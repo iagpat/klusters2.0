@@ -668,13 +668,13 @@ s,@USER_LDFLAGS@,|#_!!_#|,g
 s,@LIBZ@,|#_!!_#|-lz,g
 s,@LIBPNG@,|#_!!_#|-lpng -lz -lm,g
 s,@LIBJPEG@,|#_!!_#|-ljpeg,g
-s,@qt_libraries@,|#_!!_#|/usr/lib/qt3//lib64,g
-s,@qt_includes@,|#_!!_#|/usr/lib/qt3//include,g
-s,@QT_INCLUDES@,|#_!!_#|-I/usr/lib/qt3//include,g
-s,@QT_LDFLAGS@,|#_!!_#|-L/usr/lib/qt3//lib64,g
+s,@qt_libraries@,|#_!!_#|/usr/lib/qt3/lib64,g
+s,@qt_includes@,|#_!!_#|/usr/lib/qt3/include,g
+s,@QT_INCLUDES@,|#_!!_#|-I/usr/lib/qt3/include,g
+s,@QT_LDFLAGS@,|#_!!_#|-L/usr/lib/qt3/lib64,g
 s,@PERL@,|#_!!_#|/usr/bin/perl,g
-s,@MOC@,|#_!!_#|/usr/lib/qt3//bin/moc,g
-s,@UIC@,|#_!!_#|/usr/lib/qt3//bin/uic -L $(kde_widgetdir) -nounload,g
+s,@MOC@,|#_!!_#|/source/kde/kde4/kde-qt//bin/moc,g
+s,@UIC@,|#_!!_#|/source/kde/kde4/kde-qt//bin/uic,g
 s,@UIC_TR@,|#_!!_#|tr2i18n,g
 s,@LIB_QT@,|#_!!_#|-lqt-mt  $(LIBZ) $(LIBPNG) -lXext $(LIB_X11) $(LIBSM) -lpthread,g
 s,@LIB_QPE@,|#_!!_#|,g
@@ -686,8 +686,8 @@ s,@kde_libraries@,|#_!!_#|/opt/kde3/lib64,g
 s,@kde_includes@,|#_!!_#|/opt/kde3/include,g
 s,@KDE_LDFLAGS@,|#_!!_#|-L/opt/kde3/lib64,g
 s,@KDE_INCLUDES@,|#_!!_#|-I/opt/kde3/include,g
-s,@all_includes@,|#_!!_#|-I/opt/kde3/include -I/usr/lib/qt3//include -I. ,g
-s,@all_libraries@,|#_!!_#|-L/opt/kde3/lib64 -L/usr/lib/qt3//lib64 -L/usr/lib64   ,g
+s,@all_includes@,|#_!!_#|-I/opt/kde3/include -I/usr/lib/qt3/include -I. ,g
+s,@all_libraries@,|#_!!_#|-L/opt/kde3/lib64 -L/usr/lib/qt3/lib64 -L/usr/lib64   ,g
 s,@AUTODIRS@,|#_!!_#|,g
 s,@include_ARTS_TRUE@,|#_!!_#|,g
 s,@include_ARTS_FALSE@,|#_!!_#|#,g
