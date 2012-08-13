@@ -517,8 +517,9 @@ uninstall-am: uninstall-imagesDATA uninstall-info-am
 
 
 
+
 #>+ 2
-KDE_DIST=new_clusters.png Parameters.png Overview.png new_cluster.png Tools.png Waveform-Mean.png Parameters-TimeFrame.png MultipleProjections.png Klusters.png clusterview.png GroupingAssistant-Change.png clusterInformationWindow.png XCorrelation-Raw.png grouping_assistant_update.png forwardCluster.png delete_noise.png update.png Makefile.in TraceView.png Parameters-Default.png delete_artefact_tool.png zoom_tool.png XCorrelation-Asymptote.png printer.png waveformview.png time_tool.png GroupingAssistant.png Waveform-Scale.png delete_artefact.png backCluster.png Makefile.am group.png Waveform-Overlay.png delete_noise_tool.png 
+KDE_DIST=new_clusters.png Parameters.png new_cluster.png Overview.png Tools.png Waveform-Mean.png Parameters-TimeFrame.png MultipleProjections.png Klusters.png clusterview.png GroupingAssistant-Change.png clusterInformationWindow.png XCorrelation-Raw.png grouping_assistant_update.png forwardCluster.png delete_noise.png update.png Makefile.in TraceView.png Parameters-Default.png delete_artefact_tool.png zoom_tool.png XCorrelation-Asymptote.png waveformview.png printer.png time_tool.png GroupingAssistant.png delete_artefact.png Waveform-Scale.png backCluster.png Makefile.am group.png Waveform-Overlay.png delete_noise_tool.png 
 
 #>+ 2
 docs-am:
