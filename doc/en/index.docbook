@@ -1,0 +1,2161 @@
+<?xml version="1.0" ?>
+<!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1.2-Based Variant V1.0//EN" "dtd/kdex.dtd" [
+  <!ENTITY klusters '<application>Klusters</application>'>
+  <!ENTITY neuroscope '<application>NeuroScope</application>'>
+  <!ENTITY klustakwik '<application>KlustaKwik</application>'>
+  <!ENTITY kapp "&klusters;">
+  <!ENTITY % addindex "IGNORE">
+  <!ENTITY % English "INCLUDE">
+  ]>
+<book lang="&language;">
+
+<bookinfo>
+<title>The Klusters Handbook</title>
+
+<authorgroup>
+<author>
+<firstname>Lynn</firstname>
+<surname>Hazan</surname>
+<affiliation>
+<address><email>lynn.hazan@myrealbox.com</email></address>
+</affiliation>
+</author>
+<author>
+<firstname>Michaël</firstname>
+<surname>Zugaro</surname>
+<affiliation>
+<address><email>michael.zugaro@college-de-france.fr</email></address>
+</affiliation>
+</author>
+</authorgroup>
+
+<copyright>
+<year>2004-2007</year>
+<holder>Lynn Hazan</holder>
+<holder>Michaël B. Zugaro</holder>
+</copyright>
+<legalnotice>&FDLNotice;</legalnotice>
+
+<!-- Date and version information of the documentation
+Don't forget to include this last date and this last revision number, we
+need them for translation coordination !
+Please respect the format of the date (DD/MM/YYYY) and of the version
+(V.MM.LL), it could be used by automation scripts.
+Do NOT change these in the translation. -->
+
+<date>13/09/2007</date>
+<releaseinfo>1.6.2</releaseinfo>
+
+<abstract>
+<para>
+&klusters; is a powerful and easy-to-use application designed to help neurophysiologists
+sort action potentials recorded from multiple neurons on groups of electrodes (e.g.,
+tetrodes or multisite silicon probes).
+</para>
+<para>
+Klusters was developped by Lynn Hazan in <ulink url="http://osiris.rutgers.edu">G. Buzsáki's lab</ulink> (CMBN, Rutgers Newark, USA). If you use Klusters for your analyses, please be kind enough to cite the following article in your publications:
+</para>
+<para>
+<citetitle>
+L.&nbsp;Hazan, M.&nbsp;Zugaro, G.&nbsp;Buzs&aacute;ki (2006).
+Klusters, NeuroScope, NDManager: a Free Software Suite for Neurophysiological Data Processing and Visualization,
+J.&nbsp;Neurosci.&nbsp;Methods 155:207-216.
+</citetitle> 
+</para>
+</abstract>
+
+<!-- This is a set of Keywords for indexing by search engines. -->
+
+<keywordset>
+<keyword>KDE</keyword>
+<keyword>cluster cutting</keyword>
+<keyword>spike sorting</keyword>
+<keyword>electrophysiology</keyword>
+<keyword>tetrode</keyword>
+<keyword>silicon probe</keyword>
+<keyword>hippocampus</keyword>
+</keywordset>
+
+</bookinfo>
+
+<chapter id="introduction">
+<title>Introduction</title>
+
+<para>
+Neurophysiological experiments investigating the functional properties of large
+ensembles of neurons involve recording brain signals with large numbers of electrodes.
+Because each of the electrodes used in these experiments generally records from
+multiple neurons, the first step before analyzing the data is to sort out the action
+potentials emitted by each individual neuron.
+
+Hence, each putative action potential or "spike" must be grouped together with other spikes
+that are thought to belong to the same neuron. Such a group of spikes is referred to as
+a "cluster", and the whole process of sorting out the action potentials is thus known as
+"spike sorting" or "cluster cutting".
+
+&klusters; is a powerful and easy-to-use cluster cutting application.
+</para>
+<para>
+&klusters; is part of a larger data analysis framework, including <ulink url="http://neuroscope.sourceforge.net">&neuroscope;</ulink> and other utilities which are currently under development. While &klusters; can be used as a standalone application, some of its features are most useful within this framework.
+</para>
+</chapter>
+
+<chapter id="using-klusters">
+<title>Using Klusters</title>
+
+<sect1 id="starting">
+<title>Starting a New Session</title>
+<para>
+To start editing a file, select <menuchoice> <guimenu>File</guimenu> <guimenuitem>Open</guimenuitem> </menuchoice>. In the <guilabel>Open</guilabel> dialog, you can select any type of data file (<filename>clu</filename>, <filename>fet</filename>, <filename>spk</filename>, or <filename>par</filename>: see <link linkend="data-files">File Formats</link>).
+</para>
+<para>
+A session can also be started from the command line, by typing:
+</para>
+<screen width="40">
+<prompt>%</prompt> <userinput>klusters</userinput> <replaceable>filename</replaceable>
+</screen>
+<para>
+Once the data is loaded, the main window should look like this:
+</para>
+
+<para id="fig-overview">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Overview.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Overview.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Overview.</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<para>
+The <guilabel>Cluster Panel</guilabel> (<emphasis>left</emphasis>) lists all the cluster IDs already defined in the cluster file. Clusters can be selected by clicking on the colored squares. Use <keycap>Shift</keycap> or <keycap>CTRL</keycap> for multiple selections (see the <guimenu>Edit</guimenu> menu for more choices).
+</para>
+<para>
+The rest of the <guilabel>Main Window</guilabel> shows an <guilabel>Overview Display</guilabel> of the data. This is one of several kinds of display that &klusters; uses to present the data. It actually combines three views: a <guilabel>Cluster View</guilabel> displaying spikes in the <acronym>PCA</acronym> feature space (<emphasis>left</emphasis>), a <guilabel>Waveform View</guilabel> (<emphasis>top right</emphasis>), and a <guilabel>Correlation View</guilabel> displaying auto- and cross-correlograms (<emphasis>bottom right</emphasis>).
+</para>
+<para>
+Notice that each cluster has its own color: the same color is consistently used in the <guilabel>Cluster Panel</guilabel>, the <guilabel>Cluster View</guilabel>, the <guilabel>Waveform View</guilabel>, and the <guilabel>Correlation View</guilabel>. This makes it easy to quickly identify a given cluster across different views. If you wish to change the color of a cluster (e.g. when simultaneously displaying several clusters with similar colors), middle-click on the corresponding colored square in the <guilabel>Cluster Panel</guilabel> to open the <guilabel>Color Chooser</guilabel>. As soon as you validate your new choice, all views will be updated accordingly (but see <link linkend="delayed-update">Using &klusters; over a Slow Network Connection</link>).
+</para>
+<note>
+<para>
+Keep in mind that working on large files requires a large amount of RAM and a powerful CPU.
+</para>
+</note>
+</sect1>
+
+<sect1 id="views-displays">
+<title>Views and Displays</title>
+<para>
+The previous section introduced the <guilabel>Overview Display</guilabel> as an example of the different kinds of displays that &klusters; uses to present the data. More generally, displays are combinations of one or more individual views showing the same subset of the data, and appear as separate tabs in the main window. Using several displays at once can be useful to examine different subsets of the data in parallel.
+</para>
+<para>
+Five kinds of views are available:
+</para>
+<itemizedlist>
+<listitem><para>the <guilabel>Cluster View</guilabel>, which displays spikes in a two-dimensional projection of the <acronym>PCA</acronym> feature space,</para></listitem>
+<listitem><para>the <guilabel>Waveform View</guilabel>, which displays the spike waveforms,</para></listitem>
+<listitem><para>the <guilabel>Correlation View</guilabel>, which displays auto- and cross-correlograms,</para></listitem>
+<listitem><para>the <guilabel>Trace View</guilabel>, which displays spikes on the wide-band signals,</para></listitem>
+<listitem><para>the <guilabel>Error Matrix View</guilabel>, which helps you correct overclustering.</para></listitem>
+</itemizedlist>
+
+<para>
+&klusters; provides several predefined types of single-view and multiple-view displays, listed in the <guimenu>Displays</guimenu> menu. Multiple-view displays include:
+</para>
+<itemizedlist>
+<listitem><para>the <guilabel>Overview Display</guilabel>, which combines a <guilabel>Cluster View</guilabel>,
+a <guilabel>Waveform View</guilabel> and a <guilabel>Correlation View</guilabel> to help sort out good clusters from clusters containing mostly noise or artefacts,</para></listitem>
+<listitem><para>the <guilabel>Grouping Assistant Display</guilabel> which combines all of the above
+and an <guilabel>Error Matrix View</guilabel> to help correct overclustering generally resulting from automatic cluster cutting.</para></listitem>
+</itemizedlist>
+
+<para>
+In addition to the predefined displays, &klusters; enables you to dynamically compose your own custom displays. You can modify the content of a display by adding or removing views. To add a view, click the right button in one of the views. This will bring up the <guilabel>Add a View</guilabel> popup menu and allow you to select the type of view to add. The new view will be added just bellow the view where you clicked. To remove a view, simply click on the cross at the top right corner of the view.
+</para>
+
+<para>
+Besides, individual views can be moved around inside the display: click on the top bar of the view, then while still holding the mouse button, drag the view to its new location (indicated as an outline) and release the mouse.
+</para>
+
+<para>
+Although these functionalities provide for a lot of flexibility, there are still two limitations on what you can do within a single display:
+</para>
+<itemizedlist>
+<listitem><para>All the views will always show the same clusters. Use separate displays if you wish to see different subsets of the data in parallel.</para></listitem>
+<listitem><para>You can only include one view of each kind. There are exceptions, however. You can have as many <guilabel>Cluster View</guilabel>s or <guilabel>Correlation View</guilabel>s as you wish, and you can only have one single <guilabel>Error Matrix View</guilabel> across all the displays. Displaying several <guilabel>Cluster View</guilabel>s at once enables you to simultaneously examine clusters in different projection planes (e.g. first principal component versus time, first principal component versus second principal component, etc.). Similarly, displaying several <guilabel>Correlation View</guilabel>s allows you to examine spike train properties at different time scales. </para></listitem>
+</itemizedlist>
+
+<para>
+After you have modified the contents of a display to fit your needs, you may wish to change its title (the label of the tab) to reflect your changes. Select <menuchoice> <guimenu>Displays</guimenu><guimenuitem>Rename Active Display</guimenuitem> </menuchoice> (<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>). This will bring up a dialog where you can type the new title for the currently active display.
+</para>
+
+<para id="fig-multiple-views">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/MultipleProjections.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/MultipleProjections.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Multiple Projections</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+<para>
+The views are further described in the following sections.
+</para>
+</sect1>
+
+
+
+<sect1 id="views">
+<title>Cluster View, Waveform View, Correlation View</title>
+<para>
+The <guilabel>Cluster</guilabel>, <guilabel>Waveform</guilabel> and <guilabel>Correlation View</guilabel>s can be configured in the <guilabel>Parameter Bar</guilabel> shown below. Note that all the specific options discussed in the following sections are available in any display where a given view is present.
+</para>
+<para id="fig-parameters-default">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Parameters-Default.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Parameters-Default.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Parameters</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+<sect2>
+<title>The Cluster View</title>
+<para>
+This view displays a two-dimensional projection of the data in the <acronym>PCA</acronym> feature space. The <guilabel>x</guilabel> and <guilabel>y</guilabel> dimensions can be selected in the <guilabel>Features</guilabel> spin boxes in the <guilabel>Parameter Bar</guilabel>. The <guilabel>x</guilabel> and <guilabel>y</guilabel> axes are drawn as thin grey lines.
+</para>
+<para>
+The highest dimension corresponds to time. Displaying clusters across time is very useful to assess cell isolation drift. When time is selected as one of the projection dimensions, thin lines are drawn at regular time intervals (60&nbsp;s by default, but this can be <link linkend="settings-clusters">configured</link>).
+</para>
+<para>
+When moving the mouse over the <guilabel>Cluster View</guilabel>, the pointer coordinates in feature space are shown in the status bar.
+</para>
+<para>
+The various tools available to modify the clusters displayed in the <guilabel>Cluster View</guilabel> are described in <link linkend="grouping-reshaping">Grouping and Reshaping Clusters</link>.
+</para>
+<note>
+<para>
+If the display contains more than one <guilabel>Cluster View</guilabel>, changes to the <guilabel>x</guilabel> and <guilabel>y</guilabel> dimensions only apply to the currently active <guilabel>Cluster View</guilabel>. To activate another <guilabel>Cluster View</guilabel>, simply click in its content area or on its top bar.
+</para>
+</note>
+</sect2>
+
+<sect2>
+<title>The Waveform View</title>
+<para id="subset">
+This view displays the waveforms of a subset of the spikes evenly spaced in time over the whole recording. The default number of spikes displayed is&nbsp;100, but this can be changed in the <guilabel>Waveforms</guilabel> spin box in the <guilabel>Parameter Bar</guilabel>. It is also possible to show all spikes recorded within a given time frame: select <menuchoice> <guimenu>Waveforms</guimenu> <guimenuitem>Time Frame</guimenuitem> </menuchoice>. In the <guilabel>Parameter Bar</guilabel>, the <guilabel>Waveforms</guilabel> spin box is now replaced with a <guilabel>Start time</guilabel> spin box and a <guilabel>Duration</guilabel> text box, where you can define the time frame you wish to see.
+</para>
+<para id="fig-parameters-timeframe">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Parameters-TimeFrame.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Parameters-TimeFrame.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Parameters</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+<sect3>
+<title>Changing the Vertical Scale</title>
+<para>
+As in the <guilabel>Cluster View</guilabel>, the <link linkend="grouping-reshaping">zoom tool</link> can be used to zoom on a particular portion of the view. An additional way to improve the display is to change the vertical scale using <menuchoice> <guimenu>Waveforms</guimenu> <guimenuitem>Increase Amplitude</guimenuitem> </menuchoice> or <menuchoice> <guimenu>Waveforms</guimenu> <guimenuitem>Decrease Amplitude</guimenuitem> </menuchoice>. This will modify the vertical axis of all currently displayed waveforms as shown in the example below.
+</para>
+<para id="fig-scale">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Waveform-Scale.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Waveform-Scale.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Scale</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+</sect3>
+<sect3>
+<title>Overlay</title>
+<para>
+By default, different clusters are shown side by side in the <guilabel>Waveform View</guilabel>. However, in order to more easily compare two or more clusters (e.g. to decide whether they should be merged) it is also possible to show them one on top of the other. Select <menuchoice> <guimenu>Waveforms</guimenu> <guimenuitem>Overlay</guimenuitem> </menuchoice> to activate this mode.
+</para>
+<para id="fig-overlay">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Waveform-Overlay.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Waveform-Overlay.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Overlay</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+</sect3>
+<sect3>
+<title>Mean and Standard Deviation</title>
+<para>
+&klusters; provides yet another way to display spike waveforms: rather than showing a number of individual waveforms, it is possible to display the mean and standard deviation for each cluster. Select <menuchoice> <guimenu>Waveforms</guimenu> <guimenuitem>Mean and Standard Deviation</guimenuitem> </menuchoice>. This will draw three curves for each cluster: a continuous curve showing the mean, and two dashed curves showing the mean plus or minus one standard deviation.
+</para>
+<para>
+Note that the mean and standard deviation are estimated using the selected subset of waveforms (see <link linkend="subset">above</link>).
+</para>
+<para id="fig-mean">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Waveform-Mean.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/Waveform-Mean.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Mean</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+</sect3>
+</sect2>
+
+<sect2>
+<title>The Correlation View</title>
+<para>
+This view displays the auto- and cross-correlations of all selected clusters. By default, the histograms have 1&nbsp;ms bins and include spikes occurring within plus or minus 30&nbsp;ms around each spike from the reference cluster. This can be modified using the <guilabel>Bin size</guilabel> and <guilabel>Duration</guilabel> text boxes in the <guilabel>Parameter Bar</guilabel>.
+</para>
+<para>
+Tick marks on the <guilabel>x</guilabel> axis are spaced as follows:
+</para>
+<itemizedlist>
+<listitem><para> every 5&nbsp;ms for durations up to 30&nbsp;ms,</para></listitem>
+<listitem><para> every 10&nbsp;ms for durations from 31&nbsp;ms to 100&nbsp;ms,</para></listitem>
+<listitem><para> every 20&nbsp;ms for durations above 100&nbsp;ms.</para></listitem>
+</itemizedlist>
+<para>
+When moving the mouse over the <guilabel>Correlation View</guilabel>, the corresponding time in the underlying correlogram is shown in the status bar, together with the IDs for the corresponding clusters.
+</para>
+<sect3>
+<title>Showing or Hiding the Asymptote Line</title>
+<para>
+Beneath each auto-correlogram is a small box indicating the average firing rate of the putative neuron. This is also shown graphically as a dotted line on top of the histogram, referred to as the <guilabel>Asymptote Line</guilabel>. The purpose of this information is two-folded: not only does it allow you to distinguish a well isolated neuron with a medium to high firing rate from a group of sparse action potentials with a low firing rate, it is also very useful to estimate how noisy a given cluster is, i.e. what fraction of its spikes belong to other neurons. Spikes belonging to different neurons show up in the refractory period, but their proportion may appear deceptively low when compared to the 'shoulders' of the auto-correlogram. The proper way to estimate how clean a cluster is, is to compare the bins in the refractory period with the average firing rate of the neuron: these bins should represent as small as possible a proportion of the average firing rate. This is where the <guilabel>Asymptote Line</guilabel> is useful (the <link linkend="grouping-reshaping">zoom tool</link> can also help here). Besides, the correlograms can be scaled by their asymptotic value (see <link linkend="scale-modes">Vertical Scale Modes</link>).
+</para>
+<para>
+However, if you wish to hide this information, for instance when displaying large numbers of clusters simultaneously, select <menuchoice> <guimenu>Correlations</guimenu> <guimenuitem>Asymptote Line</guimenuitem> </menuchoice>.
+</para>
+<para id="fig-asymptote">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/XCorrelation-Asymptote.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/XCorrelation-Asymptote.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Asymptote</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+</sect3>
+<sect3 id="scale-modes">
+<title>Vertical Scale Modes</title>
+<para>
+Similar to the <guilabel>Waveform View</guilabel>, the vertical scale can be changed using <menuchoice> <guimenu>Correlations</guimenu> <guimenuitem>Increase Amplitude</guimenuitem> </menuchoice> or <menuchoice> <guimenu>Correlations</guimenu> <guimenuitem>Decrease Amplitude</guimenuitem> </menuchoice>. This will modify the vertical axis of all currently displayed correlograms (see <link linkend="fig-scale">this Figure</link>).
+</para>
+<para>
+The <guilabel>Correlation View</guilabel> offers additional scale modes. Each correlogram can be independently scaled either by its own maximum (default mode, also activated when selecting <menuchoice> <guimenu>Correlations</guimenu> <guimenuitem>Scale by Maximum</guimenuitem> </menuchoice>), or by its asymptotic value (activated when selecting <menuchoice> <guimenu>Correlations</guimenu> <guimenuitem>Scale by Asymptote</guimenuitem> </menuchoice>). It is also possible to use the same scale for all correlograms, thus making it easier to compare the respective firing rates: select <menuchoice> <guimenu>Correlations</guimenu> <guimenuitem>Uniform Scale</guimenuitem> </menuchoice>.
+</para>
+<para id="fig-raw">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/XCorrelation-Raw.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/XCorrelation-Raw.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Uniform Scale</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+</sect3>
+</sect2>
+</sect1>
+<sect1 id="trace-view">
+<title>Trace View</title>
+<para>
+The <guilabel>Trace View</guilabel> displays spikes on the wide-band signals. This view is available only if the wide-band data file (<filename>.dat</filename> file, see <link linkend="data-files">Data File</link>) is present in the same directory as the other files.
+</para>
+<note>
+<para>
+This feature requires additional information available only in the <acronym>XML</acronym> parameter file, and cannot be activated when using the obsolete flat text parameter files (see <link linkend="parameter_files">data format</link>).
+</para>
+</note>
+
+<para id="fig-trace-view">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/TraceView.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/TraceView.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Trace View.</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+
+<sect2>
+<title>Browsing Wide-Band Data</title>
+<para>
+There are several ways to navigate through the data:
+</para>
+<itemizedlist>
+<listitem>
+<para>
+To move to a particular point in the data, enter the corresponding time in the <guilabel>Start time</guilabel> text boxes (below the traces). Time is typically entered in minutes, seconds and milliseconds. Alternatively, you can use cumulative seconds or milliseconds: for instance, entering <filename>0&nbsp;min 180&nbsp;s 0&nbsp;ms</filename>, or <filename>0&nbsp;min 0&nbsp;s 180000&nbsp;ms</filename> is equivalent to entering <filename>3&nbsp;min 0&nbsp;s 0&nbsp;ms</filename>.
+</para>
+</listitem>
+<listitem>
+<para>
+To modify the duration of the time window shown in the display (1&nbsp;s by default), change the value in the <guilabel>Duration</guilabel> text box (below the traces). This value can be doubled by hitting the <keycap>+</keycap> key, or divided by two by hitting the <keycap>-</keycap> key.
+</para>
+</listitem>
+<listitem>
+<para>
+To display the next time window, click on the scroll bar below the traces, in the empty space on the right side of the slider. You can also hit the <keycap>Page Down</keycap> key. Similarly, clicking on the left side of the slider, or hitting the <keycap>Page Up</keycap> key, displays the previous time window.
+</para>
+</listitem>
+<listitem>
+<para>
+To move by smaller amounts, click on the arrows of the scroll bar, or hit <keycap>Left Arrow</keycap> or <keycap>Right Arrow</keycap>.
+</para>
+</listitem>
+<listitem>
+<para>
+To move to the beginning or the end of the data, hit the <keycap>Home</keycap> or <keycap>End</keycap> keys, respectively.
+</para>
+</listitem>
+<listitem>
+<para>
+Dragging the slider in the scroll bar is another way to move within the data.
+</para>
+</listitem>
+</itemizedlist>
+<note>
+<para>
+The shortcut keys described above will not work if the focus is in one of the text boxes below the traces. This is because in this case the shortcuts are applied to the text boxes rather than to the display (e.g. hitting the <keycap>End</keycap> key will move the insertion point to the end of the text). To activate the navigation shortcut keys, move the focus elsewhere, for instance by clicking on the scroll bar.
+</para>
+</note>
+<para>
+Similar to the <guilabel>Cluster View</guilabel>, the <guilabel>Zoom</guilabel> tool can be used to enlarge a selected area of the view (see <link linkend="grouping-reshaping">Grouping and Reshaping Clusters</link>). However, here you cannot zoom out in single steps.
+</para>
+</sect2>
+<sect2>
+<title>Browsing Unit Activity</title>
+<para>
+Pyramidal or granule cells typically fire at low rates. Thus, when examining their firing patterns, you may sometimes find it difficult to locate those epochs when the neurons discharge. &klusters; provides a mechanism to easily 'browse' spikes, i.e. to automatically move the time window to the previous or next spike fired by one or more neurons. Now, choose <menuchoice> <guimenu>Traces</guimenu> <guimenuitem>Previous Spike</guimenuitem> </menuchoice> or click on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/backCluster.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/backCluster.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Previous spike.</phrase>
+	  </textobject>
+	</inlinemediaobject>
+</guiicon> to move the time window to the previous spike fired by one of the selected clusters, or choose <menuchoice> <guimenu>Traces</guimenu> <guimenuitem>Next Spike</guimenuitem> </menuchoice> or click on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/forwardCluster.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/forwardCluster.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Next spike.</phrase>
+	  </textobject>
+	</inlinemediaobject>
+</guiicon> to move the time window to the next spike.
+</para>
+</sect2>
+<sect2>
+<title>Adjusting Channel Amplitudes</title>
+<para>
+Channel amplitudes can be adjusted by selecting <menuchoice> <guimenu>Traces</guimenu> <guimenuitem>Increase Channel Amplitudes</guimenuitem> </menuchoice> or <menuchoice> <guimenu>Traces</guimenu> <guimenuitem>Decrease Channel Amplitudes</guimenuitem> </menuchoice>.
+</para>
+</sect2>
+<sect2>
+<title>Labels</title>
+<para>
+Labels provide information about the traces: the ID of the corresponding channel, and the current amplitude. Labels can be showed by selecting <menuchoice> <guimenu>Traces</guimenu> <guimenuitem>Show Labels</guimenuitem> </menuchoice> (selecting this menu item a second time will toggle its status and hide the labels).</para>
+<para>
+Amplitudes are described as follows. By convention, 'x1' corresponds to 0.2 &nbsp;mV/cm. Thus, an amplitude of 'x0.38' corresponds to 0.076&nbsp;mV/cm.
+</para>
+</sect2>
+<sect2>
+<title>Setting the Start Time from a Cluster View</title>
+<para>
+Suppose you are inspecting a cluster as a function of time in a <guilabel>Cluster View</guilabel>, and you notice that it has certain interesting characteristics (e.g. increased firing rate) at a particular point in time. You may want to look at the corresponding wide-band signals. This can be achieved by selecting <menuchoice> <guimenu>Action</guimenu> <guimenuitem>Select time</guimenuitem> </menuchoice> or by clicking on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/time_tool.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/time_tool.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Time tool.</phrase>
+	  </textobject>
+</inlinemediaobject></guiicon> and then clicking in the <guilabel>Cluster View</guilabel> at the time point you wish to inspect, as shown in the above screenshot.
+</para>
+</sect2>
+</sect1>
+
+<sect1 id="discarding">
+<title>Discarding Noise and Artefacts</title>
+<para>
+Typically, the first step in sorting spike clusters involves discarding bad clusters, i.e. clusters that contain either multi-unit signals of low amplitude (noise) or electrical signals produced by the experimental setup (artefacts).
+</para>
+<para>
+The <guilabel>Overview Dipslay</guilabel> is ideal for this. Start by selecting the first cluster in the <guilabel>Cluster Panel</guilabel>. By combining information displayed in the three views, you can easily determine if this cluster contains well-isolated action potentials, noise, or artefacts:
+</para>
+<itemizedlist>
+<listitem>
+<para>
+action potentials emitted by a well-isolated neuron have a characteristic V-shaped waveform and their autocorrelogram has a stereotypical shape with a clear refractory period (in the previous <link linkend="fig-overview">Figure</link>, the autocorrelogram of cluster&nbsp;10 is typical of a hippocampal pyramidal cell, while that of cluster&nbsp;17 is typical of a hippocampal interneuron);
+</para>
+</listitem>
+<listitem>
+<para>
+noise has a low amplitude and although its auto-correlogram looks somewhat like that of a well-isolated neuron, it lacks a refractory period;
+</para>
+</listitem>
+<listitem><para> artefacts usually have a high amplitude and their waveforms and auto-correlograms look very different from those of neuronal signals.
+</para></listitem>
+</itemizedlist>
+<para>
+If the cluster contains artefacts, delete it by selecting <menuchoice> <guimenu>Action</guimenu> <guimenuitem>Delete Artefact Cluster(s)</guimenuitem> </menuchoice> or by clicking on the red trash icon <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/delete_artefact.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/delete_artefact.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Delete artefact.</phrase>
+	  </textobject>
+</inlinemediaobject></guiicon>. This will move all the spikes to cluster&nbsp;0 (which by convention contains all artefacts). If the cluster contains noise, delete it by selecting <menuchoice> <guimenu>Action</guimenu> <guimenuitem>Delete Noise Cluster(s)</guimenuitem> </menuchoice> or by clicking on the grey trash icon <guiicon>
+ 	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/delete_noise.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/delete_noise.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Delete noise.</phrase>
+	  </textobject>
+	</inlinemediaobject></guiicon>. This will move all the spikes to cluster&nbsp;1 (which by convention contains the noise). Otherwise, move on to the next cluster.
+</para>
+<para>
+Once the bad clusters have been removed, you may wish to renumber the remaining clusters in sequence: to do this, select <menuchoice> <guimenu>Actions</guimenu> <guimenuitem>Renumber Clusters</guimenuitem></menuchoice>.
+</para>
+<important><para>
+All these operations can be undone: simply select <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Undo</guimenuitem> </menuchoice> to revert to the previous state. Conversely, after cancelling an operation selecting <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Redo</guimenuitem> </menuchoice> will apply the changes again. To set the number of operations that can be undone, see the <link linkend="settings-general">General Settings</link>.
+</para></important>
+<important>
+<para>
+One very convenient way to speed up these operations is to use the keyboard shortcuts: press <keycombo><keycap>Shift</keycap><keycap>DEL</keycap></keycombo> to delete artefacts, <keycap>DEL</keycap> to delete noise, or the <keycap>Right Arrow</keycap> to move on to the next cluster (deleting a cluster also automatically moves on to the next cluster).
+</para>
+</important>
+</sect1>
+
+<sect1 id="grouping-reshaping">
+<title>Grouping and Reshaping Clusters</title>
+<para>
+After deleting noise and artefact clusters, you may want to reshape individual clusters or group two or more clusters. &klusters; provides many tools to help you do this:
+</para>
+<itemizedlist>
+<listitem><para>
+To zoom on a particular area in the <guilabel>Cluster View</guilabel>, select <menuchoice> <guimenu>Tools</guimenu> <guimenuitem>Zoom</guimenuitem> </menuchoice> or click on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/zoom_tool.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/zoom_tool.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Zoom tool.</phrase>
+	  </textobject>
+	</inlinemediaobject>
+</guiicon>. Now click on the center of the area you wish to enlarge. Alternatively, you can select the area to enlarge (click and hold the left button, then drag the mouse to select the area). Holding <keycap>Shift</keycap> while clicking will zoom out. Double-clicking will bring the zoom level back to the initial state.
+</para></listitem>
+<listitem><para>
+To create a new cluster, select <menuchoice> <guimenu>Tools</guimenu> <guimenuitem>New Cluster</guimenuitem> </menuchoice> or click on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/new_cluster.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/new_cluster.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>New cluster.</phrase>
+	  </textobject>
+	</inlinemediaobject>
+ </guiicon>. Use this tool to draw a polygon in the <guilabel>Cluster View</guilabel>: click the left button to add a point to the polygon, the right button to remove the last point, or the middle button to automatically close the polygon. Closing the polygon creates a new cluster containing all points enclosed in the polygon.
+</para></listitem>
+<listitem><para>
+To split existing clusters, select <menuchoice> <guimenu>Tools</guimenu> <guimenuitem>Split Clusters</guimenuitem> </menuchoice> or click on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/new_clusters.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/new_clusters.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>New clusters.</phrase>
+	  </textobject>
+	</inlinemediaobject>
+</guiicon>. Use this tool to draw a polygon in the <guilabel>Cluster View</guilabel>. Each cluster that intersects with the polygon will be split into two clusters, one containing all points enclosed in the polygon, the other one containing the remaining points.
+</para></listitem>
+<listitem><para>
+To selectively delete spikes rather than entire clusters, select <menuchoice> <guimenu>Tools</guimenu> <guimenuitem>Delete Noisy Spikes</guimenuitem> </menuchoice> (resp. <menuchoice> <guimenu>Tools</guimenu> <guimenuitem>Delete Artefact Spikes</guimenuitem> </menuchoice>) or click on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/delete_noise_tool.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/delete_noise_tool.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Delete noise tool.</phrase>
+	  </textobject>
+	</inlinemediaobject></guiicon> (resp. on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/delete_artefact_tool.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/delete_artefact_tool.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Delete artefact tool.</phrase>
+	  </textobject>
+	</inlinemediaobject>
+	</guiicon>). Use this tool to draw a polygon in the <guilabel>Cluster View</guilabel>. All points lying within the polygon will be deleted (i.e. moved to cluster&nbsp;0 or&nbsp;1).
+</para></listitem>
+<listitem><para>
+To group all currently displayed clusters, select <menuchoice> <guimenu>Actions</guimenu> <guimenuitem>Group Clusters</guimenuitem> </menuchoice> or click on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/group.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/group.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Group tool.</phrase>
+	  </textobject>
+	</inlinemediaobject></guiicon>. This will create a new cluster containing all the currently visible spikes.
+</para></listitem>
+</itemizedlist>
+<para>
+Once you are done, you may wish to renumber the clusters in sequence: this can be done by selecting <menuchoice> <guimenu>Actions</guimenu> <guimenuitem>Renumber Clusters</guimenuitem></menuchoice>.
+</para>
+<important><para>
+All these operations can be undone: simply select <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Undo</guimenuitem> </menuchoice> to revert to the previous state. Conversely, after cancelling an operation selecting <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Redo</guimenuitem> </menuchoice> will apply the changes again. To set the number of operations that can be undone, see the <link linkend="settings-general">General Settings</link>.
+</para></important>
+</sect1>
+
+<sect1 id="grouping-assistant">
+<title>Grouping Assistant</title>
+<para>
+Once the bad clusters have been removed and the good ones have been reshaped if appropriate, the next step is to group all clusters that contain spikes emitted by the same neuron. This is often necessary because good automatic cluster cutting programs tend to produce slightly over-clustered data (a safer behavior than the alternative production of under-clustered data). &klusters; provides a feature to help you find similar clusters. Select <menuchoice> <guimenu>Displays</guimenu> <guimenuitem>Grouping Assistant Display</guimenuitem> </menuchoice>. In addition to the <guilabel>Cluster</guilabel>, <guilabel>Waveform</guilabel> and <guilabel>Correlation View</guilabel>s, this display also contains an <guilabel>Error Matrix View</guilabel>.
+</para>
+<para id="fig-grouping-assistant">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/GroupingAssistant.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/GroupingAssistant.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Grouping Assistant</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+<para>
+Each element in the matrix indicates how likely it is that the two clusters corresponding to the row and column of the element contain spikes from the same neuron. Probabilities are represented using a continuous color code ranging from blue (low probability) to red (high probability, p&gt;=0.1). Moving the mouse over a particular matrix element will display the exact probability value in the <guilabel>Status Bar</guilabel>. Note that in some rare cases where a cluster contains very few spikes, the probabilities cannot be computed and thus the matrix elements will appear in black.
+</para>
+<para>
+Now select a pair of potentially similar clusters by clicking on the corresponding element in the error matrix: the two clusters are shown in the <guilabel>Cluster</guilabel>, <guilabel>Waveform</guilabel> and <guilabel>Correlation View</guilabel>s. To display more than two clusters at once, hold <keycap>CTRL</keycap> while clicking.
+</para>
+<para>
+If the clusters clearly appear to contain spikes from a single neuron, group them by selecting <menuchoice> <guimenu>Actions</guimenu> <guimenuitem>Group Clusters</guimenuitem> </menuchoice> or clicking on <guiicon><inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/group.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/group.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Group.</phrase>
+	  </textobject>
+	</inlinemediaobject></guiicon>.
+</para>
+<para>
+As a result of grouping two or more clusters, the <guilabel>Error Matrix</guilabel> is no longer up-to-date. Ideally, it should be automatically recomputed. However, computing the <guilabel>Error Matrix</guilabel> is a lengthy process, especially when there is a large number of clusters. Rather than repeatedly waiting for the matrix to be updated after each change you make, you may wish to be able to investigate several cases before manually triggering an update. This makes sense because only the matrix elements for those clusters that you modify are out of sync after a change.
+</para>
+<para>
+For these reasons, &klusters; will not automatically recompute the <guilabel>Error Matrix</guilabel> for you. Instead, it will indicate that the matrix is no longer up-to-date by enclosing it in a red rectangle. It is then up to you to manually trigger the update when you see fit, by selecting <menuchoice> <guimenu>Actions</guimenu> <guimenuitem>Update Error Matrix</guimenuitem> </menuchoice> or clicking on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/grouping_assistant_update.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/grouping_assistant_update.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Grouping assistant.</phrase>
+	  </textobject>
+	</inlinemediaobject></guiicon>.
+</para>
+<para id="fig-update">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/GroupingAssistant-Change.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/GroupingAssistant-Change.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Grouping Assistant</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+</sect1>
+
+<sect1 id="reclustering">
+<title>Automatic Reclustering</title>
+<para>
+Besides the ability to <link linkend="grouping-reshaping">manually reshape</link> existing clusters, &klusters; provides a mechanism to invoke an external automatic cluster cutting program such as Kenneth D. Harris' <ulink url="http://klustakwik.sourceforge.net">&klustakwik;</ulink> to selectively recluster currently selected clusters.
+</para>
+<para>
+Select <menuchoice> <guimenu>Actions</guimenu> <guimenuitem>Recluster</guimenuitem> </menuchoice>. This will open a new tab displaying all the messages output by the reclustering program. Error messages are displayed in red, and normal output is displayed in blue. Depending on the reclustering program, output messages may also be saved to <link linkend="reclustering-log">log files</link> on the disk.
+</para>
+<para>
+When reclustering completes, a dialog box pops up to inform you of the IDs of the newly created clusters. If you are unsatisfied with the results, as with any other operation reclustering can be cancelled by selecting <menuchoice> <guimenu>Edit</guimenu> <guimenuitem>Undo</guimenuitem> </menuchoice>.
+</para>
+<para>
+If for any reason you want to abort reclustering, simply select <menuchoice> <guimenu>Actions</guimenu> <guimenuitem>Abort Reclustering</guimenuitem> </menuchoice>.
+</para>
+<para>
+The reclustering program and its parameters can be <link linkend="settings-general">configured</link> in the <guilabel>Settings Dialog</guilabel>.
+</para>
+<note>
+<para>
+Reclustering is a processor-intensive task that may take a substantial amount of time to complete if too many clusters are selected at once. Typically, reclustering should be performed on one to three clusters.
+</para>
+</note>
+</sect1>
+
+
+
+<sect1 id="clusterInfo">
+<title>Cluster Information</title>
+<para>
+&klusters; allows to specify important information about the clusters, namely:
+<itemizedlist>
+<listitem>
+<para>
+<guilabel>Structure</guilabel> - the brain structure where the unit was recorded.
+</para>
+</listitem>
+<listitem>
+<para>
+<guilabel>Type</guilabel> - the type of neuron, e.g. pyramidal cell.
+</para>
+</listitem>
+<listitem>
+<para>
+<guilabel>I.D.</guilabel> - the isolation distance, which provides a quantitative measure of isolation quality.
+</para>
+</listitem>
+<listitem>
+<para>
+<guilabel>Quality</guilabel> - a qualitative measure of isolation quality, which can be used to compare across different recording systems (isolation distances cannot be compared between e.g. a tetrode and an octrode).
+</para>
+</listitem>
+<listitem>
+<para>
+<guilabel>Notes</guilabel> - user comments, e.g. about unresolved similarity between clusters.
+</para>
+</listitem>
+</itemizedlist>
+</para>
+<para>
+This can be done by right clicking on the colored squares in the <guilabel>Cluster Panel</guilabel>, which brings a dialog where the information can be entered.
+</para>
+<para id="fig-clusterInfoWindow">
+<screenshot>
+<screeninfo>
+ </screeninfo>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/clusterInformationWindow.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/clusterInformationWindow.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Cluster Information window</phrase>
+	  </textobject>
+	</mediaobject>
+</screenshot>
+</para>
+<para>
+This information can be displayed in the <guilabel>Cluster Panel</guilabel> by selecting <menuchoice> <guimenu>Settings</guimenu> <guimenuitem>Show Cluster Info</guimenuitem> </menuchoice> (selecting this menu item a second time will toggle its status and show the default layout).
+</para>
+<para>
+This information is also shown in the status bar when the mouse is over a cluster in the <guilabel>Cluster Panel</guilabel>.
+</para>
+</sect1>
+
+<sect1 id="saving">
+<title>Saving the Cluster File</title>
+<para>
+To save a cluster file, select <menuchoice> <guimenu>File</guimenu> <guimenuitem>Save</guimenuitem> </menuchoice>, or <menuchoice> <guimenu>File</guimenu> <guimenuitem>Save As</guimenuitem> </menuchoice> if you wish to save the data in a different location on the disk.
+</para>
+<para>
+By the time you are done editing your data, it is highly improbable that the remaining clusters are numbered in sequence. This can be corrected, by selecting <menuchoice> <guimenu>File</guimenu> <guimenuitem>Renumber and Save</guimenuitem></menuchoice>. Before the data is saved, the clusters will be renumbered starting from&nbsp;2.
+</para>
+</sect1>
+
+<sect1 id="delayed-update">
+<title>Using &klusters; over a Slow Network Connection</title>
+<para>
+By default, any change you make triggers an immediate update of all visible views. However, this may not be desirable when using &klusters; over a slow network connection. A good example is when you need to simultaneously display multiple clusters: normally, &klusters; will quickly redraw all the views every time you select a new cluster &horbar; but this is not appropriate when using &klusters; over a slow network connection, as transmitting the data to redraw can take a substantial amount of time.
+</para>
+<para>
+In order to prevent &klusters; from automatically redrawing all views after a change, select <menuchoice> <guimenu>Settings</guimenu> <guimenuitem>Delayed Update</guimenuitem></menuchoice>. Updates must then be triggered manually by selecting <menuchoice> <guimenu>Actions</guimenu> <guimenuitem>Update Display</guimenuitem></menuchoice> or clicking on <guiicon>
+	<inlinemediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/update.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/update.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Update.</phrase>
+	  </textobject>
+</inlinemediaobject></guiicon>. To revert to the default behavior, select <menuchoice> <guimenu>Settings</guimenu> <guimenuitem>Immediate Update</guimenuitem></menuchoice>.
+</para>
+</sect1>
+
+<sect1 id="print">
+<title>Printing and Exporting</title>
+<sect2>
+<title>Printing</title>
+<para>
+To print the current display, select <menuchoice> <guimenu>File</guimenu> <guimenuitem>Print</guimenuitem> </menuchoice>.
+This brings up the standard KDE print dialog. Notice the additional <guilabel>Background Color</guilabel> tab: it allows you to set the background color to white for printing (this saves printer ink). If the tabs are hidden, just click on the <guilabel>Expand</guilabel> button to display them.
+</para>
+	<mediaobject>
+	  <imageobject>
+	    <imagedata fileref="Images/printer.png" format="PNG"/>
+	  </imageobject>
+	  <imageobject>
+	    <imagedata fileref="Images/printer.eps" format="EPS"/>
+	  </imageobject>
+	  <textobject>
+	    <phrase>Printer.</phrase>
+	  </textobject>
+	</mediaobject>
+
+<para>
+The file name and view-specific parameters are printed below the figure. For multiple-view displays, each view is printed on a separate page.
+</para>
+</sect2>
+<sect2>
+<title>Exporting</title>
+<para>
+Exporting is achieved in a similar way as printing. Select <menuchoice> <guimenu>File</guimenu> <guimenuitem>Print</guimenuitem> </menuchoice>. In the print dialog, click on the printer drop down list, and choose <guilabel>Print to File (PostScript)</guilabel> to export the display as a PostScript figure, or <guilabel>Print to File (PDF)</guilabel> to export it as a Portable Document File.
+</para>
+<para>
+The Postscript format is ideal to import a figure into a drawing program for additional editing: it is a widely used standard, and all the information is stored in vectorial form. The PDF format is ideal for sharing a final figure with other investigators: it is platform independent (it will look identical whether in Linux, MacOS or Windows) and much more compact than PostScript (thus the output file is smaller and can easily be sent as an attachment via e-mail).
+</para>
+</sect2>
+</sect1>
+</chapter>
+
+<chapter id="settings">
+<title>Settings</title>
+<para>
+Selecting <menuchoice> <guimenu>Settings</guimenu> <guimenuitem>Configure &klusters;</guimenuitem></menuchoice> will open the <guilabel>Settings Dialog</guilabel>. This lets you configure several default behaviors of &klusters;.
+</para>
+
+<variablelist>
+<varlistentry id="settings-general">
+<term><guilabel>General</guilabel></term>
+<listitem>
+<para>In this page, you can configure the following:</para>
+<itemizedlist>
+<listitem>
+<para>
+<guilabel>Crash and recovery</guilabel>. To protect your data in the unfortunate event of a crash, &klusters; can periodically save a hidden recovery copy of your data. Normally, this recovery file is deleted when you close the cluster file or quit the application. But if &klusters; crashes, the recovery file remains on the disk and the next time you start working on the same data, &klusters; will find the recovery file and propose to use it instead of the presumably less up-to-date cluster file. If you choose to do so, the cluster file will be renamed (the date will be appended to its name) and the recovery file will become the new cluster file. This setting lets you enable or disable this feature and, if enabled, choose how often the data should be saved to the recovery file.
+</para>
+<para>
+<emphasis>Notice that this is different from an auto-save feature, in that it is still your responsibility to save your work: remember that the recovery file is normally deleted when you close the cluster file or quit the application.</emphasis> The advantage of this mechanism is that you keep control of when the data is actually saved to the cluster file, thus reducing the risk of saving erroneous modifications.
+</para>
+<para>
+</para>
+</listitem>
+<listitem>
+<para>
+<guilabel>Undo</guilabel>. You can set the maximum number of changes that can be undone. Be aware that the ability to undo an operation requires that an additional copy of the data be kept in memory: thus for large data files, increasing this value will significantly increase the memory load.
+</para>
+<para>
+</para>
+</listitem>
+<listitem>
+<para>
+<guilabel>Reclustering</guilabel>. This allows you to choose the reclustering program and set its parameters. The default program is Kenneth D. Harris' <ulink url="http://klustakwik.sourceforge.net">&klustakwik;</ulink>>. Alternative programs can be used, provided they also accept a feature file as their input and produce a cluster file with the same base name and electrode group ID (see <link linkend="data-files">Data Files</link> for more information). Another possibility is to use a <application>shell</application> script, e.g. to move the temporary file where &klusters; stores the features for the selected clusters to a more powerful server, process the data, and then move the newly created cluster file back to your workstation.
+</para>
+<para>
+</para>
+<para>
+Three variables are provided to help you build the command line: <userinput>%fileBaseName</userinput>, <userinput>%electrodeGroupID</userinput>, and <userinput>%features</userinput>. These are automatically set by &klusters; to match the default values for the currently edited file: <userinput>%fileBaseName</userinput> will be replaced with the base name of the temporary feature file (see note below), and <userinput>%electrodeGroupID</userinput> will be replaced with the tetrode or shank ID. Finally, <userinput>%features</userinput> will be replaced with an ensemble of boolean values (flags) indicating which features should be used by the reclustering program, namely all features except the user-defined features. As an example, assume that the data was recorded from a tetrode and that the feature file contains three principal components for each electrode, as well as four additional user-defined values (e.g. spike height, width, etc.) and time. Then, <userinput>%features</userinput> will be replaced with <userinput>11111111111100001</userinput>, which reads:
+</para>
+<para>
+<programlisting>
+1  use 1st principal component for electrode 1
+1  use 2nd principal component for electrode 1
+1  use 3rd principal component for electrode 1
+1  use 1st principal component for electrode 2
+...
+1  use 3rd principal component for electrode 4
+0  do not use 1st user-defined feature
+0  do not use 2nd user-defined feature
+0  do not use 3rd user-defined feature
+0  do not use 4th user-defined feature
+1  use time
+</programlisting>
+</para>
+<para>
+Although the example above is for a tetrode with three principal components per electrode, in general the actual value for the <userinput>%features</userinput> variable is set dynamically based on the information provided by the parameter file. You can also decide not to use this variable and supply your custom flags instead.
+</para>
+<para>
+</para>
+<para id="reclustering-log">
+Note on <userinput>%fileBaseName</userinput>: Assuming that the base name for your data files is <filename>CS210904</filename> and that clusters&nbsp;2, 4 and 7 are selected for reclustering, <userinput>%fileBaseName</userinput> will be replaced with a value such as <filename>CS210904-[2-4-7]-02.13.2004-18.54</filename> (the date and time are appended after the list of clusters). Although the temporary feature and cluster files are automatically deleted when automatic reclustering completes, depending on the reclustering program this base name may also be used for additional outputs such as log files.
+</para>
+<para>
+</para>
+</listitem>
+<listitem>
+<para>
+<guilabel>Background color</guilabel>. This setting affects all views.
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+
+<varlistentry id="settings-clusters">
+<term><guilabel>Cluster view</guilabel></term>
+<listitem>
+<para>When time is selected as one of the projection dimensions in the <guilabel>Cluster View</guilabel>, thin lines are drawn at regular time intervals. This options enables you to change the default time interval.
+</para>
+</listitem>
+</varlistentry>
+
+<varlistentry id="settings-waveforms">
+<term><guilabel>Waveform view</guilabel></term>
+<listitem>
+<para>The following items can be configured:</para>
+<itemizedlist>
+<listitem>
+<para>
+<guilabel>Waveform gain</guilabel>. This determines the initial vertical scale for the <guilabel>Waveform View</guilabel>.
+</para>
+</listitem>
+<listitem>
+<para>
+<guilabel>Channel positions</guilabel>. This allows you to decide in which order individual electrodes are displayed in the <guilabel>Waveform View</guilabel>. This is most useful for multisite silicon probes.
+</para>
+</listitem>
+</itemizedlist>
+</listitem>
+</varlistentry>
+</variablelist>
+
+</chapter>
+
+<chapter id="data-files">
+<title>File Formats</title>
+
+<para>
+&klusters; reads electrophysiological data from a set of files. Each of these files has a name of the form <filename>base.ext.n</filename>, where <filename>base</filename> stands for the common base name of all files belonging to a single recording session, <filename>ext</filename> is a three-letter extension describing the type of data stored in the file, and <filename>n</filename> stands for the ID of the particular group of electrodes from which the data was recorded. Thus, using this convention the cluster file for tetrode&nbsp;2 of session <acronym>CS150612</acronym> would be named <filename>CS150612.clu.2</filename>.
+</para>
+<para>
+More specifically, the data files are organized as described in the following sections.
+</para>
+<para>
+<emphasis>Note that the general and specific parameter files will likely be simplified and consolidated in the future.</emphasis>
+</para>
+
+<sect1 id="data_files">
+<title>Data Files</title>
+<sect2 id="cluster-file">
+<title>The Cluster File</title>
+<para>
+Generic file name: <filename>base.clu.n</filename>
+</para>
+<para>
+Format: <acronym>ASCII</acronym>
+</para>
+<para>
+The cluster file lists the cluster ID of each spike, one per line. The first line contains the total number of clusters. Assuming <literal>N</literal> spikes (<literal>spike1...spikeN</literal>), this file looks like:
+<programlisting>
+nbClusters
+clusterID_spike1
+clusterID_spike2
+clusterID_spike3
+...
+clusterID_spikeN
+</programlisting>
+</para>
+<para>
+<emphasis>Notice that the last line must end with a newline or carriage return.</emphasis>
+</para>
+</sect2>
+
+<sect2 id="feature-file">
+<title>The Feature File</title>
+<para>
+Generic file name: <filename>base.fet.n</filename>
+</para>
+<para>
+Format: <acronym>ASCII, integer values</acronym>
+</para>
+<para>
+The feature file lists for each spike the PCA coefficients for each electrode, followed by the timestamp of the spike (more features can be inserted between the PCA coefficients and the timestamp). The first line contains the number of dimensions. Assuming <literal>N1</literal> spikes (<literal>spike1...spikeN1</literal>), <literal>N2</literal> electrodes (<literal>e1...eN2</literal>) and <literal>N3</literal> coefficients (<literal>c1...cN3</literal>), this file looks like:
+<programlisting>
+nbDimensions
+c1_e1_spike1   c2_e1_spike1  ... cN3_e1_spike1   c1_e2_spike1  ... cN3_eN2_spike1   timestamp_spike1
+c1_e1_spike2   c2_e1_spike2  ... cN3_e1_spike2   c1_e2_spike2  ... cN3_eN2_spike2   timestamp_spike2
+...
+c1_e1_spikeN1  c2_e1_spikeN1 ... cN3_e1_spikeN1  c1_e2_spikeN1 ... cN3_eN2_spikeN1  timestamp_spikeN1
+</programlisting>
+The timestamp is expressed in multiples of the sampling interval. For instance, for a 20kHz recording (50 microsecond sampling interval), a timestamp of 200 corresponds to 200x0.000050s=0.01s from the beginning of the recording session.
+</para>
+<para>
+<emphasis>Notice that the last line must end with a newline or carriage return.</emphasis>
+</para>
+
+</sect2>
+
+<sect2 id="spike-file">
+<title>The Spike File</title>
+<para>
+Generic file name: <filename>base.spk.n</filename>
+</para>
+<para>
+Format: 16 or 32&nbsp;bit binary
+</para>
+<para>
+The spike file describes the waveform of each spike. Assuming <literal>N1</literal> spikes (<literal>spike1...spikeN1</literal>), <literal>N2</literal> electrodes (<literal>electrode1...electrodeN2</literal>) and <literal>N3</literal> samples per spike (<literal>sample1...sampleN3</literal>), the data are stored as follows:
+<programlisting>
+sample1_electrode1_spike1
+sample1_electrode2_spike1
+...
+sample1_electrodeN2_spike1
+sample2_electrode1_spike1
+sample2_electrode2_spike1
+...
+sample2_electrodeN2_spike1
+...
+sampleN3_electrodeN2_spike1
+...
+sample1_electrode1_spikeN1
+...
+sampleN3_electrodeN2_spikeN1
+</programlisting>
+</para>
+</sect2>
+</sect1>
+
+<sect1 id="parameter_files">
+<title>Parameter Files</title>
+<sect2 id="parameter-file">
+<title>The Parameter File</title>
+<para>
+Generic file name: <filename>base.xml</filename>
+</para>
+<para>
+Format: <acronym>XML</acronym>
+</para>
+<para>
+The parameter file is a generic file which contains information required by many related programs; &klusters; only needs a subset of this information. Note for advanced users: the schema describing the parameter file can be found in the source archive (<filename>src/parameter.xsd</filename>). Here is an example:
+<programlisting>
+<![CDATA[
+<parameters creator="par2xml" version="1.0" >	
+  <acquisitionSystem>
+    <nBits>16</nBits>
+    <nChannels>16</nChannels>
+    <samplingRate>20000</samplingRate>
+    <voltageRange>20</voltageRange>
+    <amplification>1000</amplification>
+    <offset>0</offset>
+  </acquisitionSystem>
+  <fieldPotentials>
+    <lfpSamplingRate>1250</lfpSamplingRate>
+  </fieldPotentials>
+  <anatomicalDescription>
+    <channelGroups>
+      <group>
+        <channel>0</channel>
+        <channel>2</channel>
+        <channel>7</channel>
+      </group>
+      <group>
+        <channel>3</channel>
+        <channel>4</channel>
+        <channel>5</channel>
+        <channel>6</channel>
+      </group>
+      <group>
+        <channel>8</channel>
+        <channel>10</channel>
+        <channel>15</channel>
+      </group>
+      <group>
+        <channel>11</channel>
+        <channel>12</channel>
+        <channel>13</channel>
+        <channel>14</channel>
+      </group>
+    </channelGroups>
+  </anatomicalDescription>
+  <spikeDetection>
+    <channelGroups>
+      <group>
+        <channels>
+          <channel>0</channel>
+          <channel>2</channel>
+          <channel>7</channel>
+        </channels>
+        <nSamples>32</nSamples>
+        <peakSampleIndex>16</peakSampleIndex>
+        <nFeatures>4</nFeatures>
+      </group>
+      <group>
+        <channels>
+          <channel>3</channel>
+          <channel>4</channel>
+          <channel>5</channel>
+          <channel>6</channel>
+        </channels>
+        <nSamples>32</nSamples>
+        <peakSampleIndex>16</peakSampleIndex>
+        <nFeatures>3</nFeatures>
+      </group>
+      <group>
+        <channels>
+          <channel>8</channel>
+          <channel>10</channel>
+          <channel>15</channel>
+        </channels>
+        <nSamples>32</nSamples>
+        <peakSampleIndex>16</peakSampleIndex>
+        <nFeatures>4</nFeatures>
+      </group>
+      <group>
+        <channels>
+          <channel>11</channel>
+          <channel>12</channel>
+          <channel>13</channel>
+          <channel>14</channel>
+        </channels>
+        <nSamples>32</nSamples>
+        <peakSampleIndex>16</peakSampleIndex>
+        <nFeatures>3</nFeatures>
+      </group>
+    </channelGroups>
+  </spikeDetection>
+</parameters>
+]]>
+</programlisting>
+</para>
+<para>
+As mentioned earlier, &klusters; belongs to a larger framework for neurophysiological data analysis, also comprising  <ulink url="http://neuroscope.sourceforge.net">&neuroscope;</ulink>. If you use &neuroscope; to create your spike extraction groups, a basic parameter file will be created for you and you will only need to add the <emphasis>nSamples</emphasis>, <emphasis>peakSampleIndex</emphasis> and <emphasis>nFeatures</emphasis> tags.
+</para>
+<note>
+<para>
+Obsolete flat text parameter files (see <link linkend="obsolete-parameter-files">the following section</link>) can easily be converted into an <acronym>XML</acronym> parameter file, using <application>par2xml</application> (type <command>par2xml --help</command> for details). This is included in the archive <filename>parameters.tar.gz</filename> and can be downloaded from <ulink url="http://klusters.sourceforge.net">&klusters;'s website</ulink>.
+</para>
+</note>
+<para>
+Most tags are self-explanatory, but some tags may need clarification:
+</para>
+<itemizedlist>
+<listitem>
+<para>
+voltageRange: the total voltage range, e.g. if the system is set to ±5V, the range is 10V.
+</para>
+</listitem>
+<listitem>
+<para>
+offset: some acquisition systems record the data with a fixed offset; this can be specified here so that &klusters; can recenter all the channel traces in the <guilabel>Trace View</guilabel>.
+</para>
+</listitem>
+<listitem>
+<para>
+lfpSamplingRate (not used by &klusters;): sampling rate for local field Potentials (EEG).
+</para>
+</listitem>
+<listitem>
+<para>
+anatomicalDescription (not used by &klusters;): lists channel groups according to their anatomical locations.
+</para>
+</listitem>
+<listitem>
+<para>
+spikeDetection: lists channel groups used for spike extraction.
+</para>
+</listitem>
+<listitem>
+<para>
+nSamples: number of samples in each waveform.
+</para>
+</listitem>
+<listitem>
+<para>
+peakSampleIndex: sample index of the peak in each waveform.
+</para>
+</listitem>
+<listitem>
+<para>
+nFeatures: number of principal components (features) per electrode.
+</para>
+</listitem>
+</itemizedlist>
+<para>
+Each <emphasis>group</emphasis> tag inside the <emphasis>spikeDetection</emphasis> tag identifies a group of electrodes used for spike extraction and sorting. Notice that the order of these <emphasis>group</emphasis> tags is relevant: the first tag describes the first electrode group (i.e., files <filename>base.clu.1</filename>, <filename>base.fet.1</filename> and <filename>base.spk.1</filename>), the second tag describes the second electrode group (i.e., files <filename>base.clu.2</filename>, etc.) and so on. When loading wide-band signals recorded from a group of electrodes in &klusters;, the traces appear in the <guilabel>Trace View</guilabel> in the same order as the channels are listed in the <emphasis>channels</emphasis> tag.
+</para>
+
+</sect2>
+
+
+<sect2 id="obsolete-parameter-files">
+<title>Obsolete Parameter Files</title>
+<para>
+Starting from version 1.5, the parameter file format was changed from two flat text files to the single <acronym>XML</acronym> file described in the previous section (as mentioned in the documentation for previous versions of &klusters;, the flat text format was temporary -&nbsp;it was mostly used for backwards compatibility with legacy software&nbsp;- and destined to be replaced with a more flexible one). However, &klusters; is backward compatible and can still read these parameter files, which are described in the following paragraphs.
+</para>
+<sect3 id="general-parameter-file">
+<title>The General Parameter File</title>
+<para>
+Generic file name: <filename>base.par</filename>
+</para>
+<para>
+Format: <acronym>ASCII</acronym>
+</para>
+<para>
+The general parameter file is a generic file used by a number of programs. &klusters; needs only a subset of the information provided. Here is an example:
+<programlisting>
+16 16          # total number of electrodes, resolution of the acquisition system (in bits)
+50 800         # sampling interval (in microseconds), high-pass filter frequency (in Hz)
+4              # number of electrode groups
+4 0 1 2 3      # number of electrodes for the 1st group, electrode IDs
+4 4 5 6 7      # number of electrodes for the 2nd group, electrode IDs
+3 8 9 10       # number of electrodes for the 3rd group, electrode IDs (in this example, electrode 11 was discarded)
+4 12 13 14 15  # number of electrodes for the 4th group, electrode IDs
+</programlisting>
+Only the first 3 lines are mandatory for &klusters;. The high-pass filter frequency is not used at the moment (a value of 0 can be used if not known).
+</para>
+</sect3>
+
+<sect3 id="specific-parameter-file">
+<title>The Specific Parameter File</title>
+<para>
+Generic file name: <filename>base.par.n</filename>
+</para>
+<para>
+Format: <acronym>ASCII</acronym>
+</para>
+<para>
+The specific parameter file is a generic file used by a number of programs. It describes addidional parameters for a given electrode group. Again, &klusters; needs only a subset of the information provided. Here is an example:
+<programlisting>
+16 4 50     # total number of electrodes, number of electrodes for this group,  sampling interval (in microseconds)
+0 1 2 3     # electrode IDs
+10 2        # refractory sample index after detection, RMS integration window length
+90          # approximate firing frequency in Hz
+16 8        # number of samples in each waveform, sample index of the peak
+12 6        # window length to realign the spikes, sample index of the peak (detection program)
+4 4         # number of samples (before and after the peak) to use for reconstruction and features
+3 16        # number of principal components (features) per electrode, number of samples used for the PCA
+800.        # high pass filter frequency (in Hz)
+</programlisting>
+All 9 lines are expected in this file, but only lines 1, 4, 5, and 8 are actually used at the moment (for unused parameters, a value of 0 can be used).
+</para>
+</sect3>
+</sect2>
+</sect1>
+</chapter>
+
+<chapter id="menu-entries">
+<title>Menu Entries</title>
+
+<sect1 id="menu-file">
+<title>The File Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>O</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Open</guimenuitem>
+</menuchoice></term>
+<listitem><para>Opens data files</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Open Recent</guimenuitem>
+</menuchoice></term>
+<listitem><para>Opens data files selected from a list of recently edited data files</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>I</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Import</guimenuitem>
+</menuchoice></term>
+<listitem><para>(not yet implemented)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>S</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Save</guimenuitem>
+</menuchoice></term>
+<listitem><para>Saves the cluster file</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Save As</guimenuitem>
+</menuchoice></term>
+<listitem><para>Saves the cluster file in a new location</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>S</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Renumber and Save</guimenuitem>
+</menuchoice></term>
+<listitem><para>Renumbers the clusters in sequence and saves the cluster file</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>P</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Print</guimenuitem>
+</menuchoice></term>
+<listitem><para>Prints the each view of the current display in a separate page.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>File</guimenu>
+<guimenuitem>Close</guimenuitem>
+</menuchoice></term>
+<listitem><para>Closes the data files (will prompt for saving if necessary)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>Q</keycap></keycombo>
+</shortcut>
+<guimenu>File</guimenu>
+<guimenuitem>Quit</guimenuitem>
+</menuchoice></term>
+<listitem><para>Quits &kapp; (will prompt for saving if necessary)</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-edit">
+<title>The Edit Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>Z</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Undo</guimenuitem>
+</menuchoice></term>
+<listitem><para>Undoes the last change</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>Z</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Redo</guimenuitem>
+</menuchoice></term>
+<listitem><para>Redoes the last undone change</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>A</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Select All</guimenuitem>
+</menuchoice></term>
+<listitem><para>Selects all clusters</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>A</keycap></keycombo>
+</shortcut>
+<guimenu>Edit</guimenu>
+<guimenuitem>Select All except 0 and 1</guimenuitem>
+</menuchoice></term>
+<listitem><para>Selects all clusters except artefacts (cluster&nbsp;0) and noise (cluster&nbsp;1)</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-actions">
+<title>The Actions Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Shift</keycap><keycap>DEL</keycap></keycombo>
+</shortcut>
+<guimenu>Actions</guimenu>
+<guimenuitem>Delete Artifact Cluster(s)</guimenuitem>
+</menuchoice></term>
+<listitem><para>Deletes all currently selected clusters and moves all their spikes to the artefacts cluster (cluster&nbsp;0)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>DEL</keycap>
+</shortcut>
+<guimenu>Actions</guimenu>
+<guimenuitem>Delete Noisy Cluster(s)</guimenuitem>
+</menuchoice></term>
+<listitem><para>Deletes all currently selected clusters and moves all their spikes to the noise cluster (cluster&nbsp;1)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>G</keycap>
+</shortcut>
+<guimenu>Actions</guimenu>
+<guimenuitem>Group Clusters</guimenuitem>
+</menuchoice></term>
+<listitem><para>Groups all currently selected clusters</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Actions</guimenu>
+<guimenuitem>Update Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Updates all currently visible views (delayed update mode)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>R</keycap>
+</shortcut>
+<guimenu>Actions</guimenu>
+<guimenuitem>Renumber Clusters</guimenuitem>
+</menuchoice></term>
+<listitem><para>Renumbers all clusters in sequence</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>U</keycap>
+</shortcut>
+<guimenu>Actions</guimenu>
+<guimenuitem>Update Error Matrix</guimenuitem>
+</menuchoice></term>
+<listitem><para>Updates the error matrix</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Shift</keycap><keycap>R</keycap></keycombo>
+</shortcut>
+<guimenu>Actions</guimenu>
+<guimenuitem>Recluster</guimenuitem>
+</menuchoice></term>
+<listitem><para>Launchs an external automatic cluster cutting program</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Actions</guimenu>
+<guimenuitem>Abort Reclustering</guimenuitem>
+</menuchoice></term>
+<listitem><para>Kills the external automatic cluster cutting program currently running</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-tools">
+<title>The Tools Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>Z</keycap>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>Zoom</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to zoom on a point (left click) or area (click and drag) in most views; hold <keycap>Shift</keycap> to zoom out (except in the <guilabel>Trace View</guilabel>), or double-click to reset the zoom level to the initial state</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>N</keycap>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>New Cluster</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to draw a polygon to define a new cluster (click the left button to add a point to the polygon, the right button to remove the last point, or the middle button to automatically close the polygon)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>S</keycap>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>Split Clusters</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to draw a polygon to define one new cluster for each existing cluster intersecting with the polygon</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>A</keycap>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>Delete Artefact Spikes</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to draw a polygon to select groups of spikes to move to the artefacts cluster (cluster&nbsp;0)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>N</keycap>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>Delete Noisy Spikes</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to draw a polygon to select groups of spikes to move to the noise cluster (cluster&nbsp;1)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>W</keycap>
+</shortcut>
+<guimenu>Tools</guimenu>
+<guimenuitem>Select Time</guimenuitem>
+</menuchoice></term>
+<listitem><para>Allows you to select in the <guilabel>Cluster view</guilabel> the starting time use in the <guilabel>Trace view</guilabel></para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-waveforms">
+<title>The Waveforms Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>T</keycap>
+</shortcut>
+<guimenu>Waveforms</guimenu>
+<guimenuitem>Time Frame</guimenuitem>
+</menuchoice></term>
+<listitem><para>Enables or disables the time frame mode, where waveforms are selected only in a certain time frame rather than evenly throughout the entire recording</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>O</keycap>
+</shortcut>
+<guimenu>Waveforms</guimenu>
+<guimenuitem>Overlay</guimenuitem>
+</menuchoice></term>
+<listitem><para>Enables or disables the overlay mode, where the waveforms for different clusters are displayed on top of one another rather than side-by-side</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>M</keycap>
+</shortcut>
+<guimenu>Waveforms</guimenu>
+<guimenuitem>Mean and Standard Deviation</guimenuitem>
+</menuchoice></term>
+<listitem><para>Enables or disables the statistics mode, where the mean waveform and the standard deviation are displayed rather than individual waveforms</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>I</keycap>
+</shortcut>
+<guimenu>Waveforms</guimenu>
+<guimenuitem>Increase Amplitude</guimenuitem>
+</menuchoice></term>
+<listitem><para>Increases the vertical scale</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>D</keycap>
+</shortcut>
+<guimenu>Waveforms</guimenu>
+<guimenuitem>Decrease Amplitude</guimenuitem>
+</menuchoice></term>
+<listitem><para>Decreases the vertical scale</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-correlations">
+<title>The Correlations Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Shift</keycap><keycap>A</keycap></keycombo>
+</shortcut>
+<guimenu>Correlations</guimenu>
+<guimenuitem>Scale by Asymptote</guimenuitem>
+</menuchoice></term>
+<listitem><para>Scales each correlogram by its asymptotic value</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Shift</keycap><keycap>M</keycap></keycombo>
+</shortcut>
+<guimenu>Correlations</guimenu>
+<guimenuitem>Scale by Maximum</guimenuitem>
+</menuchoice></term>
+<listitem><para>Scales each correlogram by its maximum value</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Shift</keycap><keycap>U</keycap></keycombo>
+</shortcut>
+<guimenu>Correlations</guimenu>
+<guimenuitem>Uniform Scale</guimenuitem>
+</menuchoice></term>
+<listitem><para>Scales all correlograms by the same value (determined by the default gain)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycap>L</keycap>
+</shortcut>
+<guimenu>Correlations</guimenu>
+<guimenuitem>Asymptote Line</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows or hides the asymptotic lines and average firing rates</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Shift</keycap><keycap>I</keycap></keycombo>
+</shortcut>
+<guimenu>Correlations</guimenu>
+<guimenuitem>Increase Amplitude</guimenuitem>
+</menuchoice></term>
+<listitem><para>Increases the vertical scale</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Shift</keycap><keycap>D</keycap></keycombo>
+</shortcut>
+<guimenu>Correlations</guimenu>
+<guimenuitem>Decrease Amplitude</guimenuitem>
+</menuchoice></term>
+<listitem><para>Decreases the vertical scale</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-traces">
+<title>The Traces Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>I</keycap></keycombo>
+</shortcut>
+<guimenu>Traces</guimenu>
+<guimenuitem>Increase Channel Amplitudes</guimenuitem>
+</menuchoice></term>
+<listitem><para>Increases the channel amplitudes</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>Shift</keycap><keycap>D</keycap></keycombo>
+</shortcut>
+<guimenu>Traces</guimenu>
+<guimenuitem>Decrease Channel Amplitudes</guimenuitem>
+</menuchoice></term>
+<listitem><para>Decreases the channel amplitudes</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>L</keycap></keycombo>
+</shortcut>
+<guimenu>Traces</guimenu>
+<guimenuitem>Show Labels</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows or hides the labels (channel IDs and gains).</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-displays">
+<title>The Displays Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Displays</guimenu>
+<guimenuitem>New Cluster Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Creates a new <guilabel>Cluster Display</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Displays</guimenu>
+<guimenuitem>New Waveform Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Creates a new <guilabel>Waveform Display</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Displays</guimenu>
+<guimenuitem>New Correlation Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Creates a new <guilabel>Correlation Display</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Displays</guimenu>
+<guimenuitem>New Overview Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Creates a new <guilabel>Overview Display</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Displays</guimenu>
+<guimenuitem>New Grouping Assistant Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Creates a new <guilabel>Grouping Assistant Display</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Displays</guimenu>
+<guimenuitem>New Trace Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Creates a new <guilabel>Trace Display</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>R</keycap></keycombo>
+</shortcut>
+<guimenu>Displays</guimenu>
+<guimenuitem>Rename Active Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Brings a dialog enabling the user to enter a new label for the currently active display.</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<shortcut>
+<keycombo><keycap>Ctrl</keycap><keycap>W</keycap></keycombo>
+</shortcut>
+<guimenu>Displays</guimenu>
+<guimenuitem>Close Active Display</guimenuitem>
+</menuchoice></term>
+<listitem><para>Closes the currently active display; when there is only one display, closes all data files as well (will prompt for saving if necessary)</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-settings">
+<title>The Settings Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Toolbar</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows or hides the <guilabel>Toolbar</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Actions</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows or hides the <guilabel>Actions</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Tools</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows or hides the <guilabel>Tools</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Parameters</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows or hides the <guilabel>Parameter Bar</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Cluster Info</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows or hides the <guilabel>Cluster information</guilabel> in the <guilabel>Cluster Panel</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Show Status Bar</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows or hides the <guilabel>Status Bar</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Immediate Update</guimenuitem>
+</menuchoice></term>
+<listitem><para>Triggers immediate redrawing of all views after a change</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Delayed Update</guimenuitem>
+</menuchoice></term>
+<listitem><para>Prevents immediate redrawing of all views after a change; it is then up to you to manually trigger updates when appropriate (this is useful when remotely using &klusters; over a slow network connection)</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure Shortcuts</guimenuitem>
+</menuchoice></term>
+<listitem><para>Lets you configure the shortcuts</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Settings</guimenu>
+<guimenuitem>Configure &klusters;</guimenuitem>
+</menuchoice></term>
+<listitem><para>Lets you configure a number of default behaviors</para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+<sect1 id="menu-help">
+<title>The Help Menu</title>
+<para>
+<variablelist>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Help</guimenu>
+<guimenuitem>&klusters; Handbook</guimenuitem>
+</menuchoice></term>
+<listitem><para>Opens this user manual in the <guilabel>Help Center</guilabel></para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Help</guimenu>
+<guimenuitem>What's this?</guimenuitem>
+</menuchoice></term>
+<listitem><para>Activates the context help tool</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Help</guimenu>
+<guimenuitem>Report Bug</guimenuitem>
+</menuchoice></term>
+<listitem><para>Helps you compose an e-mail message to report a bug to the author of &klusters;</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Help</guimenu>
+<guimenuitem>About &klusters;</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows information about the authors of and contributors to &klusters;</para></listitem>
+</varlistentry>
+<varlistentry>
+<term><menuchoice>
+<guimenu>Help</guimenu>
+<guimenuitem>About KDE</guimenuitem>
+</menuchoice></term>
+<listitem><para>Shows information about the authors of and contributors to <acronym>KDE</acronym></para></listitem>
+</varlistentry>
+</variablelist>
+</para>
+</sect1>
+
+</chapter>
+
+<!--
+<chapter id="faq">
+<title>Questions and Answers</title>
+
+ (OPTIONAL but recommended) This chapter should include all of the silly
+(and not-so-silly) newbie questions that fill up your mailbox. This chapter
+should be reserved for BRIEF questions and answers! If one question uses more
+than a page or so then it should probably be part of the
+"Using this Application" chapter instead. You should use links to
+cross-reference questions to the parts of your documentation that answer them.
+This is also a great place to provide pointers to other FAQ's if your users
+must do some complicated configuration on other programs in order for your
+application work.
+
+&reporting.bugs;
+&updating.documentation;
+
+<qandaset id="faqlist">
+<qandaentry>
+<question>
+<para>My Mouse doesn't work. How do I quit &kapp;?</para>
+</question>
+<answer>
+<para>You silly goose! Check out the <link linkend="commands">Commands
+Section</link> for the answer.</para>
+</answer>
+</qandaentry>
+<qandaentry>
+<question>
+<para>Why can't I twiddle my documents?</para>
+</question>
+<answer>
+<para>You can only twiddle your documents if you have the foobar.lib
+installed.</para>
+</answer>
+</qandaentry>
+</qandaset>
+</chapter>
+-->
+
+<chapter id="credits">
+
+<title>Credits and License</title>
+
+<para>
+&klusters;
+</para>
+<para>
+Program copyright 2003-2007 Lynn Hazan <email>lynn.hazan@myrealbox.com</email>
+</para>
+<para>
+Contributors:
+<itemizedlist>
+<listitem><para>Michaël B. Zugaro <email>michael.zugaro@college-de-france.fr</email></para>
+</listitem>
+<listitem><para>Kenneth D. Harris <email>kdharris@andromeda.rutgers.edu</email></para>
+</listitem>
+</itemizedlist>
+</para>
+
+<para>
+Documentation copyright 2004 - 2007 Michaël B. Zugaro <email>michael.zugaro@college-de-france.fr</email>
+</para>
+
+<!-- TRANS:CREDIT_FOR_TRANSLATORS -->
+
+&underFDL;
+&underGPL;
+
+</chapter>
+
+<appendix id="installation">
+<title>Installation</title>
+
+<sect1 id="getting-klusters">
+<title>How to obtain &klusters;</title>
+
+<para>
+&klusters; can be found on
+<ulink url="http://klusters.sourceforge.net">http://klusters.sourceforge.net</ulink>. </para>
+</sect1>
+
+<sect1 id="requirements">
+<title>Requirements</title>
+<para>
+&klusters; requires KDE >= 3.1, QT >= 3.1 and <ulink url="http://www.xmlsoft.org/downloads.html">libxml2</ulink> >= 2.5.4
+</para>
+<para>
+To build &klusters; from source, you will also need the corresponding devel packages and an ANSI C++ Standard compliant compiler (gcc version 3.2.2 is known to work).
+</para>
+<para>
+In order to enable <link linkend="reclustering">automatic reclustering</link>, you will need an automatic cluster cutting program such as Kenneth D. Harris' <ulink url="http://klustakwik.sourceforge.net">&klustakwik;</ulink>.
+</para>
+<para>
+In order to successfully use &klusters;, you need KDE 3.1. To run, &klusters; uses about 15MB of
+memory, plus enough space to load the feature and cluster files, plus roughly the size of the cluster file for each operation that can be undone.
+</para>
+</sect1>
+
+<sect1 id="compilation">
+<title>Compilation and Installation</title>
+<para>
+In order to compile and install &klusters; on your system, download and extract the source archive, then type the following in the base directory:
+<screen width="40">
+<prompt>%</prompt> <userinput>./configure --prefix=`kde-config --prefix`</userinput>
+<prompt>%</prompt> <userinput>make</userinput>
+<prompt>%</prompt> <userinput>make install</userinput>
+</screen>
+</para>
+
+</sect1>
+
+</appendix>
+
+&documentation.index;
+</book>
+<!--
+Local Variables:
+mode: sgml
+sgml-minimize-attributes:nil
+sgml-general-insert-case:lower
+sgml-indent-step:0
+sgml-indent-data:nil
+End:
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+

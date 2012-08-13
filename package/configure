@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Parse parameters
+
+case "$1" in
+	u|ubuntu)
+		prefix=/usr
+		html=/usr/share/doc/kde/HTML/
+		;;
+	f|fedora)
+		prefix=/usr
+		html=/usr/share/doc/HTML/
+		;;
+	o|opensuse)
+		prefix=/usr
+		html=/usr/share/doc/kde/HTML/
+		;;
+	*)
+		prefix=$(kde-config --prefix)
+		html=$(kde-config --install html)
+		;;
+esac
+
+(cd .. && kde_htmldir=$html ./configure --prefix=$prefix --without-arts)
+

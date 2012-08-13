@@ -1,0 +1,68 @@
+#!/bin/bash
+
+source ./version
+start=$(pwd)
+install=false
+output=-D
+
+error()
+{
+	echo "usage: $(basename $0) [-i] [ubuntu|fedora|opensuse]"
+	exit 1
+}
+
+[ $# -lt 1 ] && error
+
+# Parse parameters
+while [ $# -ne 0 ]
+do
+	case "$1" in
+		-i)
+			install=true
+			;;
+		u|ubuntu)
+			output=-D
+			requires=kdelibs4c2a
+			release=$release_ubuntu
+			arch=$arch_ubuntu
+			package=$package_ubuntu
+			install_cmd="dpkg --force-overwrite -i $package"
+			;;
+		f|fedora)
+			output=-R
+			requires=kdelibs3,nas-libs
+			release=$release_fedora
+			arch=$arch_fedora
+			package=$package_fedora
+			install_cmd="rpm -i $package"
+			;;
+		o|opensuse)
+			output=-R
+			requires=kdelibs3,kdebase3,libaudio2,libpng12-0
+			release=$release_opensuse
+			arch=$arch_opensuse
+			package=$package_opensuse
+			install_cmd="rpm -i $package"
+			;;
+		*)
+			error
+			;;
+	esac
+	shift
+done
+
+(
+	cd ..
+	ln -s $start/description-pak .
+
+	# Package
+	sudo checkinstall $output --maintainer 'Michael Zugaro' --pkgname $name --pkgversion $version --pkgrelease $release --pkglicense GPL --pkggroup Scientific --pkgsource $source --pkgarch $arch --requires $requires --pakdir $start --delspec
+
+	rm description-pak
+
+	# Install?
+	if $install
+	then
+		sudo eval $install_cmd
+	fi
+)

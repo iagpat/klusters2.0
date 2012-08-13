@@ -1,0 +1,61 @@
+#!/bin/bash
+
+source ./version
+
+BASE=/home/install/CMBN
+PACKAGES=$BASE/packages
+SOURCES=$BASE/sources
+OLD_BASE=$BASE/old
+OLD_PACKAGES=$OLD_BASE/packages
+OLD_SOURCES=$OLD_BASE/sources
+
+
+# Store new tarball, and move old versions to 'archive'
+if [ -f $tarball ]
+then
+	sudo mv -v $SOURCES/${name}*gz $OLD_SOURCES
+	sudo mv -v $tarball $SOURCES
+fi
+
+# Store new ubuntu 64bit package, and move old versions to 'archive'
+if [ -f $package_ubuntu_64 ]
+then
+	sudo mv -v $PACKAGES/${name}*ubuntu*$arch_ubuntu_64.deb $OLD_PACKAGES
+	sudo mv -v $package_ubuntu_64 $PACKAGES
+fi
+
+# Store new ubuntu 32bit package, and move old versions to 'archive'
+if [ -f $package_ubuntu_32 ]
+then
+
+	sudo mv -v $PACKAGES/${name}*ubuntu*$arch_ubuntu_32.deb $OLD_PACKAGES
+	sudo mv -v $package_ubuntu_32 $PACKAGES
+fi
+
+# Store new fedora 64bit package, and move old versions to 'archive'
+if [ -f $package_fedora_64 ]
+then
+	sudo mv -v $PACKAGES/${name}*fc*$arch_fedora_64.rpm $OLD_PACKAGES
+	sudo mv -v $package_fedora_64 $PACKAGES
+fi
+
+# Store new fedora 32bit package, and move old versions to 'archive'
+if [ -f $package_fedora_32 ]
+then
+	sudo mv -v $PACKAGES/${name}*fc*$arch_fedora_32.rpm $OLD_PACKAGES
+	sudo mv -v $package_fedora_32 $PACKAGES
+fi
+
+# Store new opensuse 64bit package, and move old versions to 'archive'
+if [ -f $package_opensuse_64 ]
+then
+	sudo mv -v $PACKAGES/${name}*suse*$arch_opensuse_64.rpm $OLD_PACKAGES
+	sudo mv -v $package_opensuse_64 $PACKAGES
+fi
+
+# Store new opensuse 32bit package, and move old versions to 'archive'
+if [ -f $package_opensuse_32 ]
+then
+	sudo mv -v $PACKAGES/${name}*suse*$arch_opensuse_32.rpm $OLD_PACKAGES
+	sudo mv -v $package_opensuse_32 $PACKAGES
+fi

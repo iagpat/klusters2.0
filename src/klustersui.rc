@@ -1,0 +1,519 @@
+<!DOCTYPE kpartgui>
+<kpartgui version="0.1" name="klusters" >
+
+ <State name="initState" >
+  <Disable>  
+   <Action name="file_save" />
+   <Action name="file_save_as" />
+   <Action name="file_renumber_save" />
+   <Action name="file_print" />
+   <Action name="file_close" />
+   <Action name="fileImport" />
+   <Action name="edit_undo" />
+   <Action name="edit_redo" />
+   <Action name="edit_select_all" />
+   <Action name="edit_select_all_except01" /> 
+   <Action name="new_clusterDisplay" />
+   <Action name="new_waveformDisplay" />
+   <Action name="new_crosscorrelationDisplay" />
+   <Action name="new_overViewDisplay" />
+   <Action name="new_goupingAssistantDisplay" />
+   <Action name="trace_display" />
+   <Action name="close_display" />
+   <Action name="rename_display" />   
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="update_display" />
+   <Action name="renumber" />
+   <Action name="recluster" />
+   <Action name="stop_recluster" />        
+   <Action name="update_errorMatrix" />
+   <Action name="zoom" />
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />
+   <Action name="raw_data" />
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" /> 
+   <Action name="time" />             
+   <Action name="increase_all_channels" />
+   <Action name="decrease_all_channels" />      
+   <Action name="show_labels"/>
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />s   
+  </Disable>
+  <Enable>
+    <Action name="file_open" />
+    <Action name="file_open_recent" />
+  </Enable>
+ </State>
+
+ <State name="documentState" >
+  <Enable>
+   <Action name="file_save" />
+   <Action name="file_save_as" />
+   <Action name="file_print" />
+   <Action name="file_renumber_save" />
+   <Action name="file_close" />
+   <Action name="edit_select_all" />
+   <Action name="edit_select_all_except01" />
+   <Action name="new_clusterDisplay" />
+   <Action name="new_waveformDisplay" />
+   <Action name="new_crosscorrelationDisplay" />
+   <Action name="new_overViewDisplay" />
+   <Action name="new_goupingAssistantDisplay" />
+   <Action name="close_display" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+   <Action name="recluster" />
+   <Action name="zoom" />
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />
+   <Action name="raw_data" />
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />     
+  </Enable>
+ </State>
+
+ <State name="traceDisplayState" >
+  <Enable>
+   <Action name="trace_display" />
+  </Enable>
+ </State>
+
+ <State name="noTraceDisplayState" >
+  <Disable>
+   <Action name="trace_display" />
+  </Disable>
+ </State>
+ 
+ <State name="immediateSelectionState" >
+  <Disable>
+   <Action name="update_display" />
+  </Disable>
+ </State>
+
+ <State name="delaySelectionState" >
+  <Enable>
+   <Action name="update_display" />
+  </Enable>
+ </State>
+
+ <State name="SavingState" >
+  <Disable>
+   <Action name="file_save" />
+   <Action name="file_save_as" />
+   <Action name="file_renumber_save" />
+  </Disable>
+ </State>
+
+ <State name="SavingDoneState" >
+  <Enable>
+   <Action name="file_save" />
+   <Action name="file_save_as" />
+   <Action name="file_renumber_save" />
+  </Enable>
+ </State>
+
+ <State name="undoState" >
+  <Enable>
+   <Action name="edit_undo" />
+   <Action name="edit_redo" />
+  </Enable>
+ </State>
+
+ <State name="emptyRedoState" >
+  <Disable>
+   <Action name="edit_redo" />
+  </Disable>
+ </State>
+
+ <State name="emptyUndoState" >
+  <Disable>
+   <Action name="edit_undo" />
+  </Disable>
+  <Enable>
+   <Action name="edit_redo" />
+  </Enable>
+ </State>
+
+ <State name="noWaveformsViewState" >
+  <Disable>
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />
+  </Disable>
+ </State>
+
+ <State name="waveformsViewState" >
+  <Enable>
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />     
+  </Enable>
+ </State>
+
+ <State name="noClusterViewState" >
+  <Disable>
+   <Action name="zoom" />
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="time" />
+  </Disable>
+ </State>
+
+ <State name="clusterViewState" >
+  <Enable>
+   <Action name="zoom" />
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />     
+  </Enable>
+ </State>
+
+ <State name="noCorrelationViewState" >
+  <Disable>
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />  
+  </Disable>
+ </State>
+
+ <State name="correlationViewState" >
+  <Enable>
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />    
+  </Enable>
+ </State>
+
+ <State name="noErrorMatrixViewState" >
+  <Disable>
+   <Action name="update_errorMatrix" />
+  </Disable>
+ </State>
+
+ <State name="errorMatrixViewState" >
+  <Disable>
+   <Action name="new_goupingAssistantDisplay" />
+  </Disable>
+  <Enable>
+   <Action name="update_errorMatrix" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />     
+  </Enable>
+ </State>
+
+ <State name="groupingAssistantDisplayExists" >
+  <Disable>
+   <Action name="new_goupingAssistantDisplay" />
+  </Disable>
+ </State>
+
+ <State name="groupingAssistantDisplayNotExists" >
+  <Enable>
+   <Action name="new_goupingAssistantDisplay" />
+  </Enable>
+ </State>
+
+ <State name="reclusterViewState" >
+  <Disable>
+   <Action name="zoom" />
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />   
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+   <Action name="update_errorMatrix" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+   <Action name="recluster" />
+   <Action name="edit_undo" />
+   <Action name="edit_redo" />   
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />   
+  </Disable>
+ </State>
+
+ <State name="reclusterState" >
+  <Disable>
+   <Action name="recluster" />
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />   
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+   <Action name="edit_undo" />
+   <Action name="edit_redo" />   
+  </Disable>
+  <Enable>
+   <Action name="stop_recluster" />
+  </Enable>
+ </State>
+
+ <State name="noReclusterState" >
+  <Enable>
+   <Action name="recluster" />
+  </Enable>
+  <Disable>
+   <Action name="stop_recluster" />
+  </Disable>  
+ </State>
+
+ <State name="stoppedReclusterState" >
+  <Disable>
+   <Action name="stop_recluster" />
+  </Disable>
+ </State>
+
+ <State name="tabState" >
+  <Enable>
+   <Action name="rename_display" />
+  </Enable>
+ </State>
+
+ <State name="noTabState" >
+  <Disable>
+   <Action name="rename_display" />
+  </Disable>
+ </State>
+
+ <State name="traceViewState" >
+  <Enable>
+   <Action name="increase_all_channels" />
+   <Action name="decrease_all_channels" />    
+   <Action name="show_labels"/>
+  </Enable>
+ </State>
+
+ <State name="noTraceViewState" >
+  <Disable>
+   <Action name="time" />
+   <Action name="increase_all_channels" />
+   <Action name="decrease_all_channels" /> 
+   <Action name="show_labels"/>
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />   
+  </Disable>
+ </State>
+ 
+ <State name="traceViewClusterViewState" >
+  <Enable>
+   <Action name="time" /> 
+  </Enable>
+ </State>
+
+ <State name="traceViewBrowsingState" >
+  <Enable>
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />  
+  </Enable>
+ </State>
+
+ <State name="noTraceViewBrowsingState" >
+  <Disable>
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />   
+  </Disable>
+ </State>
+   
+ 
+ <MenuBar>
+  <Menu name="file" >   
+   <Action append="save_merge" name="file_renumber_save" />
+   <Action append="open_merge" name="fileImport" />
+  </Menu>
+
+  <Menu name="edit" >
+   <Action append="edit\select_merge" name="edit_select_all_except01" />
+  </Menu>
+
+  <Menu name="actions_menu" >
+   <text>&amp;Actions</text>
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="update_display" />
+   <Separator/>
+   <Action name="renumber" />
+   <Separator/>
+   <Action name="update_errorMatrix" />
+   <Separator/>
+   <Action name="recluster" />
+   <Action name="stop_recluster" />    
+  </Menu>
+
+  <Menu name="tools_menu" >
+   <text>&amp;Tools</text>
+   <Action name="zoom" />
+   <Separator/>
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Separator/>
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Separator/>
+   <Action name="time" />
+  </Menu>
+
+  <Menu name="waveforms_menu" >
+   <text>&amp;Waveforms</text>
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Separator/>
+   <Action name="increase" />
+   <Action name="decrease" />
+  </Menu>
+
+  <Menu name="correlation_menu" >
+   <text>&amp;Correlations</text>
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Separator/>
+   <Action name="shoulder_line" />
+   <Separator/>
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+  </Menu>
+
+  <Menu name="traces_menu" >
+   <text>T&amp;races</text>   
+   <Action name="increase_all_channels" />
+   <Action name="decrease_all_channels" /> 
+   <Separator/>
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" /> 
+   <Separator/>   
+   <Action name="show_labels"/>    
+  </Menu>
+  
+  <Menu name="display_menu" >
+   <text>&amp;Displays</text>
+   <Action name="new_clusterDisplay" />
+   <Action name="new_waveformDisplay" />
+   <Action name="new_crosscorrelationDisplay" />
+   <Action name="new_overView" />
+   <Action name="new_goupingAssistantDisplay" />
+   <Action name="trace_display" />
+   <Separator/>
+   <Action name="rename_display" />
+   <Separator/>
+   <Action name="close_display" />
+  </Menu>
+                  
+  <Menu name="settings" >
+   <Action append="show_toolbar_merge" name="show_actionBar" />
+   <Action append="show_toolbar_merge" name="show_toolBar" />
+   <Action append="show_toolbar_merge" name="show_parameterBar" />
+	<Action append="show_toolbar_merge" name="show_clusterInfo" />	
+   <Action append="save_merge" name="immediate_selection" />
+   <Action append="save_merge" name="delay_selection" />
+  </Menu>
+ </MenuBar>
+ 
+ <ToolBar name="actionBar" >
+  <text>Actions</text>
+  <Action name="move_clusters_to_artifact" />
+  <Action name="move_clusters_to_noise" />
+  <Action name="update_display" />
+  <Action name="update_errorMatrix" />
+  <Action name="group_clusters" />  
+ </ToolBar>
+ 
+ <ToolBar position="Left" name="toolBar" >
+  <text>Tools</text>
+  <Action name="zoom" />
+  <Separator/>
+  <Action name="single_new" />
+  <Action name="multiple_new" />
+  <Separator/>
+  <Action name="delete_artifact" />
+  <Action name="delete_noise" />
+  <Separator/>
+  <Action name="time" />  
+ </ToolBar>
+
+  <ToolBar name="parameterBar" >
+   <text>Parameters</text>
+  </ToolBar>
+ 
+  <ToolBar position="Left" name="clusterBar" >
+    <text>Clusters Actions</text>
+     <Action name="show_previous_cluster" />
+     <Action name="show_next_cluster" />
+   </ToolBar>
+   
+ <ActionProperties/>
+</kpartgui>
