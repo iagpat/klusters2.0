@@ -28,7 +28,7 @@
 #include "klusters.h"
 
 #include "timer.h"
-
+#include "config-klusters.h"
 static const char *description =
 	I18N_NOOP("Klusters - Manual clustering of neuronal action potential");
 // INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
