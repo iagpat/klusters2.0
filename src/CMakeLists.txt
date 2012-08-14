@@ -7,11 +7,13 @@ set(klusters_SRCS array.cpp autosavethread.cpp baseframe.cpp channelcolors.cpp
         errormatrixthread.cpp errormatrixview.cpp eventsprovider.cpp groupingassistant.cpp
         itemcolors.cpp klusters.cpp klustersdoc.cpp klustersview.cpp klustersxmlreader.cpp
         main.cpp minmaxthread.cpp pair.cpp parameterxmlmodifier.cpp prefclusterview.cpp
-        prefclusterviewlayout.ui prefdialog.cpp prefgeneral.cpp prefgenerallayout.ui
-        prefwaveformview.cpp prefwaveformviewlayout.ui processlinemaker.cpp processwidget.cpp
+        prefdialog.cpp prefgeneral.cpp
+        prefwaveformview.cpp processlinemaker.cpp processwidget.cpp
         savethread.cpp sortabletable.cpp tags.cpp tracesprovider.cpp traceview.cpp
         tracewidget.cpp utilities.cpp viewwidget.cpp waveformthread.cpp waveformview.cpp
         zoomwindow.cpp )
+
+set(klusters_UI prefwaveformviewlayout.ui prefgenerallayout.ui prefclusterviewlayout.ui ) 
 
 add_executable(klusters ${klusters_SRCS} )
 
