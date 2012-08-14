@@ -16,7 +16,8 @@ set(klusters_SRCS array.cpp autosavethread.cpp baseframe.cpp channelcolors.cpp
 kde3_automoc(${klusters_SRCS})
 
 set(klusters_UI prefwaveformviewlayout.ui prefgenerallayout.ui prefclusterviewlayout.ui ) 
+KDE3_ADD_UI_FILES(klusters_SRCS ${klusters_UI})
 
 add_executable(klusters ${klusters_SRCS} )
 
-target_link_libraries(klusters ${QT_LIBRARIES} kdeui kdecore kio)
+target_link_libraries(klusters ${QT_LIBRARIES} kdeui kdecore kio kdeprint ${LIBXML2_LIBRARIES})
