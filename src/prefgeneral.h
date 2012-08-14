@@ -28,7 +28,7 @@
 
 //includes files for KDE
 #include <kcolorbutton.h>
-#include <kfiledialog.h>
+#include <qfiledialog.h>
 
 #include <kmessagebox.h>
 
