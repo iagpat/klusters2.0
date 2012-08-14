@@ -23,7 +23,7 @@
 #include <qtextstream.h>
 
 // include files for KDE
-#include <klocale.h>
+
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <kio/job.h>

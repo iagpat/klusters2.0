@@ -25,7 +25,7 @@
 // include files for KDE
 #include <kdeversion.h>
 #include <kdebug.h>
-#include <klocale.h>
+
 #include <kprocess.h>
 #include <qpaintdevicemetrics.h>
 

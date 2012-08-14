@@ -38,7 +38,7 @@
 #include <kaction.h>
 #include <kurl.h>
 #include <kdeprint/kprintdialogpage.h>
-#include <klocale.h>
+
 
 //include files application specific
 #include "klustersview.h"

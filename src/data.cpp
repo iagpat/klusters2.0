@@ -33,7 +33,7 @@
 #include <qregexp.h>
 
 //kde include files
-#include <klocale.h>
+
 
 #include <iomanip> // Required for formated I/O.
 using namespace std;

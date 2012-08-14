@@ -27,7 +27,7 @@ using namespace std;
 #include <qpaintdevicemetrics.h>
 
 // include files for KDE
-#include <klocale.h>
+
 #include <kpopupmenu.h>
 
 // application specific includes

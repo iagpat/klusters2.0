@@ -24,7 +24,7 @@
 
 // include files for KDE
 #include <kmessagebox.h>
-#include <klocale.h>
+
 
 
 void SaveThread::save(const KURL& url,KlustersDoc* doc,bool isSaveAs){
