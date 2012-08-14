@@ -2452,7 +2452,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
   waveformDict.insert(clusterIdString,waveforms);
  }
 
- FILE* spikeFile = fopen(spkFileName,"r");
+ FILE* spikeFile = fopen(spkFileName.latin1(),"r");
  if(spikeFile == NULL){
      // OPEN_ERROR;  ///The openning pb has to be taken into account
  }
@@ -2570,7 +2570,7 @@ Data::Status Data::getTimeFrameWaveformPoints(int clusterId,dataType start,dataT
   }
  }
 
- FILE* spikeFile = fopen(spkFileName,"r");
+ FILE* spikeFile = fopen(spkFileName.latin1(),"r");
  if(spikeFile == NULL){
      // OPEN_ERROR;  ///The openning pb has to be taken into account
  }

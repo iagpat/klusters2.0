@@ -82,7 +82,7 @@ RestartTimer();
  bool status = tmpFile.open(IO_ReadOnly);
 //If the number of events could not be determined, stop here
  if(!status){
-    cout<<counterFile.name()<<" could not be opened"<<endl;
+    qDebug("%s could not be opened\n",counterFile.name().latin1());
 
   events.setSize(0,0);
   timeStamps.setSize(0,0);
@@ -95,8 +95,8 @@ RestartTimer();
  QString info;
  if(infoLine != NULL){
   info = infoLine.stripWhiteSpace();
-  cout<<" fileName "<<fileName<<" counterFile "<<counterFile.name()<<endl;
-  cout<<" info "<<info<<endl;
+  qDebug(" fileName %s counterFile %s\n",fileName.latin1(),counterFile.name().latin1());
+  qDebug(" info %s\n",info.latin1());
   QStringList parts = QStringList::split(" ", info);
   nbEvents = parts[0].toLong();
   tmpFile.close();

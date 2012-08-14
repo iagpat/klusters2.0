@@ -45,7 +45,7 @@ public:
 
   inline void removeTmpFile(){
     //delete the temporary files
-    remove(autoSaveUrl.path()); 
+    QFile::remove(autoSaveUrl.path()); 
   };
   void run();
 

@@ -287,7 +287,7 @@ void KlustersApp::initSelectionBoxes(){
   start = new QSpinBox(1,1,timeWindow,paramBar,"start");
   //Enable to step the value from the highest value to the lowest value and vice versa
   start->setWrapping(true);
-  duration = new QLineEdit(paramBar,INITIAL_WAVEFORM_TIME_WINDOW);
+  duration = new QLineEdit(paramBar,"INITIAL_WAVEFORM_TIME_WINDOW");
   duration->setMaxLength(5);
   //duration will only accept integers between 0 and a max equal
   //to maximum of time for the current document (set when the document will be opened)
@@ -323,7 +323,7 @@ void KlustersApp::initSelectionBoxes(){
   connect(spikesTodisplay, SIGNAL(valueChanged(int)),this, SLOT(slotSpikesTodisplay(int)));
 
   //Create and initialize the lineEdit for the correlations.
-  binSizeBox = new QLineEdit(paramBar,DEFAULT_BIN_SIZE);
+  binSizeBox = new QLineEdit(paramBar,"DEFAULT_BIN_SIZE");
   binSizeBox->setMaxLength(10);
   //binSizeBox will only accept integers between 1 and a max equal
   //to maximum of time for the current document in miliseconds (set when the document will be opened)
@@ -337,7 +337,7 @@ void KlustersApp::initSelectionBoxes(){
   paramBar->insertWidget(-1,binSizeBox->sizeHint().width(),binSizeBox);
   connect(binSizeBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateBinSize()));
 
-  correlogramsHalfDuration = new QLineEdit(paramBar,INITIAL_CORRELOGRAMS_HALF_TIME_FRAME);
+  correlogramsHalfDuration = new QLineEdit(paramBar,"INITIAL_CORRELOGRAMS_HALF_TIME_FRAME");
   correlogramsHalfDuration->setMaxLength(12);
   //correlogramsHalfDuration will only accept integers between 1 and a max equal
   //to half the maximum of time for the current document in miliseconds (set when the document will be opened)
@@ -495,7 +495,7 @@ void KlustersApp::initDisplay(){
    binSizeValidator.setRange(0,maximumTime);
                      
   //Create the mainDock (first view)
-   mainDock = createDockWidget( "1", QPixmap(), 0L, i18n(doc->documentName()), "Overview Display");
+   mainDock = createDockWidget( "1", QPixmap(), 0L, i18n(doc->documentName().latin1()), "Overview Display");
    mainDock->setDockWindowTransient(this,true);
 
    //If the setting dialog exists (has already be open once), enable the settings for the channels.
@@ -585,7 +585,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
     QString displayName = (doc->documentName()).append(type);
     QString displayType = KlustersView::DisplayTypeNames[type];
 
-    display = createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, i18n(displayName), displayType);
+    display = createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, i18n(displayName.latin1()), displayType);
 
     //Check if the active display contains a ProcessWidget
     bool isProcessWidget = doesActiveDisplayContainProcessWidget();
@@ -700,7 +700,7 @@ void KlustersApp::openDocumentFile(const KURL& url)
    if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
     QString title = "File not found: ";
     title.append(filePath);
-    int answer = KMessageBox::questionYesNo(this,i18n("The selected file no longer exists, do you want to remove it from the list?"), i18n(title));
+    int answer = KMessageBox::questionYesNo(this,i18n("The selected file no longer exists, do you want to remove it from the list?"), i18n(title.latin1()));
     if(answer == KMessageBox::Yes) fileOpenRecent->removeURL(url);
     else  fileOpenRecent->addURL(url); //hack, unselect the item
     filePath = "";    
@@ -2400,7 +2400,7 @@ void KlustersApp::slotProcessExited(KProcess* process){
  info.append(".\nThe cluster list will now be updated.");
 
  QApplication::restoreOverrideCursor();
- KMessageBox::information(this,i18n(info), i18n("Automatic Reclustering !"));
+ KMessageBox::information(this,info, i18n("Automatic Reclustering !"));
  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
  doc->reclusteringUpdate(clustersToRecluster,clustersFromReclustering);
 

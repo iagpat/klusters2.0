@@ -71,7 +71,7 @@ void TracesProvider::requestData(long startTime,long endTime,QObject* initiator,
 void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator,long startTimeInRecordingUnits){
   Array<dataType> data;
 
-  FILE* dataFile = fopen(fileName,"rb");
+  FILE* dataFile = fopen(fileName.latin1(),"rb");
   if(dataFile == NULL){
    //emit the signal with an empty array, the reciever will take care of it, given a message to the user.
    data.setSize(0,0);
@@ -211,7 +211,7 @@ void TracesProvider::computeRecordingLength(){
  off_t fileLength = dataFile.tellg();
  dataFile.close();*/
 
- FILE* file = fopen(fileName,"rb");
+ FILE* file = fopen(fileName.latin1(),"rb");
  if(file == NULL){
   length = 0;
   return;

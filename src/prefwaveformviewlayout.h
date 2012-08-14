@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Form interface generated from reading ui file './prefwaveformviewlayout.ui'
 **
-** Created: jeu aoû 25 12:14:17 2011
+** Created:
 **
 ** WARNING! All changes made in this file will be lost!
 ****************************************************************************/

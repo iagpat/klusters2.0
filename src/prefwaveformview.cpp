@@ -77,7 +77,7 @@ void PrefWaveformView::saveChannelOrder(){
         i18n("*|All files"), this, i18n("Save as..."));
 
   if(!url.isEmpty()){
-  FILE* channelFile = fopen(url.path(),"w");
+  FILE* channelFile = fopen(url.path().latin1(),"w");
    if(channelFile == NULL){
     KMessageBox::error (this,
          i18n("The selected file could not be opened, possibly because of access permissions !"),

@@ -255,7 +255,7 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
   //Open the the spike and fet files. Only the fet file will be loaded the spike file
   // will be used on the fly when waveforms will need to be drawn.
   //The biggest files are open in a C FILE to enable a quick access, the others (parameter files) are open in a QFile
-  FILE* fetFile = fopen(tmpFetFile,"r");
+  FILE* fetFile = fopen(tmpFetFile.latin1(),"r");
   if(fetFile == NULL){
    //Remove the temp files if any
    KIO::NetAccess::removeTempFile(tmpSpikeFile);
@@ -264,7 +264,7 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
   }
 
   //The length of the spike file is used to determine the number of spikes.
-  FILE* spikeFile = fopen(tmpSpikeFile,"r");
+  FILE* spikeFile = fopen(tmpSpikeFile.latin1(),"r");
   if(spikeFile == NULL){
    fclose(fetFile);
    //Remove the temp files if any
@@ -293,7 +293,7 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
    QFileInfo parFileInfo(parFileUrl.path());
    if(parFileInfo.exists()){
     QApplication::restoreOverrideCursor();
-    KMessageBox::information(0,i18n("Two parameter files were found, " + xmlParFileUrl.fileName() + " and " + parFileUrl.fileName() + ". The parameter file " + xmlParFileUrl.fileName() + " will be used."), i18n("Warning!"),"TwoParameterFiles");
+    KMessageBox::information(0,i18n("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl.fileName()).arg(parFileUrl.fileName()).arg(xmlParFileUrl.fileName()), i18n("Warning!"),"TwoParameterFiles");
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    }
    xmlParFile.setName(tmpXmlParFile);
@@ -379,7 +379,7 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
     return DOWNLOAD_ERROR;
    }
 
-   FILE* cluFile = fopen(tmpCluFile,"r");
+   FILE* cluFile = fopen(tmpCluFile.latin1(),"r");
    if(cluFile == NULL){
     if(isXmlParExist){
      xmlParFile.close();
@@ -568,7 +568,7 @@ int KlustersDoc::saveDocument(const KURL& saveUrl, const char *format /*=0*/){
   }
 
   //Open the temp file in write mode
-  FILE* cluFile = fopen(tmpCluFile,"w");
+  FILE* cluFile = fopen(tmpCluFile.latin1(),"w");
  	if(cluFile == NULL){
     return OPEN_ERROR;
     tmpCluFile = tmpCluFileSave;
@@ -1937,7 +1937,7 @@ int KlustersDoc::integrateReclusteredClusters(QValueList<int>& clustersToReclust
      return DOWNLOAD_ERROR;
     }
 
-  FILE* cluFile = fopen(tmpCluFile,"r");
+  FILE* cluFile = fopen(tmpCluFile.latin1(),"r");
   if(cluFile == NULL){
    KIO::NetAccess::removeTempFile(tmpCluFile);
    if(!QFile::remove(reclusteringFetFileName))
