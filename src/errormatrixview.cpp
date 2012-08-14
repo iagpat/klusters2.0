@@ -863,3 +863,5 @@ void ErrorMatrixView::print(QPainter& printPainter,QPaintDeviceMetrics& metrics,
   viewport = QRect(viewportOld.left(),viewportOld.top(),viewportOld.width(),viewportOld.height());
 }
 
+
+#include "errormatrixview.moc"

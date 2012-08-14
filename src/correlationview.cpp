@@ -899,3 +899,5 @@ void CorrelationView::print(QPainter& printPainter,QPaintDeviceMetrics& metrics,
     askForCorrelograms();
    }
   }
+
+#include "correlationview.moc"

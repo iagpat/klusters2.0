@@ -75,3 +75,5 @@ void ChannelList::mouseMoveEvent(QMouseEvent* event){
 
 void ChannelList::contentsDragMoveEvent(QDragMoveEvent* event){
 }
+
+#include "channellist.moc"

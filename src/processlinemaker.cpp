@@ -88,3 +88,5 @@ void ProcessLineMaker::slotReceivedStderr( const QString& s )
     if(counterErr == 0 && (isProcessKilled || isWidgetHidden)) emit outputTreatmentOver();     
 }
 
+
+#include "processlinemaker.moc"

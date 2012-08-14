@@ -693,3 +693,5 @@ void ClusterView::print(QPainter& printPainter,QPaintDeviceMetrics& metrics,bool
 
 
 
+
+#include "clusterview.moc"

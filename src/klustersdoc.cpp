@@ -2137,3 +2137,5 @@ void KlustersDoc::showUserClusterInformation(){
 
 
 
+
+#include "klustersdoc.moc"

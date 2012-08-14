@@ -576,3 +576,5 @@ void ClusterPalette::hideUserClusterInformation(){
 }
 
 
+
+#include "clusterPalette.moc"

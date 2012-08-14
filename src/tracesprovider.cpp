@@ -237,3 +237,5 @@ long TracesProvider::getTotalNbSamples(){
 }
 
 
+
+#include "tracesprovider.moc"

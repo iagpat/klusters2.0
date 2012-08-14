@@ -2624,3 +2624,5 @@ void KlustersApp::slotSpikesDeleted(){
  if(view->containsTraceView() && view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
  else  slotStateChanged("noTraceViewBrowsingState");  
 }
+
+#include "klusters.moc"

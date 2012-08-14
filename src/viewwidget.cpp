@@ -34,3 +34,5 @@ ViewWidget::~ViewWidget(){
 
 
 
+
+#include "viewwidget.moc"

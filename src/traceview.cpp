@@ -4210,3 +4210,5 @@ void TraceView::updateClusters(QString name,QValueList<int>& clustersToShow,Item
 
 
 
+
+#include "traceview.moc"

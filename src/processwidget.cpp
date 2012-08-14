@@ -237,3 +237,5 @@ void ProcessWidget::print(KPrinter* printer,QString filePath){
  printPainter.end();
 }
 
+
+#include "processwidget.moc"

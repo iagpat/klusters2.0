@@ -1536,3 +1536,5 @@ void KlustersView::updateCorrelogramConnections(ViewWidget* viewWidget){
  connect(this,SIGNAL(decreaseAmplitudeofCorrelograms()),viewWidget, SLOT(decreaseAmplitude()));
  connect(this,SIGNAL(setShoulderLine(bool)),viewWidget, SLOT(setShoulderLine(bool)));
 }
+
+#include "klustersview.moc"

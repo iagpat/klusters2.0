@@ -872,3 +872,5 @@ void WaveformView::print(QPainter& printPainter,QPaintDeviceMetrics& metrics,boo
 
   }
   
+
+#include "waveformview.moc"

@@ -30,3 +30,5 @@ void PrefClusterView::setTimeInterval(int time){
 int PrefClusterView::getTimeInterval() const{
  return intervalSpinBox->value();
 }
+
+#include "prefclusterview.moc"

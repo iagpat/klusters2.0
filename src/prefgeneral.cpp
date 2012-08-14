@@ -73,3 +73,5 @@ void PrefGeneral::updateReclusteringExecutable(){
 
  setReclusteringExecutable(executable);
 }
+
+#include "prefgeneral.moc"

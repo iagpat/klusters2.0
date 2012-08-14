@@ -179,7 +179,7 @@ public slots:
   * @param whiteBackground true if the printed background has to be white, false otherwise.  
   */
   virtual inline void print(QPainter& printPainter,QPaintDeviceMetrics& metrics,bool whiteBackground){};
-  
+private: 
 //Members
 
   /**

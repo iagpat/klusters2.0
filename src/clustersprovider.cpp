@@ -415,3 +415,5 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
  emit previousClusterDataReady(finalData,initiator,name,startingInMiliseconds,startingInRecordingUnits);
 }
 
+
+#include "clustersprovider.moc"
