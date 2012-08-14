@@ -1,5 +1,8 @@
 project(klusters-src)
 
+add_subdirectory(cursors)
+add_subdirectory(icons)
+
 set(klusters_SRCS array.cpp autosavethread.cpp baseframe.cpp channelcolors.cpp
         channellist.cpp clusterPalette.cpp clusterinformationdialog.cpp
         clusterpaletteiconviewitem.cpp clusterpalettetooltip.cpp clustersprovider.cpp clusterview.cpp
