@@ -26,6 +26,7 @@
 #include <qiconset.h>  
 #include <qcursor.h>
 #include <qfileinfo.h> 
+#include <qapplication.h>
 
 // include files for KDE
 #include <kprinter.h>

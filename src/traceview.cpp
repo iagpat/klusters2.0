@@ -26,7 +26,8 @@
 #include <qpainter.h>
 #include <qprinter.h>
 #include <qpaintdevicemetrics.h>
-#include <kapp.h>
+
+#include <qapplication.h>
 
 // include files for kde
 #include <kiconloader.h>

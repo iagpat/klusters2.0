@@ -19,9 +19,6 @@
 #define KLUSTERS_H
  
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
 
 // include files for Qt
 #include <qstrlist.h>
@@ -31,9 +28,9 @@
 #include <qlineedit.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
+#include <qapplication.h>
 
 // include files for KDE
-#include <kapp.h>
 #include <kdockwidget.h>
 #include <kaction.h>
 #include <kurl.h>

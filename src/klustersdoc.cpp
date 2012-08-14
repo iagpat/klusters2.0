@@ -22,6 +22,7 @@
 #include <qstring.h>
 #include <qtimer.h>
 #include <qdatetime.h>
+#include <qapplication.h>
 
 // include files for KDE
 

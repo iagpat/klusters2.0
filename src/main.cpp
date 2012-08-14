@@ -17,7 +17,7 @@
 // include files for KDE
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
-
+#include <kapplication.h>
 #include <kurl.h>
 
 // include files for QT
