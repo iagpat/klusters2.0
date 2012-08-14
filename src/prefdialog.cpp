@@ -22,7 +22,7 @@
 // include files for KDE
 #include <kcolorbutton.h>   // for KColorButton
 #include <kpushbutton.h>    // for KPushButton
-#include <klocale.h>        // for i18n()
+#include <klocale.h>        // for tr()
 #include <kiconloader.h>    // for KIconLoader
 #include <kglobal.h>        // for KGlobal
 #include <klineedit.h>      // for KLineEdit
@@ -46,26 +46,26 @@ using namespace std;
 */
 
 PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, WFlags f)
- : KDialogBase(IconList, i18n("Preferences"), Help|Default|Ok|Apply|Cancel, Ok, parent, name, f)
+ : KDialogBase(IconList, tr("Preferences"), Help|Default|Ok|Apply|Cancel, Ok, parent, name, f)
 {
     setHelp("settings","klusters");
     
     //adding page "General options"
-    QFrame *frame = addPage(i18n("General"), i18n("Klusters General Configuration"),
+    QFrame *frame = addPage(tr("General"), tr("Klusters General Configuration"),
         KGlobal::iconLoader()->loadIcon("kfm",KIcon::Panel,0,false) );
     QVBoxLayout *frameLayout = new QVBoxLayout( frame, 0, 0 );
     prefGeneral = new PrefGeneral(frame);
     frameLayout->addWidget(prefGeneral);
 
     //adding page "Cluster view configuration"
-    frame = addPage(i18n("Cluster view"), i18n("Cluster View configuration"),
+    frame = addPage(tr("Cluster view"), tr("Cluster View configuration"),
         KGlobal::iconLoader()->loadIcon("clusterview",KIcon::User));
     frameLayout = new QVBoxLayout( frame, 0, 0 );
     prefclusterView = new PrefClusterView(frame);
     frameLayout->addWidget(prefclusterView);
 
     //adding page "Waveform view configuration"
-    frame = addPage(i18n("Waveform view"), i18n("Waveform View configuration"),
+    frame = addPage(tr("Waveform view"), tr("Waveform View configuration"),
         KGlobal::iconLoader()->loadIcon("waveformview",KIcon::User));
     frameLayout = new QVBoxLayout( frame, 0, 0 );
     prefWaveformView = new PrefWaveformView(frame,nbChannels);
@@ -120,9 +120,9 @@ void PrefDialog::updateConfiguration(){
 
 
 void PrefDialog::slotDefault() {
-  if (KMessageBox::warningContinueCancel(this, i18n("This will set the default options "
-      "in ALL pages of the preferences dialog! Do you wish to continue?"), i18n("Set default options?"),
-      i18n("Set defaults"))==KMessageBox::Continue){
+  if (KMessageBox::warningContinueCancel(this, tr("This will set the default options "
+      "in ALL pages of the preferences dialog! Do you wish to continue?"), tr("Set default options?"),
+      tr("Set defaults"))==KMessageBox::Continue){
         
    prefGeneral->setCrashRecovery(configuration().isCrashRecoveryDefault());
    prefGeneral->setCrashRecoveryIndex(configuration().crashRecoveryIntervalIndexDefault());

@@ -69,7 +69,7 @@ void PrefGeneral::updateCrashRecoveryTimeInterval(int state){
 
 void PrefGeneral::updateReclusteringExecutable(){
  QString executable = KFileDialog::getOpenFileName(QString::null,
-          QString::null, this, i18n("Select the Reclustering executable..."));
+          QString::null, this, tr("Select the Reclustering executable..."));
 
  setReclusteringExecutable(executable);
 }

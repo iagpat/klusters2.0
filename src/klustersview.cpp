@@ -60,7 +60,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
   removedClustersRedoList.setAutoDelete(true);
 
   //Create the mainDock
-  mainDock = createDockWidget("Main", QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+  mainDock = createDockWidget("Main", QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
 
   //If the type of view is a not base one, call the function to call the complex views.
   //If the type of view is a base on, construct the appropriate Widget and assign it as the mainDock widget
@@ -190,7 +190,7 @@ void KlustersView::createOverview(QColor backgroundColor,KStatusBar* statusBar,i
 
  
  //Create and add the waveforms view
- KDockWidget* waveforms = createDockWidget( "WaveForm", QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+ KDockWidget* waveforms = createDockWidget( "WaveForm", QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
  waveforms->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms,
                       inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
  ViewWidget* waveformView = dynamic_cast<ViewWidget*>(waveforms->getWidget());
@@ -205,7 +205,7 @@ void KlustersView::createOverview(QColor backgroundColor,KStatusBar* statusBar,i
  setConnections(WAVEFORMS,waveformView,waveforms);
 
  //Create and add the correlations view
- KDockWidget* correlations = createDockWidget( "Correlation", QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+ KDockWidget* correlations = createDockWidget( "Correlation", QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
  correlations->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,correlations,correlationScale,binSize,correlogramTimeFrame,shoulderLine));//assign the widget
  ViewWidget* correlationView = dynamic_cast<ViewWidget*>(correlations->getWidget());
  viewList.append(correlationView);
@@ -224,7 +224,7 @@ void KlustersView::createGroupingAssistantView(QColor backgroundColor,KStatusBar
  createOverview(backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
   
  //Create and add the errorMatrixView beneath the clusterView (mainDock)
- KDockWidget* errorMatrix = createDockWidget("ErrorMatrix", QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+ KDockWidget* errorMatrix = createDockWidget("ErrorMatrix", QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
  errorMatrix->setWidget(new ErrorMatrixView(doc,*this,backgroundColor,statusBar,errorMatrix));//assign the widget
  ViewWidget* errorMatrixView = dynamic_cast<ViewWidget*>(errorMatrix->getWidget());
  viewList.append(errorMatrixView);
@@ -542,13 +542,13 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
   if(mouseEvent->button() == QMouseEvent::RightButton){
    //Create the popmenu
    KPopupMenu menu(this);
-   menu.insertTitle(i18n("Add a View"));
+   menu.insertTitle(tr("Add a View"));
 
-   int clusterView = menu.insertItem(i18n("Add a ClusterView"));
-   int waveformView = menu.insertItem(i18n("Add a WaveformView"));
-   int correlationView = menu.insertItem(i18n("Add a CorrelationView"));
-   int errorMatrixView = menu.insertItem(i18n("Add an ErrorMatrixView"));
-   int traceView = menu.insertItem(i18n("Add a TraceView"));
+   int clusterView = menu.insertItem(tr("Add a ClusterView"));
+   int waveformView = menu.insertItem(tr("Add a WaveformView"));
+   int correlationView = menu.insertItem(tr("Add a CorrelationView"));
+   int errorMatrixView = menu.insertItem(tr("Add an ErrorMatrixView"));
+   int traceView = menu.insertItem(tr("Add a TraceView"));
 
    //A traceView is possible only if the variables it needs are available (provided in the new parameter file) and
    //the .dat file exists.
@@ -632,7 +632,7 @@ bool KlustersView::addView(KDockWidget* dockWidget,DisplayType displayType,QColo
    isThereClusterView = true;
    count = QString("%1").arg(viewCounter["ClusterView"]);
    
-   clusters = createDockWidget(count.prepend("ClusterView"), QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+   clusters = createDockWidget(count.prepend("ClusterView"), QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
    clusters->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,clusters));
    clusterView = dynamic_cast<ViewWidget*>(clusters->getWidget());
    viewList.append(clusterView);
@@ -670,7 +670,7 @@ bool KlustersView::addView(KDockWidget* dockWidget,DisplayType displayType,QColo
    isThereWaveformView = true;
    count = QString("%1").arg(viewCounter["WaveformView"]);
    
-   waveforms = createDockWidget(count.prepend("WaveformView"), QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+   waveforms = createDockWidget(count.prepend("WaveformView"), QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
    waveforms->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms,
                      inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
    waveformView = dynamic_cast<ViewWidget*>(waveforms->getWidget());
@@ -693,7 +693,7 @@ bool KlustersView::addView(KDockWidget* dockWidget,DisplayType displayType,QColo
    isThereCorrelationView = true;
    count = QString("%1").arg(viewCounter["CorrelationView"]);
    
-   correlations = createDockWidget(count.prepend("CorrelationView"), QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+   correlations = createDockWidget(count.prepend("CorrelationView"), QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
    correlations->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,correlations,correlationScale,binSize,correlogramTimeFrame,shoulderLine));//assign the widget
    correlationView = dynamic_cast<ViewWidget*>(correlations->getWidget());
    viewList.append(correlationView);
@@ -719,7 +719,7 @@ bool KlustersView::addView(KDockWidget* dockWidget,DisplayType displayType,QColo
    newViewType = true;
    isThereErrorMatrixView = true;
    
-   errorMatrix = createDockWidget("ErrorMatrix", QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+   errorMatrix = createDockWidget("ErrorMatrix", QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
    errorMatrix->setWidget(new ErrorMatrixView(doc,*this,backgroundColor,statusBar,errorMatrix));//assign the widget
    errorMatrixView = dynamic_cast<ViewWidget*>(errorMatrix->getWidget());
    viewList.append(errorMatrixView);
@@ -742,7 +742,7 @@ bool KlustersView::addView(KDockWidget* dockWidget,DisplayType displayType,QColo
    isThereTraceView = true;
    count = QString("%1").arg(viewCounter["TraceView"]);
    
-   traces = createDockWidget(count.prepend("TraceView"), QPixmap(), 0L, i18n(doc.documentName().latin1()), i18n(doc.documentName().latin1()));
+   traces = createDockWidget(count.prepend("TraceView"), QPixmap(), 0L, tr(doc.documentName().latin1()), tr(doc.documentName().latin1()));
    //the settings are : greyScale, no vertical lines nor rasters and waveforms, no labels displayed, no channel skipped.
    traces->setWidget(new TraceWidget(startingTime,duration,true,*doc.getTraceProvider(),false,false,false,
                     true,labelsDisplay,doc.getCurrentChannels(),doc.getGain(),doc.getAcquisitionGain(),doc.channelColors(),

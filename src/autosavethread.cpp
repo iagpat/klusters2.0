@@ -20,12 +20,6 @@
 //QT include files
 #include <qapplication.h>
 
-// include files for KDE
-#include <kio/job.h>
-#include <kio/netaccess.h>
-#include <klocale.h>
-#include <kmessagebox.h>
-
 //C, C++ include files
 //#define _LARGEFILE_SOURCE already defined in /usr/include/features.h
 #define _FILE_OFFSET_BITS 64

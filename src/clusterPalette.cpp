@@ -167,7 +167,7 @@ void ClusterPalette::slotRightPressed(QIconViewItem* item){
 /*  //Create a popmenu with an changeColor option
     QPopupMenu menu(iconView);
 
-	  int CHANGE_COLOR = menu.insertItem(clusterInformationi18n("Change color"));
+      int CHANGE_COLOR = menu.insertItem(clusterInformationtr("Change color"));
 	  clusterNumber
     menu.setMouseTracking( TRUE );
     int id = menu.exec( QCursor::pos());
@@ -439,7 +439,7 @@ void ClusterPalette::changeColor(QIconViewItem* item){
  */
 void ClusterPalette::languageChange()
 {
-    setCaption( i18n( "Cluster palette" ) );
+    setCaption( tr( "Cluster palette" ) );
 }
 
 void ClusterPalette::selectItems(QValueList<int> selectedClusters){

@@ -20,9 +20,6 @@
 // application specific includes
 #include "clusterinformationdialog.h"
 
-//KDE includes
-#include <klocale.h>
-
 ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString& caption) :
 		KDialogBase(parent,"Cluster information",true,caption,Ok|Cancel,Ok,true)
 {
@@ -31,7 +28,7 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
 	layout = new QVBoxLayout(page,0,spacingHint());
 
 	//Structure information (label and lineedit)
-	QLabel *label1 = new QLabel(i18n("Structure"),page,"structure_label");
+    QLabel *label1 = new QLabel(tr("Structure"),page,"structure_label");
 	layout->addWidget(label1);
 
 	structure = new QLineEdit(page,"structure");
@@ -40,7 +37,7 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
 	layout->addWidget(structure);
 
 	//Type information (label and lineedit)
-	QLabel *label2 = new QLabel(i18n("Type"),page,"type_label");
+    QLabel *label2 = new QLabel(tr("Type"),page,"type_label");
 	layout->addWidget(label2);
 
 	type = new QLineEdit(page,"type");
@@ -48,7 +45,7 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
 	layout->addWidget(type);
 	
 	//Id information (label and lineedit)
-	QLabel *label3 = new QLabel(i18n("Isolation distance"),page,"id_label");
+    QLabel *label3 = new QLabel(tr("Isolation distance"),page,"id_label");
 	layout->addWidget(label3);
 
 	id = new QLineEdit(page,"id");
@@ -56,7 +53,7 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
 	layout->addWidget(id);
 	
 	//Quality information (label and lineedit)
-	QLabel *label4 = new QLabel(i18n("Quality"),page,"quality_label");
+    QLabel *label4 = new QLabel(tr("Quality"),page,"quality_label");
 	layout->addWidget(label4);
 
 	quality = new QLineEdit(page,"quality");
@@ -64,7 +61,7 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
 	layout->addWidget(quality);
 	
 	//Type information (label and lineedit)
-	QLabel *label5 = new QLabel(i18n("Notes"),page,"notes_label");
+    QLabel *label5 = new QLabel(tr("Notes"),page,"notes_label");
 	layout->addWidget(label5);
 
 	notes = new QLineEdit(page,"notes");

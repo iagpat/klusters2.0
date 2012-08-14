@@ -136,33 +136,33 @@ void KlustersApp::initActions()
   fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
   KStdAction::save(this, SLOT(slotFileSave()), actionCollection());
   KStdAction::saveAs(this, SLOT(slotFileSaveAs()), actionCollection());
-  new KAction(i18n("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
+  new KAction(tr("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
 
   KStdAction::print(this, SLOT(slotFilePrint()), actionCollection());
   KStdAction::quit(this, SLOT(close()), actionCollection());
   viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-  new KAction(i18n("Re&number and Save"),QIconSet(QPixmap("filesave.png")), CTRL + SHIFT + Key_S,this, SLOT(slotFileRenumberAndSave()),actionCollection(), "file_renumber_save");
-  new KAction(i18n("&Import File"), CTRL + Key_I,this, SLOT(slotFileImport()),actionCollection(), "fileImport");
+  new KAction(tr("Re&number and Save"),QIconSet(QPixmap("filesave.png")), CTRL + SHIFT + Key_S,this, SLOT(slotFileRenumberAndSave()),actionCollection(), "file_renumber_save");
+  new KAction(tr("&Import File"), CTRL + Key_I,this, SLOT(slotFileImport()),actionCollection(), "fileImport");
               
   //Edit menu
-  new KAction(i18n("Select &All"), CTRL + Key_A, this, SLOT(slotSelectAll()),actionCollection(),"edit_select_all");
-  new KAction(i18n("Select All except 0 and 1"), CTRL + SHIFT + Key_A, this, 
+  new KAction(tr("Select &All"), CTRL + Key_A, this, SLOT(slotSelectAll()),actionCollection(),"edit_select_all");
+  new KAction(tr("Select All except 0 and 1"), CTRL + SHIFT + Key_A, this,
     SLOT(slotSelectAllWO01()),actionCollection(),"edit_select_all_except01");
   KStdAction::undo(this, SLOT(slotUndo()), actionCollection());
   KStdAction::redo(this, SLOT(slotRedo()), actionCollection());
     
   //Displays menu
-  viewMenu = new KActionMenu(i18n("&Window"), actionCollection(), "window_menu");
-  newClusterDisplay = new KAction(i18n("New C&luster Display"), 0, this, SLOT(slotWindowNewClusterDisplay()), actionCollection(),"new_clusterDisplay");
-  newWaveformDisplay = new KAction(i18n("New &Waveform Display"), 0, this, SLOT(slotWindowNewWaveformDisplay()), actionCollection(),"new_waveformDisplay"); 
-  newCrosscorrelationDisplay = new KAction(i18n("New C&orrelation Display"),0,this,SLOT(slotWindowNewCrosscorrelationDisplay()), actionCollection(),"new_crosscorrelationDisplay");
-  newOverViewDisplay = new KAction(i18n("New &Overview Display"), 0, this,SLOT(slotWindowNewOverViewDisplay()),actionCollection(),"new_overViewDisplay");
+  viewMenu = new KActionMenu(tr("&Window"), actionCollection(), "window_menu");
+  newClusterDisplay = new KAction(tr("New C&luster Display"), 0, this, SLOT(slotWindowNewClusterDisplay()), actionCollection(),"new_clusterDisplay");
+  newWaveformDisplay = new KAction(tr("New &Waveform Display"), 0, this, SLOT(slotWindowNewWaveformDisplay()), actionCollection(),"new_waveformDisplay");
+  newCrosscorrelationDisplay = new KAction(tr("New C&orrelation Display"),0,this,SLOT(slotWindowNewCrosscorrelationDisplay()), actionCollection(),"new_crosscorrelationDisplay");
+  newOverViewDisplay = new KAction(tr("New &Overview Display"), 0, this,SLOT(slotWindowNewOverViewDisplay()),actionCollection(),"new_overViewDisplay");
   newGroupingAssistantDisplay =
-   new KAction(i18n("New &Grouping Assistant Display"),0,this,SLOT(slotWindowNewGroupingAssistantDisplay()),actionCollection(),"new_goupingAssistantDisplay");   
-  new KAction(i18n("&Rename Active Display"), CTRL + Key_R, this, SLOT(renameActiveDisplay()),actionCollection(),"rename_display");
-  new KAction(i18n("&Close Active Display"), CTRL + Key_W, this, SLOT(slotDisplayClose()),actionCollection(),"close_display");
-  new KAction(i18n("New &Trace Display"),0, this, SLOT(slotNewTraceDisplay()),actionCollection(),"trace_display");
+   new KAction(tr("New &Grouping Assistant Display"),0,this,SLOT(slotWindowNewGroupingAssistantDisplay()),actionCollection(),"new_goupingAssistantDisplay");
+  new KAction(tr("&Rename Active Display"), CTRL + Key_R, this, SLOT(renameActiveDisplay()),actionCollection(),"rename_display");
+  new KAction(tr("&Close Active Display"), CTRL + Key_W, this, SLOT(slotDisplayClose()),actionCollection(),"close_display");
+  new KAction(tr("New &Trace Display"),0, this, SLOT(slotNewTraceDisplay()),actionCollection(),"trace_display");
 
   //Not used for the moment.
   connect(viewMenu->popupMenu(),SIGNAL(aboutToShow()), this, SLOT(viewMenuAboutToShow()));
@@ -170,66 +170,66 @@ void KlustersApp::initActions()
   KIconLoader* loader = KGlobal::iconLoader();
 
   //Actions menu
-  new KAction(i18n("Delete &Artifact Cluster(s)"),QIconSet(loader->loadIcon("delete_artefact", KIcon::User)),SHIFT + Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
-  new KAction(i18n("Delete &Noisy Cluster(s)"),QIconSet(loader->loadIcon("delete_noise", KIcon::User)),Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
-  new KAction(i18n("&Group Clusters"),QIconSet(loader->loadIcon("group", KIcon::User)), Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
-  new KAction(i18n("&Update Display"),QIconSet(loader->loadIcon("update", KIcon::User)), 0,clusterPalette, SLOT(updateClusters()),actionCollection(), "update_display");
-  new KAction(i18n("&Renumber Clusters"),0, Key_R,doc, SLOT(renumberClusters()),actionCollection(), "renumber");
-  new KAction(i18n("&Update Error Matrix"),QIconSet(loader->loadIcon("grouping_assistant_update", KIcon::User)),Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
+  new KAction(tr("Delete &Artifact Cluster(s)"),QIconSet(loader->loadIcon("delete_artefact", KIcon::User)),SHIFT + Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
+  new KAction(tr("Delete &Noisy Cluster(s)"),QIconSet(loader->loadIcon("delete_noise", KIcon::User)),Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
+  new KAction(tr("&Group Clusters"),QIconSet(loader->loadIcon("group", KIcon::User)), Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
+  new KAction(tr("&Update Display"),QIconSet(loader->loadIcon("update", KIcon::User)), 0,clusterPalette, SLOT(updateClusters()),actionCollection(), "update_display");
+  new KAction(tr("&Renumber Clusters"),0, Key_R,doc, SLOT(renumberClusters()),actionCollection(), "renumber");
+  new KAction(tr("&Update Error Matrix"),QIconSet(loader->loadIcon("grouping_assistant_update", KIcon::User)),Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
             "update_errorMatrix");
-  new KAction(i18n("Re&cluster"),0, SHIFT  + Key_R,this, SLOT(slotRecluster()),actionCollection(), "recluster");
-  new KAction(i18n("&Abort Reclustering"),0, 0,this, SLOT(slotStopRecluster()),actionCollection(), "stop_recluster");
+  new KAction(tr("Re&cluster"),0, SHIFT  + Key_R,this, SLOT(slotRecluster()),actionCollection(), "recluster");
+  new KAction(tr("&Abort Reclustering"),0, 0,this, SLOT(slotStopRecluster()),actionCollection(), "stop_recluster");
              
   //Tools menu
-  new KAction(i18n("Zoom"),QIconSet(loader->loadIcon("zoom_tool", KIcon::User)), Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
-  new KAction(i18n("New Cluster"),QIconSet(loader->loadIcon("new_cluster", KIcon::User)), Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
-  new KAction(i18n("&Split Clusters"),QIconSet(loader->loadIcon("new_clusters", KIcon::User)), Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
-  new KAction(i18n("Delete &Artifact Spikes"),QIconSet(loader->loadIcon("delete_artefact_tool", KIcon::User)),Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
-  new KAction(i18n("Delete &Noisy Spikes"),QIconSet(loader->loadIcon("delete_noise_tool", KIcon::User)),Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
-  new KAction(i18n("Select Time"),QIconSet(loader->loadIcon("time_tool", KIcon::User)), Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
+  new KAction(tr("Zoom"),QIconSet(loader->loadIcon("zoom_tool", KIcon::User)), Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
+  new KAction(tr("New Cluster"),QIconSet(loader->loadIcon("new_cluster", KIcon::User)), Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
+  new KAction(tr("&Split Clusters"),QIconSet(loader->loadIcon("new_clusters", KIcon::User)), Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
+  new KAction(tr("Delete &Artifact Spikes"),QIconSet(loader->loadIcon("delete_artefact_tool", KIcon::User)),Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
+  new KAction(tr("Delete &Noisy Spikes"),QIconSet(loader->loadIcon("delete_noise_tool", KIcon::User)),Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
+  new KAction(tr("Select Time"),QIconSet(loader->loadIcon("time_tool", KIcon::User)), Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
   //Waveforms menu
-  timeFrameMode = new KToggleAction(i18n("&Time Frame"), Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
-  overlayPresentation = new KToggleAction(i18n("&Overlay"), Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
-  meanPresentation = new KToggleAction(i18n("&Mean and Standard Deviation"), Key_M,this, SLOT(slotMeanPresentation()),actionCollection(), "mean");
-  new KAction(i18n("&Increase Amplitude"), Key_I,this, SLOT(slotIncreaseAmplitude()),actionCollection(), "increase");
-  new KAction(i18n("&Decrease Amplitude"), Key_D,this, SLOT(slotDecreaseAmplitude()),actionCollection(), "decrease");
+  timeFrameMode = new KToggleAction(tr("&Time Frame"), Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
+  overlayPresentation = new KToggleAction(tr("&Overlay"), Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
+  meanPresentation = new KToggleAction(tr("&Mean and Standard Deviation"), Key_M,this, SLOT(slotMeanPresentation()),actionCollection(), "mean");
+  new KAction(tr("&Increase Amplitude"), Key_I,this, SLOT(slotIncreaseAmplitude()),actionCollection(), "increase");
+  new KAction(tr("&Decrease Amplitude"), Key_D,this, SLOT(slotDecreaseAmplitude()),actionCollection(), "decrease");
   timeFrameMode->setChecked(false);
   overlayPresentation->setChecked(false);                      
   meanPresentation->setChecked(false);                                         
 
   //Correlations menu
-  scaleByMax = new KRadioAction(i18n("Scale by &Maximum"),SHIFT + Key_M,this,SLOT(slotScaleByMax()),actionCollection(), "scale_by_max");
+  scaleByMax = new KRadioAction(tr("Scale by &Maximum"),SHIFT + Key_M,this,SLOT(slotScaleByMax()),actionCollection(), "scale_by_max");
   scaleByMax->setExclusiveGroup("scale");
-  scaleByShouler = new KRadioAction(i18n("Scale by &Asymptote"),SHIFT + Key_A,this,SLOT(slotScaleByShouler()),actionCollection(), "scale_by_shouler");
+  scaleByShouler = new KRadioAction(tr("Scale by &Asymptote"),SHIFT + Key_A,this,SLOT(slotScaleByShouler()),actionCollection(), "scale_by_shouler");
   scaleByShouler->setExclusiveGroup("scale");
-  noScale = new KRadioAction(i18n("&Uniform Scale"),SHIFT + Key_U,this,SLOT(slotNoScale()),actionCollection(), "raw_data");
+  noScale = new KRadioAction(tr("&Uniform Scale"),SHIFT + Key_U,this,SLOT(slotNoScale()),actionCollection(), "raw_data");
   noScale->setExclusiveGroup("scale");
   //Initialize the presentation mode to scale by maximum.
   scaleByMax->setChecked(true);
-  new KAction(i18n("&Increase Amplitude"),SHIFT + Key_I,this, SLOT(slotIncreaseCorrelogramsAmplitude()),actionCollection(), "increase_correlograms");
-  new KAction(i18n("&Decrease Amplitude"),SHIFT +  Key_D,this, SLOT(slotDecreaseCorrelogramsAmplitude()),actionCollection(), "decrease_correlograms");
-  shoulderLine = new KToggleAction(i18n("Asymptote &Line"), Key_L,this, SLOT(slotShoulderLine()),actionCollection(), "shoulder_line");
+  new KAction(tr("&Increase Amplitude"),SHIFT + Key_I,this, SLOT(slotIncreaseCorrelogramsAmplitude()),actionCollection(), "increase_correlograms");
+  new KAction(tr("&Decrease Amplitude"),SHIFT +  Key_D,this, SLOT(slotDecreaseCorrelogramsAmplitude()),actionCollection(), "decrease_correlograms");
+  shoulderLine = new KToggleAction(tr("Asymptote &Line"), Key_L,this, SLOT(slotShoulderLine()),actionCollection(), "shoulder_line");
 
   //Traces menu
-   new KAction(i18n("&Increase Channel Amplitudes"),CTRL + SHIFT + Key_I,this, SLOT(slotIncreaseAllChannelsAmplitude()),actionCollection(), "increase_all_channels");
-   new KAction(i18n("&Decrease Channel Amplitudes"),CTRL + SHIFT + Key_D,this, SLOT(slotDecreaseAllChannelsAmplitude()),actionCollection(), "decrease_all_channels");
-   showHideLabels = new KToggleAction(i18n("Show &Labels"),0,CTRL + Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
+   new KAction(tr("&Increase Channel Amplitudes"),CTRL + SHIFT + Key_I,this, SLOT(slotIncreaseAllChannelsAmplitude()),actionCollection(), "increase_all_channels");
+   new KAction(tr("&Decrease Channel Amplitudes"),CTRL + SHIFT + Key_D,this, SLOT(slotDecreaseAllChannelsAmplitude()),actionCollection(), "decrease_all_channels");
+   showHideLabels = new KToggleAction(tr("Show &Labels"),0,CTRL + Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
    showHideLabels->setChecked(false);
-   new KAction(i18n("&Next Spike"),QIconSet(loader->loadIcon("forwardCluster", KIcon::User)),CTRL + SHIFT + Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
-   new KAction(i18n("&Previous Spike"),QIconSet(loader->loadIcon("backCluster", KIcon::User)),CTRL + SHIFT + Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
+   new KAction(tr("&Next Spike"),QIconSet(loader->loadIcon("forwardCluster", KIcon::User)),CTRL + SHIFT + Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
+   new KAction(tr("&Previous Spike"),QIconSet(loader->loadIcon("backCluster", KIcon::User)),CTRL + SHIFT + Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
   
   //Settings menu
-  viewActionBar = new KToggleAction(i18n("Show Actions"),0,this, SLOT(slotViewActionBar()),actionCollection(), "show_actionBar");
+  viewActionBar = new KToggleAction(tr("Show Actions"),0,this, SLOT(slotViewActionBar()),actionCollection(), "show_actionBar");
   viewActionBar->setChecked(true);
-  viewToolBar = new KToggleAction(i18n("Show Tools"),0,this, SLOT(slotViewToolBar()),actionCollection(), "show_toolBar");
+  viewToolBar = new KToggleAction(tr("Show Tools"),0,this, SLOT(slotViewToolBar()),actionCollection(), "show_toolBar");
   viewToolBar->setChecked(true);
-  viewParameterBar = new KToggleAction(i18n("Show Parameters"),0,this, SLOT(slotViewParameterBar()),actionCollection(), "show_parameterBar");
+  viewParameterBar = new KToggleAction(tr("Show Parameters"),0,this, SLOT(slotViewParameterBar()),actionCollection(), "show_parameterBar");
   viewParameterBar->setChecked(true);
-  KRadioAction* immediateSelection = new KRadioAction(i18n("Immediate Update"),0,this,SLOT(slotImmediateSelection()),actionCollection(), "immediate_selection");
+  KRadioAction* immediateSelection = new KRadioAction(tr("Immediate Update"),0,this,SLOT(slotImmediateSelection()),actionCollection(), "immediate_selection");
   immediateSelection->setExclusiveGroup("selection");
-  KRadioAction* delaySelection = new KRadioAction(i18n("Delayed Update"),0,this,SLOT(slotDelaySelection()),actionCollection(), "delay_selection");
+  KRadioAction* delaySelection = new KRadioAction(tr("Delayed Update"),0,this,SLOT(slotDelaySelection()),actionCollection(), "delay_selection");
   delaySelection->setExclusiveGroup("selection");
-  viewClusterInfo = new KToggleAction(i18n("Show Cluster Info"),0,this, SLOT(slotViewClusterInfo()),actionCollection(), "show_clusterInfo");
+  viewClusterInfo = new KToggleAction(tr("Show Cluster Info"),0,this, SLOT(slotViewClusterInfo()),actionCollection(), "show_clusterInfo");
   viewClusterInfo->setChecked(false);
   
   //Initialize the update mode
@@ -238,14 +238,14 @@ void KlustersApp::initActions()
   KStdAction::keyBindings(this, SLOT(slotKeyBindings()), actionCollection());
   KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
 
-  fileOpenRecent->setStatusText(i18n("Opens a recently used file"));
-  actionCollection()->action(KStdAction::stdName(KStdAction::Save))->setStatusText(i18n("Saves the actual document"));
-  actionCollection()->action(KStdAction::stdName(KStdAction::SaveAs))->setStatusText(i18n("Saves the actual document as..."));
-  actionCollection()->action(KStdAction::stdName(KStdAction::Close))->setStatusText(i18n("Closes the actual document"));
-  actionCollection()->action(KStdAction::stdName(KStdAction::Print))->setStatusText(i18n("Prints out the actual document"));
-  actionCollection()->action(KStdAction::stdName(KStdAction::Quit))->setStatusText(i18n("Quits the application"));
-  viewMainToolBar->setStatusText(i18n("Enables/disables the main tool bar"));
-  viewStatusBar->setStatusText(i18n("Enables/disables the status bar"));
+  fileOpenRecent->setStatusText(tr("Opens a recently used file"));
+  actionCollection()->action(KStdAction::stdName(KStdAction::Save))->setStatusText(tr("Saves the actual document"));
+  actionCollection()->action(KStdAction::stdName(KStdAction::SaveAs))->setStatusText(tr("Saves the actual document as..."));
+  actionCollection()->action(KStdAction::stdName(KStdAction::Close))->setStatusText(tr("Closes the actual document"));
+  actionCollection()->action(KStdAction::stdName(KStdAction::Print))->setStatusText(tr("Prints out the actual document"));
+  actionCollection()->action(KStdAction::stdName(KStdAction::Quit))->setStatusText(tr("Quits the application"));
+  viewMainToolBar->setStatusText(tr("Enables/disables the main tool bar"));
+  viewStatusBar->setStatusText(tr("Enables/disables the status bar"));
  
   //Custom connections
   connect(clusterPalette, SIGNAL(singleChangeColor(int)), this, SLOT(slotSingleColorUpdate(int)));
@@ -441,7 +441,7 @@ void KlustersApp::initStatusBar()
 {
   ///////////////////////////////////////////////////////////////////
   // STATUSBAR
-  statusBar()->insertItem(i18n("Ready."),1);
+  statusBar()->insertItem(tr("Ready."),1);
 }
 
 
@@ -456,7 +456,7 @@ bool KlustersApp::eventFilter(QObject* object,QEvent* event){
 void KlustersApp::initClusterPanel()
 {
   //Creation of the left panel containing the clusters
-  clusterPanel = createDockWidget( "clusterPanel",QImage("classnew") , 0L, i18n("The cluster list"), 0L);
+  clusterPanel = createDockWidget( "clusterPanel",QImage("classnew") , 0L, tr("The cluster list"), 0L);
   //Initialisation of the cluster palette containing the cluster list
   clusterPalette = new ClusterPalette(backgroundColor,clusterPanel,statusBar(),"ClusterPalette");
   //Place the clusterPalette frame in the clusterPanel (the view)
@@ -495,7 +495,7 @@ void KlustersApp::initDisplay(){
    binSizeValidator.setRange(0,maximumTime);
                      
   //Create the mainDock (first view)
-   mainDock = createDockWidget( "1", QPixmap(), 0L, i18n(doc->documentName().latin1()), "Overview Display");
+   mainDock = createDockWidget( "1", QPixmap(), 0L, tr(doc->documentName().latin1()), "Overview Display");
    mainDock->setDockWindowTransient(this,true);
 
    //If the setting dialog exists (has already be open once), enable the settings for the channels.
@@ -585,7 +585,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
     QString displayName = (doc->documentName()).append(type);
     QString displayType = KlustersView::DisplayTypeNames[type];
 
-    display = createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, i18n(displayName.latin1()), displayType);
+    display = createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, tr(displayName.latin1()), displayType);
 
     //Check if the active display contains a ProcessWidget
     bool isProcessWidget = doesActiveDisplayContainProcessWidget();
@@ -692,7 +692,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
 
 void KlustersApp::openDocumentFile(const KURL& url)
 {    
-  slotStatusMsg(i18n("Opening file..."));
+  slotStatusMsg(tr("Opening file..."));
 
   filePath = url.path();
   QFileInfo file(filePath);
@@ -700,28 +700,28 @@ void KlustersApp::openDocumentFile(const KURL& url)
    if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
     QString title = "File not found: ";
     title.append(filePath);
-    int answer = KMessageBox::questionYesNo(this,i18n("The selected file no longer exists, do you want to remove it from the list?"), i18n(title.latin1()));
+    int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists, do you want to remove it from the list?"), tr(title.latin1()));
     if(answer == KMessageBox::Yes) fileOpenRecent->removeURL(url);
     else  fileOpenRecent->addURL(url); //hack, unselect the item
     filePath = "";    
-    slotStatusMsg(i18n("Ready."));
+    slotStatusMsg(tr("Ready."));
     return;
    }
   } 
   //Do not handle remote files
   else{
-   KMessageBox::sorry(this,i18n("Sorry, Klusters does not handle remote files."),i18n("Remote file handling"));
+   KMessageBox::sorry(this,tr("Sorry, Klusters does not handle remote files."),tr("Remote file handling"));
    fileOpenRecent->removeURL(url);
    filePath = "";
-   slotStatusMsg(i18n("Ready."));
+   slotStatusMsg(tr("Ready."));
    return; 
   }  
   
   //Check if the file exists
   if(!file.exists()){
-   KMessageBox::error (this,i18n("The selected file does not exist."), i18n("Error!"));
+   KMessageBox::error (this,tr("The selected file does not exist."), tr("Error!"));
    return;
-   slotStatusMsg(i18n("Ready."));
+   slotStatusMsg(tr("Ready."));
   } 
 
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -740,113 +740,113 @@ void KlustersApp::openDocumentFile(const KURL& url)
     if(returnStatus == KlustersDoc::INCORRECT_FILE)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,i18n("The selected file is invalid, it has to be of the form baseName.clu.n or baseName.fet.n or baseName.par.n"), i18n("Error!"));
+      KMessageBox::error (this,tr("The selected file is invalid, it has to be of the form baseName.clu.n or baseName.fet.n or baseName.par.n"), tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
 
       resetState();
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }
     if(returnStatus == KlustersDoc::DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,i18n("Could not get the cluster file (base.clu.n)"), i18n("Error!"));
+      KMessageBox::error (this,tr("Could not get the cluster file (base.clu.n)"), tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
       resetState();
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }
 
     if(returnStatus == KlustersDoc::SPK_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,i18n("Could not get the spike file (base.spk.n)"), i18n("Error!"));
+      KMessageBox::error (this,tr("Could not get the spike file (base.spk.n)"), tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
       resetState();
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }
     if(returnStatus == KlustersDoc::FET_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,i18n("Could not get the feature file (base.fet.n)"), i18n("Error!"));
+      KMessageBox::error (this,tr("Could not get the feature file (base.fet.n)"), tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
       resetState();
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }
     if(returnStatus == KlustersDoc::PAR_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,i18n("Could not get the general parameter file (base.par)"), i18n("Error!"));
+      KMessageBox::error (this,tr("Could not get the general parameter file (base.par)"), tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
       resetState();
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }
     if(returnStatus == KlustersDoc::PARX_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,i18n("Could not get the specific parameter file (base.par.n)"), i18n("Error!"));
+      KMessageBox::error (this,tr("Could not get the specific parameter file (base.par.n)"), tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
       resetState();
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }
     
     if(returnStatus == KlustersDoc::PARXML_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,i18n("Could not get the parameter file (base.xml)"), i18n("Error!"));
+      KMessageBox::error (this,tr("Could not get the parameter file (base.xml)"), tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
       resetState();
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }
     
     if(returnStatus == KlustersDoc::OPEN_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,i18n("Could not open the files"), i18n("Error!"));
+      KMessageBox::error (this,tr("Could not open the files"), tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
       resetState();      
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }
     if(returnStatus == KlustersDoc::INCORRECT_CONTENT)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,errorInformation, i18n("Error!"));
+      KMessageBox::error (this,errorInformation, tr("Error!"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
       resetState();      
       QApplication::restoreOverrideCursor();
-      slotStatusMsg(i18n("Ready."));
+      slotStatusMsg(tr("Ready."));
       return;
     }   
 
@@ -876,7 +876,7 @@ void KlustersApp::openDocumentFile(const KURL& url)
    if(docName == name){
     fileOpenRecent->addURL(url); //hack, unselect the item
     QApplication::restoreOverrideCursor();
-    slotStatusMsg(i18n("Ready."));
+    slotStatusMsg(tr("Ready."));
     return; 
    }
    //If the document asked is not the already open. Open a new instance of the application with it.
@@ -899,12 +899,12 @@ void KlustersApp::openDocumentFile(const KURL& url)
    } 
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::importDocumentFile(const KURL& url)
 {
-  slotStatusMsg(i18n("Importing file..."));
+  slotStatusMsg(tr("Importing file..."));
 
   //If no document is open already open the document ask.
   if(!mainDock){
@@ -912,7 +912,7 @@ void KlustersApp::importDocumentFile(const KURL& url)
     // Open the file (that will also initialize the doc)
     if(!doc->importDocument(url))
     {
-      KMessageBox::error (this,i18n("Could not import document !"), i18n("Error !"));
+      KMessageBox::error (this,tr("Could not import document !"), tr("Error !"));
       //close the document
       doc->closeDocument();
       QApplication::restoreOverrideCursor();
@@ -935,7 +935,7 @@ void KlustersApp::importDocumentFile(const KURL& url)
      QApplication::restoreOverrideCursor();
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 bool KlustersApp::doesActiveDisplayContainProcessWidget(){
@@ -1037,7 +1037,7 @@ bool KlustersApp::queryExit()
 void KlustersApp::customEvent (QCustomEvent* event){
   //Event sent by the SaveThread
   if(event->type() == QEvent::User + 100){
-    slotStatusMsg(i18n("Save file done."));
+    slotStatusMsg(tr("Save file done."));
     SaveThread::SaveDoneEvent* saveEvent = (SaveThread::SaveDoneEvent*) event;
     if(saveEvent->isSaveOk()){
      //The cluster data have been saved to a local temporary file if the original file was a remote one
@@ -1046,7 +1046,7 @@ void KlustersApp::customEvent (QCustomEvent* event){
      //to be uploaded. The save process is made in a thread and it seams that
      //the KDE upload can not be call asynchronously, so the upload is call after the end of the thread.
      if(!KIO::NetAccess::upload(saveEvent->temporaryFile(),doc->url())){
-       KMessageBox::error (0,i18n("Could not save the current document !"), i18n("I/O Error !"));
+       KMessageBox::error (0,tr("Could not save the current document !"), tr("I/O Error !"));
      }
      if(saveEvent->isItSaveAs()){
    	   fileOpenRecent->addURL(doc->url());
@@ -1054,9 +1054,9 @@ void KlustersApp::customEvent (QCustomEvent* event){
      }
     }
     else
-       KMessageBox::error (0,i18n("Could not save the current document !"), i18n("I/O Error !"));
+       KMessageBox::error (0,tr("Could not save the current document !"), tr("I/O Error !"));
 
-    slotStatusMsg(i18n("Ready."));
+    slotStatusMsg(tr("Ready."));
     slotStateChanged("SavingDoneState");
   }
   //Event sent by klusterDoc to advice that there is some threads still running.
@@ -1076,7 +1076,7 @@ void KlustersApp::customEvent (QCustomEvent* event){
     else if(origin == "fileClose" || origin == "displayClose"){
      slotFileClose();
      QApplication::restoreOverrideCursor();
-     slotStatusMsg(i18n("Ready."));
+     slotStatusMsg(tr("Ready."));
     }
    }
   }
@@ -1094,16 +1094,16 @@ void KlustersApp::customEvent (QCustomEvent* event){
 
 void KlustersApp::slotFileOpen()
 {
-  slotStatusMsg(i18n("Opening file..."));
+  slotStatusMsg(tr("Opening file..."));
 
   KURL url=KFileDialog::getOpenURL(QString::null,
-      i18n("*.fet.*|Feature File (*.fet.n)\n*.clu.*|Cluster File (*.clu.n)\n*.spk.*|Spike File (*.spk.n)\n*.par.*|Specific Parameter File (*.par.n)\n*|All files"), this, i18n("Open File..."));
+      tr("*.fet.*|Feature File (*.fet.n)\n*.clu.*|Cluster File (*.clu.n)\n*.spk.*|Spike File (*.spk.n)\n*.par.*|Specific Parameter File (*.par.n)\n*|All files"), this, tr("Open File..."));
   if(!url.isEmpty())
   {
     openDocumentFile(url);
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotFileClose(){
@@ -1180,37 +1180,37 @@ void KlustersApp::slotFileClose(){
 }
 
 void KlustersApp::slotFileImport(){
-    slotStatusMsg(i18n("Importing file..."));
+    slotStatusMsg(tr("Importing file..."));
 
   KURL url=KFileDialog::getOpenURL(QString::null,
-      i18n("*|All files"), this, i18n("Import File..."));
+      tr("*|All files"), this, tr("Import File..."));
   if(!url.isEmpty())
   {
     importDocumentFile(url);
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotFileOpenRecent(const KURL& url)
 {
-  slotStatusMsg(i18n("Opening file..."));
+  slotStatusMsg(tr("Opening file..."));
 
   openDocumentFile(url);
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotFileSave()
 {
-  slotStatusMsg(i18n("Saving file..."));
+  slotStatusMsg(tr("Saving file..."));
 
   slotStateChanged("SavingState");
   saveThread->save(doc->url(),doc,false);
 }
 
 void KlustersApp::slotFileRenumberAndSave(){
-  slotStatusMsg(i18n("Renumbering and saving..."));
+  slotStatusMsg(tr("Renumbering and saving..."));
   slotStateChanged("SavingState");
   doc->renumberClusters();
   slotFileSave();
@@ -1218,10 +1218,10 @@ void KlustersApp::slotFileRenumberAndSave(){
 
 void KlustersApp::slotFileSaveAs()
 {
-  slotStatusMsg(i18n("Saving file with a new filename..."));
+  slotStatusMsg(tr("Saving file with a new filename..."));
 
   KURL url=KFileDialog::getSaveURL(QDir::currentDirPath(),
-        i18n("*|All files"), this, i18n("Save as..."));
+        tr("*|All files"), this, tr("Save as..."));
   if(!url.isEmpty()){
     slotStateChanged("SavingState");
     saveThread->save(url,doc,true);
@@ -1232,7 +1232,7 @@ void KlustersApp::slotDisplayClose()
 {
   KDockWidget* current;
 
-  slotStatusMsg(i18n("Closing display..."));
+  slotStatusMsg(tr("Closing display..."));
 
   //Get the active tab
   if(tabsParent){
@@ -1366,12 +1366,12 @@ void KlustersApp::slotDisplayClose()
     resetState();
    }
   }
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotFilePrint()
 {
-  slotStatusMsg(i18n("Printing..."));
+  slotStatusMsg(tr("Printing..."));
 
   printer->setOrientation(KPrinter::Landscape);
   printer->setColorMode(KPrinter::Color);
@@ -1393,12 +1393,12 @@ void KlustersApp::slotFilePrint()
    }
   }
 
-  slotStatusMsg(i18n("Ready.")); 
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotFileQuit()
 {
-  slotStatusMsg(i18n("Exiting..."));
+  slotStatusMsg(tr("Exiting..."));
 /*
   // close the first window, the list makes the next one the first again.
   // This ensures that queryClose() is called on each window to ask for closing
@@ -1416,12 +1416,12 @@ void KlustersApp::slotFileQuit()
 
   close();
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotUndo()
 {  
-  slotStatusMsg(i18n("Reverting last action..."));
+  slotStatusMsg(tr("Reverting last action..."));
 
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   doc->undo();
@@ -1432,12 +1432,12 @@ void KlustersApp::slotUndo()
   if(view->containsTraceView() && view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
   else  slotStateChanged("noTraceViewBrowsingState");  
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotRedo()
 {
-  slotStatusMsg(i18n("Reverting last undo action..."));
+  slotStatusMsg(tr("Reverting last undo action..."));
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   doc->redo();
   QApplication::restoreOverrideCursor();
@@ -1447,7 +1447,7 @@ void KlustersApp::slotRedo()
   if(view->containsTraceView() && view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
   else  slotStateChanged("noTraceViewBrowsingState");
   
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotUpdateUndoNb(int undoNb){
@@ -1463,7 +1463,7 @@ void KlustersApp::slotUpdateRedoNb(int redoNb){
 
 void KlustersApp::slotViewMainToolBar()
 {
-  slotStatusMsg(i18n("Toggle the main toolbar..."));
+  slotStatusMsg(tr("Toggle the main toolbar..."));
 
   // turn Toolbar on or off
   if(!viewMainToolBar->isChecked())
@@ -1475,11 +1475,11 @@ void KlustersApp::slotViewMainToolBar()
     toolBar("mainToolBar")->show();
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotViewActionBar(){
-  slotStatusMsg(i18n("Toggle the action..."));
+  slotStatusMsg(tr("Toggle the action..."));
   
   // turn Toolbar on or off
   if(!viewActionBar->isChecked())
@@ -1490,11 +1490,11 @@ void KlustersApp::slotViewActionBar(){
   {
     toolBar("actionBar")->show();
   }
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotViewParameterBar(){
-  slotStatusMsg(i18n("Toggle the parameters..."));
+  slotStatusMsg(tr("Toggle the parameters..."));
 
   // turn Toolbar on or off
   if(!viewParameterBar->isChecked())
@@ -1506,12 +1506,12 @@ void KlustersApp::slotViewParameterBar(){
     paramBar->show();
     slotUpdateParameterBar();
   }
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotViewToolBar()
 {
-  slotStatusMsg(i18n("Toggle the tools..."));
+  slotStatusMsg(tr("Toggle the tools..."));
 
   // turn Toolbar on or off
   if(!viewToolBar->isChecked())
@@ -1523,12 +1523,12 @@ void KlustersApp::slotViewToolBar()
     toolBar("toolBar")->show();
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotViewStatusBar()
 {
-  slotStatusMsg(i18n("Toggle the statusbar..."));
+  slotStatusMsg(tr("Toggle the statusbar..."));
   ///////////////////////////////////////////////////////////////////
   //turn Statusbar on or off
   if(!viewStatusBar->isChecked())
@@ -1540,11 +1540,11 @@ void KlustersApp::slotViewStatusBar()
     statusBar()->show();
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotViewClusterInfo(){
-	slotStatusMsg(i18n("Toggle the presentation of the cluster information in the cluster palette..."));
+    slotStatusMsg(tr("Toggle the presentation of the cluster information in the cluster palette..."));
 
   // turn the user cluster information on or off
 	if(!viewClusterInfo->isChecked())
@@ -1556,60 +1556,60 @@ void KlustersApp::slotViewClusterInfo(){
 		doc->showUserClusterInformation();		
 	}
 
-	slotStatusMsg(i18n("Ready."));
+    slotStatusMsg(tr("Ready."));
 
 }
 
 
 void KlustersApp::slotWindowNewClusterDisplay()
 {
-  slotStatusMsg(i18n("Opening a new cluster view..."));
+  slotStatusMsg(tr("Opening a new cluster view..."));
 
   createDisplay(KlustersView::CLUSTERS);
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotWindowNewWaveformDisplay()
 {
-  slotStatusMsg(i18n("Opening a new waveform view..."));
+  slotStatusMsg(tr("Opening a new waveform view..."));
 
   createDisplay(KlustersView::WAVEFORMS);
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotWindowNewCrosscorrelationDisplay()
 {
-  slotStatusMsg(i18n("Opening a new correlation view..."));
+  slotStatusMsg(tr("Opening a new correlation view..."));
 
   createDisplay(KlustersView::CORRELATIONS);
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotWindowNewOverViewDisplay()
 {
-  slotStatusMsg(i18n("Opening a new over view..."));
+  slotStatusMsg(tr("Opening a new over view..."));
 
   createDisplay(KlustersView::OVERVIEW);
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotWindowNewGroupingAssistantDisplay()
 {
-  slotStatusMsg(i18n("Opening a new grouping assistant view..."));
+  slotStatusMsg(tr("Opening a new grouping assistant view..."));
 
   createDisplay(KlustersView::GROUPING_ASSISTANT_VIEW);
   slotStateChanged("groupingAssistantDisplayExists");
   errorMatrixExists = true;
      
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotNewTraceDisplay(){
-  slotStatusMsg(i18n("Opening a new grouping assistant view..."));
+  slotStatusMsg(tr("Opening a new grouping assistant view..."));
 
   createDisplay(KlustersView::TRACES);
   
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 
@@ -1622,9 +1622,9 @@ void KlustersApp::slotStatusMsg(const QString &text)
 }
 
 void KlustersApp::slotKeyBindings(){
-  slotStatusMsg(i18n("Changing the key bindings..."));
+  slotStatusMsg(tr("Changing the key bindings..."));
   KKeyDialog::configure(actionCollection());
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::viewMenuAboutToShow()
@@ -1663,7 +1663,7 @@ void KlustersApp::viewMenuActivated( int id )
 /*Slots for the actions menu*/
 /**Creates a single cluster by selecting an area*/
 void KlustersApp::slotSingleNew(){
-   slotStatusMsg(i18n("Create new cluster..."));
+   slotStatusMsg(tr("Create new cluster..."));
 
    //If we are in delay mode, update the display, if need it, before triggering the tool change
    if(dynamic_cast<KRadioAction*>(actionCollection()->action("delay_selection"))->isChecked()){
@@ -1672,11 +1672,11 @@ void KlustersApp::slotSingleNew(){
 
    KlustersView* view = activeView();
    view->setMode(ViewWidget::NEW_CLUSTER);
-   slotStatusMsg(i18n("Ready."));
+   slotStatusMsg(tr("Ready."));
 }
 /**Creates a multiple clusters by selecting an area*/
 void KlustersApp::slotMultipleNew(){
-   slotStatusMsg(i18n("Split clusters..."));
+   slotStatusMsg(tr("Split clusters..."));
 
    //If we are in delay mode, update the display, if need it, before triggering the tool change
    if(dynamic_cast<KRadioAction*>(actionCollection()->action("delay_selection"))->isChecked()){
@@ -1685,11 +1685,11 @@ void KlustersApp::slotMultipleNew(){
 
    KlustersView* view = activeView();
    view->setMode(ViewWidget::NEW_CLUSTERS);
-   slotStatusMsg(i18n("Ready."));
+   slotStatusMsg(tr("Ready."));
 }
 /**Deletes spikes from a cluster and move them to the cluster (number 1) containing the poorly isolated cells*/
 void KlustersApp::slotDeleteNoise(){
-   slotStatusMsg(i18n("Delete noise..."));
+   slotStatusMsg(tr("Delete noise..."));
 
    //If we are in delay mode, update the display, if need it, before triggering the tool change
    if(dynamic_cast<KRadioAction*>(actionCollection()->action("delay_selection"))->isChecked()){
@@ -1698,11 +1698,11 @@ void KlustersApp::slotDeleteNoise(){
 
    KlustersView* view = activeView();
    view->setMode(ViewWidget::DELETE_NOISE);
-   slotStatusMsg(i18n("Ready."));
+   slotStatusMsg(tr("Ready."));
 }
 /**Deletes spikes from a cluster and move them to the cluster (number 0) containing the artifacts*/
 void KlustersApp::slotDeleteArtefact(){
-   slotStatusMsg(i18n("Delete artifact..."));
+   slotStatusMsg(tr("Delete artifact..."));
 
    //If we are in delay mode, update the display, if need it, before triggering the tool change
    if(dynamic_cast<KRadioAction*>(actionCollection()->action("delay_selection"))->isChecked()){
@@ -1711,11 +1711,11 @@ void KlustersApp::slotDeleteArtefact(){
 
    KlustersView* view = activeView();
    view->setMode(ViewWidget::DELETE_ARTEFACT);
-   slotStatusMsg(i18n("Ready."));
+   slotStatusMsg(tr("Ready."));
 }
 /**Zooms*/
 void KlustersApp::slotZoom(){
-   slotStatusMsg(i18n("Zooming..."));
+   slotStatusMsg(tr("Zooming..."));
 
    //If we are in delay mode, update the display, if need it, before triggering the tool change
    if(dynamic_cast<KRadioAction*>(actionCollection()->action("delay_selection"))->isChecked()){
@@ -1724,11 +1724,11 @@ void KlustersApp::slotZoom(){
 
    KlustersView* view = activeView();
    view->setMode(BaseFrame::ZOOM);
-   slotStatusMsg(i18n("Ready."));
+   slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotSelectTime(){
- slotStatusMsg(i18n("Selecting time..."));
+ slotStatusMsg(tr("Selecting time..."));
 
  //If we are in delay mode, update the display, if need it, before triggering the tool change
  if(dynamic_cast<KRadioAction*>(actionCollection()->action("delay_selection"))->isChecked()){
@@ -1738,7 +1738,7 @@ void KlustersApp::slotSelectTime(){
  KlustersView* view = activeView();
  view->setMode(ViewWidget::SELECT_TIME);
 
- slotStatusMsg(i18n("Ready."));  
+ slotStatusMsg(tr("Ready."));
 }
 
 
@@ -1764,16 +1764,16 @@ void KlustersApp::slotUpdateShownClusters(QValueList<int> selectedClusters){
 }
 
 void KlustersApp::slotGroupClusters(QValueList<int> selectedClusters){
-  slotStatusMsg(i18n("Grouping clusters..."));
+  slotStatusMsg(tr("Grouping clusters..."));
   KlustersView* view = activeView();
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   doc->groupClusters(selectedClusters,*view);
   QApplication::restoreOverrideCursor();
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotMoveClustersToNoise(QValueList<int> selectedClusters){
-  slotStatusMsg(i18n("Delete &noisy cluster(s)..."));
+  slotStatusMsg(tr("Delete &noisy cluster(s)..."));
   KlustersView* view = activeView();
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   doc->deleteClusters(selectedClusters,*view,1);
@@ -1783,11 +1783,11 @@ void KlustersApp::slotMoveClustersToNoise(QValueList<int> selectedClusters){
   else  slotStateChanged("noTraceViewBrowsingState");
   
   QApplication::restoreOverrideCursor();
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotMoveClustersToArtefact(QValueList<int> selectedClusters){
-  slotStatusMsg(i18n("Delete &artifact cluster(s)..."));
+  slotStatusMsg(tr("Delete &artifact cluster(s)..."));
   KlustersView* view = activeView();
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   doc->deleteClusters(selectedClusters,*view,0);
@@ -1797,7 +1797,7 @@ void KlustersApp::slotMoveClustersToArtefact(QValueList<int> selectedClusters){
   else  slotStateChanged("noTraceViewBrowsingState");
   
   QApplication::restoreOverrideCursor();
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 
@@ -2192,7 +2192,7 @@ void KlustersApp::slotRecluster(){
  //Get the clusters to recluster (those selected in the active display)
  const QValueList<int>& currentClusters = activeView()->clusters();
  if(currentClusters.size() == 0){
-   KMessageBox::error (this,i18n("No clusters have been selected to be reclustered."), i18n("Error !"));
+   KMessageBox::error (this,tr("No clusters have been selected to be reclustered."), tr("Error !"));
   return;
  }
 
@@ -2254,18 +2254,18 @@ void KlustersApp::slotRecluster(){
  //Create the feature file for the selected clusters and get its name.
  int returnStatus = doc->createFeatureFile(clustersToRecluster,reclusteringFetFileName);
  if(returnStatus == KlustersDoc::OPEN_ERROR){
-  KMessageBox::error (this,i18n("The reclustering feature file cannot be created (possibly because of insufficient file access permissions).\n Reclustering can not be done."), i18n("Error !"));
+  KMessageBox::error (this,tr("The reclustering feature file cannot be created (possibly because of insufficient file access permissions).\n Reclustering can not be done."), tr("Error !"));
   return;
  }
  if(returnStatus == KlustersDoc::CREATION_ERROR){
-  KMessageBox::error (this,i18n("An error happened while creating the reclustering feature file.\n Reclustering can not be done."), i18n("IO Error !"));
+  KMessageBox::error (this,tr("An error happened while creating the reclustering feature file.\n Reclustering can not be done."), tr("IO Error !"));
   return;
  }
 
      
  if(processWidget == 0L){
   KDockWidget* display;
-  display = createDockWidget(QString(QChar(displayCount)),0, 0L, i18n("Recluster output"), i18n("Recluster output"));
+  display = createDockWidget(QString(QChar(displayCount)),0, 0L, tr("Recluster output"), tr("Recluster output"));
 
   processWidget = new ProcessWidget(display);
   connect(processWidget,SIGNAL(processExited(KProcess*)), this, SLOT(slotProcessExited(KProcess*)));
@@ -2315,8 +2315,8 @@ void KlustersApp::slotRecluster(){
  status = processWidget->startJob(doc->documentDirectory(),command);
  
  if(!status){
-  KMessageBox::error (this,i18n("The reclustering program could not be started.\n"
-                      "One possible reason is that the automatic reclustering program could not be found."), i18n("Error !"));
+  KMessageBox::error (this,tr("The reclustering program could not be started.\n"
+                      "One possible reason is that the automatic reclustering program could not be found."), tr("Error !"));
   processFinished = true;
   processKilled = false;
   slotStateChanged("noReclusterState");
@@ -2328,11 +2328,11 @@ void KlustersApp::slotProcessExited(KProcess* process){
  //Check if the process has exited "voluntarily" and if so if it was successful
  if(!process->normalExit() || (process->normalExit() && process->exitStatus())){
   if(process->normalExit() || (!process->normalExit() && !processKilled))
-    KMessageBox::error (this,i18n("The reclustering program did not finished normaly.\n"
-                      "Check the output log for more information."), i18n("Error !"));
+    KMessageBox::error (this,tr("The reclustering program did not finished normaly.\n"
+                      "Check the output log for more information."), tr("Error !"));
    
   if(!QFile::remove(reclusteringFetFileName))
-   KMessageBox::error(0,i18n("Could not delete the temporary feature file used by the reclustering program."), i18n("Warning !"));
+   KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
   processFinished = true;
   processOutputsFinished = true;
   processKilled = false;
@@ -2349,7 +2349,7 @@ void KlustersApp::slotProcessExited(KProcess* process){
  switch(returnStatus){
   case KlustersDoc::DOWNLOAD_ERROR:
    QApplication::restoreOverrideCursor();
-   KMessageBox::error(this,i18n("Could not download the temporary file containing the new clusters."), i18n("Error !"));
+   KMessageBox::error(this,tr("Could not download the temporary file containing the new clusters."), tr("Error !"));
    processFinished = true;
    processOutputsFinished = true;
    processKilled = false;
@@ -2359,7 +2359,7 @@ void KlustersApp::slotProcessExited(KProcess* process){
    return;
   case KlustersDoc::OPEN_ERROR:
    QApplication::restoreOverrideCursor();
-   KMessageBox::error (this,i18n("Could not open the temporary file containing the new clusters."), i18n("Error !"));
+   KMessageBox::error (this,tr("Could not open the temporary file containing the new clusters."), tr("Error !"));
    processFinished = true;
    processOutputsFinished = true;
    processKilled = false; 
@@ -2369,7 +2369,7 @@ void KlustersApp::slotProcessExited(KProcess* process){
    return;
   case KlustersDoc::INCORRECT_CONTENT:
    QApplication::restoreOverrideCursor();
-   KMessageBox::error (this,i18n("The temporary file containing the new clusters contains incorrect data."), i18n("Error !"));
+   KMessageBox::error (this,tr("The temporary file containing the new clusters contains incorrect data."), tr("Error !"));
    processFinished = true;
    processOutputsFinished = true;
    processKilled = false;
@@ -2400,7 +2400,7 @@ void KlustersApp::slotProcessExited(KProcess* process){
  info.append(".\nThe cluster list will now be updated.");
 
  QApplication::restoreOverrideCursor();
- KMessageBox::information(this,info, i18n("Automatic Reclustering !"));
+ KMessageBox::information(this,info, tr("Automatic Reclustering !"));
  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
  doc->reclusteringUpdate(clustersToRecluster,clustersFromReclustering);
 
@@ -2561,7 +2561,7 @@ void KlustersApp::renameActiveDisplay(){
  //Get the active tab
  current = static_cast<KDockWidget*>(tabsParent->currentPage());
 
- QString newLabel = KInputDialog::getText(i18n("New Display label"),i18n("Type in the new display label"),current->tabPageLabel());
+ QString newLabel = KInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),current->tabPageLabel());
  if(!newLabel.isEmpty()){
   tabsParent->setTabLabel(current,newLabel);
   current->setTabPageLabel(newLabel);

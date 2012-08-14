@@ -30,13 +30,11 @@ using namespace std;
 ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(QIconView* parent, QString label)
 	:QIconViewItem(parent, label)
 {
-	toolTipText="";
 	toolTip=NULL;
 }
 
 ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(QIconView* parent, QString label, const QPixmap & icon ):QIconViewItem(parent, label,icon)
 {
-	toolTipText="";
 	toolTip=NULL;
 }
 
@@ -44,7 +42,7 @@ ClusterPaletteIconViewItem::~ClusterPaletteIconViewItem()
 {
 }
 
-void ClusterPaletteIconViewItem::setToolTipText(const QString toolTipText)
+void ClusterPaletteIconViewItem::setToolTipText(const QString &toolTipText)
 {
 	this->toolTipText=toolTipText;
 	if (!toolTip){

@@ -293,7 +293,7 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
    QFileInfo parFileInfo(parFileUrl.path());
    if(parFileInfo.exists()){
     QApplication::restoreOverrideCursor();
-    KMessageBox::information(0,i18n("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl.fileName()).arg(parFileUrl.fileName()).arg(xmlParFileUrl.fileName()), i18n("Warning!"),"TwoParameterFiles");
+    KMessageBox::information(0,tr("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl.fileName()).arg(parFileUrl.fileName()).arg(xmlParFileUrl.fileName()), tr("Warning!"),"TwoParameterFiles");
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    }
    xmlParFile.setName(tmpXmlParFile);
@@ -336,9 +336,9 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
      if((cluFileInfo.exists() && crashFileInfo.lastModified() > cluFileInfo.lastModified()) ||
       !cluFileInfo.exists()){
         QApplication::restoreOverrideCursor();
-        switch(KMessageBox::questionYesNo(0,i18n("A more recent copy of the cluster file (a rescue file) was found on the disk. This indicates that Klusters crashed while editing these data during a previous session.\n"
+        switch(KMessageBox::questionYesNo(0,tr("A more recent copy of the cluster file (a rescue file) was found on the disk. This indicates that Klusters crashed while editing these data during a previous session.\n"
                "Do you wish to use the newer copy (The old copy will be saved under another name)?"),
-                i18n("More recent cluster file found"), i18n("Use newer copy"), i18n("Discard newer copy") ))
+                tr("More recent cluster file found"), tr("Use newer copy"), tr("Discard newer copy") ))
         {
 					case KMessageBox::Yes:
 					 QDir dir(crashFileInfo.dir());
@@ -349,9 +349,9 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
            }
            renameStatus = dir.rename(crashFileInfo.fileName(),cluName);
            if(!renameStatus)
-            KMessageBox::error(0,i18n(
+            KMessageBox::error(0,tr(
               "It appears that the rescue file cannot be renamed (possibly because of insufficient file access permissions).\n"
-              "The rescue file will thus not be used."), i18n("I/O Error !"));
+              "The rescue file will thus not be used."), tr("I/O Error !"));
 
            break;
       }
@@ -547,11 +547,11 @@ void KlustersDoc::customEvent(QCustomEvent* event){
   }
   else{
     if(((AutoSaveThread::AutoSaveEvent*)event)->isIOerror())
-     KMessageBox::error(0,i18n(
+     KMessageBox::error(0,tr(
       "In order to protect your work in case of a crash, Klusters periodically saves a hidden copy of the cluster file"
       " in the directory where your files are located (this temporary rescue file is removed when you quit the application).\n"
       "However, it now appears that this rescue file cannot be created (possibly because of insufficient file access permissions).\n"
-      "This feature will thus be disabled for the current session."), i18n("I/O Error !"));
+      "This feature will thus be disabled for the current session."), tr("I/O Error !"));
     else
     //upload the temp file, this can not be done asynchronously.
    //wait savingInterval before starting the autoSaveThread again.
@@ -631,7 +631,7 @@ bool KlustersDoc::canCloseView(){
 	bool returnValue = false;
   if(isModified()){
 		KURL saveURL;
-  	switch(KMessageBox::warningYesNoCancel(0, i18n("The current file has been modified.\n"
+    switch(KMessageBox::warningYesNoCancel(0, tr("The current file has been modified.\n"
                           "Do you want to save it?"),url().fileName()))
     {
 			case KMessageBox::Yes:
@@ -641,8 +641,8 @@ bool KlustersDoc::canCloseView(){
         saveStatus = saveDocument(saveURL);
         QApplication::restoreOverrideCursor();
         if(saveStatus != OK){
- 					switch(KMessageBox::warningYesNo(0,i18n("Could not save the current document !\n"
-																												"Close anyway ?"), i18n("I/O Error !")))
+                    switch(KMessageBox::warningYesNo(0,tr("Could not save the current document !\n"
+                                                                                                                "Close anyway ?"), tr("I/O Error !")))
  					{
  						case KMessageBox::Yes:
  							returnValue = true;
@@ -1931,9 +1931,9 @@ int KlustersDoc::integrateReclusteredClusters(QValueList<int>& clustersToReclust
   if(KIO::NetAccess::exists(cluFileUrl))
     if(!KIO::NetAccess::download(cluFileUrl,tmpCluFile)){
      if(!QFile::remove(reclusteringFetFileName))
-      KMessageBox::error(0,i18n("Could not delete the temporary feature file used by the reclustering program."), i18n("Warning !"));
+      KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
      if(!QFile::remove(cluFileName))
-      KMessageBox::error(0,i18n("Could not delete the temporary cluster file used by the reclustering program."), i18n("Warning !"));
+      KMessageBox::error(0,tr("Could not delete the temporary cluster file used by the reclustering program."), tr("Warning !"));
      return DOWNLOAD_ERROR;
     }
 
@@ -1941,9 +1941,9 @@ int KlustersDoc::integrateReclusteredClusters(QValueList<int>& clustersToReclust
   if(cluFile == NULL){
    KIO::NetAccess::removeTempFile(tmpCluFile);
    if(!QFile::remove(reclusteringFetFileName))
-    KMessageBox::error(0,i18n("Could not delete the temporary feature file used by the reclustering program."), i18n("Warning !"));
+    KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
     if(!QFile::remove(cluFileName))
-     KMessageBox::error(0,i18n("Could not delete the temporary cluster file used by the reclustering program."), i18n("Warning !"));
+     KMessageBox::error(0,tr("Could not delete the temporary cluster file used by the reclustering program."), tr("Warning !"));
    return OPEN_ERROR;
   }
 
@@ -1952,9 +1952,9 @@ int KlustersDoc::integrateReclusteredClusters(QValueList<int>& clustersToReclust
    fclose(cluFile);
    KIO::NetAccess::removeTempFile(tmpCluFile);
    if(!QFile::remove(reclusteringFetFileName))
-    KMessageBox::error(0,i18n("Could not delete the temporary feature file used by the reclustering program."), i18n("Warning !"));
+    KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
    if(!QFile::remove(cluFileName))
-    KMessageBox::error(0,i18n("Could not delete the temporary cluster file used by the reclustering program."), i18n("Warning !"));
+    KMessageBox::error(0,tr("Could not delete the temporary cluster file used by the reclustering program."), tr("Warning !"));
    return INCORRECT_CONTENT;
   }
 
@@ -1963,9 +1963,9 @@ int KlustersDoc::integrateReclusteredClusters(QValueList<int>& clustersToReclust
 
   //Suppress the fet and clu files.
   if(!QFile::remove(reclusteringFetFileName))
-    KMessageBox::error(0,i18n("Could not delete the temporary feature file used by the reclustering program."), i18n("Warning !"));
+    KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
   if(!QFile::remove(cluFileName))
-   KMessageBox::error(0,i18n("Could not delete the temporary cluster file used by the reclustering program."), i18n("Warning !"));
+   KMessageBox::error(0,tr("Could not delete the temporary cluster file used by the reclustering program."), tr("Warning !"));
 
  return OK;
 }

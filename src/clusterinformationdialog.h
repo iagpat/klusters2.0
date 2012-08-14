@@ -36,7 +36,7 @@ class ClusterInformationDialog : public KDialogBase
 {
 Q_OBJECT
 public:
-	ClusterInformationDialog(QWidget *parent = 0,const QString& caption = "Cluster information");
+    ClusterInformationDialog(QWidget *parent = 0,const QString& caption = tr("Cluster information"));
 	virtual ~ClusterInformationDialog();
 	
 	inline const QString getStructure() { return structure->text(); };

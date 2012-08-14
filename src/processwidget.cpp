@@ -148,14 +148,14 @@ void ProcessWidget::childFinished(bool normal, int status)
 
     if (normal) {
         if (status) {
-            s = i18n("*** Exited with status: %1 ***").arg(status);
+            s = tr("*** Exited with status: %1 ***").arg(status);
             t = ProcessListBoxItem::Error;
         } else {
-            s = i18n("*** Exited normally ***");
+            s = tr("*** Exited normally ***");
             t = ProcessListBoxItem::Diagnostic;
         }
     } else {
-        s = i18n("*** Process aborted ***");
+        s = tr("*** Process aborted ***");
         t = ProcessListBoxItem::Error;
     }
 

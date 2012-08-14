@@ -41,7 +41,7 @@ class ClusterPaletteIconViewItem : public QIconViewItem
 
 		~ClusterPaletteIconViewItem();
 
-		void  setToolTipText(const QString);
+        void  setToolTipText(const QString&);
 		inline const QString   getToolTipText(void) const { return(toolTipText); }
 
 	private:

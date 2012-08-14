@@ -103,31 +103,31 @@ bool Data::configure(QFile& parFile,int electrodeGroupID,QString& errorInformati
 
   //If  one of the elements was not in the parameter file, its value would have been assigned 0.
   if(nbBits == 0){
-   errorInformation = i18n("In the parameter file (base.xml), the number of bits is missing.");
+   errorInformation = QObject::tr("In the parameter file (base.xml), the number of bits is missing.");
    return false;
   }
   if(samplingRate == 0){
-   errorInformation = i18n("In the parameter file (base.xml), the sampling rate is missing.");
+   errorInformation = QObject::tr("In the parameter file (base.xml), the sampling rate is missing.");
    return false;
   }
   if(channels.size() == 0){
-   errorInformation = i18n("There is no channels defined for this electrode group.");
+   errorInformation = QObject::tr("There is no channels defined for this electrode group.");
    return false;
   }
   if(nbChannels == 0){
-   errorInformation = i18n("In the parameter file (base.xml), the number of channels could not be determined.");
+   errorInformation = QObject::tr("In the parameter file (base.xml), the number of channels could not be determined.");
    return false;
   }
   if(nbSamplesInWaveform == 0){
-   errorInformation = i18n("In the parameter file (base.xml), the number of samples per waveform is missing.");
+   errorInformation = QObject::tr("In the parameter file (base.xml), the number of samples per waveform is missing.");
    return false;
   }
   if(peakPositionInWaveform == 0){
-   errorInformation = i18n("In the parameter file (base.xml), the position of the waveform peak is missing.");
+   errorInformation = QObject::tr("In the parameter file (base.xml), the position of the waveform peak is missing.");
    return false;
   }
   if(nbFeaturesbyChannel == 0){
-   errorInformation = i18n("In the parameter file (base.xml), the number of features per channel is missings.");
+   errorInformation = QObject::tr("In the parameter file (base.xml), the number of features per channel is missings.");
    return false;
   }
 
@@ -137,7 +137,7 @@ bool Data::configure(QFile& parFile,int electrodeGroupID,QString& errorInformati
   return true;
  }
  else{
-  errorInformation = i18n("The parameter file (base.xml) could not be parsed.");
+  errorInformation = QObject::tr("The parameter file (base.xml) could not be parsed.");
   return false;
  }
 }
@@ -156,7 +156,7 @@ bool Data::configure(QFile& parXFile,QFile& parFile,QString& errorInformation){
   }
   //The parX file has to contain at leat 9 lines, otherwise there is a problem
   if(lineCounter != 9){
-   errorInformation = i18n("In the general parameter file (base.par), the number of lines should be 9.");
+   errorInformation = QObject::tr("In the general parameter file (base.par), the number of lines should be 9.");
    return false;
   }
 
@@ -188,7 +188,7 @@ bool Data::configure(QFile& parXFile,QFile& parFile,QString& errorInformation){
 
   //The par file has to contain at leat 3 lines, otherwise there is a problem
   if(lineCounter < 3){
-   errorInformation = i18n("In the specific parameter file (base.par.n), there are less than 3 lines.");
+   errorInformation = QObject::tr("In the specific parameter file (base.par.n), there are less than 3 lines.");
    return false;
   }
 
@@ -244,7 +244,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
       isTwoBytesRecording = false;
       break;
     default:   //not implemented
-     errorInformation = i18n("The number of bits is not supported.");
+     errorInformation = QObject::tr("The number of bits is not supported.");
      return false;
   }
 
@@ -277,7 +277,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
   }
   catch(...){
    delete []buffer;
-   errorInformation = i18n("An error happened while loading the clusters into memory.");
+   errorInformation = QObject::tr("An error happened while loading the clusters into memory.");
    return false;
   }
 
@@ -285,7 +285,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
 
   //if the number of clusters read did not correspond to nbSpikes, there is a problem.
   if(k != upperLimit){
-   errorInformation = i18n("The number of spikes read in the cluster file does not correspond to number of spikes computed.");
+   errorInformation = QObject::tr("The number of spikes read in the cluster file does not correspond to number of spikes computed.");
    return false;
   }
   else return true;
@@ -343,7 +343,7 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
   }
   catch(...){
    delete []buffer;
-   errorInformation = i18n("An error happened while loading the features into memory.");
+   errorInformation = QObject::tr("An error happened while loading the features into memory.");
    return false;
   }
 
@@ -353,7 +353,7 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
 
   //if the number of features read did not correspond to nbSpikes*nbDimensions, there is a problem.
   if(k != (nbSpikes * nbDimensions)){
-  errorInformation = i18n("The number of features read in the feature file does not correspond to number of spikes times the number of dimensions.");
+  errorInformation = QObject::tr("The number of features read in the feature file does not correspond to number of spikes times the number of dimensions.");
   return false;
  }
  else return true;
@@ -462,7 +462,7 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,QString& errorInforma
       isTwoBytesRecording = false;
       break;
     default:   //not implemented
-     errorInformation = i18n("The number of bits is not supported.");
+     errorInformation = QObject::tr("The number of bits is not supported.");
      return false;
   }
   nbSpikes =  spkFileLength / static_cast<long>(static_cast<long>(nbChannels) * static_cast<long>(nbSamplesInWaveform) * static_cast<long>(sampleSize));
