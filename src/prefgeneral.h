@@ -25,12 +25,11 @@
 #include <qspinbox.h>
 #include <qpushbutton.h>
 #include <qlineedit.h> 
+#include <qfiledialog.h>
+
 
 //includes files for KDE
 #include <kcolorbutton.h>
-#include <qfiledialog.h>
-
-#include <kmessagebox.h>
 
 //include files for the application
 #include <prefgenerallayout.h>

@@ -28,10 +28,10 @@
 #include <qpaintdevicemetrics.h>
 
 #include <qapplication.h>
+#include <qmessagebox.h>
 
 // include files for kde
 #include <kiconloader.h>
-#include <kmessagebox.h>
 //
 
 //Unix include file
@@ -179,7 +179,7 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
  if(data.nbOfRows() == 0){
    QApplication::restoreOverrideCursor();
 
-  KMessageBox::error(this,QObject::tr("An error has occured, the data file could not be opened or the file size is incorrect."), QObject::tr("IO Error"));
+  QMessageBox::critical(this,QObject::tr("IO Error"), QObject::tr("An error has occured, the data file could not be opened or the file size is incorrect."));
   if(mode == SELECT) setCursor(selectCursor);
   if(mode == ZOOM) setCursor(zoomCursor);
   if(mode == MEASURE) setCursor(measureCursor);
@@ -2754,7 +2754,7 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
  }
  if(mode == ADD_EVENT && (event->button() & QMouseEvent::LeftButton)){
   if(eventDescriptionToCreate == ""){
-   KMessageBox::error (this,QObject::tr("In order to add an event you have to choose an event description first!"), QObject::tr("Unselected description type!"));
+   QMessageBox::critical(this,QObject::tr("Unselected description type!"), QObject::tr("In order to add an event you have to choose an event description first!"));
    return;
   }
 

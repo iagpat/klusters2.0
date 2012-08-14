@@ -22,9 +22,6 @@
 //QT include files
 #include <qapplication.h>
 
-// include files for KDE
-#include <kmessagebox.h>
-
 
 
 void SaveThread::save(const KURL& url,KlustersDoc* doc,bool isSaveAs){
