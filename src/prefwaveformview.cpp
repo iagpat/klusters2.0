@@ -21,10 +21,10 @@
 #include <qpainter.h>
 #include <qfile.h>
 #include <qtextstream.h>
+#include <qmessagebox.h>
 
 // include files for KDE
 
-#include <kmessagebox.h>
 #include <kfiledialog.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
@@ -79,9 +79,9 @@ void PrefWaveformView::saveChannelOrder(){
   if(!url.isEmpty()){
   FILE* channelFile = fopen(url.path().latin1(),"w");
    if(channelFile == NULL){
-    KMessageBox::error (this,
-         tr("The selected file could not be opened, possibly because of access permissions !"),
-         tr("Error !"));
+    QMessageBox::critical (this,tr("Error !"),
+         tr("The selected file could not be opened, possibly because of access permissions !")
+         );
     return;
    }
 
@@ -92,9 +92,9 @@ void PrefWaveformView::saveChannelOrder(){
    fclose(channelFile);
    
    if(writeStatus < 0){
-    KMessageBox::error (this,
-         tr("The data could not have been saved due to an writing error."),
-         tr("IO Error !"));
+    QMessageBox::critical (this,tr("IO Error !"),
+         tr("The data could not have been saved due to an writing error.")
+         );
     return;     
    }
   } 
@@ -109,17 +109,17 @@ void PrefWaveformView::loadChannelOrder(){
  if(!url.isEmpty()){
    QString tmpChannelFile;
    if(!KIO::NetAccess::download(url,tmpChannelFile)){
-     KMessageBox::error (this,
-         tr("The selected file could not be downloaded !"),
-         tr("Error !"));
+     QMessageBox::critical (this,tr("Error !"),
+         tr("The selected file could not be downloaded !")
+         );
      return;
    }
 
    QFile channelFile(tmpChannelFile);
    if(!channelFile.open(IO_ReadOnly)){
-    KMessageBox::error (this,
-         tr("The selected file could not be opened !"),
-         tr("Error !"));
+    QMessageBox::critical (this,tr("Error !"),
+         tr("The selected file could not be opened !")
+         );
     return;
    }
 
@@ -130,9 +130,9 @@ void PrefWaveformView::loadChannelOrder(){
      bool ok;
      int position = line.toInt(&ok,10);
      if(!ok){
-      KMessageBox::error (this,
+      QMessageBox::critical (this,tr("Error !"),
           tr("The selected file does not have the correct format (list of channels number),\n"
-           "it can not be used."),tr("Error !"));
+           "it can not be used."));
 
       channelFile.close();
       //Remove the temp file
@@ -152,10 +152,10 @@ void PrefWaveformView::loadChannelOrder(){
  }
 
  if(nbChannels != static_cast<int>(positions.count())){
-  KMessageBox::error (this,
+  QMessageBox::critical (this,tr("Error !"),
          tr("The number of channels in the selected file does not correspond to the number of channels of the current file !\n"
-              "This file can not be used for the current document."),
-         tr("Error !"));
+              "This file can not be used for the current document.")
+         );
   return;
  }
 
