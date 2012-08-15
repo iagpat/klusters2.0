@@ -27,6 +27,7 @@
 #include <qcursor.h>
 #include <qfileinfo.h> 
 #include <qapplication.h>
+#include <qinputdialog.h>
 
 // include files for KDE
 #include <kprinter.h>
@@ -43,7 +44,7 @@
 #include <kkeydialog.h>
 #include <kio/netaccess.h>
 #include <kprocess.h>
-#include <kinputdialog.h>
+
 
 //General C++ include files
 #include <iostream>
@@ -2562,8 +2563,9 @@ void KlustersApp::renameActiveDisplay(){
  //Get the active tab
  current = static_cast<KDockWidget*>(tabsParent->currentPage());
 
- QString newLabel = KInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),current->tabPageLabel());
- if(!newLabel.isEmpty()){
+ bool ok;
+ QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString::null, &ok, this, current->tabPageLabel());
+ if(!newLabel.isEmpty() && ok){
   tabsParent->setTabLabel(current,newLabel);
   current->setTabPageLabel(newLabel);
  }

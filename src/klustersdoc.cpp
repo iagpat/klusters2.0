@@ -27,7 +27,6 @@
 // include files for KDE
 
 #include <kmessagebox.h>
-#include <kfiledialog.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
 
@@ -548,11 +547,11 @@ void KlustersDoc::customEvent(QCustomEvent* event){
   }
   else{
     if(((AutoSaveThread::AutoSaveEvent*)event)->isIOerror())
-     KMessageBox::error(0,tr(
+     QMessageBox::critical(0,tr("I/O Error !"),tr(
       "In order to protect your work in case of a crash, Klusters periodically saves a hidden copy of the cluster file"
       " in the directory where your files are located (this temporary rescue file is removed when you quit the application).\n"
       "However, it now appears that this rescue file cannot be created (possibly because of insufficient file access permissions).\n"
-      "This feature will thus be disabled for the current session."), tr("I/O Error !"));
+      "This feature will thus be disabled for the current session.") );
     else
     //upload the temp file, this can not be done asynchronously.
    //wait savingInterval before starting the autoSaveThread again.
