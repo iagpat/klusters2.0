@@ -33,11 +33,10 @@
 #include <qpixmap.h>
 #include <qpopupmenu.h>
 #include <qbitmap.h>
-
+#include <qcolordialog.h>
+#include <qcolor.h>
 //KDE includes
-#include <kcolordialog.h>
-#include <kmessagebox.h>
-#include <kinputdialog.h>
+
 #include <kstatusbar.h>
 
 //General C++ include files
@@ -405,17 +404,17 @@ void ClusterPalette::changeColor(QIconViewItem* item){
   //Get the clusterColor associated with the item
   QColor color = clusterColors.color(index,ItemColors::BY_INDEX);
 
-  int result = KColorDialog::getColor(color,0);
-  if (result == KColorDialog::Accepted) {
+  QColor result = QColorDialog::getColor(color, 0);
+  if (result.isValid()) {
     //Update the clusterColor
-    clusterColors.setColor(index,color,ItemColors::BY_INDEX);
+    clusterColors.setColor(index,result,ItemColors::BY_INDEX);
 
     if(mode == IMMEDIATE){
       //Update the icon
       QPixmap* pixmap = item->pixmap();
       QPainter painter;
       painter.begin(pixmap);
-      painter.fillRect(0,0,12,12,color);
+      painter.fillRect(0,0,12,12,result);
       painter.end();
 
      //As soon a color changes a signal is emitted
