@@ -77,7 +77,7 @@ void PrefWaveformView::saveChannelOrder(){
         tr("*|All files"), this, tr("Save as..."));
 
   if(!url.isEmpty()){
-  FILE* channelFile = fopen(url.path().latin1(),"w");
+  FILE* channelFile = fopen(url.path().toLatin1(),"w");
    if(channelFile == NULL){
     QMessageBox::critical (this,tr("Error !"),
          tr("The selected file could not be opened, possibly because of access permissions !")

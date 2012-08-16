@@ -502,7 +502,7 @@ void KlustersApp::initDisplay(){
    binSizeValidator.setRange(0,maximumTime);
                      
   //Create the mainDock (first view)
-   mainDock = createDockWidget( "1", QPixmap(), 0L, tr(doc->documentName().latin1()), "Overview Display");
+   mainDock = createDockWidget( "1", QPixmap(), 0L, tr(doc->documentName().toLatin1()), "Overview Display");
    mainDock->setDockWindowTransient(this,true);
 
    //If the setting dialog exists (has already be open once), enable the settings for the channels.
@@ -592,7 +592,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
     QString displayName = (doc->documentName()).append(type);
     QString displayType = KlustersView::DisplayTypeNames[type];
 
-    display = createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, tr(displayName.latin1()), displayType);
+    display = createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, tr(displayName.toLatin1()), displayType);
 
     //Check if the active display contains a ProcessWidget
     bool isProcessWidget = doesActiveDisplayContainProcessWidget();
@@ -707,7 +707,7 @@ void KlustersApp::openDocumentFile(const QString& url)
    if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
     QString title = "File not found: ";
     title.append(filePath);
-    int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists, do you want to remove it from the list?"), tr(title.latin1()));
+    int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists, do you want to remove it from the list?"), tr(title.toLatin1()));
     if(answer == KMessageBox::Yes) fileOpenRecent->removeURL(url);
     else  fileOpenRecent->addURL(url); //hack, unselect the item
     filePath = "";    

@@ -86,7 +86,7 @@ void Utilities::createBackup(QString path){
  QFile backup(path+"~");
  original.open(QIODevice::ReadOnly);
  backup.open(QIODevice::WriteOnly);
- backup.writeBlock(original.readAll());
+ backup.write(original.readAll());
  original.close();
  backup.close();
 }

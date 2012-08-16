@@ -44,7 +44,7 @@ bool KlustersXmlReader::parseFile(const QFile& file,fileType type){
  xmlInitParser();
 
  // Load XML document
- doc = xmlParseFile(file.name().latin1());
+ doc = xmlParseFile(file.name().toLatin1());
  if(doc == NULL) return false;
 
  // Create xpath evaluation context
@@ -56,7 +56,7 @@ bool KlustersXmlReader::parseFile(const QFile& file,fileType type){
 
  //Read the document version
  xmlNodePtr rootElement = xmlDocGetRootElement(doc);
- xmlChar* versionTag = xmlCharStrdup(VERSION.latin1());
+ xmlChar* versionTag = xmlCharStrdup(VERSION.toLatin1());
  if(rootElement != NULL){
   xmlChar* sVersion = xmlGetProp(rootElement,versionTag);
   if(sVersion != NULL) readVersion = QString((char*)sVersion);
@@ -81,7 +81,7 @@ void KlustersXmlReader::closeFile(){
 int KlustersXmlReader::getResolution()const{
  int resolution = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + BITS).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + BITS).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -103,7 +103,7 @@ int KlustersXmlReader::getResolution()const{
 int KlustersXmlReader::getNbChannels()const{
  int nbChannels = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + NB_CHANNELS).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + NB_CHANNELS).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -126,7 +126,7 @@ int KlustersXmlReader::getNbChannels()const{
 Q3ValueList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
  Q3ValueList<int> channels;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -172,7 +172,7 @@ Q3ValueList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)co
 double KlustersXmlReader::getSamplingRate()const{
  double samplingRate = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + SAMPLING_RATE).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + SAMPLING_RATE).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -194,7 +194,7 @@ double KlustersXmlReader::getSamplingRate()const{
 int KlustersXmlReader::getNbSamples(int electrodeGroupID)const{
  int nbSamples = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -230,7 +230,7 @@ int KlustersXmlReader::getNbSamples(int electrodeGroupID)const{
 int KlustersXmlReader::getPeakSampleIndex(int electrodeGroupID)const{
  int index = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -265,7 +265,7 @@ int KlustersXmlReader::getPeakSampleIndex(int electrodeGroupID)const{
 int KlustersXmlReader::getNbFeatures(int electrodeGroupID)const{
  int nbFeatures = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -301,7 +301,7 @@ int KlustersXmlReader::getNbFeatures(int electrodeGroupID)const{
 int KlustersXmlReader::getVoltageRange() const{
  int range = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + VOLTAGE_RANGE).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + VOLTAGE_RANGE).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -324,7 +324,7 @@ int KlustersXmlReader::getVoltageRange() const{
 int KlustersXmlReader::getAmplification() const{
  int amplification = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + AMPLIFICATION).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + AMPLIFICATION).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -347,7 +347,7 @@ int KlustersXmlReader::getAmplification() const{
 int KlustersXmlReader::getOffset()const{
  int offset = 0;
  xmlXPathObjectPtr result;
- xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + OFFSET).latin1());
+ xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + OFFSET).toLatin1());
 
  //Evaluate xpath expression
  result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -369,7 +369,7 @@ int KlustersXmlReader::getOffset()const{
 
 void KlustersXmlReader::getClusterUserInformation (int pGroup, QMap<int,ClusterUserInformation>& clusterUserInformationMap)const{
 	xmlXPathObjectPtr result;
-	xmlChar* searchPath = xmlCharStrdup(QString("//" + UNITS + "/" + UNIT).latin1());
+	xmlChar* searchPath = xmlCharStrdup(QString("//" + UNITS + "/" + UNIT).toLatin1());
 
  //Evaluate xpath expression
 	result = xmlXPathEvalExpression(searchPath,xpathContex);

@@ -84,7 +84,7 @@ RestartTimer();
  bool status = tmpFile.open(QIODevice::ReadOnly);
 //If the number of events could not be determined, stop here
  if(!status){
-    qDebug("%s could not be opened\n",counterFile.name().latin1());
+    qDebug("%s could not be opened\n",counterFile.name().toLatin1());
 
   events.setSize(0,0);
   timeStamps.setSize(0,0);
@@ -97,8 +97,8 @@ RestartTimer();
  QString info;
  if(infoLine != NULL){
   info = infoLine.trimmed();
-  qDebug(" fileName %s counterFile %s\n",fileName.latin1(),counterFile.name().latin1());
-  qDebug(" info %s\n",info.latin1());
+  qDebug(" fileName %s counterFile %s\n",fileName.toLatin1(),counterFile.name().toLatin1());
+  qDebug(" info %s\n",info.toLatin1());
   QStringList parts = QStringList::split(" ", info);
   nbEvents = parts[0].toLong();
   tmpFile.close();
@@ -1386,8 +1386,8 @@ void EventsProvider::renameEvent(int selectedEventId,QString newEventDescription
 
 //Operator < on EventDescription to sort them in an case-insensitive maner.
  bool operator<(const EventDescription& s1,const EventDescription& s2){
-  if(s1.lower() == s2.lower()) return (static_cast<QString>(s1) < static_cast<QString>(s2));
-  else return (static_cast<QString>(s1.lower()) < static_cast<QString>(s2.lower()));
+  if(s1.toLower() == s2.toLower()) return (static_cast<QString>(s1) < static_cast<QString>(s2));
+  else return (static_cast<QString>(s1.toLower()) < static_cast<QString>(s2.toLower()));
  }
 
 

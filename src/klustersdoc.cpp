@@ -260,7 +260,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
   //Open the the spike and fet files. Only the fet file will be loaded the spike file
   // will be used on the fly when waveforms will need to be drawn.
   //The biggest files are open in a C FILE to enable a quick access, the others (parameter files) are open in a QFile
-  FILE* fetFile = fopen(tmpFetFile.latin1(),"r");
+  FILE* fetFile = fopen(tmpFetFile.toLatin1(),"r");
   if(fetFile == NULL){
    //Remove the temp files if any
    KIO::NetAccess::removeTempFile(tmpSpikeFile);
@@ -269,7 +269,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
   }
 
   //The length of the spike file is used to determine the number of spikes.
-  FILE* spikeFile = fopen(tmpSpikeFile.latin1(),"r");
+  FILE* spikeFile = fopen(tmpSpikeFile.toLatin1(),"r");
   if(spikeFile == NULL){
    fclose(fetFile);
    //Remove the temp files if any
@@ -384,7 +384,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     return DOWNLOAD_ERROR;
    }
 
-   FILE* cluFile = fopen(tmpCluFile.latin1(),"r");
+   FILE* cluFile = fopen(tmpCluFile.toLatin1(),"r");
    if(cluFile == NULL){
     if(isXmlParExist){
      xmlParFile.close();
@@ -573,7 +573,7 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
   }
 
   //Open the temp file in write mode
-  FILE* cluFile = fopen(tmpCluFile.latin1(),"w");
+  FILE* cluFile = fopen(tmpCluFile.toLatin1(),"w");
  	if(cluFile == NULL){
     return OPEN_ERROR;
     tmpCluFile = tmpCluFileSave;
@@ -1942,7 +1942,7 @@ int KlustersDoc::integrateReclusteredClusters(Q3ValueList<int>& clustersToReclus
      return DOWNLOAD_ERROR;
     }
 
-  FILE* cluFile = fopen(tmpCluFile.latin1(),"r");
+  FILE* cluFile = fopen(tmpCluFile.toLatin1(),"r");
   if(cluFile == NULL){
    KIO::NetAccess::removeTempFile(tmpCluFile);
    if(!QFile::remove(reclusteringFetFileName))
