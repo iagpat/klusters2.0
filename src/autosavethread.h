@@ -25,6 +25,9 @@
 //include files for QT
 #include <qthread.h>
 #include <qstring.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <QCustomEvent>
 
 // include files for KDE
 #include <kurl.h>

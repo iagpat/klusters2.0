@@ -22,6 +22,8 @@
 #include "data.h"
 #include "array.h"
 #include "types.h"
+//Added by qt3to4:
+#include <Q3ValueList>
 
 
  /**
@@ -53,8 +55,8 @@ public:
  * @return nbSpikes x nbClusters array giving the posterior
  * probabilities of belonging to each cluster of Fet2, for each point of Fet1.
  */
-  Array<double>* computeMeanProbabilities(Data& clusteringData,QValueList<int>& clusterList,QValueList<int>& computedClusterList,
-                              QValueList<int>& ignoreClusterIndex);
+  Array<double>* computeMeanProbabilities(Data& clusteringData,Q3ValueList<int>& clusterList,Q3ValueList<int>& computedClusterList,
+                              Q3ValueList<int>& ignoreClusterIndex);
 
  /**Asks the GroupingAssistant to stop his work as soon as possible.*/
  inline void stopComputing(){haveToStopComputing = true;};
@@ -102,8 +104,8 @@ private:
  * @return nbSpikes x nbClusters array giving the posterior
  * probabilities of belonging to each cluster of Fet2, for each point of Fet1.
  */
-  Array<double>* computeProbabilities(Data& clusteringData,QValueList<int>& clusterList,QValueList<int>& computedClusterList,
-                              QValueList<int>& ignoreClusterIndex);
+  Array<double>* computeProbabilities(Data& clusteringData,Q3ValueList<int>& clusterList,Q3ValueList<int>& computedClusterList,
+                              Q3ValueList<int>& ignoreClusterIndex);
 
   /**
   * Computes a Cholesky Decomposition.
@@ -126,7 +128,7 @@ private:
   * @param ignoreClusterIndex list of the indexes of the clusters which where not computed, either
   * because they do not have enough spikes or their determinant could not be calculated (their covariance matrix is not positive definite.)
   */
-   void meanCovarianceComputation(int nbClusters,int nbDimensions,dataType nbSpikes,Data& clusteringData,QValueList<int>& ignoreClusterIndex);
+   void meanCovarianceComputation(int nbClusters,int nbDimensions,dataType nbSpikes,Data& clusteringData,Q3ValueList<int>& ignoreClusterIndex);
 
 };
 

@@ -20,9 +20,11 @@
 //QT include files
 #include <qvariant.h>
 #include <qwidget.h>
-#include <qvbox.h>
-#include <qiconview.h>
+#include <q3vbox.h>
+#include <q3iconview.h>
 #include <qtooltip.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 class KStatusBar;
 
@@ -30,8 +32,8 @@ class KStatusBar;
 #include <iostream>
 using namespace std;
 
-class QIconView;
-class QIconViewItem;
+class Q3IconView;
+class Q3IconViewItem;
 
 // forward declaration of the KlustersDoc class
 class KlustersDoc;
@@ -43,7 +45,7 @@ class KlustersDoc;
   */
 
 
-class ClusterPalette : public QVBox
+class ClusterPalette : public Q3VBox
 {
     Q_OBJECT
     
@@ -67,12 +69,12 @@ public:
     
     virtual void createClusterList(KlustersDoc* doc);
     virtual void updateClusterList();
-    void selectItems(QValueList<int> selectedClusters);
+    void selectItems(Q3ValueList<int> selectedClusters);
     virtual inline void setImmediateMode(){mode = IMMEDIATE;}
     virtual inline void setDelayMode(){mode = DELAY;}
     virtual void reset();
     /**Returns the list of selected clusters*/
-    QValueList<int> selectedClusters();
+    Q3ValueList<int> selectedClusters();
 
 	 /** Hides the user cluster information, that is show the normal cluster palette.*/
 	 void hideUserClusterInformation();
@@ -89,12 +91,12 @@ public:
      int s;
      int v;
      color.hsv(&h,&s,&v);
-     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(black);
-     else iconView->setPaletteForegroundColor(white);      
+     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
+     else iconView->setPaletteForegroundColor(Qt::white);      
      iconView->setPaletteBackgroundColor(color);
      
      //get the list of selected clusters
-     QValueList<int> selected = selectedClusters();
+     Q3ValueList<int> selected = selectedClusters();
      
      //Set isInSelectItems to true to prevent the emission of signals due to selectionChange
      isInSelectItems = true;
@@ -112,7 +114,7 @@ public:
     }
 
 public slots:
-    virtual void changeColor(QIconViewItem* item);
+    virtual void changeColor(Q3IconViewItem* item);
     virtual void moveClustersToNoise();
     virtual void moveClustersToArtefact();
     virtual void groupClusters();
@@ -122,26 +124,26 @@ protected slots:
 	/** The right click on a cluster icon bring a dialog allowing the user to enter information on the cluster
 	* (structure, type, isolation distance, quality and notes).
 	*/
-    virtual void slotRightPressed(QIconViewItem* item);
-    virtual void slotMousePressed(int button,QIconViewItem* item);
+    virtual void slotRightPressed(Q3IconViewItem* item);
+    virtual void slotMousePressed(int button,Q3IconViewItem* item);
     virtual void slotClickRedraw();
     virtual void languageChange();
 	 /**
 	 * When moving the mouse over an cluster icon, the statusBar is updated with the information the user might could provided
 	  * (structure, type, isolation distance, quality and notes).
 	 */
-	 virtual void slotOnItem(QIconViewItem* item);
+	 virtual void slotOnItem(Q3IconViewItem* item);
     
 signals:
     void singleChangeColor(int selectedCluster);
-    void updateShownClusters(QValueList<int> selectedClusters);
-    void groupClusters(QValueList<int> selectedClusters);
-    void moveClustersToNoise(QValueList<int> selectedClusters);
-    void moveClustersToArtefact(QValueList<int> selectedClusters);
+    void updateShownClusters(Q3ValueList<int> selectedClusters);
+    void groupClusters(Q3ValueList<int> selectedClusters);
+    void moveClustersToNoise(Q3ValueList<int> selectedClusters);
+    void moveClustersToArtefact(Q3ValueList<int> selectedClusters);
 	 void clusterInformationModified();    
 	
 private:
-    QIconView* iconView;
+    Q3IconView* iconView;
     KlustersDoc* doc;
 
     Mode mode;//default IMMEDIATE

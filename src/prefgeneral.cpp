@@ -18,7 +18,7 @@
 #include "prefgeneral.h"
 
 //QT includes
-#include <qiconset.h>
+#include <qicon.h>
 
 // include files for KDE
 #include <kiconloader.h>
@@ -29,7 +29,7 @@ PrefGeneral::PrefGeneral(QWidget *parent, const char *name ) : PrefGeneralLayout
 
   //Set an icon on the reclusteringExecutableButton button
   KIconLoader* loader = KGlobal::iconLoader();
-  reclusteringExecutableButton->setIconSet(QIconSet(loader->loadIcon("fileopen", KIcon::Small))); 
+  reclusteringExecutableButton->setIconSet(QIcon(loader->loadIcon("fileopen", KIcon::Small))); 
 }
 PrefGeneral::~PrefGeneral(){
 }
@@ -68,7 +68,7 @@ void PrefGeneral::updateCrashRecoveryTimeInterval(int state){
 }
 
 void PrefGeneral::updateReclusteringExecutable(){
- QString executable = QFileDialog::getOpenFileName(QString::null,
+ QString executable = Q3FileDialog::getOpenFileName(QString::null,
           QString::null, this, tr("Select the Reclustering executable..."));
 
  setReclusteringExecutable(executable);

@@ -35,7 +35,7 @@ class ProcessLineMaker;
 
 class QPrinter;
 
-class ProcessListBoxItem : public QListBoxText
+class ProcessListBoxItem : public Q3ListBoxText
 {
 public:
     enum Type { Diagnostic, Normal, Error };

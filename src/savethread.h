@@ -24,6 +24,9 @@
 
 //include files for QT
 #include <qthread.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <QEvent>
 
 //include files for KDE
 #include <kio/netaccess.h>

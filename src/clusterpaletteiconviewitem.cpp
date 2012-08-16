@@ -27,13 +27,13 @@
 #include <iostream>
 using namespace std;
 
-ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(QIconView* parent, QString label)
-	:QIconViewItem(parent, label)
+ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(Q3IconView* parent, QString label)
+	:Q3IconViewItem(parent, label)
 {
 	toolTip=NULL;
 }
 
-ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(QIconView* parent, QString label, const QPixmap & icon ):QIconViewItem(parent, label,icon)
+ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(Q3IconView* parent, QString label, const QPixmap & icon ):Q3IconViewItem(parent, label,icon)
 {
 	toolTip=NULL;
 }
@@ -46,7 +46,7 @@ void ClusterPaletteIconViewItem::setToolTipText(const QString &toolTipText)
 {
 	this->toolTipText=toolTipText;
 	if (!toolTip){
-		toolTip=new ClusterPaletteToolTip(static_cast<QIconView*>(iconView()));
+		toolTip=new ClusterPaletteToolTip(static_cast<Q3IconView*>(iconView()));
 	}
 }
 

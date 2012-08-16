@@ -25,6 +25,10 @@
 
 //include files for QT
 #include <qthread.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <QEvent>
+#include <Q3ValueList>
 
 
  /** Thread used to compute the correlograms displayed in the CorrelationView.
@@ -39,11 +43,11 @@ class CorrelationThread : public QThread {
 public:
   //Only the method getCorrelations of CorrelationView has access to the private part of CorrelationThread,
   //the constructor of CorrelationThread being private, only this method con create a new CorrelationThread
-  friend CorrelationThread* CorrelationView::getCorrelations(QValueList<Pair>* pairsToCompute,QValueList<int> clusterIds);
+  friend CorrelationThread* CorrelationView::getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds);
 
 	inline ~CorrelationThread(){};
-  inline QValueList<Pair>* triggeringPairs(){return clusterPairs;};
-  inline const QValueList<int>& triggeringClusters(){return clusterIds;};
+  inline Q3ValueList<Pair>* triggeringPairs(){return clusterPairs;};
+  inline const Q3ValueList<int>& triggeringClusters(){return clusterIds;};
 
   /**Asks the thread to stop his work as soon as possible.*/
   inline void stopProcessing(){haveToStopProcessing = true;};
@@ -79,7 +83,7 @@ protected:
     void run();
 
 private:
-    inline CorrelationThread(CorrelationView& view,Data& d,QValueList<Pair>* pairs,QValueList<int> clusterIds):correlationView(view),data(d),haveToStopProcessing(false){
+    inline CorrelationThread(CorrelationView& view,Data& d,Q3ValueList<Pair>* pairs,Q3ValueList<int> clusterIds):correlationView(view),data(d),haveToStopProcessing(false){
       clusterPairs = pairs;
       this->clusterIds = clusterIds;
       start();
@@ -87,8 +91,8 @@ private:
 
     CorrelationView& correlationView;
     Data& data;
-    QValueList<Pair>* clusterPairs;
-    QValueList<int> clusterIds;
+    Q3ValueList<Pair>* clusterPairs;
+    Q3ValueList<int> clusterIds;
     /**True if the thread has to stop processing, false otherwise.*/
     bool haveToStopProcessing;    
 

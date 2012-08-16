@@ -17,7 +17,9 @@
 // include files for QT
 #include <qlayout.h>        // for QVBoxLayout
 #include <qlabel.h>         // for QLabel
-#include <qframe.h>         // for QFrame
+#include <q3frame.h>         // for QFrame
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 // include files for KDE
 #include <kcolorbutton.h>   // for KColorButton
@@ -49,23 +51,23 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, WFlags 
     setHelp("settings","klusters");
     
     //adding page "General options"
-    QFrame *frame = addPage(tr("General"), tr("Klusters General Configuration"),
+    Q3Frame *frame = addPage(tr("General"), tr("Klusters General Configuration"),
         KGlobal::iconLoader()->loadIcon("kfm",KIcon::Panel,0,false) );
-    QVBoxLayout *frameLayout = new QVBoxLayout( frame, 0, 0 );
+    Q3VBoxLayout *frameLayout = new Q3VBoxLayout( frame, 0, 0 );
     prefGeneral = new PrefGeneral(frame);
     frameLayout->addWidget(prefGeneral);
 
     //adding page "Cluster view configuration"
     frame = addPage(tr("Cluster view"), tr("Cluster View configuration"),
         KGlobal::iconLoader()->loadIcon("clusterview",KIcon::User));
-    frameLayout = new QVBoxLayout( frame, 0, 0 );
+    frameLayout = new Q3VBoxLayout( frame, 0, 0 );
     prefclusterView = new PrefClusterView(frame);
     frameLayout->addWidget(prefclusterView);
 
     //adding page "Waveform view configuration"
     frame = addPage(tr("Waveform view"), tr("Waveform View configuration"),
         KGlobal::iconLoader()->loadIcon("waveformview",KIcon::User));
-    frameLayout = new QVBoxLayout( frame, 0, 0 );
+    frameLayout = new Q3VBoxLayout( frame, 0, 0 );
     prefWaveformView = new PrefWaveformView(frame,nbChannels);
     frameLayout->addWidget(prefWaveformView);
 

@@ -28,8 +28,13 @@
 
 // include files for Qt
 #include <qwidget.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 #include <qprinter.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <Q3PtrList>
+#include <QEvent>
+#include <QCloseEvent>
 
 //include files for the application
 #include "itemcolors.h"
@@ -97,10 +102,10 @@ class KlustersView : public KDockArea
       * @param redoList list of list of removed clusters used to enable redo action.     
      */
     KlustersView(KlustersApp& mainWindow,KlustersDoc& doc,QColor backgroundColor,int initialDimensionX,int initialDdimensionY,
-    QValueList<int>* initialClusterList, DisplayType type,QWidget* parent, const char *name, int wflags,KStatusBar * statusBar,int timeInterval,int maxAmplitude,
-    QValueList<int> positions,bool isTimeFrameMode = false,long start = 0,long timeFrameWidth = 0,long nbSpkToDisplay = 0,bool overLay = false,
+    Q3ValueList<int>* initialClusterList, DisplayType type,QWidget* parent, const char *name, int wflags,KStatusBar * statusBar,int timeInterval,int maxAmplitude,
+    Q3ValueList<int> positions,bool isTimeFrameMode = false,long start = 0,long timeFrameWidth = 0,long nbSpkToDisplay = 0,bool overLay = false,
     bool mean = false,int binSize = 0, int correlationTimeFrame = 0,Data::ScaleMode scale = Data::MAX,bool shoulderLine = true,
-    long startingTime = 0,long duration = 100,bool labelsDisplay = false,QPtrList< QValueList<int> > undoList = QPtrList< QValueList<int> >(), QPtrList< QValueList<int> > redoList = QPtrList< QValueList<int> >());
+    long startingTime = 0,long duration = 100,bool labelsDisplay = false,Q3PtrList< Q3ValueList<int> > undoList = Q3PtrList< Q3ValueList<int> >(), Q3PtrList< Q3ValueList<int> > redoList = Q3PtrList< Q3ValueList<int> >());
 
     /** Destructor for the main view */
     ~KlustersView();
@@ -130,7 +135,7 @@ class KlustersView : public KDockArea
     * @param positions positions of the channels to use in the view set by the user in the settings dialog.
     * @return false if there was already a view of @displayType in the view, true otherwise.
     */
-    bool addView(KDockWidget* docWidget,DisplayType displayType,QColor backgroundColor,KStatusBar* statusBar,int timeInterval,int maxAmplitude,QValueList<int> positions);
+    bool addView(KDockWidget* docWidget,DisplayType displayType,QColor backgroundColor,KStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
     
     /**List of the names for the different type of view available.*/
     static const QString DisplayTypeNames[];
@@ -154,7 +159,7 @@ class KlustersView : public KDockArea
     /**Returns the list of the clusters presented in the view.
     * @return list of cluster ids.
     */
-    inline const QValueList<int>& clusters() const {return *shownClusters;};
+    inline const Q3ValueList<int>& clusters() const {return *shownClusters;};
 
     /**Checks if some clusters have had their color changed.
     * If so, update clusterUpdateList if needed.
@@ -186,14 +191,14 @@ class KlustersView : public KDockArea
     * Makes the different views update their drawing. This method is called only on the active view.
     * @param clustersToShow new list of clusters to be shown.
     */
-    void shownClustersUpdate(QValueList<int>& clustersToShow);
+    void shownClustersUpdate(Q3ValueList<int>& clustersToShow);
 
     /**Updates the view due to a rearrangement of clusters.
     * @param groupedClusters list of clusters having been grouped.
     * @param newClusterId the id of the cluster created by the grouping of those specified in @p groupedClusters.
     * @param active true if the view is the active one, false otherwise.
     */
-    void groupedClustersUpdate(QValueList<int>& groupedClusters, int newClusterId,bool active);
+    void groupedClustersUpdate(Q3ValueList<int>& groupedClusters, int newClusterId,bool active);
 
     /**Updates the view due deletion of clusters.
     * @param deletedClusters list of clusters having been deleted.
@@ -202,7 +207,7 @@ class KlustersView : public KDockArea
     * @param active true if the view is the active one, false otherwise.
     * @return true if at least one of the clusters in deletedClusters was in the list of clusters shown.
     */
-    bool clustersDeletionUpdate(QValueList<int>& deletedClusters,int destinationCluster,bool active);
+    bool clustersDeletionUpdate(Q3ValueList<int>& deletedClusters,int destinationCluster,bool active);
 
     /**Updates the view due deletion of clusters.
     * @param deletedClusters list of clusters having been deleted.
@@ -210,7 +215,7 @@ class KlustersView : public KDockArea
     * @param active true if the view is the active one, false otherwise.
     * @return true if at least one of the clusters in deletedClusters was in the list of clusters shown.
     */
-    bool clustersDeletionUpdate(QValueList<int>& deletedClusters,bool active);
+    bool clustersDeletionUpdate(Q3ValueList<int>& deletedClusters,bool active);
 
     /**
     * Adds a newly created cluster to those already shown.
@@ -220,7 +225,7 @@ class KlustersView : public KDockArea
     * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.  
     * @param active true if the view is the active one, false otherwise.
     */
-    void addNewClusterToView(QValueList<int>& fromClusters,int clusterId,QValueList<int>& emptiedClusters,bool active);
+    void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,Q3ValueList<int>& emptiedClusters,bool active);
 
     /**
     * Adds newly created clusters to those already shown.
@@ -230,7 +235,7 @@ class KlustersView : public KDockArea
     * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.
     * @param active true if the view is the active one, false otherwise.
     */
-    void addNewClustersToView(QMap<int,int>& fromToNewClusterIds,QValueList<int>& emptiedClusters,bool active);
+    void addNewClustersToView(QMap<int,int>& fromToNewClusterIds,Q3ValueList<int>& emptiedClusters,bool active);
 
    /**
    * Updates the content of the view due to the removal of spikes in a cluster.
@@ -240,7 +245,7 @@ class KlustersView : public KDockArea
    * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.
     * @param active true if the view is the active one, false otherwise.   
    */
-   void removeSpikesFromClustersInView(QValueList<int>& fromClusters, int destinationClusterId,QValueList<int>& emptiedClusters,bool active);
+   void removeSpikesFromClustersInView(Q3ValueList<int>& fromClusters, int destinationClusterId,Q3ValueList<int>& emptiedClusters,bool active);
 
    /**Updates the mode, methode call from the application on the active view after the user selected a tool.
    * @param selectedMode the new mode.
@@ -265,14 +270,14 @@ class KlustersView : public KDockArea
    * @param addedClusters list of clusters which were added
    * @param active true if the view is the active one, false otherwise.
    */
-   void undoAddedClusters(QValueList<int>& addedClusters,bool active);
+   void undoAddedClusters(Q3ValueList<int>& addedClusters,bool active);
 
    /** Reverts the last user action. If any clusters have been removed they will be added back
    * The clusters in @p modifiedClusters,if present in shownClusters, will be updated. 
    * @param updatedClusters list of clusters which were modified
    * @param active true if the view is the active one, false otherwise.
    */
-   void undoModifiedClusters(QValueList<int>& updatedClusters,bool active);
+   void undoModifiedClusters(Q3ValueList<int>& updatedClusters,bool active);
 
    
    /** Reverts the last user action. If any clusters have been removed they will be added back
@@ -283,14 +288,14 @@ class KlustersView : public KDockArea
    * @param updatedClusters list of clusters which were modified .
    * @param active true if the view is the active one, false otherwise.
    */
-   void undo(QValueList<int>& addedClusters,QValueList<int>& updatedClusters,bool active);
+   void undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters,bool active);
    
    /** Revers the last undo action. If any clusters have been added back in the undo
    * they will be removed again if they are shown.
    * @param active true if the view is the active one, false otherwise.
    * @param deletedClusters list of clusters which were deleted.
    */
-   void redo(bool active,QValueList<int>& deletedClusters);
+   void redo(bool active,Q3ValueList<int>& deletedClusters);
 
    /** Reverts the last undo action. If any clusters have been added back in the undo
    * they will be removed again if they are shown.
@@ -299,7 +304,7 @@ class KlustersView : public KDockArea
    * @param active true if the view is the active one, false otherwise.
    * @param deletedClusters list of clusters which were deleted.
    */
-   void redoAddedClusters(QValueList<int>& addedClusters,bool active,QValueList<int>& deletedClusters);
+   void redoAddedClusters(Q3ValueList<int>& addedClusters,bool active,Q3ValueList<int>& deletedClusters);
 
    /** Reverts the last undo action. If any clusters have been added back in the undo
    * they will be removed again if they are shown. The boolean @p isModifiedByDeletion is used
@@ -311,7 +316,7 @@ class KlustersView : public KDockArea
    * @param active true if the view is the active one, false otherwise.
    * @param deletedClusters list of clusters which were deleted.
    */
-   void redoModifiedClusters(QValueList<int>& updatedClusters,bool isModifiedByDeletion,bool active,QValueList<int>& deletedClusters);
+   void redoModifiedClusters(Q3ValueList<int>& updatedClusters,bool isModifiedByDeletion,bool active,Q3ValueList<int>& deletedClusters);
 
 
    /** Reverts the last undo action. If any clusters have been added back in the undo
@@ -326,7 +331,7 @@ class KlustersView : public KDockArea
    * @param active true if the view is the active one, false otherwise.
    * @param deletedClusters list of clusters which were deleted.
    */
-   void redo(QValueList<int>& addedClusters,QValueList<int>& modifiedClusters,bool isModifiedByDeletion,bool active,QValueList<int>& deletedClusters);
+   void redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& modifiedClusters,bool isModifiedByDeletion,bool active,Q3ValueList<int>& deletedClusters);
 
    /**
    * Updates the list of clusterIds shown using the new ids.
@@ -549,10 +554,10 @@ class KlustersView : public KDockArea
 
   /**Returns the list of list of removed clusters used to enable undo action.
   */
-  QPtrList< QValueList<int> > getUndoList();
+  Q3PtrList< Q3ValueList<int> > getUndoList();
 
   /**Returns the list of list of removed clusters used to enable redo action.*/
-  QPtrList< QValueList<int> > getRedoList();
+  Q3PtrList< Q3ValueList<int> > getRedoList();
 
   /**Updates the time interval between time lines drawn in the cluster view for the time dimension.
   * @param step the interval to use in second.
@@ -563,7 +568,7 @@ class KlustersView : public KDockArea
   /**Initialize the position of the channels in the waveform view.
   * @param positions positions of the channels to use in the view set by the user in the settings dialog.
   */
-  inline void setChannelPositions(QValueList<int>& positions){emit changeChannelPositions(positions);};
+  inline void setChannelPositions(Q3ValueList<int>& positions){emit changeChannelPositions(positions);};
 
   /**Makes all the internal changes due to a modification of the number of undo.
   * @param newNbUndo the futur new number of undo.
@@ -588,7 +593,7 @@ class KlustersView : public KDockArea
   * @param reclusteredClusterList list of the newly created clusters.
   * @param active c
   */
-  void addNewClustersToView(QValueList<int>& clustersToRecluster,QValueList<int>& reclusteredClusterList,bool active);
+  void addNewClustersToView(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,bool active);
 
   /**
   * Updates the TraceView after a modification on the clusters.
@@ -684,15 +689,15 @@ class KlustersView : public KDockArea
     void singleColorUpdated(int clusterId,bool active);
     void clusterRemovedFromView(int ClusterId,bool active);
     void clusterAddedToView(int clusterId,bool active);
-    void newClusterAddedToView(QValueList<int>& fromClusters,int clusterId,bool active);
+    void newClusterAddedToView(Q3ValueList<int>& fromClusters,int clusterId,bool active);
     void newClusterAddedToView(int clusterId,bool active);
-    void spikesRemovedFromClusters(QValueList<int>& fromClusters,bool active);
+    void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active);
     void modeToSet(BaseFrame::Mode selectedMode);
     void spikesAddedToCluster(int destinationClusterId,bool active);
     void updateContents();
     void emptySelection();
-    void modifiedClusters(QValueList<int>& modifiedClusters,bool active, bool isModifiedByDeletion=false);
-    void modifiedClustersUndo(QValueList<int>& modifiedClusters,bool active);
+    void modifiedClusters(Q3ValueList<int>& modifiedClusters,bool active, bool isModifiedByDeletion=false);
+    void modifiedClustersUndo(Q3ValueList<int>& modifiedClusters,bool active);
     void updatedTimeFrame(long start,long timeFrameWidth);
     void sampleMode();
     void timeFrameMode();
@@ -713,11 +718,11 @@ class KlustersView : public KDockArea
     void updateDrawing();
     void changeGain(int acquisitionGain);
     void changeTimeInterval(int step,bool active);
-    void changeChannelPositions(QValueList<int>& positions);
+    void changeChannelPositions(Q3ValueList<int>& positions);
     void computeProbabilities();
     void changeBackgroundColor(QColor color);
     void clustersRenumbered(bool active);
-    void updateClusters(QString name,QValueList<int>& clustersToShow,ItemColors* clustersColors,bool active);
+    void updateClusters(QString name,Q3ValueList<int>& clustersToShow,ItemColors* clustersColors,bool active);
     void increaseAllAmplitude();
     void decreaseAllAmplitude();    
     void showLabels(bool show);
@@ -749,18 +754,18 @@ protected:
     KDockWidget* mainDock;
 
     /**List of the presented clusters*/
-    QValueList<int>* shownClusters;
+    Q3ValueList<int>* shownClusters;
 
     /**List of the removed clusters*/
-    QValueList<int>* removedClusters;
+    Q3ValueList<int>* removedClusters;
 
     /**Represents a list of list of removed clusters use to enable undo action.
     */
-    QPtrList< QValueList<int> > removedClustersUndoList;
+    Q3PtrList< Q3ValueList<int> > removedClustersUndoList;
 
     /**Represents a list of list of removed clusters use to enable redo action.
     */
-    QPtrList< QValueList<int> > removedClustersRedoList;
+    Q3PtrList< Q3ValueList<int> > removedClustersRedoList;
     
     /**Dimension shown on the abscissa axis*/
     int dimensionX;
@@ -830,7 +835,7 @@ protected:
     Data::ScaleMode correlationScale;
 
     /**List of the ViewWidgets contained in this view.*/
-    QPtrList<ViewWidget> viewList;
+    Q3PtrList<ViewWidget> viewList;
 
    /**Boolean indicating if a shoulder line has to be drawn on the correlograms
    * of the Correlation View if any.*/
@@ -844,12 +849,12 @@ protected:
    QMap<QString,int> viewCounter;
    
  /**List containing the offset for each channel in a TraceView.*/
-  QValueList<int> offsets;
+  Q3ValueList<int> offsets;
 
   /**List of the exponents used to compute the drawing gain for each channel in a TraceView.*/
-  QValueList<int> gains;
+  Q3ValueList<int> gains;
    
-  QValueList<int> clustersToSkip;
+  Q3ValueList<int> clustersToSkip;
   
   /**Pointer to the TraceView if any.*/
   TraceWidget* traceWidget;
@@ -873,7 +878,7 @@ protected:
     * @param maxAmplitude initial gain use to draw the waveforms in the waveform view.
     * @param positions initial position of the channels in the waveform view.
     */
-    void createOverview(QColor backgroundColor,KStatusBar * statusBar,int timeInterval,int maxAmplitude,QValueList<int> positions);
+    void createOverview(QColor backgroundColor,KStatusBar * statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
 
     /** Creates the Grouping Assistant view:
     * an Overview (composition of the 3 basic views) to which have been added
@@ -885,7 +890,7 @@ protected:
     * @param maxAmplitude initial gain use to draw the waveforms in the waveform view.
     * @param positions initial position of the channels in the waveform view.
     */
-    void createGroupingAssistantView(QColor backgroundColor,KStatusBar * statusBar,int timeInterval,int maxAmplitude,QValueList<int> positions);
+    void createGroupingAssistantView(QColor backgroundColor,KStatusBar * statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
 
     /**
     * Adds a cluster to the view. The @p clusterId is added to both the shownClusters list
@@ -908,13 +913,13 @@ protected:
     * @param clusterIds idc of the clusters to be removed
     * @param active true if the view is the active one, false otherwise.
     */
-    void removeClustersFromView(QValueVector<int> clusterIds,bool active);
+    void removeClustersFromView(Q3ValueVector<int> clusterIds,bool active);
     
     /**
     * Returns the subset of the clusters contained in @p clusterlist which are in presented in this view.
     * @param clusterlist list to extract from.
     */
-    QValueList<int> clustersInView(QValueList<int>& clusterlist);
+    Q3ValueList<int> clustersInView(Q3ValueList<int>& clusterlist);
 
     /**
     * Fills the undo list (removedClustersUndoList) and clear the redo list
@@ -922,14 +927,14 @@ protected:
     * @param removedClustersTemp a pointer to the list of currently removed clusters which will be
     * added to removedClustersUndoList
     */
-    void prepareUndo(QValueList<int>* removedClustersTemp);
+    void prepareUndo(Q3ValueList<int>* removedClustersTemp);
 
     /**
     * Fills the undo list (removedClustersUndoList) and clear the redo list
     * (removedClustersRedoList) to prepare for a futur undo.
     * @param newlyRemovedClusters the list of currently removed clusters which will be added to removedClustersUndoList
     */
-    void prepareUndo(QValueList<int>& newlyRemovedClusters);
+    void prepareUndo(Q3ValueList<int>& newlyRemovedClusters);
 
     /**
     * In the process of the undo mechanism, the clusters which were removed are added back to the view.
@@ -957,7 +962,7 @@ protected:
    * @param active true if the view is the active one, false otherwise.
    * @param clustersToDelete list of clusters to delete.
    */
-   void removeDeletedClusters(bool active,QValueList<int>& clustersToDelete);
+   void removeDeletedClusters(bool active,Q3ValueList<int>& clustersToDelete);
 
    /**
    * Makes signal and slot connection between the current view and one of is contained view (@p view)

@@ -22,6 +22,8 @@
 //General C++ include files
 #include <iostream>
 #include <fstream>
+//Added by qt3to4:
+#include <Q3TextStream>
 using namespace std;
 
 //include files for QT
@@ -38,7 +40,7 @@ ParameterXmlModifier::~ParameterXmlModifier() {}
 bool ParameterXmlModifier::parseFile(const KURL& url) {
 
     QFile file(url.path());
-    if (!file.open(IO_ReadWrite)) return false;
+    if (!file.open(QIODevice::ReadWrite)) return false;
 	//actually load the file in a tree in  memory
     if (!doc.setContent(&file)) {
         file.close();
@@ -62,7 +64,7 @@ bool ParameterXmlModifier::parseFile(const KURL& url) {
 
 bool ParameterXmlModifier::writeTofile(const KURL& url) {
     QFile parameterFile(url.path());
-    bool status = parameterFile.open(IO_WriteOnly);
+    bool status = parameterFile.open(QIODevice::WriteOnly);
     if (!status) return status;
 
 	//insert a unit node after the spikeDetection node
@@ -72,7 +74,7 @@ bool ParameterXmlModifier::writeTofile(const KURL& url) {
     newChild = root.insertAfter(units,spikeDetection);
 	 
     if (newChild.isNull()) {
-        QTextStream stream(&parameterFile);
+        Q3TextStream stream(&parameterFile);
         stream<< initialXmlDocument;
         parameterFile.close();
         return false;
@@ -81,7 +83,7 @@ bool ParameterXmlModifier::writeTofile(const KURL& url) {
 
     QString xmlDocument = doc.toString();
 
-    QTextStream stream(&parameterFile);
+    Q3TextStream stream(&parameterFile);
     stream<< xmlDocument;
     parameterFile.close();
 

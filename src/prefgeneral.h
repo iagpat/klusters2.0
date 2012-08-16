@@ -25,7 +25,7 @@
 #include <qspinbox.h>
 #include <qpushbutton.h>
 #include <qlineedit.h> 
-#include <qfiledialog.h>
+#include <q3filedialog.h>
 
 
 //includes files for KDE

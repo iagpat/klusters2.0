@@ -27,20 +27,20 @@
 
 
 #include <kprocess.h>
-#include <qpaintdevicemetrics.h>
+#include <q3paintdevicemetrics.h>
 
 //include files for c/c++ libraries
 #include <stdlib.h>
 
 ProcessListBoxItem::ProcessListBoxItem(const QString &s, Type type)
-    : QListBoxText(s), t(type){}
+    : Q3ListBoxText(s), t(type){}
 
 
 void ProcessListBoxItem::paint(QPainter* p)
 {
     p->setPen((t==Error)? Qt::darkRed :
               (t==Diagnostic)? Qt::black : Qt::darkBlue);
-    QListBoxText::paint(p);
+    Q3ListBoxText::paint(p);
 }
 
 
@@ -48,7 +48,7 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
     : KListBox(parent, name)
 {   
     //No selection will be possible
-    setSelectionMode(QListBox::NoSelection);
+    setSelectionMode(Q3ListBox::NoSelection);
     
     setFocusPolicy(QWidget::NoFocus);
     QPalette pal = palette();
@@ -168,7 +168,7 @@ QSize ProcessWidget::minimumSizeHint() const
     // I'm not sure about this, but when I don't use override minimumSizeHint(),
     // the initial size in clearly too small
 
-    return QSize( QListBox::sizeHint().width(),
+    return QSize( Q3ListBox::sizeHint().width(),
                   (fontMetrics().lineSpacing()+2)*4 );
 }
 
@@ -196,7 +196,7 @@ void ProcessWidget::slotOutputTreatmentOver(){
 
 void ProcessWidget::print(QPrinter *printer, QString filePath){
   QPainter printPainter;
-  QPaintDeviceMetrics metrics(printer);// need width/height of printer surface
+  Q3PaintDeviceMetrics metrics(printer);// need width/height of printer surface
   const int Margin = 20;
   int yPos = 0;       // y-position for each line
 
@@ -213,7 +213,7 @@ void ProcessWidget::print(QPrinter *printer, QString filePath){
    if(Margin + yPos > metrics.height() - Margin) {
     printPainter.setPen(black);
     printPainter.drawText(Margin,Margin + yPos + fontMetrics.lineSpacing(),metrics.width(),fontMetrics.lineSpacing(),
-                          Qt::AlignAuto | Qt::AlignVCenter,QString("File: %1").arg(filePath));
+                          Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
      
     printer->newPage();  
     yPos = 0;  // back to top of page
@@ -232,7 +232,7 @@ void ProcessWidget::print(QPrinter *printer, QString filePath){
  //Print the name of the file
  printPainter.resetXForm();
  printPainter.setPen(black);
- printPainter.drawText(textRec,Qt::AlignAuto | Qt::AlignVCenter,QString("File: %1").arg(filePath));
+ printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
  
  printPainter.end();
 }

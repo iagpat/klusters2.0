@@ -17,18 +17,25 @@
 
 // include files for QT
 #include <qdir.h>
-#include <qvbox.h>
-#include <qwhatsthis.h>
+#include <q3vbox.h>
+#include <q3whatsthis.h>
 #include <qtooltip.h>
 #include <qtoolbutton.h>
 #include <qstring.h>
 #include <qimage.h>
-#include <qiconset.h>  
+#include <qicon.h>  
 #include <qcursor.h>
 #include <qfileinfo.h> 
 #include <qapplication.h>
 #include <qinputdialog.h>
 #include <QPrinter>
+//Added by qt3to4:
+#include <QLabel>
+#include <QPixmap>
+#include <Q3ValueList>
+#include <QEvent>
+#include <Q3Frame>
+#include <QCustomEvent>
 
 // include files for KDE
 #include <kiconloader.h>
@@ -142,7 +149,7 @@ void KlustersApp::initActions()
   KStdAction::quit(this, SLOT(close()), actionCollection());
   viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-  new KAction(tr("Re&number and Save"),QIconSet(QPixmap("filesave.png")), CTRL + SHIFT + Key_S,this, SLOT(slotFileRenumberAndSave()),actionCollection(), "file_renumber_save");
+  new KAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")), CTRL + SHIFT + Key_S,this, SLOT(slotFileRenumberAndSave()),actionCollection(), "file_renumber_save");
   new KAction(tr("&Import File"), CTRL + Key_I,this, SLOT(slotFileImport()),actionCollection(), "fileImport");
               
   //Edit menu
@@ -170,23 +177,23 @@ void KlustersApp::initActions()
   KIconLoader* loader = KGlobal::iconLoader();
 
   //Actions menu
-  new KAction(tr("Delete &Artifact Cluster(s)"),QIconSet(loader->loadIcon("delete_artefact", KIcon::User)),SHIFT + Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
-  new KAction(tr("Delete &Noisy Cluster(s)"),QIconSet(loader->loadIcon("delete_noise", KIcon::User)),Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
-  new KAction(tr("&Group Clusters"),QIconSet(loader->loadIcon("group", KIcon::User)), Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
-  new KAction(tr("&Update Display"),QIconSet(loader->loadIcon("update", KIcon::User)), 0,clusterPalette, SLOT(updateClusters()),actionCollection(), "update_display");
+  new KAction(tr("Delete &Artifact Cluster(s)"),QIcon(loader->loadIcon("delete_artefact", KIcon::User)),SHIFT + Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
+  new KAction(tr("Delete &Noisy Cluster(s)"),QIcon(loader->loadIcon("delete_noise", KIcon::User)),Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
+  new KAction(tr("&Group Clusters"),QIcon(loader->loadIcon("group", KIcon::User)), Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
+  new KAction(tr("&Update Display"),QIcon(loader->loadIcon("update", KIcon::User)), 0,clusterPalette, SLOT(updateClusters()),actionCollection(), "update_display");
   new KAction(tr("&Renumber Clusters"),0, Key_R,doc, SLOT(renumberClusters()),actionCollection(), "renumber");
-  new KAction(tr("&Update Error Matrix"),QIconSet(loader->loadIcon("grouping_assistant_update", KIcon::User)),Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
+  new KAction(tr("&Update Error Matrix"),QIcon(loader->loadIcon("grouping_assistant_update", KIcon::User)),Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
             "update_errorMatrix");
   new KAction(tr("Re&cluster"),0, SHIFT  + Key_R,this, SLOT(slotRecluster()),actionCollection(), "recluster");
   new KAction(tr("&Abort Reclustering"),0, 0,this, SLOT(slotStopRecluster()),actionCollection(), "stop_recluster");
              
   //Tools menu
-  new KAction(tr("Zoom"),QIconSet(loader->loadIcon("zoom_tool", KIcon::User)), Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
-  new KAction(tr("New Cluster"),QIconSet(loader->loadIcon("new_cluster", KIcon::User)), Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
-  new KAction(tr("&Split Clusters"),QIconSet(loader->loadIcon("new_clusters", KIcon::User)), Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
-  new KAction(tr("Delete &Artifact Spikes"),QIconSet(loader->loadIcon("delete_artefact_tool", KIcon::User)),Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
-  new KAction(tr("Delete &Noisy Spikes"),QIconSet(loader->loadIcon("delete_noise_tool", KIcon::User)),Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
-  new KAction(tr("Select Time"),QIconSet(loader->loadIcon("time_tool", KIcon::User)), Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
+  new KAction(tr("Zoom"),QIcon(loader->loadIcon("zoom_tool", KIcon::User)), Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
+  new KAction(tr("New Cluster"),QIcon(loader->loadIcon("new_cluster", KIcon::User)), Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
+  new KAction(tr("&Split Clusters"),QIcon(loader->loadIcon("new_clusters", KIcon::User)), Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
+  new KAction(tr("Delete &Artifact Spikes"),QIcon(loader->loadIcon("delete_artefact_tool", KIcon::User)),Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
+  new KAction(tr("Delete &Noisy Spikes"),QIcon(loader->loadIcon("delete_noise_tool", KIcon::User)),Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
+  new KAction(tr("Select Time"),QIcon(loader->loadIcon("time_tool", KIcon::User)), Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
   //Waveforms menu
   timeFrameMode = new KToggleAction(tr("&Time Frame"), Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
   overlayPresentation = new KToggleAction(tr("&Overlay"), Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
@@ -215,8 +222,8 @@ void KlustersApp::initActions()
    new KAction(tr("&Decrease Channel Amplitudes"),CTRL + SHIFT + Key_D,this, SLOT(slotDecreaseAllChannelsAmplitude()),actionCollection(), "decrease_all_channels");
    showHideLabels = new KToggleAction(tr("Show &Labels"),0,CTRL + Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
    showHideLabels->setChecked(false);
-   new KAction(tr("&Next Spike"),QIconSet(loader->loadIcon("forwardCluster", KIcon::User)),CTRL + SHIFT + Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
-   new KAction(tr("&Previous Spike"),QIconSet(loader->loadIcon("backCluster", KIcon::User)),CTRL + SHIFT + Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
+   new KAction(tr("&Next Spike"),QIcon(loader->loadIcon("forwardCluster", KIcon::User)),CTRL + SHIFT + Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
+   new KAction(tr("&Previous Spike"),QIcon(loader->loadIcon("backCluster", KIcon::User)),CTRL + SHIFT + Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
   
   //Settings menu
   viewActionBar = new KToggleAction(tr("Show Actions"),0,this, SLOT(slotViewActionBar()),actionCollection(), "show_actionBar");
@@ -249,10 +256,10 @@ void KlustersApp::initActions()
  
   //Custom connections
   connect(clusterPalette, SIGNAL(singleChangeColor(int)), this, SLOT(slotSingleColorUpdate(int)));
-  connect(clusterPalette, SIGNAL(updateShownClusters(QValueList<int>)), this, SLOT(slotUpdateShownClusters(QValueList<int>)));
-  connect(clusterPalette, SIGNAL(groupClusters(QValueList<int>)), this, SLOT(slotGroupClusters(QValueList<int>)));
-  connect(clusterPalette, SIGNAL(moveClustersToNoise(QValueList<int>)), this, SLOT(slotMoveClustersToNoise(QValueList<int>)));
-  connect(clusterPalette, SIGNAL(moveClustersToArtefact(QValueList<int>)), this, SLOT(slotMoveClustersToArtefact(QValueList<int>)));
+  connect(clusterPalette, SIGNAL(updateShownClusters(Q3ValueList<int>)), this, SLOT(slotUpdateShownClusters(Q3ValueList<int>)));
+  connect(clusterPalette, SIGNAL(groupClusters(Q3ValueList<int>)), this, SLOT(slotGroupClusters(Q3ValueList<int>)));
+  connect(clusterPalette, SIGNAL(moveClustersToNoise(Q3ValueList<int>)), this, SLOT(slotMoveClustersToNoise(Q3ValueList<int>)));
+  connect(clusterPalette, SIGNAL(moveClustersToArtefact(Q3ValueList<int>)), this, SLOT(slotMoveClustersToArtefact(Q3ValueList<int>)));
   connect(clusterPalette, SIGNAL(clusterInformationModified()), this, SLOT(slotClusterInformationModified()));
   connect(doc, SIGNAL(updateUndoNb(int)), this, SLOT(slotUpdateUndoNb(int)));
   connect(doc, SIGNAL(updateRedoNb(int)), this, SLOT(slotUpdateRedoNb(int)));
@@ -274,7 +281,7 @@ void KlustersApp::initSelectionBoxes(){
   dimensionX->setWrapping(true);
   dimensionY->setWrapping(true);
   featureXLabel = new QLabel("Features (x,y) ",paramBar);
-  featureXLabel->setFrameStyle(QFrame::ToolBarPanel|QFrame::Plain);
+  featureXLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
   featureXLabel->setFont(font);
   //Insert the spine boxes in the main tool bar and make the connections
   paramBar->insertWidget(-1,featureXLabel->sizeHint().width(),featureXLabel);
@@ -293,10 +300,10 @@ void KlustersApp::initSelectionBoxes(){
   //to maximum of time for the current document (set when the document will be opened)
   duration->setValidator(&validator);
   durationLabel = new QLabel("  Duration (s)",paramBar);
-  durationLabel->setFrameStyle(QFrame::ToolBarPanel|QFrame::Plain);
+  durationLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
   durationLabel->setFont(font);
   startLabel = new QLabel("  Start time (s)",paramBar);
-  startLabel->setFrameStyle(QFrame::ToolBarPanel|QFrame::Plain);
+  startLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
   startLabel->setFont(font);
   paramBar->insertWidget(-1,startLabel->sizeHint().width(),startLabel);
   start->setMinimumSize(70,start->minimumHeight());
@@ -314,7 +321,7 @@ void KlustersApp::initSelectionBoxes(){
   //Enable to step the value from the highest value to the lowest value and vice versa
   spikesTodisplay->setWrapping(true);
   spikesTodisplayLabel = new QLabel("  Waveforms",paramBar);
-  spikesTodisplayLabel->setFrameStyle(QFrame::ToolBarPanel|QFrame::Plain);
+  spikesTodisplayLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
   spikesTodisplayLabel->setFont(font);
   paramBar->insertWidget(-1,spikesTodisplayLabel->sizeHint().width(),spikesTodisplayLabel);
   spikesTodisplay->setMinimumSize(70,spikesTodisplay->minimumHeight());
@@ -329,7 +336,7 @@ void KlustersApp::initSelectionBoxes(){
   //to maximum of time for the current document in miliseconds (set when the document will be opened)
   binSizeBox->setValidator(&binSizeValidator);
   binSizeLabel = new QLabel("  Bin size (ms)",paramBar);
-  binSizeLabel->setFrameStyle(QFrame::ToolBarPanel|QFrame::Plain);
+  binSizeLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
   binSizeLabel->setFont(font);
   paramBar->insertWidget(-1,binSizeLabel->sizeHint().width(),binSizeLabel);
   binSizeBox->setMinimumSize(30,binSizeBox->minimumHeight());
@@ -343,7 +350,7 @@ void KlustersApp::initSelectionBoxes(){
   //to half the maximum of time for the current document in miliseconds (set when the document will be opened)
   correlogramsHalfDuration->setValidator(&correlogramsHalfTimeFrameValidator);
   correlogramsHalfDurationLabel = new QLabel("  Duration (ms)",paramBar);
-  correlogramsHalfDurationLabel->setFrameStyle(QFrame::ToolBarPanel|QFrame::Plain);
+  correlogramsHalfDurationLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
   correlogramsHalfDurationLabel->setFont(font);
   paramBar->insertWidget(-1,correlogramsHalfDurationLabel->sizeHint().width(),correlogramsHalfDurationLabel);
   correlogramsHalfDuration->setMinimumSize(70,correlogramsHalfDuration->minimumHeight());
@@ -352,7 +359,7 @@ void KlustersApp::initSelectionBoxes(){
   connect(correlogramsHalfDuration, SIGNAL(returnPressed()),this, SLOT(slotUpdateCorrelogramsHalfDuration()));      
 
   //Connect the move function of the parameterBar to slotUpdateParameterBar to always correctly show its contents. 
-  connect(paramBar, SIGNAL(placeChanged(QDockWindow::Place)), this, SLOT(slotUpdateParameterBar()));
+  connect(paramBar, SIGNAL(placeChanged(Q3DockWindow::Place)), this, SLOT(slotUpdateParameterBar()));
   connect(paramBar, SIGNAL(moved(BarPosition)), this, SLOT(slotUpdateParameterBar()));
 }
 
@@ -414,7 +421,7 @@ void KlustersApp::applyPreferences() {
   else doc->stopAutoSaving();
 
   if(configuration().getNbChannels() != 0 && channelPositions != (*configuration().getChannelPositions())){
-   QValueList<int>* positions = configuration().getChannelPositions();
+   Q3ValueList<int>* positions = configuration().getChannelPositions();
    channelPositions.clear();
    for(int i = 0; i < static_cast<int>(positions->size()); ++i)
      channelPositions.append((*positions)[i]);   
@@ -502,7 +509,7 @@ void KlustersApp::initDisplay(){
    if(prefDialog != 0L) prefDialog->enableChannelSettings(true);
    
    //No clusters are shown by default.
-   QValueList<int>* clusterList = new QValueList<int>();
+   Q3ValueList<int>* clusterList = new Q3ValueList<int>();
     
    //Update the dimension and start spine boxes
    dimensionX->setValue(1);
@@ -591,11 +598,11 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
     bool isProcessWidget = doesActiveDisplayContainProcessWidget();
     
     //Present the clusters of the current display in the new display (if it was not a processing display).
-    QValueList<int>* clusterList = new QValueList<int>();
+    Q3ValueList<int>* clusterList = new Q3ValueList<int>();
     if(!isProcessWidget){
-     const QValueList<int>& currentClusters = activeView()->clusters();
+     const Q3ValueList<int>& currentClusters = activeView()->clusters();
 
-     QValueList<int>::const_iterator shownClustersIterator;
+     Q3ValueList<int>::const_iterator shownClustersIterator;
      for(shownClustersIterator = currentClusters.begin(); shownClustersIterator != currentClusters.end(); ++shownClustersIterator )
       clusterList->append(*shownClustersIterator);
     }
@@ -1745,7 +1752,7 @@ void KlustersApp::slotSingleColorUpdate(int clusterId){
   }
 }
 
-void KlustersApp::slotUpdateShownClusters(QValueList<int> selectedClusters){  
+void KlustersApp::slotUpdateShownClusters(Q3ValueList<int> selectedClusters){  
  //Trigger ths action only if the active display does not contain a ProcessWidget
  if(!doesActiveDisplayContainProcessWidget()){
    
@@ -1758,7 +1765,7 @@ void KlustersApp::slotUpdateShownClusters(QValueList<int> selectedClusters){
  } 
 }
 
-void KlustersApp::slotGroupClusters(QValueList<int> selectedClusters){
+void KlustersApp::slotGroupClusters(Q3ValueList<int> selectedClusters){
   slotStatusMsg(tr("Grouping clusters..."));
   KlustersView* view = activeView();
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -1767,7 +1774,7 @@ void KlustersApp::slotGroupClusters(QValueList<int> selectedClusters){
   slotStatusMsg(tr("Ready."));
 }
 
-void KlustersApp::slotMoveClustersToNoise(QValueList<int> selectedClusters){
+void KlustersApp::slotMoveClustersToNoise(Q3ValueList<int> selectedClusters){
   slotStatusMsg(tr("Delete &noisy cluster(s)..."));
   KlustersView* view = activeView();
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -1781,7 +1788,7 @@ void KlustersApp::slotMoveClustersToNoise(QValueList<int> selectedClusters){
   slotStatusMsg(tr("Ready."));
 }
 
-void KlustersApp::slotMoveClustersToArtefact(QValueList<int> selectedClusters){
+void KlustersApp::slotMoveClustersToArtefact(Q3ValueList<int> selectedClusters){
   slotStatusMsg(tr("Delete &artifact cluster(s)..."));
   KlustersView* view = activeView();
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -1969,7 +1976,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
    //Update the palette of clusters
    if(!processFinished) clusterPalette->selectItems(clustersToRecluster);
    else{
-    QValueList<int> emptyList;
+    Q3ValueList<int> emptyList;
     clusterPalette->selectItems(emptyList);
    } 
 
@@ -2155,7 +2162,7 @@ void KlustersApp::slotUpdateErrorMatrix(){
 void KlustersApp::slotSelectAll(){
  //Trigger the action only if the active display does not contain a ProcessWidget
  if(!doesActiveDisplayContainProcessWidget()){
-  QValueList<int> clustersToHide;
+  Q3ValueList<int> clustersToHide;
   doc->showAllClustersExcept(clustersToHide);
  }
 }
@@ -2163,7 +2170,7 @@ void KlustersApp::slotSelectAll(){
 void KlustersApp::slotSelectAllWO01(){
  //Trigger the action only if the active display does not contain a ProcessWidget
  if(!doesActiveDisplayContainProcessWidget()){
-  QValueList<int> clustersToHide;
+  Q3ValueList<int> clustersToHide;
   clustersToHide.append(0);
   clustersToHide.append(1);
   doc->showAllClustersExcept(clustersToHide);
@@ -2185,17 +2192,17 @@ void KlustersApp::slotRecluster(){
  }
 
  //Get the clusters to recluster (those selected in the active display)
- const QValueList<int>& currentClusters = activeView()->clusters();
+ const Q3ValueList<int>& currentClusters = activeView()->clusters();
  if(currentClusters.size() == 0){
    KMessageBox::error (this,tr("No clusters have been selected to be reclustered."), tr("Error !"));
   return;
  }
 
  clustersToRecluster.clear();
- QValueList<int>::const_iterator shownClustersIterator;
+ Q3ValueList<int>::const_iterator shownClustersIterator;
  for(shownClustersIterator = currentClusters.begin(); shownClustersIterator != currentClusters.end(); ++shownClustersIterator)
   clustersToRecluster.append(*shownClustersIterator);
- qHeapSort(clustersToRecluster);
+ qSort(clustersToRecluster);
 
  //Build the command line to launch the reclustering
 
@@ -2379,7 +2386,7 @@ void KlustersApp::slotProcessExited(KProcess* process){
  QString info = "The automatic reclustering of ";
  if(clustersToRecluster.size() > 1) info.append("clusters ");
  else info.append("cluster ");
- QValueList<int>::iterator iterator;
+ Q3ValueList<int>::iterator iterator;
  for(iterator = clustersToRecluster.begin(); iterator != clustersToRecluster.end(); ++iterator ){
   info.append(QString::number(*iterator));
   info.append(" ");

@@ -30,7 +30,13 @@
 // include files for Qt
 #include <qpaintdevice.h>
 #include <qcursor.h>
-#include <qpaintdevicemetrics.h>
+#include <q3paintdevicemetrics.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <QCustomEvent>
+#include <QResizeEvent>
+#include <QMouseEvent>
+#include <QEvent>
 
 // include files for kde
 #include <kiconloader.h>
@@ -81,17 +87,17 @@ isZoomed(false),goingToDie(false),printState(false){
  ordinateMax = 0;
 
  //Create the pairs for the clusters to show.
- const QValueList<int>& shownClusters = view.clusters();
- QValueList<int> clusters;
- QValueList<int>::const_iterator clustersIterator;
+ const Q3ValueList<int>& shownClusters = view.clusters();
+ Q3ValueList<int> clusters;
+ Q3ValueList<int>::const_iterator clustersIterator;
  for(clustersIterator = shownClusters.begin(); clustersIterator != shownClusters.end(); ++clustersIterator)
    clusters.append(*clustersIterator);
- qHeapSort(clusters);
+ qSort(clusters);
  
- QValueList<int>::iterator iterator;
+ Q3ValueList<int>::iterator iterator;
  int i = 0;
  for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){   
-  QValueList<int>::iterator iterator2;
+  Q3ValueList<int>::iterator iterator2;
   for(iterator2 = clusters.at(i); iterator2 != clusters.end(); ++iterator2){
    //Create pairs as (*iterator,*iterator2) where *iterator <= *iterator2
    pairs.append(Pair(*iterator,*iterator2));   
@@ -128,9 +134,9 @@ void CorrelationView::singleColorUpdate(int clusterId,bool active){
  if(active){
   //Add the pairs link to the cluster id to the pairUpdateList,
   // so they will be updated during the next update
-  const QValueList<int>& shownClusters = view.clusters();
+  const Q3ValueList<int>& shownClusters = view.clusters();
 
-  QValueList<int>::ConstIterator iterator;
+  Q3ValueList<int>::ConstIterator iterator;
   for(iterator = shownClusters.begin(); iterator != shownClusters.end(); ++iterator){
    //Create pairs as (*iterator,clusterId) where *iterator <= clusterId
    //and (clusterId,*iterator) where *iterator > clusterId
@@ -176,7 +182,7 @@ void CorrelationView::removeClusterFromView(int clusterId,bool active){
 }
 
 
-void CorrelationView::addNewClusterToView(QValueList<int>& fromClusters,int clusterId,bool active){
+void CorrelationView::addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active){
  isZoomed = false;//Hack because all the tabs share the same data.
 
  //Update drawContentsMode if need it.
@@ -188,7 +194,7 @@ void CorrelationView::addNewClusterToView(QValueList<int>& fromClusters,int clus
  }
 }
 
-void CorrelationView::spikesRemovedFromClusters(QValueList<int>& fromClusters,bool active){
+void CorrelationView::spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active){
  isZoomed = false;//Hack because all the tabs share the same data.
 
  //Update drawContentsMode if need it.
@@ -280,7 +286,7 @@ void CorrelationView::drawContents(QPainter *p){
 }
 
 
-CorrelationThread* CorrelationView::getCorrelations(QValueList<Pair>* pairsToCompute,QValueList<int> clusterIds){
+CorrelationThread* CorrelationView::getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds){
   //The creation of a thread automatically start it.
   return new CorrelationThread(*this,doc.data(),pairsToCompute,clusterIds);
 }
@@ -291,20 +297,20 @@ void CorrelationView::askForCorrelograms(){
   dataReady = false;
 
   //Compute the pairs for all the clusters currently shown.
-  const QValueList<int>& shownClusters = view.clusters();
-  QValueList<int> clusters;
-  QValueList<int>::const_iterator clustersIterator;
+  const Q3ValueList<int>& shownClusters = view.clusters();
+  Q3ValueList<int> clusters;
+  Q3ValueList<int>::const_iterator clustersIterator;
   for(clustersIterator = shownClusters.begin(); clustersIterator != shownClusters.end(); ++clustersIterator)
     clusters.append(*clustersIterator);
-  qHeapSort(clusters);
+  qSort(clusters);
 
 
   pairs.clear();
-  QValueList<Pair>* clusterPairs = new QValueList<Pair>();
-  QValueList<int>::iterator iterator;
+  Q3ValueList<Pair>* clusterPairs = new Q3ValueList<Pair>();
+  Q3ValueList<int>::iterator iterator;
   int i = 0;
   for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
-   QValueList<int>::iterator iterator2;
+   Q3ValueList<int>::iterator iterator2;
    for(iterator2 = clusters.at(i); iterator2 != clusters.end(); ++iterator2){
     //Create pairs as (*iterator,*iterator2) where *iterator <= *iterator2
     pairs.append(Pair(*iterator,*iterator2));
@@ -362,16 +368,16 @@ void CorrelationView::updateWindow(){
  if(drawContentsMode == REFRESH)drawContentsMode = REDRAW;  
 }
 
-void CorrelationView::drawCorrelograms(QPainter& painter,QValueList<Pair>& pairList){   
+void CorrelationView::drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pairList){   
   
  //Clear the firing rate list
   firingRates.clear();
   
  //Sort the pair so the drawing will be simplified.
- qHeapSort(pairList); 
+ qSort(pairList); 
  
  //Loop on the pairs to be drawn.
- QValueList<Pair>::iterator pairIterator;
+ Q3ValueList<Pair>::iterator pairIterator;
 
  ItemColors& clusterColors = doc.clusterColors();
  Data& clusteringData = doc.data();
@@ -391,14 +397,14 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QValueList<Pair>& pairL
  //The position of those clusters in the drawing
  //has to been find in order to redraw them at the correct position.
  bool specificPosition = false;
- QValueList<int> shownClusters;
+ Q3ValueList<int> shownClusters;
  if(drawContentsMode == UPDATE){
   specificPosition = true;
-  QValueList<int>::const_iterator iterator;
-  QValueList<int> const clusters = view.clusters();
+  Q3ValueList<int>::const_iterator iterator;
+  Q3ValueList<int> const clusters = view.clusters();
   for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
    shownClusters.append(*iterator);
-  qHeapSort(shownClusters);
+  qSort(shownClusters);
  }
 
  for(pairIterator = pairList.begin(); pairIterator != pairList.end(); ++pairIterator){
@@ -450,15 +456,15 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QValueList<Pair>& pairL
    clusterColor = clusterColors.color(cluster1);
    painter.setBrush(QBrush(clusterColor));
    //Do not draw the outlines of the rectangles if there is more than one pair.
-   painter.setPen(NoPen);
+   painter.setPen(Qt::NoPen);
    }
   else{
    //Use white to draw if the background is dark (the legend is then white) and grey if it is white.
-   if(colorLegend == white) clusterColor = white;
-   else clusterColor = gray;
+   if(colorLegend == Qt::white) clusterColor = Qt::white;
+   else clusterColor = Qt::gray;
    painter.setBrush(QBrush(clusterColor));
    //Do not draw the outlines of the rectangles if there is more than one pair.
-   painter.setPen(NoPen);
+   painter.setPen(Qt::NoPen);
   }
       
   uint x = 0;
@@ -535,12 +541,12 @@ void CorrelationView::setBinSizeAndTimeWindow(int size,int width){
 }
 
 void CorrelationView::drawClusterIds(QPainter& painter){
- QValueList<int> shownClusters;
- QValueList<int>::const_iterator iterator;
- QValueList<int> const clusters = view.clusters();
+ Q3ValueList<int> shownClusters;
+ Q3ValueList<int>::const_iterator iterator;
+ Q3ValueList<int> const clusters = view.clusters();
  for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
   shownClusters.append(*iterator);
- qHeapSort(shownClusters);
+ qSort(shownClusters);
  
  QFont f("Helvetica",8); 
  painter.setFont(f);
@@ -581,7 +587,7 @@ void CorrelationView::drawClusterIds(QPainter& painter){
       if(isMargin) rf = QRect(worldToViewport(firingX,-firingY).x() + 10,worldToViewport(firingX,-firingY).y() - 17,worldToViewportWidth(width + 20),15);
       else rf = QRect(worldToViewport(firingX,-firingY).x() + 10 - XMARGIN,worldToViewport(firingX,-firingY).y() - 17,worldToViewportWidth(width + 20),15);
       painter.setPen(clusterColors.color(*iterator));
-      painter.setBrush(NoBrush);
+      painter.setBrush(Qt::NoBrush);
       painter.drawRect(rf);
       painter.setPen(colorLegend);
       painter.drawText(rf,Qt::AlignCenter,firingRate);
@@ -593,7 +599,7 @@ void CorrelationView::drawClusterIds(QPainter& painter){
        if(isMargin) rf = QRect(worldToViewport(firingX,-firingY).x() + 10,worldToViewport(firingX,-firingY).y() - 13,worldToViewportWidth(width + 20),15);
        else rf = QRect(worldToViewport(firingX,-firingY).x() + 10 - XMARGIN,worldToViewport(firingX,-firingY).y() - 13,worldToViewportWidth(width + 20),15);
        painter.setPen(clusterColors.color(*iterator));
-       painter.setBrush(NoBrush);
+       painter.setBrush(Qt::NoBrush);
        painter.drawRect(rf);
        painter.setPen(colorLegend);
        painter.drawText(rf,Qt::AlignCenter,firingRate);
@@ -604,7 +610,7 @@ void CorrelationView::drawClusterIds(QPainter& painter){
       if(isMargin) rf = QRect(worldToViewport(firingX,-firingY).x() + 10,worldToViewport(firingX,-firingY).y(),worldToViewportWidth(width + 20),15);
       else rf = QRect(worldToViewport(firingX,-firingY).x() + 10 - XMARGIN,worldToViewport(firingX,-firingY).y(),worldToViewportWidth(width + 20),15);
       painter.setPen(clusterColors.color(*iterator));
-      painter.setBrush(NoBrush);
+      painter.setBrush(Qt::NoBrush);
       painter.drawRect(rf);
       painter.setPen(colorLegend);
       painter.drawText(rf,Qt::AlignCenter,firingRate);
@@ -654,7 +660,7 @@ void CorrelationView::mouseDoubleClickEvent (QMouseEvent *e){
  ViewWidget::mouseDoubleClickEvent(e);
  if((view.clusters().size() > 0)){
   Data& clusteringData = doc.data();
-  QValueList<Pair>::iterator pairIterator;
+  Q3ValueList<Pair>::iterator pairIterator;
   bool correlogramsNotAvailable = false;
   for(pairIterator = pairs.begin(); pairIterator != pairs.end(); ++pairIterator){
    Data::CorrelogramIterator iterator = clusteringData.correlogramIterator(*pairIterator,scaleMode,binSize,timeWindow);
@@ -675,7 +681,7 @@ void CorrelationView::mouseReleaseEvent(QMouseEvent* e){
 
  if((e->button() & QMouseEvent::LeftButton) && (view.clusters().size() > 0)){
   Data& clusteringData = doc.data();
-  QValueList<Pair>::iterator pairIterator;
+  Q3ValueList<Pair>::iterator pairIterator;
   bool correlogramsNotAvailable = false;
   for(pairIterator = pairs.begin(); pairIterator != pairs.end(); ++pairIterator){
    Data::CorrelogramIterator iterator = clusteringData.correlogramIterator(*pairIterator,scaleMode,binSize,timeWindow);
@@ -696,7 +702,7 @@ void CorrelationView::resizeEvent(QResizeEvent* e){
 
  if(view.clusters().size() > 0){
   Data& clusteringData = doc.data();
-  QValueList<Pair>::iterator pairIterator;
+  Q3ValueList<Pair>::iterator pairIterator;
   bool correlogramsNotAvailable = false;
   for(pairIterator = pairs.begin(); pairIterator != pairs.end(); ++pairIterator){
    Data::CorrelogramIterator iterator = clusteringData.correlogramIterator(*pairIterator,scaleMode,binSize,timeWindow);
@@ -747,12 +753,12 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
    int y = (current.y() - static_cast<int>(heightBorder));
    int yCluster = abs(static_cast<int>(static_cast<float>(y)/static_cast<float>(YsizeForMaxAmp + Yspace)));
    if(xCluster <= yCluster){
-    QValueList<int> shownClusters;
-    QValueList<int>::const_iterator iterator;
-    QValueList<int> const clusters = view.clusters();
+    Q3ValueList<int> shownClusters;
+    Q3ValueList<int>::const_iterator iterator;
+    Q3ValueList<int> const clusters = view.clusters();
     for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
      shownClusters.append(*iterator);
-    qHeapSort(shownClusters); 
+    qSort(shownClusters); 
     
     statusBar->changeItem("Time (ms): "+ QString("%1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]),1);
    }
@@ -764,7 +770,7 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
  ViewWidget::mouseMoveEvent(event); 
 }
 
-void CorrelationView::print(QPainter& printPainter,QPaintDeviceMetrics& metrics,bool whiteBackground){
+void CorrelationView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground){
   printState = true;
   
  //Draw the double buffer (pixmap) by copying it into the printer device throught the painter.
@@ -796,8 +802,8 @@ void CorrelationView::print(QPainter& printPainter,QPaintDeviceMetrics& metrics,
   QColor colorLegendTmp = colorLegend;
   QColor background= backgroundColor();
   if(whiteBackground){
-   colorLegend = black;
-   setPaletteBackgroundColor(white);
+   colorLegend = Qt::black;
+   setPaletteBackgroundColor(Qt::white);
   }
   
   printPainter.fillRect(back,backgroundColor());

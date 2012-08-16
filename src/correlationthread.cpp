@@ -19,6 +19,8 @@
 
 //QT include files
 #include <qapplication.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 //General C++ include files
 #include <iostream>
@@ -39,7 +41,7 @@ void CorrelationThread::run(){
   //(halfBins + 1/2 for each half time window)
   int halfBins = ((correlationView.timeWindow / correlationView.binSize) - 1) / 2;
 
-  QValueList<Pair>::iterator pairIterator;
+  Q3ValueList<Pair>::iterator pairIterator;
   for(pairIterator = clusterPairs->begin(); pairIterator != clusterPairs->end(); ++pairIterator){
    if(!haveToStopProcessing){
     Data::Status status = data.getCorrelograms(*pairIterator,correlationView.binSize,correlationView.timeWindow,binSizeInRU,timeWindowInRU,halfBins);

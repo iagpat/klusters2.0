@@ -20,7 +20,7 @@
 // include files for QT
 #include <qpainter.h>
 #include <qfile.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 #include <qmessagebox.h>
 
 // include files for KDE
@@ -116,14 +116,14 @@ void PrefWaveformView::loadChannelOrder(){
    }
 
    QFile channelFile(tmpChannelFile);
-   if(!channelFile.open(IO_ReadOnly)){
+   if(!channelFile.open(QIODevice::ReadOnly)){
     QMessageBox::critical (this,tr("Error !"),
          tr("The selected file could not be opened !")
          );
     return;
    }
 
-   QTextStream positionStream(&channelFile);
+   Q3TextStream positionStream(&channelFile);
    QString line;
    int channel = 0;
    for(line = positionStream.readLine(); !line.isNull();line = positionStream.readLine()){

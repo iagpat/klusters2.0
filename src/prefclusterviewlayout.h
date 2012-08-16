@@ -11,12 +11,17 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <QLabel>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
-class QGroupBox;
+class Q3GroupBox;
 class QLabel;
 class QSpinBox;
 
@@ -28,16 +33,16 @@ public:
     PrefClusterViewLayout( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
     ~PrefClusterViewLayout();
 
-    QGroupBox* groupBox3;
+    Q3GroupBox* groupBox3;
     QLabel* textLabel6;
     QSpinBox* intervalSpinBox;
 
 protected:
-    QGridLayout* PrefClusterViewLayoutLayout;
+    Q3GridLayout* PrefClusterViewLayoutLayout;
     QSpacerItem* spacer21;
-    QGridLayout* layout57;
+    Q3GridLayout* layout57;
     QSpacerItem* spacer18;
-    QHBoxLayout* layout55;
+    Q3HBoxLayout* layout55;
     QSpacerItem* spacer19;
 
 protected slots:

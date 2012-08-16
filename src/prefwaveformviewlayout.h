@@ -11,13 +11,18 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3GridLayout>
+#include <Q3HBoxLayout>
+#include <QLabel>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class ChannelList;
-class QGroupBox;
+class Q3GroupBox;
 class QLabel;
 class QSpinBox;
 class KPushButton;
@@ -30,25 +35,25 @@ public:
     PrefWaveformViewLayout( QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
     ~PrefWaveformViewLayout();
 
-    QGroupBox* groupBox1;
+    Q3GroupBox* groupBox1;
     QLabel* textLabel4_2;
     QSpinBox* gainSpinBox;
-    QGroupBox* groupBox2;
+    Q3GroupBox* groupBox2;
     ChannelList* channelList;
     KPushButton* saveButton;
     QLabel* textLabel1;
     KPushButton* loadButton;
 
 protected:
-    QGridLayout* PrefWaveformViewLayoutLayout;
+    Q3GridLayout* PrefWaveformViewLayoutLayout;
     QSpacerItem* spacer1;
-    QHBoxLayout* layout14;
+    Q3HBoxLayout* layout14;
     QSpacerItem* spacer16;
-    QHBoxLayout* layout40;
+    Q3HBoxLayout* layout40;
     QSpacerItem* spacer7_2;
-    QHBoxLayout* layout53;
+    Q3HBoxLayout* layout53;
     QSpacerItem* spacer17;
-    QGridLayout* layout52;
+    Q3GridLayout* layout52;
     QSpacerItem* spacer9_2;
     QSpacerItem* spacer14_3;
     QSpacerItem* spacer8;

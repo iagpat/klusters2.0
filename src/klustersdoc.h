@@ -25,9 +25,13 @@
 // include files for QT
 #include <qobject.h>
 #include <qstring.h>
-#include <qptrlist.h> 
+#include <q3ptrlist.h> 
 #include <qpoint.h>
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <Q3ValueList>
+#include <QEvent>
 
 // include files for KDE
 #include <kurl.h>
@@ -157,38 +161,38 @@ class KlustersDoc : public QObject
     * @param clustersToShow list of clusters to be drawn.
     * @param activeView the view in which the change has to be immediate.
     */
-    void shownClustersUpdate(QValueList<int> clustersToShow,KlustersView& activeView);
+    void shownClustersUpdate(Q3ValueList<int> clustersToShow,KlustersView& activeView);
 
     /**Updates the selection of clusters to be shown in the active view due to
     * a selection in the error matrix.
     * @param clustersToShow list of clusters to be drawn.
     */    
-    void shownClustersUpdate(QValueList<int> clustersToShow);
+    void shownClustersUpdate(Q3ValueList<int> clustersToShow);
 
     /**Updates the selection of clusters to be shown in the active view due to
     * a selection in the error matrix.
     * @param clustersToShow list of clusters to be drawn.
     * @param previousSelectedClusterPairs list of clusters corresponding to the clusters previous selected in the error matrix.
     */
-    void shownClustersUpdate(QValueList<int> clustersToShow,QValueList<int> previousSelectedClusterPairs);
+    void shownClustersUpdate(Q3ValueList<int> clustersToShow,Q3ValueList<int> previousSelectedClusterPairs);
 
     /**Updates the selection of clusters to be shown in the active view due to
     * a selection in the error matrix.
     * @param clustersToShow list of clusters to be drawn in addition to those already shown.
     */
-    void addClustersToActiveView(QValueList<int> clustersToShow);
+    void addClustersToActiveView(Q3ValueList<int> clustersToShow);
 
     /**Updates the selection of clusters to be shown by showing all the clusters
     * except those contained in @p clustersToHide.
     * @param clustersToHide list of clusters to not show.
     */
-    void showAllClustersExcept(QValueList<int> clustersToHide);
+    void showAllClustersExcept(Q3ValueList<int> clustersToHide);
     
     /**Manages the grouping of clusters.
     * @param clustersToGroup list of clusters to be grouped.
     * @param activeView the view in which the change has to be immediate.
     */    
-    void groupClusters(QValueList<int> clustersToGroup,KlustersView& activeView);
+    void groupClusters(Q3ValueList<int> clustersToGroup,KlustersView& activeView);
 
     /**Manages the deletion of clusters, if @p clusterId is 0, the clusters are moved to cluster 0 (cluster of artefact)
     * if @p clusterId is , the clusters are moved to cluster 1 (cluster of noise).
@@ -196,7 +200,7 @@ class KlustersDoc : public QObject
     * @param activeView the view in which the change has to be immediate.
     * @param clusterId the id of the cluster to where the clusteres in clustersToDelete will be moved.
     */
-    void deleteClusters(QValueList<int> clustersToDelete,KlustersView& activeView,int clusterId);
+    void deleteClusters(Q3ValueList<int> clustersToDelete,KlustersView& activeView,int clusterId);
 
     /**
     * Removes spikes from some clusters and assign them to the cluster 1, the cluster for the noise.
@@ -206,7 +210,7 @@ class KlustersDoc : public QObject
     * @param dimensionX the dimension used as absciss to display the clusters.
     * @param dimensionY the dimension used as ordinate to display the clusters.
     */
-    void deleteNoise(QRegion& region,const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
+    void deleteNoise(QRegion& region,const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
 
     /**
     * Removes spikes from some clusters and assign them to the cluster 0, the cluster for the artefact.
@@ -216,7 +220,7 @@ class KlustersDoc : public QObject
     * @param dimensionX the dimension used as absciss to display the clusters.
     * @param dimensionY the dimension used as ordinate to display the clusters.
     */
-    void deleteArtifact(QRegion& region,const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
+    void deleteArtifact(QRegion& region,const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
 
     /**
     * Creates a new cluster out of existing ones.
@@ -227,7 +231,7 @@ class KlustersDoc : public QObject
     * @param dimensionY the dimension used as ordinate to display the clusters.
     * @return the number of the newly created cluster.
     */
-    void createNewCluster(QRegion& region, const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY); 
+    void createNewCluster(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY); 
 
     /**
     * Creates a new clusters out of existing ones. If the polygon of selection contains x clusters
@@ -239,7 +243,7 @@ class KlustersDoc : public QObject
     * @param dimensionY the dimension used as ordinate to display the clusters.
     * @return a list of the numbers of the newly created clusters.
     */
-    void createNewClusters(QRegion& region, const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
+    void createNewClusters(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
 
     /**Returns the number of dimensions of the data.*/
     inline int nbDimensions(){return clusteringData->nbOfDimensions();};
@@ -326,7 +330,7 @@ class KlustersDoc : public QObject
   /**Initialize the position of the channels in the waveform views.
   * @param positions positions of the channels to use in the view set by the user in the settings dialog.
   */
-  void setChannelPositions(QValueList<int>& positions);
+  void setChannelPositions(Q3ValueList<int>& positions);
 
   /**Returns the number of channels used.*/
   inline int nbOfchannels() const{return clusteringData->nbOfchannels();};
@@ -350,7 +354,7 @@ class KlustersDoc : public QObject
   * @param reclusteringFetFileName name for the reclustering fet file.
   * @return the creation status as a OpenSaveCreateReturnMessage enum.
   */
-  int createFeatureFile(QValueList<int>& clustersToRecluster,QString reclusteringFetFileName);
+  int createFeatureFile(Q3ValueList<int>& clustersToRecluster,QString reclusteringFetFileName);
 
   /**Integrates in the data the clusters obtained by automatic reclustering.
   * Suppress the reclustered ones and add the newly created ones.
@@ -360,7 +364,7 @@ class KlustersDoc : public QObject
   * @param reclusteringFetFileName name of the reclustering fet file.
   * @return the integration status as a OpenSaveCreateReturnMessage enum.
   */
-  int integrateReclusteredClusters(QValueList<int>& clustersToRecluster,QValueList<int>& reclusteredClusterList,QString reclusteringFetFileName);
+  int integrateReclusteredClusters(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,QString reclusteringFetFileName);
   
   /** Returns the id of the electrode group correponding to the current document.
   * @return the id of the electrode group.
@@ -372,7 +376,7 @@ class KlustersDoc : public QObject
   * @param clustersToRecluster list of clusters reclustered.
   * @param reclusteredClusterList output parameter, the list of the newly created clusters.
   */
-  void reclusteringUpdate(QValueList<int>& clustersToRecluster,QValueList<int>& reclusteredClusterList);
+  void reclusteringUpdate(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList);
 
   /**
   * Informs if the variables need it by the traceView are available. Those variables are retrieve only from
@@ -424,7 +428,7 @@ class KlustersDoc : public QObject
 
  /**Returns a reference on the map given th correspondance between the display group ids and the channel ids.
   */
-  inline QMap<int, QValueList<int> >* getDisplayGroupsChannels() {return &displayGroupsChannels;};   
+  inline QMap<int, Q3ValueList<int> >* getDisplayGroupsChannels() {return &displayGroupsChannels;};   
 
  /**Returns a reference on the Map given the correspondance between the channel ids and the spike group ids.
   */
@@ -432,14 +436,14 @@ class KlustersDoc : public QObject
 
   /**Returns a reference on the map given th correspondance between the spike group ids and the channel ids.
   */
-  inline QMap<int, QValueList<int> >* getSpikeGroupsChannels() {return &spikeGroupsChannels;};
+  inline QMap<int, Q3ValueList<int> >* getSpikeGroupsChannels() {return &spikeGroupsChannels;};
      
   /**Returns the list of channels of the current electrode.*/
-  inline QValueList<int>& getCurrentChannels() {return clusteringData->getCurrentChannels();};
+  inline Q3ValueList<int>& getCurrentChannels() {return clusteringData->getCurrentChannels();};
 
   /**Returns a map given the list of cluster file containing data for a given display group.
   * This is used in the TraceView.*/  
-  inline QMap<int, QValueList<int> >* getDisplayGroupsClusterFile() {return &displayGroupsClusterFile;};
+  inline QMap<int, Q3ValueList<int> >* getDisplayGroupsClusterFile() {return &displayGroupsClusterFile;};
   
   /**Returns a pointer to the TraceProvider.*/
   inline  TracesProvider* getTraceProvider()const{return tracesProvider;}; 
@@ -462,22 +466,22 @@ class KlustersDoc : public QObject
   signals:
     void updateUndoNb(int undoNb);
     void updateRedoNb(int undoNb);
-    void clustersGrouped(QValueList<int>& groupedClusters, int newClusterId);
-    void clustersDeleted(QValueList<int>& deletedClusters,int destinationCluster);
-    void removeSpikesFromClusters(QValueList<int>& fromClusters, int destinationClusterId,QValueList<int>& emptiedClusters);
-    void newClusterAdded(QValueList<int>& fromClusters,int clusterId,QValueList<int>& emptiedClusters);
-    void newClustersAdded(QMap<int,int>& fromToNewClusterIds,QValueList<int>& emptiedClusters);
+    void clustersGrouped(Q3ValueList<int>& groupedClusters, int newClusterId);
+    void clustersDeleted(Q3ValueList<int>& deletedClusters,int destinationCluster);
+    void removeSpikesFromClusters(Q3ValueList<int>& fromClusters, int destinationClusterId,Q3ValueList<int>& emptiedClusters);
+    void newClusterAdded(Q3ValueList<int>& fromClusters,int clusterId,Q3ValueList<int>& emptiedClusters);
+    void newClustersAdded(QMap<int,int>& fromToNewClusterIds,Q3ValueList<int>& emptiedClusters);
     void renumber(QMap<int,int>& clusterIdsOldNew);
     void undoRenumbering(QMap<int,int>& clusterIdsNewOld);
-    void undoAdditionModification(QValueList<int>& addedClusters,QValueList<int>& updatedClusters);
-    void undoAddition(QValueList<int>& addedClusters);
-    void undoModification(QValueList<int>& updatedClusters);
+    void undoAdditionModification(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters);
+    void undoAddition(Q3ValueList<int>& addedClusters);
+    void undoModification(Q3ValueList<int>& updatedClusters);
     void redoRenumbering(QMap<int,int>& clusterIdsOldNew);
-    void redoAdditionModification(QValueList<int>& addedClusters,QValueList<int>& modifiedClusters,bool isModifiedByDeletion,QValueList<int>& deletedClusters);
-    void redoAddition(QValueList<int>& addedClusters,QValueList<int>& deletedClusters);
-    void redoModification(QValueList<int>& updatedClusters,bool isModifiedByDeletion,QValueList<int>& deletedClusters);
-    void redoDeletion(QValueList<int>& deletedClusters);
-    void newClustersAdded(QValueList<int>& clustersToRecluster);
+    void redoAdditionModification(Q3ValueList<int>& addedClusters,Q3ValueList<int>& modifiedClusters,bool isModifiedByDeletion,Q3ValueList<int>& deletedClusters);
+    void redoAddition(Q3ValueList<int>& addedClusters,Q3ValueList<int>& deletedClusters);
+    void redoModification(Q3ValueList<int>& updatedClusters,bool isModifiedByDeletion,Q3ValueList<int>& deletedClusters);
+    void redoDeletion(Q3ValueList<int>& deletedClusters);
+    void newClustersAdded(Q3ValueList<int>& clustersToRecluster);
     void spikesDeleted();
     
   public slots:
@@ -504,7 +508,7 @@ class KlustersDoc : public QObject
     * @param dimensionX the dimension used as absciss to display the clusters.
     * @param dimensionY the dimension used as ordinate to display the clusters.
     */
-    void deleteSpikesFromClusters(int destination, QRegion& region,const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
+    void deleteSpikesFromClusters(int destination, QRegion& region,const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
 
     /**
     * Fills the undo list (clusterColorListUndoList) and clear the redo list
@@ -526,7 +530,7 @@ class KlustersDoc : public QObject
     * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
     * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact abd cluster of noise respectively).
     */    
-    void prepareUndo(QValueList<int>* addedClustersTemp,QValueList<int>* modifiedClustersTemp,QValueList<int>* deletedClustersTemp,bool isModifiedByDeletion = false);
+    void prepareUndo(Q3ValueList<int>* addedClustersTemp,Q3ValueList<int>* modifiedClustersTemp,Q3ValueList<int>* deletedClustersTemp,bool isModifiedByDeletion = false);
 
     /**
     * Fills the undo lists (addedClustersUndoList, deletedClustersUndoList and modifiedClustersUndoList) with
@@ -542,7 +546,7 @@ class KlustersDoc : public QObject
     * @param deletedClusters the list of last deleted clusters, the list will be added
     * to the deletedClustersUndoList.
     */
-    void prepareUndo(int newCluster,QValueList<int>& deletedClusters);
+    void prepareUndo(int newCluster,Q3ValueList<int>& deletedClusters);
 
     /**
     * Fills the undo lists (addedClustersUndoList, deletedClustersUndoList and modifiedClustersUndoList) to
@@ -554,7 +558,7 @@ class KlustersDoc : public QObject
     * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
     * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
    */
-    void prepareUndo(QValueList<int>& modifiedClusters,QValueList<int>& deletedClusters,bool isModifiedByDeletion = false);
+    void prepareUndo(Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters,bool isModifiedByDeletion = false);
      
     /**
     * Fills the undo lists (addedClustersUndoList, deletedClustersUndoList and modifiedClustersUndoList) to
@@ -568,7 +572,7 @@ class KlustersDoc : public QObject
     * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
     * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
     */    
-    void prepareUndo(int newCluster, QValueList<int>& modifiedClusters,QValueList<int>& deletedClusters,bool isModifiedByDeletion = false);
+    void prepareUndo(int newCluster, Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters,bool isModifiedByDeletion = false);
 
     /**
     * Fills the undo lists (addedClustersUndoList, deletedClustersUndoList and modifiedClustersUndoList) to
@@ -580,7 +584,7 @@ class KlustersDoc : public QObject
     * @param deletedClusters the list of last deleted clusters, the list will be added
     * to the deletedClustersUndoList.
     */    
-    void prepareUndo(QValueList<int>& newClusters, QValueList<int>& modifiedClusters,QValueList<int>& deletedClusters);
+    void prepareUndo(Q3ValueList<int>& newClusters, Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters);
 
     /**
     * Clears the different undo and redo lists as no undo/redo is possible after a renumbering
@@ -598,7 +602,7 @@ class KlustersDoc : public QObject
     * @param deletedClusters the list of automatically reclustered clusters  which will be deleted, the list will be added
     * to the deletedClustersUndoList.
     */
-    void prepareReclusteringUndo(QValueList<int>& newClusters,QValueList<int>& deletedClusters);
+    void prepareReclusteringUndo(Q3ValueList<int>& newClusters,Q3ValueList<int>& deletedClusters);
 
     //Members
 
@@ -608,12 +612,12 @@ class KlustersDoc : public QObject
     /**Represents a list of list of clusters with their associated color and status
     * use to enable undo action.
     */
-    QPtrList<ItemColors> clusterColorListUndoList;
+    Q3PtrList<ItemColors> clusterColorListUndoList;
 
     /**Represents a list of list of clusters with their associated color and status
     * use to enable redo action.
     */
-    QPtrList<ItemColors> clusterColorListRedoList;
+    Q3PtrList<ItemColors> clusterColorListRedoList;
     
     /**The modified flag of the current document. */
     bool modified;
@@ -640,7 +644,7 @@ class KlustersDoc : public QObject
     QString tmpSpikeFile;
     
     /**The list of the views currently connected to the document. */
-    QPtrList<KlustersView>* viewList;
+    Q3PtrList<KlustersView>* viewList;
 
     /** Class containing all the data for the clusters cuting.*/
     Data* clusteringData;
@@ -652,47 +656,47 @@ class KlustersDoc : public QObject
     ClusterPalette& clusterPalette;
 
     /**List of current added clusters. */
-    QValueList<int>* addedClusters;
+    Q3ValueList<int>* addedClusters;
     /**List of current modified clusters. */
-    QValueList<int>* modifiedClusters;
+    Q3ValueList<int>* modifiedClusters;
     /**List of current deleted clusters. */
-    QValueList<int>* deletedClusters;
+    Q3ValueList<int>* deletedClusters;
     
     /**Represents a list of list of added clusters use to enable undo action.
     */
-    QPtrList< QValueList<int> > addedClustersUndoList;
+    Q3PtrList< Q3ValueList<int> > addedClustersUndoList;
 
     /**Represents a list of list of added  clusters use to enable redo action.
     */
-    QPtrList< QValueList<int> > addedClustersRedoList;
+    Q3PtrList< Q3ValueList<int> > addedClustersRedoList;
 
     /**Represents a list of list of modified clusters use to enable undo action.
     */
-    QPtrList< QValueList<int> > modifiedClustersUndoList;
+    Q3PtrList< Q3ValueList<int> > modifiedClustersUndoList;
 
     /**Represents a list of list of modified clusters use to enable redo action.
     */
-    QPtrList< QValueList<int> > modifiedClustersRedoList;
+    Q3PtrList< Q3ValueList<int> > modifiedClustersRedoList;
 
     /**Represents a list of list of deleted clusters use to enable undo action.
     */
-    QPtrList< QValueList<int> > deletedClustersUndoList;
+    Q3PtrList< Q3ValueList<int> > deletedClustersUndoList;
 
     /**Represents a list of list of deleted clusters use to enable redo action.
     */
-    QPtrList< QValueList<int> > deletedClustersRedoList;
+    Q3PtrList< Q3ValueList<int> > deletedClustersRedoList;
     
     /**List of the undo numbers where the modification of clusters has been due to
     * the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
     * This list is used to reduce the number of cluster to redraw whenever possible.
     */    
-    QValueList<int> modifiedClustersByDeleteUndo;
+    Q3ValueList<int> modifiedClustersByDeleteUndo;
 
     /**List of the redo numbers where the modification of clusters has been due to
     the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
     * This list is used to reduce the number of cluster to redraw whenever possible.
     */
-    QValueList<int> modifiedClustersByDeleteRedo;
+    Q3ValueList<int> modifiedClustersByDeleteRedo;
 
    /**Map with keys equal to the do/undo indices and values equal to a map
    *giving the correspondence between the old numbering and the new numbering of the clusters.*/
@@ -703,7 +707,7 @@ class KlustersDoc : public QObject
     QMap<int, QMap<int,int> > clusterIdsNewOldMap;
 
    /**List given the undo indices corresponding to a renumbering which can be redo.*/
-   QValueList<int> renumberingRedoList; 
+   Q3ValueList<int> renumberingRedoList; 
    
    /**Thread responsible for the autosaving of the document.*/
    AutoSaveThread* autoSaveThread;
@@ -736,20 +740,20 @@ class KlustersDoc : public QObject
  QMap<int,int> displayChannelsGroups;
 
  /**Map given the correspondance between the display group ids and the channel ids.*/
- QMap<int, QValueList<int> > displayGroupsChannels;
+ QMap<int, Q3ValueList<int> > displayGroupsChannels;
 
  /**Map given the correspondance between the channel ids and the spike group ids.*/
  QMap<int,int> channelsSpikeGroups;
 
  /**Map given the correspondance between the spike group ids and the channel ids.*/
- QMap<int, QValueList<int> > spikeGroupsChannels;
+ QMap<int, Q3ValueList<int> > spikeGroupsChannels;
  
  /**
  * This assumes that the cluster file names contain the identifier of
  * the spike group used to create them (myFile.clu.1 correspond to the
  * spike group 1).
  */    
- QMap<int, QValueList<int> > displayGroupsClusterFile;
+ QMap<int, Q3ValueList<int> > displayGroupsClusterFile;
  
 };
 

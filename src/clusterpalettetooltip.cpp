@@ -21,7 +21,7 @@
 #include "clusterpalettetooltip.h"
 #include "clusterpaletteiconviewitem.h"
 
-ClusterPaletteToolTip::ClusterPaletteToolTip(QIconView* parentIconView, QToolTipGroup* toolTipGroup):QToolTip(parentIconView->viewport(), toolTipGroup), parent(parentIconView)
+ClusterPaletteToolTip::ClusterPaletteToolTip(Q3IconView* parentIconView, QToolTipGroup* toolTipGroup):QToolTip(parentIconView->viewport(), toolTipGroup), parent(parentIconView)
 {
 }
 

@@ -19,13 +19,16 @@
  ***************************************************************************/
 // application specific includes
 #include "clusterinformationdialog.h"
+//Added by qt3to4:
+#include <QLabel>
+#include <Q3VBoxLayout>
 
 ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString& caption) :
 		KDialogBase(parent,"Cluster information",true,caption,Ok|Cancel,Ok,true)
 {
 	page = new QWidget(this);
 	setMainWidget(page);
-	layout = new QVBoxLayout(page,0,spacingHint());
+	layout = new Q3VBoxLayout(page,0,spacingHint());
 
 	//Structure information (label and lineedit)
     QLabel *label1 = new QLabel(tr("Structure"),page,"structure_label");

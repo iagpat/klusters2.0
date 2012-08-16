@@ -19,6 +19,11 @@
 
 // include files for QT
 #include <qstring.h>
+//Added by qt3to4:
+#include <Q3Frame>
+#include <Q3ValueList>
+#include <QLabel>
+#include <QKeyEvent>
 
 //includes files for KDE
 
@@ -30,11 +35,11 @@
 using namespace std;
 
 TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvider& tracesProvider,bool multiColumns,bool verticalLines,
-                  bool raster,bool waveforms,bool labelsDisplay,QValueList<int>& channelsToDisplay,int gain,int acquisitionGain,
-                  ChannelColors* channelColors,QMap<int, QValueList<int> >* groupsChannels,
-                  QMap<int,int>* channelsGroups,QValueList<int>& channelOffsets,QValueList<int>& gains,const QValueList<int>& skippedChannels,QWidget* parent, const char* name,QColor backgroundColor,KStatusBar* statusBar,
+                  bool raster,bool waveforms,bool labelsDisplay,Q3ValueList<int>& channelsToDisplay,int gain,int acquisitionGain,
+                  ChannelColors* channelColors,QMap<int, Q3ValueList<int> >* groupsChannels,
+                  QMap<int,int>* channelsGroups,Q3ValueList<int>& channelOffsets,Q3ValueList<int>& gains,const Q3ValueList<int>& skippedChannels,QWidget* parent, const char* name,QColor backgroundColor,KStatusBar* statusBar,
                   int minSize,int maxSize,int windowTopLeft,int windowBottomRight,int border):
-                  QVBox(parent,name),timeWindow(duration),
+                  Q3VBox(parent,name),timeWindow(duration),
                   view(tracesProvider,greyScale,multiColumns,verticalLines,raster,waveforms,labelsDisplay,channelsToDisplay,gain,acquisitionGain,
                   startTime,timeWindow,channelColors,groupsChannels,channelsGroups,channelOffsets,gains,skippedChannels,this,name,
                   backgroundColor,statusBar,minSize,maxSize,windowTopLeft,windowBottomRight,border),startTime(startTime),
@@ -42,18 +47,18 @@ TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvi
 
   recordingLength = tracesProvider.recordingLength();
 
-  selectionWidgets = new QHBox(this);
+  selectionWidgets = new Q3HBox(this);
   setMargin(0);
   setSpacing(0);
   setStretchFactor(selectionWidgets,0);
   setStretchFactor(&view,200);
 
-  setFocusPolicy(QWidget::StrongFocus);
+  setFocusPolicy(Qt::StrongFocus);
 
   initSelectionWidgets();
   adjustSize();
 
-  connect(&view,SIGNAL(channelsSelected(const QValueList<int>&)),this, SLOT(slotChannelsSelected(const QValueList<int>&)));
+  connect(&view,SIGNAL(channelsSelected(const Q3ValueList<int>&)),this, SLOT(slotChannelsSelected(const Q3ValueList<int>&)));
   connect(&view,SIGNAL(setStartAndDuration(long,long)),this, SLOT(slotSetStartAndDuration(long,long)));
   connect(&view,SIGNAL(eventModified(QString,int,double,double)),this, SLOT(slotEventModified(QString,int,double,double)));
   connect(&view,SIGNAL(eventRemoved(QString,int,double)),this, SLOT(slotEventRemoved(QString,int,double)));
@@ -81,7 +86,7 @@ void TraceWidget::initSelectionWidgets(){
 
   //Create and initialize the spin boxe  and lineEdit.
   startLabel = new QLabel("Start time",selectionWidgets);
-  startLabel->setFrameStyle(QFrame::ToolBarPanel|QFrame::Plain);
+  startLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
   startLabel->setFont(font);
 
   minutePart = recordingLength / 60000;
@@ -107,7 +112,7 @@ void TraceWidget::initSelectionWidgets(){
 
 
   durationLabel = new QLabel("  Duration (ms)",selectionWidgets);
-  durationLabel->setFrameStyle(QFrame::ToolBarPanel|QFrame::Plain);
+  durationLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
   durationLabel->setFont(font);
   duration = new QLineEdit(QString("%1").arg(timeWindow),selectionWidgets);
   duration->setMinimumSize(50,duration->minimumHeight());
@@ -136,7 +141,7 @@ void TraceWidget::initSelectionWidgets(){
 
   //enable the user to use the keyboard to interact with the scrollbar.
   scrollBar->setMouseTracking(false);
-  scrollBar->setFocusPolicy(QWidget::StrongFocus);
+  scrollBar->setFocusPolicy(Qt::StrongFocus);
   connect(scrollBar,SIGNAL(valueChanged(int)),this, SLOT(slotScrollBarUpdated()));
 
   selectionWidgets->setMargin(0);

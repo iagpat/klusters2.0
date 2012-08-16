@@ -21,9 +21,11 @@
 // include files for QT
 #include <qwidget.h>
 #include <qbutton.h>
-#include <qiconview.h>
+#include <q3iconview.h>
 #include <qspinbox.h>
 #include <qmap.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 
 //include files for the application
@@ -63,7 +65,7 @@ public:
   void resetChannelList(int nb);
 
   /**Returns the positions of the channels to use in the waveform vies.**/
-  inline QValueList<int> getChannelPositions() const {return channelPositions;}
+  inline Q3ValueList<int> getChannelPositions() const {return channelPositions;}
 
   inline void enableChannelSettings(bool state){
    saveButton->setEnabled(state);
@@ -76,7 +78,7 @@ signals:
   void positionsChanged();
   
 private:
-  QValueList<int> channelPositions;
+  Q3ValueList<int> channelPositions;
   int nbChannels;
   
 private slots:

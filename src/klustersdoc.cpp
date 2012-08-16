@@ -23,6 +23,11 @@
 #include <qtimer.h>
 #include <qdatetime.h>
 #include <qapplication.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <QCustomEvent>
+#include <Q3PtrList>
+#include <QEvent>
 
 // include files for KDE
 
@@ -51,7 +56,7 @@ extern int nbUndo;
 
 KlustersDoc::KlustersDoc(QWidget* parent,ClusterPalette& clusterPalette,bool autoSave,int savingInterval): clusterColorListUndoList(),clusterColorListRedoList(),modified(false),docUrl(),baseName(""), xmlParameterFile(""),tmpCluFile(""),tmpSpikeFile(""),parent(parent),clusterPalette(clusterPalette),
 addedClustersUndoList(),addedClustersRedoList(),modifiedClustersUndoList(),modifiedClustersRedoList(),autoSave(autoSave),savingInterval(savingInterval),tracesProvider(0L),clustersProvider(0L),channelColorList(0L){
-  viewList = new QPtrList<KlustersView>;
+  viewList = new Q3PtrList<KlustersView>;
   viewList->setAutoDelete(false);
   clusterColorListUndoList.setAutoDelete(true);
   clusterColorListRedoList.setAutoDelete(true);
@@ -213,8 +218,8 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
   //Initialize the members specific to a document
   clusteringData = new Data();
   clusterColorList = new ItemColors();
-  addedClusters = new QValueList<int>();
-  modifiedClusters = new QValueList<int>();
+  addedClusters = new Q3ValueList<int>();
+  modifiedClusters = new Q3ValueList<int>();
   modified = false;
 
   //Store the baseName for future use
@@ -297,7 +302,7 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    }
    xmlParFile.setName(tmpXmlParFile);
-   if(!xmlParFile.open(IO_ReadOnly)){
+   if(!xmlParFile.open(QIODevice::ReadOnly)){
     fclose(fetFile);
     //Remove the temp files if any
     KIO::NetAccess::removeTempFile(tmpSpikeFile);
@@ -308,7 +313,7 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
   else{
    if(!KIO::NetAccess::download(parXFileUrl, tmpParXFile)) return PARX_DOWNLOAD_ERROR;
    parXFile.setName(tmpParXFile);
-   if(!parXFile.open(IO_ReadOnly)){
+   if(!parXFile.open(QIODevice::ReadOnly)){
     fclose(fetFile);
     //Remove the temp files if any
     KIO::NetAccess::removeTempFile(tmpSpikeFile);
@@ -317,7 +322,7 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
    }
    if(!KIO::NetAccess::download(parFileUrl, tmpParFile)) return PAR_DOWNLOAD_ERROR;
    parFile.setName(tmpParFile);
-   if(!parFile.open(IO_ReadOnly)){
+   if(!parFile.open(QIODevice::ReadOnly)){
     fclose(fetFile);
     parXFile.close();
     //Remove the temp files if any
@@ -478,8 +483,8 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
 
 
   //Constructs the clusterColorList
-  QValueList<dataType> clusterList = clusteringData->clusterIds();
-  QValueList<dataType>::iterator it;
+  Q3ValueList<dataType> clusterList = clusteringData->clusterIds();
+  Q3ValueList<dataType>::iterator it;
   for(it = clusterList.begin(); it != clusterList.end(); ++it){
     QColor color;
     if(*it == 1) color.setHsv(0,0,220);//Cluster 1 is always gray
@@ -729,7 +734,7 @@ void KlustersDoc::setTimeStepInSecond(int step){
   activeView->showAllWidgets();
 }
 
-void KlustersDoc::setChannelPositions(QValueList<int>& positions){
+void KlustersDoc::setChannelPositions(Q3ValueList<int>& positions){
  //Notify all the views of the modification
   KlustersView* view;
   for(view = viewList->first(); view!=0; view = viewList->next())
@@ -756,7 +761,7 @@ void KlustersDoc::singleColorUpdate(int clusterId,KlustersView& activeView){
 }
 
 
-void KlustersDoc::shownClustersUpdate(QValueList<int> clustersToShow,KlustersView& activeView){
+void KlustersDoc::shownClustersUpdate(Q3ValueList<int> clustersToShow,KlustersView& activeView){
   if(clusterColorList->isColorChanged()){
     //Notify all the views of the modification
     KlustersView* view;
@@ -781,7 +786,7 @@ void KlustersDoc::shownClustersUpdate(QValueList<int> clustersToShow,KlustersVie
   activeView.updateTraceView(electrodeGroupID,clusterColorList,true);
 }
 
-void KlustersDoc::shownClustersUpdate(QValueList<int> clustersToShow){
+void KlustersDoc::shownClustersUpdate(Q3ValueList<int> clustersToShow){
   //Update the palette of cluster
   clusterPalette.selectItems(clustersToShow);
 
@@ -795,12 +800,12 @@ void KlustersDoc::shownClustersUpdate(QValueList<int> clustersToShow){
   activeView->updateTraceView(electrodeGroupID,clusterColorList,true);
 }
 
-void KlustersDoc::shownClustersUpdate(QValueList<int> clustersToShow,QValueList<int> previousSelectedClusterPairs){
+void KlustersDoc::shownClustersUpdate(Q3ValueList<int> clustersToShow,Q3ValueList<int> previousSelectedClusterPairs){
   //Get the clusters currently selected
-  QValueList<int> currentShownClusters = clusterPalette.selectedClusters();
+  Q3ValueList<int> currentShownClusters = clusterPalette.selectedClusters();
 
   //Add the clusters which were shown and not part of the previous selected cluster pairs
-  QValueList<int>::iterator clustersToAdd;
+  Q3ValueList<int>::iterator clustersToAdd;
   for(clustersToAdd = currentShownClusters.begin(); clustersToAdd != currentShownClusters.end(); ++clustersToAdd )
    if(!previousSelectedClusterPairs.contains(*clustersToAdd)) clustersToShow.append(*clustersToAdd);
 
@@ -817,12 +822,12 @@ void KlustersDoc::shownClustersUpdate(QValueList<int> clustersToShow,QValueList<
   activeView->updateTraceView(electrodeGroupID,clusterColorList,true);
 }
 
-void KlustersDoc::showAllClustersExcept(QValueList<int> clustersToHide){
+void KlustersDoc::showAllClustersExcept(Q3ValueList<int> clustersToHide){
 
-  QValueList<dataType> clusterList = clusteringData->clusterIds();
-  QValueList<int> clustersToShow;
+  Q3ValueList<dataType> clusterList = clusteringData->clusterIds();
+  Q3ValueList<int> clustersToShow;
 
-  QValueList<dataType>::iterator clustersToAdd;
+  Q3ValueList<dataType>::iterator clustersToAdd;
   for(clustersToAdd = clusterList.begin(); clustersToAdd != clusterList.end(); ++clustersToAdd ){
    if(!clustersToHide.contains(static_cast<int>(*clustersToAdd))) clustersToShow.append(static_cast<int>(*clustersToAdd));
   }
@@ -840,11 +845,11 @@ void KlustersDoc::showAllClustersExcept(QValueList<int> clustersToHide){
  activeView->updateTraceView(electrodeGroupID,clusterColorList,true);
 }
 
-void KlustersDoc::addClustersToActiveView(QValueList<int> clustersToShow){
+void KlustersDoc::addClustersToActiveView(Q3ValueList<int> clustersToShow){
   //Get the clusters currently selected
-  QValueList<int> currentShownClusters = clusterPalette.selectedClusters();
+  Q3ValueList<int> currentShownClusters = clusterPalette.selectedClusters();
 
-  QValueList<int>::iterator clustersToAdd;
+  Q3ValueList<int>::iterator clustersToAdd;
   for(clustersToAdd = currentShownClusters.begin(); clustersToAdd != currentShownClusters.end(); ++clustersToAdd )
    clustersToShow.append(*clustersToAdd);
 
@@ -861,7 +866,7 @@ void KlustersDoc::addClustersToActiveView(QValueList<int> clustersToShow){
   activeView->updateTraceView(electrodeGroupID,clusterColorList,true);
 }
 
-void KlustersDoc::groupClusters(QValueList<int> clustersToGroup,KlustersView& activeView){
+void KlustersDoc::groupClusters(Q3ValueList<int> clustersToGroup,KlustersView& activeView){
   //Call data to group the clusters
   float newClusterId = clusteringData->groupClusters(clustersToGroup);
   int newClusterIdint = static_cast<int>(newClusterId);
@@ -875,7 +880,7 @@ void KlustersDoc::groupClusters(QValueList<int> clustersToGroup,KlustersView& ac
   clusterColorList->append(newClusterIdint,color);
 
   //Remove the clusters which were grouped
-  QValueList<int>::iterator clustersToRemove;
+  Q3ValueList<int>::iterator clustersToRemove;
   for (clustersToRemove = clustersToGroup.begin(); clustersToRemove != clustersToGroup.end(); ++clustersToRemove ){
     clusterColorList->remove(*clustersToRemove);
   }
@@ -906,14 +911,14 @@ void KlustersDoc::groupClusters(QValueList<int> clustersToGroup,KlustersView& ac
 
   //Update the palette of cluster
   clusterPalette.updateClusterList();
-  QValueList<int> clustersToShow;
+  Q3ValueList<int> clustersToShow;
   clustersToShow.append(newClusterIdint);
   clusterPalette.selectItems(clustersToShow);
 }
 
 
-void KlustersDoc::deleteClusters(QValueList<int> clustersToDelete,KlustersView& activeView,int clusterId){
-   QValueList<int> modifiedcluster;
+void KlustersDoc::deleteClusters(Q3ValueList<int> clustersToDelete,KlustersView& activeView,int clusterId){
+   Q3ValueList<int> modifiedcluster;
    modifiedcluster.append(clusterId);
 
   //If only one cluster has been deleted, the following cluster on the list, if any, will be selected.
@@ -923,8 +928,8 @@ void KlustersDoc::deleteClusters(QValueList<int> clustersToDelete,KlustersView& 
   if(clustersToDelete.size() == 1){
    int clusterToDelete =  clustersToDelete[0];
    bool previous = false;
-   QValueList<dataType> clusters = clusteringData->clusterIds();
-   QValueList<dataType>::iterator clustersIterator;
+   Q3ValueList<dataType> clusters = clusteringData->clusterIds();
+   Q3ValueList<dataType>::iterator clustersIterator;
    for(clustersIterator = clusters.begin(); clustersIterator != clusters.end(); ++clustersIterator){
     if(previous){
      clusterToSelect = static_cast<int>(*clustersIterator);
@@ -969,7 +974,7 @@ void KlustersDoc::deleteClusters(QValueList<int> clustersToDelete,KlustersView& 
   }
 
   //Update clusterColors,remove the clusters which were deleted
-  QValueList<int>::iterator clustersToRemove;
+  Q3ValueList<int>::iterator clustersToRemove;
   for (clustersToRemove = clustersToDelete.begin(); clustersToRemove != clustersToDelete.end(); ++clustersToRemove ){
     if(*clustersToRemove == clusterId) continue;
     clusterColorList->remove(*clustersToRemove);
@@ -1004,7 +1009,7 @@ void KlustersDoc::deleteClusters(QValueList<int> clustersToDelete,KlustersView& 
 
  //If only one cluster has been deleted, select the following cluster on the list if any.
  if(existNextCluster){
-  QValueList<int> clusters;
+  Q3ValueList<int> clusters;
   clusters.append(clusterToSelect);
 
   //Update the cluster palette
@@ -1016,21 +1021,21 @@ void KlustersDoc::deleteClusters(QValueList<int> clustersToDelete,KlustersView& 
  }
 }
 
-void KlustersDoc::deleteArtifact(QRegion& region,const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
+void KlustersDoc::deleteArtifact(QRegion& region,const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
  deleteSpikesFromClusters(0,region,clustersOfOrigin,dimensionX,dimensionY);
 }
 
 
-void KlustersDoc::deleteNoise(QRegion& region,const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
+void KlustersDoc::deleteNoise(QRegion& region,const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
  deleteSpikesFromClusters(1,region,clustersOfOrigin,dimensionX,dimensionY);
 }
 
-void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
+void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
   //list which will contain the clusters really having spikes in the region of selection.
-  QValueList <int> fromClusters;
+  Q3ValueList <int> fromClusters;
   //list which will contain the clusters which became empty because all their spikes were in the region of selection.
-  QValueList <int> emptyClusters;
-  QValueList<int> clustersToShow(clustersOfOrigin);
+  Q3ValueList <int> emptyClusters;
+  Q3ValueList<int> clustersToShow(clustersOfOrigin);
 
   clusteringData->deleteSpikesFromClusters(region,clustersOfOrigin,destination,dimensionX,dimensionY,fromClusters,emptyClusters);
 
@@ -1043,7 +1048,7 @@ void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,cons
     activeView->showAllWidgets();
   }
   else{
-   QValueList<int> updatedClusters = QValueList<int>(fromClusters);
+   Q3ValueList<int> updatedClusters = Q3ValueList<int>(fromClusters);
    updatedClusters.append(destination);
 
    //Update clusterColors, add cluster 1 if need it
@@ -1068,7 +1073,7 @@ void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,cons
 
   //Remove all the empty clusters from clusterColors and clustersToShow
   if(emptyClusters.size()>0){
-    QValueList<int>::iterator clustersToRemove;
+    Q3ValueList<int>::iterator clustersToRemove;
     for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
       clusterColorList->remove(*clustersToRemove);
       clustersToShow.remove(*clustersToRemove);
@@ -1108,12 +1113,12 @@ void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,cons
 }
 
 
-void KlustersDoc::createNewCluster(QRegion& region, const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
+void KlustersDoc::createNewCluster(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
   //list which will contain the clusters really having spikes in the region of selection.
-  QValueList <int> fromClusters;
+  Q3ValueList <int> fromClusters;
   //list which will contain the clusters which became empty because all their spikes were in the region of selection.
-  QValueList <int> emptyClusters;
-  QValueList<int> clustersToShow(clustersOfOrigin);
+  Q3ValueList <int> emptyClusters;
+  Q3ValueList<int> clustersToShow(clustersOfOrigin);
   //Get the active view.
   KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
 
@@ -1137,7 +1142,7 @@ void KlustersDoc::createNewCluster(QRegion& region, const QValueList <int>& clus
     clustersToShow.append(newClusterIdint);
     //Remove all the empty clusters from clusterColors and clustersToShow
     if(emptyClusters.size()>0){
-      QValueList<int>::iterator clustersToRemove;
+      Q3ValueList<int>::iterator clustersToRemove;
       for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
         clusterColorList->remove(*clustersToRemove);
         clustersToShow.remove(*clustersToRemove);
@@ -1173,16 +1178,16 @@ void KlustersDoc::createNewCluster(QRegion& region, const QValueList <int>& clus
   }
 }
 
-void KlustersDoc::createNewClusters(QRegion& region, const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
+void KlustersDoc::createNewClusters(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
   //list which will contain the clusters really having spikes in the region of selection.
-  QValueList <int> fromClusters;
+  Q3ValueList <int> fromClusters;
   //list which will contain the clusters which became empty because all their spikes were in the region of selection.
-  QValueList <int> emptyClusters;
-  QValueList<int> clustersToShow(clustersOfOrigin);
+  Q3ValueList <int> emptyClusters;
+  Q3ValueList<int> clustersToShow(clustersOfOrigin);
   //Get the active view.
   KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
 
-  QValueList <int> newClusters;
+  Q3ValueList <int> newClusters;
   QMap<int,int> fromToNewClusterIds = clusteringData->createNewClusters(region,clustersOfOrigin,dimensionX,dimensionY,emptyClusters);
   newClusters = fromToNewClusterIds.values();
   fromClusters = fromToNewClusterIds.keys();
@@ -1198,8 +1203,8 @@ void KlustersDoc::createNewClusters(QRegion& region, const QValueList <int>& clu
 
     //Add the clusters in clusterColors and clustersToShow.
     QColor color;
-    QValueList<int>::iterator clustersToCreate;
-    qHeapSort(newClusters);
+    Q3ValueList<int>::iterator clustersToCreate;
+    qSort(newClusters);
     for (clustersToCreate = newClusters.begin(); clustersToCreate != newClusters.end(); ++clustersToCreate ){
         color.setHsv(static_cast<int>(fmod(static_cast<float>(*clustersToCreate)*7,36))*10,255,255);
         clusterColorList->append(*clustersToCreate,color);
@@ -1207,7 +1212,7 @@ void KlustersDoc::createNewClusters(QRegion& region, const QValueList <int>& clu
     }
     //Remove all the empty clusters
     if(emptyClusters.size()>0){
-      QValueList<int>::iterator clustersToRemove;
+      Q3ValueList<int>::iterator clustersToRemove;
       for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
         clusterColorList->remove(*clustersToRemove);
         clustersToShow.remove(*clustersToRemove);
@@ -1268,7 +1273,7 @@ void KlustersDoc::prepareClusterColorUndo(){
   emit updateRedoNb(0);
 }
 
-void KlustersDoc::prepareUndo(QValueList<int>* addedClustersTemp,QValueList<int>* modifiedClustersTemp,QValueList<int>* deletedClustersTemp,bool isModifiedByDeletion){
+void KlustersDoc::prepareUndo(Q3ValueList<int>* addedClustersTemp,Q3ValueList<int>* modifiedClustersTemp,Q3ValueList<int>* deletedClustersTemp,bool isModifiedByDeletion){
   //Prepare the undo for the cluster palette
   prepareClusterColorUndo();
 
@@ -1285,7 +1290,7 @@ void KlustersDoc::prepareUndo(QValueList<int>* addedClustersTemp,QValueList<int>
   deletedClusters = deletedClustersTemp;
 
   //The renumbering actions which were redo are now lost
-  QValueList<int>::iterator iterator;
+  Q3ValueList<int>::iterator iterator;
   for(iterator = renumberingRedoList.begin(); iterator != renumberingRedoList.end(); ++iterator){
     clusterIdsOldNewMap.remove(*iterator);
     clusterIdsNewOldMap.remove(*iterator);
@@ -1317,8 +1322,8 @@ void KlustersDoc::prepareUndo(QValueList<int>* addedClustersTemp,QValueList<int>
       clusterIdsNewOldMap.insert(i-1,clusterIdsNewOld);
      }
      //remove the map entries with the bigger key (has not be taken into account by the previous loop)
-     QValueList<int> undoNbs = clusterIdsOldNewMap.keys();
-     qHeapSort(undoNbs);
+     Q3ValueList<int> undoNbs = clusterIdsOldNewMap.keys();
+     qSort(undoNbs);
      int biggerUndo = undoNbs.last();
      clusterIdsOldNewMap.remove(biggerUndo);
      clusterIdsNewOldMap.remove(biggerUndo);
@@ -1343,8 +1348,8 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
 
   //Process the renumbering variables. All the undo indices in renumberingRedoList which
   //are bigger than newNbUndo will not be accesible any more, delete them.
-  QValueList<int>::iterator iterator;
-  QValueList<int> suppressIndices;
+  Q3ValueList<int>::iterator iterator;
+  Q3ValueList<int> suppressIndices;
   for(iterator = renumberingRedoList.begin(); iterator != renumberingRedoList.end(); ++iterator){
     if(*iterator > newNbUndo){
      clusterIdsOldNewMap.remove(*iterator);
@@ -1383,8 +1388,8 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
        clusterIdsNewOldMap.insert(i-1,clusterIdsNewOld);
      }
      //remove the map entries with the bigger key (has not be taken into account by the previous loop)
-     QValueList<int> undoNbs = clusterIdsOldNewMap.keys();
-     qHeapSort(undoNbs);
+     Q3ValueList<int> undoNbs = clusterIdsOldNewMap.keys();
+     qSort(undoNbs);
      int biggerUndo = undoNbs.last();
      clusterIdsOldNewMap.remove(biggerUndo);
      clusterIdsNewOldMap.remove(biggerUndo);
@@ -1429,85 +1434,85 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
 
 void KlustersDoc::prepareUndo(){
   //Create a new empty list of created clusters
-  QValueList<int>* addedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* addedClustersTemp = new Q3ValueList<int>();
 
   //Create a new empty list of modified clusters
-  QValueList<int>* modifiedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* modifiedClustersTemp = new Q3ValueList<int>();
 
   //Create a new empty list of deleted clusters
-  QValueList<int>* deletedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* deletedClustersTemp = new Q3ValueList<int>();
 
   prepareUndo(addedClustersTemp, modifiedClustersTemp,deletedClustersTemp);
 }
 
-void KlustersDoc::prepareUndo(int newCluster,QValueList<int>& deletedClusters){
+void KlustersDoc::prepareUndo(int newCluster,Q3ValueList<int>& deletedClusters){
   //Create a new list of created clusters
-  QValueList<int>* addedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* addedClustersTemp = new Q3ValueList<int>();
   addedClustersTemp->append(newCluster);
 
   //Create a new list of modified clusters
-  QValueList<int>* modifiedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* modifiedClustersTemp = new Q3ValueList<int>();
 
   //Create a new list of deleted clusters
-  QValueList<int>* deletedClustersTemp = new QValueList<int>();
-  QValueList<int>::iterator iterator;
+  Q3ValueList<int>* deletedClustersTemp = new Q3ValueList<int>();
+  Q3ValueList<int>::iterator iterator;
   for (iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
    deletedClustersTemp->append(*iterator);
 
   prepareUndo(addedClustersTemp, modifiedClustersTemp,deletedClustersTemp);
 }
 
-void KlustersDoc::prepareUndo(QValueList<int>& modifiedClusters,QValueList<int>& deletedClusters,bool isModifiedByDeletion){
+void KlustersDoc::prepareUndo(Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters,bool isModifiedByDeletion){
  //Create a new empty list of created clusters
-  QValueList<int>* addedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* addedClustersTemp = new Q3ValueList<int>();
 
   //Create a new list of modified clusters
-  QValueList<int>* modifiedClustersTemp = new QValueList<int>();
-  QValueList<int>::iterator iterator;
+  Q3ValueList<int>* modifiedClustersTemp = new Q3ValueList<int>();
+  Q3ValueList<int>::iterator iterator;
   for (iterator = modifiedClusters.begin(); iterator != modifiedClusters.end(); ++iterator)
    modifiedClustersTemp->append(*iterator);
 
   //Create a new list of deleted clusters
-  QValueList<int>* deletedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* deletedClustersTemp = new Q3ValueList<int>();
   for (iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
    deletedClustersTemp->append(*iterator);
 
   prepareUndo(addedClustersTemp, modifiedClustersTemp,deletedClustersTemp,isModifiedByDeletion);
 }
 
-void KlustersDoc::prepareUndo(int newCluster, QValueList<int>& modifiedClusters,QValueList<int>& deletedClusters,bool isModifiedByDeletion){
+void KlustersDoc::prepareUndo(int newCluster, Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters,bool isModifiedByDeletion){
  //Create a new empty list of created clusters
-  QValueList<int>* addedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* addedClustersTemp = new Q3ValueList<int>();
   addedClustersTemp->append(newCluster);
 
   //Create a new list of modified clusters
-  QValueList<int>* modifiedClustersTemp = new QValueList<int>();
-  QValueList<int>::iterator iterator;
+  Q3ValueList<int>* modifiedClustersTemp = new Q3ValueList<int>();
+  Q3ValueList<int>::iterator iterator;
   for (iterator = modifiedClusters.begin(); iterator != modifiedClusters.end(); ++iterator)
    modifiedClustersTemp->append(*iterator);
 
   //Create a new list of deleted clusters
-  QValueList<int>* deletedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* deletedClustersTemp = new Q3ValueList<int>();
   for (iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
    deletedClustersTemp->append(*iterator);
 
   prepareUndo(addedClustersTemp, modifiedClustersTemp,deletedClustersTemp,isModifiedByDeletion);
 }
 
-void KlustersDoc::prepareUndo(QValueList<int>& newClusters, QValueList<int>& modifiedClusters,QValueList<int>& deletedClusters){
+void KlustersDoc::prepareUndo(Q3ValueList<int>& newClusters, Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters){
  //Create a new list of created clusters
-  QValueList<int>* addedClustersTemp = new QValueList<int>();
-  QValueList<int>::iterator iterator;
+  Q3ValueList<int>* addedClustersTemp = new Q3ValueList<int>();
+  Q3ValueList<int>::iterator iterator;
   for (iterator = newClusters.begin(); iterator != newClusters.end(); ++iterator)
    addedClustersTemp->append(*iterator);
 
   //Create a new list of modified clusters
-  QValueList<int>* modifiedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* modifiedClustersTemp = new Q3ValueList<int>();
   for (iterator = modifiedClusters.begin(); iterator != modifiedClusters.end(); ++iterator)
    modifiedClustersTemp->append(*iterator);
 
   //Create a new list of deleted clusters
-  QValueList<int>* deletedClustersTemp = new QValueList<int>();
+  Q3ValueList<int>* deletedClustersTemp = new Q3ValueList<int>();
   for (iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
    deletedClustersTemp->append(*iterator);
 
@@ -1526,18 +1531,18 @@ void KlustersDoc::prepareUndo(QMap<int,int> clusterIdsOldNew,QMap<int,int> clust
 }
 
 
-void KlustersDoc::prepareReclusteringUndo(QValueList<int>& newClusters,QValueList<int>& deletedClusters){
+void KlustersDoc::prepareReclusteringUndo(Q3ValueList<int>& newClusters,Q3ValueList<int>& deletedClusters){
  //Create a new list of created clusters
- QValueList<int>* addedClustersTemp = new QValueList<int>();
- QValueList<int>::iterator iterator;
+ Q3ValueList<int>* addedClustersTemp = new Q3ValueList<int>();
+ Q3ValueList<int>::iterator iterator;
  for(iterator = newClusters.begin(); iterator != newClusters.end(); ++iterator)
   addedClustersTemp->append(*iterator);
 
  //Create a new list of modified clusters
- QValueList<int>* modifiedClustersTemp = new QValueList<int>();
+ Q3ValueList<int>* modifiedClustersTemp = new Q3ValueList<int>();
 
  //Create a new list of deleted clusters
- QValueList<int>* deletedClustersTemp = new QValueList<int>();
+ Q3ValueList<int>* deletedClustersTemp = new Q3ValueList<int>();
  for(iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
   deletedClustersTemp->append(*iterator);
 
@@ -1669,18 +1674,18 @@ cout<<"in KlustersDoc::undo 1"<<endl;
     }
   }
   addedClustersRedoList.prepend(addedClusters);
-  QValueList<int>* addedClustersTemp = addedClustersUndoList.take(0);
+  Q3ValueList<int>* addedClustersTemp = addedClustersUndoList.take(0);
   addedClusters =  addedClustersTemp;
 
   modifiedClustersRedoList.prepend(modifiedClusters);
-  QValueList<int>* modifiedClustersTemp = modifiedClustersUndoList.take(0);
+  Q3ValueList<int>* modifiedClustersTemp = modifiedClustersUndoList.take(0);
   modifiedClusters =  modifiedClustersTemp;
 
   deletedClustersRedoList.prepend(deletedClusters);
-  QValueList<int>* deletedClustersTemp = deletedClustersUndoList.take(0);
+  Q3ValueList<int>* deletedClustersTemp = deletedClustersUndoList.take(0);
   deletedClusters =  deletedClustersTemp;
 
-  QValueList<int> clustersToShow = activeView->clusters();
+  Q3ValueList<int> clustersToShow = activeView->clusters();
 
   //Call redraw on the active view
   activeView->showAllWidgets();
@@ -1715,15 +1720,15 @@ void KlustersDoc::redo(){
     clusterColorList =  clusterColorListTemp;
 
     addedClustersUndoList.prepend(addedClusters);
-    QValueList<int>* addedClustersTemp = addedClustersRedoList.take(0);
+    Q3ValueList<int>* addedClustersTemp = addedClustersRedoList.take(0);
     addedClusters =  addedClustersTemp;
 
     modifiedClustersUndoList.prepend(modifiedClusters);
-    QValueList<int>* modifiedClustersTemp = modifiedClustersRedoList.take(0);
+    Q3ValueList<int>* modifiedClustersTemp = modifiedClustersRedoList.take(0);
     modifiedClusters =  modifiedClustersTemp;
 
     deletedClustersUndoList.prepend(deletedClusters);
-    QValueList<int>* deletedClustersTemp = deletedClustersRedoList.take(0);
+    Q3ValueList<int>* deletedClustersTemp = deletedClustersRedoList.take(0);
     deletedClusters =  deletedClustersTemp;
 
     clusteringData->redo(*addedClusters,*modifiedClusters,*deletedClusters);
@@ -1839,7 +1844,7 @@ void KlustersDoc::redo(){
 
  cout << "in KlustersDoc::redo, 2  : "<< endl;
 
-    QValueList<int> clustersToShow = activeView->clusters();
+    Q3ValueList<int> clustersToShow = activeView->clusters();
 
     //Call redraw on the active view
     activeView->showAllWidgets();
@@ -1872,7 +1877,7 @@ void KlustersDoc::renumberClusters(){
   prepareUndo(clusterIdsOldNew,clusterIdsNewOld);
 
   //Update the clusterColorList, keep the same colors, only update the clusterIds
-  QValueList<dataType> clusterList = clusteringData->clusterIds();
+  Q3ValueList<dataType> clusterList = clusteringData->clusterIds();
   int nbClusters = clusterList.size();
 
   for(int i = 0; i < nbClusters; ++i){
@@ -1909,9 +1914,9 @@ void KlustersDoc::renumberClusters(){
   clusterPalette.selectItems(activeView->clusters());
 }
 
-int KlustersDoc::createFeatureFile(QValueList<int>& clustersToRecluster,QString reclusteringFetFileName){
+int KlustersDoc::createFeatureFile(Q3ValueList<int>& clustersToRecluster,QString reclusteringFetFileName){
   QFile fetFile(reclusteringFetFileName);
-  if(!fetFile.open(IO_WriteOnly)) return OPEN_ERROR;
+  if(!fetFile.open(QIODevice::WriteOnly)) return OPEN_ERROR;
 
   //Create the file
   clusteringData->createFeatureFile(clustersToRecluster,fetFile);
@@ -1921,7 +1926,7 @@ int KlustersDoc::createFeatureFile(QValueList<int>& clustersToRecluster,QString 
   else return CREATION_ERROR;
 }
 
-int KlustersDoc::integrateReclusteredClusters(QValueList<int>& clustersToRecluster,QValueList<int>& reclusteredClusterList,QString reclusteringFetFileName){
+int KlustersDoc::integrateReclusteredClusters(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,QString reclusteringFetFileName){
 
  QString cluFileName(reclusteringFetFileName);
  cluFileName.replace(".fet.",".clu.");
@@ -1970,7 +1975,7 @@ int KlustersDoc::integrateReclusteredClusters(QValueList<int>& clustersToReclust
  return OK;
 }
 
-void KlustersDoc::reclusteringUpdate(QValueList<int>& clustersToRecluster,QValueList<int>& reclusteredClusterList){
+void KlustersDoc::reclusteringUpdate(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList){
   //Prepare the undo
   prepareReclusteringUndo(reclusteredClusterList,clustersToRecluster);
 
@@ -1981,15 +1986,15 @@ void KlustersDoc::reclusteringUpdate(QValueList<int>& clustersToRecluster,QValue
    //Get the active view.
    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
 
-   QValueList<int> clustersToShow;
-   QValueList<int>::const_iterator iterator;
-   QValueList<int> const clusters = activeView->clusters();
+   Q3ValueList<int> clustersToShow;
+   Q3ValueList<int>::const_iterator iterator;
+   Q3ValueList<int> const clusters = activeView->clusters();
    for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
     clustersToShow.append(*iterator);
 
    //Add the new clusters in clusterColors and clustersToShow.
    QColor color;
-   QValueList<int>::iterator clustersToCreate;
+   Q3ValueList<int>::iterator clustersToCreate;
    for(clustersToCreate = reclusteredClusterList.begin(); clustersToCreate != reclusteredClusterList.end(); ++clustersToCreate ){
     color.setHsv(static_cast<int>(fmod(static_cast<float>(*clustersToCreate)*7,36))*10,255,255);
     clusterColorList->append(*clustersToCreate,color);
@@ -1997,7 +2002,7 @@ void KlustersDoc::reclusteringUpdate(QValueList<int>& clustersToRecluster,QValue
    }
 
    //Remove all the reclustered clusters from clusterColors and clustersToShow.
-   QValueList<int>::iterator clustersToRemove;
+   Q3ValueList<int>::iterator clustersToRemove;
    for (clustersToRemove = clustersToRecluster.begin(); clustersToRemove != clustersToRecluster.end(); ++clustersToRemove ){
     clusterColorList->remove(*clustersToRemove);
     clustersToShow.remove(*clustersToRemove);
@@ -2030,14 +2035,14 @@ void KlustersDoc::reclusteringUpdate(QValueList<int>& clustersToRecluster,QValue
   else{//processWidget
    //Add the new clusters in clusterColors.
    QColor color;
-   QValueList<int>::iterator clustersToCreate;
+   Q3ValueList<int>::iterator clustersToCreate;
    for(clustersToCreate = reclusteredClusterList.begin(); clustersToCreate != reclusteredClusterList.end(); ++clustersToCreate ){
     color.setHsv(static_cast<int>(fmod(static_cast<float>(*clustersToCreate)*7,36))*10,255,255);
     clusterColorList->append(*clustersToCreate,color);
    }
 
    //Remove all the reclustered clusters from clusterColors and clustersToShow.
-   QValueList<int>::iterator clustersToRemove;
+   Q3ValueList<int>::iterator clustersToRemove;
    for (clustersToRemove = clustersToRecluster.begin(); clustersToRemove != clustersToRecluster.end(); ++clustersToRemove ){
     clusterColorList->remove(*clustersToRemove);
    }
@@ -2056,7 +2061,7 @@ void KlustersDoc::reclusteringUpdate(QValueList<int>& clustersToRecluster,QValue
 
    //Update the palette of cluster
    clusterPalette.updateClusterList();
-   QValueList<int> emptyList;
+   Q3ValueList<int> emptyList;
    clusterPalette.selectItems(emptyList);
   }
 }
@@ -2089,11 +2094,11 @@ void KlustersDoc::createProviders(){
  //Put all the channels of the spike group corresponding to the open file in the same group(the electrodeGroupID)
  channelColorList = new ChannelColors();
  QColor color;
- QValueList<int> group;
+ Q3ValueList<int> group;
  color.setHsv(210,255,255);
 
- QValueList<int>& currentChannels =  clusteringData->getCurrentChannels();
- QValueList<int>::const_iterator iterator;
+ Q3ValueList<int>& currentChannels =  clusteringData->getCurrentChannels();
+ Q3ValueList<int>::const_iterator iterator;
  for(iterator = currentChannels.begin(); iterator != currentChannels.end(); ++iterator){
   channelColorList->append(*iterator,color);
   displayChannelsGroups.insert(*iterator,electrodeGroupID.toInt());
@@ -2105,7 +2110,7 @@ void KlustersDoc::createProviders(){
  spikeGroupsChannels.insert(electrodeGroupID.toInt(),group);
 
  ////Put all the other channels in the trash group (group 0).
- QValueList<int> trashGroup;
+ Q3ValueList<int> trashGroup;
  for(int i = 0; i < channelNb; ++i){
   if(!currentChannels.contains(i)){
    channelColorList->append(i,color);
@@ -2121,7 +2126,7 @@ void KlustersDoc::createProviders(){
  clustersProvider = new ClustersProvider(docUrl,samplingRate,samplingRate,*clusteringData,tracesProvider->getTotalNbSamples());
 
  //The current cluster file contains the data for the unique display group.
- QValueList<int> list;
+ Q3ValueList<int> list;
  list.append(electrodeGroupID.toInt());
  displayGroupsClusterFile.insert(electrodeGroupID.toInt(),list);
 }

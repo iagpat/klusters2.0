@@ -24,6 +24,8 @@
 #include "qlayout.h"
 #include "qlabel.h"
 #include "qlineedit.h"
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 
 //KDE includes
 #include <kdialogbase.h>
@@ -59,7 +61,7 @@ public:
 		QLineEdit		*id;
 		QLineEdit		*quality;
 		QLineEdit		*notes;						
-		QVBoxLayout		*layout;
+		Q3VBoxLayout		*layout;
 
 };
 

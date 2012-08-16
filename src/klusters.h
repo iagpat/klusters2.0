@@ -21,14 +21,18 @@
 
 
 // include files for Qt
-#include <qstrlist.h>
-#include <qvaluelist.h>
+#include <q3strlist.h>
+#include <q3valuelist.h>
 #include <qspinbox.h> 
 #include <qvalidator.h>
 #include <qlineedit.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <qapplication.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <QEvent>
+#include <QShowEvent>
 
 // include files for KDE
 #include <kdockwidget.h>
@@ -263,21 +267,21 @@ class KlustersApp : public KDockMainWindow
     /**Draws the clusters contain in @p selectedClusters list.
     * @param selectedClusters list of clusters which have been selected to be shown.
     */    
-    void slotUpdateShownClusters(QValueList<int> selectedClusters);
+    void slotUpdateShownClusters(Q3ValueList<int> selectedClusters);
     /**Groups the clusters contain in @p selectedClusters list and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be grouped.
     */
-    void slotGroupClusters(QValueList<int> selectedClusters);
+    void slotGroupClusters(Q3ValueList<int> selectedClusters);
     /**Calls the document to move the clusters contain in @p selectedClusters list
     * to the cluster of noise (cluster 1) and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be moved
     */
-    void slotMoveClustersToNoise(QValueList<int> selectedClusters);
+    void slotMoveClustersToNoise(Q3ValueList<int> selectedClusters);
     /**Calls the document to move the clusters contain in @p selectedClusters list 
     * to the cluster of artefact (cluster 0) and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be moved
     */
-    void slotMoveClustersToArtefact(QValueList<int> selectedClusters);
+    void slotMoveClustersToArtefact(Q3ValueList<int> selectedClusters);
     /**Sets the selection mode to immediate, disenabling the update action.*/
     void slotImmediateSelection();
     /**Set the selection mode to delay, enabling the update action.*/
@@ -738,7 +742,7 @@ class KlustersApp : public KDockMainWindow
     int waveformsGain;
 
     /**Position of the channels in the waveform views.*/
-    QValueList<int> channelPositions;
+    Q3ValueList<int> channelPositions;
 
     /**Background color for the views.*/
     QColor backgroundColor;
@@ -756,10 +760,10 @@ class KlustersApp : public KDockMainWindow
     bool processOutputsFinished;
 
     /**List of the clusters to recluster.*/
-    QValueList<int> clustersToRecluster;
+    Q3ValueList<int> clustersToRecluster;
 
     /**List of the clusters created by the reclustering.*/
-    QValueList<int> clustersFromReclustering;
+    Q3ValueList<int> clustersFromReclustering;
 
     /**Path to the reclustering executable.*/
     QString reclusteringExecutable;

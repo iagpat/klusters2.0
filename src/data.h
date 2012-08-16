@@ -26,9 +26,9 @@
 #include "clusteruserinformation.h"
 
 //Include files for QT
-#include <qptrlist.h>
-#include <qvaluelist.h>
-#include <qdict.h>
+#include <q3ptrlist.h>
+#include <q3valuelist.h>
+#include <q3dict.h>
 #include <qregion.h>
 #include <qmap.h>
 #include <qfile.h>
@@ -168,7 +168,7 @@ public:
   * @param modifiedClusters list of the clusters which have been modified implying
   * the modification of the cluster 0 this the recalculation of the minima and maxima.
   */
-  void minMaxDimensionCalculation(QValueList<int> modifiedClusters);
+  void minMaxDimensionCalculation(Q3ValueList<int> modifiedClusters);
 
   /**
   * Creates a new cluster out of existing ones.
@@ -184,7 +184,7 @@ public:
   * @return the number of the newly created cluster or 0 if no cluster have been created (no spikes selected).
   * This is safe as cluster 0 (artifact) can never be created that way.
   */
-  dataType createNewCluster(QRegion& region, const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY, QValueList <int>& fromClusters,QValueList <int>& emptyClusters);
+  dataType createNewCluster(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY, Q3ValueList <int>& fromClusters,Q3ValueList <int>& emptyClusters);
 
   /**
   * Creates a new clusters out of existing ones. If the polygon of selection contains x clusters
@@ -199,7 +199,7 @@ public:
   * @return a map where the keys are ids of the clusters which really contained spikes in the region
   * and the values are the ids of the newly created clusters.
   */
-  QMap<int,int> createNewClusters(QRegion& region, const QValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY,QValueList <int>& emptyClusters);
+  QMap<int,int> createNewClusters(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY,Q3ValueList <int>& emptyClusters);
 
  /**
   * Removes spikes from some clusters and assign them to the cluster @p destinationCluster
@@ -215,19 +215,19 @@ public:
   * @param emptyClusters an empty list used as a return value, which will be filled
   * with the cluster numbers which became empty because all their spikes were put in the new one.
   */
-  void deleteSpikesFromClusters(QRegion& region, const QValueList <int>& clustersOfOrigin, int destinationCluster, int dimensionX, int dimensionY, QValueList <int>& fromClusters,QValueList <int>& emptyClusters);
+  void deleteSpikesFromClusters(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int destinationCluster, int dimensionX, int dimensionY, Q3ValueList <int>& fromClusters,Q3ValueList <int>& emptyClusters);
 
  /**
   * Deletes the clusters contained in @p clustersToDelete. The correponding spikes are assign to cluster 1 (the noise)
   * @param clustersToDelete a list of the cluster numbers (in ascending order) identifying the clusters to delete.
   */
-  void moveClustersToNoise(QValueList <int>& clustersToDelete);
+  void moveClustersToNoise(Q3ValueList <int>& clustersToDelete);
 
  /**
   * Deletes the clusters contained in @p clustersToDelete. The correponding spikes are assign to cluster 0 (the artifact)
   * @param clustersToDelete a list of the cluster numbers (in ascending order) identifying the clusters to delete.
   */
-  void moveClustersToArtefact(QValueList <int>& clustersToDelete);
+  void moveClustersToArtefact(Q3ValueList <int>& clustersToDelete);
 
   /**
   * Groups the clusters contained in @p clustersToGroup. The correponding spikes are assign to a new cluster.
@@ -235,7 +235,7 @@ public:
   * @param clustersToGroup a list of the cluster numbers (in ascending order) identifying the clusters to group
   * @return the number of the newly created cluster.
   */
-  dataType groupClusters(QValueList <int>& clustersToGroup);
+  dataType groupClusters(Q3ValueList <int>& clustersToGroup);
 
   /**Returns the number of dimensions of the data.*/
   inline int nbOfDimensions(){return nbDimensions;};
@@ -244,14 +244,14 @@ public:
   * @param addedClusters list of clusters which were added (can be empty).
   * @param updatedClusters list of clusters which were modified (can be empty).
   */
-  void undo(QValueList<int>& addedClusters,QValueList<int>& updatedClusters);
+  void undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters);
 
   /** Reverts the last undo action
   * @param addedClusters list of clusters which were added (can be empty).
   * @param updatedClusters list of clusters which were modified (can be empty).
   * @param deletedClusters list of clusters which were deleted (can be empty).
   */
-  void redo(QValueList<int>& addedClusters,QValueList<int>& updatedClusters,QValueList<int>& deletedClusters);
+  void redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters,Q3ValueList<int>& deletedClusters);
 
   /**Renumbers the clusters, so the the clusterIds will be consecutive.
   * @param clusterIdsOldNew map between old and new cluster ids.
@@ -331,7 +331,7 @@ public:
   };
 
   /** Returns the list of cluster Ids.*/
-  inline QValueList<dataType> clusterIds(){
+  inline Q3ValueList<dataType> clusterIds(){
     return clusterInfoMap->keys();
   };
 
@@ -486,7 +486,7 @@ public:
   * @param clustersToRecluster list of clusters to recluster.
   * @param fetFile file to which the data will be saved.
   */
-  void createFeatureFile(QValueList<int>& clustersToRecluster,QFile& fetFile);
+  void createFeatureFile(Q3ValueList<int>& clustersToRecluster,QFile& fetFile);
 
   /**Integrates the clusters obtained by automatic reclustering.
   * Suppress the reclustered ones and add the newly created ones.
@@ -496,7 +496,7 @@ public:
   * @param clusterFile cluster file created by the automatic reclustering program.
   * @return true if the integration is successful, false otherwise.
   */
-  bool integrateReclusteredClusters(QValueList<int>& clustersToRecluster,QValueList<int>& reclusteredClusterList, FILE* clusterFile);
+  bool integrateReclusteredClusters(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList, FILE* clusterFile);
 
   /**
   * Informs if the the variables need it by the traceView are available. Those variables are retrieve only from
@@ -523,7 +523,7 @@ public:
    /**Returns the sample index of the peak.*/
   inline int getPeakPositionInWaveform()const{return peakPositionInWaveform;};
   /**Returns the list of channels of the current electrode.*/
-  inline QValueList<int>& getCurrentChannels(){return currentChannels;};
+  inline Q3ValueList<int>& getCurrentChannels(){return currentChannels;};
 
 private:
 
@@ -537,7 +537,7 @@ private:
   int nbChannels;
   int nbSamplesInWaveform;
   int peakPositionInWaveform;
-  QValueList<int> channelIds;
+  Q3ValueList<int> channelIds;
   int nbRefactorySample;
   int RMSIntWindowLenght;
   float firingRate;
@@ -562,7 +562,7 @@ private:
   int initialOffset;
   int totalNbChannels;
   bool traceViewVariablesAvailable;
-  QValueList<int> currentChannels;
+  Q3ValueList<int> currentChannels;
 
   /**
   * A array which contains the coefficients  to apply the spike samples in
@@ -597,12 +597,12 @@ private:
   /**Represents a list of clusterInfoMap
   * use to enable undo action.
   */
-  QPtrList<SortableTable> spikesByClusterUndoList;
+  Q3PtrList<SortableTable> spikesByClusterUndoList;
 
   /**Represents a list of clusterInfoMap
   * use to enable redo action.
   */
-  QPtrList<SortableTable> spikesByClusterRedoList;
+  Q3PtrList<SortableTable> spikesByClusterRedoList;
 
   /**
   * Represents information on a cluster:
@@ -662,12 +662,12 @@ private:
   /**Represents a list of clusterInfoMap
   * use to enable undo action.
   */
-  QPtrList<ClusterInfoMap> clusterInfoMapUndoList;
+  Q3PtrList<ClusterInfoMap> clusterInfoMapUndoList;
 
   /**Represents a list of clusterInfoMap
   * use to enable redo action.
   */
-  QPtrList<ClusterInfoMap> clusterInfoMapRedoList;
+  Q3PtrList<ClusterInfoMap> clusterInfoMapRedoList;
 
   /**List of the maximum of each dimension*/
   Array<dataType> dimensionMaxima;
@@ -675,19 +675,19 @@ private:
   Array<dataType> dimensionMinima;
 
   /**List of the clusters giving the maximum of each dimension (sorted by dimension)*/
-  QValueList<int> clustersGivingMaximum;
+  Q3ValueList<int> clustersGivingMaximum;
 
   /**List of the clusters giving the minimum of each dimension (sorted by dimension)*/
-  QValueList<int> clustersGivingMinimum;
+  Q3ValueList<int> clustersGivingMinimum;
 
   /**QT object providing access serialization between threads*/
   QMutex mutex;
 
   /**List containing the the dimension change status of each action of the undo list*/
-  QValueList<bool> dimensionChangedUndo;
+  Q3ValueList<bool> dimensionChangedUndo;
 
   /**List containing the the dimension change status of each action of the redo list*/
-  QValueList<bool> dimensionChangedRedo;
+  Q3ValueList<bool> dimensionChangedRedo;
 
   /**True is the data where recording using a 12 or 16 bits recording system which
   * gives data coded on 2 bytes, false otherwise (the recording is then assume to be 32 bits
@@ -861,7 +861,7 @@ private:
   * Dictionary containing the waveform data by cluster. Only the clusters
   * for which data have been asked are present in this dictionary.
   */
-  QDict<Waveforms> waveformDict;
+  Q3Dict<Waveforms> waveformDict;
 
   /**Boolean use to inform the MinMaxThread that an undo or a redo is in process and that it has to stop.*/
   bool undoRedoInProcess;
@@ -981,7 +981,7 @@ private:
   * are calculated stored only for (A,B) with A > B and not for (B,A).
   * value: a qdict containing a pair as a key and a Correlation object as a value. The pair represent the the bin size and the time window of the Correlation object.
   */
-  QDict< QDict<Correlation> > correlationDict;
+  Q3Dict< Q3Dict<Correlation> > correlationDict;
 
   /**Excerpt of spikesByCluster for the clusters selected to be recluster.*/
   SortableTable reclusteringSpikesByCluster;
@@ -1011,7 +1011,7 @@ private:
   * the position of its first spike in the new cluster's spikes (starting from the first spike of the new cluster).
   * @param nbOfspikes list containing, for each cluster to delete, its number of spikes.
   */
-  void moveClusters(QValueList<int>& clustersToDelete,SortableTable* spikesByClusterTemp,ClusterInfoMap* clusterInfoMapTemp,long upperInsertionIndex,long& nbSpikesInNewCluster,int destinationId,QValueList<long>& positions,QValueList<long>& nbOfspikes);
+  void moveClusters(Q3ValueList<int>& clustersToDelete,SortableTable* spikesByClusterTemp,ClusterInfoMap* clusterInfoMapTemp,long upperInsertionIndex,long& nbSpikesInNewCluster,int destinationId,Q3ValueList<long>& positions,Q3ValueList<long>& nbOfspikes);
 
   /**Creates a new thread to calculate the min and max of the dimensions when the cluster 0 is modified.*/
   MinMaxThread* minMaxCalculator();
@@ -1068,7 +1068,7 @@ private:
   * @param cleanProcess true if the cluster has to be remove from correlationInProcess false otherwise.
   * The default is false.
   */
-  void cleanCorrelation(dataType clusterId,QValueList<dataType> currentClusterList,bool cleanProcess = false);
+  void cleanCorrelation(dataType clusterId,Q3ValueList<dataType> currentClusterList,bool cleanProcess = false);
 
   /**
   * Renumber all the correlations.
@@ -1100,7 +1100,7 @@ private:
   * @param fromTop true if the position is given starting from the first spike of the new cluster, false if
   * it is given starting from the last spike of the new cluster. The default is false.
   */
-  void sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp,dataType clusterId,QValueList<dataType> positions,QValueList<dataType> nbOfspikes,int step,bool fromTop = false);
+  void sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp,dataType clusterId,Q3ValueList<dataType> positions,Q3ValueList<dataType> nbOfspikes,int step,bool fromTop = false);
 
   /**
   * Sorts by time the spikes of a newly created cluster created from other clusters.
@@ -1118,7 +1118,7 @@ private:
   * @param firstPosition position of the first spike of the cluster 0 or 1.
   * @param number number of spikes of either the cluster 0 or 1.
   */
-  void sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp,dataType clusterId,QValueList<dataType> lastPositions,QValueList<dataType> nbOfspikes,dataType firstPosition,dataType number);
+  void sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp,dataType clusterId,Q3ValueList<dataType> lastPositions,Q3ValueList<dataType> nbOfspikes,dataType firstPosition,dataType number);
 
 
   /**
@@ -1398,7 +1398,7 @@ private:
       inline CorrelogramIterator(const Data& d,Pair pair,ScaleMode scaleMode,int binSize,int timeframe):data(d){
         index = 0;
         lastIndex = -1;
-        QDict<Correlation>* dict = data.correlationDict[pair.toString()];
+        Q3Dict<Correlation>* dict = data.correlationDict[pair.toString()];
         if(dict == 0) dataAvailable = false;
         else{
          Pair parameters = Pair(binSize,timeframe);

@@ -22,7 +22,7 @@
 #include <kurl.h>
 
 //include files for QT
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qmap.h>
 #include <qdom.h> 
 

@@ -21,6 +21,8 @@
 
 //General C++ include files
 #include <iostream>
+//Added by qt3to4:
+#include <Q3ValueList>
 using namespace std;
 
 //include files for QT
@@ -121,8 +123,8 @@ int KlustersXmlReader::getNbChannels()const{
 }
 
 
-QValueList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
- QValueList<int> channels;
+Q3ValueList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
+ Q3ValueList<int> channels;
  xmlXPathObjectPtr result;
  xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).latin1());
 

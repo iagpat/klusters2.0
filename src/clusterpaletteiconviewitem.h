@@ -21,7 +21,9 @@
 #define CLUSTERPALETTEICONVIEWITEM_H
 
 // include files for QT
-#include <qiconview.h>
+#include <q3iconview.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 class QPixmap;
 
@@ -33,11 +35,11 @@ class QPixmap;
 	This class represents the items in the clusterpalette. It overwrites thr default
 	QIconViewItem to enable the use of a custom toolTip class (#ClusterPaletteToolTip).
 */
-class ClusterPaletteIconViewItem : public QIconViewItem
+class ClusterPaletteIconViewItem : public Q3IconViewItem
 {
 	public:
-		ClusterPaletteIconViewItem(QIconView*, QString);
-		ClusterPaletteIconViewItem(QIconView* parent, QString text, const QPixmap & icon );
+		ClusterPaletteIconViewItem(Q3IconView*, QString);
+		ClusterPaletteIconViewItem(Q3IconView* parent, QString text, const QPixmap & icon );
 
 		~ClusterPaletteIconViewItem();
 

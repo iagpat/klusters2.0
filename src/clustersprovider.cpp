@@ -18,6 +18,8 @@
 #include <qfile.h>
 #include <qstringlist.h>
 #include <qfileinfo.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 //General C++ include files
 #include <iostream>
@@ -98,7 +100,7 @@ void ClustersProvider::retrieveData(long startTime,long endTime,QObject* initiat
  //A copy is needed because the clusters can changed while the look up of information is in process.
  clusteringData.duplicate(spikesByCluster,clusterInfoMap);
 
- QValueList<int>::iterator iterator;
+ Q3ValueList<int>::iterator iterator;
  dataType nbSpikes = 0;
  for(iterator = clusterIds->begin(); iterator != clusterIds->end(); ++iterator){
   nbSpikes += (*clusterInfoMap)[*iterator].nbSpikes();
@@ -140,7 +142,7 @@ void ClustersProvider::retrieveData(long startTime,long endTime,QObject* initiat
  emit dataReady(finalData,initiator,name);
 }
 
-void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QValueList<int> selectedIds,QObject* initiator,long startTimeInRecordingUnits){
+void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,Q3ValueList<int> selectedIds,QObject* initiator,long startTimeInRecordingUnits){
  SortableTable data;
 
  //the found spike will be placed at clusterPosition*100 % of the timeFrame
@@ -169,7 +171,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QVal
  //A copy is needed because the clusters can changed while the look up of information is in process.
  clusteringData.duplicate(spikesByCluster,clusterInfoMap);
 
- QValueList<int>::iterator iterator;
+ Q3ValueList<int>::iterator iterator;
  dataType nbSpikes = 0;
  for(iterator = clusterIds->begin(); iterator != clusterIds->end(); ++iterator){
   nbSpikes += (*clusterInfoMap)[*iterator].nbSpikes();
@@ -179,7 +181,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QVal
  data.setSize(nbSpikes);//a SortableTable haas by default 2 lines. Here the first line contains the sample index and the secoind the clusterId.
 
  //First look up for the the time corresponding to the first spike found after startInRecordingUnits
- QValueList<int> firstSpikes;
+ Q3ValueList<int> firstSpikes;
  dataType time = 0;
 
  for(iterator = selectedIds.begin(); iterator != selectedIds.end(); ++iterator){
@@ -206,7 +208,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QVal
   return;
  }
 
- qHeapSort(firstSpikes);
+ qSort(firstSpikes);
  time = firstSpikes[0];
 
  //the found spike will be placed at clusterPosition*100 % of the timeFrame
@@ -247,7 +249,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QVal
    return;
   }
 
-  qHeapSort(firstSpikes);
+  qSort(firstSpikes);
   time = firstSpikes[0];
 
   startingInRecordingUnits = QMAX(time - static_cast<long>(position),0);
@@ -300,7 +302,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QVal
  emit nextClusterDataReady(finalData,initiator,name,startingInMiliseconds,startingInRecordingUnits);
 }
 
-void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,QValueList<int> selectedIds,QObject* initiator,long startTimeInRecordingUnits){
+void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,Q3ValueList<int> selectedIds,QObject* initiator,long startTimeInRecordingUnits){
  SortableTable data;
 
  //the found spike will be placed at clusterPosition*100 % of the timeFrame
@@ -323,7 +325,7 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
  //A copy is needed because the clusters can changed while the look up of information is in process.
  clusteringData.duplicate(spikesByCluster,clusterInfoMap);
 
- QValueList<int>::iterator iterator;
+ Q3ValueList<int>::iterator iterator;
  dataType nbSpikes = 0;
  for(iterator = clusterIds->begin(); iterator != clusterIds->end(); ++iterator){
   nbSpikes += (*clusterInfoMap)[*iterator].nbSpikes();
@@ -333,7 +335,7 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
  data.setSize(nbSpikes);//a SortableTable haas by default 2 lines. Here the first line contains the sample index and the secoind the clusterId.
 
  //First look up for the the time corresponding to the first spike found before startInRecordingUnits
- QValueList<int> firstSpikes;
+ Q3ValueList<int> firstSpikes;
  dataType time = 0;
 
  for(iterator = selectedIds.begin(); iterator != selectedIds.end(); ++iterator){
@@ -363,7 +365,7 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
   return;
  }
 
- qHeapSort(firstSpikes);
+ qSort(firstSpikes);
  time = firstSpikes[firstSpikes.size() - 1];
 
  //the found spike will be placed at clusterPosition*100 % of the timeFrame

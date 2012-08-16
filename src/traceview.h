@@ -21,8 +21,12 @@
 // include files for QT
 #include <qwidget.h>
 #include <qpixmap.h>
-#include <qdict.h>
+#include <q3dict.h>
 #include <qpair.h>
+//Added by qt3to4:
+#include <Q3ValueList>
+#include <QResizeEvent>
+#include <QMouseEvent>
 
 //include files for the application
 #include "baseframe.h"
@@ -80,9 +84,9 @@ public:
   * @param border size of the border between the frame and the contents.
   */
 	TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiColumns,bool verticalLines,
-            bool raster,bool waveforms,bool labelsDisplay,QValueList<int>& channelsToDisplay,int unitGain,int acquisitionGain,long start,long timeFrameWidth,
-            ChannelColors* channelColors,QMap<int, QValueList<int> >* groupsChannels,QMap<int,int>* channelsGroups,
-            QValueList<int>& channelOffsets,QValueList<int>& gains,const QValueList<int>& skippedChannels, QWidget* parent=0, const char* name=0,QColor backgroundColor = Qt::black,KStatusBar* statusBar = 0L,
+            bool raster,bool waveforms,bool labelsDisplay,Q3ValueList<int>& channelsToDisplay,int unitGain,int acquisitionGain,long start,long timeFrameWidth,
+            ChannelColors* channelColors,QMap<int, Q3ValueList<int> >* groupsChannels,QMap<int,int>* channelsGroups,
+            Q3ValueList<int>& channelOffsets,Q3ValueList<int>& gains,const Q3ValueList<int>& skippedChannels, QWidget* parent=0, const char* name=0,QColor backgroundColor = Qt::black,KStatusBar* statusBar = 0L,
             int minSize = 500, int maxSize = 4000, int windowTopLeft = -500,int windowBottomRight = 1001, int border = 0);
 
 
@@ -134,7 +138,7 @@ public:
   * Updates the list of channels shown with @p channelsToShow.
   * @param channelsToShow new list of channels to be shown.
   */
-  void showChannels(const QValueList<int>& channelsToShow);
+  void showChannels(const Q3ValueList<int>& channelsToShow);
 
   /**Increases of the amplitude of all the channels.
   */
@@ -147,12 +151,12 @@ public:
   /**Increases of the amplitude of the selected channels.
   * @param channelIds ids of the channels for which the amplitude has to be increased.
   */
-  void increaseSelectedChannelsAmplitude(const QValueList<int>& channelIds);
+  void increaseSelectedChannelsAmplitude(const Q3ValueList<int>& channelIds);
 
   /**Decreases of the amplitude of the selected channels.
   * @param channelIds ids of the channels for which the amplitude has to be decreased.
   */
-  void decreaseSelectedChannelsAmplitude(const QValueList<int>& channelIds);
+  void decreaseSelectedChannelsAmplitude(const Q3ValueList<int>& channelIds);
 
   /**Sets the unit gain and the acquisition system gain.
   * @param gain initial gain use to draw the traces in the TraceView.
@@ -249,7 +253,7 @@ public:
   /**Selects the channels .
   *@param selectedIds ids of the selected channels.
   */
-  void selectChannels(const QValueList<int>& selectedIds);
+  void selectChannels(const Q3ValueList<int>& selectedIds);
 
   /**Resets the offset of the selected channels to the default values.
   * @param selectedChannelDefaultOffsets map given the default offsets for the selected channels.
@@ -259,7 +263,7 @@ public:
   /**Resets the gain of the selected channels.
   *@param selectedChannels ids of the selected channels.
   */
-  void resetGains(const QValueList<int>& selectedChannels);
+  void resetGains(const Q3ValueList<int>& selectedChannels);
 
   /**Resets the state of the view.*/
   void reset();
@@ -292,8 +296,8 @@ public:
   * @param clustersToSkip list of clusters to not use while browsing.
   */
   void addClusterProvider(ClustersProvider* clustersProvider,QString name,ItemColors* clusterColors,
-                          bool active,QValueList<int>& clustersToShow,QMap<int, QValueList<int> >* displayGroupsClusterFile,
-                          QMap<int,int>* channelsSpikeGroups,int nbSamplesBefore,int nbSamplesAfter,const QValueList<int>& clustersToSkip);
+                          bool active,Q3ValueList<int>& clustersToShow,QMap<int, Q3ValueList<int> >* displayGroupsClusterFile,
+                          QMap<int,int>* channelsSpikeGroups,int nbSamplesBefore,int nbSamplesAfter,const Q3ValueList<int>& clustersToSkip);
 
   /**Removes a provider of cluster data.
   * @param name name use to identified the cluster provider.
@@ -307,7 +311,7 @@ public:
   * @param name name use to identified the cluster provider containing the clusters to show.
   * @param clustersToShow new list of clusters to be shown.
   */
-  void showClusters(QString name,QValueList<int>& clustersToShow);
+  void showClusters(QString name,Q3ValueList<int>& clustersToShow);
 
   /**Changes the color of a cluster.
   * @param name name use to identified the cluster provider containing the updated cluster.
@@ -326,7 +330,7 @@ public:
   * @param eventsToSkip list of events to not use while browsing.
   */
   void addEventProvider(EventsProvider* eventsProvider,QString name,ItemColors* eventColors,
-                          bool active,QValueList<int>& eventsToShow,const QValueList<int>& eventsToSkip);
+                          bool active,Q3ValueList<int>& eventsToShow,const Q3ValueList<int>& eventsToSkip);
 
   /**Removes a provider of event data.
   * @param name name use to identified the event provider.
@@ -340,7 +344,7 @@ public:
   * @param name name use to identified the event provider containing the events to show.
   * @param eventsToShow new list of events to be shown.
   */
-  void showEvents(QString name,QValueList<int>& eventsToShow);
+  void showEvents(QString name,Q3ValueList<int>& eventsToShow);
 
   /**Changes the color of a event.
   * @param name name use to identified the event provider containing the updated event.
@@ -355,7 +359,7 @@ public:
   * @param metrics object providing informatin about the printer.
   * @param whiteBackground true if the printed background has to be white, false otherwise.
   */
-  void print(QPainter& printPainter,QPaintDeviceMetrics& metrics,bool whiteBackground);
+  void print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground);
 
   /**Retrieves the next event.*/
   void showNextEvent();
@@ -377,7 +381,7 @@ public:
   * @param eventsToShow new list of events to be shown.
   * @param active true if the view is the active one, false otherwise.
   */
-  void updateEvents(QString providerName,QValueList<int>& eventsToShow,bool active);
+  void updateEvents(QString providerName,Q3ValueList<int>& eventsToShow,bool active);
 
   /**Deletes the selected event.
   */
@@ -393,13 +397,13 @@ public:
   * @param providerName name use to identified the event provider containing the modified event.
   * @param eventsToNotBrowse new list of events to not use while browsing.
   */
-  void updateNoneBrowsingEventList(QString providerName,const QValueList<int>& eventsToNotBrowse);
+  void updateNoneBrowsingEventList(QString providerName,const Q3ValueList<int>& eventsToNotBrowse);
 
   /**Updates the list of clusters to not use while browsing.
   * @param providerName name use to identified the event provider containing the modified event.
   * @param clustersToNotBrowse new list of clusters to not use while browsing.
   */
-  void updateNoneBrowsingClusterList(QString providerName,const QValueList<int>& clustersToNotBrowse);
+  void updateNoneBrowsingClusterList(QString providerName,const Q3ValueList<int>& clustersToNotBrowse);
 
   /** Updates the description of a spike waveform.
   * @param nbSamplesBefore number of samples contained in the waveform of a spike before the sample of the peak.
@@ -430,7 +434,7 @@ public:
   * @param clusterColors list of colors for the clusters.
   * @param active true if the view is the active one, false otherwise.
   */
-  void updateClusters(QString name,QValueList<int>& clustersToShow,ItemColors* clusterColors,bool active);
+  void updateClusters(QString name,Q3ValueList<int>& clustersToShow,ItemColors* clusterColors,bool active);
 
 public slots:
   /**Displays the data that has been retrieved.
@@ -509,10 +513,10 @@ public slots:
   /**Updates the list of skipped channels.
   * @param skippedChannels list of skipped channels
   **/
-  void skipStatusChanged(const QValueList<int>& skippedChannels);
+  void skipStatusChanged(const Q3ValueList<int>& skippedChannels);
 
 signals:
-  void channelsSelected(const QValueList<int>& selectedIds);
+  void channelsSelected(const Q3ValueList<int>& selectedIds);
   void setStartAndDuration(long time,long duration);
   void eventModified(QString providerName,int selectedEventId,double time,double newTime);
   void eventRemoved(QString providerName,int selectedEventId,double time);
@@ -579,7 +583,7 @@ private:
   bool waveforms;
 
   /**List of the presented channels.*/
-  QValueList<int> shownChannels;
+  Q3ValueList<int> shownChannels;
 
   /**True if the data information needed to draw the traces are available.*/
   bool dataReady;
@@ -588,17 +592,17 @@ private:
   Array<dataType> data;
 
   /**List containing the offset for each channel.*/
-  QValueList<int>& channelOffsets;
+  Q3ValueList<int>& channelOffsets;
 
   /**List of the factors use to calculate the ordinate value to been drawn.
   * The factor equals 0.75 raised to the power of the gain (Yworld = alpha.factor.Ydata).
   */
-  QValueList<float> channelFactors;
+  Q3ValueList<float> channelFactors;
 
   /**List of the exponents used to compute the drawing gain for each channel.
   * The actual gain is 0.75 raised to the power of gain.
   */
-  QValueList<int>& gains;
+  Q3ValueList<int>& gains;
 
   /**Size in pixels corresponding to the vertical space allocated to a trace.*/
   int traceVspace;
@@ -624,7 +628,7 @@ private:
   /**Map the correspondence between the channel group ids and the channel ids.
   *Pointer to the variable belonging to NeuroscopeDoc.
   */
-  QMap<int, QValueList<int> >* groupsChannels;
+  QMap<int, Q3ValueList<int> >* groupsChannels;
 
   /**Stores to which group each channel belongs. Pointer to the variable belonging to
   NeuroscopeDoc.*/
@@ -632,7 +636,7 @@ private:
 
   /**Map the correspondence between the channel group ids and the channel ids for the displayed channels.
   */
-  QMap<int, QValueList<int> > shownGroupsChannels;
+  QMap<int, Q3ValueList<int> > shownGroupsChannels;
 
   /**Minimal abscissa in window coordinate*/
   long abscissaMin;
@@ -713,7 +717,7 @@ private:
 
   /**List of the gains display next to each drawn channel.
   */
-  QValueList<float> channelDisplayGains;
+  Q3ValueList<float> channelDisplayGains;
 
   int nbClusters;
 
@@ -752,7 +756,7 @@ private:
   bool resized;
 
   /**List of the selected channels.*/
-  QValueList<int> selectedChannels;
+  Q3ValueList<int> selectedChannels;
 
   /**Boolean used to update the display after a change in the number of groups.*/
   bool groupsChanged;
@@ -856,7 +860,7 @@ private:
   int initialTraceWidth;
 
   /**Map between the cluster provider names and the list of selected clusters.*/
-  QMap<int, QValueList<int> > selectedClusters;
+  QMap<int, Q3ValueList<int> > selectedClusters;
 
   /**Structure representing cluster data, actual data and status.*/
   struct ClusterData{
@@ -879,31 +883,31 @@ private:
   };
 
   /**Dictionary between the cluster provider names and the cluster data and status.*/
-  QDict<ClusterData> clustersData;
+  Q3Dict<ClusterData> clustersData;
 
   /** Dictionary between the cluster provider names and the providers.*/
-  QDict<ClustersProvider> clusterProviders;
+  Q3Dict<ClustersProvider> clusterProviders;
 
   /**Dictionary between the provider names and the item color lists except for the TracesProvider.*/
-  QDict<ItemColors> providerItemColors;
+  Q3Dict<ItemColors> providerItemColors;
 
   /**Stores the cluster order used when they are presented in raster. Each cluster is identified
   * by a string build as the ClusterProvider name plus a dash plus the cluster id.
   */
-  QValueList<QString> clustersOrder;
+  Q3ValueList<QString> clustersOrder;
 
   /**Stores the cluster raster ordinate position.*/
-  QValueList<int> rasterOrdinates;
+  Q3ValueList<int> rasterOrdinates;
 
   /**Stores the cluster raster abscissa position.*/
-  QValueList<int> rasterAbscisses;
+  Q3ValueList<int> rasterAbscisses;
 
   /**Map given the list of cluster file containing data for a given display group.
   * This assumes that the cluster file names contain the identifier of
   * the spike group used to create them (myFile.clu.1 correspond to the
   * spike group 1).
   */
-  QMap<int, QValueList<int> >* groupClusterFiles;
+  QMap<int, Q3ValueList<int> >* groupClusterFiles;
 
   /*Map between the channel ids and the spike group ids. */
   QMap<int,int>* channelClusterFiles;
@@ -918,7 +922,7 @@ private:
   bool printState;
 
   /**Map between the event provider names and the list of selected events.*/
-  QMap<QString, QValueList<int> > selectedEvents;
+  QMap<QString, Q3ValueList<int> > selectedEvents;
 
   /**Structure representing event data, actual data and status.*/
   struct EventData{
@@ -971,10 +975,10 @@ private:
   bool spikeBrowsing;
 
   /**Dictionary between the event provider names and the event data and status.*/
-  QDict<EventData> eventsData;
+  Q3Dict<EventData> eventsData;
 
   /** Dictionary between the event provider names and the providers.*/
-  QDict<EventsProvider> eventProviders;
+  Q3Dict<EventsProvider> eventProviders;
 
   /**Pair storing the event provider having a selected event the closer in time to the current endTime,
   * the pair stores also the starting time of the retrieve data.*/
@@ -1000,14 +1004,14 @@ private:
   int lastClickAbscissa;
 
   /**Contains the original abscissa and index of the selected event.*/
-  QValueList<int> selectedEventPosition;
+  Q3ValueList<int> selectedEventPosition;
 
   /**True if it is the beginning of an event dragging.*/
   bool startEventDragging;
 
  /**Stores the event providers containing events which have been modified and thus
  * needing to be update.*/
-  QValueList<QString> eventProvidersToUpdate;
+  Q3ValueList<QString> eventProvidersToUpdate;
 
   /**Index of the new event to create.*/
   int newEventPosition;
@@ -1022,18 +1026,18 @@ private:
   bool eventBeingModified;
 
   /**Map between the cluster provider names and the list of clusters to not be used for browsing.*/
-  QMap<QString, QValueList<int> > clustersNotUsedForBrowsing;
+  QMap<QString, Q3ValueList<int> > clustersNotUsedForBrowsing;
 
   /**Map between the event provider names and the list of events to not be used for browsing.*/
-  QMap<QString, QValueList<int> > eventsNotUsedForBrowsing;
+  QMap<QString, Q3ValueList<int> > eventsNotUsedForBrowsing;
 
   bool retrieveClusterData;
 
   /*List of skipped channels.*/
-  QValueList<int> skippedChannels;
+  Q3ValueList<int> skippedChannels;
 
   /*List of positions for the current lines to be drawn.*/
-  QValueList<int> linePositions;
+  Q3ValueList<int> linePositions;
 
  //***************Functions************
 
@@ -1044,7 +1048,7 @@ private:
  * Updates shownGroupsChannels.
  * @param channelsToShow list of channels to shown in the display.
  */
- void updateShownGroupsChannels(const QValueList<int>& channelsToShow);
+ void updateShownGroupsChannels(const Q3ValueList<int>& channelsToShow);
 
  /**
  * Draws the traces.
@@ -1057,7 +1061,7 @@ private:
  * @param channels list of channels to draw.
  * @param highlight true if the channels have to be highlighted, false otherwise.
  */
- void drawTraces(QValueList<int> channels,bool highlight);
+ void drawTraces(Q3ValueList<int> channels,bool highlight);
 
  /**
  * Draws the trace for the channel @p channelId.
@@ -1084,7 +1088,7 @@ private:
  /**Computes the channelDisplayGains for the selected channels.
  * @param selectedChannels ids of the selected channels.
  */
- void computeChannelDisplayGain(const QValueList<int>& selectedChannels);
+ void computeChannelDisplayGain(const Q3ValueList<int>& selectedChannels);
 
  /**Draw the calibration scale.
  * @param painter painter on which to draw the information.

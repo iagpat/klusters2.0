@@ -16,7 +16,12 @@
  ***************************************************************************/
 
 // include files for QT
-#include <qdragobject.h> 
+#include <q3dragobject.h> 
+//Added by qt3to4:
+#include <QMouseEvent>
+#include <QDragMoveEvent>
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 //include files for the application
 #include "channellist.h"
@@ -26,10 +31,10 @@
 using namespace std;
 
 
-ChannelList::ChannelList(QWidget * parent, const char * name, WFlags f):QListBox( parent, name, f ){
-  setVScrollBarMode(QScrollView::Auto);
+ChannelList::ChannelList(QWidget * parent, const char * name, WFlags f):Q3ListBox( parent, name, f ){
+  setVScrollBarMode(Q3ScrollView::Auto);
   setDragAutoScroll(true);
-  setSelectionMode(QListBox::Single);
+  setSelectionMode(Q3ListBox::Single);
   setAcceptDrops(TRUE);
   dragging = FALSE;
 }
@@ -38,7 +43,7 @@ ChannelList::~ChannelList(){
 }
 
 void ChannelList::dragEnterEvent(QDragEnterEvent* event){
-  if(QTextDrag::canDecode(event))
+  if(Q3TextDrag::canDecode(event))
     event->accept();
 }
 
@@ -46,7 +51,7 @@ void ChannelList::dragEnterEvent(QDragEnterEvent* event){
 void ChannelList::dropEvent(QDropEvent* event){
   QString text;
 
-  if(QTextDrag::decode(event,text))
+  if(Q3TextDrag::decode(event,text))
    if(event->source() == this && event->action() == QDropEvent::Copy){
     // Careful not to tread on my own feet
     event->acceptAction();
@@ -60,14 +65,14 @@ void ChannelList::dropEvent(QDropEvent* event){
 
 
 void ChannelList::mousePressEvent(QMouseEvent* event){
-  QListBox::mousePressEvent(event);
+  Q3ListBox::mousePressEvent(event);
   dragging = TRUE;
 }
 
 
 void ChannelList::mouseMoveEvent(QMouseEvent* event){  
  if(dragging && event->state() == Qt::LeftButton){
-   QDragObject* drag = new QTextDrag(currentText(),this);
+   Q3DragObject* drag = new Q3TextDrag(currentText(),this);
    drag->dragMove();
    dragging = FALSE;
  }

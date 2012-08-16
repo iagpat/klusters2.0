@@ -26,6 +26,10 @@
 
 //include files for QT
 #include <qthread.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <QEvent>
+#include <Q3ValueList>
 
   /**Thread used to compute the Error Matrix. Each element in the matrix
   * indicates how likely it is that the two clusters corresponding to the row and column
@@ -43,9 +47,9 @@ public:
 
 	inline ~ErrorMatrixThread(){};
   inline Array<double>* getProbabilities(){return probabilities;};
-  inline QValueList<int> getClusterList(){return clusterList;};
-  inline QValueList<int> getComputedClusterList(){return computedClusterList;};
-  inline QValueList<int> getIgnoreClusterIndex(){return ignoreClusterIndex;};
+  inline Q3ValueList<int> getClusterList(){return clusterList;};
+  inline Q3ValueList<int> getComputedClusterList(){return computedClusterList;};
+  inline Q3ValueList<int> getIgnoreClusterIndex(){return ignoreClusterIndex;};
   
   /**Asks the thread to stop his work as soon as possible.*/
   inline void stopProcessing(){
@@ -92,9 +96,9 @@ private:
  ErrorMatrixView& errorMatrixView;
  Data& data;
  Array<double>* probabilities;
- QValueList<int> clusterList;
- QValueList<int> computedClusterList;
- QValueList<int> ignoreClusterIndex;
+ Q3ValueList<int> clusterList;
+ Q3ValueList<int> computedClusterList;
+ Q3ValueList<int> ignoreClusterIndex;
  /**True if the thread has to stop processing, false otherwise.*/
  bool haveToStopProcessing;
  GroupingAssistant assistant;

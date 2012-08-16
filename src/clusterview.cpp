@@ -32,7 +32,13 @@
 #include <qpaintdevice.h>
 #include <qapplication.h>
 #include <qcursor.h>
-#include <qpaintdevicemetrics.h>
+#include <q3paintdevicemetrics.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <Q3PointArray>
+#include <Q3ValueList>
+#include <QMouseEvent>
+#include <QEvent>
 
 // include files for kde
 #include <kiconloader.h>
@@ -78,9 +84,9 @@ ClusterView::~ClusterView(){
   cout << "in ~ClusterView(): "<<endl;
 }
 
-void ClusterView::drawClusters(QPainter& painter,const QValueList<int>& clustersList,bool drawCircles){
+void ClusterView::drawClusters(QPainter& painter,const Q3ValueList<int>& clustersList,bool drawCircles){
   //Loop on the clusters to be drawn
-  QValueList<int>::const_iterator clusterIterator;
+  Q3ValueList<int>::const_iterator clusterIterator;
 
   ItemColors& clusterColors = doc.clusterColors();
   Data& clusteringData = doc.data();
@@ -101,7 +107,7 @@ void ClusterView::drawClusters(QPainter& painter,const QValueList<int>& clusters
     }
   }
 
-  painter.setBrush(NoBrush);
+  painter.setBrush(Qt::NoBrush);
 }
 
 void ClusterView::drawContents(QPainter* p){
@@ -532,9 +538,9 @@ void ClusterView::customEvent(QCustomEvent* event){
 
   ComputeEvent* computeEvent = (ComputeEvent*) event;
   //Get the polygon
-  QPointArray polygon = computeEvent->polygon();
+  Q3PointArray polygon = computeEvent->polygon();
   QRegion selectionArea;
-  QPointArray reviewPolygon;
+  Q3PointArray reviewPolygon;
   long Xdimension = 0;
   long Ydimension = 0;
 
@@ -641,7 +647,7 @@ void ClusterView::drawTimeInformation(QPainter& painter){
 }
 
 
-void ClusterView::print(QPainter& printPainter,QPaintDeviceMetrics& metrics,bool whiteBackground){
+void ClusterView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground){
  //Draw the double buffer (pixmap) by copying it into the printer device throught the painter.
   QRect viewportOld = QRect(viewport.left(),viewport.top(),viewport.width(),viewport.height());
 
@@ -658,8 +664,8 @@ void ClusterView::print(QPainter& printPainter,QPaintDeviceMetrics& metrics,bool
   QColor colorLegendTmp = colorLegend;
   QColor background= backgroundColor();
   if(whiteBackground){
-   colorLegend = black;
-   setPaletteBackgroundColor(white);
+   colorLegend = Qt::black;
+   setPaletteBackgroundColor(Qt::white);
   }
 
   printPainter.fillRect(back,backgroundColor());

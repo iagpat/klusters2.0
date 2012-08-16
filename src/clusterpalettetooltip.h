@@ -22,7 +22,7 @@
 
 // include files for QT
 #include <qtooltip.h>
-#include <qiconview.h>
+#include <q3iconview.h>
 
 /**
 	@author Lynn Hazan <lynn.hazan@myrealbox.com>
@@ -31,14 +31,14 @@
 class ClusterPaletteToolTip : public QToolTip
 {
 public:
-	ClusterPaletteToolTip(QIconView*, QToolTipGroup* =0);
+	ClusterPaletteToolTip(Q3IconView*, QToolTipGroup* =0);
 
 	virtual ~ClusterPaletteToolTip(void);
 
 	void maybeTip(const QPoint&);
 
 	private:
-		QIconView* parent;
+		Q3IconView* parent;
 
 };
 

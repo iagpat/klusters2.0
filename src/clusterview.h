@@ -19,14 +19,19 @@
 #define CLUSTERVIEW_H
 
 // include files for QT
-#include <qframe.h>
+#include <q3frame.h>
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qpixmap.h>
-#include <qpointarray.h>
+#include <q3pointarray.h>
 #include <qtimer.h>
 #include <qregion.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
+//Added by qt3to4:
+#include <QCustomEvent>
+#include <QResizeEvent>
+#include <QMouseEvent>
+#include <QEvent>
 
 //include files for the application
 #include "zoomwindow.h"
@@ -117,7 +122,7 @@ public slots:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-  inline void addNewClusterToView(QValueList<int>& fromClusters,int clusterId,bool active){
+  inline void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active){
     addClusterToUpdate(clusterId);
   };
 
@@ -137,7 +142,7 @@ public slots:
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-  inline void spikesRemovedFromClusters(QValueList<int>& fromClusters,bool active){redraw();};
+  inline void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active){redraw();};
 
   /**
   * Update the content of the widget due to the addition of spikes in a cluster.
@@ -168,7 +173,7 @@ public slots:
   * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
   */
-  void updateClusters(QValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
+  void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
     if(isModifiedByDeletion) redraw();
   };
 
@@ -180,7 +185,7 @@ public slots:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-  inline void undoUpdateClusters(QValueList<int>& modifiedClusters,bool active){redraw();};
+  inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){redraw();};
 
   /**Updates the time interval in second and in recording unit using @p step given in second.
   * @param step the interval to use in second.
@@ -206,7 +211,7 @@ public slots:
   * @param metrics object providing information about the printer.
   * @param whiteBackground true if the printed background has to be white, false otherwise.
   */
-  void print(QPainter& printPainter,QPaintDeviceMetrics& metrics,bool whiteBackground);
+  void print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground);
 
 protected:
   /**
@@ -246,7 +251,7 @@ private:
   * @param painter painter on which to draw the spikes
   * @param clustersList list of clusters to draw
   */
-  void drawClusters(QPainter& painter,const QValueList<int>& clustersList,bool drawCircles = false);
+  void drawClusters(QPainter& painter,const Q3ValueList<int>& clustersList,bool drawCircles = false);
 
   /**
   * Returns the color associated with one of the selection mode. This color will
@@ -322,7 +327,7 @@ private:
   /**
   * Points defining the selection polygon.
   */
-  QPointArray selectionPolygon;
+  Q3PointArray selectionPolygon;
 
   /**
   * Number of points defining the selection polygon.
@@ -379,7 +384,7 @@ private:
   friend class ComputeEvent;
 
   /**Returns a new ComputeEvent.*/
-  inline ComputeEvent* getComputeEvent(QPointArray polygon){
+  inline ComputeEvent* getComputeEvent(Q3PointArray polygon){
     return new ComputeEvent(polygon);
   };
 
@@ -392,16 +397,16 @@ private:
   class ComputeEvent : public QCustomEvent{
    //Only the method getComputeEvent of ClusterView has access to the private part of ComputeEvent,
    //the constructor of ComputeEvent being private, only this method con create a new ComputeEvent
-   friend ComputeEvent* ClusterView::getComputeEvent(QPointArray selectionPolygon);
+   friend ComputeEvent* ClusterView::getComputeEvent(Q3PointArray selectionPolygon);
 
   public:
     inline ~ComputeEvent(){};
-    inline QPointArray polygon(){return selectionPolygon;};
+    inline Q3PointArray polygon(){return selectionPolygon;};
 
   private:
-    ComputeEvent(QPointArray polygon):QCustomEvent(QEvent::User + 700),selectionPolygon(polygon){};
+    ComputeEvent(Q3PointArray polygon):QCustomEvent(QEvent::User + 700),selectionPolygon(polygon){};
 
-    QPointArray selectionPolygon;
+    Q3PointArray selectionPolygon;
   };
 
 };

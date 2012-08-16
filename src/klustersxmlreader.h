@@ -29,7 +29,7 @@
 #include <libxml/xpathInternals.h>
 
 //include files for QT
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qfile.h>
 #include <qmap.h>
 
@@ -76,7 +76,7 @@ public:
   * @param electrodeGroupID the id of the electrode group currently opened.
   * @return number of channels.
   */
-  QValueList<int> getNbChannelsByGroup(int electrodeGroupID)const;
+  Q3ValueList<int> getNbChannelsByGroup(int electrodeGroupID)const;
 
  /**
   * Returns the sampling rate of the system in hertz.
