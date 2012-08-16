@@ -28,7 +28,7 @@
 using namespace std;
 
 // include files for KDE
-#include <kurl.h>
+
 
 //include files for c/c++ libraries
 #include <math.h>

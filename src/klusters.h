@@ -37,7 +37,7 @@
 // include files for KDE
 #include <kdockwidget.h>
 #include <kaction.h>
-#include <kurl.h>
+
 
 
 //include files application specific

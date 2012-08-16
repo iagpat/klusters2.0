@@ -30,7 +30,7 @@
 #include <QCustomEvent>
 
 // include files for KDE
-#include <kurl.h>
+
 
 /**Thread used to save automatically the document on a defined schedule.
  * The thread calls the Data object which will do the work.

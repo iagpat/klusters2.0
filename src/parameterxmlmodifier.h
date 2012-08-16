@@ -19,7 +19,7 @@
 #define PARAMETERXMLMODIFIER_H
 
 // include files for KDE
-#include <kurl.h>
+
 
 //include files for QT
 #include <q3valuelist.h>

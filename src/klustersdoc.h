@@ -34,7 +34,7 @@
 #include <QEvent>
 
 // include files for KDE
-#include <kurl.h>
+
 #include <kdockwidget.h>
 #include "itemcolors.h"
 
