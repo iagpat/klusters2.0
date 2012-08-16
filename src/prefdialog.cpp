@@ -21,8 +21,7 @@
 
 // include files for KDE
 #include <kcolorbutton.h>   // for KColorButton
-#include <kpushbutton.h>    // for KPushButton
-        // for tr()
+
 #include <kiconloader.h>    // for KIconLoader
 #include <kglobal.h>        // for KGlobal
 #include <kmessagebox.h>    // for KMessageBox

@@ -25,8 +25,6 @@
 #include <qspinbox.h>
 #include <qmap.h>
 
-// include files for KDE
-#include <kpushbutton.h>
 
 //include files for the application
 #include <prefwaveformviewlayout.h>
@@ -44,17 +42,17 @@ public:
 	~PrefWaveformView();
 
   /**Sets the gain used to display the waveforms.*/
-  inline void setGain(int gain){gainSpinBox->setValue(gain);};
+  inline void setGain(int gain){gainSpinBox->setValue(gain);}
 
   /**Returns the gain used to display the waveforms.*/
-  inline int getGain() const{return gainSpinBox->value();};
+  inline int getGain() const{return gainSpinBox->value();}
 
   /**Sets the number of channels contained in the document. This will be used to
   * fill the channelView.*/
-  inline void setNbChannels(int nb){nbChannels = nb;};
+  inline void setNbChannels(int nb){nbChannels = nb;}
 
   /**Returns the number of channels contained in the document.*/
-  inline int getNbChannels() const {return nbChannels;};
+  inline int getNbChannels() const {return nbChannels;}
 
   /**Initialize the channel view with the number of current channels.*/
   void initializeChannelList();
@@ -65,7 +63,7 @@ public:
   void resetChannelList(int nb);
 
   /**Returns the positions of the channels to use in the waveform vies.**/
-  inline QValueList<int> getChannelPositions() const {return channelPositions;};
+  inline QValueList<int> getChannelPositions() const {return channelPositions;}
 
   inline void enableChannelSettings(bool state){
    saveButton->setEnabled(state);
