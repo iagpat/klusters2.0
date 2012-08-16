@@ -39,7 +39,7 @@
 
 // include files for KDE
 #include <kiconloader.h>
-#include <kmessagebox.h>
+
 #include <kfiledialog.h>
 #include <kconfig.h>
 #include <kstdaction.h>

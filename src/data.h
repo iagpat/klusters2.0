@@ -35,8 +35,6 @@
 #include <qmutex.h>
 #include <qthread.h>
 
-// include files for KDE
-#include <kurl.h>
 
 //include files for common C/c++
 #include <iostream>
