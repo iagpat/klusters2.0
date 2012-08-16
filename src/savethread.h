@@ -28,8 +28,6 @@
 #include <QCustomEvent>
 #include <QEvent>
 
-//include files for KDE
-#include <kio/netaccess.h>
 
 /**Thread used to save the cluster file.
  * The thread calls the Data object which will do the work.
@@ -40,8 +38,8 @@ class SaveThread : public QThread{
   
 public: 
 
-  inline SaveThread(KlustersApp* parent):doc(0L),parent(parent),isSaveAs(false){};
-  inline ~SaveThread(){cout<<"in ~SaveThread"<<endl;};
+  inline SaveThread(KlustersApp* parent):doc(0L),parent(parent),isSaveAs(false){}
+  inline ~SaveThread(){cout<<"in ~SaveThread"<<endl;}
 
   
   virtual void run();
@@ -73,14 +71,14 @@ public:
    friend SaveDoneEvent* SaveThread::saveDoneEvent(bool status);
 
   public:
-    inline bool isItSaveAs(){return saveThread.isSaveAs;};
-    inline void setTemporaryFile(QString tmpFile){tempCluFile = tmpFile;};
-    inline QString temporaryFile(){return tempCluFile;};
-    inline bool isSaveOk(){return saveOk;};
-    inline ~SaveDoneEvent(){};
+    inline bool isItSaveAs(){return saveThread.isSaveAs;}
+    inline void setTemporaryFile(QString tmpFile){tempCluFile = tmpFile;}
+    inline QString temporaryFile(){return tempCluFile;}
+    inline bool isSaveOk(){return saveOk;}
+    inline ~SaveDoneEvent(){}
     
   private:
-    SaveDoneEvent(const SaveThread& thread,bool status):QCustomEvent(QEvent::User + 100),saveThread(thread),saveOk(status){};
+    SaveDoneEvent(const SaveThread& thread,bool status):QCustomEvent(QEvent::User + 100),saveThread(thread),saveOk(status){}
     
     const SaveThread& saveThread;
     QString tempCluFile;

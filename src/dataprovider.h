@@ -45,10 +45,10 @@ public:
   * @param initiator instance requesting the data.
   * @param startTimeInRecordingUnits begining of the time interval from which to retrieve the data in recording units.    
   */  
-  virtual void requestData(long startTime,long endTime,QObject* initiator,long startTimeInRecordingUnits=0){};
+  virtual void requestData(long startTime,long endTime,QObject* initiator,long startTimeInRecordingUnits=0){}
 
  /**Enables the caller to know if there is any thread running launch by the provider.*/
- virtual inline bool isThreadsRunning(){return false;};
+ virtual inline bool isThreadsRunning(){return false;}
   
 protected:
   /**The name of the file containing the data provided by this class.*/

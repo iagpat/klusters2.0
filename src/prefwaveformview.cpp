@@ -27,7 +27,7 @@
 
 #include <kfiledialog.h>
 #include <kio/job.h>
-#include <kio/netaccess.h>
+
 
 PrefWaveformView::PrefWaveformView(QWidget *parent,int nbChannels,const char *name):
 PrefWaveformViewLayout(parent,name),nbChannels(nbChannels){

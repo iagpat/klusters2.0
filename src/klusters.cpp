@@ -47,7 +47,7 @@
 #include <kpopupmenu.h>
 #include <kglobal.h>
 #include <ktoolbar.h>
-#include <kio/netaccess.h>
+
 #include <kprocess.h>
 
 

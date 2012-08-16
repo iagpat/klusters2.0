@@ -33,7 +33,7 @@
 
 
 #include <kio/job.h>
-#include <kio/netaccess.h>
+
 
 // application specific includes
 #include "klusters.h"

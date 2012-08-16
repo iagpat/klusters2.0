@@ -17,16 +17,11 @@
 //include files for the application
 #include "dataprovider.h"
 
-// include files for KDE
-#include <kio/netaccess.h>
-
 DataProvider::DataProvider(QString fileUrl):QObject(){
  //Download the file if need it
- if(!KIO::NetAccess::download(fileUrl,fileName)) fileName = ""; 
+ fileName = fileUrl;
 }
 DataProvider::~DataProvider(){
- //Remove the temp files if any
- KIO::NetAccess::removeTempFile(fileName);
 }
 
 #include "dataprovider.moc"
