@@ -679,7 +679,7 @@ void CorrelationView::mouseReleaseEvent(QMouseEvent* e){
  //Trigger parent event
  ViewWidget::mouseReleaseEvent(e);
 
- if((e->button() & QMouseEvent::LeftButton) && (view.clusters().size() > 0)){
+ if((e->button() & Qt::LeftButton) && (view.clusters().size() > 0)){
   Data& clusteringData = doc.data();
   Q3ValueList<Pair>::iterator pairIterator;
   bool correlogramsNotAvailable = false;

@@ -149,12 +149,12 @@ void KlustersApp::initActions()
   KStdAction::quit(this, SLOT(close()), actionCollection());
   viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
   viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-  new KAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")), CTRL + SHIFT + Key_S,this, SLOT(slotFileRenumberAndSave()),actionCollection(), "file_renumber_save");
-  new KAction(tr("&Import File"), CTRL + Key_I,this, SLOT(slotFileImport()),actionCollection(), "fileImport");
+  new KAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")), Qt::CTRL + Qt::SHIFT + Qt::Key_S,this, SLOT(slotFileRenumberAndSave()),actionCollection(), "file_renumber_save");
+  new KAction(tr("&Import File"), Qt::CTRL + Qt::Key_I,this, SLOT(slotFileImport()),actionCollection(), "fileImport");
               
   //Edit menu
-  new KAction(tr("Select &All"), CTRL + Key_A, this, SLOT(slotSelectAll()),actionCollection(),"edit_select_all");
-  new KAction(tr("Select All except 0 and 1"), CTRL + SHIFT + Key_A, this,
+  new KAction(tr("Select &All"), Qt::CTRL + Qt::Key_A, this, SLOT(slotSelectAll()),actionCollection(),"edit_select_all");
+  new KAction(tr("Select All except 0 and 1"), Qt::CTRL + Qt::SHIFT + Qt::Key_A, this,
     SLOT(slotSelectAllWO01()),actionCollection(),"edit_select_all_except01");
   KStdAction::undo(this, SLOT(slotUndo()), actionCollection());
   KStdAction::redo(this, SLOT(slotRedo()), actionCollection());
@@ -167,8 +167,8 @@ void KlustersApp::initActions()
   newOverViewDisplay = new KAction(tr("New &Overview Display"), 0, this,SLOT(slotWindowNewOverViewDisplay()),actionCollection(),"new_overViewDisplay");
   newGroupingAssistantDisplay =
    new KAction(tr("New &Grouping Assistant Display"),0,this,SLOT(slotWindowNewGroupingAssistantDisplay()),actionCollection(),"new_goupingAssistantDisplay");
-  new KAction(tr("&Rename Active Display"), CTRL + Key_R, this, SLOT(renameActiveDisplay()),actionCollection(),"rename_display");
-  new KAction(tr("&Close Active Display"), CTRL + Key_W, this, SLOT(slotDisplayClose()),actionCollection(),"close_display");
+  new KAction(tr("&Rename Active Display"), Qt::CTRL + Qt::Key_R, this, SLOT(renameActiveDisplay()),actionCollection(),"rename_display");
+  new KAction(tr("&Close Active Display"), Qt::CTRL + Qt::Key_W, this, SLOT(slotDisplayClose()),actionCollection(),"close_display");
   new KAction(tr("New &Trace Display"),0, this, SLOT(slotNewTraceDisplay()),actionCollection(),"trace_display");
 
   //Not used for the moment.
@@ -177,53 +177,53 @@ void KlustersApp::initActions()
   KIconLoader* loader = KGlobal::iconLoader();
 
   //Actions menu
-  new KAction(tr("Delete &Artifact Cluster(s)"),QIcon(loader->loadIcon("delete_artefact", KIcon::User)),SHIFT + Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
-  new KAction(tr("Delete &Noisy Cluster(s)"),QIcon(loader->loadIcon("delete_noise", KIcon::User)),Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
-  new KAction(tr("&Group Clusters"),QIcon(loader->loadIcon("group", KIcon::User)), Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
+  new KAction(tr("Delete &Artifact Cluster(s)"),QIcon(loader->loadIcon("delete_artefact", KIcon::User)),Qt::SHIFT + Qt::Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
+  new KAction(tr("Delete &Noisy Cluster(s)"),QIcon(loader->loadIcon("delete_noise", KIcon::User)),Qt::Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
+  new KAction(tr("&Group Clusters"),QIcon(loader->loadIcon("group", KIcon::User)), Qt::Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
   new KAction(tr("&Update Display"),QIcon(loader->loadIcon("update", KIcon::User)), 0,clusterPalette, SLOT(updateClusters()),actionCollection(), "update_display");
-  new KAction(tr("&Renumber Clusters"),0, Key_R,doc, SLOT(renumberClusters()),actionCollection(), "renumber");
-  new KAction(tr("&Update Error Matrix"),QIcon(loader->loadIcon("grouping_assistant_update", KIcon::User)),Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
+  new KAction(tr("&Renumber Clusters"),0, Qt::Key_R,doc, SLOT(renumberClusters()),actionCollection(), "renumber");
+  new KAction(tr("&Update Error Matrix"),QIcon(loader->loadIcon("grouping_assistant_update", KIcon::User)),Qt::Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
             "update_errorMatrix");
-  new KAction(tr("Re&cluster"),0, SHIFT  + Key_R,this, SLOT(slotRecluster()),actionCollection(), "recluster");
+  new KAction(tr("Re&cluster"),0, Qt::SHIFT  + Qt::Key_R,this, SLOT(slotRecluster()),actionCollection(), "recluster");
   new KAction(tr("&Abort Reclustering"),0, 0,this, SLOT(slotStopRecluster()),actionCollection(), "stop_recluster");
              
   //Tools menu
-  new KAction(tr("Zoom"),QIcon(loader->loadIcon("zoom_tool", KIcon::User)), Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
-  new KAction(tr("New Cluster"),QIcon(loader->loadIcon("new_cluster", KIcon::User)), Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
-  new KAction(tr("&Split Clusters"),QIcon(loader->loadIcon("new_clusters", KIcon::User)), Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
-  new KAction(tr("Delete &Artifact Spikes"),QIcon(loader->loadIcon("delete_artefact_tool", KIcon::User)),Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
-  new KAction(tr("Delete &Noisy Spikes"),QIcon(loader->loadIcon("delete_noise_tool", KIcon::User)),Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
-  new KAction(tr("Select Time"),QIcon(loader->loadIcon("time_tool", KIcon::User)), Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
+  new KAction(tr("Zoom"),QIcon(loader->loadIcon("zoom_tool", KIcon::User)), Qt::Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
+  new KAction(tr("New Cluster"),QIcon(loader->loadIcon("new_cluster", KIcon::User)), Qt::Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
+  new KAction(tr("&Split Clusters"),QIcon(loader->loadIcon("new_clusters", KIcon::User)), Qt::Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
+  new KAction(tr("Delete &Artifact Spikes"),QIcon(loader->loadIcon("delete_artefact_tool", KIcon::User)),Qt::Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
+  new KAction(tr("Delete &Noisy Spikes"),QIcon(loader->loadIcon("delete_noise_tool", KIcon::User)),Qt::Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
+  new KAction(tr("Select Time"),QIcon(loader->loadIcon("time_tool", KIcon::User)), Qt::Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
   //Waveforms menu
-  timeFrameMode = new KToggleAction(tr("&Time Frame"), Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
-  overlayPresentation = new KToggleAction(tr("&Overlay"), Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
-  meanPresentation = new KToggleAction(tr("&Mean and Standard Deviation"), Key_M,this, SLOT(slotMeanPresentation()),actionCollection(), "mean");
-  new KAction(tr("&Increase Amplitude"), Key_I,this, SLOT(slotIncreaseAmplitude()),actionCollection(), "increase");
-  new KAction(tr("&Decrease Amplitude"), Key_D,this, SLOT(slotDecreaseAmplitude()),actionCollection(), "decrease");
+  timeFrameMode = new KToggleAction(tr("&Time Frame"), Qt::Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
+  overlayPresentation = new KToggleAction(tr("&Overlay"), Qt::Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
+  meanPresentation = new KToggleAction(tr("&Mean and Standard Deviation"), Qt::Key_M,this, SLOT(slotMeanPresentation()),actionCollection(), "mean");
+  new KAction(tr("&Increase Amplitude"), Qt::Key_I,this, SLOT(slotIncreaseAmplitude()),actionCollection(), "increase");
+  new KAction(tr("&Decrease Amplitude"), Qt::Key_D,this, SLOT(slotDecreaseAmplitude()),actionCollection(), "decrease");
   timeFrameMode->setChecked(false);
   overlayPresentation->setChecked(false);                      
   meanPresentation->setChecked(false);                                         
 
   //Correlations menu
-  scaleByMax = new KRadioAction(tr("Scale by &Maximum"),SHIFT + Key_M,this,SLOT(slotScaleByMax()),actionCollection(), "scale_by_max");
+  scaleByMax = new KRadioAction(tr("Scale by &Maximum"),Qt::SHIFT + Qt::Key_M,this,SLOT(slotScaleByMax()),actionCollection(), "scale_by_max");
   scaleByMax->setExclusiveGroup("scale");
-  scaleByShouler = new KRadioAction(tr("Scale by &Asymptote"),SHIFT + Key_A,this,SLOT(slotScaleByShouler()),actionCollection(), "scale_by_shouler");
+  scaleByShouler = new KRadioAction(tr("Scale by &Asymptote"),Qt::SHIFT + Qt::Key_A,this,SLOT(slotScaleByShouler()),actionCollection(), "scale_by_shouler");
   scaleByShouler->setExclusiveGroup("scale");
-  noScale = new KRadioAction(tr("&Uniform Scale"),SHIFT + Key_U,this,SLOT(slotNoScale()),actionCollection(), "raw_data");
+  noScale = new KRadioAction(tr("&Uniform Scale"),Qt::SHIFT + Qt::Key_U,this,SLOT(slotNoScale()),actionCollection(), "raw_data");
   noScale->setExclusiveGroup("scale");
   //Initialize the presentation mode to scale by maximum.
   scaleByMax->setChecked(true);
-  new KAction(tr("&Increase Amplitude"),SHIFT + Key_I,this, SLOT(slotIncreaseCorrelogramsAmplitude()),actionCollection(), "increase_correlograms");
-  new KAction(tr("&Decrease Amplitude"),SHIFT +  Key_D,this, SLOT(slotDecreaseCorrelogramsAmplitude()),actionCollection(), "decrease_correlograms");
-  shoulderLine = new KToggleAction(tr("Asymptote &Line"), Key_L,this, SLOT(slotShoulderLine()),actionCollection(), "shoulder_line");
+  new KAction(tr("&Increase Amplitude"),Qt::SHIFT + Qt::Key_I,this, SLOT(slotIncreaseCorrelogramsAmplitude()),actionCollection(), "increase_correlograms");
+  new KAction(tr("&Decrease Amplitude"),Qt::SHIFT +  Qt::Key_D,this, SLOT(slotDecreaseCorrelogramsAmplitude()),actionCollection(), "decrease_correlograms");
+  shoulderLine = new KToggleAction(tr("Asymptote &Line"), Qt::Key_L,this, SLOT(slotShoulderLine()),actionCollection(), "shoulder_line");
 
   //Traces menu
-   new KAction(tr("&Increase Channel Amplitudes"),CTRL + SHIFT + Key_I,this, SLOT(slotIncreaseAllChannelsAmplitude()),actionCollection(), "increase_all_channels");
-   new KAction(tr("&Decrease Channel Amplitudes"),CTRL + SHIFT + Key_D,this, SLOT(slotDecreaseAllChannelsAmplitude()),actionCollection(), "decrease_all_channels");
-   showHideLabels = new KToggleAction(tr("Show &Labels"),0,CTRL + Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
+   new KAction(tr("&Increase Channel Amplitudes"),Qt::CTRL + Qt::SHIFT + Qt::Key_I,this, SLOT(slotIncreaseAllChannelsAmplitude()),actionCollection(), "increase_all_channels");
+   new KAction(tr("&Decrease Channel Amplitudes"),Qt::CTRL + Qt::SHIFT + Qt::Key_D,this, SLOT(slotDecreaseAllChannelsAmplitude()),actionCollection(), "decrease_all_channels");
+   showHideLabels = new KToggleAction(tr("Show &Labels"),0,Qt::CTRL + Qt::Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
    showHideLabels->setChecked(false);
-   new KAction(tr("&Next Spike"),QIcon(loader->loadIcon("forwardCluster", KIcon::User)),CTRL + SHIFT + Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
-   new KAction(tr("&Previous Spike"),QIcon(loader->loadIcon("backCluster", KIcon::User)),CTRL + SHIFT + Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
+   new KAction(tr("&Next Spike"),QIcon(loader->loadIcon("forwardCluster", KIcon::User)),Qt::CTRL + Qt::SHIFT + Qt::Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
+   new KAction(tr("&Previous Spike"),QIcon(loader->loadIcon("backCluster", KIcon::User)),Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
   
   //Settings menu
   viewActionBar = new KToggleAction(tr("Show Actions"),0,this, SLOT(slotViewActionBar()),actionCollection(), "show_actionBar");
@@ -1227,7 +1227,7 @@ void KlustersApp::slotFileSaveAs()
 {
   slotStatusMsg(tr("Saving file with a new filename..."));
 
-  QString url=KFileDialog::getSaveURL(QDir::currentDirPath(),
+  QString url=KFileDialog::getSaveURL(QDir::currentPath(),
         tr("*|All files"), this, tr("Save as..."));
   if(!url.isEmpty()){
     slotStateChanged("SavingState");

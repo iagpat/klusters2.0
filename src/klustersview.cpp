@@ -546,7 +546,7 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
   else return QWidget::eventFilter(object,event);    // standard event processing  
   
   QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
-  if(mouseEvent->button() == QMouseEvent::RightButton){
+  if(mouseEvent->button() == Qt::RightButton){
    //Create the popmenu
    KPopupMenu menu(this);
    menu.insertTitle(tr("Add a View"));

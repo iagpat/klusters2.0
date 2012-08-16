@@ -55,7 +55,7 @@ int Utilities::getNbLines(QString path){
  QString infoLine = fileStream.readLine();
  QString info;
  if(infoLine != NULL){
-  info = infoLine.stripWhiteSpace();
+  info = infoLine.trimmed();
   QStringList parts = QStringList::split(" ", info);
   nbLines = parts[0].toLong();
   tmpFile.close();

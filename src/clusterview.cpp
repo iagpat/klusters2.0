@@ -325,14 +325,14 @@ void ClusterView::updatedDimensions(int dimensionX, int dimensionY){
   //The min and max are chosen in a maner that the axis are always visible and superior
   //to -40000000 (due to a Qt limitation in the big negative values).
   long width = maxForDimensionX - minForDimensionX;
-  abscissaMin = static_cast<long>(QMIN(0,minForDimensionX)-width*0.05);
-  abscissaMin = static_cast<long>(QMAX(abscissaMin,-1000000)); // below this limit, Qt crashes
-  abscissaMax = static_cast<long>(QMAX(0,maxForDimensionX)+width*0.05);
+  abscissaMin = static_cast<long>(qMin(0,minForDimensionX)-width*0.05);
+  abscissaMin = static_cast<long>(qMax(abscissaMin,-1000000)); // below this limit, Qt crashes
+  abscissaMax = static_cast<long>(qMax(0,maxForDimensionX)+width*0.05);
 
   long height = maxForDimensionY - minForDimensionY;
-  ordinateMin = static_cast<long>(-QMAX(0,maxForDimensionY)-height*0.05);
-  ordinateMax = static_cast<long>(-QMIN(0,minForDimensionY)+height*0.05);
-  ordinateMax = static_cast<long>(QMIN(ordinateMax,1000000)); // below -(this limit), Qt crashes
+  ordinateMin = static_cast<long>(-qMax(0,maxForDimensionY)-height*0.05);
+  ordinateMax = static_cast<long>(-qMin(0,minForDimensionY)+height*0.05);
+  ordinateMax = static_cast<long>(qMin(ordinateMax,1000000)); // below -(this limit), Qt crashes
 
 
   //Update the window in a maner to always see the axis
@@ -401,7 +401,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
     QColor color = selectPolygonColor(mode);
 
     //Erase the last line drawn
-    if(e->button() == QMouseEvent::RightButton){
+    if(e->button() == Qt::RightButton){
       if(selectionPolygon.size() == 0) return;
 
       //Erase the last drawn line by drawing into the buffer
@@ -413,7 +413,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
     }
 
     //Close the polygon of selection and trigger the right action depending on the mode
-    if(e->button() == QMouseEvent::MidButton && selectionPolygon.size()>0){
+    if(e->button() == Qt::MidButton && selectionPolygon.size()>0){
       QRegion selectionArea;
 
       //Paint into the buffer to allow the selection to be redrawn after a refresh
@@ -454,7 +454,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
       statusBar->clear();
     }
 
-    if (e->button() == QMouseEvent::LeftButton){
+    if (e->button() == Qt::LeftButton){
       QPoint selectedPoint = viewportToWorld(e->x(),e->y());
 
       if(nbSelectionPoints == 0) selectionPolygon.putPoints(0, 1, selectedPoint.x(),selectedPoint.y());

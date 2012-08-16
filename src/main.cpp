@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
       QString file = args->arg(0);
       if(file.left(1) != "/"){
        QString url = QString();
-       url.setPath((QDir::currentDirPath()).append("/"));
+       url.setPath((QDir::currentPath()).append("/"));
        url.setFileName(file);
        Klusters->openDocumentFile(url);
       }

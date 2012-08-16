@@ -239,7 +239,7 @@ void ErrorMatrixView::drawMatrix(QPainter& painter){
   if(modifiedClusterList.size() > 0 || hasBeenRenumbered || isNotUpToDate){
    //Draw a red rectangle around the matrix to warn the user that
    //the matrix is not up to date anymore.
-   QPen pen(red,4,SolidLine);
+   QPen pen(red,4,Qt::SolidLine);
    painter.setPen(pen);
    painter.drawRect(abscissaMin + widthBorder - 1,
                   ordinateMin + heightBorder - 2,

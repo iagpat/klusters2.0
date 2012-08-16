@@ -50,7 +50,7 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
     //No selection will be possible
     setSelectionMode(Q3ListBox::NoSelection);
     
-    setFocusPolicy(QWidget::NoFocus);
+    setFocusPolicy(Qt::NoFocus);
     QPalette pal = palette();
     pal.setColor(QColorGroup::HighlightedText,
                  pal.color(QPalette::Normal, QColorGroup::Text));
@@ -129,14 +129,14 @@ void ProcessWidget::slotProcessExited(KProcess* )
 
 void ProcessWidget::insertStdoutLine(const QString &line)
 {
-    insertItem(new ProcessListBoxItem(line.stripWhiteSpace(),
+    insertItem(new ProcessListBoxItem(line.trimmed(),
         ProcessListBoxItem::Normal));
 }
 
 
 void ProcessWidget::insertStderrLine(const QString &line)
 {
-    insertItem(new ProcessListBoxItem(line.stripWhiteSpace(),
+    insertItem(new ProcessListBoxItem(line.trimmed(),
         ProcessListBoxItem::Error));
 }
 

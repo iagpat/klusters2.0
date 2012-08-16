@@ -45,7 +45,7 @@ using namespace std;
   *@author Lynn Hazan
 */
 
-PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, WFlags f)
+PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFlags f)
  : KDialogBase(IconList, tr("Preferences"), Help|Default|Ok|Apply|Cancel, Ok, parent, name, f)
 {
     setHelp("settings","klusters");

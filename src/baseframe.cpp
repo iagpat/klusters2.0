@@ -90,7 +90,7 @@ void BaseFrame::mousePressEvent(QMouseEvent* e){
       rubber = 0;
     }
 
-   if(e->button() == QMouseEvent::LeftButton){
+   if(e->button() == Qt::LeftButton){
        //Assign firstClick
        QRect r((QRect)window);
        
@@ -109,7 +109,7 @@ void BaseFrame::mousePressEvent(QMouseEvent* e){
 
 void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
  //We do not consider the other button events but we consider key press
- if(e->button() & QMouseEvent::LeftButton){
+ if(e->button() & Qt::LeftButton){
   bool isZoomed = false;
 
   if(isRubberBandToBeDrawn){
@@ -193,7 +193,7 @@ void BaseFrame::mouseMoveEvent(QMouseEvent* e){
 
 void BaseFrame::mouseDoubleClickEvent(QMouseEvent* e){
   if(mode == ZOOM){
-    if ((e->button() == QMouseEvent::LeftButton) && !(e->state() & Qt::ShiftModifier)){
+    if ((e->button() == Qt::LeftButton) && !(e->state() & Qt::ShiftModifier)){
      //Reset to the initial window
      window.reset();
      drawContentsMode = REDRAW;

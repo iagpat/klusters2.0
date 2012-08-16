@@ -984,7 +984,7 @@ void TraceView::drawTrace(QPainter& painter,int limit,int basePosition,int X,int
 
    for(int i = 2; i <= nbSamplesToDraw;++i){
     start = static_cast<int>(floor((i-1) * downSampling + 0.5 + 1));//the index in data starts at 1
-    stop = QMIN(static_cast<int>(floor(i * downSampling + 0.5)),nbSamples);
+    stop = qMin(static_cast<int>(floor(i * downSampling + 0.5)),nbSamples);
 
     min = data(start,channelId + 1);
     max = min;
@@ -1046,7 +1046,7 @@ void TraceView::drawTrace(QPainter& painter,int limit,int basePosition,int X,int
 
    for(int i = 2; i <= nbSamplesToDraw;++i){
     start = static_cast<int>(floor((i-1) * downSampling + 0.5 + 1));//the index in data starts at 1
-    stop = QMIN(static_cast<int>(floor(i * downSampling + 0.5)),nbSamples);
+    stop = qMin(static_cast<int>(floor(i * downSampling + 0.5)),nbSamples);
 
     min = data(start,channelId + 1);
     max = min;
@@ -1246,8 +1246,8 @@ void TraceView::drawTraces(Q3ValueList<int> channels,bool highlight){
 
      for(int i = 1; i < nbSpikes + 1;++i){
       dataType index = currentData(1,i);
-      int firstIndex = QMAX(0,index - nbSamplesBefore);
-      int lastIndex = QMIN(nbSamples,index + nbSamplesAfter);
+      int firstIndex = qMax(0,index - nbSamplesBefore);
+      int lastIndex = qMin(nbSamples,index + nbSamplesAfter);
       int nbWaveformSamples = lastIndex - firstIndex + 1;
       dataType clusterId = currentData(2,i);
 
@@ -1491,8 +1491,8 @@ void TraceView::drawTraces(QPainter& painter){
 
       for(int i = 1; i < nbSpikes + 1;++i){
        dataType index = currentData(1,i);
-       int firstIndex = QMAX(1,index - nbSamplesBefore);
-       int lastIndex = QMIN(nbSamples,index + nbSamplesAfter);
+       int firstIndex = qMax(1,index - nbSamplesBefore);
+       int lastIndex = qMin(nbSamples,index + nbSamplesAfter);
        int nbWaveformSamples = lastIndex - firstIndex + 1;
        dataType clusterId = currentData(2,i);
 
@@ -1710,8 +1710,8 @@ void TraceView::drawTraces(QPainter& painter){
 
       for(int i = 1; i < nbSpikes + 1;++i){
        dataType index = currentData(1,i);
-       int firstIndex = QMAX(1,index - nbSamplesBefore);
-       int lastIndex = QMIN(nbSamples,index + nbSamplesAfter);
+       int firstIndex = qMax(1,index - nbSamplesBefore);
+       int lastIndex = qMin(nbSamples,index + nbSamplesAfter);
        int nbWaveformSamples = lastIndex - firstIndex + 1;
        dataType clusterId = currentData(2,i);
 
@@ -2255,7 +2255,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
 }
 
 void TraceView::mousePressEvent(QMouseEvent* event){
- if(event->button() == QMouseEvent::LeftButton){
+ if(event->button() == Qt::LeftButton){
   if(mode == ZOOM || mode == MEASURE || mode == SELECT_TIME){
    //The parent implementation takes care of the zoom.
    BaseFrame::mousePressEvent(event);
@@ -2683,13 +2683,13 @@ void TraceView::mousePressEvent(QMouseEvent* event){
    }
    previousDragOrdinate = 0;
   }//mode == SELECT && shownChannels.size() != 0 || mode == MEASURE || mode == SELECT_TIME || mode == SELECT_EVENT || mode == ADD_EVENT || mode == DRAW_LINE
- }//QMouseEvent::LeftButton
+ }//Qt::LeftButton
 }
 
 
 void TraceView::mouseReleaseEvent(QMouseEvent* event){
  if(mode == SELECT){
-  if(event->button() & QMouseEvent::LeftButton && !(event->state() & Qt::ShiftModifier) && !(event->state() & Qt::ControlModifier)){
+  if(event->button() & Qt::LeftButton && !(event->state() & Qt::ShiftModifier) && !(event->state() & Qt::ControlModifier)){
    //There was a drag of channels
    if(previousDragOrdinate != 0){
     int delta = previousDragOrdinate - lastClickOrdinate;
@@ -2721,7 +2721,7 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
   }
  }
 
- if(mode == SELECT_EVENT && (event->button() & QMouseEvent::LeftButton)){
+ if(mode == SELECT_EVENT && (event->button() & Qt::LeftButton)){
   //There was a drag of an event
   if(!startEventDragging){
    int delta = previousDragAbscissa - lastClickAbscissa;
@@ -2755,7 +2755,7 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
    update();
   }
  }
- if(mode == ADD_EVENT && (event->button() & QMouseEvent::LeftButton)){
+ if(mode == ADD_EVENT && (event->button() & Qt::LeftButton)){
   if(eventDescriptionToCreate == ""){
    QMessageBox::critical(this,QObject::tr("Unselected description type!"), QObject::tr("In order to add an event you have to choose an event description first!"));
    return;
@@ -2776,7 +2776,7 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
   }
  }
 
- if(mode == ZOOM && (event->button() & QMouseEvent::LeftButton)){
+ if(mode == ZOOM && (event->button() & Qt::LeftButton)){
   //Zoom out
   if(event->state() & Qt::ShiftModifier){
     previousWindow = (QRect)window;
@@ -2801,11 +2801,11 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
   drawContentsMode = REDRAW;
   update();
  }
- if(mode == MEASURE && (event->button() & QMouseEvent::LeftButton)){
+ if(mode == MEASURE && (event->button() & Qt::LeftButton)){
   //The parent implementation takes care of the rubber band
   BaseFrame::mouseReleaseEvent(event);
  }
- if(mode == SELECT_TIME && (event->button() & QMouseEvent::LeftButton)){
+ if(mode == SELECT_TIME && (event->button() & Qt::LeftButton)){
   //The parent implementation takes care of the rubber band
   BaseFrame::mouseReleaseEvent(event);
   QPoint current;
@@ -2933,7 +2933,7 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
   if(duration > timeFrameWidth) duration = timeFrameWidth;
   emit setStartAndDuration(startingTime,duration);
  }
- if(mode == DRAW_LINE && (event->button() & QMouseEvent::LeftButton)){
+ if(mode == DRAW_LINE && (event->button() & Qt::LeftButton)){
   //erase the line
   if(linePositions.size() != 0) drawTimeLine(0,false,true);
   linePositions.clear();

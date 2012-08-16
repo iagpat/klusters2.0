@@ -31,7 +31,7 @@
 using namespace std;
 
 
-ChannelList::ChannelList(QWidget * parent, const char * name, WFlags f):Q3ListBox( parent, name, f ){
+ChannelList::ChannelList(QWidget * parent, const char * name, Qt::WFlags f):Q3ListBox( parent, name, f ){
   setVScrollBarMode(Q3ScrollView::Auto);
   setDragAutoScroll(true);
   setSelectionMode(Q3ListBox::Single);

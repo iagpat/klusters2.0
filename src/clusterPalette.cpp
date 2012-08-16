@@ -47,7 +47,7 @@
 #include <vector>
 using namespace std;
 
-ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,KStatusBar * statusBar, const char* name, WFlags fl )
+ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,KStatusBar * statusBar, const char* name, Qt::WFlags fl )
 	: Q3VBox( parent, name, fl ),doc(0L),mode(IMMEDIATE),isInSelectItems(false),isUpToDate(true),backgroundColor(backgroundColor),statusBar(statusBar),isInUserClusterInfoMode(false)
 {
     //Set the palette color
