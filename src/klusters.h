@@ -34,7 +34,6 @@
 #include <kdockwidget.h>
 #include <kaction.h>
 #include <kurl.h>
-#include <kdeprint/kprintdialogpage.h>
 
 
 //include files application specific

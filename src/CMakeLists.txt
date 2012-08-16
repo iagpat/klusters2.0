@@ -23,6 +23,6 @@ KDE3_ADD_UI_FILES(klusters_SRCS ${klusters_UI})
 
 add_executable(klusters ${klusters_SRCS} )
 
-target_link_libraries(klusters ${QT_LIBRARIES} kdeui kdecore kio kdeprint ${LIBXML2_LIBRARIES})
+target_link_libraries(klusters ${QT_LIBRARIES} kdeui kdecore kio ${LIBXML2_LIBRARIES})
 
 install(PROGRAMS klusters DESTINATION bin)
