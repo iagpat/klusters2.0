@@ -28,7 +28,7 @@ using namespace std;
 // include files for KDE
 #include <kurl.h>
 #include <kprocess.h>
-#include <ktempfile.h>
+#include <QTemporaryFile>
 
 //Unix include file
 #include <unistd.h>
@@ -67,8 +67,8 @@ RestartTimer();
  //Get the number of events
  KProcess childproc;
  childproc.setUseShell(true);
- KTempFile counterFile = KTempFile();//make a unique file
- childproc << "wc -l "<<fileName<<" > "<<counterFile.name();
+ QTemporaryFile counterFile = QTemporaryFile();//make a unique file
+ childproc << "wc -l "<<fileName<<" > "<<counterFile.fileName();
  childproc.start(KProcess::NotifyOnExit);
  sleep(1);
  QFileInfo fi(counterFile.name());

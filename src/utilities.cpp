@@ -21,7 +21,7 @@
 
 // include files for KDE
 #include <kprocess.h>
-#include <ktempfile.h>
+#include <QTemporaryFile>
 
 //include files for c/c++ libraries
 #include <stdlib.h>
@@ -34,8 +34,8 @@ int Utilities::getNbLines(QString path){
  if(shellToUse != NULL) childproc.setUseShell(true,shellToUse);
  else childproc.setUseShell(true);
 
- KTempFile counterFile = KTempFile();//make a unique file
- childproc << "wc -l "<<path<<" > "<<counterFile.name();
+ QTemporaryFile counterFile = QTemporaryFile();//make a unique file
+ childproc << "wc -l "<<path<<" > "<<counterFile.fileName();
  childproc.start(KProcess::DontCare);
  sleep(1);
  QFileInfo fi(counterFile.name());
