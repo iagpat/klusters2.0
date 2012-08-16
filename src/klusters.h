@@ -187,8 +187,6 @@ class KlustersApp : public KDockMainWindow
     void slotUndo();
     /** Reverts the last undo action.*/
     void slotRedo();
-    /**Display the configure key bindings dialog.*/
-    void slotKeyBindings();
     
     /** Toggles the main tool bar.*/
     void slotViewMainToolBar();

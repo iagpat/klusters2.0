@@ -40,7 +40,6 @@
 #include <kpopupmenu.h>
 #include <kglobal.h>
 #include <ktoolbar.h>
-#include <kkeydialog.h>
 #include <kio/netaccess.h>
 #include <kprocess.h>
 
@@ -1621,12 +1620,6 @@ void KlustersApp::slotStatusMsg(const QString &text)
   // change status message permanently
   statusBar()->clear();
   statusBar()->changeItem(text,1);
-}
-
-void KlustersApp::slotKeyBindings(){
-  slotStatusMsg(tr("Changing the key bindings..."));
-  KKeyDialog::configure(actionCollection());
-  slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::viewMenuAboutToShow()
