@@ -471,7 +471,7 @@ class KlustersApp : public KDockMainWindow
     //Members
     
     /** the printer instance */
-    KPrinter* printer;
+    QPrinter* printer;
 
     /** A counter that gets increased each time the user creates a new display of the document with "Displays"->"New ...".*/
     int displayCount;

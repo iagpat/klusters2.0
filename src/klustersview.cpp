@@ -242,7 +242,7 @@ void KlustersView::update(KlustersView* pSender){
 		repaint();
 }
 
-void KlustersView::print(KPrinter* pPrinter,QString filePath,bool whiteBackground)
+void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackground)
 {
   QPainter printPainter;
   QPaintDeviceMetrics metrics(pPrinter);

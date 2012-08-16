@@ -25,7 +25,6 @@
 
 // include files for KDE
 #include <klistbox.h>
-#include <kprinter.h>
 
 //include files for Qt
 #include <qcolor.h>
@@ -33,6 +32,8 @@
 //forward declaration 
 class KProcess;
 class ProcessLineMaker;
+
+class QPrinter;
 
 class ProcessListBoxItem : public QListBoxText
 {
@@ -78,7 +79,7 @@ public:
     * @param printer printer to print into.
     * @param filePath path of the opened document.
     */
-    void print(KPrinter* printer,QString filePath);
+    void print(QPrinter* printer,QString filePath);
     
 public slots:
     /**

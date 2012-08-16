@@ -23,13 +23,13 @@
 #endif
 
 //Include files for KDE
-#include <kprinter.h>
 #include <kdockwidget.h>
 #include <kstatusbar.h>
 
 // include files for Qt
 #include <qwidget.h>
 #include <qvaluevector.h>
+#include <qprinter.h>
 
 //include files for the application
 #include "itemcolors.h"
@@ -118,7 +118,7 @@ class KlustersView : public KDockArea
     * @param filePath path of the opened document.
     * @param whiteBackground true if the printed background has to be white, false otherwise.    
     */
-    void print(KPrinter* printer,QString filePath,bool whiteBackground);
+    void print(QPrinter* printer,QString filePath,bool whiteBackground);
     
     /**Adds a new view (ClusterView,WaveformView or CorrelationView).
     * @param docWidget KDockWidget to which the new view will be docked.    

@@ -28,9 +28,9 @@
 #include <qfileinfo.h> 
 #include <qapplication.h>
 #include <qinputdialog.h>
+#include <QPrinter>
 
 // include files for KDE
-#include <kprinter.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
@@ -76,7 +76,7 @@ processOutputsFinished(true),processKilled(false),errorMatrixExists(false),fileP
 	
   //Gets the configuration object of the application throught the static reference to the application kapp
   config = KGlobal::config();
-  printer = new KPrinter;
+  printer = new QPrinter;
   
   //Apply the user settings.
   initializePreferences();
@@ -1374,9 +1374,10 @@ void KlustersApp::slotFilePrint()
 {
   slotStatusMsg(tr("Printing..."));
 
-  printer->setOrientation(KPrinter::Landscape);
-  printer->setColorMode(KPrinter::Color);
-  printer->addDialogPage(new printDialogPage(this));
+  printer->setOrientation(QPrinter::Landscape);
+  printer->setColorMode(QPrinter::Color);
+  //REmove it
+  //printer->addDialogPage(new printDialogPage(this));
   
   if (printer->setup(this))
   {

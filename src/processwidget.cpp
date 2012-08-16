@@ -194,7 +194,7 @@ void ProcessWidget::slotOutputTreatmentOver(){
  emit processOutputsFinished();
 }
 
-void ProcessWidget::print(KPrinter* printer,QString filePath){
+void ProcessWidget::print(QPrinter *printer, QString filePath){
   QPainter printPainter;
   QPaintDeviceMetrics metrics(printer);// need width/height of printer surface
   const int Margin = 20;
