@@ -140,7 +140,7 @@ void KlustersApp::initActions()
 
 //File menu
   KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
-  fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
+  fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
   KStdAction::save(this, SLOT(slotFileSave()), actionCollection());
   KStdAction::saveAs(this, SLOT(slotFileSaveAs()), actionCollection());
   new KAction(tr("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
@@ -697,7 +697,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
    }
 }
 
-void KlustersApp::openDocumentFile(const KURL& url)
+void KlustersApp::openDocumentFile(const QString& url)
 {    
   slotStatusMsg(tr("Opening file..."));
 
@@ -909,7 +909,7 @@ void KlustersApp::openDocumentFile(const KURL& url)
   slotStatusMsg(tr("Ready."));
 }
 
-void KlustersApp::importDocumentFile(const KURL& url)
+void KlustersApp::importDocumentFile(const QString& url)
 {
   slotStatusMsg(tr("Importing file..."));
 
@@ -988,7 +988,7 @@ void KlustersApp::readProperties(KConfig* config)
   // initialize the recent file list
   fileOpenRecent->loadEntries(config);
   filePath = config->readPathEntry("openFile");
-  KURL url;
+  QString url;
   url.setPath(filePath);
   openDocumentFile(url);    
 }
@@ -1103,7 +1103,7 @@ void KlustersApp::slotFileOpen()
 {
   slotStatusMsg(tr("Opening file..."));
 
-  KURL url=KFileDialog::getOpenURL(QString::null,
+  QString url=KFileDialog::getOpenURL(QString::null,
       tr("*.fet.*|Feature File (*.fet.n)\n*.clu.*|Cluster File (*.clu.n)\n*.spk.*|Spike File (*.spk.n)\n*.par.*|Specific Parameter File (*.par.n)\n*|All files"), this, tr("Open File..."));
   if(!url.isEmpty())
   {
@@ -1189,7 +1189,7 @@ void KlustersApp::slotFileClose(){
 void KlustersApp::slotFileImport(){
     slotStatusMsg(tr("Importing file..."));
 
-  KURL url=KFileDialog::getOpenURL(QString::null,
+  QString url=KFileDialog::getOpenURL(QString::null,
       tr("*|All files"), this, tr("Import File..."));
   if(!url.isEmpty())
   {
@@ -1199,7 +1199,7 @@ void KlustersApp::slotFileImport(){
   slotStatusMsg(tr("Ready."));
 }
 
-void KlustersApp::slotFileOpenRecent(const KURL& url)
+void KlustersApp::slotFileOpenRecent(const QString& url)
 {
   slotStatusMsg(tr("Opening file..."));
 
@@ -1227,7 +1227,7 @@ void KlustersApp::slotFileSaveAs()
 {
   slotStatusMsg(tr("Saving file with a new filename..."));
 
-  KURL url=KFileDialog::getSaveURL(QDir::currentDirPath(),
+  QString url=KFileDialog::getSaveURL(QDir::currentDirPath(),
         tr("*|All files"), this, tr("Save as..."));
   if(!url.isEmpty()){
     slotStateChanged("SavingState");

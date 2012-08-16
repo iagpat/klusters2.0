@@ -73,7 +73,7 @@ void PrefWaveformView::resetChannelList(int nb){
 }
 
 void PrefWaveformView::saveChannelOrder(){
-  KURL url = KFileDialog::getSaveURL(QDir::currentDirPath(),
+  QString url = KFileDialog::getSaveURL(QDir::currentDirPath(),
         tr("*|All files"), this, tr("Save as..."));
 
   if(!url.isEmpty()){
@@ -101,7 +101,7 @@ void PrefWaveformView::saveChannelOrder(){
 }
 
 void PrefWaveformView::loadChannelOrder(){
- KURL url = KFileDialog::getOpenURL(QString::null,
+ QString url = KFileDialog::getOpenURL(QString::null,
       tr("*|All files"), this, tr("Load File..."));
 
  QMap<int,int> positions;

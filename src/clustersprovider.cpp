@@ -41,7 +41,7 @@ using namespace std;
 #include "timer.h"
 
 
-ClustersProvider::ClustersProvider(KURL fileUrl,double samplingRate,double currentSamplingRate,Data& clusteringData,dataType dataFileMaxTime): DataProvider(fileUrl),
+ClustersProvider::ClustersProvider(QString fileUrl,double samplingRate,double currentSamplingRate,Data& clusteringData,dataType dataFileMaxTime): DataProvider(fileUrl),
  samplingRate(samplingRate),clusteringData(clusteringData),dataFileMaxTime(dataFileMaxTime){
 
  clusterPosition = 0.25;

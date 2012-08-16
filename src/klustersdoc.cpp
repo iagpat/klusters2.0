@@ -152,7 +152,7 @@ bool KlustersDoc::canCloseDocument(KlustersApp* mainWindow,QString callingMethod
 void KlustersDoc::closeDocument(){
   //If a document has been open reset the members
   viewList->clear();
-  docUrl = KURL();
+  docUrl = QString();
   baseName = "";
   xmlParameterFile = "";
   clusterColorListUndoList.clear();
@@ -201,7 +201,7 @@ void KlustersDoc::closeDocument(){
 }
 
 
-bool KlustersDoc::importDocument(const KURL &url, const char *format /*=0*/){
+bool KlustersDoc::importDocument(const QString &url, const char *format /*=0*/){
   bool returnValue = true;
 
   //1 - Get the base name of the file
@@ -210,7 +210,7 @@ bool KlustersDoc::importDocument(const KURL &url, const char *format /*=0*/){
   return  returnValue;
 }
 
-int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const char *format /*=0*/){
+int KlustersDoc::openDocument(const QString &url,QString& errorInformation, const char *format /*=0*/){
   //1 - Get the base name of the file
   //2 - load the config information: read the different files, initialize clusteringData (loadConfigFromNewFormat())
   //3 - load the spikes, clusters, time and PCA information (loadDataFromNewFormat())
@@ -233,23 +233,23 @@ int KlustersDoc::openDocument(const KURL &url,QString& errorInformation, const c
   //Create the files url to open (baseName.spk.x,baseName.clu.x,baseName.fet.x,baseName.par.x,baseName.par and baseName.xml)
   //and store the url (corresponding to the cluster file). If the xml format parameter file does not exist, the parameter files
   // baseName.par.x,baseName.par will be used otherwise the baseName.xml will be used.
-  KURL spkFileUrl(url);
+  QString spkFileUrl(url);
   spkFileUrl.setFileName(baseName +".spk."+ electrodeGroupID);
-  KURL cluFileUrl(url);
+  QString cluFileUrl(url);
   cluFileUrl.setFileName(baseName +".clu."+ electrodeGroupID);
   docUrl = cluFileUrl;
-  cluFileSaveUrl = KURL(cluFileUrl);
+  cluFileSaveUrl = QString(cluFileUrl);
   cluFileSaveUrl.setFileName("." + cluFileUrl.fileName() +".autoSave");
-  KURL fetFileUrl(url);
+  QString fetFileUrl(url);
   fetFileUrl.setFileName(baseName +".fet."+ electrodeGroupID);
 
   //Parameter files
-  KURL xmlParFileUrl(url);
+  QString xmlParFileUrl(url);
   xmlParFileUrl.setFileName(baseName +".xml");
   xmlParameterFile = xmlParFileUrl.path();
-  KURL parXFileUrl(url);
+  QString parXFileUrl(url);
   parXFileUrl.setFileName(baseName +".par."+ electrodeGroupID);
-  KURL parFileUrl(url);
+  QString parFileUrl(url);
   parFileUrl.setFileName(baseName +".par");
 
   //Download the spike and fet files in temp files if necessary
@@ -565,7 +565,7 @@ void KlustersDoc::customEvent(QCustomEvent* event){
  }
 }
 
-int KlustersDoc::saveDocument(const KURL& saveUrl, const char *format /*=0*/){
+int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/){
 
   QString tmpCluFileSave = tmpCluFile;
   if(docUrl != saveUrl){
@@ -597,7 +597,7 @@ int KlustersDoc::saveDocument(const KURL& saveUrl, const char *format /*=0*/){
 	  if(fileParts.count() < 3) electrodeGroupID = "";
 	  else electrodeGroupID = fileParts[fileParts.count()-1];
 
-	  KURL xmlParFileUrl(saveUrl);
+	  QString xmlParFileUrl(saveUrl);
 	  xmlParFileUrl.setFileName(baseName +".xml");
 	  xmlParameterFile = xmlParFileUrl.path();
   }
@@ -635,7 +635,7 @@ int KlustersDoc::saveDocument(const KURL& saveUrl, const char *format /*=0*/){
 bool KlustersDoc::canCloseView(){
 	bool returnValue = false;
   if(isModified()){
-		KURL saveURL;
+		QString saveURL;
     switch(KMessageBox::warningYesNoCancel(0, tr("The current file has been modified.\n"
                           "Do you want to save it?"),url().fileName()))
     {
@@ -1931,7 +1931,7 @@ int KlustersDoc::integrateReclusteredClusters(Q3ValueList<int>& clustersToReclus
  QString cluFileName(reclusteringFetFileName);
  cluFileName.replace(".fet.",".clu.");
 
-  KURL cluFileUrl(cluFileName);
+  QString cluFileUrl(cluFileName);
   QString tmpCluFile;
   if(KIO::NetAccess::exists(cluFileUrl))
     if(!KIO::NetAccess::download(cluFileUrl,tmpCluFile)){
@@ -2067,7 +2067,7 @@ void KlustersDoc::reclusteringUpdate(Q3ValueList<int>& clustersToRecluster,Q3Val
 }
 
 void KlustersDoc::createProviders(){
- KURL datUrl(docUrl);
+ QString datUrl(docUrl);
  datUrl.setFileName(baseName +".dat");
 
  int resolution = clusteringData->getResolution();

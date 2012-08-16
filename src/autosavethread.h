@@ -42,7 +42,7 @@ public:
 
 	inline ~AutoSaveThread(){cout<<"in ~AutoSaveThread"<<endl;};
   //The default saving interval is 5 minutes.
-  inline AutoSaveThread(Data& d, KlustersDoc* doc,KURL saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
+  inline AutoSaveThread(Data& d, KlustersDoc* doc,QString saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
     cout<<"in constructor AutoSaveThread"<<endl; 
   };
 
@@ -81,7 +81,7 @@ public:
 private:
     Data& data;
     KlustersDoc* doc;
-    KURL autoSaveUrl;
+    QString autoSaveUrl;
 };
 
 #endif

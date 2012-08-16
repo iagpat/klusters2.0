@@ -53,7 +53,7 @@ public:
   * @param isSaveAs true if the current save action is a saveAs action
   * (meaning the file to save is different from the one used to load the data), false otherwise. The default is false.
   */
-  void save(const KURL& url,KlustersDoc* doc,bool isSaveAs=false);
+  void save(const QString& url,KlustersDoc* doc,bool isSaveAs=false);
   
   class SaveDoneEvent;
   friend class SaveDoneEvent;
@@ -90,7 +90,7 @@ public:
 private:
   KlustersDoc* doc;
   KlustersApp* parent;
-  KURL url;
+  QString url;
   bool isSaveAs;
 };
 

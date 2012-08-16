@@ -37,7 +37,7 @@ extern QString version;
 ParameterXmlModifier::ParameterXmlModifier() {}
 ParameterXmlModifier::~ParameterXmlModifier() {}
 
-bool ParameterXmlModifier::parseFile(const KURL& url) {
+bool ParameterXmlModifier::parseFile(const QString& url) {
 
     QFile file(url.path());
     if (!file.open(QIODevice::ReadWrite)) return false;
@@ -62,7 +62,7 @@ bool ParameterXmlModifier::parseFile(const KURL& url) {
     return true;
 }
 
-bool ParameterXmlModifier::writeTofile(const KURL& url) {
+bool ParameterXmlModifier::writeTofile(const QString& url) {
     QFile parameterFile(url.path());
     bool status = parameterFile.open(QIODevice::WriteOnly);
     if (!status) return status;

@@ -106,11 +106,11 @@ class KlustersDoc : public QObject
     /** Opens the document by filename and format.
     * @return an OpenSaveCreateReturnMessage enum giving the open status.
     */
-    int openDocument(const KURL &url,QString& errorInformation, const char* format=0);
+    int openDocument(const QString &url,QString& errorInformation, const char* format=0);
     /**Opens a document using different format, than the one defined for the application, by filename and format.
     * Not Yet implemented.
     */
-    bool importDocument(const KURL &url, const char* format=0);   
+    bool importDocument(const QString &url, const char* format=0);   
 
     /** Closes the actual document.*/
     void closeDocument();
@@ -126,11 +126,11 @@ class KlustersDoc : public QObject
     /** Saves the document under the file name containes in @p url.
     * @return an OpenRetunMessage enum giving the open status
     */    
-    int saveDocument(const KURL &url, const char* format=0);
-    /**Returns the KURL of the document. */
-    inline const KURL& url() const{return docUrl;};
+    int saveDocument(const QString &url, const char* format=0);
+    /**Returns the QString of the document. */
+    inline const QString& url() const{return docUrl;};
     /**Sets the URL of the document. */
-    inline void setURL(const KURL& url){docUrl=url;};
+    inline void setURL(const QString& url){docUrl=url;};
     /**Sends back the full name of the document with the electrode group Id append.*/
     QString documentName();
 
@@ -388,7 +388,7 @@ class KlustersDoc : public QObject
   * Informs if the data need it by the traceView are available.
   * @return true if the data are available, false otherwise.*/
   inline bool areTraceDataAvailable()const {
-   KURL datUrl(docUrl);
+   QString datUrl(docUrl);
    datUrl.setFileName(baseName +".dat");
    
    QFileInfo datFileInfo = QFileInfo(datUrl.path());   
@@ -623,10 +623,10 @@ class KlustersDoc : public QObject
     bool modified;
     
     /**The url of the document.*/
-    KURL docUrl;
+    QString docUrl;
     
     /**The url for the temporary saved file.*/
-    KURL cluFileSaveUrl;
+    QString cluFileSaveUrl;
     
     /**The base name of the document. */
     QString baseName;

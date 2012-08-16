@@ -77,12 +77,12 @@ class KlustersApp : public KDockMainWindow
     /**Opens a file, only one document at the time is allowed.
     * Asking for a new one will open a new instance of the application with it.
     */
-    virtual void openDocumentFile(const KURL& url=0);
+    virtual void openDocumentFile(const QString& url=0);
 
     /** Imports a file using the old format, only one document at the time is allowed.
     * Asking for a new one will open a new instance of the application with it.
     */
-    virtual void importDocumentFile(const KURL& url=0);
+    virtual void importDocumentFile(const QString& url=0);
 
     /**Returns the view contains in the active display.
     * @return active view.
@@ -174,7 +174,7 @@ class KlustersApp : public KDockMainWindow
     /** Opens a file in the old format and load it into the document.*/
     void slotFileImport();
     /** Opens a file from the recent files menu */
-    void slotFileOpenRecent(const KURL& url);
+    void slotFileOpenRecent(const QString& url);
     /** Save the document */
     void slotFileSave();
     /** Renumbers the cluster and save the document.*/

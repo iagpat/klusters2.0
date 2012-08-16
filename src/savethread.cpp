@@ -24,7 +24,7 @@
 
 
 
-void SaveThread::save(const KURL& url,KlustersDoc* doc,bool isSaveAs){
+void SaveThread::save(const QString& url,KlustersDoc* doc,bool isSaveAs){
   this->url = url;
   this->doc = doc;
   this->isSaveAs = isSaveAs;
