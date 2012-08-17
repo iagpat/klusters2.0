@@ -2135,12 +2135,4 @@ void KlustersDoc::createProviders(){
 void KlustersDoc::showUserClusterInformation(){
 	clusterPalette.showUserClusterInformation(electrodeGroupID.toInt());
 }
-
-
-
-
-
-
-
-
 #include "klustersdoc.moc"

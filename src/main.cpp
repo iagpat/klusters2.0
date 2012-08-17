@@ -14,10 +14,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-// include files for KDE
-#include <kcmdlineargs.h>
-#include <kaboutdata.h>
-#include <kapplication.h>
 
 
 // include files for QT

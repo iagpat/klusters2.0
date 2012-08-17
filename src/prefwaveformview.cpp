@@ -101,14 +101,14 @@ void PrefWaveformView::saveChannelOrder(){
 }
 
 void PrefWaveformView::loadChannelOrder(){
- QString url = KFileDialog::getOpenURL(QString::null,
+    QString url = KFileDialog::getOpenURL(QString(),
       tr("*|All files"), this, tr("Load File..."));
 
  QMap<int,int> positions;
       
  if(!url.isEmpty()){
-   QString tmpChannelFile;
-   if(!KIO::NetAccess::download(url,tmpChannelFile)){
+   QString tmpChannelFile = url;
+   if(!QFile(tmpChannelFile).exists()){
      QMessageBox::critical (this,tr("Error !"),
          tr("The selected file could not be downloaded !")
          );
@@ -135,8 +135,6 @@ void PrefWaveformView::loadChannelOrder(){
            "it can not be used."));
 
       channelFile.close();
-      //Remove the temp file
-      KIO::NetAccess::removeTempFile(tmpChannelFile);
 
       return;
      }
@@ -147,8 +145,6 @@ void PrefWaveformView::loadChannelOrder(){
       
    channelFile.close();
 
-   //Remove the temp file
-   KIO::NetAccess::removeTempFile(tmpChannelFile);
  }
 
  if(nbChannels != static_cast<int>(positions.count())){

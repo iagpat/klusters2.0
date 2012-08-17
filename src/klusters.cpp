@@ -1103,7 +1103,7 @@ void KlustersApp::slotFileOpen()
 {
   slotStatusMsg(tr("Opening file..."));
 
-  QString url=KFileDialog::getOpenURL(QString::null,
+  QString url=KFileDialog::getOpenURL(QString(),
       tr("*.fet.*|Feature File (*.fet.n)\n*.clu.*|Cluster File (*.clu.n)\n*.spk.*|Spike File (*.spk.n)\n*.par.*|Specific Parameter File (*.par.n)\n*|All files"), this, tr("Open File..."));
   if(!url.isEmpty())
   {
@@ -1189,7 +1189,7 @@ void KlustersApp::slotFileClose(){
 void KlustersApp::slotFileImport(){
     slotStatusMsg(tr("Importing file..."));
 
-  QString url=KFileDialog::getOpenURL(QString::null,
+    QString url=KFileDialog::getOpenURL(QString(),
       tr("*|All files"), this, tr("Import File..."));
   if(!url.isEmpty())
   {
@@ -2564,7 +2564,7 @@ void KlustersApp::renameActiveDisplay(){
  current = static_cast<KDockWidget*>(tabsParent->currentPage());
 
  bool ok;
- QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString::null, &ok, this, current->tabPageLabel());
+ QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString(), &ok, this, current->tabPageLabel());
  if(!newLabel.isEmpty() && ok){
   tabsParent->setTabLabel(current,newLabel);
   current->setTabPageLabel(newLabel);

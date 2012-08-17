@@ -14,10 +14,6 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
-// include files for KDE
-#include <kapplication.h>       // for 'kapp'
-            // for KConfig
-            // for tr()
 
 //include files for the application
 #include "configuration.h"
