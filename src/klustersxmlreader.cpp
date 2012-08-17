@@ -44,7 +44,7 @@ bool KlustersXmlReader::parseFile(const QFile& file,fileType type){
  xmlInitParser();
 
  // Load XML document
- doc = xmlParseFile(file.name().toLatin1());
+ doc = xmlParseFile(file.fileName().toLatin1());
  if(doc == NULL) return false;
 
  // Create xpath evaluation context
