@@ -7,6 +7,3 @@ autom4te.cache
 config.log
 src/.deps/
 src/klusters
-src/prefclusterviewlayout.cpp
-src/prefgenerallayout.cpp
-src/prefwaveformviewlayout.cpp
