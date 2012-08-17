@@ -14,9 +14,9 @@ set(klusters_SRCS array.cpp autosavethread.cpp baseframe.cpp channelcolors.cpp
         prefwaveformview.cpp processlinemaker.cpp processwidget.cpp
         savethread.cpp sortabletable.cpp tags.cpp tracesprovider.cpp traceview.cpp
         tracewidget.cpp utilities.cpp viewwidget.cpp waveformthread.cpp waveformview.cpp
-        zoomwindow.cpp prefgenerallayout.cpp)
+        zoomwindow.cpp prefgenerallayout.cpp prefwaveformviewlayout.cpp)
 
-set(klusters_UI prefwaveformviewlayout.ui prefgenerallayout.ui prefclusterviewlayout.ui ) 
+set(klusters_UI prefwaveformviewlayout.ui4 prefgenerallayout.ui prefclusterviewlayout.ui ) 
 qt4_wrap_ui(klusters_SRCS ${klusters_UI})
 
 add_executable(klusters ${klusters_SRCS} )
