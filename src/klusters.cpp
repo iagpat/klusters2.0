@@ -40,7 +40,7 @@
 // include files for KDE
 #include <kiconloader.h>
 
-#include <kfiledialog.h>
+
 
 #include <kstdaction.h>
 #include <kstatusbar.h>

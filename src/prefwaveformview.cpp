@@ -25,7 +25,7 @@
 
 // include files for KDE
 
-#include <kfiledialog.h>
+
 #include <kio/job.h>
 
 
