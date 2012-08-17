@@ -18,10 +18,6 @@
 #ifndef KLUSTERSDOC_H
 #define KLUSTERSDOC_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 // include files for QT
 #include <qobject.h>
 #include <qstring.h>
@@ -32,10 +28,8 @@
 #include <QCustomEvent>
 #include <Q3ValueList>
 #include <QEvent>
+#include <QCustomEvent>
 
-// include files for KDE
-
-#include <kdockwidget.h>
 #include "itemcolors.h"
 
 //include files for the application

@@ -90,7 +90,7 @@ public:
      int h;
      int s;
      int v;
-     color.hsv(&h,&s,&v);
+     color.getHsv(&h,&s,&v);
      if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
      else iconView->setPaletteForegroundColor(Qt::white);      
      iconView->setPaletteBackgroundColor(color);
