@@ -16,8 +16,6 @@ set(klusters_SRCS array.cpp autosavethread.cpp baseframe.cpp channelcolors.cpp
         tracewidget.cpp utilities.cpp viewwidget.cpp waveformthread.cpp waveformview.cpp
         zoomwindow.cpp )
 
-kde3_automoc(${klusters_SRCS})
-
 set(klusters_UI prefwaveformviewlayout.ui prefgenerallayout.ui prefclusterviewlayout.ui ) 
 qt4_wrap_ui(klusters_SRCS ${klusters_UI})
 
