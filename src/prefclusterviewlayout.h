@@ -1,53 +1,22 @@
-/****************************************************************************
-** Form interface generated from reading ui file './prefclusterviewlayout.ui'
-**
-** Created:
-**
-** WARNING! All changes made in this file will be lost!
-****************************************************************************/
-
 #ifndef PREFCLUSTERVIEWLAYOUT_H
 #define PREFCLUSTERVIEWLAYOUT_H
 
-#include <qvariant.h>
-#include <qwidget.h>
-//Added by qt3to4:
-#include <Q3GridLayout>
-#include <QLabel>
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
+#include "ui_prefclusterviewlayout.h"
 
-class Q3VBoxLayout;
-class Q3HBoxLayout;
-class Q3GridLayout;
-class QSpacerItem;
-class Q3GroupBox;
-class QLabel;
-class QSpinBox;
 
-class PrefClusterViewLayout : public QWidget
+class PrefClusterViewLayout : public QWidget, private Ui_PrefClusterViewLayout
 {
     Q_OBJECT
 
 public:
-    PrefClusterViewLayout( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
-    ~PrefClusterViewLayout();
+    PrefClusterViewLayout( QWidget* parent = 0 );
+    
 
-    Q3GroupBox* groupBox3;
-    QLabel* textLabel6;
-    QSpinBox* intervalSpinBox;
+public slots:
+   // TODO copy 0 functions, 0 signals, and 0 slots (not init and destroy!) from prefclusterviewlayout.h.old here
 
-protected:
-    Q3GridLayout* PrefClusterViewLayoutLayout;
-    QSpacerItem* spacer21;
-    Q3GridLayout* layout57;
-    QSpacerItem* spacer18;
-    Q3HBoxLayout* layout55;
-    QSpacerItem* spacer19;
-
-protected slots:
-    virtual void languageChange();
-
+private:
+   
 };
 
-#endif // PREFCLUSTERVIEWLAYOUT_H
+#endif
