@@ -22,7 +22,7 @@
 #include <qfile.h>
 #include <q3textstream.h>
 #include <qmessagebox.h>
-
+#include <QFileDialog>
 // include files for KDE
 
 
@@ -101,8 +101,8 @@ void PrefWaveformView::saveChannelOrder(){
 }
 
 void PrefWaveformView::loadChannelOrder(){
-    QString url = KFileDialog::getOpenURL(QString(),
-      tr("*|All files"), this, tr("Load File..."));
+    QString url = QFileDialog::getOpenFileName(this, tr("Load File..."),QString(),
+      tr("*|All files") );
 
  QMap<int,int> positions;
       

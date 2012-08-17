@@ -1103,8 +1103,8 @@ void KlustersApp::slotFileOpen()
 {
   slotStatusMsg(tr("Opening file..."));
 
-  QString url=KFileDialog::getOpenURL(QString(),
-      tr("*.fet.*|Feature File (*.fet.n)\n*.clu.*|Cluster File (*.clu.n)\n*.spk.*|Spike File (*.spk.n)\n*.par.*|Specific Parameter File (*.par.n)\n*|All files"), this, tr("Open File..."));
+  QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
+      tr("*.fet.*|Feature File (*.fet.n)\n*.clu.*|Cluster File (*.clu.n)\n*.spk.*|Spike File (*.spk.n)\n*.par.*|Specific Parameter File (*.par.n)\n*|All files"));
   if(!url.isEmpty())
   {
     openDocumentFile(url);
@@ -1189,8 +1189,8 @@ void KlustersApp::slotFileClose(){
 void KlustersApp::slotFileImport(){
     slotStatusMsg(tr("Importing file..."));
 
-    QString url=KFileDialog::getOpenURL(QString(),
-      tr("*|All files"), this, tr("Import File..."));
+    QString url=QFileDialog::getOpenFileName(this, tr("Import File..."),QString(),
+      tr("*|All files"));
   if(!url.isEmpty())
   {
     importDocumentFile(url);
