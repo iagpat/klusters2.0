@@ -73,8 +73,8 @@ void PrefWaveformView::resetChannelList(int nb){
 }
 
 void PrefWaveformView::saveChannelOrder(){
-  QString url = QFileDialog::getSaveFileName(this, tr("Save as..."),QDir::currentPath(),
-        tr("*|All files"));
+  QString url = KFileDialog::getSaveURL(QDir::currentPath(),
+        tr("*|All files"), this, tr("Save as..."));
 
   if(!url.isEmpty()){
   FILE* channelFile = fopen(url.path().toLatin1(),"w");

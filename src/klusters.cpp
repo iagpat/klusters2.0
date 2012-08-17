@@ -1227,8 +1227,8 @@ void KlustersApp::slotFileSaveAs()
 {
   slotStatusMsg(tr("Saving file with a new filename..."));
 
-  QString url=QFileDialog::getSaveFileName(this, tr("Save as..."),QDir::currentPath(),
-        tr("*|All files") );
+  QString url=KFileDialog::getSaveURL(QDir::currentPath(),
+        tr("*|All files"), this, tr("Save as..."));
   if(!url.isEmpty()){
     slotStateChanged("SavingState");
     saveThread->save(url,doc,true);
