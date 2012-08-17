@@ -52,9 +52,9 @@ void ChannelList::dropEvent(QDropEvent* event){
   QString text;
 
   if(Q3TextDrag::decode(event,text))
-   if(event->source() == this && event->action() == QDropEvent::Copy){
+   if(event->source() == this && event->dropAction () == Qt::CopyAction){
     // Careful not to tread on my own feet
-    event->acceptAction();
+    event->acceptProposedAction();
     //QString text = currentText();
     removeItem(currentItem());
     insertItem(text,index(itemAt(event->pos())));
@@ -71,7 +71,7 @@ void ChannelList::mousePressEvent(QMouseEvent* event){
 
 
 void ChannelList::mouseMoveEvent(QMouseEvent* event){  
- if(dragging && event->state() == Qt::LeftButton){
+ if(dragging && event->button() == Qt::LeftButton){
    Q3DragObject* drag = new Q3TextDrag(currentText(),this);
    drag->dragMove();
    dragging = FALSE;
