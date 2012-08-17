@@ -36,7 +36,6 @@
 
 // include files for KDE
 #include <kdockwidget.h>
-#include <kaction.h>
 
 
 

@@ -41,7 +41,7 @@
 #include <kiconloader.h>
 
 #include <kfiledialog.h>
-#include <kconfig.h>
+
 #include <kstdaction.h>
 #include <kstatusbar.h>
 #include <kpopupmenu.h>
