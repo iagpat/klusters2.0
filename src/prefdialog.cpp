@@ -25,7 +25,7 @@
 #include <kcolorbutton.h>   // for KColorButton
 
 #include <kiconloader.h>    // for KIconLoader
-#include <kglobal.h>        // for KGlobal
+        // for KGlobal
     // for KMessageBox
 
 //include files for the application

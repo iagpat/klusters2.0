@@ -45,7 +45,7 @@
 #include <kstdaction.h>
 #include <kstatusbar.h>
 #include <kpopupmenu.h>
-#include <kglobal.h>
+
 #include <ktoolbar.h>
 
 #include <QProcess>
