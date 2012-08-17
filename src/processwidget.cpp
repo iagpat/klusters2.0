@@ -26,7 +26,7 @@
 #include <kdeversion.h>
 
 
-#include <kprocess.h>
+#include <QProcess>
 #include <q3paintdevicemetrics.h>
 
 //include files for c/c++ libraries

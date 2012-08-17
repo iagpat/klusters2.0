@@ -48,7 +48,7 @@
 #include <kglobal.h>
 #include <ktoolbar.h>
 
-#include <kprocess.h>
+#include <QProcess>
 
 
 //General C++ include files

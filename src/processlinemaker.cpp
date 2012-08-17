@@ -14,7 +14,7 @@
 
 //include files for the application
 #include "processlinemaker.h"
-#include <kprocess.h>
+#include <QProcess>
 
 ProcessLineMaker::ProcessLineMaker():counterOut(0),counterErr(0),isProcessKilled(false),isWidgetHidden(false),processExited(false){}
 

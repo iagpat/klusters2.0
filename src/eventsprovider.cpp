@@ -30,7 +30,7 @@ using namespace std;
 
 // include files for KDE
 
-#include <kprocess.h>
+#include <QProcess>
 #include <QTemporaryFile>
 
 //Unix include file
