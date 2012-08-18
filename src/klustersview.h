@@ -23,7 +23,7 @@
 #endif
 
 //Include files for KDE
-#include <kdockwidget.h>
+#include <QDockWidget>
 #include <kstatusbar.h>
 
 // include files for Qt

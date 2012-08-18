@@ -4,29 +4,29 @@ add_subdirectory(cursors)
 add_subdirectory(icons)
 
 set(klusters_SRCS array.cpp 
-	#autosavethread.cpp 
-	#baseframe.cpp 
+	autosavethread.cpp 
+	baseframe.cpp 
 	channelcolors.cpp
         channellist.cpp 
-	#clusterPalette.cpp 
+	clusterPalette.cpp 
 	#clusteinformationdialog.cpp
-	#clusterpaletteiconviewitem.cpp 
-	#clusterpalettetooltip.cpp 
-	#clustersprovider.cpp 
-	#clusterview.cpp
-        #configuration.cpp 
-	#correlationthread.cpp 
-	#correlationview.cpp 
-	#data.cpp 
+	clusterpaletteiconviewitem.cpp 
+	clusterpalettetooltip.cpp 
+	clustersprovider.cpp 
+	clusterview.cpp
+        configuration.cpp 
+	correlationthread.cpp 
+	correlationview.cpp 
+	data.cpp 
 	dataprovider.cpp
-	#errormatrixthread.cpp 
-	#errormatrixview.cpp 
-	#eventsprovider.cpp 
-	#groupingassistant.cpp
+	errormatrixthread.cpp 
+	errormatrixview.cpp 
+	eventsprovider.cpp 
+	groupingassistant.cpp
         itemcolors.cpp 
-	#klusters.cpp 
-	#klustersdoc.cpp 
-	#klustersview.cpp 
+	klusters.cpp 
+	klustersdoc.cpp 
+	klustersview.cpp 
 	klustersxmlreader.cpp
         main.cpp 
 	minmaxthread.cpp 
