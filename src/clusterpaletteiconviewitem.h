@@ -28,7 +28,7 @@
 class QPixmap;
 
 //include files for the application
-#include "clusterpalettetooltip.h"
+//#include "clusterpalettetooltip.h"
 
 /**
 	@author Lynn Hazan <lynn.hazan@myrealbox.com>
@@ -48,7 +48,8 @@ class ClusterPaletteIconViewItem : public Q3IconViewItem
 
 	private:
 		QString               toolTipText;
-		ClusterPaletteToolTip*    toolTip;
+		//KDAB_PENDING
+		//ClusterPaletteToolTip*    toolTip;
 };
 
 #endif

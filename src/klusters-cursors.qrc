@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/cursors">
+        <file>cursors/new_cluster_cursor.png</file>
+        <file>cursors/new_clusters_cursor.png</file>
+        <file>cursors/select_time_cursor.png</file>
+        <file>cursors/zoom_cursor.png</file>
+        <file>cursors/delete_artefact_cursor.png</file>
+        <file>cursors/delete_noise_cursor.png</file>
+    </qresource>
+</RCC>

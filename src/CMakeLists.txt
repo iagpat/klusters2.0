@@ -1,6 +1,5 @@
 project(klusters-src)
 
-add_subdirectory(cursors)
 add_subdirectory(icons)
 
 set(klusters_SRCS array.cpp 
@@ -8,11 +7,11 @@ set(klusters_SRCS array.cpp
 	baseframe.cpp 
 	channelcolors.cpp
         channellist.cpp 
-	clusterPalette.cpp 
+	#clusterPalette.cpp 
 	#clusteinformationdialog.cpp
 	clusterpaletteiconviewitem.cpp 
-	clusterpalettetooltip.cpp 
-	clustersprovider.cpp 
+	#clusterpalettetooltip.cpp 
+	#clustersprovider.cpp 
 	clusterview.cpp
         configuration.cpp 
 	correlationthread.cpp 
@@ -52,6 +51,8 @@ set(klusters_SRCS array.cpp
 	prefgenerallayout.cpp 
 	prefwaveformviewlayout.cpp 
 	prefclusterviewlayout.cpp)
+
+qt4_add_resources(klusters_SRCS klusters-cursors.qrc) 
 
 set(klusters_UI prefwaveformviewlayout.ui4 prefgenerallayout.ui prefclusterviewlayout.ui4 ) 
 qt4_wrap_ui(klusters_SRCS ${klusters_UI})

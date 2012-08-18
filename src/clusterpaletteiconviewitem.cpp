@@ -30,12 +30,12 @@ using namespace std;
 ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(Q3IconView* parent, QString label)
 	:Q3IconViewItem(parent, label)
 {
-	toolTip=NULL;
+	//KDAB_PENDING toolTip=NULL;
 }
 
 ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(Q3IconView* parent, QString label, const QPixmap & icon ):Q3IconViewItem(parent, label,icon)
 {
-	toolTip=NULL;
+	//KDAB_PENDING toolTip=NULL;
 }
 
 ClusterPaletteIconViewItem::~ClusterPaletteIconViewItem()
@@ -44,10 +44,12 @@ ClusterPaletteIconViewItem::~ClusterPaletteIconViewItem()
 
 void ClusterPaletteIconViewItem::setToolTipText(const QString &toolTipText)
 {
+#if KDAB_PENDING	
 	this->toolTipText=toolTipText;
 	if (!toolTip){
 		toolTip=new ClusterPaletteToolTip(static_cast<Q3IconView*>(iconView()));
 	}
+#endif	
 }
 
 
