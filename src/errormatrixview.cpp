@@ -37,7 +37,7 @@
 #include <iostream>
 using namespace std;
 
-ErrorMatrixView::ErrorMatrixView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,KStatusBar* statusBar,QWidget *parent,const char* name,int minSize, int 
+ErrorMatrixView::ErrorMatrixView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar* statusBar,QWidget *parent,const char* name,int minSize, int 
 maxSize, int windowTopLeft ,int windowBottomRight,int border) :
                           ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border),
                           dataReady(false),nbColors(100),cutoffProbability(0.1),init(true),hasBeenRenumbered(false),

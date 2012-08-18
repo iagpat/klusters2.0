@@ -43,7 +43,7 @@
 
 
 #include <kstdaction.h>
-#include <kstatusbar.h>
+#include <QStatusBar>
 #include <kpopupmenu.h>
 
 #include <ktoolbar.h>

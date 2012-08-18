@@ -59,7 +59,7 @@ public:
 
 friend class ErrorMatrixThread;
 
-	ErrorMatrixView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,KStatusBar* statusBar,QWidget *parent=0,const char* name=0,int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
+	ErrorMatrixView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar* statusBar,QWidget *parent=0,const char* name=0,int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
                         int windowBottomRight = 1001, int border = 0);
 	~ErrorMatrixView();
 

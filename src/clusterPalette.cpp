@@ -21,7 +21,7 @@
 #include "klustersdoc.h"
 #include "clusterPalette.h"
 #include "itemcolors.h"
-#include "clusterinformationdialog.h"
+//#include "clusterinformationdialog.h"
 #include "clusterpaletteiconviewitem.h"
 
 // include files for Qt
@@ -40,14 +40,14 @@
 #include <Q3ValueList>
 //KDE includes
 
-#include <kstatusbar.h>
+#include <QStatusBar>
 
 //General C++ include files
 #include <iostream>
 #include <vector>
 using namespace std;
 
-ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,KStatusBar * statusBar, const char* name, Qt::WFlags fl )
+ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,QStatusBar * statusBar, const char* name, Qt::WFlags fl )
 	: Q3VBox( parent, name, fl ),doc(0L),mode(IMMEDIATE),isInSelectItems(false),isUpToDate(true),backgroundColor(backgroundColor),statusBar(statusBar),isInUserClusterInfoMode(false)
 {
     //Set the palette color

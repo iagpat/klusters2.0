@@ -26,7 +26,7 @@
 //Added by qt3to4:
 #include <Q3ValueList>
 
-class KStatusBar;
+class QStatusBar;
 
 //General C++ include files
 #include <iostream>
@@ -57,7 +57,7 @@ public:
 	* @param name name of the widget (can be used for introspection).
 	* @param wflags common QWidget flags.
 	*/
-	ClusterPalette(QColor backgroundColor,QWidget* parent = 0,KStatusBar * statusBar = 0, const char* name = 0, Qt::WFlags fl = 0 );
+	ClusterPalette(QColor backgroundColor,QWidget* parent = 0,QStatusBar * statusBar = 0, const char* name = 0, Qt::WFlags fl = 0 );
    /*
    *  Destroys the object and frees any allocated resources.
    */
@@ -158,7 +158,7 @@ private:
     QColor backgroundColor;
 
 	 /**Pointer to the status bar of the application.*/
-	 KStatusBar* statusBar;
+	 QStatusBar* statusBar;
 
 	 /**Allows to update correctly the cluster text.*/
 	 bool isInUserClusterInfoMode;

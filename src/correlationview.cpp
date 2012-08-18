@@ -47,7 +47,7 @@ const int CorrelationView::XMARGIN = 10;
 const int CorrelationView::YMARGIN = 0;
 
 
-CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,KStatusBar * statusBar,QWidget* parent,Data::ScaleMode scale,int binSize, int correlationTimeFrame,bool shoulderLine, const char* name,
+CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar * statusBar,QWidget* parent,Data::ScaleMode scale,int binSize, int correlationTimeFrame,bool shoulderLine, const char* name,
 int minSize, int maxSize, int windowTopLeft ,int windowBottomRight, int border) :
 ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border,XMARGIN,YMARGIN),
 scaleMode(scale),dataReady(true),binSize(binSize),timeWindow(correlationTimeFrame),shoulderLine(shoulderLine),

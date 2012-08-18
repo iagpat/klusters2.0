@@ -60,7 +60,7 @@ public:
 
   friend class CorrelationThread;
     
-	CorrelationView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,KStatusBar * statusBar, QWidget* parent=0, Data::ScaleMode scale = Data::MAX,
+	CorrelationView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar * statusBar, QWidget* parent=0, Data::ScaleMode scale = Data::MAX,
                   int binSize = 0, int correlationTimeFrame = 0,bool shoulderLine = false,const char* name=0,
                   int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
                   int windowBottomRight = 1001, int border = 0);

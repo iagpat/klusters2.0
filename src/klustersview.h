@@ -24,7 +24,7 @@
 
 //Include files for KDE
 #include <QDockWidget>
-#include <kstatusbar.h>
+#include <QStatusBar>
 
 // include files for Qt
 #include <qwidget.h>
@@ -102,7 +102,7 @@ class KlustersView : public KDockArea
       * @param redoList list of list of removed clusters used to enable redo action.     
      */
     KlustersView(KlustersApp& mainWindow,KlustersDoc& doc,QColor backgroundColor,int initialDimensionX,int initialDdimensionY,
-    Q3ValueList<int>* initialClusterList, DisplayType type,QWidget* parent, const char *name, int wflags,KStatusBar * statusBar,int timeInterval,int maxAmplitude,
+    Q3ValueList<int>* initialClusterList, DisplayType type,QWidget* parent, const char *name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
     Q3ValueList<int> positions,bool isTimeFrameMode = false,long start = 0,long timeFrameWidth = 0,long nbSpkToDisplay = 0,bool overLay = false,
     bool mean = false,int binSize = 0, int correlationTimeFrame = 0,Data::ScaleMode scale = Data::MAX,bool shoulderLine = true,
     long startingTime = 0,long duration = 100,bool labelsDisplay = false,Q3PtrList< Q3ValueList<int> > undoList = Q3PtrList< Q3ValueList<int> >(), Q3PtrList< Q3ValueList<int> > redoList = Q3PtrList< Q3ValueList<int> >());
@@ -135,7 +135,7 @@ class KlustersView : public KDockArea
     * @param positions positions of the channels to use in the view set by the user in the settings dialog.
     * @return false if there was already a view of @displayType in the view, true otherwise.
     */
-    bool addView(KDockWidget* docWidget,DisplayType displayType,QColor backgroundColor,KStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
+    bool addView(KDockWidget* docWidget,DisplayType displayType,QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
     
     /**List of the names for the different type of view available.*/
     static const QString DisplayTypeNames[];
@@ -872,25 +872,25 @@ protected:
     
     /** Creates the OverView View (composition of the 3 basic views).
     * @param backgroundColor color used as background.
-    * @param statusBar KStatusBar which will be use to construct the viewWidgets.
+    * @param statusBar QStatusBar which will be use to construct the viewWidgets.
     * @param timeInterval time interval between 2 time lines drawn in the cluster view.
     * when the time dimension is selected.
     * @param maxAmplitude initial gain use to draw the waveforms in the waveform view.
     * @param positions initial position of the channels in the waveform view.
     */
-    void createOverview(QColor backgroundColor,KStatusBar * statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
+    void createOverview(QColor backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
 
     /** Creates the Grouping Assistant view:
     * an Overview (composition of the 3 basic views) to which have been added
     * a ErrorMatrix View under the clusterview.
     * @param backgroundColor color used as background.
-    * @param statusBar KStatusBar which will be use to construct the viewWidgets.
+    * @param statusBar QStatusBar which will be use to construct the viewWidgets.
     * @param timeInterval time interval between 2 time lines drawn in the cluster view
     * when the time dimension is selected.
     * @param maxAmplitude initial gain use to draw the waveforms in the waveform view.
     * @param positions initial position of the channels in the waveform view.
     */
-    void createGroupingAssistantView(QColor backgroundColor,KStatusBar * statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
+    void createGroupingAssistantView(QColor backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
 
     /**
     * Adds a cluster to the view. The @p clusterId is added to both the shownClusters list

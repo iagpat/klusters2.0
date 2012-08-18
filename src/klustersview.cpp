@@ -52,7 +52,7 @@ const QString KlustersView::DisplayTypeNames[]={"Cluster Display","Waveform Disp
 
 
 KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor backgroundColor,int initialDimensionX,int initialDimensionY,
- Q3ValueList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, int wflags,KStatusBar * statusBar,int timeInterval,int maxAmplitude, 
+ Q3ValueList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude, 
  Q3ValueList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
  int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay, Q3PtrList< Q3ValueList<int> > undoList, Q3PtrList< Q3ValueList<int> > redoList)
  : KDockArea(parent, name),doc(pDoc), removedClustersUndoList(undoList),removedClustersRedoList(redoList),dimensionX(initialDimensionX),dimensionY(initialDimensionY),
@@ -179,7 +179,7 @@ KlustersView::~KlustersView()
   delete removedClusters;
 }
 
-void KlustersView::createOverview(QColor backgroundColor,KStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
+void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
  /*OVERVIEW type is the combination of 3 base types:
   CLUSTERS on the left side, WAVEFORMS at the right top and CORRELATIONS in the bottom right
  */
@@ -226,7 +226,7 @@ void KlustersView::createOverview(QColor backgroundColor,KStatusBar* statusBar,i
  setConnections(CORRELATIONS,correlationView,correlations);
 }
 
-void KlustersView::createGroupingAssistantView(QColor backgroundColor,KStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
+void KlustersView::createGroupingAssistantView(QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
  //First create the overview
  createOverview(backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
   
@@ -610,7 +610,7 @@ void KlustersView::closeEvent(QCloseEvent* e){
 
 }
 
-bool KlustersView::addView(KDockWidget* dockWidget,DisplayType displayType,QColor backgroundColor,KStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
+bool KlustersView::addView(KDockWidget* dockWidget,DisplayType displayType,QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
 
  //Enable docking abilities
  dockWidget->setDockSite(KDockWidget::DockCorner);
