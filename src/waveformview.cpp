@@ -50,7 +50,7 @@ using namespace std;
 const int WaveformView::XMARGIN = 0;
 const int WaveformView::YMARGIN = 0;
 
-WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,Q3ValueList<int> positions,KStatusBar * statusBar,QWidget* parent,
+WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,Q3ValueList<int> positions,QStatusBar * statusBar,QWidget* parent,
                           bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
                           bool overLay,bool mean, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
                           int border) :

@@ -44,7 +44,7 @@ class PrefDialog : public KDialogBase {
     /** Transfers the settings from the dialog to the configuration object.*/
     void updateConfiguration();
     /** */
-    inline bool isApplyEnable(){return applyEnable;};
+    inline bool isApplyEnable(){return applyEnable;}
 
     void resetChannelList(int nbChannels);
 

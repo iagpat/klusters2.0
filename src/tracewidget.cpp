@@ -37,7 +37,7 @@ using namespace std;
 TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvider& tracesProvider,bool multiColumns,bool verticalLines,
                   bool raster,bool waveforms,bool labelsDisplay,Q3ValueList<int>& channelsToDisplay,int gain,int acquisitionGain,
                   ChannelColors* channelColors,QMap<int, Q3ValueList<int> >* groupsChannels,
-                  QMap<int,int>* channelsGroups,Q3ValueList<int>& channelOffsets,Q3ValueList<int>& gains,const Q3ValueList<int>& skippedChannels,QWidget* parent, const char* name,QColor backgroundColor,KStatusBar* statusBar,
+                  QMap<int,int>* channelsGroups,Q3ValueList<int>& channelOffsets,Q3ValueList<int>& gains,const Q3ValueList<int>& skippedChannels,QWidget* parent, const char* name,QColor backgroundColor,QStatusBar* statusBar,
                   int minSize,int maxSize,int windowTopLeft,int windowBottomRight,int border):
                   Q3VBox(parent,name),timeWindow(duration),
                   view(tracesProvider,greyScale,multiColumns,verticalLines,raster,waveforms,labelsDisplay,channelsToDisplay,gain,acquisitionGain,

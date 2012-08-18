@@ -26,7 +26,7 @@
 #include <Q3ValueList>
 
 //Inclused files for KDE
-#include <kstatusbar.h>
+#include <QStatusBar>
 
 //include files for the application
 #include "baseframe.h"
@@ -68,7 +68,7 @@ public:
   * @param Yborder border on the top and bottom sides inside the window (QRect corresponding
   * to the part of the drawing which will actually be drawn onto the widget).           
   */
-	ViewWidget(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,KStatusBar* statusBar, QWidget* parent=0, const char* name=0,
+    ViewWidget(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar* statusBar, QWidget* parent=0, const char* name=0,
   int minSize = 500, int maxSize = 4000, int windowTopLeft = -500,int windowBottomRight = 1001, int border = 0,int Xborder = 0,int Yborder = 0);
 
   ~ViewWidget();
@@ -178,7 +178,7 @@ public slots:
   * @param metrics object providing information about the printer.
   * @param whiteBackground true if the printed background has to be white, false otherwise.  
   */
-  virtual inline void print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground){};
+  virtual inline void print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground){}
 public: 
 //Members
 
@@ -198,7 +198,7 @@ public:
   Q3ValueList<int> clusterUpdateList;
 
   /**Pointer to the status bar of the application.*/
-  KStatusBar* statusBar;
+  QStatusBar* statusBar;
 
 };
 

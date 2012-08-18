@@ -156,7 +156,7 @@ inline void reset(){
  right  = initialRight;
  top    = initialTop;
  bottom = initialBottom;
-};
+}
 
 };
 

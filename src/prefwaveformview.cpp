@@ -23,10 +23,6 @@
 #include <q3textstream.h>
 #include <qmessagebox.h>
 #include <QFileDialog>
-// include files for KDE
-
-
-#include <kio/job.h>
 
 
 PrefWaveformView::PrefWaveformView(QWidget *parent,int nbChannels,const char *name):

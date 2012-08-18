@@ -61,7 +61,7 @@ public:
 
 friend class WaveformThread;
 
-	WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,Q3ValueList<int> positions,KStatusBar * statusBar, QWidget* parent=0,
+    WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,Q3ValueList<int> positions,QStatusBar * statusBar, QWidget* parent=0,
                 bool isTimeFrameMode = false,long start = 0,long timeFrameWidth = 0,long nbSpkToDisplay =0,bool overLay = false,bool mean = false, 
                 const char* name=0,int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
                 int windowBottomRight = 1001, int border = 0);

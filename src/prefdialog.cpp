@@ -21,8 +21,6 @@
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 
-// include files for KDE
-#include <kcolorbutton.h>   // for KColorButton
 
 #include <kiconloader.h>    // for KIconLoader
         // for KGlobal
