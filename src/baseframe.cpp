@@ -26,9 +26,6 @@
 #include <Q3Frame>
 #include <QMouseEvent>
 
-// include files for kde
-#include <kiconloader.h>
-
 //include files for c/c++ libraries
 #include <math.h>
 #include <iostream>
@@ -38,7 +35,7 @@ using namespace std;
 
 BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,QColor backgroundColor,
            int minSize,int maxSize ,int windowTopLeft ,int windowBottomRight,int border):
-           Q3Frame(parent,name,WRepaintNoErase|WResizeNoErase),
+           Q3Frame(parent,name,Qt::WRepaintNoErase|Qt::WResizeNoErase),
            MIN_SIZE(minSize),MAX_SIZE(maxSize),BORDER(border),WINDOW_TOP_LEFT(windowTopLeft),WINDOW_BOTTOM_RIGHT(windowBottomRight),
            viewport(QRect()),window (QRect(QPoint(0,-WINDOW_TOP_LEFT),QPoint(WINDOW_BOTTOM_RIGHT,0))),
            firstClick(0,0),isDoubleClick(false),rubber(0),
@@ -62,9 +59,11 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,Q
   setMinimumSize(static_cast<int>(MIN_SIZE*1.05)  + 2 * BORDER,MIN_SIZE  + 2 * BORDER);
   setMaximumSize(MAX_SIZE + 2 * BORDER,MAX_SIZE + 2 * BORDER);
 
+#if KDAB_PENDING
   //Create and set the zoom cursor (a magnifier).
   KIconLoader *loader = KGlobal::iconLoader();
   zoomCursor = QCursor(loader->loadIcon("zoom_cursor", KIcon::User),7,7);
+#endif
 }
 
 BaseFrame::~BaseFrame(){
@@ -358,7 +357,7 @@ long BaseFrame::worldToViewportOrdinate(long wy){
 
 void BaseFrame::drawRubber(){
     if(!rubber) return;
-
+#if KDAD_PENDING //port to qrubberband
     QPainter painter;
     painter.begin(this);
     //set the window (part of the word I want to show)
@@ -375,9 +374,10 @@ void BaseFrame::drawRubber(){
 
     style().drawPrimitive(QStyle::PE_FocusRect, &painter,
                            QRect(normalizeRubber.x(), normalizeRubber.y(), normalizeRubber.width(),normalizeRubber.height()),
-                           colorGroup(), QStyle::State_None, colorGroup().background() );
+                           colorGroup(), Qt::State_None, colorGroup().background() );
 
     painter.end();
+#endif
 }
 
 
