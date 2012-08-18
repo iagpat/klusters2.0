@@ -383,9 +383,9 @@ class KlustersDoc : public QObject
   * @return true if the data are available, false otherwise.*/
   inline bool areTraceDataAvailable()const {
    QString datUrl(docUrl);
-   datUrl.setFileName(baseName +".dat");
+   datUrl.append("/"+baseName +".dat");
    
-   QFileInfo datFileInfo = QFileInfo(datUrl.path());   
+   QFileInfo datFileInfo = QFileInfo(datUrl);   
    if(!datFileInfo.exists()) return false;
    else return true;
   };
