@@ -40,14 +40,11 @@
 #include <QMouseEvent>
 #include <QEvent>
 
-// include files for kde
-#include <kiconloader.h>
-
 using namespace std;
 
-const QColor ClusterView::NEW_CLUSTER_COLOR(green);
+const QColor ClusterView::NEW_CLUSTER_COLOR(Qt::green);
 const QColor ClusterView::DELETE_NOISE_COLOR(220,220,220);
-const QColor ClusterView::DELETE_ARTEFACT_COLOR(red);
+const QColor ClusterView::DELETE_ARTEFACT_COLOR(Qt::red);
 
 ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int timeInterval,QStatusBar * statusBar,QWidget* parent, const char* name,
 int minSize, int maxSize, int windowTopLeft ,int windowBottomRight, int border) :
@@ -65,13 +62,11 @@ selectionPolygon(0), nbSelectionPoints(0),polygonClosed(false),existLastMovingLi
   //Update the dimension of the window and the values of dimensionX and dimensionY
   updatedDimensions(view.abscissaDimension(),view.ordinateDimension());
 
-  KIconLoader *loader = KGlobal::iconLoader();
-
-  newClusterCursor = QCursor(loader->loadIcon("new_cluster_cursor", KIcon::User),0,0);
-  newClustersCursor = QCursor(loader->loadIcon("new_clusters_cursor", KIcon::User),0,0);
-  deleteNoiseCursor = QCursor(loader->loadIcon("delete_noise_cursor", KIcon::User),0,0);
-  deleteArtefactCursor = QCursor(loader->loadIcon("delete_artefact_cursor", KIcon::User),0,0);
-  selectTimeCursor = QCursor(loader->loadIcon("select_time_cursor", KIcon::User),0,0);
+  newClusterCursor = QCursor(QPixmap(":/icons/new_cluster_cursor"),0,0);
+  newClustersCursor = QCursor(QPixmap(":/icons/new_clusters_cursor"),0,0);
+  deleteNoiseCursor = QCursor(QPixmap(":/icons/delete_noise_cursor"),0,0);
+  deleteArtefactCursor = QCursor(QPixmap(":/icons/delete_artefact_cursor"),0,0);
+  selectTimeCursor = QCursor(QPixmap(":/icons/select_time_cursor"),0,0);
 
   //The default tool is the zoom.
   setCursor(zoomCursor);

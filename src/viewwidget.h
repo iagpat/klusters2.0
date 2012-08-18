@@ -21,6 +21,7 @@
 // include files for Qt
 #include <qwidget.h>
 #include <q3frame.h>
+#include <Q3PaintDeviceMetrics>
 #include <qpixmap.h>
 //Added by qt3to4:
 #include <Q3ValueList>
