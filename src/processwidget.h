@@ -42,7 +42,7 @@ public:
     
     ProcessListBoxItem(const QString &s, Type type);
 
-    inline virtual bool isCustomItem(){return false;};
+    inline virtual bool isCustomItem(){return false;}
 
     inline QColor color(){
       return ((t==Error)? Qt::darkRed : (t==Diagnostic)? Qt::black : Qt::darkBlue);

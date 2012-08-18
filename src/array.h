@@ -39,13 +39,13 @@ public:
     nbColumns = nbOfColumns;
     nbRows = nbOfRows;
     array = new T[nbRows * nbColumns];
-  };
+  }
   
   inline Array():nbColumns(0),nbRows(0),array(0L){};
   
  	inline ~Array(){
     delete []array;
-  };
+  }
   /**
   *
   */
@@ -54,7 +54,7 @@ public:
     nbRows = nbOfRows;
     if(array) delete[]array;
     array = new T[nbRows * nbColumns];
-  };
+  }
   
   /**
     Accessor @p Array(i,j). The rows and columns starts at 1.
@@ -65,7 +65,7 @@ public:
   */
   inline T operator()(long row,long column) const{
     return array[(row - 1)*nbColumns + (column - 1)];
-  };
+  }
   /**
     Mutator @p Array(i,j). The rows and columns starts at 1.
 
@@ -75,7 +75,7 @@ public:
   */
   inline T& operator()(long row,long column){
     return array[(row - 1)*nbColumns + (column - 1)];
-  };
+  }
   /**
     Return the i element of the internal array by reference.
     The position starts at 0.
@@ -85,21 +85,21 @@ public:
   */
   inline T& operator[](long position){
     return array[position];
-  };
+  }
   /**
   * Returns the number of rows in the array
   * @return number of rows
   */
   inline long nbOfRows() const{
     return nbRows;
-  };
+  }
   /**
   * Returns the number of columns in the array
   * @return number of columns
   */
   inline long nbOfColumns() const{
     return nbColumns;
-  };
+  }
 
 
   /**
@@ -110,7 +110,7 @@ public:
     for(long i = 0;i < nbRows;++i)
       memcpy(&array[i * nbColumns + 1],&(source.array[i * source.nbColumns]),
              source.nbColumns * sizeof(T));
-  };
+  }
 
   /**
   * Copies a subset of data from @p source to the current object. Copy from the first column
@@ -122,7 +122,7 @@ public:
     for(long i = 0;i < nbRows;++i)
       memcpy(&array[i * lastColumnToCopy],&(source.array[i * source.nbColumns]),
              lastColumnToCopy * sizeof(T));
-  };
+  }
 
   /**
   * Copies a subset of data from @p source to the current object. Copy from @p firstColumnToCopy
@@ -137,14 +137,14 @@ public:
     for(long i = 0;i < nbRows;++i)
       memcpy(&array[i * nbColumns + startingColumn - 1],&(source.array[i * source.nbColumns + (firstColumnToCopy - 1)]),
              nbColumnsToCopy * sizeof(T));
-  };
+  }
   
   /**
   * Fills the array with zeros.
   */
   inline void fillWithZeros(){
    memset(array,0,static_cast<unsigned int>(nbRows * nbColumns) * sizeof(T));   
-  };
+  }
 
 
   inline Array<T>& operator=(const Array<T>& source){
@@ -156,7 +156,7 @@ public:
     memcpy(array,source.array,nbRows * nbColumns * sizeof(T));
    } 
     return *this;
-  };
+  }
     
 protected:
   long nbColumns;
@@ -195,7 +195,7 @@ public:
      array[i*nbColumns + (j + 1)] = source.array[i*source.nbColumns + j];
     }
    }
-  };
+  }
 
   /**
   * Copies a subset of data from @p source to the current object. Copy from the first column
@@ -209,7 +209,7 @@ public:
      array[i*lastColumnToCopy + j] = source.array[i*source.nbColumns + j];
     }
    }
-  };
+  }
 
   /**
   * Copies a subset of data from @p source to the current object. Copy from @p firstColumnToCopy
@@ -226,7 +226,7 @@ public:
      array[i*nbColumns + (startingColumn - 1) + j] = source.array[i*source.nbColumns + (firstColumnToCopy - 1) + j];
     }
    }
-  };
+  }
   
    
   inline pArray<T>& operator=(pArray<T>& source){
@@ -240,7 +240,7 @@ public:
      } 
     }
     return *this;
-  };
+  }
 
   inline pArray<T> operator=(pArray<T>& source) const{
     nbColumns = source.nbColumns;
@@ -253,7 +253,7 @@ public:
      }
     }
     return *this;
-  };
+  }
 };
 
 #endif

@@ -24,12 +24,9 @@
 #include <qcheckbox.h> 
 #include <qspinbox.h>
 #include <qpushbutton.h>
-#include <qlineedit.h> 
+#include <qlineedit.h>
 #include <q3filedialog.h>
 
-
-//includes files for KDE
-#include <kcolorbutton.h>
 
 //include files for the application
 #include <prefgenerallayout.h>

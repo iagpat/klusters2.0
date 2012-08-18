@@ -38,8 +38,8 @@ using namespace std;
 */
 class Utilities{
 public:
-    inline Utilities(){};
-    inline ~Utilities(){};
+    inline Utilities(){}
+    inline ~Utilities(){}
     
     /**
     * Compares the versions

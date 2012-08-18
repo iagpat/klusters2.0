@@ -22,9 +22,6 @@
 #include <qapplication.h>
 #include <qcursor.h>
 
-// include files for KDE
-#include <kdeversion.h>
-
 
 #include <QProcess>
 #include <q3paintdevicemetrics.h>

@@ -19,6 +19,7 @@
 // include files for QT
 #include <qdir.h>
 #include <qstring.h>
+#include <QApplication>
 
 //Application include files
 #include "klusters.h"
@@ -41,6 +42,19 @@ QString version = VERSION;
 
 int main(int argc, char* argv[])
 { 
+    QApplication::setOrganizationName("sourceforge");
+    QApplication::setOrganizationDomain("sourceforge.net");
+    QApplication::setApplicationName("klusters");
+
+    QStringList args;
+    for (int i = 1; i < argc; ++i) {
+      args.push_back(QString::fromLocal8Bit(argv[i]));
+    }
+    QApplication app(argc, argv);
+
+#if 0 //TODO
+
+
 	KAboutData aboutData( "klusters", I18N_NOOP("Klusters"),
 		VERSION, description, KAboutData::License_GPL,
 		"(c) 2003-2004-2005-2007, Lynn Hazan", 0, 0, "lynn.hazan@myrealbox.com");
@@ -78,6 +92,20 @@ int main(int argc, char* argv[])
     } 
 
 		args->clear();
+  }
+#endif
+  KlustersApp* Klusters = new KlustersApp();
+  Klusters->show();
+  if(args->count()){
+    QString file = args->arg(0);
+    if(file.left(1) != "/"){
+     QString url = QString();
+     url.setPath((QDir::currentPath()).append("/"));
+     url.setFileName(file);
+     Klusters->openDocumentFile(url);
+    } else {
+        Klusters->openDocumentFile(file);
+    }
   }
 
   return app.exec();

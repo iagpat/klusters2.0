@@ -56,7 +56,7 @@ public:
   /**
   * Sorts the one row table.
   */
-  inline void sort(){Quicksort(1,nbColumns);};
+  inline void sort(){Quicksort(1,nbColumns);}
 
   
   /**Returns a subset of the table, the data from one row (@p row) contained
@@ -72,7 +72,7 @@ public:
     
 private:
 
-  inline void setSize(dataType nbOfRows, dataType nbOfColumns){};
+  inline void setSize(dataType nbOfRows, dataType nbOfColumns){}
 
   /*QuickSort algorithm.
   * To speed the sort, two sort algorithms are combined.

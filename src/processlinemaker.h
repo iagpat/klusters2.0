@@ -20,10 +20,6 @@
 #ifndef _PROCESSLINEMAKER_H_
 #define _PROCESSLINEMAKER_H_
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 // include files for Qt
 #include <qstring.h>
 #include <qobject.h>
@@ -50,7 +46,7 @@ class ProcessLineMaker : public QObject
 public:
 	ProcessLineMaker();
 	ProcessLineMaker(const KProcess*);
-  inline void processKilled(){isProcessKilled = true;};
+  inline void processKilled(){isProcessKilled = true;}
   inline void reset(){
     counterOut = 0;
     counterErr = 0;
@@ -62,7 +58,7 @@ public:
 public slots:
 	void slotReceivedStdout(const QString& s);
 	void slotReceivedStderr(const QString& s);
-  inline void slotWidgetHidden(){isWidgetHidden = true;};
+  inline void slotWidgetHidden(){isWidgetHidden = true;}
 
   inline void slotProcessExited(){
    processExited = true;

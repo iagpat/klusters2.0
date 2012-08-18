@@ -91,13 +91,13 @@ public slots:
   * @param dimensionX
   * @param dimensionY
   */
-  virtual inline void updatedDimensions(int dimensionX, int dimensionY){};
+  virtual inline void updatedDimensions(int dimensionX, int dimensionY){}
 
   /**Updates the view only for one cluster for which the color has been changed
   * @param clusterId cluster Id for which the color have changed.
   * @param active true if the view is the active one, false otherwise.
   */
-  virtual inline void singleColorUpdate(int clusterId,bool active){};
+  virtual inline void singleColorUpdate(int clusterId,bool active){}
 
  /**
   * Adds an additional cluster to those already shown.
@@ -105,14 +105,14 @@ public slots:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-  virtual inline void addClusterToView(int clusterId,bool active){};
+  virtual inline void addClusterToView(int clusterId,bool active){}
 
   /**
   * Removes a cluster from those already shown.
   * @param clusterId cluster Id to remove.
   * @param active true if the view is the active one, false otherwise.
   */
-  virtual inline void removeClusterFromView(int clusterId,bool active){};
+  virtual inline void removeClusterFromView(int clusterId,bool active){}
 
   /**
   * Adds a newly created cluster to those already shown.
@@ -121,7 +121,7 @@ public slots:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-  virtual inline void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active){};
+  virtual inline void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active){}
 
   /**
   * Adds a newly created cluster to those already shown.
@@ -129,7 +129,7 @@ public slots:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-  virtual inline void addNewClusterToView(int clusterId,bool active){};
+  virtual inline void addNewClusterToView(int clusterId,bool active){}
 
   /**
   * Updates the content of the widget due to the removal of spikes in a cluster.
@@ -137,7 +137,7 @@ public slots:
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-  virtual inline void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active){};
+  virtual inline void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active){}
 
   /**
   * Updates the content of the widget due to the addition of spikes in a cluster.
@@ -145,11 +145,11 @@ public slots:
   * @param clusterId cluster Id to which the spikes have been added
   * @param active true if the view is the active one, false otherwise.
   */
-  virtual inline void spikesAddedToCluster(int clusterId,bool active){};
+  virtual inline void spikesAddedToCluster(int clusterId,bool active){}
 
   /**Method called when no spikes have been found in a polygon of selection
   */
-  virtual inline void emptySelection(){};
+  virtual inline void emptySelection(){}
 
   /**
   * Updates the clusters which have been modified by the suppression of spikes
@@ -160,7 +160,7 @@ public slots:
   * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact abd cluster of noise respectively).
   */
-  virtual inline void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){};
+  virtual inline void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){}
 
     /**
   * Updates the clusters which have been modified by the suppression of spikes
@@ -170,11 +170,9 @@ public slots:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-  virtual inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){};
-
+  virtual inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){}
   /**Enables the caller to know if there is any thread running launch by the viewWidget.*/
-  virtual inline bool isThreadsRunning(){return false;};
-
+  virtual inline bool isThreadsRunning(){return false;}
   /**Prints the currently display information on a printer via the painter @p printPainter.
   * @param printPainter painter on a printer.
   * @param metrics object providing information about the printer.
