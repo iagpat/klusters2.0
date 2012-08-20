@@ -24,7 +24,6 @@
 //include files for QT
 #include <q3valuelist.h>
 #include <qmap.h>
-#include <qdom.h> 
 
 class ClusterUserInformation;
 

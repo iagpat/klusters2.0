@@ -29,11 +29,6 @@
 #include <Q3PtrList>
 #include <QEvent>
 
-// include files for KDE
-
-
-#include <kio/job.h>
-
 
 // application specific includes
 #include "klusters.h"
