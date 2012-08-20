@@ -19,10 +19,6 @@
 #ifndef _PROCESSWIDGET_H_
 #define _PROCESSWIDGET_H_
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 // include files for KDE
 #include <klistbox.h>
 

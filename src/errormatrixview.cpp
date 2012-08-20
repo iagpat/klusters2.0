@@ -845,7 +845,7 @@ void ErrorMatrixView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics
   }
   
   printPainter.fillRect(back,backgroundColor());
-  printPainter.setClipRect(back,QPainter::CoordPainter);
+  printPainter.setClipRect(back,Qt::CoordPainter);
 
   //Paint the matrix
   drawMatrix(printPainter);

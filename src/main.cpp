@@ -97,7 +97,7 @@ int main(int argc, char* argv[])
   KlustersApp* Klusters = new KlustersApp();
   Klusters->show();
   if(args.count()){
-    QString file = args.arg(0);
+    QString file = args.at(0);
     if(file.left(1) != "/"){
      QString url = QString();
      url.setPath((QDir::currentPath()).append("/"));

@@ -33,7 +33,7 @@ set(klusters_SRCS array.cpp
 	#prefdialog.cpp 
 	#prefgeneral.cpp
 	#prefwaveformview.cpp 
-	#processlinemaker.cpp 
+	processlinemaker.cpp 
 	#processwidget.cpp
 	#savethread.cpp 
 	sortabletable.cpp 
