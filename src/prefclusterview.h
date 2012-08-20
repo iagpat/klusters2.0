@@ -34,7 +34,7 @@
 class PrefClusterView : public PrefClusterViewLayout  {
    Q_OBJECT
 public: 
-	PrefClusterView(QWidget *parent=0, const char *name=0);
+	PrefClusterView(QWidget *parent=0);
 	~PrefClusterView();
 
   /**Sets the time interval between 2 lines drawn in the cluster views

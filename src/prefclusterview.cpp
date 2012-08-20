@@ -18,7 +18,7 @@
 #include "prefclusterview.h"
 
 
-PrefClusterView::PrefClusterView(QWidget *parent, const char *name ) : PrefClusterViewLayout(parent,name) {
+PrefClusterView::PrefClusterView(QWidget *parent) : PrefClusterViewLayout(parent) {
 }
 PrefClusterView::~PrefClusterView(){
 }
