@@ -183,7 +183,7 @@
                     </widget>
                   </item>
                   <item>
-                    <widget class="KColorButton" name="backgroundColorButton">
+                    <widget class="QPushButton" name="backgroundColorButton">
                       <property name="sizePolicy">
                         <sizepolicy>
                           <hsizetype>5</hsizetype>
@@ -489,60 +489,6 @@
   </widget>
   <layoutdefault spacing="6" margin="11"/>
   <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <customwidgets>
-    <customwidget>
-      <class>KColorButton</class>
-      <extends>QWidget</extends>
-      <header location="local">kcolorbutton.h</header>
-      <sizehint>
-        <width>-1</width>
-        <height>-1</height>
-      </sizehint>
-      <container>0</container>
-      <sizepolicy>
-        <hordata>5</hordata>
-        <verdata>5</verdata>
-      </sizepolicy>
-      <properties>
-        <property type="CString">name</property>
-        <property type="Bool">enabled</property>
-        <property type="Rect">geometry</property>
-        <property type="SizePolicy">sizePolicy</property>
-        <property type="Size">minimumSize</property>
-        <property type="Size">maximumSize</property>
-        <property type="Size">sizeIncrement</property>
-        <property type="Size">baseSize</property>
-        <property type="Color">paletteForegroundColor</property>
-        <property type="Color">paletteBackgroundColor</property>
-        <property type="Pixmap">paletteBackgroundPixmap</property>
-        <property type="Palette">palette</property>
-        <property type="BackgroundOrigin">backgroundOrigin</property>
-        <property type="Font">font</property>
-        <property type="Cursor">cursor</property>
-        <property type="String">caption</property>
-        <property type="Pixmap">icon</property>
-        <property type="String">iconText</property>
-        <property type="Bool">mouseTracking</property>
-        <property type="FocusPolicy">focusPolicy</property>
-        <property type="Bool">acceptDrops</property>
-        <property type="String">text</property>
-        <property type="Pixmap">pixmap</property>
-        <property type="KeySequence">accel</property>
-        <property type="Bool">autoRepeat</property>
-        <property type="Bool">autoDefault</property>
-        <property type="Bool">default</property>
-        <property type="IconSet">iconSet</property>
-        <property type="Bool">toggleButton</property>
-        <property type="Bool">on</property>
-        <property type="Bool">flat</property>
-        <property type="Bool">autoMask</property>
-        <property type="Color">color</property>
-      </properties>
-    </customwidget>
-  </customwidgets>
-  <includes>
-    <include location="local">kcolorbutton.h</include>
-  </includes>
   <resources>
     <include location="prefgenerallayout.qrc"/>
   </resources>

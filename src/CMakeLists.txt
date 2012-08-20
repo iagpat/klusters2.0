@@ -41,12 +41,12 @@ set(klusters_SRCS array.cpp
 	tracesprovider.cpp 
 	#traceview.cpp
         tracewidget.cpp 
-	#utilities.cpp 
+	utilities.cpp 
 	#viewwidget.cpp 
 	waveformthread.cpp 
 	#waveformview.cpp
         zoomwindow.cpp 
-	#prefgenerallayout.cpp 
+	prefgenerallayout.cpp 
 	prefwaveformviewlayout.cpp 
 	prefclusterviewlayout.cpp)
 

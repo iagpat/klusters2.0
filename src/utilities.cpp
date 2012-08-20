@@ -36,7 +36,7 @@ int Utilities::getNbLines(QString path){
  if(shellToUse != NULL) childproc.setUseShell(true,shellToUse);
  else childproc.setUseShell(true);
 
- QTemporaryFile counterFile = QTemporaryFile();//make a unique file
+ QTemporaryFile counterFile;//make a unique file
  childproc << "wc -l "<<path<<" > "<<counterFile.fileName();
  childproc.start(KProcess::DontCare);
  sleep(1);
@@ -54,7 +54,7 @@ int Utilities::getNbLines(QString path){
  Q3TextStream fileStream(&tmpFile);
  QString infoLine = fileStream.readLine();
  QString info;
- if(infoLine != NULL){
+ if(!infoLine.isEmpty()){
   info = infoLine.trimmed();
   QStringList parts = QStringList::split(" ", info);
   nbLines = parts[0].toLong();
@@ -71,7 +71,7 @@ int Utilities::getNbLines(QString path){
  
 
  //If the number of lines could not be determined, try again
- if(infoLine == NULL || info == ""){
+ if(infoLine.isEmpty() || info == ""){
    cout<<"infoLine == NULL || info == ''"<<endl;
   return getNbLines(path);   
  }
