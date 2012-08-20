@@ -888,16 +888,9 @@ void KlustersApp::openDocumentFile(const QString& url)
     fileOpenRecent->addURL(url);
     filePath = doc->url().path();
      
-    QProcess* childproc = new QProcess();
-    childproc->setUseShell(true);
 
-    QString command = "`which klusters` ";
-    command.append(url.path());
-    *childproc << command;
-    childproc->start(QProcess::DontCare);
-    
-    childproc->detach();
-    delete childproc;
+    QProcess::startDetached("klusters", QStringList()<<command);
+
 
     QApplication::restoreOverrideCursor();  
    } 
