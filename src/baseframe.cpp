@@ -61,7 +61,7 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,Q
 
   //Create and set the zoom cursor (a magnifier).
 
-  zoomCursor = QCursor(QPixmap(":/icons/zoom_cursor",7,7);
+  zoomCursor = QCursor(QPixmap(":/icons/zoom_cursor"),7,7);
 }
 
 BaseFrame::~BaseFrame(){
