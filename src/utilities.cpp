@@ -28,55 +28,16 @@
 //include files for c/c++ libraries
 #include <stdlib.h>
 
-int Utilities::getNbLines(QString path){
- int nbLines = -1;
- 
- QProcess childproc;
- const char* shellToUse = getenv("SHELL");
- if(shellToUse != NULL) childproc.setUseShell(true,shellToUse);
- else childproc.setUseShell(true);
-
- QTemporaryFile counterFile;//make a unique file
- childproc << "wc -l "<<path<<" > "<<counterFile.fileName();
- childproc.start(QProcess::DontCare);
- sleep(1);
- QFileInfo fi(counterFile.name());
- while(!fi.exists()){
-  sleep(1);
- } 
- QFile tmpFile(counterFile.name());
- bool status = tmpFile.open(QIODevice::ReadOnly);
- 
- //If the number of lines could not be determined, stop here
- if(!status) return nbLines;
- 
- //Create a reader on the temp file
- Q3TextStream fileStream(&tmpFile);
- QString infoLine = fileStream.readLine();
- QString info;
- if(!infoLine.isEmpty()){
-  info = infoLine.trimmed();
-  QStringList parts = QStringList::split(" ", info);
-  nbLines = parts[0].toLong();
-  tmpFile.close();
-  cout<<"nbLines "<<nbLines<<endl;
+int Utilities::getNbLines(QString path){ 
+ int numLines = 0;
+ QFile file(path);
+ if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+     while (!file.atEnd()) {
+         file.readLine();
+         ++numLines;
+     }
  }
-
-  
- //Remove the temporary file
- QProcess childproc2;
- childproc2.setUseShell(true);
- childproc2 <<"rm -f "<<counterFile.name();
- bool res = childproc2.start(QProcess::DontCare);
- 
-
- //If the number of lines could not be determined, try again
- if(infoLine.isEmpty() || info == ""){
-   cout<<"infoLine == NULL || info == ''"<<endl;
-  return getNbLines(path);   
- }
- 
- return nbLines;
+ return numLines;
 }
 
 
