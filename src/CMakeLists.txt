@@ -29,24 +29,24 @@ set(klusters_SRCS array.cpp
 	minmaxthread.cpp 
 	pair.cpp 
 	parameterxmlmodifier.cpp 
-	prefclusterview.cpp
-	prefdialog.cpp 
-	prefgeneral.cpp
-        prefwaveformview.cpp 
-	processlinemaker.cpp 
-	processwidget.cpp
-        savethread.cpp 
+	#prefclusterview.cpp
+	#prefdialog.cpp 
+	#prefgeneral.cpp
+	#prefwaveformview.cpp 
+	#processlinemaker.cpp 
+	#processwidget.cpp
+	#savethread.cpp 
 	sortabletable.cpp 
 	tags.cpp 
 	tracesprovider.cpp 
-	traceview.cpp
+	#traceview.cpp
         tracewidget.cpp 
-	utilities.cpp 
-	viewwidget.cpp 
+	#utilities.cpp 
+	#viewwidget.cpp 
 	waveformthread.cpp 
-	waveformview.cpp
+	#waveformview.cpp
         zoomwindow.cpp 
-	prefgenerallayout.cpp 
+	#prefgenerallayout.cpp 
 	prefwaveformviewlayout.cpp 
 	prefclusterviewlayout.cpp)
 

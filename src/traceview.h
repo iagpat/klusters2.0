@@ -27,7 +27,7 @@
 #include <Q3ValueList>
 #include <QResizeEvent>
 #include <QMouseEvent>
-
+#include <Q3PaintDeviceMetrics>
 //include files for the application
 #include "baseframe.h"
 #include "tracesprovider.h"
