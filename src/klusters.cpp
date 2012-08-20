@@ -44,7 +44,6 @@
 
 #include <kstdaction.h>
 #include <QStatusBar>
-#include <kpopupmenu.h>
 
 #include <ktoolbar.h>
 

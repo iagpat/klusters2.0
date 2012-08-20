@@ -24,6 +24,7 @@
 #include <QMouseEvent>
 #include <QEvent>
 #include <QCloseEvent>
+#include <QAction>
 using namespace std;
 
 // include files for Qt
@@ -32,10 +33,6 @@ using namespace std;
 #include <qlabel.h>
 #include <q3deepcopy.h>
 #include <q3paintdevicemetrics.h>
-
-// include files for KDE
-
-#include <kpopupmenu.h>
 
 // application specific includes
 #include "klusters.h"
@@ -548,31 +545,35 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
   QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
   if(mouseEvent->button() == Qt::RightButton){
    //Create the popmenu
-   KPopupMenu menu(this);
-   menu.insertTitle(tr("Add a View"));
+   QMenu menu(this);
+   menu.setTitle(tr("Add a View"));
 
-   int clusterView = menu.insertItem(tr("Add a ClusterView"));
-   int waveformView = menu.insertItem(tr("Add a WaveformView"));
-   int correlationView = menu.insertItem(tr("Add a CorrelationView"));
-   int errorMatrixView = menu.insertItem(tr("Add an ErrorMatrixView"));
-   int traceView = menu.insertItem(tr("Add a TraceView"));
+   QAction* clusterView = menu.insertItem(tr("Add a ClusterView"));
+   QAction* waveformView = menu.insertItem(tr("Add a WaveformView"));
+   QAction* correlationView = menu.insertItem(tr("Add a CorrelationView"));
+   QAction* errorMatrixView = menu.insertItem(tr("Add an ErrorMatrixView"));
+   QAction* traceView = menu.insertItem(tr("Add a TraceView"));
 
    //A traceView is possible only if the variables it needs are available (provided in the new parameter file) and
    //the .dat file exists.
-   if(!doc.areTraceDataAvailable() || !doc.isTraceViewVariablesAvailable()) menu.setItemEnabled(traceView,false); 
+   if(!doc.areTraceDataAvailable() || !doc.isTraceViewVariablesAvailable()) traceView->setEnabled(false);
    
    //For the moment only one WaveformView and TraceView are allowed per View.
-   if(viewCounter.contains("WaveformView")) menu.setItemEnabled(waveformView,false); 
+   if(viewCounter.contains("WaveformView"))
+       waveformView->setEnabled(false);
    
-   if(viewCounter.contains("CorrelationView")) menu.setItemEnabled(correlationView,true); 
+   if(viewCounter.contains("CorrelationView"))
+       correlationView->setEnabled(true);
    
-   if(viewCounter.contains("TraceView")) menu.setItemEnabled(traceView,false); 
+   if(viewCounter.contains("TraceView"))
+       traceView->setEnabled(false);
 
    //Only one ErrorMatrixView is allowed for the whole application.
-   if(mainWindow.isExistAnErrorMatrix()) menu.setItemEnabled(errorMatrixView,false);
+   if(mainWindow.isExistAnErrorMatrix())
+       errorMatrixView->setEnabled(false);
    
    menu.setMouseTracking(TRUE);
-   int id = menu.exec(QCursor::pos());
+   QAction* id = menu.exec(QCursor::pos());
    
    if(id == clusterView){
     mainWindow.widgetAddToDisplay(CLUSTERS,dockManager->findWidgetParentDock(widget));
