@@ -888,13 +888,13 @@ void KlustersApp::openDocumentFile(const QString& url)
     fileOpenRecent->addURL(url);
     filePath = doc->url().path();
      
-    KProcess* childproc = new KProcess();
+    QProcess* childproc = new QProcess();
     childproc->setUseShell(true);
 
     QString command = "`which klusters` ";
     command.append(url.path());
     *childproc << command;
-    childproc->start(KProcess::DontCare);
+    childproc->start(QProcess::DontCare);
     
     childproc->detach();
     delete childproc;
@@ -2267,7 +2267,7 @@ void KlustersApp::slotRecluster(){
   display = createDockWidget(QString(QChar(displayCount)),0, 0L, tr("Recluster output"), tr("Recluster output"));
 
   processWidget = new ProcessWidget(display);
-  connect(processWidget,SIGNAL(processExited(KProcess*)), this, SLOT(slotProcessExited(KProcess*)));
+  connect(processWidget,SIGNAL(processExited(QProcess*)), this, SLOT(slotProcessExited(QProcess*)));
   connect(processWidget,SIGNAL(processOutputsFinished()), this, SLOT(slotOutputTreatmentOver()));
 
   //install the new view in the display so it can be see in the future tab.
@@ -2323,7 +2323,7 @@ void KlustersApp::slotRecluster(){
  }
 }
 
-void KlustersApp::slotProcessExited(KProcess* process){
+void KlustersApp::slotProcessExited(QProcess* process){
  //Check if the process has exited "voluntarily" and if so if it was successful
  if(!process->normalExit() || (process->normalExit() && process->exitStatus())){
   if(process->normalExit() || (!process->normalExit() && !processKilled))

@@ -30,7 +30,7 @@
 using namespace std;
 
 // forward declaration 
-class KProcess;
+class QProcess;
 
  /**
  * This class receives the outputs of external processes launched by ProcessWidget.
@@ -45,7 +45,7 @@ class ProcessLineMaker : public QObject
 
 public:
 	ProcessLineMaker();
-	ProcessLineMaker(const KProcess*);
+	ProcessLineMaker(const QProcess*);
   inline void processKilled(){isProcessKilled = true;}
   inline void reset(){
     counterOut = 0;
@@ -67,10 +67,10 @@ public slots:
   };
   
 protected slots:
-	inline void slotReceivedStdout(KProcess* process, char* buffer,int buflen){
+	inline void slotReceivedStdout(QProcess* process, char* buffer,int buflen){
     slotReceivedStdout(QString::fromLocal8Bit(buffer,buflen));
   };
-	inline void slotReceivedStderr(KProcess* process,char* buffer, int buflen){
+	inline void slotReceivedStderr(QProcess* process,char* buffer, int buflen){
    slotReceivedStderr(QString::fromLocal8Bit(buffer,buflen));
   };
         

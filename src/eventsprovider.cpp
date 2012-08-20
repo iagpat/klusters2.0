@@ -68,11 +68,11 @@ int EventsProvider::loadData(){
 RestartTimer();
 
  //Get the number of events
- KProcess childproc;
+ QProcess childproc;
  childproc.setUseShell(true);
  QTemporaryFile counterFile = QTemporaryFile();//make a unique file
  childproc << "wc -l "<<fileName<<" > "<<counterFile.fileName();
- childproc.start(KProcess::NotifyOnExit);
+ childproc.start(QProcess::NotifyOnExit);
  sleep(1);
  QFileInfo fi(counterFile.name());
  while(!fi.exists()){
@@ -106,10 +106,10 @@ RestartTimer();
  }
 
  //Remove the temporary file
- KProcess childproc2;
+ QProcess childproc2;
  childproc2.setUseShell(true);
  childproc2 <<"rm -f "<<counterFile.name();
- childproc2.start(KProcess::NotifyOnExit);
+ childproc2.start(QProcess::NotifyOnExit);
 
  if(infoLine == NULL || nbEvents == 0){
   initializeEmptyProvider();

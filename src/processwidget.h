@@ -30,7 +30,7 @@
 #include <qcolor.h>
 
 //forward declaration 
-class KProcess;
+class QProcess;
 class ProcessLineMaker;
 
 class QPrinter;
@@ -116,7 +116,7 @@ protected:
     virtual void childFinished(bool normal, int status);
 
 signals:
-    void processExited(KProcess*);
+    void processExited(QProcess*);
     void processOutputsFinished();
     void hidden();
 
@@ -124,7 +124,7 @@ protected:
     virtual QSize minimumSizeHint() const;
     
 protected slots:
-    void slotProcessExited(KProcess*);
+    void slotProcessExited(QProcess*);
     void slotOutputTreatmentOver();
     
 private:
@@ -135,7 +135,7 @@ private:
    void maybeScrollToBottom();
 
 private:
-    KProcess* childproc;
+    QProcess* childproc;
     ProcessLineMaker* procLineMaker;
 };
 

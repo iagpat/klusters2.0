@@ -49,7 +49,7 @@ class ClusterPalette;
 class SaveThread;
 class PrefDialog;
 class ProcessWidget;
-class KProcess;
+class QProcess;
 
 /**
   * The Klusters main window and central class. It sets up the main
@@ -403,7 +403,7 @@ class KlustersApp : public KDockMainWindow
    /**Triggers the update of data incorporating the new data from the reclustering.
    * @param process process which has just finished.
    */  
-   void slotProcessExited(KProcess* process);
+   void slotProcessExited(QProcess* process);
 
    /**Updates internal state indicating that the outputs of the separate process, which
    * has been killed, is finished.*/

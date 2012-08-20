@@ -31,14 +31,14 @@
 int Utilities::getNbLines(QString path){
  int nbLines = -1;
  
- KProcess childproc;
+ QProcess childproc;
  const char* shellToUse = getenv("SHELL");
  if(shellToUse != NULL) childproc.setUseShell(true,shellToUse);
  else childproc.setUseShell(true);
 
  QTemporaryFile counterFile;//make a unique file
  childproc << "wc -l "<<path<<" > "<<counterFile.fileName();
- childproc.start(KProcess::DontCare);
+ childproc.start(QProcess::DontCare);
  sleep(1);
  QFileInfo fi(counterFile.name());
  while(!fi.exists()){
@@ -64,10 +64,10 @@ int Utilities::getNbLines(QString path){
 
   
  //Remove the temporary file
- KProcess childproc2;
+ QProcess childproc2;
  childproc2.setUseShell(true);
  childproc2 <<"rm -f "<<counterFile.name();
- bool res = childproc2.start(KProcess::DontCare);
+ bool res = childproc2.start(QProcess::DontCare);
  
 
  //If the number of lines could not be determined, try again

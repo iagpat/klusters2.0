@@ -18,14 +18,14 @@
 
 ProcessLineMaker::ProcessLineMaker():counterOut(0),counterErr(0),isProcessKilled(false),isWidgetHidden(false),processExited(false){}
 
-ProcessLineMaker::ProcessLineMaker( const KProcess* proc ):counterOut(0),counterErr(0),isProcessKilled(false),
+ProcessLineMaker::ProcessLineMaker( const QProcess* proc ):counterOut(0),counterErr(0),isProcessKilled(false),
 isWidgetHidden(false),processExited(false)
 {
-    connect(proc, SIGNAL(receivedStdout(KProcess*,char*,int)),
-            this, SLOT(slotReceivedStdout(KProcess*,char*,int)) );
+    connect(proc, SIGNAL(receivedStdout(QProcess*,char*,int)),
+            this, SLOT(slotReceivedStdout(QProcess*,char*,int)) );
     
-    connect(proc, SIGNAL(receivedStderr(KProcess*,char*,int)),
-            this, SLOT(slotReceivedStderr(KProcess*,char*,int)) );
+    connect(proc, SIGNAL(receivedStderr(QProcess*,char*,int)),
+            this, SLOT(slotReceivedStderr(QProcess*,char*,int)) );
 }
 
 void ProcessLineMaker::slotReceivedStdout( const QString& s )

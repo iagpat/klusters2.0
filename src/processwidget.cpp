@@ -58,7 +58,7 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
     setCursor(QCursor(Qt::ArrowCursor));
         
     //Create the process
-    childproc = new KProcess();
+    childproc = new QProcess();
     const char* shellToUse = getenv("SHELL");
     if(shellToUse != NULL) childproc->setUseShell(true,shellToUse);
     else childproc->setUseShell(true);
@@ -76,9 +76,9 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
     connect(this, SIGNAL(hidden()),
              procLineMaker, SLOT(slotWidgetHidden()));
 
-    connect(childproc, SIGNAL(processExited(KProcess*)),
-            this, SLOT(slotProcessExited(KProcess*) )) ;
-    connect(this, SIGNAL(processExited(KProcess*)),
+    connect(childproc, SIGNAL(processExited(QProcess*)),
+            this, SLOT(slotProcessExited(QProcess*) )) ;
+    connect(this, SIGNAL(processExited(QProcess*)),
             procLineMaker, SLOT(slotProcessExited())) ;    
 }
 
@@ -101,7 +101,7 @@ bool ProcessWidget::startJob(const QString &dir, const QString &command)
     }    
     
     *childproc << command;
-    return childproc->start(KProcess::NotifyOnExit, KProcess::AllOutput);
+    return childproc->start(QProcess::NotifyOnExit, QProcess::AllOutput);
 }
 
 
@@ -118,7 +118,7 @@ bool ProcessWidget::isRunning()
 }
 
 
-void ProcessWidget::slotProcessExited(KProcess* )
+void ProcessWidget::slotProcessExited(QProcess* )
 {
     emit processExited(childproc);
 }
