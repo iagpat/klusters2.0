@@ -38,7 +38,7 @@
 #include <QCustomEvent>
 
 // include files for KDE
-#include <kiconloader.h>
+
 
 
 
@@ -174,7 +174,7 @@ void KlustersApp::initActions()
   //Not used for the moment.
   connect(viewMenu->popupMenu(),SIGNAL(aboutToShow()), this, SLOT(viewMenuAboutToShow()));
 
-  KIconLoader* loader = KGlobal::iconLoader();
+
 
   //Actions menu
   new KAction(tr("Delete &Artifact Cluster(s)"),QIcon(":/icons/delete_artefact"),Qt::SHIFT + Qt::Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");

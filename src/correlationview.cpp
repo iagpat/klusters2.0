@@ -39,7 +39,7 @@
 #include <QEvent>
 
 // include files for kde
-#include <kiconloader.h>
+
 
 using namespace std;
 

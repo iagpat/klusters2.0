@@ -21,15 +21,15 @@
 #include <qicon.h>
 
 // include files for KDE
-#include <kiconloader.h>
+
 
 PrefGeneral::PrefGeneral(QWidget *parent, const char *name ) : PrefGeneralLayout(parent,name) {
   connect(crashRecoveryCheckBox,SIGNAL(stateChanged(int)),this,SLOT(updateCrashRecoveryTimeInterval(int)));
   connect(reclusteringExecutableButton,SIGNAL(clicked()),this,SLOT(updateReclusteringExecutable()));
 
   //Set an icon on the reclusteringExecutableButton button
-  KIconLoader* loader = KGlobal::iconLoader();
-  reclusteringExecutableButton->setIconSet(QIcon(":/icons/fileopen", KIcon::Small))); 
+  
+  reclusteringExecutableButton->setIconSet(QIcon(":/icons/fileopen"))); 
 }
 PrefGeneral::~PrefGeneral(){
 }

@@ -34,7 +34,7 @@
 #include <Q3PointArray>
 
 // include files for kde
-#include <kiconloader.h>
+
 //
 
 //Unix include file

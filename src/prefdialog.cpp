@@ -22,10 +22,6 @@
 #include <Q3VBoxLayout>
 
 
-#include <kiconloader.h>    // for KIconLoader
-        // for KGlobal
-    // for KMessageBox
-
 //include files for the application
 #include "prefdialog.h"     // class PrefDialog
 
@@ -57,14 +53,14 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
 
     //adding page "Cluster view configuration"
     frame = addPage(tr("Cluster view"), tr("Cluster View configuration"),
-        KGlobal::iconLoader()->loadIcon("clusterview",KIcon::User));
+        QIcon(":icons/clusterview"));
     frameLayout = new Q3VBoxLayout( frame, 0, 0 );
     prefclusterView = new PrefClusterView(frame);
     frameLayout->addWidget(prefclusterView);
 
     //adding page "Waveform view configuration"
     frame = addPage(tr("Waveform view"), tr("Waveform View configuration"),
-        KGlobal::iconLoader()->loadIcon("waveformview",KIcon::User));
+        QIcon(":icons/waveformview"));
     frameLayout = new Q3VBoxLayout( frame, 0, 0 );
     prefWaveformView = new PrefWaveformView(frame,nbChannels);
     frameLayout->addWidget(prefWaveformView);
