@@ -1,7 +1,5 @@
 project(klusters-src)
 
-add_subdirectory(icons)
-
 set(klusters_SRCS array.cpp 
 	autosavethread.cpp 
 	baseframe.cpp 
