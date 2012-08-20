@@ -177,23 +177,23 @@ void KlustersApp::initActions()
   KIconLoader* loader = KGlobal::iconLoader();
 
   //Actions menu
-  new KAction(tr("Delete &Artifact Cluster(s)"),QIcon(loader->loadIcon("delete_artefact", KIcon::User)),Qt::SHIFT + Qt::Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
-  new KAction(tr("Delete &Noisy Cluster(s)"),QIcon(loader->loadIcon("delete_noise", KIcon::User)),Qt::Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
-  new KAction(tr("&Group Clusters"),QIcon(loader->loadIcon("group", KIcon::User)), Qt::Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
-  new KAction(tr("&Update Display"),QIcon(loader->loadIcon("update", KIcon::User)), 0,clusterPalette, SLOT(updateClusters()),actionCollection(), "update_display");
+  new KAction(tr("Delete &Artifact Cluster(s)"),QIcon(":/icons/delete_artefact"),Qt::SHIFT + Qt::Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
+  new KAction(tr("Delete &Noisy Cluster(s)"),QIcon(":/icons/delete_noise"),Qt::Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
+  new KAction(tr("&Group Clusters"),QIcon(":/icons/group"), Qt::Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
+  new KAction(tr("&Update Display"),QIcon(":/icons/update"), 0,clusterPalette, SLOT(updateClusters()),actionCollection(), "update_display");
   new KAction(tr("&Renumber Clusters"),0, Qt::Key_R,doc, SLOT(renumberClusters()),actionCollection(), "renumber");
-  new KAction(tr("&Update Error Matrix"),QIcon(loader->loadIcon("grouping_assistant_update", KIcon::User)),Qt::Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
+  new KAction(tr("&Update Error Matrix"),QIcon(":/icons/grouping_assistant_update"),Qt::Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
             "update_errorMatrix");
   new KAction(tr("Re&cluster"),0, Qt::SHIFT  + Qt::Key_R,this, SLOT(slotRecluster()),actionCollection(), "recluster");
   new KAction(tr("&Abort Reclustering"),0, 0,this, SLOT(slotStopRecluster()),actionCollection(), "stop_recluster");
              
   //Tools menu
-  new KAction(tr("Zoom"),QIcon(loader->loadIcon("zoom_tool", KIcon::User)), Qt::Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
-  new KAction(tr("New Cluster"),QIcon(loader->loadIcon("new_cluster", KIcon::User)), Qt::Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
-  new KAction(tr("&Split Clusters"),QIcon(loader->loadIcon("new_clusters", KIcon::User)), Qt::Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
-  new KAction(tr("Delete &Artifact Spikes"),QIcon(loader->loadIcon("delete_artefact_tool", KIcon::User)),Qt::Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
-  new KAction(tr("Delete &Noisy Spikes"),QIcon(loader->loadIcon("delete_noise_tool", KIcon::User)),Qt::Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
-  new KAction(tr("Select Time"),QIcon(loader->loadIcon("time_tool", KIcon::User)), Qt::Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
+  new KAction(tr("Zoom"),QIcon(":/icons/zoom_tool"), Qt::Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
+  new KAction(tr("New Cluster"),QIcon(":/icons/new_cluster"), Qt::Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
+  new KAction(tr("&Split Clusters"),QIcon(":/icons/new_clusters"), Qt::Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
+  new KAction(tr("Delete &Artifact Spikes"),QIcon(":/icons/delete_artefact_tool"),Qt::Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
+  new KAction(tr("Delete &Noisy Spikes"),QIcon(":/icons/delete_noise_tool"),Qt::Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
+  new KAction(tr("Select Time"),QIcon(":/icons/time_tool"), Qt::Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
   //Waveforms menu
   timeFrameMode = new KToggleAction(tr("&Time Frame"), Qt::Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
   overlayPresentation = new KToggleAction(tr("&Overlay"), Qt::Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
@@ -222,8 +222,8 @@ void KlustersApp::initActions()
    new KAction(tr("&Decrease Channel Amplitudes"),Qt::CTRL + Qt::SHIFT + Qt::Key_D,this, SLOT(slotDecreaseAllChannelsAmplitude()),actionCollection(), "decrease_all_channels");
    showHideLabels = new KToggleAction(tr("Show &Labels"),0,Qt::CTRL + Qt::Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
    showHideLabels->setChecked(false);
-   new KAction(tr("&Next Spike"),QIcon(loader->loadIcon("forwardCluster", KIcon::User)),Qt::CTRL + Qt::SHIFT + Qt::Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
-   new KAction(tr("&Previous Spike"),QIcon(loader->loadIcon("backCluster", KIcon::User)),Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
+   new KAction(tr("&Next Spike"),QIcon(":/icons/forwardCluster"),Qt::CTRL + Qt::SHIFT + Qt::Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
+   new KAction(tr("&Previous Spike"),QIcon(":/icons/backCluster"),Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
   
   //Settings menu
   viewActionBar = new KToggleAction(tr("Show Actions"),0,this, SLOT(slotViewActionBar()),actionCollection(), "show_actionBar");

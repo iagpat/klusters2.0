@@ -59,11 +59,9 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,Q
   setMinimumSize(static_cast<int>(MIN_SIZE*1.05)  + 2 * BORDER,MIN_SIZE  + 2 * BORDER);
   setMaximumSize(MAX_SIZE + 2 * BORDER,MAX_SIZE + 2 * BORDER);
 
-#if KDAB_PENDING
   //Create and set the zoom cursor (a magnifier).
-  KIconLoader *loader = KGlobal::iconLoader();
-  zoomCursor = QCursor(loader->loadIcon("zoom_cursor", KIcon::User),7,7);
-#endif
+
+  zoomCursor = QCursor(QPixmap(":/icons/zoom_cursor",7,7);
 }
 
 BaseFrame::~BaseFrame(){
