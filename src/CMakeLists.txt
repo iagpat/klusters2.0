@@ -52,7 +52,7 @@ set(klusters_SRCS array.cpp
 	prefwaveformviewlayout.cpp 
 	prefclusterviewlayout.cpp)
 
-qt4_add_resources(klusters_SRCS klusters-cursors.qrc) 
+qt4_add_resources(klusters_SRCS klusters-cursors.qrc klusters-icons.qrc) 
 
 set(klusters_UI prefwaveformviewlayout.ui4 prefgenerallayout.ui prefclusterviewlayout.ui4 ) 
 qt4_wrap_ui(klusters_SRCS ${klusters_UI})
