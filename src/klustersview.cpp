@@ -272,7 +272,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
    printPainter.resetXForm();
 
    printPainter.setFont(f);
-   printPainter.setPen(black);
+   printPainter.setPen(Qt::black);
    if(widget->isA("ClusterView")){
      ClusterView* clusterView = static_cast<ClusterView*>(widget);
      printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      Features: %2,%3").arg(filePath).arg(clusterView->getDimensionX()).arg(clusterView->getDimensionY()));

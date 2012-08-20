@@ -208,7 +208,7 @@ void ProcessWidget::print(QPrinter *printer, QString filePath){
   for(int i = 0; i< numRows(); i++){
    // no more room on the current page 
    if(Margin + yPos > metrics.height() - Margin) {
-    printPainter.setPen(black);
+    printPainter.setPen(Qt::black);
     printPainter.drawText(Margin,Margin + yPos + fontMetrics.lineSpacing(),metrics.width(),fontMetrics.lineSpacing(),
                           Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
      
@@ -228,7 +228,7 @@ void ProcessWidget::print(QPrinter *printer, QString filePath){
 
  //Print the name of the file
  printPainter.resetXForm();
- printPainter.setPen(black);
+ printPainter.setPen(Qt::black);
  printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
  
  printPainter.end();

@@ -239,14 +239,14 @@ void ErrorMatrixView::drawMatrix(QPainter& painter){
   if(modifiedClusterList.size() > 0 || hasBeenRenumbered || isNotUpToDate){
    //Draw a red rectangle around the matrix to warn the user that
    //the matrix is not up to date anymore.
-   QPen pen(red,4,Qt::SolidLine);
+   QPen pen(Qt::red,4,Qt::SolidLine);
    painter.setPen(pen);
    painter.drawRect(abscissaMin + widthBorder - 1,
                   ordinateMin + heightBorder - 2,
                   (clusterList.size() * cellWidth) + 4,
                   (clusterList.size() * cellWidth)  + 5);
 
-   painter.setPen(black);
+   painter.setPen(Qt::black);
   }
 
  int x = abscissaMin + widthBorder;
@@ -256,7 +256,7 @@ void ErrorMatrixView::drawMatrix(QPainter& painter){
  for(int clusterIndex = 1; clusterIndex <= nbClusters; ++clusterIndex){
   for(int clusterIndex2 = 1; clusterIndex2 <= nbClusters; ++clusterIndex2){    
     if((clusterIndex == clusterIndex2) || ignoreClusterIndex.contains(clusterIndex) || ignoreClusterIndex.contains(clusterIndex2)){
-     painter.setBrush(black);
+     painter.setBrush(Qt::black);
      painter.drawRect(x,y,cellWidth + 1,cellWidth + 1);
     }
     else{
@@ -840,8 +840,8 @@ void ErrorMatrixView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics
   QColor colorLegendTmp = colorLegend;
   QColor background= backgroundColor();
   if(whiteBackground){
-   colorLegend = black;
-   setPaletteBackgroundColor(white);
+   colorLegend = Qt::black;
+   setPaletteBackgroundColor(Qt::white);
   }
   
   printPainter.fillRect(back,backgroundColor());

@@ -42,10 +42,8 @@
 
 
 
-#include <kstdaction.h>
 #include <QStatusBar>
 
-#include <ktoolbar.h>
 
 #include <QProcess>
 
