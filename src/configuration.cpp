@@ -17,6 +17,7 @@
 
 //include files for the application
 #include "configuration.h"
+#include <QSettings>
 
 /**
   *@author Lynn Hazan
@@ -38,44 +39,51 @@ Configuration::Configuration():nbChannels(0) {
 }
 
 void Configuration::read() {
-    KConfig* conf = kapp->config();
+    QSettings settings;
 
-    //read general options
-    conf->setGroup("General");
-    crashRecovery = conf->readBoolEntry("crashRecovery",crashRecoveryDefault);
-    crashRecoveryIndex = conf->readNumEntry("crashRecoveryIndex",crashRecoveryIndexDefault);
-    nbUndo = conf->readNumEntry("nbUndo",nbUndoDefault);    
-    backgroundColor = conf->readColorEntry("backgroundColor",&backgroundColorDefault);
-    reclusteringExecutable = conf->readEntry("reclusteringExecutable",reclusteringExecutableDefault);
-    reclusteringArgs = conf->readEntry("reclusteringArgs",reclusteringArgsDefault);
-    
+    settings.beginGroup("General");
+    crashRecovery = settings.value("crashRecovery",crashRecoveryDefault).toBool();
+    crashRecoveryIndex = settings.value("crashRecoveryIndex",crashRecoveryIndexDefault).toInt();
+    nbUndo = settings.value("nbUndo",nbUndoDefault).toInt();
+    backgroundColor = settings.value("backgroundColor",&backgroundColorDefault).value<QColor>();
+    reclusteringExecutable = settings.value("reclusteringExecutable",reclusteringExecutableDefault).toString();
+    reclusteringArgs = settings.value("reclusteringArgs",reclusteringArgsDefault).toString();
+    settings.endGroup();
+
     //read cluster view options
-    conf->setGroup("clusterView");
-    timeInterval = conf->readNumEntry("timeInterval",timeIntervalDefault);
+    settings.beginGroup("clusterView");
+    timeInterval = settings.value("timeInterval",timeIntervalDefault).toInt();
+    settings.endGroup();
 
     //read waveform view options
-    conf->setGroup("waveformView");
-    gain = conf->readNumEntry("gain",gainDefault);
+    settings.beginGroup("waveformView");
+    gain = settings.value("gain",gainDefault).toInt();
+    settings.endGroup();
 }
 
 void Configuration::write() const {  
-    KConfig* conf = kapp->config();
-    //write general options
-    conf->setGroup("General");
-    conf->writeEntry("crashRecovery",crashRecovery);
-    conf->writeEntry("crashRecoveryIndex",crashRecoveryIndex);
-    conf->writeEntry("nbUndo",nbUndo);
-    conf->writeEntry("backgroundColor",backgroundColor);
-    conf->writeEntry("reclusteringExecutable",reclusteringExecutable);
-    conf->writeEntry("reclusteringArgs",reclusteringArgs); 
+    QSettings settings;
+
+    settings.beginGroup("General");
+    settings.setValue("crashRecovery",crashRecovery);
+    settings.setValue("crashRecoveryIndex",crashRecoveryIndex);
+    settings.setValue("nbUndo",nbUndo);
+    settings.setValue("backgroundColor",backgroundColor);
+    settings.setValue("reclusteringExecutable",reclusteringExecutable);
+    settings.setValue("reclusteringArgs",reclusteringArgs);
+    settings.endGroup();
     
     //write cluster view options
-    conf->setGroup("clusterView");
-    conf->writeEntry("timeInterval",timeInterval);
+    settings.beginGroup("clusterView");
+    settings.setValue("timeInterval",timeInterval);
+    settings.endGroup();
 
     //write waveform view options
-    conf->setGroup("waveformView");
-    conf->writeEntry("gain",gain);
+    settings.beginGroup("waveformView");
+    settings.setValue("gain",gain);
+    settings.beginGroup("General");
+
+
 }
 
 Configuration& configuration() {
