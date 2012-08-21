@@ -23,9 +23,9 @@ set(klusters_SRCS array.cpp
         itemcolors.cpp 
 	#klusters.cpp 
 	#klustersdoc.cpp 
-	klustersview.cpp 
+	#klustersview.cpp 
 	klustersxmlreader.cpp
-	main.cpp 
+	#main.cpp 
 	minmaxthread.cpp 
 	pair.cpp 
 	parameterxmlmodifier.cpp 

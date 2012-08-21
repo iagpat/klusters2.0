@@ -4,7 +4,7 @@
 #include "ui_prefwaveformviewlayout.h"
 
 
-class PrefWaveformViewLayout : public QWidget, private Ui_PrefWaveformViewLayout
+class PrefWaveformViewLayout : public QWidget, public Ui_PrefWaveformViewLayout
 {
     Q_OBJECT
 
