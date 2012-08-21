@@ -28,7 +28,7 @@
 #include <Q3VBoxLayout>
 
 //KDE includes
-#include <kdialogbase.h>
+#include <QDialog>
 
 /**
 	@author Lynn Hazan <lynn.hazan@myrealbox.com>
