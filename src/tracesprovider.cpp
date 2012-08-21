@@ -23,6 +23,7 @@
 #include <iostream>
 #include <fstream>
 using namespace std;
+#include <QDebug>
 
 //include files for the application
 #include "tracesprovider.h"
@@ -35,7 +36,7 @@ TracesProvider::TracesProvider(QString fileUrl,int nbChannels,int resolution,dou
 }
 
 TracesProvider::~TracesProvider(){
-  cout<<"in ~TracesProvider"<<endl;
+  qDebug()<<"in ~TracesProvider"<<endl;
 }
 
 

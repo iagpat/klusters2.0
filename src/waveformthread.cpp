@@ -23,6 +23,7 @@
 #include <qapplication.h>
 //Added by qt3to4:
 #include <Q3ValueList>
+#include <QDebug>
 
 //Unix include file
 #include <unistd.h>
@@ -362,7 +363,7 @@ void WaveformThread::getMean(WaveformView::PresentationMode mode){
 
 void WaveformThread::getMean(Q3ValueList<int> clusterIds,WaveformView::PresentationMode mode){
   
-   cout<<"in  WaveformThread::getMean"<<endl;
+   qDebug()<<"in  WaveformThread::getMean"<<endl;
   
   meanRequested = true;
   this->clusterIds = clusterIds;

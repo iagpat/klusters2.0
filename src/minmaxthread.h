@@ -25,6 +25,7 @@
 #include <qthread.h>
 //Added by qt3to4:
 #include <Q3ValueList>
+#include <QDebug>
 
 /**Thread used to compute the minimum and maximum values for each dimension (feature).
  * The thread calls the data object which will do the work.
@@ -37,7 +38,7 @@ public:
   //the constructor of MinMaxThread being private, only this method con create a new MinMaxThread
   friend MinMaxThread* Data::minMaxCalculator();
 
-    inline ~MinMaxThread(){cout<<"in ~MinMaxThread"<<endl;}
+    inline ~MinMaxThread(){qDebug()<<"in ~MinMaxThread"<<endl;}
 
   inline void run(){data.minMaxDimensionCalculation(modifiedClusters);}
   inline void setModifiedClusters(Q3ValueList<int> clusters){modifiedClusters = clusters;}

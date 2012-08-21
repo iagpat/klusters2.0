@@ -29,6 +29,7 @@
 #include <Q3PtrList>
 #include <QEvent>
 #include <QMessageBox>
+#include <QDebug>
 
 
 // application specific includes
@@ -71,7 +72,7 @@ addedClustersUndoList(),addedClustersRedoList(),modifiedClustersUndoList(),modif
 }
 
 KlustersDoc::~KlustersDoc(){
-    cout << "~KlustersDoc()"<<endl;
+    qDebug() << "~KlustersDoc()"<<endl;
 
   delete viewList;
 
@@ -443,7 +444,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
 
   //If ask create a thread for the auto saving of the document.
   if(autoSave){
-    cout<<"autoSave = true in openDoc"<<endl;
+    qDebug()<<"autoSave = true in openDoc"<<endl;
    endAutoSaving = false;
    autoSaveThread = new AutoSaveThread(*clusteringData,this,cluFileSaveUrl);
    autoSaveThread->start();
@@ -1476,7 +1477,7 @@ void KlustersDoc::prepareUndo(QMap<int,int> clusterIdsOldNew,QMap<int,int> clust
 
   //Update the renumbering lists
   int currentNbUndo = clusterColorListUndoList.count();
-  cout<<"currentNbUndo in KlustersDoc::prepareUndo: "<<currentNbUndo<<endl;
+  qDebug()<<"currentNbUndo in KlustersDoc::prepareUndo: "<<currentNbUndo<<endl;
   clusterIdsOldNewMap.insert(currentNbUndo,clusterIdsOldNew);
   clusterIdsNewOldMap.insert(currentNbUndo,clusterIdsNewOld);
 }
@@ -1502,7 +1503,7 @@ void KlustersDoc::prepareReclusteringUndo(Q3ValueList<int>& newClusters,Q3ValueL
 
 void KlustersDoc::undo(){
 
-cout<<"in KlustersDoc::undo 1"<<endl;
+qDebug()<<"in KlustersDoc::undo 1"<<endl;
 
  //Update the boolean modified here as every undo action implies a call to the function.
  //The user can save and make an undo just behind, in that case the document is modified.
@@ -1523,11 +1524,11 @@ cout<<"in KlustersDoc::undo 1"<<endl;
 
   int nbUndo = clusterColorListUndoList.count();
 
-  cout << "nbUndo in KlustersDoc::undo: "<<nbUndo<< endl;
+  qDebug() << "nbUndo in KlustersDoc::undo: "<<nbUndo<< endl;
 
   //If this undo does concern renumbering
   if(clusterIdsNewOldMap.contains(nbUndo + 1)){
-    cout << "renumber in KlustersDoc::undo, nbUndo + 1 : "<<nbUndo + 1<< endl;
+    qDebug() << "renumber in KlustersDoc::undo, nbUndo + 1 : "<<nbUndo + 1<< endl;
     //Add the current undo indice to the renumberingRedoList
     renumberingRedoList.append(nbUndo + 1);
 
@@ -1558,7 +1559,7 @@ cout<<"in KlustersDoc::undo 1"<<endl;
     //Notify all the views of the undo
     KlustersView* view;
     if(addedClusters->size() > 0 && modifiedClusters->size() > 0){
-       cout << "addedClusters->size() > 0 && modifiedClusters->size() > 0"<< endl;
+       qDebug() << "addedClusters->size() > 0 && modifiedClusters->size() > 0"<< endl;
       for(view = viewList->first(); view!=0; view = viewList->next())
        if(view != activeView){
         view->undo(*addedClusters,*modifiedClusters,false);
@@ -1575,7 +1576,7 @@ cout<<"in KlustersDoc::undo 1"<<endl;
      emit undoAdditionModification(*addedClusters,*modifiedClusters);
     }
     else if(addedClusters->size() > 0 && modifiedClusters->size() == 0){
-      cout << "addedClusters->size() > 0 && modifiedClusters->size() == 0"<< endl;
+      qDebug() << "addedClusters->size() > 0 && modifiedClusters->size() == 0"<< endl;
      for(view = viewList->first(); view!=0; view = viewList->next())
       if(view != activeView){
        view->undoAddedClusters(*addedClusters,false);
@@ -1592,7 +1593,7 @@ cout<<"in KlustersDoc::undo 1"<<endl;
      emit undoAddition(*addedClusters);
     }
     else if(addedClusters->size() == 0 && modifiedClusters->size() > 0){
-      cout << "addedClusters->size() == 0 && modifiedClusters->size() > 0"<< endl;
+      qDebug() << "addedClusters->size() == 0 && modifiedClusters->size() > 0"<< endl;
      for(view = viewList->first(); view!=0; view = viewList->next())
       if(view != activeView){
        view->undoModifiedClusters(*modifiedClusters,false);
@@ -1610,7 +1611,7 @@ cout<<"in KlustersDoc::undo 1"<<endl;
     }
     //////!!!!This last condition should not be reach anymore, to test and remove.!!!!!////
     else if(addedClusters->size() == 0 && modifiedClusters->size() == 0){
-      cout << "addedClusters->size() == 0 && modifiedClusters->size() == 0"<< endl;
+      qDebug() << "addedClusters->size() == 0 && modifiedClusters->size() == 0"<< endl;
      for(view = viewList->first(); view!=0; view = viewList->next())
       if(view != activeView){
        view->undo(false);
@@ -1650,7 +1651,7 @@ cout<<"in KlustersDoc::undo 1"<<endl;
   emit updateRedoNb(clusterColorListRedoList.count());
  }
 
- cout<<"in KlustersDoc::undo 2"<<endl;
+ qDebug()<<"in KlustersDoc::undo 2"<<endl;
 }
 
 
@@ -1687,10 +1688,10 @@ void KlustersDoc::redo(){
     //If this redo does concern renumbering
     int nbUndo = clusterColorListUndoList.count();
 
-     cout << "in KlustersDoc::redo, nbUndo  : "<<nbUndo<< endl;
+     qDebug() << "in KlustersDoc::redo, nbUndo  : "<<nbUndo<< endl;
 
     if(clusterIdsOldNewMap.contains(nbUndo)){
-       cout << "renumber in KlustersDoc::redo, nbUndo  : "<<nbUndo<< endl;
+       qDebug() << "renumber in KlustersDoc::redo, nbUndo  : "<<nbUndo<< endl;
      //remove the current undo indice from the renumberingRedoList
      renumberingRedoList.remove(nbUndo);
 
@@ -1724,7 +1725,7 @@ void KlustersDoc::redo(){
       //Notify all the views of the undo
       KlustersView* view;
       if(addedClusters->size() > 0 && modifiedClusters->size() > 0){
-         cout << "in KlustersDoc::redo, nbUndo  addedClusters->size() > 0 && modifiedClusters->size()>0"<< endl;
+         qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() > 0 && modifiedClusters->size()>0"<< endl;
        for(view = viewList->first(); view!=0; view = viewList->next())
         if(view != activeView){
          view->redo(*addedClusters,*modifiedClusters,isModifiedByDeletion,false,*deletedClusters);
@@ -1741,7 +1742,7 @@ void KlustersDoc::redo(){
        emit redoAdditionModification(*addedClusters,*modifiedClusters,isModifiedByDeletion,*deletedClusters);
       }
       else if(addedClusters->size() > 0 && modifiedClusters->size() == 0){
-         cout << "in KlustersDoc::redo, nbUndo  addedClusters->size() > 0 && modifiedClusters->size()==0"<< endl;
+         qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() > 0 && modifiedClusters->size()==0"<< endl;
        for(view = viewList->first(); view!=0; view = viewList->next())
         if(view != activeView){
          view->redoAddedClusters(*addedClusters,false,*deletedClusters);
@@ -1758,7 +1759,7 @@ void KlustersDoc::redo(){
        emit redoAddition(*addedClusters,*deletedClusters);
       }
       else if(addedClusters->size() == 0 && modifiedClusters->size() > 0){
-         cout << "in KlustersDoc::redo, nbUndo  addedClusters->size() == 0 && modifiedClusters->size()>0"<< endl;
+         qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() == 0 && modifiedClusters->size()>0"<< endl;
         for(view = viewList->first(); view!=0; view = viewList->next())
         if(view != activeView){
          view->redoModifiedClusters(*modifiedClusters,isModifiedByDeletion,false,*deletedClusters);
@@ -1775,7 +1776,7 @@ void KlustersDoc::redo(){
        emit redoModification(*modifiedClusters,isModifiedByDeletion,*deletedClusters);
       }
       else if(addedClusters->size() == 0 && modifiedClusters->size() == 0){
-         cout << "in KlustersDoc::redo, nbUndo  addedClusters->size() == 0 && modifiedClusters->size() ==0"<< endl;
+         qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() == 0 && modifiedClusters->size() ==0"<< endl;
        for(view = viewList->first(); view!=0; view = viewList->next())
         if(view != activeView){
          view->redo(false,*deletedClusters);
@@ -1793,7 +1794,7 @@ void KlustersDoc::redo(){
       }
     }
 
- cout << "in KlustersDoc::redo, 2  : "<< endl;
+ qDebug() << "in KlustersDoc::redo, 2  : "<< endl;
 
     Q3ValueList<int> clustersToShow = activeView->clusters();
 
@@ -1802,17 +1803,17 @@ void KlustersDoc::redo(){
     //Update the clusterPalette
     clusterPalette.updateClusterList();
 
- cout << "in KlustersDoc::redo, 3 b : "<< endl;
+ qDebug() << "in KlustersDoc::redo, 3 b : "<< endl;
 
     clusterPalette.selectItems(clustersToShow);
 
-      cout << "in KlustersDoc::redo, 4  : "<< endl;
+      qDebug() << "in KlustersDoc::redo, 4  : "<< endl;
 
     //Signal to klusters the new number of undo and redo
     emit updateUndoNb(clusterColorListUndoList.count());
     emit updateRedoNb(clusterColorListRedoList.count());
 
-      cout << "in KlustersDoc::redo, end  : "<< endl;
+      qDebug() << "in KlustersDoc::redo, end  : "<< endl;
  }
 }
 

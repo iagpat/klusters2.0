@@ -23,6 +23,7 @@
 #include "itemcolors.h"
 
 #include "timer.h"
+#include <QDebug>
 
 //General C++ include files
 #include <math.h>
@@ -76,7 +77,7 @@ selectionPolygon(0), nbSelectionPoints(0),polygonClosed(false),existLastMovingLi
 }
 
 ClusterView::~ClusterView(){
-  cout << "in ~ClusterView(): "<<endl;
+  qDebug() << "in ~ClusterView(): "<<endl;
 }
 
 void ClusterView::drawClusters(QPainter& painter,const Q3ValueList<int>& clustersList,bool drawCircles){

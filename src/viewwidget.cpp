@@ -19,6 +19,7 @@
 
 //include files for the application
 #include "klustersview.h"
+#include <QDebug>
 
 ViewWidget::ViewWidget(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar* statusBar,QWidget* parent, const char* name,
 int minSize,int maxSize ,int windowTopLeft ,int windowBottomRight,int border,int Xborder,int Yborder):
@@ -27,7 +28,7 @@ doublebuffer(),view(view),doc(doc),statusBar(statusBar){
 }
 
 ViewWidget::~ViewWidget(){
-  cout << "in ~ViewWidget(): "<<endl;
+  qDebug() << "in ~ViewWidget(): "<<endl;
 }
 
 

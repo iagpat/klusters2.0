@@ -21,6 +21,7 @@
 //Added by qt3to4:
 #include <Q3TextStream>
 #include <Q3ValueList>
+#include <QDebug>
 
 //General C++ include files
 #include <iostream>
@@ -61,7 +62,7 @@ eventPosition(static_cast<float>(position) / 100.0),modified(false){
 }
 
 EventsProvider::~EventsProvider(){
- cout<<"in ~EventsProvider "<<endl;
+ qDebug()<<"in ~EventsProvider "<<endl;
 }
 
 int EventsProvider::loadData(){
@@ -76,7 +77,7 @@ RestartTimer();
  sleep(1);
  QFileInfo fi(counterFile.name());
  while(!fi.exists()){
-  cout<<"!fi.exists()"<<endl;
+  qDebug()<<"!fi.exists()"<<endl;
   sleep(1);
  }
 
@@ -102,7 +103,7 @@ RestartTimer();
   QStringList parts = QStringList::split(" ", info);
   nbEvents = parts[0].toLong();
   tmpFile.close();
-  cout<<"nbEvents "<<nbEvents<<endl;
+  qDebug()<<"nbEvents "<<nbEvents<<endl;
  }
 
  //Remove the temporary file
@@ -157,7 +158,7 @@ RestartTimer();
  }
 
  eventFile.close();
- cout << "Loading evt file into memory: "<<Timer() << endl;
+ qDebug() << "Loading evt file into memory: "<<Timer() << endl;
 
 
  //The number of events read has to be coherent with the number of events read.

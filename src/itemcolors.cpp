@@ -22,6 +22,7 @@
 //Added by qt3to4:
 #include <Q3ValueList>
 #include <Q3PtrList>
+#include <QDebug>
 
 using namespace std;
 
@@ -31,7 +32,7 @@ ItemColors::ItemColors():itemList(),colorChanged(false){
 }
 
 ItemColors::~ItemColors(){
-   cout << "~ItemColors()"<<endl;
+   qDebug() << "~ItemColors()"<<endl;
 }
 
 

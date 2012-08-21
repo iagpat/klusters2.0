@@ -28,7 +28,7 @@
 //Added by qt3to4:
 #include <QEvent>
 #include <QCustomEvent>
-
+#include <QDebug>
 // include files for KDE
 
 
@@ -40,10 +40,10 @@
 class AutoSaveThread : public QThread {
 public:
 
-	inline ~AutoSaveThread(){cout<<"in ~AutoSaveThread"<<endl;};
+	inline ~AutoSaveThread(){qDebug()<<"in ~AutoSaveThread"<<endl;};
   //The default saving interval is 5 minutes.
   inline AutoSaveThread(Data& d, KlustersDoc* doc,QString saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
-    cout<<"in constructor AutoSaveThread"<<endl; 
+    qDebug()<<"in constructor AutoSaveThread"<<endl; 
   };
 
   inline void removeTmpFile(){

@@ -33,6 +33,7 @@
 #include <qregexp.h>
 //Added by qt3to4:
 #include <Q3ValueList>
+#include <QDebug>
 
 //kde include files
 
@@ -275,7 +276,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
      }
    }
 
-    cout << "in loadClusters,  nbSpikes: "<<nbSpikes <<", k: "<<k<<", spkFileLength "<<spkFileLength<<", nbChannels "<<nbChannels<<", nbSamplesInWaveform "<<nbSamplesInWaveform<<", sampleSize "<<sampleSize<< endl;
+    qDebug() << "in loadClusters,  nbSpikes: "<<nbSpikes <<", k: "<<k<<", spkFileLength "<<spkFileLength<<", nbChannels "<<nbChannels<<", nbSamplesInWaveform "<<nbSamplesInWaveform<<", sampleSize "<<sampleSize<< endl;
   }
   catch(...){
    delete []buffer;
@@ -351,7 +352,7 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
 
   delete []buffer;
 
-   cout << "in loadFeatures,  k: "<<k<< " nbSpikes "<<nbSpikes<< " nbDimensions "<<nbDimensions<< endl;
+   qDebug() << "in loadFeatures,  k: "<<k<< " nbSpikes "<<nbSpikes<< " nbDimensions "<<nbDimensions<< endl;
 
   //if the number of features read did not correspond to nbSpikes*nbDimensions, there is a problem.
   if(k != (nbSpikes * nbDimensions)){
@@ -601,7 +602,7 @@ void Data::minMaxDimensionCalculation(Q3ValueList<int> modifiedClusters){
   }
   mutex.unlock();
 
-   cout << "in minMaxDimensionCalculation end" << endl;
+   qDebug() << "in minMaxDimensionCalculation end" << endl;
 
 }
 
@@ -1392,7 +1393,7 @@ void Data::moveClustersToArtefact(Q3ValueList <int>& clustersToDelete){
 
   //The max and min dimensions have to be recalculated.
   //If the minMaxThread has not finish, wait until it is done
-  while(!minMaxThread->wait()){cout<<"wait for minMaxThread to finish"<<endl;};
+  while(!minMaxThread->wait()){qDebug()<<"wait for minMaxThread to finish"<<endl;};
   //Reset the flag to false so the minMaxThread can do the computation
   clusterZeroJustModified = false;
   minMaxThread->setModifiedClusters(clustersToDelete);
@@ -1551,7 +1552,7 @@ void Data::moveClustersToNoise(Q3ValueList<int>& clustersToDelete){
   //The max and min dimensions have to be recalculated.
   //If the minMaxThread has not finish, wait until it is done
   if(clustersToDelete.contains(0)){
-  while(!minMaxThread->wait()){cout<<"wait for minMaxThread to finish"<<endl; };
+  while(!minMaxThread->wait()){qDebug()<<"wait for minMaxThread to finish"<<endl; };
    //Reset the flag to false so the minMaxThread can do the computation
    clusterZeroJustModified = false;
    Q3ValueList<int> modifiedClusters;
@@ -1881,7 +1882,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
  //Inform that an undo is in process
  undoRedoInProcess = true;
 
- cout<<"in Data::undo 1"<<endl;
+ qDebug()<<"in Data::undo 1"<<endl;
 
  //Get the list of clusters before applying the changes, this will be used in the clean
  //of the correlation.
@@ -1895,7 +1896,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
   Q3ValueList<int>::iterator clustersToRemoveIterator;
   for(clustersToRemoveIterator = addedClusters.begin(); clustersToRemoveIterator != addedClusters.end(); ++clustersToRemoveIterator){
 
-   cout<<"in Data::undo addedClusters.size() > 0, *clustersToRemoveIterator: "<<*clustersToRemoveIterator<<endl;
+   qDebug()<<"in Data::undo addedClusters.size() > 0, *clustersToRemoveIterator: "<<*clustersToRemoveIterator<<endl;
    mutex.lock();
    if(waveformStatusMap.contains(*clustersToRemoveIterator)){
     if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
@@ -1910,7 +1911,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
     }
    }
    mutex.unlock();
-     cout<<"in Data::undo addedClusters.size() > 0, *clustersToRemoveIterator: "<<*clustersToRemoveIterator<<", correlationsInProcess.contains(static_cast<dataType>(*clustersToRemoveIterator): "<<correlationsInProcess.contains(static_cast<dataType>(*clustersToRemoveIterator))<<endl;
+     qDebug()<<"in Data::undo addedClusters.size() > 0, *clustersToRemoveIterator: "<<*clustersToRemoveIterator<<", correlationsInProcess.contains(static_cast<dataType>(*clustersToRemoveIterator): "<<correlationsInProcess.contains(static_cast<dataType>(*clustersToRemoveIterator))<<endl;
 
 
 
@@ -1926,7 +1927,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
   Q3ValueList<int>::iterator clustersToRemoveIterator;
   for(clustersToRemoveIterator = updatedClusters.begin(); clustersToRemoveIterator != updatedClusters.end(); ++clustersToRemoveIterator){
 
-      cout<<"in Data::undo updatedClusters.size() > 0, *clustersToRemoveIterator: "<<*clustersToRemoveIterator<<endl;
+      qDebug()<<"in Data::undo updatedClusters.size() > 0, *clustersToRemoveIterator: "<<*clustersToRemoveIterator<<endl;
 
    mutex.lock();
    if(waveformStatusMap.contains(*clustersToRemoveIterator)){
@@ -1962,7 +1963,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
   Q3ValueList<dataType>::iterator iterator;
   for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
 
-      cout<<"in Data::undo addedClusters.size() == 0 && updatedClusters.size() == 0, *iterator: "<<*iterator<<endl;
+      qDebug()<<"in Data::undo addedClusters.size() == 0 && updatedClusters.size() == 0, *iterator: "<<*iterator<<endl;
 
 
    mutex.lock();
@@ -1993,7 +1994,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
  //Do the same with the spikesByCluster
  if(clusterInfoMapUndoList.count()>0){
 
-      cout<<"clusterInfoMapUndoList.count()>0"<<endl;
+      qDebug()<<"clusterInfoMapUndoList.count()>0"<<endl;
 
 
 
@@ -2005,19 +2006,19 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
   mutex.lock();
   clusterInfoMap =  clusterInfoMapTemp;
 
-  cout<<"in Data::undo 2, clusterInfoMap updated"<<endl;
+  qDebug()<<"in Data::undo 2, clusterInfoMap updated"<<endl;
 
   spikesByCluster =  spikesByClusterTemp;
 
   mutex.unlock();
 
-   cout<<"in Data::undo 3, spikesByCluster updated"<<endl;
+   qDebug()<<"in Data::undo 3, spikesByCluster updated"<<endl;
 
   //If the last action implied a changed of the dimension, change the dimension again
   if(dimensionChangedUndo[0] == true){
 
 
-      cout<<"in Data::undo dimensionChangedUndo[0] == true"<<endl;
+      qDebug()<<"in Data::undo dimensionChangedUndo[0] == true"<<endl;
 
 
    //If the minMaxThread has not finish, wait until it is done
@@ -2031,7 +2032,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
    dimensionChangedRedo.prepend(true);
   }
  }
- cout<<"in Data::undo end"<<endl;
+ qDebug()<<"in Data::undo end"<<endl;
 }
 
 
@@ -2360,7 +2361,7 @@ bool Data::saveClusters(FILE* clusterFile){
     for(long i = 1; i <= nbSpikes ; ++i)
       writeStatus = fprintf(clusterFile, "%i\n",static_cast<int>((spikesByClusterTemp)(2,i)));
   }
-cout << "save clu file: "<<Timer() << endl;
+qDebug() << "save clu file: "<<Timer() << endl;
   if(writeStatus > 0) return 1;
   else return 0;
 }

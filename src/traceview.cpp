@@ -32,6 +32,7 @@
 //Added by qt3to4:
 #include <QMouseEvent>
 #include <Q3PointArray>
+#include <QDebug>
 
 // include files for kde
 
@@ -118,7 +119,7 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
   abscissaMin = 0;
   X0 = borderX;
 
-  cout<<"nbChannels: "<<nbChannels<<" samplingRate: "<<samplingRate<<" timeStep: "<<timeStep<<" channelOffsets.size() "<<channelOffsets.size()<<" multiColumns "<<multiColumns<<endl;
+  qDebug()<<"nbChannels: "<<nbChannels<<" samplingRate: "<<samplingRate<<" timeStep: "<<timeStep<<" channelOffsets.size() "<<channelOffsets.size()<<" multiColumns "<<multiColumns<<endl;
 
   //The initial offset for each channel is set to zero.
   if(channelOffsets.size() == 0)
@@ -3050,7 +3051,7 @@ void TraceView::correctZoom(QRect& r){
   }
  }
   /* if(zoomed && !firstZoom && zoomOut){
-     cout<<" zoomed && !firstZoom && zoomOut r.width() "<<r.width()<<endl;
+     qDebug()<<" zoomed && !firstZoom && zoomOut r.width() "<<r.width()<<endl;
     zoomOut = false;
     zoomed = false;
     if(zoomFactor != 1){
@@ -3058,7 +3059,7 @@ void TraceView::correctZoom(QRect& r){
      }
      else{
       zoomed = false;
-      cout<<"zoomFactor "<<zoomFactor<<endl;
+      qDebug()<<"zoomFactor "<<zoomFactor<<endl;
       int windowWidth = r.width();
 
 
@@ -3081,8 +3082,8 @@ void TraceView::correctZoom(QRect& r){
       r.setLeft(newLeft);
       r.setWidth(newWidth);
       window = ZoomWindow(r);
- cout<<"previousWindow.width() "<<previousWindow.width()<<" windowWidth "<<windowWidth<<" previousDownSampling "<<previousDownSampling<<" zoomFactor "<<zoomFactor<<endl;
-cout<<" downSampling "<<downSampling<<" newWidth "<<newWidth<<" r.left() "<<r.left()<<" newLeft "<<newLeft<<" timeStep "<<timeStep<<endl;
+ qDebug()<<"previousWindow.width() "<<previousWindow.width()<<" windowWidth "<<windowWidth<<" previousDownSampling "<<previousDownSampling<<" zoomFactor "<<zoomFactor<<endl;
+qDebug()<<" downSampling "<<downSampling<<" newWidth "<<newWidth<<" r.left() "<<r.left()<<" newLeft "<<newLeft<<" timeStep "<<timeStep<<endl;
 
      }
     }

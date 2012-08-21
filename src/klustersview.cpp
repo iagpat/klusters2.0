@@ -33,6 +33,7 @@ using namespace std;
 #include <qlabel.h>
 #include <q3deepcopy.h>
 #include <q3paintdevicemetrics.h>
+#include <QDebug>
 
 // application specific includes
 #include "klusters.h"
@@ -171,7 +172,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
 
 KlustersView::~KlustersView()
 {
-  cout << "in ~KlustersView(): "<<endl;
+  qDebug() << "in ~KlustersView(): "<<endl;
   delete shownClusters;
   delete removedClusters;
 }
@@ -260,9 +261,9 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
   int nbViews = viewList.count(); 
   ViewWidget* widget;
   for(widget = viewList.first(); widget != 0L ; widget = viewList.next()){
-   //cout<<" widget->geomerty().width() "<<widget->geometry().width()<<" widget->geomerty().height() "<<widget->geometry().height()<<endl;
+   //qDebug()<<" widget->geomerty().width() "<<widget->geometry().width()<<" widget->geomerty().height() "<<widget->geometry().height()<<endl;
    //QWidget* parent = static_cast<QWidget*>(widget->parent());
-   // cout<<"parent->geometry().x() "<<parent->geometry().x()<<" parent->geomerty().y() "<<parent->geometry().y()<<endl;
+   // qDebug()<<"parent->geometry().x() "<<parent->geometry().x()<<" parent->geomerty().y() "<<parent->geometry().y()<<endl;
 
    //Modify the viewport so the view will not draw on the legend
    QRect newViewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height());
@@ -956,7 +957,7 @@ void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,Q3Val
     Q3ValueList<int>::iterator fromClusterIterator;
     for (fromClusterIterator = fromClustersInView.begin(); fromClusterIterator != fromClustersInView.end(); ++fromClusterIterator){
       int newClusterId = fromToNewClusterIds[*fromClusterIterator];
-cout << "in KlustersView::addNewClustersToView newClusterId "<<newClusterId<<endl;
+qDebug() << "in KlustersView::addNewClustersToView newClusterId "<<newClusterId<<endl;
       shownClusters->append(newClusterId);
       emit newClusterAddedToView(newClusterId,active);      
     }
@@ -970,7 +971,7 @@ cout << "in KlustersView::addNewClustersToView newClusterId "<<newClusterId<<end
 
 
 void KlustersView::addNewClustersToView(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,bool active){
-cout << "in KlustersView::addNewClustersToView: "<<endl;
+qDebug() << "in KlustersView::addNewClustersToView: "<<endl;
 
   //List containing the clusters of this view which contained recluster clusters
   Q3ValueList<int> inView = clustersInView(clustersToRecluster);
@@ -984,14 +985,14 @@ cout << "in KlustersView::addNewClustersToView: "<<endl;
 
    Q3ValueList<int>::iterator clustersToRemoveIterator;
    for(clustersToRemoveIterator = clustersToRecluster.begin(); clustersToRemoveIterator != clustersToRecluster.end(); ++clustersToRemoveIterator ){
-    cout << "*clustersToRemoveIterator: "<<*clustersToRemoveIterator<<endl;
+    qDebug() << "*clustersToRemoveIterator: "<<*clustersToRemoveIterator<<endl;
     removeClusterFromView(*clustersToRemoveIterator,active);
    }
 
    Q3ValueList<int>::iterator iterator;
    for (iterator = reclusteredClusterList.begin(); iterator != reclusteredClusterList.end(); ++iterator){
     shownClusters->append(*iterator);
-     cout << "*iterator to add: "<<*iterator<<endl;
+     qDebug() << "*iterator to add: "<<*iterator<<endl;
     emit newClusterAddedToView(*iterator,active);
    }
   }  
@@ -1100,12 +1101,12 @@ void KlustersView::addRemovedClusters(bool active){
  //If removedClustersUndoList is not empty, make the current removedClusters become the first element
  //of the removedClustersRedoList and the first element of the removedClustersUndoList become the current removedClusters.
  if(removedClustersUndoList.count()>0){
-   cout << "in addRemovedClusters removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
+   qDebug() << "in addRemovedClusters removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
   if(removedClusters->size() > 0){
    Q3ValueList<int>::iterator newClusterIterator;
    for(newClusterIterator = removedClusters->begin(); newClusterIterator != removedClusters->end(); ++newClusterIterator){
      shownClusters->append(*newClusterIterator);
-     cout << "in addRemovedClusters *newClusterIterator: "<<*newClusterIterator<< endl;
+     qDebug() << "in addRemovedClusters *newClusterIterator: "<<*newClusterIterator<< endl;
      emit newClusterAddedToView(*newClusterIterator,active);
    }
   }
@@ -1119,7 +1120,7 @@ void KlustersView::undo(bool active){
   //add back the removed clusters
   addRemovedClusters(active);
   --numberUndo;
-   cout << "numberUndo in KlustersView::undo added: "<<numberUndo<< endl;
+   qDebug() << "numberUndo in KlustersView::undo added: "<<numberUndo<< endl;
 }
 
 void KlustersView::undoAddedClusters(Q3ValueList<int>& addedClusters,bool active){
@@ -1137,7 +1138,7 @@ void KlustersView::undoAddedClusters(Q3ValueList<int>& addedClusters,bool active
    }
   }
   --numberUndo;
-   cout << "numberUndo in KlustersView::undo modified: "<<numberUndo<<" removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
+   qDebug() << "numberUndo in KlustersView::undo modified: "<<numberUndo<<" removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
 }
 
 void KlustersView::undoModifiedClusters(Q3ValueList<int>& updatedClusters,bool active){
@@ -1152,7 +1153,7 @@ void KlustersView::undoModifiedClusters(Q3ValueList<int>& updatedClusters,bool a
     emit modifiedClustersUndo(inView,active);
   }
   --numberUndo;
-   cout << "numberUndo in KlustersView::undo updated: "<<numberUndo<< endl;
+   qDebug() << "numberUndo in KlustersView::undo updated: "<<numberUndo<< endl;
 }
 
 void KlustersView::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters,bool active){  
@@ -1176,7 +1177,7 @@ void KlustersView::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& update
   if(inView.size() > 0) emit modifiedClustersUndo(inView,active);
 
   --numberUndo;
-   cout << "numberUndo in KlustersView::undo added-updated: "<<numberUndo<< endl;
+   qDebug() << "numberUndo in KlustersView::undo added-updated: "<<numberUndo<< endl;
 }
 
 
@@ -1335,7 +1336,7 @@ void KlustersView::undoRenumbering(QMap<int,int>& clusterIdsNewOld,bool active){
 
  
  numberUndo--;
- cout << "numberUndo in KlustersView::undoRenumbering: "<<numberUndo<< endl;
+ qDebug() << "numberUndo in KlustersView::undoRenumbering: "<<numberUndo<< endl;
 
  emit clustersRenumbered(active);
 }
@@ -1347,7 +1348,7 @@ void KlustersView::redoRenumbering(QMap<int,int>& clusterIdsOldNew,bool active){
  removeUndoAddedClusters(active);
  
  ++numberUndo;
-  cout << "numberUndo in KlustersView::redoRenumbering: "<<numberUndo<< endl;
+  qDebug() << "numberUndo in KlustersView::redoRenumbering: "<<numberUndo<< endl;
 
  emit clustersRenumbered(active);
 }

@@ -27,6 +27,7 @@
 //Added by qt3to4:
 #include <QCustomEvent>
 #include <QEvent>
+#include <QDebug>
 
 
 /**Thread used to save the cluster file.
@@ -39,7 +40,7 @@ class SaveThread : public QThread{
 public: 
 
   inline SaveThread(KlustersApp* parent):doc(0L),parent(parent),isSaveAs(false){}
-  inline ~SaveThread(){cout<<"in ~SaveThread"<<endl;}
+  inline ~SaveThread(){qDebug()<<"in ~SaveThread"<<endl;}
 
   
   virtual void run();
