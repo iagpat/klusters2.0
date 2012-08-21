@@ -472,13 +472,13 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
 
   if(dimensionX == timeDimension){
    int timeInS = static_cast<int>(current.x() * samplingInterval / 1000000.0);
-   statusBar->changeItem("Coordinates: (" + QString("%1").arg(timeInS) + ", " + QString("%1").arg(-current.y()) + ")",1);
+   statusBar->showMessage("Coordinates: (" + QString("%1").arg(timeInS) + ", " + QString("%1").arg(-current.y()) + ")");
   }
   else if(dimensionY == timeDimension){
    int timeInS = static_cast<int>(current.y() * samplingInterval / 1000000.0);
-   statusBar->changeItem("Coordinates: (" + QString("%1").arg(current.x()) + ", " + QString("%1").arg(-timeInS) + ")",1);
+   statusBar->showMessage("Coordinates: (" + QString("%1").arg(current.x()) + ", " + QString("%1").arg(-timeInS) + ")");
   }
-  else  statusBar->changeItem("Coordinates: (" + QString("%1").arg(current.x()) + ", " + QString("%1").arg(-current.y()) + ")",1);
+  else  statusBar->showMessage("Coordinates: (" + QString("%1").arg(current.x()) + ", " + QString("%1").arg(-current.y()) + ")");
 
 
 

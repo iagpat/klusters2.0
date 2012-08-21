@@ -36,7 +36,7 @@ ProcessListBoxItem::ProcessListBoxItem(const QString &s, Type type)
 void ProcessListBoxItem::paint(QPainter* p)
 {
     p->setPen((t==Error)? Qt::darkRed :
-              (t==Diagnostic)? Qt::black : Qt::darkBlue);
+                          (t==Diagnostic)? Qt::black : Qt::darkBlue);
     Q3ListBoxText::paint(p);
 }
 
@@ -56,7 +56,7 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
     setPalette(pal);
 
     setCursor(QCursor(Qt::ArrowCursor));
-        
+
     //Create the process
     childproc = new QProcess();
     const char* shellToUse = getenv("SHELL");
@@ -74,12 +74,12 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
              this, SLOT(slotOutputTreatmentOver()));
 
     connect(this, SIGNAL(hidden()),
-             procLineMaker, SLOT(slotWidgetHidden()));
+            procLineMaker, SLOT(slotWidgetHidden()));
 
     connect(childproc, SIGNAL(processExited(QProcess*)),
             this, SLOT(slotProcessExited(QProcess*) )) ;
     connect(this, SIGNAL(processExited(QProcess*)),
-            procLineMaker, SLOT(slotProcessExited())) ;    
+            procLineMaker, SLOT(slotProcessExited())) ;
 }
 
 
@@ -97,8 +97,8 @@ bool ProcessWidget::startJob(const QString &dir, const QString &command)
     insertItem(new ProcessListBoxItem(command, ProcessListBoxItem::Diagnostic));
     childproc->clearArguments();
     if(!dir.isNull()) {
-     QDir::setCurrent(dir);
-    }    
+        QDir::setCurrent(dir);
+    }
     
     *childproc << command;
     return childproc->start(QProcess::NotifyOnExit, QProcess::AllOutput);
@@ -127,14 +127,14 @@ void ProcessWidget::slotProcessExited(QProcess* )
 void ProcessWidget::insertStdoutLine(const QString &line)
 {
     insertItem(new ProcessListBoxItem(line.trimmed(),
-        ProcessListBoxItem::Normal));
+                                      ProcessListBoxItem::Normal));
 }
 
 
 void ProcessWidget::insertStderrLine(const QString &line)
 {
     insertItem(new ProcessListBoxItem(line.trimmed(),
-        ProcessListBoxItem::Error));
+                                      ProcessListBoxItem::Error));
 }
 
 
@@ -171,67 +171,67 @@ QSize ProcessWidget::minimumSizeHint() const
 
 void ProcessWidget::maybeScrollToBottom()
 {
-  if ( verticalScrollBar()->value() == verticalScrollBar()->maxValue() ) {
-      qApp->processEvents();
-      verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
-      /// \FIXME dirty hack to _actually_ scroll to the bottom
-      qApp->processEvents();
-      verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
-  }
+    if ( verticalScrollBar()->value() == verticalScrollBar()->maxValue() ) {
+        qApp->processEvents();
+        verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
+        /// \FIXME dirty hack to _actually_ scroll to the bottom
+        qApp->processEvents();
+        verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
+    }
 }
 
 void ProcessWidget::hideWidget(){
- if(childproc->isRunning()) childproc->suspend();
- emit hidden();
+    if(childproc->isRunning()) childproc->suspend();
+    emit hidden();
 }
 
 
 void ProcessWidget::slotOutputTreatmentOver(){
- childFinished(childproc->normalExit(), childproc->exitStatus());
- emit processOutputsFinished();
+    childFinished(childproc->normalExit(), childproc->exitStatus());
+    emit processOutputsFinished();
 }
 
 void ProcessWidget::print(QPrinter *printer, QString filePath){
-  QPainter printPainter;
-  Q3PaintDeviceMetrics metrics(printer);// need width/height of printer surface
-  const int Margin = 20;
-  int yPos = 0;       // y-position for each line
+    QPainter printPainter;
+    Q3PaintDeviceMetrics metrics(printer);// need width/height of printer surface
+    const int Margin = 20;
+    int yPos = 0;       // y-position for each line
 
-  printPainter.begin(printer);
+    printPainter.begin(printer);
 
-  QRect textRec = QRect(printPainter.viewport().left() + 5 ,printPainter.viewport().height() - 20,printPainter.viewport().width() - 5,20);
-  QFont f("Helvetica",8);
-  
-  printPainter.setFont(f);
-  QFontMetrics fontMetrics = printPainter.fontMetrics();
+    QRect textRec = QRect(printPainter.viewport().left() + 5 ,printPainter.viewport().height() - 20,printPainter.viewport().width() - 5,20);
+    QFont f("Helvetica",8);
 
-  for(int i = 0; i< numRows(); i++){
-   // no more room on the current page 
-   if(Margin + yPos > metrics.height() - Margin) {
+    printPainter.setFont(f);
+    QFontMetrics fontMetrics = printPainter.fontMetrics();
+
+    for(int i = 0; i< numRows(); i++){
+        // no more room on the current page
+        if(Margin + yPos > metrics.height() - Margin) {
+            printPainter.setPen(Qt::black);
+            printPainter.drawText(Margin,Margin + yPos + fontMetrics.lineSpacing(),metrics.width(),fontMetrics.lineSpacing(),
+                                  Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
+
+            printer->newPage();
+            yPos = 0;  // back to top of page
+        }
+        //Draw text
+        ProcessListBoxItem* boxItem = static_cast<ProcessListBoxItem*>(item(i));
+        printPainter.setPen(boxItem->color());
+
+        printPainter.drawText(Margin,Margin + yPos,
+                              metrics.width(),fontMetrics.lineSpacing(),
+                              ExpandTabs | DontClip, boxItem->text());
+
+        yPos = yPos + fontMetrics.lineSpacing();
+    }
+
+    //Print the name of the file
+    printPainter.resetXForm();
     printPainter.setPen(Qt::black);
-    printPainter.drawText(Margin,Margin + yPos + fontMetrics.lineSpacing(),metrics.width(),fontMetrics.lineSpacing(),
-                          Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
-     
-    printer->newPage();  
-    yPos = 0;  // back to top of page
-   }
-   //Draw text
-   ProcessListBoxItem* boxItem = static_cast<ProcessListBoxItem*>(item(i));
-   printPainter.setPen(boxItem->color());
+    printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
 
-   printPainter.drawText(Margin,Margin + yPos,
-                        metrics.width(),fontMetrics.lineSpacing(),
-                        ExpandTabs | DontClip, boxItem->text());
-
-   yPos = yPos + fontMetrics.lineSpacing();
- }
-
- //Print the name of the file
- printPainter.resetXForm();
- printPainter.setPen(Qt::black);
- printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
- 
- printPainter.end();
+    printPainter.end();
 }
 
 

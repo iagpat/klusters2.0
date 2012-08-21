@@ -312,13 +312,13 @@ void ClusterPalette::slotOnItem(Q3IconViewItem* item){
 			  }
 		  }
 	  		  
-		  statusBar->changeItem(clusterText,1);
+          statusBar->showMessage(clusterText);
 
 			//Ajout de l'information en tooltip
 		  //clusterItem->setToolTipText("Structure: " + clusterInformation[0] + ", Type: " + clusterInformation[1] + ", ID: " + clusterInformation[2] + ", Quality: " + clusterInformation[3] + ", notes: " + clusterInformation[4]);
 	  }
 	  else{
-		  statusBar->changeItem("",1);
+          statusBar->clearMessage();
 	  }
    }
   }
@@ -453,13 +453,13 @@ void ClusterPalette::selectItems(Q3ValueList<int> selectedClusters){
 
   //Loop on the clusters to be selected
   Q3ValueList<int>::iterator clusterIterator;
-
   ClusterPaletteIconViewItem* currentIcon = 0L;
+#if KDAB_PENDING
   for(clusterIterator = selectedClusters.begin(); clusterIterator != selectedClusters.end(); ++clusterIterator){	  
 	  currentIcon =  static_cast<ClusterPaletteIconViewItem*>(iconView->findItem(QString("%1").arg(*clusterIterator),Qt::BeginsWith));
 	  currentIcon->setSelected(true,true);
   }
-
+#endif
   //Last item in selection gets focus if it exists
   if(selectedClusters.size() != 0) iconView->setCurrentItem(currentIcon);
 

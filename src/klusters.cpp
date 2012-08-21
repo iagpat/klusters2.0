@@ -445,7 +445,7 @@ void KlustersApp::initStatusBar()
 {
   ///////////////////////////////////////////////////////////////////
   // STATUSBAR
-  statusBar()->insertItem(tr("Ready."),1);
+  statusBar()->showMessage(tr("Ready."),1);
 }
 
 
@@ -1620,7 +1620,7 @@ void KlustersApp::slotStatusMsg(const QString &text)
   ///////////////////////////////////////////////////////////////////
   // change status message permanently
   statusBar()->clear();
-  statusBar()->changeItem(text,1);
+  statusBar()->showMessage(text);
 }
 
 void KlustersApp::viewMenuAboutToShow()
