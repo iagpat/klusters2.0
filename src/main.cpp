@@ -99,9 +99,8 @@ int main(int argc, char* argv[])
   if(args.count()){
     QString file = args.at(0);
     if(file.left(1) != "/"){
-     QString url = QString();
-     url.setPath((QDir::currentPath()).append("/"));
-     url.setFileName(file);
+     QString url;
+     url = QDir::currentPath()+ ("/") + file;
      Klusters->openDocumentFile(url);
     } else {
         Klusters->openDocumentFile(file);

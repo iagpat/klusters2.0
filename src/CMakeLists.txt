@@ -22,7 +22,7 @@ set(klusters_SRCS array.cpp
 	#groupingassistant.cpp
         itemcolors.cpp 
 	#klusters.cpp 
-	klustersdoc.cpp 
+	#klustersdoc.cpp 
 	klustersview.cpp 
 	klustersxmlreader.cpp
 	main.cpp 

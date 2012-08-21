@@ -131,17 +131,17 @@ class KlustersApp : public KDockMainWindow
      * This function is called when it is time for Klusters to save its
      * properties for session management purposes.
      */
-    void saveProperties(KConfig* config);
+    void saveProperties();
     /**
      * This function is called when this Klusters is restored. The KConfig
      * object points to the session management config file that was saved.
      * with @ref saveProperties
      */
-    void readProperties(KConfig* config);
+    void readProperties();
     
     void customEvent (QCustomEvent* event);
     
-    inline void showEvent(QShowEvent* event){slotUpdateParameterBar();};
+    inline void showEvent(QShowEvent* event){slotUpdateParameterBar();}
 
     /** Event filter to catch right click for contextual menu.
     * @param object target object for the event.
@@ -523,9 +523,6 @@ class KlustersApp : public KDockMainWindow
     KToggleAction* shoulderLine;
     KToolBar* paramBar;
     KToggleAction* showHideLabels;
-
-    /** the configuration object of the application */
-    KConfig* config;
 
     /**Spine box enabling to choose the absciss dimension*/
     QSpinBox* dimensionX;
