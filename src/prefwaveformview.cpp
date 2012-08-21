@@ -26,7 +26,7 @@
 
 
 PrefWaveformView::PrefWaveformView(QWidget *parent,int nbChannels,const char *name):
-PrefWaveformViewLayout(parent,name),nbChannels(nbChannels){
+PrefWaveformViewLayout(parent),nbChannels(nbChannels){
  if(nbChannels > 0) initializeChannelList();
  else{
    saveButton->setEnabled(false);
@@ -69,6 +69,7 @@ void PrefWaveformView::resetChannelList(int nb){
 }
 
 void PrefWaveformView::saveChannelOrder(){
+#if KDAB_PENDING	
   QString url = KFileDialog::getSaveURL(QDir::currentPath(),
         tr("*|All files"), this, tr("Save as..."));
 
@@ -94,6 +95,7 @@ void PrefWaveformView::saveChannelOrder(){
     return;     
    }
   } 
+#endif
 }
 
 void PrefWaveformView::loadChannelOrder(){

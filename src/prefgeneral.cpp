@@ -23,28 +23,31 @@
 // include files for KDE
 
 
-PrefGeneral::PrefGeneral(QWidget *parent, const char *name ) : PrefGeneralLayout(parent,name) {
+PrefGeneral::PrefGeneral(QWidget *parent, const char *name ) : PrefGeneralLayout(parent) {
   connect(crashRecoveryCheckBox,SIGNAL(stateChanged(int)),this,SLOT(updateCrashRecoveryTimeInterval(int)));
   connect(reclusteringExecutableButton,SIGNAL(clicked()),this,SLOT(updateReclusteringExecutable()));
 
   //Set an icon on the reclusteringExecutableButton button
   
-  reclusteringExecutableButton->setIconSet(QIcon(":/icons/fileopen"))); 
+  reclusteringExecutableButton->setIconSet(QIcon(":/icons/fileopen")); 
 }
 PrefGeneral::~PrefGeneral(){
 }
 
 void PrefGeneral::setCrashRecovery(bool use){
  crashRecoveryCheckBox->setChecked(use);
- if(use) updateCrashRecoveryTimeInterval(QButton::On);
- else updateCrashRecoveryTimeInterval(QButton::Off);
+ if(use) updateCrashRecoveryTimeInterval(QCheckBox::On);
+ else updateCrashRecoveryTimeInterval(QCheckBox::Off);
 }
 
 void PrefGeneral::setCrashRecoveryIndex(int index){crashRecoveryComboBox->setCurrentItem(index);}
 
 void PrefGeneral::setNbUndo(int nb){undoSpinBox->setValue(nb);}
 
-void PrefGeneral::setBackgroundColor(const QColor& color) {backgroundColorButton->setColor(color);}
+void PrefGeneral::setBackgroundColor(const QColor& color) {
+	//KDAB-PENDING
+	//backgroundColorButton->setColor(color);
+}
 
 void PrefGeneral::setReclusteringExecutable(QString executable) {reclusteringExecutableLineEdit->setText(executable);}
 
@@ -56,15 +59,19 @@ int PrefGeneral::crashRecoveryIntervalIndex() const{return crashRecoveryComboBox
 
 int PrefGeneral::getNbUndo() const{return undoSpinBox->value();}
 
-QColor PrefGeneral::getBackgroundColor() const{return backgroundColorButton->color();}
+QColor PrefGeneral::getBackgroundColor() const
+{
+	//KDAB_PENDING
+	//return backgroundColorButton->color();
+}
 
 QString PrefGeneral::getReclusteringExecutable() const{return reclusteringExecutableLineEdit->text();}
 
 QString PrefGeneral::getReclusteringArguments() const{return reclusteringArgsLineEdit->text();}
        
 void PrefGeneral::updateCrashRecoveryTimeInterval(int state){
- if(state == QButton::On) crashRecoveryComboBox->setEnabled(true);
- else if(state == QButton::Off) crashRecoveryComboBox->setEnabled(false);
+ if(state == QCheckBox::On) crashRecoveryComboBox->setEnabled(true);
+ else if(state == QCheckBox::Off) crashRecoveryComboBox->setEnabled(false);
 }
 
 void PrefGeneral::updateReclusteringExecutable(){
