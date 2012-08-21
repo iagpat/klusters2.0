@@ -34,17 +34,17 @@ set(klusters_SRCS array.cpp
 	prefgeneral.cpp
 	prefwaveformview.cpp 
 	processlinemaker.cpp 
-	processwidget.cpp
-	savethread.cpp 
+	#processwidget.cpp
+	#savethread.cpp 
 	sortabletable.cpp 
 	tags.cpp 
 	tracesprovider.cpp 
-	traceview.cpp
+	#traceview.cpp
         tracewidget.cpp 
 	utilities.cpp 
-	viewwidget.cpp 
+	#viewwidget.cpp 
 	waveformthread.cpp 
-	waveformview.cpp
+	#waveformview.cpp
         zoomwindow.cpp 
 	prefgenerallayout.cpp 
 	prefwaveformviewlayout.cpp 
