@@ -214,7 +214,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,Q3Va
 
  //the found spike will be placed at clusterPosition*100 % of the timeFrame
  //compute the final starting time
- dataType startingInRecordingUnits = qMax(time - static_cast<long>(position),0);
+ dataType startingInRecordingUnits = qMax(time - static_cast<long>(position),0L);
 
  if(startingInRecordingUnits == previousStartTime){
   if(firstSpikes.size() == 1){
@@ -254,7 +254,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,Q3Va
   //qSort(firstSpikes);
   time = firstSpikes[0];
 
-  startingInRecordingUnits = qMax(time - static_cast<long>(position),0);
+  startingInRecordingUnits = qMax(time - static_cast<long>(position),0L);
  }
 
  dataType endInRecordingUnits = startingInRecordingUnits + timeFrameInRecordingUnits;
@@ -373,7 +373,7 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
 
  //the found spike will be placed at clusterPosition*100 % of the timeFrame
  //compute the final starting time
- dataType startingInRecordingUnits = qMax(time - static_cast<long>(position),0);
+ dataType startingInRecordingUnits = qMax(time - static_cast<long>(position),0L);
 
  dataType endInRecordingUnits = startingInRecordingUnits + timeFrameInRecordingUnits;
 

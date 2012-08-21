@@ -9,11 +9,11 @@ set(klusters_SRCS array.cpp
 	clusterinformationdialog.cpp
 	clusterpaletteiconviewitem.cpp 
 	#clusterpalettetooltip.cpp 
-	#clustersprovider.cpp 
-	clusterview.cpp
+	clustersprovider.cpp 
+	#clusterview.cpp
         configuration.cpp 
 	correlationthread.cpp 
-	#correlationview.cpp 
+	correlationview.cpp 
 	data.cpp 
 	dataprovider.cpp
 	errormatrixthread.cpp 
