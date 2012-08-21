@@ -185,7 +185,7 @@ void ClusterView::resetSelectionPolygon(){
      QRect r((QRect)window);
      painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
 
-     painter.setRasterOp(XorROP);
+     //KDAB_PENDING painter.setRasterOp(XorROP);
      painter.setPen(color);
 
      //Erase the closing line
@@ -218,7 +218,7 @@ void ClusterView::eraseTheLastDrawnLine(QColor polygonColor){
   //set the window (part of the word I want to show)
   QRect r((QRect)window);
   painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
-  painter.setRasterOp(XorROP);
+  //KDAB_PENDING painter.setRasterOp(XorROP);
   painter.setPen(polygonColor);
 
   //The user did not move since the last left click (no mouseMoveEvent)
@@ -273,7 +273,7 @@ void ClusterView::eraseTheLastMovingLine(QColor polygonColor){
     //set the window (part of the word I want to show)
     QRect r((QRect)window);
     painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
-    painter.setRasterOp(XorROP);
+    //KDAB_PENDING painter.setRasterOp(XorROP);
     painter.setPen(polygonColor);
 
     //Treat the case when we reach the first point of the selection
@@ -322,7 +322,7 @@ void ClusterView::updatedDimensions(int dimensionX, int dimensionY){
   //to -40000000 (due to a Qt limitation in the big negative values).
   long width = maxForDimensionX - minForDimensionX;
   abscissaMin = static_cast<long>(qMin(0L,minForDimensionX)-width*0.05);
-  abscissaMin = static_cast<long>(qMax(abscissaMin,-1000000)); // below this limit, Qt crashes
+  abscissaMin = static_cast<long>(qMax(abscissaMin,-1000000L)); // below this limit, Qt crashes
   abscissaMax = static_cast<long>(qMax(0L,maxForDimensionX)+width*0.05);
 
   long height = maxForDimensionY - minForDimensionY;
@@ -426,7 +426,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
         eraseTheLastMovingLine(color);
 
         //Draw the closing line of the polygon
-        painter.setRasterOp(XorROP);
+        //KDAB_PENDING painter.setRasterOp(XorROP);
         painter.drawLine(selectionPolygon.point(0),selectionPolygon.point(selectionPolygon.size()-1));
 
         polygonClosed = true;
@@ -502,7 +502,7 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
      //set the window (part of the word I want to show)
      QRect r((QRect)window);
      painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
-     painter.setRasterOp(XorROP);
+     //KDAB_PENDING painter.setRasterOp(XorROP);
      painter.setPen(color);
 
      //First mouseMoveEvent after the last mousePressEvent
@@ -665,7 +665,7 @@ void ClusterView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,boo
   }
 
   printPainter.fillRect(back,backgroundColor());
-  printPainter.setClipRect(back,QPainter::CoordPainter);
+  //KDAB_PENDING printPainter.setClipRect(back,QPainter::CoordPainter);
 
   //Draw the axes
   drawAxes(printPainter);
