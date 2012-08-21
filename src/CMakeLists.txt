@@ -5,7 +5,7 @@ set(klusters_SRCS array.cpp
 	baseframe.cpp 
 	channelcolors.cpp
         channellist.cpp 
-	clusterPalette.cpp 
+	#clusterPalette.cpp 
 	clusterinformationdialog.cpp
 	clusterpaletteiconviewitem.cpp 
 	clusterpalettetooltip.cpp 
