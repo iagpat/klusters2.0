@@ -126,7 +126,7 @@ class KlustersView : public KDockArea
     void print(QPrinter* printer,QString filePath,bool whiteBackground);
     
     /**Adds a new view (ClusterView,WaveformView or CorrelationView).
-    * @param docWidget KDockWidget to which the new view will be docked.    
+    * @param docWidget QDockWidget to which the new view will be docked.    
     * @param displayType type of view to add.
     * @param backgroundColor color used as background.
     * @param statusBar a reference to the application status bar.
@@ -135,7 +135,7 @@ class KlustersView : public KDockArea
     * @param positions positions of the channels to use in the view set by the user in the settings dialog.
     * @return false if there was already a view of @displayType in the view, true otherwise.
     */
-    bool addView(KDockWidget* docWidget,DisplayType displayType,QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
+    bool addView(QDockWidget* docWidget,DisplayType displayType,QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions);
     
     /**List of the names for the different type of view available.*/
     static const QString DisplayTypeNames[];
@@ -751,7 +751,7 @@ protected:
     /** mainDock is the main DockWidget to which all other dockWidget will be dock. Inititalized in
      * the constructor.
      */
-    KDockWidget* mainDock;
+    QDockWidget* mainDock;
 
     /**List of the presented clusters*/
     Q3ValueList<int>* shownClusters;
@@ -968,9 +968,9 @@ protected:
    * Makes signal and slot connection between the current view and one of is contained view (@p view)
    * @param displayType type of view for which connections will be made.
    * @param view view for which connections will be made.
-   * @param dockWidget KDockWidget containing the view for which connections will be made.  
+   * @param dockWidget QDockWidget containing the view for which connections will be made.  
    */
-   void setConnections(DisplayType displayType,QWidget* view,KDockWidget* dockWidget);
+   void setConnections(DisplayType displayType,QWidget* view,QDockWidget* dockWidget);
    
    /**
    * Makes signal and slot connection between the current view and the active correlogramView.

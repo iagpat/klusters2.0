@@ -532,11 +532,11 @@ void KlustersApp::initDisplay(){
    
    mainDock->setWidget(view);
    //allow dock on the left side only
-   mainDock->setDockSite(KDockWidget::DockLeft);
+   mainDock->setDockSite(QDockWidget::DockLeft);
    setView(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
    setMainDockWidget(mainDock);
    //disable docking abilities of mainDock itself
-   mainDock->setEnableDocking(KDockWidget::DockNone);
+   mainDock->setEnableDocking(QDockWidget::DockNone);
 
    //Initialize and dock the clusterpanel
    //Create the cluster list and select the clusters which will be drawn
@@ -544,14 +544,14 @@ void KlustersApp::initDisplay(){
    clusterPalette->selectItems(*clusterList);
 
    //allow dock on the right side only
-   clusterPanel->setDockSite(KDockWidget::DockRight);
+   clusterPanel->setDockSite(QDockWidget::DockRight);
      
    //Dock the clusterPanel on the left
-   clusterPanel->setEnableDocking(KDockWidget::DockFullSite);
-   clusterPanel->manualDock(mainDock,KDockWidget::DockLeft,0);  // relation target/this (in percent)
+   clusterPanel->setEnableDocking(QDockWidget::DockFullSite);
+   clusterPanel->manualDock(mainDock,QDockWidget::DockLeft,0);  // relation target/this (in percent)
    
    //forbit docking abilities of clusterPanel itself
-   clusterPanel->setEnableDocking(KDockWidget::DockNone);
+   clusterPanel->setEnableDocking(QDockWidget::DockNone);
 
    //Update the Time frame and sample related widgets
    spikesTodisplay->setValue(DEFAULT_NB_SPIKES_DISPLAYED);  
@@ -585,7 +585,7 @@ void KlustersApp::initDisplay(){
 void KlustersApp::createDisplay(KlustersView::DisplayType type)
 {
   if(mainDock){
-    KDockWidget* display;
+    QDockWidget* display;
     QString displayName = (doc->documentName()).append(type);
     QString displayType = KlustersView::DisplayTypeNames[type];
 
@@ -661,10 +661,10 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
     display->setWidget(view);
 
     //Temporarily allow addition of a new dockWidget in the center
-    mainDock->setDockSite(KDockWidget::DockCenter);
+    mainDock->setDockSite(QDockWidget::DockCenter);
     //Add the new display as a tab and get a new DockWidget, grandParent of the target (mainDock)
     //and the new display.
-    KDockWidget* grandParent = display->manualDock(mainDock,KDockWidget::DockCenter);
+    QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
 
     //Disconnect the previous connection
     if(tabsParent != NULL) disconnect(tabsParent,0,0,0);
@@ -679,12 +679,12 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
     slotStateChanged("tabState");
     
     //Back to enable dock to the left side only
-    mainDock->setDockSite(KDockWidget::DockLeft);
+    mainDock->setDockSite(QDockWidget::DockLeft);
 
     // forbit docking abilities of display itself
-    display->setEnableDocking(KDockWidget::DockNone);
+    display->setEnableDocking(QDockWidget::DockNone);
     // allow others to dock to the left side only
-    display->setDockSite(KDockWidget::DockLeft);
+    display->setDockSite(QDockWidget::DockLeft);
 
     //Keep track of the number of displays
     displayCount ++;
@@ -936,10 +936,10 @@ void KlustersApp::importDocumentFile(const QString& url)
 }
 
 bool KlustersApp::doesActiveDisplayContainProcessWidget(){
- KDockWidget* current;
+ QDockWidget* current;
 
  //Get the active tab
- if(tabsParent) current = static_cast<KDockWidget*>(tabsParent->currentPage());
+ if(tabsParent) current = static_cast<QDockWidget*>(tabsParent->currentPage());
  //or the active window if there is only one display (which can only be the mainDock)
  else current = mainDock;
 
@@ -947,10 +947,10 @@ bool KlustersApp::doesActiveDisplayContainProcessWidget(){
 }
 
 KlustersView* KlustersApp::activeView(){
-  KDockWidget* current;
+  QDockWidget* current;
   
   //Get the active tab
-  if(tabsParent) current = static_cast<KDockWidget*>(tabsParent->currentPage());
+  if(tabsParent) current = static_cast<QDockWidget*>(tabsParent->currentPage());
   //or the active window if there is only one display (which can only be the mainDock)
   else current = mainDock;
  
@@ -1120,9 +1120,9 @@ void KlustersApp::slotFileClose(){
         //Remove the display from the group of tabs
         while(true){
           int nbOfTabs = tabsParent->count();
-          KDockWidget* current = static_cast<KDockWidget*>(tabsParent->page(0));
+          QDockWidget* current = static_cast<QDockWidget*>(tabsParent->page(0));
           if(current == mainDock){
-            current = static_cast<KDockWidget*>(tabsParent->page(1));
+            current = static_cast<QDockWidget*>(tabsParent->page(1));
           }
         
           if((current->getWidget())->isA("KlustersView")){
@@ -1231,7 +1231,7 @@ void KlustersApp::slotFileSaveAs()
 
 void KlustersApp::slotDisplayClose()
 {
-  KDockWidget* current;
+  QDockWidget* current;
 
   slotStatusMsg(tr("Closing display..."));
 
@@ -1239,14 +1239,14 @@ void KlustersApp::slotDisplayClose()
   if(tabsParent){
      QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
      int nbOfTabs = tabsParent->count();
-     current = static_cast<KDockWidget*>(tabsParent->currentPage());
+     current = static_cast<QDockWidget*>(tabsParent->currentPage());
      //If the active display is the mainDock, assign the mainDock status to an other display (take the first one available)
      if(current == mainDock){
        if(tabsParent->currentPageIndex() == 0){
-         mainDock = static_cast<KDockWidget*>(tabsParent->page(1));
+         mainDock = static_cast<QDockWidget*>(tabsParent->page(1));
          setMainDockWidget(mainDock);
        }
-       else setMainDockWidget(static_cast<KDockWidget*>(tabsParent->page(0)));
+       else setMainDockWidget(static_cast<QDockWidget*>(tabsParent->page(0)));
      }
      //Remove the display from the group of tabs
      tabsParent->removePage(current);
@@ -1389,7 +1389,7 @@ void KlustersApp::slotFilePrint()
     else view->print(printer,filePath,false);     
    }
    else{
-    KDockWidget* dock = static_cast<KDockWidget*>(tabsParent->currentPage());
+    QDockWidget* dock = static_cast<QDockWidget*>(tabsParent->currentPage());
     ProcessWidget* view = static_cast<ProcessWidget*>(dock->getWidget());
     view->print(printer,filePath);
    }
@@ -1810,7 +1810,7 @@ void KlustersApp::slotDelaySelection(){
 }
 
 void KlustersApp::slotTabChange(QWidget* widget){
- KDockWidget* display = dynamic_cast<KDockWidget*>(widget);
+ QDockWidget* display = dynamic_cast<QDockWidget*>(widget);
  if((display->getWidget())->isA("KlustersView")){
    KlustersView* activeView = dynamic_cast<KlustersView*>(display->getWidget());
 
@@ -2261,7 +2261,7 @@ void KlustersApp::slotRecluster(){
 
      
  if(processWidget == 0L){
-  KDockWidget* display;
+  QDockWidget* display;
   display = createDockWidget(QString(QChar(displayCount)),0, 0L, tr("Recluster output"), tr("Recluster output"));
 
   processWidget = new ProcessWidget(display);
@@ -2272,10 +2272,10 @@ void KlustersApp::slotRecluster(){
   display->setWidget(processWidget);
 
   //Temporarily allow addition of a new dockWidget in the center
-  mainDock->setDockSite(KDockWidget::DockCenter);
+  mainDock->setDockSite(QDockWidget::DockCenter);
   //Add the new display as a tab and get a new DockWidget, grandParent of the target (mainDock)
   //and the new display.
-  KDockWidget* grandParent = display->manualDock(mainDock,KDockWidget::DockCenter);
+  QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
 
   //The grandParent's widget is the KDockTabGroup regrouping all the tabs
   tabsParent = static_cast<KDockTabGroup*>(grandParent->getWidget());
@@ -2285,13 +2285,13 @@ void KlustersApp::slotRecluster(){
   connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
   //Back to enable dock to the left side only
-  mainDock->setDockSite(KDockWidget::DockLeft);
+  mainDock->setDockSite(QDockWidget::DockLeft);
 
   // forbit docking abilities of display itself
-  display->setEnableDocking(KDockWidget::DockNone);
+  display->setEnableDocking(QDockWidget::DockNone);
 
   // allow others to dock to the left side only
-  display->setDockSite(KDockWidget::DockLeft);
+  display->setDockSite(QDockWidget::DockLeft);
 
   //Keep track of the number of displays
   displayCount ++;
@@ -2428,7 +2428,7 @@ void KlustersApp::updateUndoRedoDisplay(){
   if(currentNbRedo == 0) slotStateChanged("emptyRedoState");
 }
 
-void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,KDockWidget* docWidget){
+void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDockWidget* docWidget){
  KlustersView* view = activeView(); 
  bool newWidgetType = view->addView(docWidget,displayType,backgroundColor,statusBar(),displayTimeInterval,waveformsGain,channelPositions);
  
@@ -2553,10 +2553,10 @@ void KlustersApp::updateDimensionSpinBoxes(int dimensionX, int dimensionY){
 }
 
 void KlustersApp::renameActiveDisplay(){
- KDockWidget* current;
+ QDockWidget* current;
 
  //Get the active tab
- current = static_cast<KDockWidget*>(tabsParent->currentPage());
+ current = static_cast<QDockWidget*>(tabsParent->currentPage());
 
  bool ok;
  QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString(), &ok, this, current->tabPageLabel());

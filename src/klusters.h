@@ -93,9 +93,9 @@ class KlustersApp : public KDockMainWindow
 
     /**Adds a new view (ClusterView, WaveformView or CorrelationView) to the active display.
     * @param displayType type of view to add (ClusterView,WaveformView or CorrelationView).
-    * @param docWidget KDockWidget to which the new view will be docked.
+    * @param docWidget QDockWidget to which the new view will be docked.
     */
-    void widgetAddToDisplay(KlustersView::DisplayType displayType,KDockWidget* docWidget);
+    void widgetAddToDisplay(KlustersView::DisplayType displayType,QDockWidget* docWidget);
 
     /**Updates the menu due to the removal of a view (ClusterView, WaveformView or CorrelationView) in the active display.
     * @param displayType type of view to add (ClusterView,WaveformView or CorrelationView).
@@ -479,11 +479,11 @@ class KlustersApp : public KDockMainWindow
     /** mainDock is the main DockWidget to which all other dockWidget will be dock. Inititalized in
      * initDisplay()
      */
-    KDockWidget* mainDock;
+    QDockWidget* mainDock;
 
     /** clustersPanel is the DockWidget containing the ClusterPalette. Inititalized in initClusterPanel()
      */
-    KDockWidget* clusterPanel;
+    QDockWidget* clusterPanel;
 
     /** ClusterPalette is the Widget containing the cluster list. Inititalized in initClusterPanel()
     */
@@ -750,7 +750,7 @@ class KlustersApp : public KDockMainWindow
     bool processFinished;
 
     /**Widget embeding the output of the external process.*/
-    KDockWidget* processOutputDock;
+    QDockWidget* processOutputDock;
 
     /**True if all the outputs of the external process have been printed, false otherwise.*/
     bool processOutputsFinished;
