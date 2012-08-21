@@ -430,13 +430,15 @@ void WaveformView::drawWaveforms(QPainter& painter,const Q3ValueList<int>& clust
   for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
    shownClusters.append(*iterator);
  
-  qSort(shownClusters);
+  //KDAB_PENDING
+  //qSort(shownClusters);
   
   Q3ValueList<int> clusterListSorted;
   for(iterator = clusterList.begin(); iterator != clusterList.end(); ++iterator)
    clusterListSorted.append(*iterator);
  
-  qSort(clusterListSorted);
+  //KDAB_PENDING
+  //qSort(clusterListSorted);
 
   //Loop on the clusters to be drawn
   Q3ValueList<int>::const_iterator clusterIterator;
@@ -649,7 +651,8 @@ void WaveformView::drawClusterIds(QPainter& painter){
  Q3ValueList<int> const clusters = view.clusters();
  for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
   shownClusters.append(*iterator);
- qSort(shownClusters);
+ //KDAB_PENDING
+ //qSort(shownClusters);
 
  QFont f("Helvetica",8); 
  painter.setFont(f);

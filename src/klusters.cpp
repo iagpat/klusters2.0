@@ -2192,7 +2192,8 @@ void KlustersApp::slotRecluster(){
  Q3ValueList<int>::const_iterator shownClustersIterator;
  for(shownClustersIterator = currentClusters.begin(); shownClustersIterator != currentClusters.end(); ++shownClustersIterator)
   clustersToRecluster.append(*shownClustersIterator);
- qSort(clustersToRecluster);
+ //KDAB_PENDING
+ //qSort(clustersToRecluster);
 
  //Build the command line to launch the reclustering
 

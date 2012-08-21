@@ -208,7 +208,8 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,Q3Va
   return;
  }
 
- qSort(firstSpikes);
+ //KDAB_PENDING
+ //qSort(firstSpikes);
  time = firstSpikes[0];
 
  //the found spike will be placed at clusterPosition*100 % of the timeFrame
@@ -249,7 +250,8 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,Q3Va
    return;
   }
 
-  qSort(firstSpikes);
+  //KDAB_PENDING
+  //qSort(firstSpikes);
   time = firstSpikes[0];
 
   startingInRecordingUnits = qMax(time - static_cast<long>(position),0);
@@ -365,7 +367,8 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
   return;
  }
 
- qSort(firstSpikes);
+ //KDAB_PENDING
+ //qSort(firstSpikes);
  time = firstSpikes[firstSpikes.size() - 1];
 
  //the found spike will be placed at clusterPosition*100 % of the timeFrame

@@ -1199,7 +1199,8 @@ void KlustersDoc::createNewClusters(QRegion& region, const Q3ValueList <int>& cl
     //Add the clusters in clusterColors and clustersToShow.
     QColor color;
     Q3ValueList<int>::iterator clustersToCreate;
-    qSort(newClusters);
+    //KDAB_PENDING
+    //qSort(newClusters);
     for (clustersToCreate = newClusters.begin(); clustersToCreate != newClusters.end(); ++clustersToCreate ){
         color.setHsv(static_cast<int>(fmod(static_cast<float>(*clustersToCreate)*7,36))*10,255,255);
         clusterColorList->append(*clustersToCreate,color);
@@ -1318,7 +1319,8 @@ void KlustersDoc::prepareUndo(Q3ValueList<int>* addedClustersTemp,Q3ValueList<in
      }
      //remove the map entries with the bigger key (has not be taken into account by the previous loop)
      Q3ValueList<int> undoNbs = clusterIdsOldNewMap.keys();
-     qSort(undoNbs);
+     //KDAB_PENDING
+     //qSort(undoNbs);
      int biggerUndo = undoNbs.last();
      clusterIdsOldNewMap.remove(biggerUndo);
      clusterIdsNewOldMap.remove(biggerUndo);
@@ -1384,7 +1386,8 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
      }
      //remove the map entries with the bigger key (has not be taken into account by the previous loop)
      Q3ValueList<int> undoNbs = clusterIdsOldNewMap.keys();
-     qSort(undoNbs);
+     //KDAB_PENDING
+     //qSort(undoNbs);
      int biggerUndo = undoNbs.last();
      clusterIdsOldNewMap.remove(biggerUndo);
      clusterIdsNewOldMap.remove(biggerUndo);
