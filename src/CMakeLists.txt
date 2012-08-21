@@ -18,7 +18,7 @@ set(klusters_SRCS array.cpp
 	dataprovider.cpp
 	errormatrixthread.cpp 
 	#errormatrixview.cpp 
-	eventsprovider.cpp 
+	#eventsprovider.cpp 
 	groupingassistant.cpp
         itemcolors.cpp 
 	#klusters.cpp 
@@ -44,7 +44,7 @@ set(klusters_SRCS array.cpp
 	utilities.cpp 
 	#viewwidget.cpp 
 	waveformthread.cpp 
-	#waveformview.cpp
+	waveformview.cpp
         zoomwindow.cpp 
 	prefgenerallayout.cpp 
 	prefwaveformviewlayout.cpp 

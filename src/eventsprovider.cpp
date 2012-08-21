@@ -96,7 +96,7 @@ RestartTimer();
  Q3TextStream tmpFileStream(&tmpFile);
  QString infoLine = tmpFileStream.readLine();
  QString info;
- if(infoLine != NULL){
+ if(!infoLine.isEmpty()){
   info = infoLine.trimmed();
   qDebug(" fileName %s counterFile %s\n",fileName.toLatin1(),counterFile.name().toLatin1());
   qDebug(" info %s\n",info.toLatin1());
@@ -112,7 +112,7 @@ RestartTimer();
  childproc2 <<"rm -f "<<counterFile.name();
  childproc2.start(QProcess::NotifyOnExit);
 
- if(infoLine == NULL || nbEvents == 0){
+ if(infoLine.isEmpty() || nbEvents == 0){
   initializeEmptyProvider();
   return OK;
  }

@@ -296,9 +296,9 @@ void ErrorMatrixView::mouseMoveEvent(QMouseEvent* e){
   int indexMax = clusterList.size() - 1;
   if((cluster1Index > -1) && (cluster1Index <= indexMax) &&
      (cluster2Index > -1) && (cluster2Index <= indexMax)){
-    statusBar->changeItem("Clusters (" + QString("%1").arg(clusterList[cluster2Index]) + "," +
+    statusBar->showMessage("Clusters (" + QString("%1").arg(clusterList[cluster2Index]) + "," +
              QString("%1").arg(clusterList[cluster1Index]) + "): p = " +
-             QString("%1").arg((*probabilities)(cluster2Index + 1,cluster1Index + 1)),1);
+             QString("%1").arg((*probabilities)(cluster2Index + 1,cluster1Index + 1)));
   }
 }
 
@@ -845,7 +845,7 @@ void ErrorMatrixView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics
   }
   
   printPainter.fillRect(back,backgroundColor());
-  printPainter.setClipRect(back,Qt::CoordPainter);
+  //KDAB_PENDING printPainter.setClipRect(back,Qt::CoordPainter);
 
   //Paint the matrix
   drawMatrix(printPainter);
