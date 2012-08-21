@@ -31,37 +31,37 @@
 #include <QDialog>
 
 /**
-	@author Lynn Hazan <lynn.hazan@myrealbox.com>
-	This class is the dialog used to gather cluster information.
+    @author Lynn Hazan <lynn.hazan@myrealbox.com>
+    This class is the dialog used to gather cluster information.
 */
-class ClusterInformationDialog : public KDialogBase
+class ClusterInformationDialog : public QDialog
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     ClusterInformationDialog(QWidget *parent = 0,const QString& caption = tr("Cluster information"));
-	virtual ~ClusterInformationDialog();
-	
-	inline const QString getStructure() { return structure->text(); };
-	inline const QString getType() { return type->text(); };
-	inline const QString getId() { return id->text(); };
-	inline const QString getQuality() { return quality->text(); };
-	inline const QString getNotes() { return notes->text(); };
+    virtual ~ClusterInformationDialog();
 
-	inline void setStructure(QString pStructure) { structure->setText(pStructure); };
-	inline void setType(QString pType) { type->setText(pType); };
-	inline void setId(QString pID) { id->setText(pID); };
-	inline void setQuality(QString pQuality) { quality->setText(pQuality); };
-	inline void setNotes(QString pNotes) { notes->setText(pNotes); };
-			
-	private:
-		QWidget			*page;
-		QLineEdit		*structure;
-		QLineEdit		*type;
-		/**Isolation Distance*/
-		QLineEdit		*id;
-		QLineEdit		*quality;
-		QLineEdit		*notes;						
-		Q3VBoxLayout		*layout;
+    inline const QString getStructure() { return structure->text(); }
+    inline const QString getType() { return type->text(); }
+    inline const QString getId() { return id->text(); }
+    inline const QString getQuality() { return quality->text(); }
+    inline const QString getNotes() { return notes->text(); }
+
+    inline void setStructure(QString pStructure) { structure->setText(pStructure); }
+    inline void setType(QString pType) { type->setText(pType); }
+    inline void setId(QString pID) { id->setText(pID); }
+    inline void setQuality(QString pQuality) { quality->setText(pQuality); }
+    inline void setNotes(QString pNotes) { notes->setText(pNotes); }
+
+private:
+    QWidget			*page;
+    QLineEdit		*structure;
+    QLineEdit		*type;
+    /**Isolation Distance*/
+    QLineEdit		*id;
+    QLineEdit		*quality;
+    QLineEdit		*notes;
+    Q3VBoxLayout		*layout;
 
 };
 

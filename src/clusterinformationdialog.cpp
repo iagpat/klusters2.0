@@ -22,10 +22,13 @@
 //Added by qt3to4:
 #include <QLabel>
 #include <Q3VBoxLayout>
+#include <QDialogButtonBox>
 
 ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString& caption) :
-		KDialogBase(parent,"Cluster information",true,caption,Ok|Cancel,Ok,true)
+        QDialog(parent)
 {
+    setWindowTitle(caption);
+    setModal(true);
 	page = new QWidget(this);
 	setMainWidget(page);
 	layout = new Q3VBoxLayout(page,0,spacingHint());
@@ -72,6 +75,13 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
 	layout->addWidget(notes);
 
 	layout->addStretch(10);
+
+    QDialogButtonBox*buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
+                                                       | QDialogButtonBox::Cancel);
+    layout->addWidget(buttonBox);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+
 }
 
 ClusterInformationDialog::~ClusterInformationDialog()

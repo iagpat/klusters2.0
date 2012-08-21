@@ -943,7 +943,7 @@ void KlustersDoc::deleteClusters(Q3ValueList<int> clustersToDelete,KlustersView&
    if(!clusterColorList->contains(0)){
      //Prepare the undo
      prepareUndo(0,modifiedcluster,clustersToDelete);
-     QColor color(red); //Cluster 01 is always red
+     QColor color(Qt::red); //Cluster 01 is always red
      clusterColorList->insert(static_cast<int>(0),color,0);
    }
    else
@@ -1059,7 +1059,7 @@ void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,cons
    else if(destination == 0 && !clusterColorList->contains(0)){
      //Prepare the undo
      prepareUndo(0,updatedClusters,emptyClusters,true);
-     QColor color(red); //Cluster 01 is always red
+     QColor color(Qt::red); //Cluster 01 is always red
      clusterColorList->insert(static_cast<int>(0),color,0);
    }
    else
