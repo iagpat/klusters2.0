@@ -13,12 +13,12 @@ set(klusters_SRCS array.cpp
 	#clusterview.cpp
         configuration.cpp 
 	correlationthread.cpp 
-	correlationview.cpp 
+	#correlationview.cpp 
 	data.cpp 
 	dataprovider.cpp
 	errormatrixthread.cpp 
 	#errormatrixview.cpp 
-	#eventsprovider.cpp 
+	eventsprovider.cpp 
 	groupingassistant.cpp
         itemcolors.cpp 
 	#klusters.cpp 

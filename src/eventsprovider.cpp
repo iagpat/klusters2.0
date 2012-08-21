@@ -71,7 +71,7 @@ RestartTimer();
  //Get the number of events
  QProcess childproc;
  childproc.setUseShell(true);
- QTemporaryFile counterFile = QTemporaryFile();//make a unique file
+ QTemporaryFile counterFile;//make a unique file
  childproc << "wc -l "<<fileName<<" > "<<counterFile.fileName();
  childproc.start(QProcess::NotifyOnExit);
  sleep(1);
@@ -502,7 +502,7 @@ void EventsProvider::requestNextEventData(long startTime,long timeFrame,Q3ValueL
  //check that the event corresponding to the current startIndex
  //is not the one already at eventPosition, if so take the following start index
  time = static_cast<long>(floor(0.5 + timeStamps(1,startIndex)));
- dataType startingTime = qMax(time - static_cast<long>(timeFrame * eventPosition),0);
+ dataType startingTime = qMax(time - static_cast<long>(timeFrame * eventPosition),0L);
  while ((time == startTime) && (startIndex < nbEvents)){
   startIndex++;
   time = static_cast<long>(floor(0.5 + timeStamps(1,startIndex)));
@@ -534,7 +534,7 @@ void EventsProvider::requestNextEventData(long startTime,long timeFrame,Q3ValueL
  time = static_cast<long>(floor(0.5 + timeStamps(1,startIndex)));
 
  //compute the final starting time and the corresponding index
- startingTime = qMax(time - static_cast<long>(timeFrame * eventPosition),0);
+ startingTime = qMax(time - static_cast<long>(timeFrame * eventPosition),0L);
 
  long newStartIndex = startIndex;
  while(time > startingTime){
@@ -713,7 +713,7 @@ void EventsProvider::requestPreviousEventData(long startTime,long timeFrame,Q3Va
  //check that the event corresponding to the startIndex
  //is not the one already at eventPosition, if so take the previous index.
  time = static_cast<long>(floor(0.5 + timeStamps(1,startIndex)));
- dataType startingTime = qMax(time - static_cast<long>(timeFrame * eventPosition),0);
+ dataType startingTime = qMax(time - static_cast<long>(timeFrame * eventPosition),0L);
  while((time == startTime) && (startIndex > 1)){
   startIndex--;
   time = static_cast<long>(floor(0.5 + timeStamps(1,startIndex)));
@@ -743,7 +743,7 @@ void EventsProvider::requestPreviousEventData(long startTime,long timeFrame,Q3Va
  }
 
  //compute the final starting time and the corresponding index
- startingTime = qMax(time - static_cast<long>(timeFrame * eventPosition),0);
+ startingTime = qMax(time - static_cast<long>(timeFrame * eventPosition),0L);
  long newStartIndex = startIndex;
 
  while(time > startingTime){
