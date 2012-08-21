@@ -92,7 +92,8 @@ isZoomed(false),goingToDie(false),printState(false){
  Q3ValueList<int>::const_iterator clustersIterator;
  for(clustersIterator = shownClusters.begin(); clustersIterator != shownClusters.end(); ++clustersIterator)
    clusters.append(*clustersIterator);
- qSort(clusters);
+ //KDAB_PENDING
+ //qSort(clusters);
  
  Q3ValueList<int>::iterator iterator;
  int i = 0;
@@ -302,7 +303,8 @@ void CorrelationView::askForCorrelograms(){
   Q3ValueList<int>::const_iterator clustersIterator;
   for(clustersIterator = shownClusters.begin(); clustersIterator != shownClusters.end(); ++clustersIterator)
     clusters.append(*clustersIterator);
-  qSort(clusters);
+  //KDAB_PENDING
+  //qSort(clusters);
 
 
   pairs.clear();
@@ -374,7 +376,8 @@ void CorrelationView::drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pair
   firingRates.clear();
   
  //Sort the pair so the drawing will be simplified.
- qSort(pairList); 
+ //KDAB_PENDING
+ //qSort(pairList); 
  
  //Loop on the pairs to be drawn.
  Q3ValueList<Pair>::iterator pairIterator;
@@ -404,7 +407,8 @@ void CorrelationView::drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pair
   Q3ValueList<int> const clusters = view.clusters();
   for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
    shownClusters.append(*iterator);
-  qSort(shownClusters);
+  //KDAB_PENDING
+  //qSort(shownClusters);
  }
 
  for(pairIterator = pairList.begin(); pairIterator != pairList.end(); ++pairIterator){
@@ -546,7 +550,8 @@ void CorrelationView::drawClusterIds(QPainter& painter){
  Q3ValueList<int> const clusters = view.clusters();
  for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
   shownClusters.append(*iterator);
- qSort(shownClusters);
+ //KDAB_PENDING
+ //qSort(shownClusters);
  
  QFont f("Helvetica",8); 
  painter.setFont(f);
@@ -758,7 +763,8 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
     Q3ValueList<int> const clusters = view.clusters();
     for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
      shownClusters.append(*iterator);
-    qSort(shownClusters); 
+    //KDAB_PENDING
+    //qSort(shownClusters); 
     
     statusBar->changeItem("Time (ms): "+ QString("%1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]),1);
    }

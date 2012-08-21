@@ -8,16 +8,16 @@ set(klusters_SRCS array.cpp
 	#clusterPalette.cpp 
 	clusterinformationdialog.cpp
 	clusterpaletteiconviewitem.cpp 
-	clusterpalettetooltip.cpp 
-	clustersprovider.cpp 
-	clusterview.cpp
+	#clusterpalettetooltip.cpp 
+	#clustersprovider.cpp 
+	#clusterview.cpp
         configuration.cpp 
 	correlationthread.cpp 
-	correlationview.cpp 
+	#correlationview.cpp 
 	data.cpp 
 	dataprovider.cpp
 	errormatrixthread.cpp 
-	errormatrixview.cpp 
+	#errormatrixview.cpp 
 	eventsprovider.cpp 
 	groupingassistant.cpp
         itemcolors.cpp 

@@ -48,7 +48,7 @@ eventPosition(static_cast<float>(position) / 100.0),modified(false){
 
  //Find the event file identifier and use it as the name for the provider
  //the file name is X.id.evt (id is a 3 character identifier)
- QString fileName = fileUrl.fileName();
+ QString fileName = fileUrl;
  int startingIndex = fileName.findRev("evt");
  if(startingIndex == static_cast<int>(fileName.length()) - 3){//X.id.evt
   int nBStartingIndex = fileName.findRev(".",startingIndex - 2);
@@ -1246,7 +1246,8 @@ void EventsProvider::addEventDescription(QString eventDescriptionToAdd){
 
  descriptions.append(EventDescription(eventDescriptionToAdd));
 
- qSort(descriptions);
+ //KDAB_PENDING
+ //qSort(descriptions);
  long maxSize = 0;
  long sum = 0;
  long sumOfSquares = 0;
@@ -1301,7 +1302,8 @@ void EventsProvider::removeEventDescription(QString eventDescriptionToRemove){
  Q3ValueList<EventDescription> newDescriptions = eventIds.keys();
  newDescriptions.remove(EventDescription(eventDescriptionToRemove));
 
- qSort(newDescriptions);
+ //KDAB_PENDING
+ //qSort(newDescriptions);
  long maxSize = 0;
  long sum = 0;
  long sumOfSquares = 0;
