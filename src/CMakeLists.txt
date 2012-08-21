@@ -18,10 +18,10 @@ set(klusters_SRCS array.cpp
 	dataprovider.cpp
 	errormatrixthread.cpp 
 	#errormatrixview.cpp 
-	eventsprovider.cpp 
-	groupingassistant.cpp
+	#eventsprovider.cpp 
+	#groupingassistant.cpp
         itemcolors.cpp 
-	klusters.cpp 
+	#klusters.cpp 
 	klustersdoc.cpp 
 	klustersview.cpp 
 	klustersxmlreader.cpp

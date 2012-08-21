@@ -723,7 +723,7 @@ void KlustersApp::openDocumentFile(const QString& url)
   
   //Check if the file exists
   if(!file.exists()){
-   KMessageBox::error (this,tr("The selected file does not exist."), tr("Error!"));
+   QMessageBox::error (this,tr("The selected file does not exist."), tr("Error!"));
    return;
    slotStatusMsg(tr("Ready."));
   } 
@@ -806,7 +806,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::PARX_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,tr("Could not get the specific parameter file (base.par.n)"), tr("Error!"));
+      QMessageBox::critical (this,tr("Error!"), tr("Could not get the specific parameter file (base.par.n)") );
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();

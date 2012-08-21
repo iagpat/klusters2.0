@@ -28,6 +28,7 @@
 #include <QCustomEvent>
 #include <Q3PtrList>
 #include <QEvent>
+#include <QMessageBox>
 
 
 // application specific includes
@@ -171,9 +172,7 @@ void KlustersDoc::closeDocument(){
     modifiedClusters = 0L;
   }
   //Remove the temp files if any
-  if(tmpCluFile != "")KIO::NetAccess::removeTempFile(tmpCluFile);
   tmpCluFile = "";
-  if(tmpSpikeFile != "")KIO::NetAccess::removeTempFile(tmpSpikeFile);
   tmpSpikeFile = "";
 
   //Variables link to TraceView
@@ -257,9 +256,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
   //The biggest files are open in a C FILE to enable a quick access, the others (parameter files) are open in a QFile
   FILE* fetFile = fopen(tmpFetFile.toLatin1(),"r");
   if(fetFile == NULL){
-   //Remove the temp files if any
-   KIO::NetAccess::removeTempFile(tmpSpikeFile);
-   KIO::NetAccess::removeTempFile(tmpFetFile);
    return OPEN_ERROR;
   }
 
@@ -267,9 +263,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
   FILE* spikeFile = fopen(tmpSpikeFile.toLatin1(),"r");
   if(spikeFile == NULL){
    fclose(fetFile);
-   //Remove the temp files if any
-   KIO::NetAccess::removeTempFile(tmpSpikeFile);
-   KIO::NetAccess::removeTempFile(tmpFetFile);
    return OPEN_ERROR;
   }
   fseeko(spikeFile,0,SEEK_END);
@@ -299,9 +292,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
    xmlParFile.setName(tmpXmlParFile);
    if(!xmlParFile.open(QIODevice::ReadOnly)){
     fclose(fetFile);
-    //Remove the temp files if any
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
-    KIO::NetAccess::removeTempFile(tmpXmlParFile);
     return OPEN_ERROR;
    }
   }
@@ -310,9 +300,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
    parXFile.setName(tmpParXFile);
    if(!parXFile.open(QIODevice::ReadOnly)){
     fclose(fetFile);
-    //Remove the temp files if any
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
-    KIO::NetAccess::removeTempFile(tmpParXFile);
     return OPEN_ERROR;
    }
    if(!KIO::NetAccess::download(parFileUrl, tmpParFile)) return PAR_DOWNLOAD_ERROR;
@@ -320,10 +307,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
    if(!parFile.open(QIODevice::ReadOnly)){
     fclose(fetFile);
     parXFile.close();
-    //Remove the temp files if any
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
-    KIO::NetAccess::removeTempFile(tmpParXFile);
-    KIO::NetAccess::removeTempFile(tmpParFile);
     return OPEN_ERROR;
    }
   }
@@ -365,17 +348,12 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
    if(!KIO::NetAccess::download(cluFileUrl, tmpCluFile)){
     if(isXmlParExist){
      xmlParFile.close();
-     KIO::NetAccess::removeTempFile(tmpXmlParFile);
     }
     else{
      parXFile.close();
      parFile.close();
-     //Remove the temp files if any
-     KIO::NetAccess::removeTempFile(tmpParXFile);
-     KIO::NetAccess::removeTempFile(tmpParFile);
     }
     fclose(fetFile);
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
     return DOWNLOAD_ERROR;
    }
 
@@ -383,17 +361,12 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
    if(cluFile == NULL){
     if(isXmlParExist){
      xmlParFile.close();
-     KIO::NetAccess::removeTempFile(tmpXmlParFile);
     }
     else{
      parXFile.close();
      parFile.close();
-     //Remove the temp files if any
-     KIO::NetAccess::removeTempFile(tmpParXFile);
-     KIO::NetAccess::removeTempFile(tmpParFile);
     }
     fclose(fetFile);
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
     return OPEN_ERROR;
    }
 
@@ -404,15 +377,11 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
      xmlParFile.close();
      fclose(fetFile);
      fclose(cluFile);
-     KIO::NetAccess::removeTempFile(tmpXmlParFile);
-     KIO::NetAccess::removeTempFile(tmpSpikeFile);
      return INCORRECT_CONTENT;
     }
     xmlParFile.close();
     fclose(fetFile);
     fclose(cluFile);
-    KIO::NetAccess::removeTempFile(tmpXmlParFile);
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
    }
    else{
     if(!clusteringData->initialize(fetFile,cluFile,spkFileLength,tmpSpikeFile,parXFile,parFile,errorInformation)){
@@ -421,18 +390,12 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
      parFile.close();
      fclose(fetFile);
      fclose(cluFile);
-     KIO::NetAccess::removeTempFile(tmpParXFile);
-     KIO::NetAccess::removeTempFile(tmpParFile);
-     KIO::NetAccess::removeTempFile(tmpSpikeFile);
      return INCORRECT_CONTENT;
     }
     parXFile.close();
     parFile.close();
     fclose(fetFile);
     fclose(cluFile);
-    KIO::NetAccess::removeTempFile(tmpParXFile);
-    KIO::NetAccess::removeTempFile(tmpParFile);
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
    }
   }//end //the cluster file exists
   //the cluster file does not exist
@@ -445,14 +408,10 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
      //close the files
      xmlParFile.close();
      fclose(fetFile);
-     KIO::NetAccess::removeTempFile(tmpXmlParFile);
-     KIO::NetAccess::removeTempFile(tmpSpikeFile);
      return INCORRECT_CONTENT;
     }
     xmlParFile.close();
     fclose(fetFile);
-    KIO::NetAccess::removeTempFile(tmpXmlParFile);
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
    }
    else{
     if(!clusteringData->initialize(fetFile,spkFileLength,tmpSpikeFile,parXFile,parFile,errorInformation)){
@@ -460,9 +419,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
      parXFile.close();
      parFile.close();
      fclose(fetFile);
-     KIO::NetAccess::removeTempFile(tmpParXFile);
-     KIO::NetAccess::removeTempFile(tmpParFile);
-     KIO::NetAccess::removeTempFile(tmpSpikeFile);
 
      return INCORRECT_CONTENT;
     }
@@ -470,9 +426,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     parXFile.close();
     parFile.close();
     fclose(fetFile);
-    KIO::NetAccess::removeTempFile(tmpParXFile);
-    KIO::NetAccess::removeTempFile(tmpParFile);
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
    }
   }//end the cluster file does not exist
 
@@ -1934,41 +1887,38 @@ int KlustersDoc::integrateReclusteredClusters(Q3ValueList<int>& clustersToReclus
   if(KIO::NetAccess::exists(cluFileUrl))
     if(!KIO::NetAccess::download(cluFileUrl,tmpCluFile)){
      if(!QFile::remove(reclusteringFetFileName))
-      KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
+      QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary feature file used by the reclustering program.") );
      if(!QFile::remove(cluFileName))
-      KMessageBox::error(0,tr("Could not delete the temporary cluster file used by the reclustering program."), tr("Warning !"));
+      QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary cluster file used by the reclustering program.") );
      return DOWNLOAD_ERROR;
     }
 
   FILE* cluFile = fopen(tmpCluFile.toLatin1(),"r");
   if(cluFile == NULL){
-   KIO::NetAccess::removeTempFile(tmpCluFile);
    if(!QFile::remove(reclusteringFetFileName))
-    KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
+    QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary feature file used by the reclustering program.") );
     if(!QFile::remove(cluFileName))
-     KMessageBox::error(0,tr("Could not delete the temporary cluster file used by the reclustering program."), tr("Warning !"));
+     QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary cluster file used by the reclustering program.") );
    return OPEN_ERROR;
   }
 
   //Actually integrate the new clusters.
   if(!clusteringData->integrateReclusteredClusters(clustersToRecluster,reclusteredClusterList,cluFile)){
    fclose(cluFile);
-   KIO::NetAccess::removeTempFile(tmpCluFile);
    if(!QFile::remove(reclusteringFetFileName))
-    KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
+    QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary feature file used by the reclustering program.") );
    if(!QFile::remove(cluFileName))
-    KMessageBox::error(0,tr("Could not delete the temporary cluster file used by the reclustering program."), tr("Warning !"));
+    QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary cluster file used by the reclustering program.") );
    return INCORRECT_CONTENT;
   }
 
   fclose(cluFile);
-  KIO::NetAccess::removeTempFile(tmpCluFile);
 
   //Suppress the fet and clu files.
   if(!QFile::remove(reclusteringFetFileName))
-    KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
+    QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary feature file used by the reclustering program.") );
   if(!QFile::remove(cluFileName))
-   KMessageBox::error(0,tr("Could not delete the temporary cluster file used by the reclustering program."), tr("Warning !"));
+   QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary cluster file used by the reclustering program.") );
 
  return OK;
 }
