@@ -321,14 +321,14 @@ void ClusterView::updatedDimensions(int dimensionX, int dimensionY){
   //The min and max are chosen in a maner that the axis are always visible and superior
   //to -40000000 (due to a Qt limitation in the big negative values).
   long width = maxForDimensionX - minForDimensionX;
-  abscissaMin = static_cast<long>(qMin(0,minForDimensionX)-width*0.05);
+  abscissaMin = static_cast<long>(qMin(0L,minForDimensionX)-width*0.05);
   abscissaMin = static_cast<long>(qMax(abscissaMin,-1000000)); // below this limit, Qt crashes
-  abscissaMax = static_cast<long>(qMax(0,maxForDimensionX)+width*0.05);
+  abscissaMax = static_cast<long>(qMax(0L,maxForDimensionX)+width*0.05);
 
   long height = maxForDimensionY - minForDimensionY;
-  ordinateMin = static_cast<long>(-qMax(0,maxForDimensionY)-height*0.05);
-  ordinateMax = static_cast<long>(-qMin(0,minForDimensionY)+height*0.05);
-  ordinateMax = static_cast<long>(qMin(ordinateMax,1000000)); // below -(this limit), Qt crashes
+  ordinateMin = static_cast<long>(-qMax(0L,maxForDimensionY)-height*0.05);
+  ordinateMax = static_cast<long>(-qMin(0L,minForDimensionY)+height*0.05);
+  ordinateMax = static_cast<long>(qMin(ordinateMax,1000000L)); // below -(this limit), Qt crashes
 
 
   //Update the window in a maner to always see the axis
