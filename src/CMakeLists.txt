@@ -10,7 +10,7 @@ set(klusters_SRCS array.cpp
 	clusterpaletteiconviewitem.cpp 
 	#clusterpalettetooltip.cpp 
 	#clustersprovider.cpp 
-	clusterview.cpp
+	#clusterview.cpp
         configuration.cpp 
 	correlationthread.cpp 
 	#correlationview.cpp 
@@ -39,7 +39,7 @@ set(klusters_SRCS array.cpp
 	sortabletable.cpp 
 	tags.cpp 
 	tracesprovider.cpp 
-	#traceview.cpp
+	traceview.cpp
         tracewidget.cpp 
 	utilities.cpp 
 	#viewwidget.cpp 
