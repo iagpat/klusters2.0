@@ -241,7 +241,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
   //Parameter files
   QString xmlParFileUrl(url);
   xmlParFileUrl.setFileName(baseName +".xml");
-  xmlParameterFile = xmlParFileUrl.path();
+  xmlParameterFile = xmlParFileUrl;
   QString parXFileUrl(url);
   parXFileUrl.setFileName(baseName +".par."+ electrodeGroupID);
   QString parFileUrl(url);
@@ -276,7 +276,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
   QString tmpXmlParFile;
   QString tmpParXFile;
   QString tmpParFile;
-  QFileInfo xmlParFileInfo(xmlParFileUrl.path());
+  QFileInfo xmlParFileInfo(xmlParFileUrl);
   QFile xmlParFile;
   QFile parXFile;
   QFile parFile;
@@ -284,7 +284,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
    if(!KIO::NetAccess::download(xmlParFileUrl,tmpXmlParFile)) return PARXML_DOWNLOAD_ERROR;
    isXmlParExist = true;
    //Check if the generic parameter file also exist, if so, warn the user that the xml format parameter file will be used.
-   QFileInfo parFileInfo(parFileUrl.path());
+   QFileInfo parFileInfo(parFileUrl);
    if(parFileInfo.exists()){
     QApplication::restoreOverrideCursor();
     KMessageBox::information(0,tr("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl.fileName()).arg(parFileUrl.fileName()).arg(xmlParFileUrl.fileName()), tr("Warning!"),"TwoParameterFiles");
@@ -314,9 +314,9 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
 
   //If a crashRecoveryFile exits, check if it is newer than the clu file, if so
   //ask the user if he wants to use that one to replace the clu file.
-   QFileInfo crashFileInfo(cluFileSaveUrl.path());
+   QFileInfo crashFileInfo(cluFileSaveUrl);
    if(crashFileInfo.exists()){
-     QFileInfo cluFileInfo(cluFileUrl.path());
+     QFileInfo cluFileInfo(cluFileUrl);
      if((cluFileInfo.exists() && crashFileInfo.lastModified() > cluFileInfo.lastModified()) ||
       !cluFileInfo.exists()){
         QApplication::restoreOverrideCursor();
@@ -401,7 +401,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
   }//end //the cluster file exists
   //the cluster file does not exist
   else{
-   tmpCluFile =  cluFileUrl.path();
+   tmpCluFile =  cluFileUrl;
 
    //Initialize the data
    if(isXmlParExist){
@@ -518,7 +518,7 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
 
   QString tmpCluFileSave = tmpCluFile;
   if(docUrl != saveUrl){
-	  tmpCluFile =  saveUrl.path();
+      tmpCluFile =  saveUrl;
   }
 
   //Open the temp file in write mode
@@ -548,7 +548,7 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
 
 	  QString xmlParFileUrl(saveUrl);
 	  xmlParFileUrl.setFileName(baseName +".xml");
-	  xmlParameterFile = xmlParFileUrl.path();
+      xmlParameterFile = xmlParFileUrl;
   }
 
   //Save the cluster user information if the xmlParameterFile exists
@@ -2025,7 +2025,7 @@ void KlustersDoc::createProviders(){
  int channelNb = clusteringData->getTotalNbChannels();
 
  //Create the tracesProviders
- tracesProvider = new TracesProvider(datUrl.path(),channelNb,
+ tracesProvider = new TracesProvider(datUrl,channelNb,
                       resolution,samplingRate,clusteringData->getOffset());
 
 

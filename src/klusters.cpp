@@ -699,7 +699,7 @@ void KlustersApp::openDocumentFile(const QString& url)
 {    
   slotStatusMsg(tr("Opening file..."));
 
-  filePath = url.path();
+  filePath = url;
   QFileInfo file(filePath);
   if(url.protocol() == "file"){
    if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
@@ -887,7 +887,7 @@ void KlustersApp::openDocumentFile(const QString& url)
    //If the document asked is not the already open. Open a new instance of the application with it.
    else{
     fileOpenRecent->addURL(url);
-    filePath = doc->url().path();
+    filePath = doc->url();
      
 
     QProcess::startDetached("klusters", QStringList()<<command);
