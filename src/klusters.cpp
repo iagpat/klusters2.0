@@ -79,7 +79,6 @@ processOutputsFinished(true),processKilled(false),errorMatrixExists(false),fileP
 {
 	
   //Gets the configuration object of the application throught the static reference to the application kapp
-  config = KGlobal::config();
   printer = new QPrinter;
   
   //Apply the user settings.
