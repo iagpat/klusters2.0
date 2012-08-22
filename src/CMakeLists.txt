@@ -23,7 +23,7 @@ set(klusters_SRCS array.cpp
         itemcolors.cpp 
 	#klusters.cpp 
 	#klustersdoc.cpp 
-	#klustersview.cpp 
+	klustersview.cpp 
 	klustersxmlreader.cpp
 	#main.cpp 
 	minmaxthread.cpp 
@@ -34,7 +34,7 @@ set(klusters_SRCS array.cpp
 	prefgeneral.cpp
 	prefwaveformview.cpp 
 	processlinemaker.cpp 
-	processwidget.cpp
+	#processwidget.cpp
 	savethread.cpp 
 	sortabletable.cpp 
 	tags.cpp 

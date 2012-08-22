@@ -19,8 +19,6 @@
  ***************************************************************************/
 #include "utilities.h"
 
-// include files for KDE
-#include <QProcess>
 #include <QTemporaryFile>
 //Added by qt3to4:
 #include <Q3TextStream>

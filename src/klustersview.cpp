@@ -79,7 +79,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
       isThereTraceView = false;    
       mainDock->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,mainDock));
       setMainDockWidget(mainDock);
-      currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->getWidget());
+      currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
       viewList.append(currentViewWidget);
       currentViewWidget->installEventFilter(this);//To enable right click popup menu
       mainDock->installEventFilter(this);
@@ -95,7 +95,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
       mainDock->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,mainDock,
                           inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));
       setMainDockWidget(mainDock);
-      currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->getWidget());
+      currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
       viewList.append(currentViewWidget);
       currentViewWidget->installEventFilter(this);//To enable right click popup menu
       mainDock->installEventFilter(this);
@@ -111,7 +111,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
       mainDock->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,mainDock,correlationScale,
                           binSize,correlogramTimeFrame,shoulderLine));
       setMainDockWidget(mainDock);
-      currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->getWidget());
+      currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
       viewList.append(currentViewWidget);
       currentViewWidget->installEventFilter(this);//To enable right click popup menu
       mainDock->installEventFilter(this);      
@@ -151,7 +151,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
                     doc.getDisplayGroupsChannels(),doc.getDisplayChannelsGroups(),offsets,gains,skippedChannels,mainDock,"traces",
                     backgroundColor,statusBar,5));
       setMainDockWidget(mainDock);
-      traceWidget = dynamic_cast<TraceWidget*>(mainDock->getWidget());
+      traceWidget = dynamic_cast<TraceWidget*>(mainDock->widget());
       //Set the list of the current view as the list of clusters to look up in the ClusterProvider.
        doc.getClustersProvider()->setClusterIdList(shownClusters);
          
@@ -198,7 +198,7 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
  QDockWidget* waveforms = createDockWidget( "WaveForm", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
  waveforms->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms,
                       inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
- ViewWidget* waveformView = dynamic_cast<ViewWidget*>(waveforms->getWidget());
+ ViewWidget* waveformView = dynamic_cast<ViewWidget*>(waveforms->widget());
  viewList.append(waveformView);
  waveformView->installEventFilter(this);//To enable right click popup menu
  waveforms->installEventFilter(this); 
@@ -212,7 +212,7 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
  //Create and add the correlations view
  QDockWidget* correlations = createDockWidget( "Correlation", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
  correlations->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,correlations,correlationScale,binSize,correlogramTimeFrame,shoulderLine));//assign the widget
- ViewWidget* correlationView = dynamic_cast<ViewWidget*>(correlations->getWidget());
+ ViewWidget* correlationView = dynamic_cast<ViewWidget*>(correlations->widget());
  viewList.append(correlationView);
  correlationView->installEventFilter(this);//To enable right click popup menu
  correlations->installEventFilter(this);
@@ -231,7 +231,7 @@ void KlustersView::createGroupingAssistantView(QColor backgroundColor,QStatusBar
  //Create and add the errorMatrixView beneath the clusterView (mainDock)
  QDockWidget* errorMatrix = createDockWidget("ErrorMatrix", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
  errorMatrix->setWidget(new ErrorMatrixView(doc,*this,backgroundColor,statusBar,errorMatrix));//assign the widget
- ViewWidget* errorMatrixView = dynamic_cast<ViewWidget*>(errorMatrix->getWidget());
+ ViewWidget* errorMatrixView = dynamic_cast<ViewWidget*>(errorMatrix->widget());
  viewList.append(errorMatrixView);
  errorMatrixView->installEventFilter(this);//To enable right click popup menu
  errorMatrix->installEventFilter(this);
@@ -464,7 +464,7 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
  //update the dimension spin boxes to reflect the current ClusterView dimensions
  // and make the ClusterView the only view connected to the signal of update of the spin boxes.
  if(object->isA("QDockWidget")){
-  QWidget* widget = dynamic_cast<QDockWidget*>(object)->getWidget();
+  QWidget* widget = dynamic_cast<QDockWidget*>(object)->widget();
   if(widget->isA("ClusterView")){
    ViewWidget* viewWidget;
    for(viewWidget = viewList.first(); viewWidget != 0L ; viewWidget = viewList.next()){
@@ -535,7 +535,7 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
   
   
   QWidget* widget;
-  if(object->isA("QDockWidget")) widget = dynamic_cast<QDockWidget*>(object)->getWidget();
+  if(object->isA("QDockWidget")) widget = dynamic_cast<QDockWidget*>(object)->widget();
   else if(object->isA("ClusterView") || object->isA("WaveformView") || object->isA("CorrelationView") || object->isA("ErrorMatrixView")
          || object->isA("TraceWidget"))
     widget = dynamic_cast<QWidget*>(object);
@@ -643,7 +643,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    
    clusters = createDockWidget(count.prepend("ClusterView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
    clusters->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,clusters));
-   clusterView = dynamic_cast<ViewWidget*>(clusters->getWidget());
+   clusterView = dynamic_cast<ViewWidget*>(clusters->widget());
    viewList.append(clusterView);
    clusterView->installEventFilter(this);//To enable right click popup menu
    clusters->installEventFilter(this);
@@ -682,7 +682,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    waveforms = createDockWidget(count.prepend("WaveformView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
    waveforms->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms,
                      inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
-   waveformView = dynamic_cast<ViewWidget*>(waveforms->getWidget());
+   waveformView = dynamic_cast<ViewWidget*>(waveforms->widget());
    viewList.append(waveformView);
    waveformView->installEventFilter(this);//To enable right click popup menu
    waveforms->installEventFilter(this);
@@ -704,7 +704,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    
    correlations = createDockWidget(count.prepend("CorrelationView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
    correlations->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,correlations,correlationScale,binSize,correlogramTimeFrame,shoulderLine));//assign the widget
-   correlationView = dynamic_cast<ViewWidget*>(correlations->getWidget());
+   correlationView = dynamic_cast<ViewWidget*>(correlations->widget());
    viewList.append(correlationView);
    correlationView->installEventFilter(this);//To enable right click popup menu
    correlations->installEventFilter(this);
@@ -730,7 +730,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    
    errorMatrix = createDockWidget("ErrorMatrix", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
    errorMatrix->setWidget(new ErrorMatrixView(doc,*this,backgroundColor,statusBar,errorMatrix));//assign the widget
-   errorMatrixView = dynamic_cast<ViewWidget*>(errorMatrix->getWidget());
+   errorMatrixView = dynamic_cast<ViewWidget*>(errorMatrix->widget());
    viewList.append(errorMatrixView);
    errorMatrixView->installEventFilter(this);//To enable right click popup menu
    errorMatrix->installEventFilter(this);
@@ -759,7 +759,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
                     backgroundColor,statusBar,5));//assign the widget
                          
                     
-   traceWidget = dynamic_cast<TraceWidget*>(traces->getWidget());
+   traceWidget = dynamic_cast<TraceWidget*>(traces->widget());
    
    //Set the list of the current view as the list of clusters to look up in the ClusterProvider.
    doc.getClustersProvider()->setClusterIdList(shownClusters);

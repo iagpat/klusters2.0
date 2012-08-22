@@ -663,7 +663,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
     if(tabsParent != NULL) disconnect(tabsParent,0,0,0);
 
     //The grandParent's widget is the KDockTabGroup regrouping all the tabs
-    tabsParent = static_cast<KDockTabGroup*>(grandParent->getWidget());
+    tabsParent = static_cast<KDockTabGroup*>(grandParent->widget());
 
     //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
     //the active display change.
@@ -936,7 +936,7 @@ bool KlustersApp::doesActiveDisplayContainProcessWidget(){
  //or the active window if there is only one display (which can only be the mainDock)
  else current = mainDock;
 
- return (current->getWidget())->isA("ProcessWidget"); 
+ return (current->widget())->isA("ProcessWidget");
 }
 
 KlustersView* KlustersApp::activeView(){
@@ -947,7 +947,7 @@ KlustersView* KlustersApp::activeView(){
   //or the active window if there is only one display (which can only be the mainDock)
   else current = mainDock;
  
-  return static_cast<KlustersView*>(current->getWidget());
+  return static_cast<KlustersView*>(current->widget());
 }
 
 void KlustersApp::saveProperties()
@@ -1118,7 +1118,7 @@ void KlustersApp::slotFileClose(){
             current = static_cast<QDockWidget*>(tabsParent->page(1));
           }
         
-          if((current->getWidget())->isA("KlustersView")){
+          if((current->widget())->isA("KlustersView")){
            tabsParent->removePage(current);
            delete current;
           } 
@@ -1148,7 +1148,7 @@ void KlustersApp::slotFileClose(){
        clusterPanel->hide();
        clusterPanel->undock();
        //The last display is the mainDock
-       if((mainDock->getWidget())->isA("KlustersView")) delete mainDock;
+       if((mainDock->widget())->isA("KlustersView")) delete mainDock;
        else{
         if(processWidget->isRunning()){
          processWidget->killJob();
@@ -1251,8 +1251,8 @@ void KlustersApp::slotDisplayClose()
      } 
 
      //Remove the view from the document list if need it
-     if((current->getWidget())->isA("KlustersView")){
-      KlustersView* view = dynamic_cast<KlustersView*>(current->getWidget());
+     if((current->widget())->isA("KlustersView")){
+      KlustersView* view = dynamic_cast<KlustersView*>(current->widget());
       doc->removeView(view);
 
       //Update the Displays menu if the current display is a grouping assistant.
@@ -1292,7 +1292,7 @@ void KlustersApp::slotDisplayClose()
     if(doc->canCloseDocument(this,"displayClose")){
      doc->closeDocument();
      //Delete the view
-     if((mainDock->getWidget())->isA("KlustersView")){
+     if((mainDock->widget())->isA("KlustersView")){
       if(processWidget != 0L){
        delete processWidget;
        processWidget = 0L; 
@@ -1331,7 +1331,7 @@ void KlustersApp::slotDisplayClose()
     if(doc->canCloseDocument(this,"displayClose")){
      doc->closeDocument();
      //Delete the view
-     if((mainDock->getWidget())->isA("KlustersView")){
+     if((mainDock->widget())->isA("KlustersView")){
       if(processWidget != 0L){
        delete processWidget;
        processWidget = 0L;
@@ -1383,7 +1383,7 @@ void KlustersApp::slotFilePrint()
    }
    else{
     QDockWidget* dock = static_cast<QDockWidget*>(tabsParent->currentPage());
-    ProcessWidget* view = static_cast<ProcessWidget*>(dock->getWidget());
+    ProcessWidget* view = static_cast<ProcessWidget*>(dock->widget());
     view->print(printer,filePath);
    }
   }
@@ -1804,8 +1804,8 @@ void KlustersApp::slotDelaySelection(){
 
 void KlustersApp::slotTabChange(QWidget* widget){
  QDockWidget* display = dynamic_cast<QDockWidget*>(widget);
- if((display->getWidget())->isA("KlustersView")){
-   KlustersView* activeView = dynamic_cast<KlustersView*>(display->getWidget());
+ if((display->widget())->isA("KlustersView")){
+   KlustersView* activeView = dynamic_cast<KlustersView*>(display->widget());
 
    //Update the content of the view contains in active display.
    activeView->updateViewContents();
@@ -2271,7 +2271,7 @@ void KlustersApp::slotRecluster(){
   QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
 
   //The grandParent's widget is the KDockTabGroup regrouping all the tabs
-  tabsParent = static_cast<KDockTabGroup*>(grandParent->getWidget());
+  tabsParent = static_cast<KDockTabGroup*>(grandParent->widget());
 
   //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
   //the active display changes.
