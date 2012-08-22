@@ -30,7 +30,7 @@ set(klusters_SRCS array.cpp
 	pair.cpp 
 	parameterxmlmodifier.cpp 
 	prefclusterview.cpp
-	prefdialog.cpp 
+	#prefdialog.cpp 
 	prefgeneral.cpp
 	prefwaveformview.cpp 
 	processlinemaker.cpp 

@@ -21,7 +21,8 @@
 #include <qpainter.h>
 #include <qapplication.h>
 #include <qcursor.h>
-
+#include <QPrinter>
+#include <QScrollBar>
 
 #include <QProcess>
 #include <q3paintdevicemetrics.h>
@@ -30,14 +31,17 @@
 #include <stdlib.h>
 
 ProcessListBoxItem::ProcessListBoxItem(const QString &s, Type type)
-    : Q3ListBoxText(s), t(type){}
-
-
-void ProcessListBoxItem::paint(QPainter* p)
+    : QListWidgetItem(s),
+      t(type)
 {
-    p->setPen((t==Error)? Qt::darkRed :
-                          (t==Diagnostic)? Qt::black : Qt::darkBlue);
-    Q3ListBoxText::paint(p);
+}
+
+QVariant ProcessListBoxItem::data ( int role ) const
+{
+    if(role == Qt::TextColorRole ){
+        return ((t==Error)? Qt::darkRed : (t==Diagnostic)? Qt::black : Qt::darkBlue);
+    }
+    return QListWidgetItem::data(role);
 }
 
 
@@ -45,7 +49,7 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
     : QListWidget(parent)
 {   
     //No selection will be possible
-    setSelectionMode(Q3ListBox::NoSelection);
+    setSelectionMode(QAbstractItemView::NoSelection);
     
     setFocusPolicy(Qt::NoFocus);
     QPalette pal = palette();
@@ -94,7 +98,7 @@ bool ProcessWidget::startJob(const QString &dir, const QString &command)
 {
     procLineMaker->reset();
     clear();
-    insertItem(new ProcessListBoxItem(command, ProcessListBoxItem::Diagnostic));
+    addItem(new ProcessListBoxItem(command, ProcessListBoxItem::Diagnostic));
     childproc->clearArguments();
     if(!dir.isNull()) {
         QDir::setCurrent(dir);
@@ -126,14 +130,14 @@ void ProcessWidget::slotProcessExited(QProcess* )
 
 void ProcessWidget::insertStdoutLine(const QString &line)
 {
-    insertItem(new ProcessListBoxItem(line.trimmed(),
+    addItem(new ProcessListBoxItem(line.trimmed(),
                                       ProcessListBoxItem::Normal));
 }
 
 
 void ProcessWidget::insertStderrLine(const QString &line)
 {
-    insertItem(new ProcessListBoxItem(line.trimmed(),
+    addItem(new ProcessListBoxItem(line.trimmed(),
                                       ProcessListBoxItem::Error));
 }
 
@@ -156,7 +160,7 @@ void ProcessWidget::childFinished(bool normal, int status)
         t = ProcessListBoxItem::Error;
     }
 
-    insertItem(new ProcessListBoxItem(s, t));
+    addItem(new ProcessListBoxItem(s, t));
 }
 
 
@@ -191,7 +195,7 @@ void ProcessWidget::slotOutputTreatmentOver(){
     emit processOutputsFinished();
 }
 
-void ProcessWidget::print(QPrinter *printer, QString filePath){
+void ProcessWidget::print(QPrinter *printer, const QString &filePath){
     QPainter printPainter;
     Q3PaintDeviceMetrics metrics(printer);// need width/height of printer surface
     const int Margin = 20;
@@ -205,7 +209,7 @@ void ProcessWidget::print(QPrinter *printer, QString filePath){
     printPainter.setFont(f);
     QFontMetrics fontMetrics = printPainter.fontMetrics();
 
-    for(int i = 0; i< numRows(); i++){
+    for(int i = 0; i< count(); i++){
         // no more room on the current page
         if(Margin + yPos > metrics.height() - Margin) {
             printPainter.setPen(Qt::black);
@@ -221,7 +225,7 @@ void ProcessWidget::print(QPrinter *printer, QString filePath){
 
         printPainter.drawText(Margin,Margin + yPos,
                               metrics.width(),fontMetrics.lineSpacing(),
-                              ExpandTabs | DontClip, boxItem->text());
+                              Qt::ExpandTabs | Qt::DontClip, boxItem->text());
 
         yPos = yPos + fontMetrics.lineSpacing();
     }

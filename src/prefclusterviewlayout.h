@@ -4,7 +4,7 @@
 #include "ui_prefclusterviewlayout.h"
 
 
-class PrefClusterViewLayout : public QWidget, protected Ui_PrefClusterViewLayout
+class PrefClusterViewLayout : public QWidget, public Ui_PrefClusterViewLayout
 {
     Q_OBJECT
 

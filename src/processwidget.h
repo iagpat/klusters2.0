@@ -21,6 +21,7 @@
 
 // include files for KDE
 #include <QListWidget>
+#include <QListWidgetItem>
 
 //include files for Qt
 #include <qcolor.h>
@@ -31,21 +32,20 @@ class ProcessLineMaker;
 
 class QPrinter;
 
-class ProcessListBoxItem : public Q3ListBoxText
+class ProcessListBoxItem : public QListWidgetItem
 {
 public:
     enum Type { Diagnostic, Normal, Error };
     
-    ProcessListBoxItem(const QString &s, Type type);
+    explicit ProcessListBoxItem(const QString &s, Type type);
 
-    inline virtual bool isCustomItem(){return false;}
+    QVariant data ( int role ) const;
 
-    inline QColor color(){
+    QColor color() const {
       return ((t==Error)? Qt::darkRed : (t==Diagnostic)? Qt::black : Qt::darkBlue);
-    };
+    }
     
 private:
-    virtual void paint(QPainter* p);
     Type t;
 };
 
@@ -55,7 +55,7 @@ private:
  * @author Bernd Gehrmann, lynn hazan
  * @since klusters 1.2 
  */
-class ProcessWidget : public QListBox
+class ProcessWidget : public QListWidget
 {
     Q_OBJECT
 
@@ -75,7 +75,7 @@ public:
     * @param printer printer to print into.
     * @param filePath path of the opened document.
     */
-    void print(QPrinter* printer,QString filePath);
+    void print(QPrinter* printer,const QString& filePath);
     
 public slots:
     /**
