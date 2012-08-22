@@ -153,8 +153,14 @@ void KlustersApp::createMenus()
     KStdAction::quit(this, SLOT(close()), actionCollection());
     viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
     viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-    new QAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")), Qt::CTRL + Qt::SHIFT + Qt::Key_S,this, SLOT(slotFileRenumberAndSave()),actionCollection(), "file_renumber_save");
-    new QAction(tr("&Import File"), Qt::CTRL + Qt::Key_I,this, SLOT(slotFileImport()),actionCollection(), "fileImport");
+    VARIABLE = MENU->addAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")));
+    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
+
+    VARIABLE = MENU->addAction(tr("&Import File"));
+    VARIABLE->setShortcuts(Qt::CTRL + Qt::Key_I);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotFileImport()));
+
 
 #endif
     //Edit Menu
@@ -179,15 +185,39 @@ void KlustersApp::initActions()
 
     //Displays menu
     viewMenu = new QActionMenu(tr("&Window"), actionCollection(), "window_menu");
-    newClusterDisplay = new QAction(tr("New C&luster Display"), 0, this, SLOT(slotWindowNewClusterDisplay()), actionCollection(),"new_clusterDisplay");
-    newWaveformDisplay = new QAction(tr("New &Waveform Display"), 0, this, SLOT(slotWindowNewWaveformDisplay()), actionCollection(),"new_waveformDisplay");
-    newCrosscorrelationDisplay = new QAction(tr("New C&orrelation Display"),0,this,SLOT(slotWindowNewCrosscorrelationDisplay()), actionCollection(),"new_crosscorrelationDisplay");
-    newOverViewDisplay = new QAction(tr("New &Overview Display"), 0, this,SLOT(slotWindowNewOverViewDisplay()),actionCollection(),"new_overViewDisplay");
+    newClusterDisplay = MENU->addAction(tr("New C&luster Display"));
+    newClusterDisplay->setShortcuts(0);
+    connect(newClusterDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewClusterDisplay()));
+
+    newWaveformDisplay = MENU->addAction(tr("New &Waveform Display"));
+    newWaveformDisplay->setShortcuts(0);
+    connect(newWaveformDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewWaveformDisplay()));
+
+    newCrosscorrelationDisplay = MENU->addAction(tr("New C&orrelation Display"));
+    newCrosscorrelationDisplay->setShortcuts(0);
+    connect(newCrosscorrelationDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewCrosscorrelationDisplay()));
+
+    newOverViewDisplay = MENU->addAction(tr("New &Overview Display"));
+    newOverViewDisplay->setShortcuts(0);
+    connect(newOverViewDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewOverViewDisplay()));
+
     newGroupingAssistantDisplay =
-            new QAction(tr("New &Grouping Assistant Display"),0,this,SLOT(slotWindowNewGroupingAssistantDisplay()),actionCollection(),"new_goupingAssistantDisplay");
-    new QAction(tr("&Rename Active Display"), Qt::CTRL + Qt::Key_R, this, SLOT(renameActiveDisplay()),actionCollection(),"rename_display");
-    new QAction(tr("&Close Active Display"), Qt::CTRL + Qt::Key_W, this, SLOT(slotDisplayClose()),actionCollection(),"close_display");
-    new QAction(tr("New &Trace Display"),0, this, SLOT(slotNewTraceDisplay()),actionCollection(),"trace_display");
+            VARIABLE = MENU->addAction(tr("New &Grouping Assistant Display"));
+    VARIABLE->setShortcuts(0);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotWindowNewGroupingAssistantDisplay()));
+
+    VARIABLE = MENU->addAction(tr("&Rename Active Display"));
+    VARIABLE->setShortcuts(Qt::CTRL + Qt::Key_R);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(renameActiveDisplay()));
+
+    VARIABLE = MENU->addAction(tr("&Close Active Display"));
+    VARIABLE->setShortcuts(Qt::CTRL + Qt::Key_W);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDisplayClose()));
+
+    VARIABLE = MENU->addAction(tr("New &Trace Display"));
+    VARIABLE->setShortcuts(0);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotNewTraceDisplay()));
+
 
     //Not used for the moment.
     connect(viewMenu->popupMenu(),SIGNAL(aboutToShow()), this, SLOT(viewMenuAboutToShow()));
@@ -195,29 +225,74 @@ void KlustersApp::initActions()
 
 
     //Actions menu
-    new QAction(tr("Delete &Artifact Cluster(s)"),QIcon(":/icons/delete_artefact"),Qt::SHIFT + Qt::Key_Delete,clusterPalette, SLOT(moveClustersToArtefact()),actionCollection(), "move_clusters_to_artifact");
-    new QAction(tr("Delete &Noisy Cluster(s)"),QIcon(":/icons/delete_noise"),Qt::Key_Delete,clusterPalette, SLOT(moveClustersToNoise()),actionCollection(), "move_clusters_to_noise");
-    new QAction(tr("&Group Clusters"),QIcon(":/icons/group"), Qt::Key_G,clusterPalette, SLOT(groupClusters()),actionCollection(), "group_clusters");
-    new QAction(tr("&Update Display"),QIcon(":/icons/update"), 0,clusterPalette, SLOT(updateClusters()),actionCollection(), "update_display");
-    new QAction(tr("&Renumber Clusters"),0, Qt::Key_R,doc, SLOT(renumberClusters()),actionCollection(), "renumber");
+    VARIABLE = MENU->addAction(tr("Delete &Artifact Cluster(s)"),QIcon(":/icons/delete_artefact"));
+    VARIABLE->setShortcuts(Qt::SHIFT + Qt::Key_Delete);
+    connect(VARIABLE,SIGNAL(triggered()), clusterPalette,SLOT(moveClustersToArtefact()));
+
+    VARIABLE = MENU->addAction(tr("Delete &Noisy Cluster(s)"),QIcon(":/icons/delete_noise"));
+    VARIABLE->setShortcuts(Qt::Key_Delete);
+    connect(VARIABLE,SIGNAL(triggered()), clusterPalette,SLOT(moveClustersToNoise()));
+
+    VARIABLE = MENU->addAction(tr("&Group Clusters"),QIcon(":/icons/group"));
+    VARIABLE->setShortcuts(Qt::Key_G);
+    connect(VARIABLE,SIGNAL(triggered()), clusterPalette,SLOT(groupClusters()));
+
+    VARIABLE = MENU->addAction(tr("&Update Display"),QIcon(":/icons/update"));
+    VARIABLE->setShortcuts(0);
+    connect(VARIABLE,SIGNAL(triggered()), clusterPalette,SLOT(updateClusters()));
+
+    VARIABLE = MENU->addAction(tr("&Renumber Clusters"),0);
+    VARIABLE->setShortcuts(Qt::Key_R);
+    connect(VARIABLE,SIGNAL(triggered()), doc,SLOT(renumberClusters()));
+
     new QAction(tr("&Update Error Matrix"),QIcon(":/icons/grouping_assistant_update"),Qt::Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
                 "update_errorMatrix");
-    new QAction(tr("Re&cluster"),0, Qt::SHIFT  + Qt::Key_R,this, SLOT(slotRecluster()),actionCollection(), "recluster");
-    new QAction(tr("&Abort Reclustering"),0, 0,this, SLOT(slotStopRecluster()),actionCollection(), "stop_recluster");
+    VARIABLE = MENU->addAction(tr("Re&cluster"),0);
+    VARIABLE->setShortcuts(Qt::SHIFT  + Qt::Key_R);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotRecluster()));
+
+    VARIABLE = MENU->addAction(tr("&Abort Reclustering"),0);
+    VARIABLE->setShortcuts(0);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotStopRecluster()));
+
 
     //Tools menu
-    new QAction(tr("Zoom"),QIcon(":/icons/zoom_tool"), Qt::Key_Z,this, SLOT(slotZoom()),actionCollection(), "zoom");
-    new QAction(tr("New Cluster"),QIcon(":/icons/new_cluster"), Qt::Key_C,this, SLOT(slotSingleNew()),actionCollection(), "single_new");
-    new QAction(tr("&Split Clusters"),QIcon(":/icons/new_clusters"), Qt::Key_S,this, SLOT(slotMultipleNew()),actionCollection(), "multiple_new");
-    new QAction(tr("Delete &Artifact Spikes"),QIcon(":/icons/delete_artefact_tool"),Qt::Key_A,this, SLOT(slotDeleteArtefact()),actionCollection(), "delete_artifact");
-    new QAction(tr("Delete &Noisy Spikes"),QIcon(":/icons/delete_noise_tool"),Qt::Key_N,this, SLOT(slotDeleteNoise()),actionCollection(), "delete_noise");
-    new QAction(tr("Select Time"),QIcon(":/icons/time_tool"), Qt::Key_W,this, SLOT(slotSelectTime()),actionCollection(), "time");
+    VARIABLE = MENU->addAction(tr("Zoom"),QIcon(":/icons/zoom_tool"));
+    VARIABLE->setShortcuts(Qt::Key_Z);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotZoom()));
+
+    VARIABLE = MENU->addAction(tr("New Cluster"),QIcon(":/icons/new_cluster"));
+    VARIABLE->setShortcuts(Qt::Key_C);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotSingleNew()));
+
+    VARIABLE = MENU->addAction(tr("&Split Clusters"),QIcon(":/icons/new_clusters"));
+    VARIABLE->setShortcuts(Qt::Key_S);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotMultipleNew()));
+
+    VARIABLE = MENU->addAction(tr("Delete &Artifact Spikes"),QIcon(":/icons/delete_artefact_tool"));
+    VARIABLE->setShortcuts(Qt::Key_A);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDeleteArtefact()));
+
+    VARIABLE = MENU->addAction(tr("Delete &Noisy Spikes"),QIcon(":/icons/delete_noise_tool"));
+    VARIABLE->setShortcuts(Qt::Key_N);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDeleteNoise()));
+
+    VARIABLE = MENU->addAction(tr("Select Time"),QIcon(":/icons/time_tool"));
+    VARIABLE->setShortcuts(Qt::Key_W);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotSelectTime()));
+
     //Waveforms menu
     timeFrameMode = new KToggleAction(tr("&Time Frame"), Qt::Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
     overlayPresentation = new KToggleAction(tr("&Overlay"), Qt::Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
     meanPresentation = new KToggleAction(tr("&Mean and Standard Deviation"), Qt::Key_M,this, SLOT(slotMeanPresentation()),actionCollection(), "mean");
-    new QAction(tr("&Increase Amplitude"), Qt::Key_I,this, SLOT(slotIncreaseAmplitude()),actionCollection(), "increase");
-    new QAction(tr("&Decrease Amplitude"), Qt::Key_D,this, SLOT(slotDecreaseAmplitude()),actionCollection(), "decrease");
+    VARIABLE = MENU->addAction(tr("&Increase Amplitude"));
+    VARIABLE->setShortcuts(Qt::Key_I);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotIncreaseAmplitude()));
+
+    VARIABLE = MENU->addAction(tr("&Decrease Amplitude"));
+    VARIABLE->setShortcuts(Qt::Key_D);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDecreaseAmplitude()));
+
     timeFrameMode->setChecked(false);
     overlayPresentation->setChecked(false);
     meanPresentation->setChecked(false);
@@ -231,17 +306,35 @@ void KlustersApp::initActions()
     noScale->setExclusiveGroup("scale");
     //Initialize the presentation mode to scale by maximum.
     scaleByMax->setChecked(true);
-    new QAction(tr("&Increase Amplitude"),Qt::SHIFT + Qt::Key_I,this, SLOT(slotIncreaseCorrelogramsAmplitude()),actionCollection(), "increase_correlograms");
-    new QAction(tr("&Decrease Amplitude"),Qt::SHIFT +  Qt::Key_D,this, SLOT(slotDecreaseCorrelogramsAmplitude()),actionCollection(), "decrease_correlograms");
+    VARIABLE = MENU->addAction(tr("&Increase Amplitude"));
+    VARIABLE->setShortcuts(Qt::SHIFT + Qt::Key_I);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotIncreaseCorrelogramsAmplitude()));
+
+    VARIABLE = MENU->addAction(tr("&Decrease Amplitude"));
+    VARIABLE->setShortcuts(Qt::SHIFT +  Qt::Key_D);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDecreaseCorrelogramsAmplitude()));
+
     shoulderLine = new KToggleAction(tr("Asymptote &Line"), Qt::Key_L,this, SLOT(slotShoulderLine()),actionCollection(), "shoulder_line");
 
     //Traces menu
-    new QAction(tr("&Increase Channel Amplitudes"),Qt::CTRL + Qt::SHIFT + Qt::Key_I,this, SLOT(slotIncreaseAllChannelsAmplitude()),actionCollection(), "increase_all_channels");
-    new QAction(tr("&Decrease Channel Amplitudes"),Qt::CTRL + Qt::SHIFT + Qt::Key_D,this, SLOT(slotDecreaseAllChannelsAmplitude()),actionCollection(), "decrease_all_channels");
+    VARIABLE = MENU->addAction(tr("&Increase Channel Amplitudes"));
+    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_I);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotIncreaseAllChannelsAmplitude()));
+
+    VARIABLE = MENU->addAction(tr("&Decrease Channel Amplitudes"));
+    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDecreaseAllChannelsAmplitude()));
+
     showHideLabels = new KToggleAction(tr("Show &Labels"),0,Qt::CTRL + Qt::Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
     showHideLabels->setChecked(false);
-    new QAction(tr("&Next Spike"),QIcon(":/icons/forwardCluster"),Qt::CTRL + Qt::SHIFT + Qt::Key_F, this, SLOT(slotShowNextCluster()), actionCollection(),"show_next_cluster");
-    new QAction(tr("&Previous Spike"),QIcon(":/icons/backCluster"),Qt::CTRL + Qt::SHIFT + Qt::Key_B, this, SLOT(slotShowPreviousCluster()), actionCollection(),"show_previous_cluster");
+    VARIABLE = MENU->addAction(tr("&Next Spike"),QIcon(":/icons/forwardCluster"));
+    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotShowNextCluster()));
+
+    VARIABLE = MENU->addAction(tr("&Previous Spike"),QIcon(":/icons/backCluster"));
+    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_B);
+    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotShowPreviousCluster()));
+
 
     //Settings menu
     viewActionBar = new KToggleAction(tr("Show Actions"),0,this, SLOT(slotViewActionBar()),actionCollection(), "show_actionBar");
