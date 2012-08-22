@@ -39,6 +39,7 @@
 #include <QDebug>
 #include <QStatusBar>
 #include <QProcess>
+#include <QMenuBar>
 
 
 // application specific includes
@@ -125,19 +126,29 @@ KlustersApp::~KlustersApp()
 
 void KlustersApp::createMenus()
 {
-    //TODO
-}
+    //File Menu
+    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
+    QAction *openAction = fileMenu->addAction(tr("&Open..."));
+    openAction->setShortcuts(QKeySequence::Open);
+    connect(openAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
-void KlustersApp::initActions()
-{
 
-    //File menu
-    KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
-    fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
-    KStdAction::save(this, SLOT(slotFileSave()), actionCollection());
-    KStdAction::saveAs(this, SLOT(slotFileSaveAs()), actionCollection());
-    new QAction(tr("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
 
+    //KDAB_TODO fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
+
+    QAction *saveAction = fileMenu->addAction(tr("Save..."));
+    saveAction->setShortcuts(QKeySequence::Save);
+    connect(openAction, SIGNAL(triggered()), this, SLOT(slotFileSave()));
+
+    QAction *saveAsAction = fileMenu->addAction(tr("&Save As..."));
+    saveAsAction->setShortcuts(QKeySequence::SaveAs);
+    connect(openAsAction, SIGNAL(triggered()), this, SLOT(slotFileSaveAs()));
+
+    QAction *closeAction = fileMenu->addAction(tr("Close"));
+    closeAction->setShortcuts(QKeySequence::Close);
+    connect(closeAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
+
+#if 0
     KStdAction::print(this, SLOT(slotFilePrint()), actionCollection());
     KStdAction::quit(this, SLOT(close()), actionCollection());
     viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
@@ -145,13 +156,27 @@ void KlustersApp::initActions()
     new QAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")), Qt::CTRL + Qt::SHIFT + Qt::Key_S,this, SLOT(slotFileRenumberAndSave()),actionCollection(), "file_renumber_save");
     new QAction(tr("&Import File"), Qt::CTRL + Qt::Key_I,this, SLOT(slotFileImport()),actionCollection(), "fileImport");
 
-    //Edit menu
-    new QAction(tr("Select &All"), Qt::CTRL + Qt::Key_A, this, SLOT(slotSelectAll()),actionCollection(),"edit_select_all");
-    new QAction(tr("Select All except 0 and 1"), Qt::CTRL + Qt::SHIFT + Qt::Key_A, this,
-                SLOT(slotSelectAllWO01()),actionCollection(),"edit_select_all_except01");
+#endif
+    //Edit Menu
+    QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
+    QAction *selectAllAction = editMenu->addAction(tr("Select &All"));
+    selectAllAction->setShortcuts(QKeySequence::SelectAll);
+    connect(selectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAll()));
+
+
+    QAction *selectAllExceptAction = editMenu->addAction(tr("Select &All"));
+    selectAllAction->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
+    connect(selectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
+
     KStdAction::undo(this, SLOT(slotUndo()), actionCollection());
     KStdAction::redo(this, SLOT(slotRedo()), actionCollection());
-    
+
+    //TODO
+}
+
+void KlustersApp::initActions()
+{
+
     //Displays menu
     viewMenu = new QActionMenu(tr("&Window"), actionCollection(), "window_menu");
     newClusterDisplay = new QAction(tr("New C&luster Display"), 0, this, SLOT(slotWindowNewClusterDisplay()), actionCollection(),"new_clusterDisplay");
