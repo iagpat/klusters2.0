@@ -45,7 +45,7 @@ class KlustersView;
 class KlustersApp;
 class AutoSaveThread;
 
-  /**
+/**
   * The KlustersDoc class provides a document object that can be used in conjunction with the classes
   * KlustersApp and KlustersView to create a document-view model for MDI (Multiple Document Interface)
   * based on KApplication and KDockMainWindow as main classes.
@@ -57,16 +57,16 @@ class AutoSaveThread;
   */
 class KlustersDoc : public QObject
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  friend class KlustersView;
+    friend class KlustersView;
 
-  public:
+public:
 
     /**Information retun after a call to openFile/saveDocument/createFeatureFile*/
     enum OpenSaveCreateReturnMessage {OK=0,OPEN_ERROR=1,DOWNLOAD_ERROR=3,INCORRECT_FILE=4,SAVE_ERROR=5,
-                               UPLOAD_ERROR=6,INCORRECT_CONTENT=7,CREATION_ERROR=8,SPK_DOWNLOAD_ERROR=9,FET_DOWNLOAD_ERROR=10,
-										 PAR_DOWNLOAD_ERROR=11,PARX_DOWNLOAD_ERROR=12,PARXML_DOWNLOAD_ERROR=13,NOT_WRITABLE=14,PARSE_ERROR=15};
+                                      UPLOAD_ERROR=6,INCORRECT_CONTENT=7,CREATION_ERROR=8,SPK_DOWNLOAD_ERROR=9,FET_DOWNLOAD_ERROR=10,
+                                      PAR_DOWNLOAD_ERROR=11,PARX_DOWNLOAD_ERROR=12,PARXML_DOWNLOAD_ERROR=13,NOT_WRITABLE=14,PARSE_ERROR=15};
     
     /** Constructs a document.
     * @param parent the parent QWidget.
@@ -84,7 +84,7 @@ class KlustersDoc : public QObject
     void removeView(KlustersView* view);
     
     /** Returns the first view instance. */
-    KlustersView* firstView(){return viewList->first();};
+    KlustersView* firstView(){return viewList->first();}
     
     /**Returns true, if the requested view is the last view of the document. */
     bool isLastView();
@@ -94,9 +94,9 @@ class KlustersDoc : public QObject
     */
     bool canCloseView();
     /** Sets the modified flag for the document after a modifying action on a view connected to the document.*/
-    void setModified(bool m = true){ modified=m; };
+    void setModified(bool m = true){ modified=m; }
     /** Returns if the document is modified or not. Use this to determine if your document needs saving by the user on closing.*/
-    bool isModified(){ return modified; };
+    bool isModified(){ return modified; }
     /** Opens the document by filename and format.
     * @return an OpenSaveCreateReturnMessage enum giving the open status.
     */
@@ -104,7 +104,7 @@ class KlustersDoc : public QObject
     /**Opens a document using different format, than the one defined for the application, by filename and format.
     * Not Yet implemented.
     */
-    bool importDocument(const QString &url, const char* format=0);   
+    bool importDocument(const QString &url, const char* format=0);
 
     /** Closes the actual document.*/
     void closeDocument();
@@ -119,12 +119,12 @@ class KlustersDoc : public QObject
     
     /** Saves the document under the file name containes in @p url.
     * @return an OpenRetunMessage enum giving the open status
-    */    
+    */
     int saveDocument(const QString &url, const char* format=0);
     /**Returns the QString of the document. */
-    inline const QString& url() const{return docUrl;};
+    inline const QString& url() const{return docUrl;}
     /**Sets the URL of the document. */
-    inline void setURL(const QString& url){docUrl=url;};
+    inline void setURL(const QString& url){docUrl=url;}
     /**Sends back the full name of the document with the electrode group Id append.*/
     QString documentName();
 
@@ -133,16 +133,16 @@ class KlustersDoc : public QObject
 
     /**Sends back the directory where is store the document.*/
     QString documentDirectory();
-        
+
     /**Returns the reference on the list of ClusterColor objects.
     * @return ItemColors containing the information on the clusters and their associated color.
     */
-    inline ItemColors& clusterColors() const {return *clusterColorList;} ;
+    inline ItemColors& clusterColors() const {return *clusterColorList;}
 
     /**Returns a reference on data (object containing all the information).
     * @return data object.
     */
-    inline Data& data() const {return *clusteringData;};
+    inline Data& data() const {return *clusteringData;}
 
     /**Manages the color change of a single cluster.
     * Method call when the palette is in immediat mode (no need to press the update buton to trigger the change)
@@ -160,7 +160,7 @@ class KlustersDoc : public QObject
     /**Updates the selection of clusters to be shown in the active view due to
     * a selection in the error matrix.
     * @param clustersToShow list of clusters to be drawn.
-    */    
+    */
     void shownClustersUpdate(Q3ValueList<int> clustersToShow);
 
     /**Updates the selection of clusters to be shown in the active view due to
@@ -185,7 +185,7 @@ class KlustersDoc : public QObject
     /**Manages the grouping of clusters.
     * @param clustersToGroup list of clusters to be grouped.
     * @param activeView the view in which the change has to be immediate.
-    */    
+    */
     void groupClusters(Q3ValueList<int> clustersToGroup,KlustersView& activeView);
 
     /**Manages the deletion of clusters, if @p clusterId is 0, the clusters are moved to cluster 0 (cluster of artefact)
@@ -225,7 +225,7 @@ class KlustersDoc : public QObject
     * @param dimensionY the dimension used as ordinate to display the clusters.
     * @return the number of the newly created cluster.
     */
-    void createNewCluster(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY); 
+    void createNewCluster(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
 
     /**
     * Creates a new clusters out of existing ones. If the polygon of selection contains x clusters
@@ -240,7 +240,7 @@ class KlustersDoc : public QObject
     void createNewClusters(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
 
     /**Returns the number of dimensions of the data.*/
-    inline int nbDimensions(){return clusteringData->nbOfDimensions();};
+    inline int nbDimensions(){return clusteringData->nbOfDimensions();}
 
     /** Reverts the last user action.*/
     void undo();
@@ -249,10 +249,10 @@ class KlustersDoc : public QObject
     void redo();
 
     /**Returns the temporary file corresponding to the cluster file.*/
-    inline QString temporaryFile(){return tmpCluFile;};
+    inline QString temporaryFile(){return tmpCluFile;}
 
-    /**Returns the temporary file corresponding to the spike file.*/    
-    inline QString getSpikeFileName(){return tmpSpikeFile;};
+    /**Returns the temporary file corresponding to the spike file.*/
+    inline QString getSpikeFileName(){return tmpSpikeFile;}
 
     /**Returns the maximum value for the time dimension in second.*/
     inline long maxTime() const{return clusteringData->maxTime();}
@@ -260,97 +260,97 @@ class KlustersDoc : public QObject
     /**Returns the total number of spikes of the current document.
     * @return the total number of spikes.
     */
-    inline long totalNbOfSpikes(){ return clusteringData->totalNbOfSpikes();};
+    inline long totalNbOfSpikes(){ return clusteringData->totalNbOfSpikes();}
 
     class CloseDocumentEvent;
     friend class CloseDocumentEvent;
 
     inline CloseDocumentEvent* getCloseDocumentEvent(QString origin){
-      return new CloseDocumentEvent(origin);
-    };
+        return new CloseDocumentEvent(origin);
+    }
 
     /**
     * Internal class use to send information to the main window to inform it that
     * the document could not be closed has there still have thread running.
     */
     class CloseDocumentEvent : public QCustomEvent{
-     //Only the method getCloseDocumentEvent of KlustersDoc has access to the private part of CloseDocumentEvent,
-     //the constructor of CloseDocumentEvent being private, only this method con create a new CloseDocumentEvent
-     friend CloseDocumentEvent* KlustersDoc::getCloseDocumentEvent(QString origin);
+        //Only the method getCloseDocumentEvent of KlustersDoc has access to the private part of CloseDocumentEvent,
+        //the constructor of CloseDocumentEvent being private, only this method con create a new CloseDocumentEvent
+        friend CloseDocumentEvent* KlustersDoc::getCloseDocumentEvent(QString origin);
 
     public:
-      inline QString methodOfOrigin(){return origin;};
-      inline ~CloseDocumentEvent(){};
+        inline QString methodOfOrigin(){return origin;}
+        inline ~CloseDocumentEvent(){}
 
     private:
-      CloseDocumentEvent(QString origin):QCustomEvent(QEvent::User + 400),origin(origin){};
+        CloseDocumentEvent(QString origin):QCustomEvent(QEvent::User + 400),origin(origin){}
 
-      QString origin;
+        QString origin;
     };
 
     /**Sets the auto saving on for the future documents to be opened.
     * @param interval saving interval.
     */
     inline void setAutoSaving(int interval){
-     savingInterval = interval;
-     endAutoSaving = false;
-     autoSave = true;
-    };
+        savingInterval = interval;
+        endAutoSaving = false;
+        autoSave = true;
+    }
     
     /**Updates the time interval use for the auto saving of the document. Starts the auto saving if it was off.
     * @param interval saving interval.
     */
     void updateAutoSavingInterval(int interval);
     
-   /**Stops the auto saving of the document.
+    /**Stops the auto saving of the document.
    * @param currentDocument true if the auto saving is stopped only for the currently open document, false if it is
    * a change in the settings which triggered this call and therefore the auto saving is disabled completely.
    * @return true if the autoSaving thread has been delete false otherwise.
    */
-   bool stopAutoSaving(bool currentDocument = false);
-   
-   void customEvent (QCustomEvent* event);
-   
-   /**Sets the acquisition system gain.
+    bool stopAutoSaving(bool currentDocument = false);
+
+    void customEvent (QCustomEvent* event);
+
+    /**Sets the acquisition system gain.
     * @param acquisitionGain acquisition system gain.
     */
     void setGain(int acquisitionGain);
     
-  /**Updates the time interval between time lines drawn in the cluster views for the time dimension.
+    /**Updates the time interval between time lines drawn in the cluster views for the time dimension.
   * @param step the interval to use in second.
-  */    
-   void setTimeStepInSecond(int step);
+  */
+    void setTimeStepInSecond(int step);
 
-  /**Initialize the position of the channels in the waveform views.
+    /**Initialize the position of the channels in the waveform views.
   * @param positions positions of the channels to use in the view set by the user in the settings dialog.
   */
-  void setChannelPositions(Q3ValueList<int>& positions);
+    void setChannelPositions(Q3ValueList<int>& positions);
 
-  /**Returns the number of channels used.*/
-  inline int nbOfchannels() const{return clusteringData->nbOfchannels();};
+    /**Returns the number of channels used.*/
+    inline int nbOfchannels() const{return clusteringData->nbOfchannels();}
 
-  /**Returns the total number of PCAs used
+    /**Returns the total number of PCAs used
   * (number of channels times number of PCA by channel).*/
-  inline int totalNbOfPCAs() const{return clusteringData->totalNbOfPCAs();};
+    inline int totalNbOfPCAs() const{return clusteringData->totalNbOfPCAs();}
     
-  /**Makes all the internal changes due to a modification of the number of undo.
+    /**Makes all the internal changes due to a modification of the number of undo.
   * @param newNbUndo the futur new number of undo.
   */
-  void nbUndoChangedCleaning(int newNbUndo);
+    void nbUndoChangedCleaning(int newNbUndo);
 
-  /**Updates the background color used in the views.
+    /**Updates the background color used in the views.
   * @param backgroundColor color of the new background.
  */
-  void setBackgroundColor(QColor backgroundColor);
+    void setBackgroundColor(QColor backgroundColor);
 
-  /**Creates the feature file to automatically recluster the clusters contained in @p clustersToRecluster.
+    /**Creates the feature file to automatically recluster the clusters contained in @p clustersToRecluster.
   * @param clustersToRecluster list of clusters to recluster.
   * @param reclusteringFetFileName name for the reclustering fet file.
   * @return the creation status as a OpenSaveCreateReturnMessage enum.
   */
-  int createFeatureFile(Q3ValueList<int>& clustersToRecluster,QString reclusteringFetFileName);
+    int createFeatureFile(Q3ValueList<int>& clustersToRecluster,QString reclusteringFetFileName);
 
-  /**Integrates in the data the clusters obtained by automatic reclustering.
+    /**Integrates in the data the clusters obtained by automatic reclustering.
   * Suppress the reclustered ones and add the newly created ones.
   * @param clustersToRecluster list of clusters reclustered.
   * @param reclusteredClusterList output parameter, the list of the newly created clusters.
@@ -358,106 +358,106 @@ class KlustersDoc : public QObject
   * @param reclusteringFetFileName name of the reclustering fet file.
   * @return the integration status as a OpenSaveCreateReturnMessage enum.
   */
-  int integrateReclusteredClusters(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,QString reclusteringFetFileName);
-  
-  /** Returns the id of the electrode group correponding to the current document.
+    int integrateReclusteredClusters(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,QString reclusteringFetFileName);
+
+    /** Returns the id of the electrode group correponding to the current document.
   * @return the id of the electrode group.
   */
-  inline QString currentElectrodeGroupID() const {return electrodeGroupID;};
+    inline QString currentElectrodeGroupID() const {return electrodeGroupID;}
 
-  /**Updates the views to take into account the clusters obtained by automatic reclustering.
+    /**Updates the views to take into account the clusters obtained by automatic reclustering.
   * Suppress the reclustered ones and add the newly created ones.
   * @param clustersToRecluster list of clusters reclustered.
   * @param reclusteredClusterList output parameter, the list of the newly created clusters.
   */
-  void reclusteringUpdate(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList);
+    void reclusteringUpdate(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList);
 
-  /**
+    /**
   * Informs if the variables need it by the traceView are available. Those variables are retrieve only from
   * the parameter file in xml format (the new format).
   * @return true if the variables are available, false otherwise.*/
-  inline bool isTraceViewVariablesAvailable()const {return clusteringData->isTraceViewVariablesAvailable();};
-  
-   /**
+    inline bool isTraceViewVariablesAvailable()const {return clusteringData->isTraceViewVariablesAvailable();}
+
+    /**
   * Informs if the data need it by the traceView are available.
   * @return true if the data are available, false otherwise.*/
-  inline bool areTraceDataAvailable()const {
-   QString datUrl(docUrl);
-   datUrl.append("/"+baseName +".dat");
-   
-   QFileInfo datFileInfo = QFileInfo(datUrl);   
-   if(!datFileInfo.exists()) return false;
-   else return true;
-  };
+    inline bool areTraceDataAvailable()const {
+        QString datUrl(docUrl);
+        datUrl.append("/"+baseName +".dat");
 
-  /**
+        QFileInfo datFileInfo = QFileInfo(datUrl);
+        if(!datFileInfo.exists()) return false;
+        else return true;
+    }
+
+    /**
   * Informs if a TracesProvider exits.
   * @return true if the provider exists, false otherwise.*/
-  inline bool isTracesProvider() const{
-   if(tracesProvider == 0L) return false;
-   else return true;
-  };
-  
-  /**Creates providers which will provide data to the TraceView. A TracesProvider which will provide the channel data and 
+    inline bool isTracesProvider() const{
+        if(tracesProvider == 0L) return false;
+        else return true;
+    }
+
+    /**Creates providers which will provide data to the TraceView. A TracesProvider which will provide the channel data and
   * a TracesProvider which will provide the cluster data.*/
-  void createProviders();
+    void createProviders();
     
-  /**Gets the acquisition system gain.
+    /**Gets the acquisition system gain.
   * @return current acquisition gain.
   */
-  inline int getAcquisitionGain()const{return acquisitionGain;};
+    inline int getAcquisitionGain()const{return acquisitionGain;}
 
-  /**Gets the current gain based on the screen gain and the acquisition system gain.
+    /**Gets the current gain based on the screen gain and the acquisition system gain.
   * @return current gain.
   */
-  inline int getGain()const{return gain;};
-  
-  /**Returns a pointer on the list of ChannelColors objects used to represent the channel colors used in TraceView.
+    inline int getGain()const{return gain;}
+
+    /**Returns a pointer on the list of ChannelColors objects used to represent the channel colors used in TraceView.
   * @return ChannelColors containing the information on the channels and their associated color.
   */
-  inline ChannelColors* channelColors() const {return channelColorList;} ;
-  
- /**Returns a reference on the Map given the correspondance between the channel ids and the display group ids.*/   
-  inline QMap<int,int>* getDisplayChannelsGroups() {return &displayChannelsGroups;};
+    inline ChannelColors* channelColors() const {return channelColorList;}
 
- /**Returns a reference on the map given th correspondance between the display group ids and the channel ids.
+    /**Returns a reference on the Map given the correspondance between the channel ids and the display group ids.*/
+    inline QMap<int,int>* getDisplayChannelsGroups() {return &displayChannelsGroups;}
+
+    /**Returns a reference on the map given th correspondance between the display group ids and the channel ids.
   */
-  inline QMap<int, Q3ValueList<int> >* getDisplayGroupsChannels() {return &displayGroupsChannels;};   
+    inline QMap<int, Q3ValueList<int> >* getDisplayGroupsChannels() {return &displayGroupsChannels;}
 
- /**Returns a reference on the Map given the correspondance between the channel ids and the spike group ids.
+    /**Returns a reference on the Map given the correspondance between the channel ids and the spike group ids.
   */
-  inline QMap<int,int>* getChannelsSpikeGroups() {return &channelsSpikeGroups;};
+    inline QMap<int,int>* getChannelsSpikeGroups() {return &channelsSpikeGroups;}
 
-  /**Returns a reference on the map given th correspondance between the spike group ids and the channel ids.
+    /**Returns a reference on the map given th correspondance between the spike group ids and the channel ids.
   */
-  inline QMap<int, Q3ValueList<int> >* getSpikeGroupsChannels() {return &spikeGroupsChannels;};
-     
-  /**Returns the list of channels of the current electrode.*/
-  inline Q3ValueList<int>& getCurrentChannels() {return clusteringData->getCurrentChannels();};
+    inline QMap<int, Q3ValueList<int> >* getSpikeGroupsChannels() {return &spikeGroupsChannels;}
 
-  /**Returns a map given the list of cluster file containing data for a given display group.
-  * This is used in the TraceView.*/  
-  inline QMap<int, Q3ValueList<int> >* getDisplayGroupsClusterFile() {return &displayGroupsClusterFile;};
-  
-  /**Returns a pointer to the TraceProvider.*/
-  inline  TracesProvider* getTraceProvider()const{return tracesProvider;}; 
-  
-  /**Returns a pointer to the ClustersProvider.*/
-  inline ClustersProvider* getClustersProvider()const{return clustersProvider;};   
+    /**Returns the list of channels of the current electrode.*/
+    inline Q3ValueList<int>& getCurrentChannels() {return clusteringData->getCurrentChannels();}
 
-  /**Returns the number of samples in a waveform before the peak.*/
-  inline int getNbSamplesBeforePeak()const{return (clusteringData->getPeakPositionInWaveform() - 1);};
-  
-  /**Returns the number of samples in a waveform after the peak.*/
-  inline int getNbSamplesAfterPeak()const{return (clusteringData->getNbSamplesInWaveform() - clusteringData->getPeakPositionInWaveform());}
-	 
-  /** Shows in the cluster palette the user cluster information, that is show a modified cluster palette presenting the cluster ids and the user cluster information.*/
-  void showUserClusterInformation();
+    /**Returns a map given the list of cluster file containing data for a given display group.
+  * This is used in the TraceView.*/
+    inline QMap<int, Q3ValueList<int> >* getDisplayGroupsClusterFile() {return &displayGroupsClusterFile;}
 
-  /**Sets the modified status of the current opend document to true .*/
-  inline void clusterInformationModified(){modified = true;}
-		  
-  signals:
+    /**Returns a pointer to the TraceProvider.*/
+    inline  TracesProvider* getTraceProvider()const{return tracesProvider;}
+
+    /**Returns a pointer to the ClustersProvider.*/
+    inline ClustersProvider* getClustersProvider()const{return clustersProvider;}
+
+    /**Returns the number of samples in a waveform before the peak.*/
+    inline int getNbSamplesBeforePeak()const{return (clusteringData->getPeakPositionInWaveform() - 1);}
+
+    /**Returns the number of samples in a waveform after the peak.*/
+    inline int getNbSamplesAfterPeak()const{return (clusteringData->getNbSamplesInWaveform() - clusteringData->getPeakPositionInWaveform());}
+
+    /** Shows in the cluster palette the user cluster information, that is show a modified cluster palette presenting the cluster ids and the user cluster information.*/
+    void showUserClusterInformation();
+
+    /**Sets the modified status of the current opend document to true .*/
+    inline void clusterInformationModified(){modified = true;}
+
+signals:
     void updateUndoNb(int undoNb);
     void updateRedoNb(int undoNb);
     void clustersGrouped(Q3ValueList<int>& groupedClusters, int newClusterId);
@@ -478,7 +478,7 @@ class KlustersDoc : public QObject
     void newClustersAdded(Q3ValueList<int>& clustersToRecluster);
     void spikesDeleted();
     
-  public slots:
+public slots:
     /** Calls repaint() on all views connected to the document object and is called by the view by which the document has been changed.
      * As this view normally repaints itself, it is excluded from the paintEvent.
      */
@@ -489,10 +489,10 @@ class KlustersDoc : public QObject
 
     /**Launchs an autoSave by starting the autoSaveThread.*/
     void launchAutoSave();
- 
-  private:
 
-     /**
+private:
+
+    /**
     * Removes spikes from some clusters and assign them to the cluster @pdestinationCluster
     * which is either the cluster 0, corresponding to the artefact, or the cluster 1, corresponding to the noise.
     * @param destination the cluster number to assign the spikes contained in the region.
@@ -523,13 +523,13 @@ class KlustersDoc : public QObject
     * to the deletedClustersUndoList.
     * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
     * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact abd cluster of noise respectively).
-    */    
+    */
     void prepareUndo(Q3ValueList<int>* addedClustersTemp,Q3ValueList<int>* modifiedClustersTemp,Q3ValueList<int>* deletedClustersTemp,bool isModifiedByDeletion = false);
 
     /**
     * Fills the undo lists (addedClustersUndoList, deletedClustersUndoList and modifiedClustersUndoList) with
     * empty list to prepare the futur undo.
-    */    
+    */
     void prepareUndo();
 
     /**
@@ -553,7 +553,7 @@ class KlustersDoc : public QObject
     * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
    */
     void prepareUndo(Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters,bool isModifiedByDeletion = false);
-     
+
     /**
     * Fills the undo lists (addedClustersUndoList, deletedClustersUndoList and modifiedClustersUndoList) to
     * prepare the futur undo.
@@ -565,7 +565,7 @@ class KlustersDoc : public QObject
     * to the deletedClustersUndoList.
     * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
     * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
-    */    
+    */
     void prepareUndo(int newCluster, Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters,bool isModifiedByDeletion = false);
 
     /**
@@ -577,7 +577,7 @@ class KlustersDoc : public QObject
     * to the modifiedClustersUndoList.
     * @param deletedClusters the list of last deleted clusters, the list will be added
     * to the deletedClustersUndoList.
-    */    
+    */
     void prepareUndo(Q3ValueList<int>& newClusters, Q3ValueList<int>& modifiedClusters,Q3ValueList<int>& deletedClusters);
 
     /**
@@ -586,7 +586,7 @@ class KlustersDoc : public QObject
     * @param clusterIdsOldNew map giving the correspondence between the old numbering and the new numbering of the clusters.
     * @param clusterIdsNewOld map giving the correspondence between the new numbering and the old numbering of the clusters.
     */
-     void prepareUndo(QMap<int,int> clusterIdsOldNew,QMap<int,int> clusterIdsNewOld);
+    void prepareUndo(QMap<int,int> clusterIdsOldNew,QMap<int,int> clusterIdsNewOld);
     
     /**
     * Fills the undo lists (addedClustersUndoList, deletedClustersUndoList and modifiedClustersUndoList) to
@@ -625,8 +625,8 @@ class KlustersDoc : public QObject
     /**The base name of the document. */
     QString baseName;
 
-	 /**The path to the xml þarameter file. */
-	 QString xmlParameterFile;	 
+    /**The path to the xml þarameter file. */
+    QString xmlParameterFile;
 
     /**The electrode number*/
     QString electrodeGroupID;
@@ -683,7 +683,7 @@ class KlustersDoc : public QObject
     /**List of the undo numbers where the modification of clusters has been due to
     * the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
     * This list is used to reduce the number of cluster to redraw whenever possible.
-    */    
+    */
     Q3ValueList<int> modifiedClustersByDeleteUndo;
 
     /**List of the redo numbers where the modification of clusters has been due to
@@ -692,63 +692,63 @@ class KlustersDoc : public QObject
     */
     Q3ValueList<int> modifiedClustersByDeleteRedo;
 
-   /**Map with keys equal to the do/undo indices and values equal to a map
+    /**Map with keys equal to the do/undo indices and values equal to a map
    *giving the correspondence between the old numbering and the new numbering of the clusters.*/
-   QMap<int, QMap<int,int> > clusterIdsOldNewMap ;
+    QMap<int, QMap<int,int> > clusterIdsOldNewMap ;
 
-   /**Map with keys equal to the do/undo indices and values equal to a map
+    /**Map with keys equal to the do/undo indices and values equal to a map
    * giving the correspondence between the new numbering and the old numbering of the clusters.*/
     QMap<int, QMap<int,int> > clusterIdsNewOldMap;
 
-   /**List given the undo indices corresponding to a renumbering which can be redo.*/
-   Q3ValueList<int> renumberingRedoList; 
-   
-   /**Thread responsible for the autosaving of the document.*/
-   AutoSaveThread* autoSaveThread;
-   
-   /**Boolean indicating if an auto save have to be made on the document.*/
-   bool autoSave;
-   
-   /**Time interval between two auto saving.*/
-   int savingInterval;
-   
-   /**Boolean indicating if the auto saving has to be stopped.*/
-   bool endAutoSaving;
-   
-  /**Provider of the channels data.*/
-  TracesProvider* tracesProvider; 
-  
- /**Provider of the cluster data for the TraceView.*/
-  ClustersProvider* clustersProvider;    
-  
- /**Represents a the list of channels with their associated color and status.*/
- ChannelColors* channelColorList;
- 
- /**Gain which takes the screen gain into account.*/
- int gain;
+    /**List given the undo indices corresponding to a renumbering which can be redo.*/
+    Q3ValueList<int> renumberingRedoList;
 
- /**Acquisition system gain.*/
- int acquisitionGain;
+    /**Thread responsible for the autosaving of the document.*/
+    AutoSaveThread* autoSaveThread;
 
- /**Map given the correspondance between the channel ids and the display group ids.*/
- QMap<int,int> displayChannelsGroups;
+    /**Boolean indicating if an auto save have to be made on the document.*/
+    bool autoSave;
 
- /**Map given the correspondance between the display group ids and the channel ids.*/
- QMap<int, Q3ValueList<int> > displayGroupsChannels;
+    /**Time interval between two auto saving.*/
+    int savingInterval;
 
- /**Map given the correspondance between the channel ids and the spike group ids.*/
- QMap<int,int> channelsSpikeGroups;
+    /**Boolean indicating if the auto saving has to be stopped.*/
+    bool endAutoSaving;
 
- /**Map given the correspondance between the spike group ids and the channel ids.*/
- QMap<int, Q3ValueList<int> > spikeGroupsChannels;
- 
- /**
+    /**Provider of the channels data.*/
+    TracesProvider* tracesProvider;
+
+    /**Provider of the cluster data for the TraceView.*/
+    ClustersProvider* clustersProvider;
+
+    /**Represents a the list of channels with their associated color and status.*/
+    ChannelColors* channelColorList;
+
+    /**Gain which takes the screen gain into account.*/
+    int gain;
+
+    /**Acquisition system gain.*/
+    int acquisitionGain;
+
+    /**Map given the correspondance between the channel ids and the display group ids.*/
+    QMap<int,int> displayChannelsGroups;
+
+    /**Map given the correspondance between the display group ids and the channel ids.*/
+    QMap<int, Q3ValueList<int> > displayGroupsChannels;
+
+    /**Map given the correspondance between the channel ids and the spike group ids.*/
+    QMap<int,int> channelsSpikeGroups;
+
+    /**Map given the correspondance between the spike group ids and the channel ids.*/
+    QMap<int, Q3ValueList<int> > spikeGroupsChannels;
+
+    /**
  * This assumes that the cluster file names contain the identifier of
  * the spike group used to create them (myFile.clu.1 correspond to the
  * spike group 1).
- */    
- QMap<int, Q3ValueList<int> > displayGroupsClusterFile;
- 
+ */
+    QMap<int, Q3ValueList<int> > displayGroupsClusterFile;
+
 };
 
 #endif // KCLUSTERSDOC_H

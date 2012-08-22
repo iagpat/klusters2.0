@@ -17,7 +17,7 @@
 
 #ifndef KLUSTERS_H
 #define KLUSTERS_H
- 
+
 
 
 // include files for Qt
@@ -65,13 +65,13 @@ class QProcess;
   */
 class KlustersApp : public QMainWindow
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  public:
+public:
     /** Construtor of KlustersApp, calls all init functions to create the application.
      * @see initMenuBar initToolBar
      */
-    KlustersApp();
+    explicit KlustersApp();
     ~KlustersApp();
 
     /**Opens a file, only one document at the time is allowed.
@@ -109,20 +109,20 @@ class KlustersApp : public QMainWindow
     inline bool isExistAnErrorMatrix() const {return errorMatrixExists;}
 
     /**Updates the dimension spin boxes.
-    * @param dimensionX absciss dimension.  
-    * @param dimensionY ordinate dimension.    
+    * @param dimensionX absciss dimension.
+    * @param dimensionY ordinate dimension.
     */
     void updateDimensionSpinBoxes(int dimensionX, int dimensionY);
-         
+
     /**Updates the correlogeramView parameters.
-    * @param binSize size of the bins to use to compute the correlograms.  
-    * @param timeWindow time frame to use to compute the correlograms.    
-    * @param isShoulderLine boolean indicating if a doted line is drawn at the shoulder level of the correlograms.  
-    * @param correlationScale  type of scale used to present the correlation data.    
+    * @param binSize size of the bins to use to compute the correlograms.
+    * @param timeWindow time frame to use to compute the correlograms.
+    * @param isShoulderLine boolean indicating if a doted line is drawn at the shoulder level of the correlograms.
+    * @param correlationScale  type of scale used to present the correlation data.
     */
-    void updateCorrelogramViewVariables(int binSize,int timeWindow,bool isShoulderLine, Data::ScaleMode correlationScale);    
+    void updateCorrelogramViewVariables(int binSize,int timeWindow,bool isShoulderLine, Data::ScaleMode correlationScale);
     
-  protected:
+protected:
     /** queryExit is called by KDocMainWindow when the last window of the application is going to be closed during the closeEvent().
      * Its purpose is purely to prepare the application (with possible user interaction)
      * so it can safely be closed later (without user interaction).
@@ -150,12 +150,12 @@ class KlustersApp : public QMainWindow
     */
     bool eventFilter(QObject* object,QEvent* event);
 
-  
-  public slots:
+
+public slots:
     /** queryClose is called by KDocMainWindow call just before being closed.
      */
     bool queryClose();
-      
+
     /**Shows or hide the parameters boxes base on the user settings.*/
     void slotUpdateParameterBar();
 
@@ -167,8 +167,8 @@ class KlustersApp : public QMainWindow
 
     /**Initializes some of the variables defined in the settings (preferences).*/
     void initializePreferences();
-         
-  private slots:
+
+private slots:
     /** Open a file and load it into the document.*/
     void slotFileOpen();
     /** Opens a file in the old format and load it into the document.*/
@@ -183,11 +183,11 @@ class KlustersApp : public QMainWindow
     void slotFileSaveAs();
     /** Asks for saving if the file is modified, then closes the actual file and window*/
     void slotFileClose();
-    /** Prints the views in the current display, for multiple-view displays, each view is printed on a separate page. */    
+    /** Prints the views in the current display, for multiple-view displays, each view is printed on a separate page. */
     void slotFilePrint();
-		/** Closes the document and quits the application.*/
+    /** Closes the document and quits the application.*/
     void slotFileQuit();
-		/** Reverts the last user action.*/
+    /** Reverts the last user action.*/
     void slotUndo();
     /** Reverts the last undo action.*/
     void slotRedo();
@@ -202,8 +202,8 @@ class KlustersApp : public QMainWindow
     void slotViewToolBar();
     /** Toggles the bar for the parameters.*/
     void slotViewParameterBar();
-	 /** Toggles the user cluster information in the cluster palette.*/
-	 void slotViewClusterInfo();
+    /** Toggles the user cluster information in the cluster palette.*/
+    void slotViewClusterInfo();
     
     /** Creates a new cluster display for the document and adds the new display to the
      * list of displays the document maintains.
@@ -227,7 +227,7 @@ class KlustersApp : public QMainWindow
      */
     void slotWindowNewGroupingAssistantDisplay();
 
-   /** Creates a new trace display for the document and adds the new display to the
+    /** Creates a new trace display for the document and adds the new display to the
      * list of displays the document maintains.
      */
     void slotNewTraceDisplay();
@@ -236,7 +236,7 @@ class KlustersApp : public QMainWindow
      * @param text the text that is displayed in the statusbar
      */
     void slotStatusMsg(const QString &text);
-  	/** Gets called when the window menu is activated; recreates the window menu with all opened window titles. */
+    /** Gets called when the window menu is activated; recreates the window menu with all opened window titles. */
     void viewMenuAboutToShow();
     /** Activates the MDI child widget when it gets selected from the window menu. */
     void viewMenuActivated( int id );
@@ -253,7 +253,7 @@ class KlustersApp : public QMainWindow
     void slotZoom();
     
     /**Chooses the selection time tool, enabling the user to select a time frame
-    * for which the traces are going to be displayed in the TraceView. This slot is accessible only if a TraceView and a ClusterView are present 
+    * for which the traces are going to be displayed in the TraceView. This slot is accessible only if a TraceView and a ClusterView are present
     * and if one of the dimensions in the ClusterView is the time.*/
     void slotSelectTime();
     
@@ -266,7 +266,7 @@ class KlustersApp : public QMainWindow
     void slotSingleColorUpdate(int clusterId);
     /**Draws the clusters contain in @p selectedClusters list.
     * @param selectedClusters list of clusters which have been selected to be shown.
-    */    
+    */
     void slotUpdateShownClusters(Q3ValueList<int> selectedClusters);
     /**Groups the clusters contain in @p selectedClusters list and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be grouped.
@@ -277,7 +277,7 @@ class KlustersApp : public QMainWindow
     * @param selectedClusters list of clusters which have been selected to be moved
     */
     void slotMoveClustersToNoise(Q3ValueList<int> selectedClusters);
-    /**Calls the document to move the clusters contain in @p selectedClusters list 
+    /**Calls the document to move the clusters contain in @p selectedClusters list
     * to the cluster of artefact (cluster 0) and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be moved
     */
@@ -299,144 +299,144 @@ class KlustersApp : public QMainWindow
     /**Updates the number of redo*/
     void slotUpdateRedoNb(int redoNb);
 
-  /**Informs the active display to present the waveforms for an updated time frame.*/
-   inline void slotUpdateStartTime(int start){
-     if(!isInit){
-      startTime = start;
-      activeView()->updateTimeFrame(static_cast<long>(start),timeWindow);
-     }
-   };
-                                              
-   /**Informs the active display to present the waveforms for an updated time frame.*/
-   void slotUpdateDuration();
-   
-   /**Sets the presentation mode of the waveform view of the active display. It can be either the sample mode
-   * or the time frame mode. In the sample mode, for each shown cluster, only one out of the number of spikes 
+    /**Informs the active display to present the waveforms for an updated time frame.*/
+    inline void slotUpdateStartTime(int start){
+        if(!isInit){
+            startTime = start;
+            activeView()->updateTimeFrame(static_cast<long>(start),timeWindow);
+        }
+    };
+
+    /**Informs the active display to present the waveforms for an updated time frame.*/
+    void slotUpdateDuration();
+
+    /**Sets the presentation mode of the waveform view of the active display. It can be either the sample mode
+   * or the time frame mode. In the sample mode, for each shown cluster, only one out of the number of spikes
    * to be displayed will be shown, the time frame mode, for each shown cluster, only the spikes
    * within the current time frame will be shown.
    */
-   void slotTimeFrameMode();
- 
-   /**Sets the waveforms of each cluster in the active display to overlay or be side by side.
+    void slotTimeFrameMode();
+
+    /**Sets the waveforms of each cluster in the active display to overlay or be side by side.
    */
-   inline void setOverLayPresentation(){
-     if(overlayPresentation->isChecked())activeView()->setOverLayPresentation();
-     else activeView()->setSideBySidePresentation();
-   }
-                  
-   /**Sets the way of presenting the information concerning the waveforms selected in the active display.
+    inline void setOverLayPresentation(){
+        if(overlayPresentation->isChecked())activeView()->setOverLayPresentation();
+        else activeView()->setSideBySidePresentation();
+    }
+
+    /**Sets the way of presenting the information concerning the waveforms selected in the active display.
    * It can be either the mean presentation or the normal presentation. In the mean presentation,
    * there is only the waveforms of the mean and the standard deviation. In the normal presentation all the
    * waveforms for the selected (depending on the sample/time frame mode) spikes are shown.
    */
-   inline void slotMeanPresentation(){
-     if(meanPresentation->isChecked())activeView()->setMeanPresentation();
-     else activeView()->setAllWaveformsPresentation();
-   };
+    inline void slotMeanPresentation(){
+        if(meanPresentation->isChecked())activeView()->setMeanPresentation();
+        else activeView()->setAllWaveformsPresentation();
+    };
 
-   /**Triggers the increase of the amplitude of the waveforms in the waveform view.
+    /**Triggers the increase of the amplitude of the waveforms in the waveform view.
    */
-   inline void slotIncreaseAmplitude(){activeView()->increaseWaveformsAmplitude();}
+    inline void slotIncreaseAmplitude(){activeView()->increaseWaveformsAmplitude();}
 
-   /**Triggers the decrease of the amplitude of the waveforms in the waveform view.
+    /**Triggers the decrease of the amplitude of the waveforms in the waveform view.
    */
-   inline void slotDecreaseAmplitude(){activeView()->decreaseWaveformsAmplitude();}
+    inline void slotDecreaseAmplitude(){activeView()->decreaseWaveformsAmplitude();}
 
 
-   /**Informs the active display to present an updated number of waveforms when the
+    /**Informs the active display to present an updated number of waveforms when the
    * waveformView is in sample mode.
    */
-   inline void slotSpikesTodisplay(int nbSpikes){
-     if(!isInit){
-      activeView()->setDisplayNbSpikes(static_cast<long>(nbSpikes));
-     }
-   };
+    inline void slotSpikesTodisplay(int nbSpikes){
+        if(!isInit){
+            activeView()->setDisplayNbSpikes(static_cast<long>(nbSpikes));
+        }
+    };
 
-   /**Informs the active display to present the correlations with a new time frame.*/
-   void slotUpdateCorrelogramsHalfDuration();
+    /**Informs the active display to present the correlations with a new time frame.*/
+    void slotUpdateCorrelogramsHalfDuration();
 
-   /**Informs the active display to present the correlations with a new size for the bins.*/
-   void slotUpdateBinSize();
+    /**Informs the active display to present the correlations with a new size for the bins.*/
+    void slotUpdateBinSize();
 
-   /**Triggers the increase of the amplitude of the correlograms in the correlation view.
+    /**Triggers the increase of the amplitude of the correlograms in the correlation view.
    */
-   inline void slotIncreaseCorrelogramsAmplitude(){activeView()->increaseCorrelogramsAmplitude();}
+    inline void slotIncreaseCorrelogramsAmplitude(){activeView()->increaseCorrelogramsAmplitude();}
 
-   /**Triggers the decrease of the amplitude of the correlograms in the correlation view.
+    /**Triggers the decrease of the amplitude of the correlograms in the correlation view.
    */
-   inline void slotDecreaseCorrelogramsAmplitude(){activeView()->decreaseCorrelogramsAmplitude();}
+    inline void slotDecreaseCorrelogramsAmplitude(){activeView()->decreaseCorrelogramsAmplitude();}
 
-   /**Present the correlograms with the raw data without appling any scale.
+    /**Present the correlograms with the raw data without appling any scale.
    */
-   inline void slotNoScale(){activeView()->setNoScale();}
-      
-   /**Presents the correlograms scaling the data by the maximum value.
-   */
-   inline void slotScaleByMax(){activeView()->setScaleByMax();}
+    inline void slotNoScale(){activeView()->setNoScale();}
 
-   /**Present the correlograms scaling the data by the shoulder value.
+    /**Presents the correlograms scaling the data by the maximum value.
    */
-   inline void slotScaleByShouler(){activeView()->setScaleByShouler();}
+    inline void slotScaleByMax(){activeView()->setScaleByMax();}
 
-   /**Informs the active display to update the drawing of a doted line
+    /**Present the correlograms scaling the data by the shoulder value.
+   */
+    inline void slotScaleByShouler(){activeView()->setScaleByShouler();}
+
+    /**Informs the active display to update the drawing of a doted line
    * at the shoulder level on the correlograms.*/
-   inline void slotShoulderLine(){
-     activeView()->updateShoulderLine(shoulderLine->isChecked());
-   };
+    inline void slotShoulderLine(){
+        activeView()->updateShoulderLine(shoulderLine->isChecked());
+    };
 
-   /**Triggers the update of the errorMatrix view in the grouping assistant view.
-   */   
-   void slotUpdateErrorMatrix();
+    /**Triggers the update of the errorMatrix view in the grouping assistant view.
+   */
+    void slotUpdateErrorMatrix();
 
-   /**Select all the clusters.*/
-   void slotSelectAll();
+    /**Select all the clusters.*/
+    void slotSelectAll();
 
-   /**Selects all the clusters except the clusters of artefact and noise
+    /**Selects all the clusters except the clusters of artefact and noise
    * (clusters 0 and 1 respectively).*/
-   void slotSelectAllWO01();
+    void slotSelectAllWO01();
 
-   /**Launchs a separate process to recluster the selected clusters.*/
-   void slotRecluster();
+    /**Launchs a separate process to recluster the selected clusters.*/
+    void slotRecluster();
 
-   /**Stops the separate process which is reclustering some clusters.*/
-   void slotStopRecluster();
+    /**Stops the separate process which is reclustering some clusters.*/
+    void slotStopRecluster();
 
-   /**Triggers the update of data incorporating the new data from the reclustering.
+    /**Triggers the update of data incorporating the new data from the reclustering.
    * @param process process which has just finished.
-   */  
-   void slotProcessExited(QProcess* process);
+   */
+    void slotProcessExited(QProcess* process);
 
-   /**Updates internal state indicating that the outputs of the separate process, which
+    /**Updates internal state indicating that the outputs of the separate process, which
    * has been killed, is finished.*/
-   void slotOutputTreatmentOver();
+    void slotOutputTreatmentOver();
 
-   /**Launches a dialog to enable the user to change the tab label of the active display.*/
-   void renameActiveDisplay();
-                  
-   /**Triggers the increase of the amplitude of all the channels.
+    /**Launches a dialog to enable the user to change the tab label of the active display.*/
+    void renameActiveDisplay();
+
+    /**Triggers the increase of the amplitude of all the channels.
    */
-   inline void slotIncreaseAllChannelsAmplitude(){activeView()->increaseAllChannelsAmplitude();}
+    inline void slotIncreaseAllChannelsAmplitude(){activeView()->increaseAllChannelsAmplitude();}
 
-   /**Triggers the decrease of the amplitude of all the channels.
+    /**Triggers the decrease of the amplitude of all the channels.
    */
-   inline void slotDecreaseAllChannelsAmplitude(){activeView()->decreaseAllChannelsAmplitude();}
-   
-   /**Enables or disables the display of labels next to the traces.*/
-   void slotShowLabels();
-   
-   /**Retrieves the next cluster.*/
-   void slotShowNextCluster();
+    inline void slotDecreaseAllChannelsAmplitude(){activeView()->decreaseAllChannelsAmplitude();}
 
-   /**Retrieves the previous cluster.*/
-   void slotShowPreviousCluster();
-   
-   /**Updates, if needed, the browsing possibility of the traceView.*/
-   void slotSpikesDeleted();
+    /**Enables or disables the display of labels next to the traces.*/
+    void slotShowLabels();
 
-	/**Updates the status modified of the current opend document.*/
-	void slotClusterInformationModified();
-	
- private:
+    /**Retrieves the next cluster.*/
+    void slotShowNextCluster();
+
+    /**Retrieves the previous cluster.*/
+    void slotShowPreviousCluster();
+
+    /**Updates, if needed, the browsing possibility of the traceView.*/
+    void slotSpikesDeleted();
+
+    /**Updates the status modified of the current opend document.*/
+    void slotClusterInformationModified();
+
+private:
     void createMenus();
 
     /** Initializes the QActions of the application */
@@ -460,8 +460,8 @@ class KlustersApp : public QMainWindow
     void createDisplay(KlustersView::DisplayType type);
 
     /**Updates the active display due to a change of one of the dimensions.
-    * @param dimensionX absciss dimension.  
-    * @param dimensionX ordinate dimension.    
+    * @param dimensionX absciss dimension.
+    * @param dimensionX ordinate dimension.
     */
     void updateDimensions(int dimensionX, int dimensionY);
 
@@ -470,7 +470,7 @@ class KlustersApp : public QMainWindow
 
     /**Updates the acess to the undo/redo mechanism*/
     void updateUndoRedoDisplay();
-       
+
     //Members
     
     /** the printer instance */
@@ -503,7 +503,7 @@ class KlustersApp : public QMainWindow
     KDockTabGroup* tabsParent;
 
     
-    //Action and toolbar pointers 
+    //Action and toolbar pointers
     KRecentFilesAction* fileOpenRecent;
     KToggleAction* viewMainToolBar;
     KToggleAction* viewStatusBar;
@@ -516,7 +516,7 @@ class KlustersApp : public QMainWindow
     KToggleAction* viewActionBar;
     KToggleAction* viewToolBar;
     KToggleAction* viewParameterBar;
-	 KToggleAction* viewClusterInfo;
+    KToggleAction* viewClusterInfo;
     KToggleAction* timeFrameMode;
     KToggleAction* overlayPresentation;
     KToggleAction* meanPresentation;
@@ -549,12 +549,12 @@ class KlustersApp : public QMainWindow
 
     /**Amount of time used when looking for the spikes when the presentation mode is time frame.
     * This amount is in second and the default is 30.
-    */               
+    */
     long timeWindow;
 
     /**Starting time when looking for the spikes when the presentation mode is time frame.
     * This amount is in second and the default is 0.
-    */               
+    */
     long startTime;
 
     /**Spine box enabling to choose the start time used to display the waveforms while
@@ -569,26 +569,26 @@ class KlustersApp : public QMainWindow
     class Validator;
     friend class Validator;
 
-   /**
+    /**
     * Represents a validator for the duration lineEdit which fix any bad entry
     * by setting the last correct value.
     */
     class Validator: public QIntValidator{
-            
+
     public:
-      inline Validator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
-        klusters = dynamic_cast<KlustersApp*>(parent);        
-      };
-      inline Validator(int minimum,int maximum,QObject* parent, const char* name = 0):
-      QIntValidator(minimum,maximum,parent,name){
-        klusters = dynamic_cast<KlustersApp*>(parent);
-      };
-      inline ~Validator(){};
-      inline void fixup (QString& input) const{
-        input = QString("%1").arg(klusters->timeWindow);
-      };
+        inline Validator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
+            klusters = dynamic_cast<KlustersApp*>(parent);
+        };
+        inline Validator(int minimum,int maximum,QObject* parent, const char* name = 0):
+            QIntValidator(minimum,maximum,parent,name){
+            klusters = dynamic_cast<KlustersApp*>(parent);
+        };
+        inline ~Validator(){};
+        inline void fixup (QString& input) const{
+            input = QString("%1").arg(klusters->timeWindow);
+        };
     private:
-      KlustersApp* klusters;
+        KlustersApp* klusters;
     };
     
     /**A validator for the time frame to use to display the waveforms while
@@ -616,7 +616,7 @@ class KlustersApp : public QMainWindow
     static const QString INITIAL_WAVEFORM_TIME_WINDOW;
     static const long DEFAULT_NB_SPIKES_DISPLAYED;
     /**The size of half the time frame for the correlations has to be k*bineSize,
-    * as the total number of bins = 2*halfbins + 1 (halfBins.5 for each half time frame). 
+    * as the total number of bins = 2*halfbins + 1 (halfBins.5 for each half time frame).
     */
     static const QString INITIAL_CORRELOGRAMS_HALF_TIME_FRAME;
     static const QString DEFAULT_BIN_SIZE;
@@ -644,7 +644,7 @@ class KlustersApp : public QMainWindow
     class BinSizeValidator;
     friend class BinSizeValidator;
 
-   /**
+    /**
     * Represents a validator for the binSize lineEdit which fix any bad entry
     * by setting the last correct value and update the correlogramsHalfDuration
     * to ensure the relation correlogramsTimeFrame = (2k + 1) * binSize.
@@ -652,41 +652,41 @@ class KlustersApp : public QMainWindow
     class BinSizeValidator: public QIntValidator{
 
     public:
-      inline BinSizeValidator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
-        klusters = dynamic_cast<KlustersApp*>(parent);
-      };
-      inline BinSizeValidator(int minimum,int maximum,QObject* parent, const char* name = 0):
-      QIntValidator(minimum,maximum,parent,name){
-        klusters = dynamic_cast<KlustersApp*>(parent);
-      };
-      inline ~BinSizeValidator(){};                  
-      inline void fixup (QString& input) const{
-       //If the state determine in validate was invalid, fix by setting back the last correct value.
-        input = QString("%1").arg(klusters->binSize);      
-      };
-      inline QValidator::State validate(QString &input,int& pos) const{             
-        QValidator::State state = QIntValidator::validate(input,pos);
-        //Let the QIntValidator validates the value as to know if it is a correct integer (within the range).
-        if(state != QValidator::Acceptable) return state;
-        //If the value is a correct integer, update the correlogramsHalfDuration if need it.
-        // correlogramTimeFrame (2 * correlogramsHalfDuration) has to be (2k + 1) * binSize.
-        else{
-         int sizeOfBin = input.toInt();         
-         int halfTimeFrame = (klusters->correlogramsHalfDuration->displayText()).toInt();
-                  
-         float x = (2*static_cast<float>(halfTimeFrame)/static_cast<float>(sizeOfBin)-1)*0.5;
-         int k = static_cast<int>(x + 0.5);
-         
-         klusters->correlogramTimeFrame = (2*k+1) * sizeOfBin;        
-         if(k != x){
-         // klusters->correlogramsHalfDuration->setText(QString("%1").arg(k * sizeOfBin));
-          klusters->correlogramsHalfDuration->setText(QString("%1").arg(static_cast<int>(klusters->correlogramTimeFrame / 2)));
-         }
-         return state;
-        }
-      };
+        inline BinSizeValidator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
+            klusters = dynamic_cast<KlustersApp*>(parent);
+        };
+        inline BinSizeValidator(int minimum,int maximum,QObject* parent, const char* name = 0):
+            QIntValidator(minimum,maximum,parent,name){
+            klusters = dynamic_cast<KlustersApp*>(parent);
+        };
+        inline ~BinSizeValidator(){};
+        inline void fixup (QString& input) const{
+            //If the state determine in validate was invalid, fix by setting back the last correct value.
+            input = QString("%1").arg(klusters->binSize);
+        };
+        inline QValidator::State validate(QString &input,int& pos) const{
+            QValidator::State state = QIntValidator::validate(input,pos);
+            //Let the QIntValidator validates the value as to know if it is a correct integer (within the range).
+            if(state != QValidator::Acceptable) return state;
+            //If the value is a correct integer, update the correlogramsHalfDuration if need it.
+            // correlogramTimeFrame (2 * correlogramsHalfDuration) has to be (2k + 1) * binSize.
+            else{
+                int sizeOfBin = input.toInt();
+                int halfTimeFrame = (klusters->correlogramsHalfDuration->displayText()).toInt();
+
+                float x = (2*static_cast<float>(halfTimeFrame)/static_cast<float>(sizeOfBin)-1)*0.5;
+                int k = static_cast<int>(x + 0.5);
+
+                klusters->correlogramTimeFrame = (2*k+1) * sizeOfBin;
+                if(k != x){
+                    // klusters->correlogramsHalfDuration->setText(QString("%1").arg(k * sizeOfBin));
+                    klusters->correlogramsHalfDuration->setText(QString("%1").arg(static_cast<int>(klusters->correlogramTimeFrame / 2)));
+                }
+                return state;
+            }
+        };
     private:
-      KlustersApp* klusters;
+        KlustersApp* klusters;
     };
 
     /**A validator for the bin size of the correlations.
@@ -697,7 +697,7 @@ class KlustersApp : public QMainWindow
     class CorrelogramsHalfTimeFrameValidator;
     friend class CorrelogramsHalfTimeFrameValidator;
 
-   /**
+    /**
     * Represents a validator for the correlogramTimeFrame lineEdit which fix any bad entry
     * by setting the last correct value and update it
     * to ensure the relation correlogramsTimeFrame = k * binSize.
@@ -705,26 +705,26 @@ class KlustersApp : public QMainWindow
     class CorrelogramsHalfTimeFrameValidator: public QIntValidator{
 
     public:
-      inline CorrelogramsHalfTimeFrameValidator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
-        klusters = dynamic_cast<KlustersApp*>(parent);
-      };
-      inline CorrelogramsHalfTimeFrameValidator(int minimum,int maximum,QObject* parent, const char* name = 0):
-      QIntValidator(minimum,maximum,parent,name){
-        klusters = dynamic_cast<KlustersApp*>(parent);
-      };
-      inline ~CorrelogramsHalfTimeFrameValidator(){};
-      inline void fixup (QString& input) const{
-       int halfTimeFrame = input.toInt();
+        inline CorrelogramsHalfTimeFrameValidator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
+            klusters = dynamic_cast<KlustersApp*>(parent);
+        };
+        inline CorrelogramsHalfTimeFrameValidator(int minimum,int maximum,QObject* parent, const char* name = 0):
+            QIntValidator(minimum,maximum,parent,name){
+            klusters = dynamic_cast<KlustersApp*>(parent);
+        };
+        inline ~CorrelogramsHalfTimeFrameValidator(){};
+        inline void fixup (QString& input) const{
+            int halfTimeFrame = input.toInt();
 
-       //The value entered was not an integer
-       if(halfTimeFrame == 0){
-        input = QString("%1").arg((klusters->correlogramTimeFrame - klusters->binSize) / 2);
-        return;
-       }
-      };
-      
+            //The value entered was not an integer
+            if(halfTimeFrame == 0){
+                input = QString("%1").arg((klusters->correlogramTimeFrame - klusters->binSize) / 2);
+                return;
+            }
+        };
+
     private:
-      KlustersApp* klusters;
+        KlustersApp* klusters;
     };
 
     /**A validator for the time frame used to compute the correlations.
@@ -783,27 +783,27 @@ class KlustersApp : public QMainWindow
     QString filePath;
 
 
- class printDialogPage : public KPrintDialogPage{
-  public:
-   inline printDialogPage(QWidget* parent = 0,const char* name = 0): KPrintDialogPage(parent,name){
-    setTitle(QObject::tr("Background Color"));
-    backgroundColor = new QCheckBox("Use white background",this);
-    backgroundColor->adjustSize();
-   };
+    class printDialogPage : public KPrintDialogPage{
+    public:
+        inline printDialogPage(QWidget* parent = 0,const char* name = 0): KPrintDialogPage(parent,name){
+            setTitle(QObject::tr("Background Color"));
+            backgroundColor = new QCheckBox("Use white background",this);
+            backgroundColor->adjustSize();
+        };
 
-    inline void getOptions(QMap<QString,QString>& opts,bool incldef){
-      opts["kde-klusters-backgroundColor"] = (backgroundColor->isChecked() ? "1" : "-1");
+        inline void getOptions(QMap<QString,QString>& opts,bool incldef){
+            opts["kde-klusters-backgroundColor"] = (backgroundColor->isChecked() ? "1" : "-1");
+        };
+
+        inline void setOptions(const QMap<QString,QString>& opts){
+            backgroundColor->setChecked(opts["kde-klusters-backgroundColor"] == "1");
+        };
+
+        inline bool isValid(QString& message){return true;};
+
+    private:
+        QCheckBox* backgroundColor;
     };
-
-    inline void setOptions(const QMap<QString,QString>& opts){
-     backgroundColor->setChecked(opts["kde-klusters-backgroundColor"] == "1");
-    };
-
-    inline bool isValid(QString& message){return true;};
-
-  private:
-    QCheckBox* backgroundColor;
-  };    
 };
- 
+
 #endif // KCLUSTERS_H

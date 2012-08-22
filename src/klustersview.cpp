@@ -203,7 +203,7 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
  waveformView->installEventFilter(this);//To enable right click popup menu
  waveforms->installEventFilter(this); 
  
- waveforms->manualDock(mainDock,QDockWidget::DockRight,50);
+ waveforms->setAllowedAreas(mainDock,QDockWidget::DockRight,50);
  waveforms->setEnableDocking(QDockWidget::DockCorner);
  viewCounter.insert("WaveformView",1);
  
@@ -217,7 +217,7 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
  correlationView->installEventFilter(this);//To enable right click popup menu
  correlations->installEventFilter(this);
   
- correlations->manualDock(waveforms,QDockWidget::DockBottom,50);
+ correlations->setAllowedAreas(waveforms,QDockWidget::DockBottom,50);
  correlations->setEnableDocking(QDockWidget::DockCorner);
  viewCounter.insert("CorrelationView",1);
  
@@ -236,7 +236,7 @@ void KlustersView::createGroupingAssistantView(QColor backgroundColor,QStatusBar
  errorMatrixView->installEventFilter(this);//To enable right click popup menu
  errorMatrix->installEventFilter(this);
  
- errorMatrix->manualDock(mainDock,QDockWidget::DockBottom,50);
+ errorMatrix->setAllowedAreas(mainDock,QDockWidget::DockBottom,50);
  errorMatrix->setEnableDocking(QDockWidget::DockCorner);
  
  setConnections(ERROR_MATRIX,errorMatrixView,errorMatrix);
@@ -648,7 +648,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    clusterView->installEventFilter(this);//To enable right click popup menu
    clusters->installEventFilter(this);
    
-   clusters->manualDock(dockWidget,QDockWidget::DockBottom,50);
+   clusters->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
    clusters->setEnableDocking(QDockWidget::DockCorner);
 
    //Make the new ClusterView the only view connected to the signal of update of the spin boxes.
@@ -687,7 +687,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    waveformView->installEventFilter(this);//To enable right click popup menu
    waveforms->installEventFilter(this);
    
-   waveforms->manualDock(dockWidget,QDockWidget::DockBottom,50);
+   waveforms->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
    waveforms->setEnableDocking(QDockWidget::DockCorner);
 
    setConnections(WAVEFORMS,waveformView,waveforms);
@@ -709,7 +709,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    correlationView->installEventFilter(this);//To enable right click popup menu
    correlations->installEventFilter(this);
    
-   correlations->manualDock(dockWidget,QDockWidget::DockBottom,50);
+   correlations->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
    correlations->setEnableDocking(QDockWidget::DockCorner);
 
    //Make the new CorrelationView the only view connected to the signals.
@@ -735,7 +735,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    errorMatrixView->installEventFilter(this);//To enable right click popup menu
    errorMatrix->installEventFilter(this);
 
-   errorMatrix->manualDock(dockWidget,QDockWidget::DockBottom,50);
+   errorMatrix->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
    errorMatrix->setEnableDocking(QDockWidget::DockCorner);
 
    setConnections(ERROR_MATRIX,errorMatrixView,errorMatrix);
@@ -771,7 +771,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
    traces->installEventFilter(this);//To enable right click popup menu
    traceWidget->installEventFilter(this);
    
-   traces->manualDock(dockWidget,QDockWidget::DockBottom,50);
+   traces->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
    traces->setEnableDocking(QDockWidget::DockCorner);
 
    setConnections(TRACES,traceWidget,traces);
