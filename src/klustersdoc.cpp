@@ -333,9 +333,9 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
            }
            renameStatus = dir.rename(crashFileInfo.fileName(),cluName);
            if(!renameStatus)
-            KMessageBox::error(0,tr(
+            QMessageBox::critical(0, tr("I/O Error !"),tr(
               "It appears that the rescue file cannot be renamed (possibly because of insufficient file access permissions).\n"
-              "The rescue file will thus not be used."), tr("I/O Error !"));
+              "The rescue file will thus not be used."));
 
            break;
       }

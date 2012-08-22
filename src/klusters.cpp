@@ -737,7 +737,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::INCORRECT_FILE)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,tr("The selected file is invalid, it has to be of the form baseName.clu.n or baseName.fet.n or baseName.par.n"), tr("Error!"));
+      QMessageBox::critical (this, tr("Error!"), tr("The selected file is invalid, it has to be of the form baseName.clu.n or baseName.fet.n or baseName.par.n"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
@@ -750,7 +750,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,tr("Could not get the cluster file (base.clu.n)"), tr("Error!"));
+      QMessageBox::critical (this,tr("Error!"),tr("Could not get the cluster file (base.clu.n)") );
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
@@ -763,7 +763,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::SPK_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,tr("Could not get the spike file (base.spk.n)"), tr("Error!"));
+      QMessageBox::critical (this,tr("Error!"),tr("Could not get the spike file (base.spk.n)"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
@@ -775,7 +775,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::FET_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,tr("Could not get the feature file (base.fet.n)"), tr("Error!"));
+      QMessageBox::critical (this,tr("Error!"),tr("Could not get the feature file (base.fet.n)"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
@@ -787,7 +787,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::PAR_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,tr("Could not get the general parameter file (base.par)"), tr("Error!"));
+      QMessageBox::critical (this,tr("Error!"),tr("Could not get the general parameter file (base.par)"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
@@ -812,7 +812,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::PARXML_DOWNLOAD_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,tr("Could not get the parameter file (base.xml)"), tr("Error!"));
+      QMessageBox::critical (this,tr("Error!"),tr("Could not get the parameter file (base.xml)"));
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
@@ -825,7 +825,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::OPEN_ERROR)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,tr("Could not open the files"), tr("Error!"));
+      QMessageBox::critical (this,tr("Error!"),tr("Could not open the files") );
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
@@ -837,7 +837,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     if(returnStatus == KlustersDoc::INCORRECT_CONTENT)
     {
       QApplication::restoreOverrideCursor();
-      KMessageBox::error (this,errorInformation, tr("Error!"));
+      QMessageBox::critical (this,tr("Error!"),errorInformation);
       QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
       //close the document
       doc->closeDocument();
@@ -902,7 +902,7 @@ void KlustersApp::importDocumentFile(const QString& url)
     // Open the file (that will also initialize the doc)
     if(!doc->importDocument(url))
     {
-      KMessageBox::error (this,tr("Could not import document !"), tr("Error !"));
+      QMessageBox::critical (this,tr("Error !"),tr("Could not import document !"));
       //close the document
       doc->closeDocument();
       QApplication::restoreOverrideCursor();
@@ -1040,7 +1040,7 @@ void KlustersApp::customEvent (QCustomEvent* event){
      //to be uploaded. The save process is made in a thread and it seams that
      //the KDE upload can not be call asynchronously, so the upload is call after the end of the thread.
      if(!KIO::NetAccess::upload(saveEvent->temporaryFile(),doc->url())){
-       KMessageBox::error (0,tr("Could not save the current document !"), tr("I/O Error !"));
+       QMessageBox::critical (0,tr("Could not save the current document !"), tr("I/O Error !"));
      }
      if(saveEvent->isItSaveAs()){
    	   fileOpenRecent->addURL(doc->url());
@@ -1048,7 +1048,7 @@ void KlustersApp::customEvent (QCustomEvent* event){
      }
     }
     else
-       KMessageBox::error (0,tr("Could not save the current document !"), tr("I/O Error !"));
+       QMessageBox::critical (0,tr("Could not save the current document !"), tr("I/O Error !"));
 
     slotStatusMsg(tr("Ready."));
     slotStateChanged("SavingDoneState");
@@ -2181,7 +2181,7 @@ void KlustersApp::slotRecluster(){
  //Get the clusters to recluster (those selected in the active display)
  const Q3ValueList<int>& currentClusters = activeView()->clusters();
  if(currentClusters.size() == 0){
-   KMessageBox::error (this,tr("No clusters have been selected to be reclustered."), tr("Error !"));
+   QMessageBox::critical (this,tr("Error !"),tr("No clusters have been selected to be reclustered."));
   return;
  }
 
@@ -2244,11 +2244,11 @@ void KlustersApp::slotRecluster(){
  //Create the feature file for the selected clusters and get its name.
  int returnStatus = doc->createFeatureFile(clustersToRecluster,reclusteringFetFileName);
  if(returnStatus == KlustersDoc::OPEN_ERROR){
-  KMessageBox::error (this,tr("The reclustering feature file cannot be created (possibly because of insufficient file access permissions).\n Reclustering can not be done."), tr("Error !"));
+  QMessageBox::critical (this,tr("Error !"),tr("The reclustering feature file cannot be created (possibly because of insufficient file access permissions).\n Reclustering can not be done."));
   return;
  }
  if(returnStatus == KlustersDoc::CREATION_ERROR){
-  KMessageBox::error (this,tr("An error happened while creating the reclustering feature file.\n Reclustering can not be done."), tr("IO Error !"));
+  QMessageBox::critical (this,tr("IO Error !"),tr("An error happened while creating the reclustering feature file.\n Reclustering can not be done."));
   return;
  }
 
@@ -2305,8 +2305,8 @@ void KlustersApp::slotRecluster(){
  status = processWidget->startJob(doc->documentDirectory(),command);
  
  if(!status){
-  KMessageBox::error (this,tr("The reclustering program could not be started.\n"
-                      "One possible reason is that the automatic reclustering program could not be found."), tr("Error !"));
+  QMessageBox::critical (this,tr("Error !"),tr("The reclustering program could not be started.\n"
+                      "One possible reason is that the automatic reclustering program could not be found."));
   processFinished = true;
   processKilled = false;
   slotStateChanged("noReclusterState");
@@ -2318,11 +2318,11 @@ void KlustersApp::slotProcessExited(QProcess* process){
  //Check if the process has exited "voluntarily" and if so if it was successful
  if(!process->normalExit() || (process->normalExit() && process->exitStatus())){
   if(process->normalExit() || (!process->normalExit() && !processKilled))
-    KMessageBox::error (this,tr("The reclustering program did not finished normaly.\n"
-                      "Check the output log for more information."), tr("Error !"));
+    QMessageBox::critical (this,tr("Error !"),tr("The reclustering program did not finished normaly.\n"
+                      "Check the output log for more information."));
    
   if(!QFile::remove(reclusteringFetFileName))
-   KMessageBox::error(0,tr("Could not delete the temporary feature file used by the reclustering program."), tr("Warning !"));
+   QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary feature file used by the reclustering program."));
   processFinished = true;
   processOutputsFinished = true;
   processKilled = false;
@@ -2339,7 +2339,7 @@ void KlustersApp::slotProcessExited(QProcess* process){
  switch(returnStatus){
   case KlustersDoc::DOWNLOAD_ERROR:
    QApplication::restoreOverrideCursor();
-   KMessageBox::error(this,tr("Could not download the temporary file containing the new clusters."), tr("Error !"));
+   QMessageBox::critical(this,tr("Error !"),tr("Could not download the temporary file containing the new clusters."));
    processFinished = true;
    processOutputsFinished = true;
    processKilled = false;
@@ -2349,7 +2349,7 @@ void KlustersApp::slotProcessExited(QProcess* process){
    return;
   case KlustersDoc::OPEN_ERROR:
    QApplication::restoreOverrideCursor();
-   KMessageBox::error (this,tr("Could not open the temporary file containing the new clusters."), tr("Error !"));
+   QMessageBox::critical (this,tr("Error !"),tr("Could not open the temporary file containing the new clusters."));
    processFinished = true;
    processOutputsFinished = true;
    processKilled = false; 
@@ -2359,7 +2359,7 @@ void KlustersApp::slotProcessExited(QProcess* process){
    return;
   case KlustersDoc::INCORRECT_CONTENT:
    QApplication::restoreOverrideCursor();
-   KMessageBox::error (this,tr("The temporary file containing the new clusters contains incorrect data."), tr("Error !"));
+   QMessageBox::critical (this,tr("Error !"),tr("The temporary file containing the new clusters contains incorrect data."));
    processFinished = true;
    processOutputsFinished = true;
    processKilled = false;
