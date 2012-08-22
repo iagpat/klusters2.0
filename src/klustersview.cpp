@@ -53,7 +53,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
  Q3ValueList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude, 
  Q3ValueList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
  int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay, Q3PtrList< Q3ValueList<int> > undoList, Q3PtrList< Q3ValueList<int> > redoList)
- : KDockArea(parent, name),doc(pDoc), removedClustersUndoList(undoList),removedClustersRedoList(redoList),dimensionX(initialDimensionX),dimensionY(initialDimensionY),
+ : QWidget(parent),doc(pDoc), removedClustersUndoList(undoList),removedClustersRedoList(redoList),dimensionX(initialDimensionX),dimensionY(initialDimensionY),
  currentViewWidget(0L),numberUndo(undoList.count()),inTimeFrameMode(isTimeFrameMode),timeWindow(timeFrameWidth),startTime(start),nbSpkToDisplay(nbSpkToDisplay),
  overLayDisplay(overLay),meanDisplay(mean),
  binSize(binSize),correlogramTimeFrame(correlationTimeFrame),correlationScale(scale),shoulderLine(shoulderLine),

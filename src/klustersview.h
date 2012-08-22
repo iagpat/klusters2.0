@@ -18,10 +18,6 @@
 #ifndef KCLUSTERSVIEW_H
 #define KCLUSTERSVIEW_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 //Include files for KDE
 #include <QDockWidget>
 #include <QStatusBar>
@@ -55,7 +51,7 @@ class TraceWidget;
  * The KlustersView class inherits QWidget as a KDockArea to give it the ability to contains dockWidgets.
  * @author Lynn Hazan
  */
-class KlustersView : public KDockArea
+class KlustersView : public QWidget
 {
   Q_OBJECT
 
