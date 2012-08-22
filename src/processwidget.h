@@ -20,7 +20,7 @@
 #define _PROCESSWIDGET_H_
 
 // include files for KDE
-#include <klistbox.h>
+#include <QListWidget>
 
 //include files for Qt
 #include <qcolor.h>
@@ -55,7 +55,7 @@ private:
  * @author Bernd Gehrmann, lynn hazan
  * @since klusters 1.2 
  */
-class ProcessWidget : public KListBox
+class ProcessWidget : public QListBox
 {
     Q_OBJECT
 

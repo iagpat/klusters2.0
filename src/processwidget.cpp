@@ -42,7 +42,7 @@ void ProcessListBoxItem::paint(QPainter* p)
 
 
 ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
-    : KListBox(parent, name)
+    : QListWidget(parent)
 {   
     //No selection will be possible
     setSelectionMode(Q3ListBox::NoSelection);

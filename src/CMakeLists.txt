@@ -21,11 +21,11 @@ set(klusters_SRCS array.cpp
 	eventsprovider.cpp 
 	groupingassistant.cpp
         itemcolors.cpp 
-	klusters.cpp 
-	klustersdoc.cpp 
-	klustersview.cpp 
+	#klusters.cpp 
+	#klustersdoc.cpp 
+	#klustersview.cpp 
 	klustersxmlreader.cpp
-	main.cpp 
+	#main.cpp 
 	minmaxthread.cpp 
 	pair.cpp 
 	parameterxmlmodifier.cpp 
