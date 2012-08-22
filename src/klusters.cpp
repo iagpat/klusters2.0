@@ -698,7 +698,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     QString title = "File not found: ";
     title.append(filePath);
     int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists, do you want to remove it from the list?"), tr(title.toLatin1()));
-    if(answer == KMessageBox::Yes) fileOpenRecent->removeURL(url);
+    if(answer == QMessageBox::Yes) fileOpenRecent->removeURL(url);
     else  fileOpenRecent->addURL(url); //hack, unselect the item
     filePath = "";    
     slotStatusMsg(tr("Ready."));

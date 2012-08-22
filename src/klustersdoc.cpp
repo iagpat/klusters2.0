@@ -324,7 +324,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
                "Do you wish to use the newer copy (The old copy will be saved under another name)?"),
                 tr("More recent cluster file found"), tr("Use newer copy"), tr("Discard newer copy") ))
         {
-					case KMessageBox::Yes:
+                    case QMessageBox::Yes:
 					 QDir dir(crashFileInfo.dir());
            QString cluName = cluFileInfo.fileName();
            bool renameStatus;
@@ -588,7 +588,7 @@ bool KlustersDoc::canCloseView(){
     switch(KMessageBox::warningYesNoCancel(0, tr("The current file has been modified.\n"
                           "Do you want to save it?"),url().fileName()))
     {
-			case KMessageBox::Yes:
+            case QMessageBox::Yes:
 				saveURL=url();
         int saveStatus;
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -598,11 +598,11 @@ bool KlustersDoc::canCloseView(){
                     switch(KMessageBox::warningYesNo(0,tr("Could not save the current document !\n"
                                                                                                                 "Close anyway ?"), tr("I/O Error !")))
  					{
- 						case KMessageBox::Yes:
+                        case QMessageBox::Yes:
  							returnValue = true;
               modified = false;
               break;
- 						case KMessageBox::No:
+                        case QMessageBox::No:
  							returnValue = false;
               break;
  					}
@@ -612,11 +612,11 @@ bool KlustersDoc::canCloseView(){
           modified = false;
         }
 				break;
-			case KMessageBox::No:
+            case QMessageBox::No:
 				returnValue = true;
         modified = false;
 				break;
-			case KMessageBox::Cancel:
+            case QMessageBox::Cancel:
         returnValue = false;
 				break;
 			default:
