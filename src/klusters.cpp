@@ -2390,7 +2390,7 @@ void KlustersApp::slotProcessExited(QProcess* process){
  info.append(".\nThe cluster list will now be updated.");
 
  QApplication::restoreOverrideCursor();
- KMessageBox::information(this,info, tr("Automatic Reclustering !"));
+ QMessageBox::information(this, tr("Automatic Reclustering !"),info);
  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
  doc->reclusteringUpdate(clustersToRecluster,clustersFromReclustering);
 

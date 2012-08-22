@@ -287,7 +287,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
    QFileInfo parFileInfo(parFileUrl);
    if(parFileInfo.exists()){
     QApplication::restoreOverrideCursor();
-    KMessageBox::information(0,tr("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl.fileName()).arg(parFileUrl.fileName()).arg(xmlParFileUrl.fileName()), tr("Warning!"),"TwoParameterFiles");
+    QMessageBox::information(0, tr("Warning!"), tr("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl.fileName()).arg(parFileUrl.fileName()).arg(xmlParFileUrl.fileName()));
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    }
    xmlParFile.setName(tmpXmlParFile);
