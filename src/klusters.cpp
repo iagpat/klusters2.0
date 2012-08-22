@@ -70,7 +70,8 @@ const QString KlustersApp::INITIAL_CORRELOGRAMS_HALF_TIME_FRAME = "30";
 const QString KlustersApp::DEFAULT_BIN_SIZE = "1";
 
 
-KlustersApp::KlustersApp():KDockMainWindow(0,"Klusters"), displayCount(0),mainDock(0),
+KlustersApp::KlustersApp()
+    : QMainWindow(0,"Klusters"), displayCount(0),mainDock(0),
 clusterPanel(0),clusterPalette(0),tabsParent(0),dimensionX(0L),dimensionY(0L),isInit(true),
 currentNbUndo(0),currentNbRedo(0),timeWindow(INITIAL_WAVEFORM_TIME_WINDOW.toLong()),validator(this),spikesTodisplayStep(20),
 correlogramTimeFrame(INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1),binSize(DEFAULT_BIN_SIZE.toInt()),binSizeValidator(this),
@@ -97,6 +98,8 @@ processOutputsFinished(true),processKilled(false),errorMatrixExists(false),fileP
   //Prepare the actions
   initActions();
   
+  createMenus();
+
   //Prepare the spineboxes and line edit
   initSelectionBoxes();
 
@@ -130,6 +133,11 @@ KlustersApp::~KlustersApp()
    delete processOutputDock;
    processOutputDock = 0L;
   }
+}
+
+void KlustersApp::createMenus()
+{
+    //TODO
 }
 
 void KlustersApp::initActions()
@@ -239,7 +247,6 @@ void KlustersApp::initActions()
   //Initialize the update mode
   immediateSelection->setChecked(true);
   
-  KStdAction::keyBindings(this, SLOT(slotKeyBindings()), actionCollection());
   KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
 
   fileOpenRecent->setStatusText(tr("Opens a recently used file"));
@@ -262,8 +269,6 @@ void KlustersApp::initActions()
   connect(doc, SIGNAL(updateRedoNb(int)), this, SLOT(slotUpdateRedoNb(int)));
   connect(doc, SIGNAL(spikesDeleted()), this, SLOT(slotSpikesDeleted()));
   
-  //Actually create the menus and toolbars
-  createGUI();
 }
 
 void KlustersApp::initSelectionBoxes(){

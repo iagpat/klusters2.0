@@ -437,6 +437,8 @@ class KlustersApp : public QMainWindow
 	void slotClusterInformationModified();
 	
  private:
+    void createMenus();
+
     /** Initializes the QActions of the application */
     void initActions();
 
