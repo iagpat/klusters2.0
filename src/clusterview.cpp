@@ -77,7 +77,7 @@ selectionPolygon(0), nbSelectionPoints(0),polygonClosed(false),existLastMovingLi
 }
 
 ClusterView::~ClusterView(){
-  qDebug() << "in ~ClusterView(): "<<endl;
+  qDebug() << "in ~ClusterView(): ";
 }
 
 void ClusterView::drawClusters(QPainter& painter,const Q3ValueList<int>& clustersList,bool drawCircles){

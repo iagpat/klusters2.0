@@ -32,7 +32,7 @@ ItemColors::ItemColors():itemList(),colorChanged(false){
 }
 
 ItemColors::~ItemColors(){
-   qDebug() << "~ItemColors()"<<endl;
+   qDebug() << "~ItemColors()";
 }
 
 

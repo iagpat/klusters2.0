@@ -36,7 +36,7 @@ TracesProvider::TracesProvider(QString fileUrl,int nbChannels,int resolution,dou
 }
 
 TracesProvider::~TracesProvider(){
-  qDebug()<<"in ~TracesProvider"<<endl;
+  qDebug()<<"in ~TracesProvider";
 }
 
 

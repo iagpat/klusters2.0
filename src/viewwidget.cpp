@@ -28,7 +28,7 @@ doublebuffer(),view(view),doc(doc),statusBar(statusBar){
 }
 
 ViewWidget::~ViewWidget(){
-  qDebug() << "in ~ViewWidget(): "<<endl;
+  qDebug() << "in ~ViewWidget(): ";
 }
 
 

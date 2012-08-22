@@ -37,21 +37,9 @@
 #include <Q3Frame>
 #include <QCustomEvent>
 #include <QDebug>
-
-// include files for KDE
-
-
-
-
 #include <QStatusBar>
-
-
 #include <QProcess>
 
-
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 // application specific includes
 #include "klusters.h"
@@ -1034,7 +1022,7 @@ bool KlustersApp::queryExit()
 {
   QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
   //If the saveThread has not finish, wait until id done
-  while(!saveThread->wait()){qDebug()<<"in queryExit"<<endl;};
+  while(!saveThread->wait()){qDebug()<<"in queryExit";};
   QApplication::restoreOverrideCursor();
   
   return true;

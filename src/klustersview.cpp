@@ -172,7 +172,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
 
 KlustersView::~KlustersView()
 {
-  qDebug() << "in ~KlustersView(): "<<endl;
+  qDebug() << "in ~KlustersView(): ";
   delete shownClusters;
   delete removedClusters;
 }
@@ -261,9 +261,9 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
   int nbViews = viewList.count(); 
   ViewWidget* widget;
   for(widget = viewList.first(); widget != 0L ; widget = viewList.next()){
-   //qDebug()<<" widget->geomerty().width() "<<widget->geometry().width()<<" widget->geomerty().height() "<<widget->geometry().height()<<endl;
+   //qDebug()<<" widget->geomerty().width() "<<widget->geometry().width()<<" widget->geomerty().height() "<<widget->geometry().height();
    //QWidget* parent = static_cast<QWidget*>(widget->parent());
-   // qDebug()<<"parent->geometry().x() "<<parent->geometry().x()<<" parent->geomerty().y() "<<parent->geometry().y()<<endl;
+   // qDebug()<<"parent->geometry().x() "<<parent->geometry().x()<<" parent->geomerty().y() "<<parent->geometry().y();
 
    //Modify the viewport so the view will not draw on the legend
    QRect newViewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height());
@@ -957,7 +957,7 @@ void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,Q3Val
     Q3ValueList<int>::iterator fromClusterIterator;
     for (fromClusterIterator = fromClustersInView.begin(); fromClusterIterator != fromClustersInView.end(); ++fromClusterIterator){
       int newClusterId = fromToNewClusterIds[*fromClusterIterator];
-qDebug() << "in KlustersView::addNewClustersToView newClusterId "<<newClusterId<<endl;
+qDebug() << "in KlustersView::addNewClustersToView newClusterId "<<newClusterId;
       shownClusters->append(newClusterId);
       emit newClusterAddedToView(newClusterId,active);      
     }
@@ -971,7 +971,7 @@ qDebug() << "in KlustersView::addNewClustersToView newClusterId "<<newClusterId<
 
 
 void KlustersView::addNewClustersToView(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,bool active){
-qDebug() << "in KlustersView::addNewClustersToView: "<<endl;
+qDebug() << "in KlustersView::addNewClustersToView: ";
 
   //List containing the clusters of this view which contained recluster clusters
   Q3ValueList<int> inView = clustersInView(clustersToRecluster);
@@ -985,14 +985,14 @@ qDebug() << "in KlustersView::addNewClustersToView: "<<endl;
 
    Q3ValueList<int>::iterator clustersToRemoveIterator;
    for(clustersToRemoveIterator = clustersToRecluster.begin(); clustersToRemoveIterator != clustersToRecluster.end(); ++clustersToRemoveIterator ){
-    qDebug() << "*clustersToRemoveIterator: "<<*clustersToRemoveIterator<<endl;
+    qDebug() << "*clustersToRemoveIterator: "<<*clustersToRemoveIterator;
     removeClusterFromView(*clustersToRemoveIterator,active);
    }
 
    Q3ValueList<int>::iterator iterator;
    for (iterator = reclusteredClusterList.begin(); iterator != reclusteredClusterList.end(); ++iterator){
     shownClusters->append(*iterator);
-     qDebug() << "*iterator to add: "<<*iterator<<endl;
+     qDebug() << "*iterator to add: "<<*iterator;
     emit newClusterAddedToView(*iterator,active);
    }
   }  

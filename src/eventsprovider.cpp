@@ -62,7 +62,7 @@ eventPosition(static_cast<float>(position) / 100.0),modified(false){
 }
 
 EventsProvider::~EventsProvider(){
- qDebug()<<"in ~EventsProvider "<<endl;
+ qDebug()<<"in ~EventsProvider ";
 }
 
 int EventsProvider::loadData(){
@@ -77,7 +77,7 @@ RestartTimer();
  sleep(1);
  QFileInfo fi(counterFile.name());
  while(!fi.exists()){
-  qDebug()<<"!fi.exists()"<<endl;
+  qDebug()<<"!fi.exists()";
   sleep(1);
  }
 
@@ -103,7 +103,7 @@ RestartTimer();
   QStringList parts = QStringList::split(" ", info);
   nbEvents = parts[0].toLong();
   tmpFile.close();
-  qDebug()<<"nbEvents "<<nbEvents<<endl;
+  qDebug()<<"nbEvents "<<nbEvents;
  }
 
  //Remove the temporary file

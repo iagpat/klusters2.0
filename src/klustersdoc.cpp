@@ -72,7 +72,7 @@ addedClustersUndoList(),addedClustersRedoList(),modifiedClustersUndoList(),modif
 }
 
 KlustersDoc::~KlustersDoc(){
-    qDebug() << "~KlustersDoc()"<<endl;
+    qDebug() << "~KlustersDoc()";
 
   delete viewList;
 
@@ -444,7 +444,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
 
   //If ask create a thread for the auto saving of the document.
   if(autoSave){
-    qDebug()<<"autoSave = true in openDoc"<<endl;
+    qDebug()<<"autoSave = true in openDoc";
    endAutoSaving = false;
    autoSaveThread = new AutoSaveThread(*clusteringData,this,cluFileSaveUrl);
    autoSaveThread->start();
@@ -1477,7 +1477,7 @@ void KlustersDoc::prepareUndo(QMap<int,int> clusterIdsOldNew,QMap<int,int> clust
 
   //Update the renumbering lists
   int currentNbUndo = clusterColorListUndoList.count();
-  qDebug()<<"currentNbUndo in KlustersDoc::prepareUndo: "<<currentNbUndo<<endl;
+  qDebug()<<"currentNbUndo in KlustersDoc::prepareUndo: "<<currentNbUndo;
   clusterIdsOldNewMap.insert(currentNbUndo,clusterIdsOldNew);
   clusterIdsNewOldMap.insert(currentNbUndo,clusterIdsNewOld);
 }
@@ -1503,7 +1503,7 @@ void KlustersDoc::prepareReclusteringUndo(Q3ValueList<int>& newClusters,Q3ValueL
 
 void KlustersDoc::undo(){
 
-qDebug()<<"in KlustersDoc::undo 1"<<endl;
+qDebug()<<"in KlustersDoc::undo 1";
 
  //Update the boolean modified here as every undo action implies a call to the function.
  //The user can save and make an undo just behind, in that case the document is modified.
@@ -1651,7 +1651,7 @@ qDebug()<<"in KlustersDoc::undo 1"<<endl;
   emit updateRedoNb(clusterColorListRedoList.count());
  }
 
- qDebug()<<"in KlustersDoc::undo 2"<<endl;
+ qDebug()<<"in KlustersDoc::undo 2";
 }
 
 

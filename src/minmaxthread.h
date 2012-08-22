@@ -38,7 +38,7 @@ public:
   //the constructor of MinMaxThread being private, only this method con create a new MinMaxThread
   friend MinMaxThread* Data::minMaxCalculator();
 
-    inline ~MinMaxThread(){qDebug()<<"in ~MinMaxThread"<<endl;}
+    inline ~MinMaxThread(){qDebug()<<"in ~MinMaxThread";}
 
   inline void run(){data.minMaxDimensionCalculation(modifiedClusters);}
   inline void setModifiedClusters(Q3ValueList<int> clusters){modifiedClusters = clusters;}
