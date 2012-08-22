@@ -36,6 +36,7 @@
 
 // include files for KDE
 #include <QDockWidget>
+#include <QMainWindow>
 
 
 
@@ -62,7 +63,7 @@ class QProcess;
   * full session management as well as keyboard accelerator configuration.
   * @author Lynn Hazan
   */
-class KlustersApp : public KDockMainWindow
+class KlustersApp : public QMainWindow
 {
   Q_OBJECT
 
@@ -105,7 +106,7 @@ class KlustersApp : public KDockMainWindow
     /**Informs of the existance of an Error Matrix View in the application.
     * @return true if an Error Matrix View exists in the application, false otherwise.
     */
-    inline bool isExistAnErrorMatrix() const {return errorMatrixExists;};
+    inline bool isExistAnErrorMatrix() const {return errorMatrixExists;}
 
     /**Updates the dimension spin boxes.
     * @param dimensionX absciss dimension.  
@@ -321,7 +322,7 @@ class KlustersApp : public KDockMainWindow
    inline void setOverLayPresentation(){
      if(overlayPresentation->isChecked())activeView()->setOverLayPresentation();
      else activeView()->setSideBySidePresentation();
-   };
+   }
                   
    /**Sets the way of presenting the information concerning the waveforms selected in the active display.
    * It can be either the mean presentation or the normal presentation. In the mean presentation,
@@ -335,11 +336,11 @@ class KlustersApp : public KDockMainWindow
 
    /**Triggers the increase of the amplitude of the waveforms in the waveform view.
    */
-   inline void slotIncreaseAmplitude(){activeView()->increaseWaveformsAmplitude();};
+   inline void slotIncreaseAmplitude(){activeView()->increaseWaveformsAmplitude();}
 
    /**Triggers the decrease of the amplitude of the waveforms in the waveform view.
    */
-   inline void slotDecreaseAmplitude(){activeView()->decreaseWaveformsAmplitude();};
+   inline void slotDecreaseAmplitude(){activeView()->decreaseWaveformsAmplitude();}
 
 
    /**Informs the active display to present an updated number of waveforms when the
@@ -359,23 +360,23 @@ class KlustersApp : public KDockMainWindow
 
    /**Triggers the increase of the amplitude of the correlograms in the correlation view.
    */
-   inline void slotIncreaseCorrelogramsAmplitude(){activeView()->increaseCorrelogramsAmplitude();};
+   inline void slotIncreaseCorrelogramsAmplitude(){activeView()->increaseCorrelogramsAmplitude();}
 
    /**Triggers the decrease of the amplitude of the correlograms in the correlation view.
    */
-   inline void slotDecreaseCorrelogramsAmplitude(){activeView()->decreaseCorrelogramsAmplitude();};
+   inline void slotDecreaseCorrelogramsAmplitude(){activeView()->decreaseCorrelogramsAmplitude();}
 
    /**Present the correlograms with the raw data without appling any scale.
    */
-   inline void slotNoScale(){activeView()->setNoScale();};
+   inline void slotNoScale(){activeView()->setNoScale();}
       
    /**Presents the correlograms scaling the data by the maximum value.
    */
-   inline void slotScaleByMax(){activeView()->setScaleByMax();};
+   inline void slotScaleByMax(){activeView()->setScaleByMax();}
 
    /**Present the correlograms scaling the data by the shoulder value.
    */
-   inline void slotScaleByShouler(){activeView()->setScaleByShouler();};
+   inline void slotScaleByShouler(){activeView()->setScaleByShouler();}
 
    /**Informs the active display to update the drawing of a doted line
    * at the shoulder level on the correlograms.*/
@@ -414,11 +415,11 @@ class KlustersApp : public KDockMainWindow
                   
    /**Triggers the increase of the amplitude of all the channels.
    */
-   inline void slotIncreaseAllChannelsAmplitude(){activeView()->increaseAllChannelsAmplitude();};
+   inline void slotIncreaseAllChannelsAmplitude(){activeView()->increaseAllChannelsAmplitude();}
 
    /**Triggers the decrease of the amplitude of all the channels.
    */
-   inline void slotDecreaseAllChannelsAmplitude(){activeView()->decreaseAllChannelsAmplitude();};
+   inline void slotDecreaseAllChannelsAmplitude(){activeView()->decreaseAllChannelsAmplitude();}
    
    /**Enables or disables the display of labels next to the traces.*/
    void slotShowLabels();
@@ -436,7 +437,7 @@ class KlustersApp : public KDockMainWindow
 	void slotClusterInformationModified();
 	
  private:
-    /** Initializes the KActions of the application */
+    /** Initializes the QActions of the application */
     void initActions();
 
     /**Initializes the different parameter widgets.*/
@@ -504,12 +505,12 @@ class KlustersApp : public KDockMainWindow
     KRecentFilesAction* fileOpenRecent;
     KToggleAction* viewMainToolBar;
     KToggleAction* viewStatusBar;
-    KActionMenu* viewMenu;
-    KAction* newClusterDisplay;
-    KAction* newWaveformDisplay;
-    KAction* newCrosscorrelationDisplay;
-    KAction* newOverViewDisplay;
-    KAction* newGroupingAssistantDisplay;           
+    QActionMenu* viewMenu;
+    QAction* newClusterDisplay;
+    QAction* newWaveformDisplay;
+    QAction* newCrosscorrelationDisplay;
+    QAction* newOverViewDisplay;
+    QAction* newGroupingAssistantDisplay;
     KToggleAction* viewActionBar;
     KToggleAction* viewToolBar;
     KToggleAction* viewParameterBar;
