@@ -15,6 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 //application specific include files.
+#include "config-klusters.h"
 #include "klustersxmlreader.h"
 #include "tags.h"
 #include "clusteruserinformation.h"
@@ -30,7 +31,6 @@ using namespace std;
 #include <qstring.h>
 
 using namespace klusters;
-extern QString version;
 
 KlustersXmlReader::KlustersXmlReader():readVersion(""){
 }
