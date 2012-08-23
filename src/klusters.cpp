@@ -99,12 +99,12 @@ KlustersApp::KlustersApp()
     // Apply the saved mainwindow settings, if any, and ask the mainwindow
     // to automatically save settings if changed: window size, toolbar
     // position, icon size, etc.
-    setAutoSaveSettings();
+    //KDAB_PENDING setAutoSaveSettings();
 
     slotUpdateParameterBar();
 
     // initialize the recent file list
-    fileOpenRecent->loadEntries(config);
+    //KDAB_PENDING fileOpenRecent->loadEntries(config);
 
     //Disable some actions at startup (see the klustersui.rc file)
     slotStateChanged("initState");
@@ -137,8 +137,8 @@ void KlustersApp::createMenus()
     //KDAB_TODO fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
 
     mSaveAction = fileMenu->addAction(tr("Save..."));
-    saveAction->setShortcut(QKeySequence::Save);
-    connect(openAction, SIGNAL(triggered()), this, SLOT(slotFileSave()));
+    mSaveAction->setShortcut(QKeySequence::Save);
+    connect(mSaveAction, SIGNAL(triggered()), this, SLOT(slotFileSave()));
 
     mSaveAsAction = fileMenu->addAction(tr("&Save As..."));
     mSaveAsAction->setShortcut(QKeySequence::SaveAs);
@@ -154,7 +154,7 @@ void KlustersApp::createMenus()
 
     mImportFile = fileMenu->addAction(tr("&Import File"));
     mImportFile->setShortcut(Qt::CTRL + Qt::Key_I);
-    connect(v,SIGNAL(triggered()), this,SLOT(slotFileImport()));
+    connect(mImportFile,SIGNAL(triggered()), this,SLOT(slotFileImport()));
 
     mQuitAction = fileMenu->addAction(tr("Quit"));
     mQuitAction->setShortcut(QKeySequence::Print);
@@ -251,8 +251,9 @@ void KlustersApp::createMenus()
     mRenumberClusters->setShortcut(Qt::Key_R);
     connect(mRenumberClusters,SIGNAL(triggered()), doc,SLOT(renumberClusters()));
 
-    new QAction(tr("&Update Error Matrix"),QIcon(":/icons/grouping_assistant_update"),Qt::Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
-                "update_errorMatrix");
+    mUpdateErrorMatrix = actionMenu->addAction(tr("&Update Error Matrix"));
+    mUpdateErrorMatrix->setShortcut(Qt::Key_U);
+    connect(mUpdateErrorMatrix,SIGNAL(triggered()), doc,SLOT(slotUpdateErrorMatrix()));
     mReCluster = actionMenu->addAction(tr("Re&cluster"));
     mReCluster->setShortcut(Qt::SHIFT  + Qt::Key_R);
     connect(mReCluster,SIGNAL(triggered()), this,SLOT(slotRecluster()));
@@ -715,7 +716,7 @@ void KlustersApp::initDisplay(){
     //discard any settings concerning the positions of the channels.
     if(configuration().getNbChannels() != 0 && configuration().getNbChannels() != doc->nbOfchannels()) channelPositions.clear();
 
-    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::Qt::WDestructiveClose,statusBar(),
+    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
                                           false,false,DEFAULT_BIN_SIZE.toInt(),INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
@@ -905,7 +906,9 @@ void KlustersApp::openDocumentFile(const QString& url)
             title.append(filePath);
             int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists, do you want to remove it from the list?"), tr(title.toLatin1()));
             if(answer == QMessageBox::Yes) fileOpenRecent->removeURL(url);
-            else  fileOpenRecent->addURL(url); //hack, unselect the item
+            else  {
+                //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
+            }
             filePath = "";
             slotStatusMsg(tr("Ready."));
             return;
@@ -935,7 +938,7 @@ void KlustersApp::openDocumentFile(const QString& url)
         currentNbUndo = 0;
         currentNbRedo = 0;
 
-        fileOpenRecent->addURL(url);
+        //KDAB_PENDING fileOpenRecent->addURL(url);
 
         // Open the file (that will also initialize the doc)
         QString errorInformation = "";
@@ -1077,14 +1080,14 @@ void KlustersApp::openDocumentFile(const QString& url)
         QString name = url.directory() + "/" + baseName + "-" + electrodNb;
 
         if(docName == name){
-            fileOpenRecent->addURL(url); //hack, unselect the item
+            //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
         }
         //If the document asked is not the already open. Open a new instance of the application with it.
         else{
-            fileOpenRecent->addURL(url);
+            //KDAB_PENDING fileOpenRecent->addURL(url);
             filePath = doc->url();
 
 
@@ -1114,7 +1117,7 @@ void KlustersApp::importDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             return;
         }
-        fileOpenRecent->addURL(url);
+        //KDAB_PENDING fileOpenRecent->addURL(url);
         initDisplay();
         QApplication::restoreOverrideCursor();
     }
@@ -1249,7 +1252,7 @@ void KlustersApp::customEvent (QCustomEvent* event){
                 QMessageBox::critical (0,tr("Could not save the current document !"), tr("I/O Error !"));
             }
             if(saveEvent->isItSaveAs()){
-                fileOpenRecent->addURL(doc->url());
+                //KDAB_PENDING fileOpenRecent->addURL(doc->url());
                 setCaption(doc->documentName());
             }
         }
