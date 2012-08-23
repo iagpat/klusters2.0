@@ -457,9 +457,9 @@ void KlustersApp::initSelectionBoxes(){
     featureXLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
     featureXLabel->setFont(font);
     //Insert the spine boxes in the main tool bar and make the connections
-    paramBar->insertWidget(-1,featureXLabel->sizeHint().width(),featureXLabel);
-    paramBar->insertWidget(-1,dimensionX->sizeHint().width(),dimensionX);
-    paramBar->insertWidget(-1,dimensionY->sizeHint().width(),dimensionY);
+    paramBar->addWidget(featureXLabel);
+    paramBar->addWidget(dimensionX);
+    paramBar->addWidget(dimensionY);
     connect(dimensionX, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateDimensionX(int)));
     connect(dimensionY, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateDimensionY(int)));
 
@@ -478,14 +478,14 @@ void KlustersApp::initSelectionBoxes(){
     startLabel = new QLabel("  Start time (s)",paramBar);
     startLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
     startLabel->setFont(font);
-    paramBar->insertWidget(-1,startLabel->sizeHint().width(),startLabel);
+    paramBar->addWidget(startLabel);
     start->setMinimumSize(70,start->minimumHeight());
     start->setMaximumSize(70,start->maximumHeight());
-    paramBar->insertWidget(-1,start->sizeHint().width(),start);
-    paramBar->insertWidget(-1,durationLabel->sizeHint().width(),durationLabel);
+    paramBar->addWidget(start);
+    paramBar->addWidget(durationLabel);
     duration->setMinimumSize(70,duration->minimumHeight());
     duration->setMaximumSize(70,duration->maximumHeight());
-    paramBar->insertWidget(-1,duration->sizeHint().width(),duration);
+    paramBar->addWidget(duration);
     connect(start, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateStartTime(int)));
     connect(duration, SIGNAL(returnPressed()),this, SLOT(slotUpdateDuration()));
 
@@ -496,10 +496,10 @@ void KlustersApp::initSelectionBoxes(){
     spikesTodisplayLabel = new QLabel("  Waveforms",paramBar);
     spikesTodisplayLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
     spikesTodisplayLabel->setFont(font);
-    paramBar->insertWidget(-1,spikesTodisplayLabel->sizeHint().width(),spikesTodisplayLabel);
+    paramBar->addWidget(spikesTodisplayLabel);
     spikesTodisplay->setMinimumSize(70,spikesTodisplay->minimumHeight());
     spikesTodisplay->setMaximumSize(70,spikesTodisplay->maximumHeight());
-    paramBar->insertWidget(-1,spikesTodisplay->sizeHint().width(),spikesTodisplay);
+    paramBar->addWidget(spikesTodisplay);
     connect(spikesTodisplay, SIGNAL(valueChanged(int)),this, SLOT(slotSpikesTodisplay(int)));
 
     //Create and initialize the lineEdit for the correlations.
@@ -511,10 +511,10 @@ void KlustersApp::initSelectionBoxes(){
     binSizeLabel = new QLabel("  Bin size (ms)",paramBar);
     binSizeLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
     binSizeLabel->setFont(font);
-    paramBar->insertWidget(-1,binSizeLabel->sizeHint().width(),binSizeLabel);
+    paramBar->addWidget(binSizeLabel);
     binSizeBox->setMinimumSize(30,binSizeBox->minimumHeight());
     binSizeBox->setMaximumSize(30,binSizeBox->maximumHeight());
-    paramBar->insertWidget(-1,binSizeBox->sizeHint().width(),binSizeBox);
+    paramBar->addWidget(binSizeBox);
     connect(binSizeBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateBinSize()));
 
     correlogramsHalfDuration = new QLineEdit(paramBar,"INITIAL_CORRELOGRAMS_HALF_TIME_FRAME");
@@ -525,10 +525,10 @@ void KlustersApp::initSelectionBoxes(){
     correlogramsHalfDurationLabel = new QLabel("  Duration (ms)",paramBar);
     correlogramsHalfDurationLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
     correlogramsHalfDurationLabel->setFont(font);
-    paramBar->insertWidget(-1,correlogramsHalfDurationLabel->sizeHint().width(),correlogramsHalfDurationLabel);
+    paramBar->addWidget(correlogramsHalfDurationLabel);
     correlogramsHalfDuration->setMinimumSize(70,correlogramsHalfDuration->minimumHeight());
     correlogramsHalfDuration->setMaximumSize(70,correlogramsHalfDuration->maximumHeight());
-    paramBar->insertWidget(-1,correlogramsHalfDuration->sizeHint().width(),correlogramsHalfDuration);
+    paramBar->addWidget(correlogramsHalfDuration);
     connect(correlogramsHalfDuration, SIGNAL(returnPressed()),this, SLOT(slotUpdateCorrelogramsHalfDuration()));
 
     //Connect the move function of the parameterBar to slotUpdateParameterBar to always correctly show its contents.
