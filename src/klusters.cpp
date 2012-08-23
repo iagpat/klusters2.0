@@ -178,6 +178,16 @@ void KlustersApp::createMenus()
     mSelectAllExceptAction->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
     connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
 
+
+    mUndo = editMenu->addAction(tr("Select &All"));
+    mUndo->setShortcuts(QKeySequence::Undo);
+    connect(mUndo, SIGNAL(triggered()), this, SLOT(slotUndo());
+
+
+    mSelectAllExceptAction = editMenu->addAction(tr("Select &All"));
+    mSelectAllExceptAction->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
+    connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
+
     KStdAction::undo(this, SLOT(slotUndo()), actionCollection());
     KStdAction::redo(this, SLOT(slotRedo()), actionCollection());
 
@@ -378,26 +388,24 @@ void KlustersApp::createMenus()
     connect(viewParameterBar,SIGNAL(triggered()), this,SLOT(slotViewParameterBar()));
 
     viewParameterBar->setChecked(true);
-    KRadioAction* immediateSelection = settingsMenu->addAction(tr("Immediate Update"));
+    mImmediateSelection = settingsMenu->addAction(tr("Immediate Update"));
     grp = new QActionGroup(this);
-    grp->addAction(immediateSelection);
-    KRadioAction* immediateSelection->setCheckable(true);
-    connect(KRadioAction* immediateSelection,SIGNAL(triggered()), this,SLOT(slotImmediateSelection()));
+    grp->addAction(mImmediateSelection);
+    mImmediateSelection->setCheckable(true);
+    connect(mImmediateSelection,SIGNAL(triggered()), this,SLOT(slotImmediateSelection()));
 
-    immediateSelection->setExclusiveGroup("selection");
-    KRadioAction* delaySelection = settingsMenu->addAction(tr("Delayed Update"));
-    grp = new QActionGroup(this);
-    grp->addAction(delaySelection);
-    KRadioAction* delaySelection->setCheckable(true);
-    connect(KRadioAction* delaySelection,SIGNAL(triggered()), this,SLOT(slotDelaySelection()));
+    mDelaySelection = settingsMenu->addAction(tr("Delayed Update"));
+    grp->addAction(mDelaySelection);
+    mDelaySelection->setCheckable(true);
+    connect(mDelaySelection,SIGNAL(triggered()), this,SLOT(slotDelaySelection()));
 
-    delaySelection->setExclusiveGroup("selection");
     viewClusterInfo = settingsMenu->addAction(tr("Show Cluster Info"));
     viewClusterInfo->setCheckable(true);
     connect(viewClusterInfo,SIGNAL(triggered()), this,SLOT(slotViewClusterInfo()));
 
     viewClusterInfo->setChecked(false);
 
+#if KDAB_PENDING
     //Initialize the update mode
     immediateSelection->setChecked(true);
 
@@ -411,7 +419,7 @@ void KlustersApp::createMenus()
     actionCollection()->action(KStdAction::stdName(KStdAction::Quit))->setStatusText(tr("Quits the application"));
     viewMainToolBar->setStatusText(tr("Enables/disables the main tool bar"));
     viewStatusBar->setStatusText(tr("Enables/disables the status bar"));
-
+#endif
     //Custom connections
     connect(clusterPalette, SIGNAL(singleChangeColor(int)), this, SLOT(slotSingleColorUpdate(int)));
     connect(clusterPalette, SIGNAL(updateShownClusters(Q3ValueList<int>)), this, SLOT(slotUpdateShownClusters(Q3ValueList<int>)));
@@ -434,7 +442,10 @@ void KlustersApp::initActions()
 void KlustersApp::initSelectionBoxes(){
     QFont font("Helvetica",9);
 
-    paramBar = toolBar("parameterBar");
+    QToolBar *topBar = new QToolBar(tr("Tools"));
+    addToolBar(Qt::TopToolBarArea, topBar);
+
+    paramBar = addToolBar(i18n("Parameters"));
 
     //Create and initialize the spin boxes for the dimensions
     dimensionX = new QSpinBox(1,1,1,paramBar,"dimensionX");

@@ -502,28 +502,28 @@ private:
 
     
     //Action and toolbar pointers
-    KRecentFilesAction* fileOpenRecent;
-    KToggleAction* viewMainToolBar;
-    KToggleAction* viewStatusBar;
+    QAction* fileOpenRecent;
+    QAction* viewMainToolBar;
+    QAction* viewStatusBar;
     QActionMenu* viewMenu;
     QAction* newClusterDisplay;
     QAction* newWaveformDisplay;
     QAction* newCrosscorrelationDisplay;
     QAction* newOverViewDisplay;
     QAction* newGroupingAssistantDisplay;
-    KToggleAction* viewActionBar;
-    KToggleAction* viewToolBar;
-    KToggleAction* viewParameterBar;
-    KToggleAction* viewClusterInfo;
-    KToggleAction* timeFrameMode;
-    KToggleAction* overlayPresentation;
-    KToggleAction* meanPresentation;
-    KRadioAction* noScale;
-    KRadioAction* scaleByMax;
-    KRadioAction* scaleByShouler;
-    KToggleAction* shoulderLine;
-    KToolBar* paramBar;
-    KToggleAction* showHideLabels;
+    QAction* viewActionBar;
+    QAction* viewToolBar;
+    QAction* viewParameterBar;
+    QAction* viewClusterInfo;
+    QAction* timeFrameMode;
+    QAction* overlayPresentation;
+    QAction* meanPresentation;
+    QAction* noScale;
+    QAction* scaleByMax;
+    QAction* scaleByShouler;
+    QAction* shoulderLine;
+    QToolBar* paramBar;
+    QAction* showHideLabels;
 
     QAction *mRenameActiveDisplay;
     QAction *mCloseActiveDisplay;
@@ -555,6 +555,9 @@ private:
     QAction *mNextSpike;
     QAction *mPreviousSpike;
     QAction *mPrintAction;
+    QAction *mImmediateSelection;
+    QAction *mDelaySelection;
+    QAction *mUndo;
 
     /**Spine box enabling to choose the absciss dimension*/
     QSpinBox* dimensionX;
