@@ -40,8 +40,9 @@
 #include <QStatusBar>
 #include <QProcess>
 #include <QMenuBar>
-
-
+#include <QMessageBox>
+#include <QToolBar>
+#include <QKeySequence>
 // application specific includes
 #include "klusters.h"
 #include "klustersdoc.h"
@@ -642,7 +643,8 @@ bool KlustersApp::eventFilter(QObject* object,QEvent* event){
 void KlustersApp::initClusterPanel()
 {
     //Creation of the left panel containing the clusters
-    clusterPanel = createDockWidget( "clusterPanel",QImage("classnew") , 0L, tr("The cluster list"), 0L);
+    clusterPanel = new QDockWidget(tr("The cluster list"),0L);
+    clusterPanel->setWindowIcon(QIcon("classnew"));
     //Initialisation of the cluster palette containing the cluster list
     clusterPalette = new ClusterPalette(backgroundColor,clusterPanel,statusBar(),"ClusterPalette");
     //Place the clusterPalette frame in the clusterPanel (the view)
@@ -681,7 +683,9 @@ void KlustersApp::initDisplay(){
     binSizeValidator.setRange(0,maximumTime);
 
     //Create the mainDock (first view)
-    mainDock = createDockWidget( "1", QPixmap(), 0L, tr(doc->documentName().toLatin1()), "Overview Display");
+    mainDock = new QDockWidget( tr(doc->documentName().toLatin1()),0);
+
+            //KDAB_PENDING look at last element createDockWidget( "1", QPixmap(), 0L, tr(doc->documentName().toLatin1()), "Overview Display");
     mainDock->setDockWindowTransient(this,true);
 
     //If the setting dialog exists (has already be open once), enable the settings for the channels.
@@ -771,7 +775,9 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         QString displayName = (doc->documentName()).append(type);
         QString displayType = KlustersView::DisplayTypeNames[type];
 
-        display = createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, tr(displayName.toLatin1()), displayType);
+        display = new QDockWidget(tr(displayName.toLatin1()),0L);
+        display->setWindowIcon(QIcon("classnew"));
+                //KDAB_PENDING createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, tr(displayName.toLatin1()), displayType);
 
         //Check if the active display contains a ProcessWidget
         bool isProcessWidget = doesActiveDisplayContainProcessWidget();
@@ -2420,7 +2426,8 @@ void KlustersApp::slotRecluster(){
 
     if(processWidget == 0L){
         QDockWidget* display;
-        display = createDockWidget(QString(QChar(displayCount)),0, 0L, tr("Recluster output"), tr("Recluster output"));
+        display = new QDockWidget(tr("Recluster output"),0);
+                //KDAB_PENDING createDockWidget(QString(QChar(displayCount)),0, 0L, tr("Recluster output"), tr("Recluster output"));
 
         processWidget = new ProcessWidget(display);
         connect(processWidget,SIGNAL(processExited(QProcess*)), this, SLOT(slotProcessExited(QProcess*)));
