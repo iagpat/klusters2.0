@@ -146,9 +146,19 @@ void KlustersApp::createMenus()
     mCloseAction->setShortcuts(QKeySequence::Close);
     connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
 
+    mPrintAction = fileMenu->addAction(tr("Print"));
+    mPrintAction->setShortcuts(QKeySequence::Print);
+    connect(mPrintAction, SIGNAL(triggered()), this, SLOT(slotFilePrint()));
+
+    mImportFile = fileMenu->addAction(tr("&Import File"));
+    mImportFile->setShortcuts(Qt::CTRL + Qt::Key_I);
+    connect(v,SIGNAL(triggered()), this,SLOT(slotFileImport()));
+
+    mQuitAction = fileMenu->addAction(tr("Quit"));
+    mQuitAction->setShortcuts(QKeySequence::Print);
+    connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
+
 #if 0
-    KStdAction::print(this, SLOT(slotFilePrint()), actionCollection());
-    KStdAction::quit(this, SLOT(close()), actionCollection());
     viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
     viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
 
@@ -156,9 +166,6 @@ void KlustersApp::createMenus()
     VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
 #endif
-    mImportFile = fileMenu->addAction(tr("&Import File"));
-    mImportFile->setShortcuts(Qt::CTRL + Qt::Key_I);
-    connect(v,SIGNAL(triggered()), this,SLOT(slotFileImport()));
 
 
     //Edit Menu

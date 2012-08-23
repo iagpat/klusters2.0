@@ -554,6 +554,7 @@ private:
     QAction *mDecreaseChannelAmplitudes;
     QAction *mNextSpike;
     QAction *mPreviousSpike;
+    QAction *mPrintAction;
 
     /**Spine box enabling to choose the absciss dimension*/
     QSpinBox* dimensionX;
