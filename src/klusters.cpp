@@ -160,7 +160,8 @@ void KlustersApp::createMenus()
     mQuitAction->setShortcut(QKeySequence::Print);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
 
-    mRenumberAndSave = fileMenu->addAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")));
+    mRenumberAndSave = fileMenu->addAction(tr("Re&number and Save"));
+    mRenumberAndSave->setIcon(QIcon(QPixmap("filesave.png")));
     mRenumberAndSave->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     connect(mRenumberAndSave,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
 
@@ -230,57 +231,67 @@ void KlustersApp::createMenus()
 
     //Actions menu
     QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
-    mDeleteArtifact = actionMenu->addAction(tr("Delete &Artifact Cluster(s)"),QIcon(":/icons/delete_artefact"));
+    mDeleteArtifact = actionMenu->addAction(tr("Delete &Artifact Cluster(s)"));
+    mDeleteArtifact->setIcon(QIcon(":/icons/delete_artefact"));
     mDeleteArtifact->setShortcut(Qt::SHIFT + Qt::Key_Delete);
     connect(mDeleteArtifact,SIGNAL(triggered()), clusterPalette,SLOT(moveClustersToArtefact()));
 
-    mDeleteNoisy = actionMenu->addAction(tr("Delete &Noisy Cluster(s)"),QIcon(":/icons/delete_noise"));
+    mDeleteNoisy = actionMenu->addAction(tr("Delete &Noisy Cluster(s)"));
+    mDeleteNoisy->setIcon(QIcon(":/icons/delete_noise"));
     mDeleteNoisy->setShortcut(Qt::Key_Delete);
     connect(mDeleteNoisy,SIGNAL(triggered()), clusterPalette,SLOT(moveClustersToNoise()));
 
-    mGroupeClusters = actionMenu->addAction(tr("&Group Clusters"),QIcon(":/icons/group"));
+    mGroupeClusters = actionMenu->addAction(tr("&Group Clusters"));
+    mGroupeClusters->setIcon(QIcon(":/icons/group"));
     mGroupeClusters->setShortcut(Qt::Key_G);
     connect(mGroupeClusters,SIGNAL(triggered()), clusterPalette,SLOT(groupClusters()));
 
-    mUpdateDisplay = actionMenu->addAction(tr("&Update Display"),QIcon(":/icons/update"));
+    mUpdateDisplay = actionMenu->addAction(tr("&Update Display"));
+    mUpdateDisplay->setIcon(QIcon(":/icons/update"));
     connect(mUpdateDisplay,SIGNAL(triggered()), clusterPalette,SLOT(updateClusters()));
 
-    mRenumberClusters = actionMenu->addAction(tr("&Renumber Clusters"),0);
+    mRenumberClusters = actionMenu->addAction(tr("&Renumber Clusters"));
     mRenumberClusters->setShortcut(Qt::Key_R);
     connect(mRenumberClusters,SIGNAL(triggered()), doc,SLOT(renumberClusters()));
 
     new QAction(tr("&Update Error Matrix"),QIcon(":/icons/grouping_assistant_update"),Qt::Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
                 "update_errorMatrix");
-    mReCluster = actionMenu->addAction(tr("Re&cluster"),0);
+    mReCluster = actionMenu->addAction(tr("Re&cluster"));
     mReCluster->setShortcut(Qt::SHIFT  + Qt::Key_R);
     connect(mReCluster,SIGNAL(triggered()), this,SLOT(slotRecluster()));
 
-    mAbortReclustering = actionMenu->addAction(tr("&Abort Reclustering"),0);
+    mAbortReclustering = actionMenu->addAction(tr("&Abort Reclustering"));
     connect(mAbortReclustering,SIGNAL(triggered()), this,SLOT(slotStopRecluster()));
 
     //Tools menu
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
-    mZoomAction = toolsMenu->addAction(tr("Zoom"),QIcon(":/icons/zoom_tool"));
+    mZoomAction = toolsMenu->addAction(tr("Zoom"));
+    mZoomAction->setIcon(QIcon(":/icons/zoom_tool"));
     mZoomAction->setShortcut(Qt::Key_Z);
     connect(mZoomAction,SIGNAL(triggered()), this,SLOT(slotZoom()));
 
-    mNewCluster = toolsMenu->addAction(tr("New Cluster"),QIcon(":/icons/new_cluster"));
+    mNewCluster = toolsMenu->addAction(tr("New Cluster"));
+    mNewCluster->setIcon(QIcon(":/icons/new_cluster"));
     mNewCluster->setShortcut(Qt::Key_C);
     connect(mNewCluster,SIGNAL(triggered()), this,SLOT(slotSingleNew()));
 
-    mSplitClusters = toolsMenu->addAction(tr("&Split Clusters"),QIcon(":/icons/new_clusters"));
+    mSplitClusters = toolsMenu->addAction(tr("&Split Clusters"));
+    mSplitClusters->setIcon(QIcon(":/icons/new_clusters"));
     mSplitClusters->setShortcut(Qt::Key_S);
     connect(mSplitClusters,SIGNAL(triggered()), this,SLOT(slotMultipleNew()));
 
-    mDeleteArtifactSpikes = toolsMenu->addAction(tr("Delete &Artifact Spikes"),QIcon(":/icons/delete_artefact_tool"));
+    mDeleteArtifactSpikes = toolsMenu->addAction(tr("Delete &Artifact Spikes"));
+    mDeleteArtifactSpikes->setIcon(QIcon(":/icons/delete_artefact_tool"));
     mDeleteArtifactSpikes->setShortcut(Qt::Key_A);
     connect(mDeleteArtifactSpikes,SIGNAL(triggered()), this,SLOT(slotDeleteArtefact()));
 
-    mDeleteNoisySpikes = toolsMenu->addAction(tr("Delete &Noisy Spikes"),QIcon(":/icons/delete_noise_tool"));
+    mDeleteNoisySpikes = toolsMenu->addAction(tr("Delete &Noisy Spikes"));
+    mDeleteNoisySpikes->setIcon(QIcon(":/icons/delete_noise_tool"));
     mDeleteNoisySpikes->setShortcut(Qt::Key_N);
     connect(mDeleteNoisySpikes,SIGNAL(triggered()), this,SLOT(slotDeleteNoise()));
 
-    mSelectTime = toolsMenu->addAction(tr("Select Time"),QIcon(":/icons/time_tool"));
+    mSelectTime = toolsMenu->addAction(tr("Select Time"));
+    mSelectTime->setIcon(QIcon(":/icons/time_tool"));
     mSelectTime->setShortcut(Qt::Key_W);
     connect(mSelectTime,SIGNAL(triggered()), this,SLOT(slotSelectTime()));
 
@@ -370,11 +381,13 @@ void KlustersApp::createMenus()
     connect(showHideLabels,SIGNAL(triggered()), this,SLOT(slotShowLabels()));
 
     showHideLabels->setChecked(false);
-    mNextSpike = traceMenu->addAction(tr("&Next Spike"),QIcon(":/icons/forwardCluster"));
+    mNextSpike = traceMenu->addAction(tr("&Next Spike"));
+    mNextSpike->setIcon(QIcon(":/icons/forwardCluster"));
     mNextSpike->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
     connect(mNextSpike,SIGNAL(triggered()), this,SLOT(slotShowNextCluster()));
 
-    mPreviousSpike = traceMenu->addAction(tr("&Previous Spike"),QIcon(":/icons/backCluster"));
+    mPreviousSpike = traceMenu->addAction(tr("&Previous Spike"));
+    mPreviousSpike->setIcon(QIcon(":/icons/backCluster"));
     mPreviousSpike->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B);
     connect(mPreviousSpike,SIGNAL(triggered()), this,SLOT(slotShowPreviousCluster()));
 
@@ -453,7 +466,7 @@ void KlustersApp::initSelectionBoxes(){
     QToolBar *topBar = new QToolBar(tr("Tools"));
     addToolBar(Qt::TopToolBarArea, topBar);
 
-    paramBar = addToolBar(i18n("Parameters"));
+    paramBar = addToolBar(tr("Parameters"));
 
     //Create and initialize the spin boxes for the dimensions
     dimensionX = new QSpinBox(1,1,1,paramBar,"dimensionX");
