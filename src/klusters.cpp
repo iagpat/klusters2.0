@@ -327,7 +327,7 @@ void KlustersApp::createMenus()
     QMenu *correlationsMenu = menuBar()->addMenu(tr("&Correlations"));
     scaleByMax = correlationsMenu->addAction(tr("Scale by &Maximum"));
 
-    grp = new QActionGroup(this);
+    QActionGroup *grp = new QActionGroup(this);
     grp->addAction(scaleByMax);
     scaleByMax->setShortcut(Qt::SHIFT + Qt::Key_M);
     scaleByMax->setCheckable(true);
