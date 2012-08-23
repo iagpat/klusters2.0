@@ -558,6 +558,10 @@ private:
     QAction *mImmediateSelection;
     QAction *mDelaySelection;
     QAction *mUndo;
+    QAction *mIncreaseAmplitudeCorrelation;
+    QAction *mQuitAction;
+    QAction *mOpenAction;
+    QAction *mRedo;
 
     /**Spine box enabling to choose the absciss dimension*/
     QSpinBox* dimensionX;
@@ -815,27 +819,6 @@ private:
     QString filePath;
 
 
-    class printDialogPage : public KPrintDialogPage{
-    public:
-        inline printDialogPage(QWidget* parent = 0,const char* name = 0): KPrintDialogPage(parent,name){
-            setTitle(QObject::tr("Background Color"));
-            backgroundColor = new QCheckBox("Use white background",this);
-            backgroundColor->adjustSize();
-        };
-
-        inline void getOptions(QMap<QString,QString>& opts,bool incldef){
-            opts["kde-klusters-backgroundColor"] = (backgroundColor->isChecked() ? "1" : "-1");
-        };
-
-        inline void setOptions(const QMap<QString,QString>& opts){
-            backgroundColor->setChecked(opts["kde-klusters-backgroundColor"] == "1");
-        };
-
-        inline bool isValid(QString& message){return true;};
-
-    private:
-        QCheckBox* backgroundColor;
-    };
 };
 
 #endif // KCLUSTERS_H

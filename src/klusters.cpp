@@ -128,9 +128,9 @@ void KlustersApp::createMenus()
 {
     //File Menu
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
-    QAction *openAction = fileMenu->addAction(tr("&Open..."));
-    openAction->setShortcuts(QKeySequence::Open);
-    connect(openAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
+    mOpenAction = fileMenu->addAction(tr("&Open..."));
+    mOpenAction->setShortcuts(QKeySequence::Open);
+    connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
     //KDAB_TODO fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
 
@@ -179,17 +179,18 @@ void KlustersApp::createMenus()
     connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
 
 
-    mUndo = editMenu->addAction(tr("Select &All"));
+    mUndo = editMenu->addAction(tr("Undo"));
     mUndo->setShortcuts(QKeySequence::Undo);
-    connect(mUndo, SIGNAL(triggered()), this, SLOT(slotUndo());
+    connect(mUndo, SIGNAL(triggered()), this, SLOT(slotUndo()));
+
+    mRedo = editMenu->addAction(tr("Redo"));
+    mRedo->setShortcuts(QKeySequence::Redo);
+    connect(mRedo, SIGNAL(triggered()), this, SLOT(slotRedo());
 
 
     mSelectAllExceptAction = editMenu->addAction(tr("Select &All"));
     mSelectAllExceptAction->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
     connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
-
-    KStdAction::undo(this, SLOT(slotUndo()), actionCollection());
-    KStdAction::redo(this, SLOT(slotRedo()), actionCollection());
 
     //Displays menu
     QMenu *displayMenu = menuBar()->addMenu(tr("&Displays"));
@@ -330,9 +331,9 @@ void KlustersApp::createMenus()
 
     //Initialize the presentation mode to scale by maximum.
     scaleByMax->setChecked(true);
-    VARIABLE = correlationsMenu->addAction(tr("&Increase Amplitude"));
-    VARIABLE->setShortcuts(Qt::SHIFT + Qt::Key_I);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotIncreaseCorrelogramsAmplitude()));
+    mIncreaseAmplitudeCorrelation = correlationsMenu->addAction(tr("&Increase Amplitude"));
+    mIncreaseAmplitudeCorrelation->setShortcuts(Qt::SHIFT + Qt::Key_I);
+    connect(mIncreaseAmplitudeCorrelation,SIGNAL(triggered()), this,SLOT(slotIncreaseCorrelogramsAmplitude()));
 
     mDecreaseAmplitudeCorrelation = correlationsMenu->addAction(tr("&Decrease Amplitude"));
     mDecreaseAmplitudeCorrelation->setShortcuts(Qt::SHIFT +  Qt::Key_D);
