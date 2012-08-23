@@ -170,9 +170,6 @@ void KlustersApp::createMenus()
     viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
     viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
 
-    VARIABLE = fileMenu->addAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")));
-    VARIABLE->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
 #endif
 
 
@@ -718,7 +715,7 @@ void KlustersApp::initDisplay(){
     //discard any settings concerning the positions of the channels.
     if(configuration().getNbChannels() != 0 && configuration().getNbChannels() != doc->nbOfchannels()) channelPositions.clear();
 
-    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,WDestructiveClose,statusBar(),
+    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
                                           false,false,DEFAULT_BIN_SIZE.toInt(),INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
