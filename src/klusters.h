@@ -236,8 +236,6 @@ private slots:
      * @param text the text that is displayed in the statusbar
      */
     void slotStatusMsg(const QString &text);
-    /** Gets called when the window menu is activated; recreates the window menu with all opened window titles. */
-    void viewMenuAboutToShow();
     /** Activates the MDI child widget when it gets selected from the window menu. */
     void viewMenuActivated( int id );
     /*Slots for the tools menu.*/
@@ -526,6 +524,23 @@ private:
     KToggleAction* shoulderLine;
     KToolBar* paramBar;
     KToggleAction* showHideLabels;
+
+    QAction *mRenameActiveDisplay;
+    QAction *mCloseActiveDisplay;
+    QAction *mNewTraceDisplay;
+    QAction *mDeleteArtifact;
+    QAction *mDeleteNoisy;
+    QAction *mGroupeClusters;
+    QAction *mUpdateDisplay;
+    QAction *mRenumberClusters;
+    QAction *mReCluster;
+    QAction *mAbortReclustering;
+    QAction *mZoomAction;
+    QAction *mNewCluster;
+    QAction *mSplitClusters;
+    QAction *mDeleteArtifactSpikes;
+    QAction *mDeleteNoisySpikes;
+    QAction *mSelectTime;
 
     /**Spine box enabling to choose the absciss dimension*/
     QSpinBox* dimensionX;

@@ -132,8 +132,6 @@ void KlustersApp::createMenus()
     openAction->setShortcuts(QKeySequence::Open);
     connect(openAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
-
-
     //KDAB_TODO fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
 
     QAction *saveAction = fileMenu->addAction(tr("Save..."));
@@ -171,116 +169,101 @@ void KlustersApp::createMenus()
 
 
     QAction *selectAllExceptAction = editMenu->addAction(tr("Select &All"));
-    selectAllAction->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
+    selectAllExceptAction->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
     connect(selectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
 
     KStdAction::undo(this, SLOT(slotUndo()), actionCollection());
     KStdAction::redo(this, SLOT(slotRedo()), actionCollection());
 
-    //TODO
+    //Displays menu
+    QMenu *displayMenu = menuBar()->addMenu(tr("&Displays"));
+    viewMenu = new QActionMenu(tr("&Window"), actionCollection(), "window_menu");
+    newClusterDisplay = displayMenu->addAction(tr("New C&luster Display"));
+    connect(newClusterDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewClusterDisplay()));
+
+    newWaveformDisplay = displayMenu->addAction(tr("New &Waveform Display"));
+    connect(newWaveformDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewWaveformDisplay()));
+
+    newCrosscorrelationDisplay = displayMenu->addAction(tr("New C&orrelation Display"));
+    connect(newCrosscorrelationDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewCrosscorrelationDisplay()));
+
+    newOverViewDisplay = displayMenu->addAction(tr("New &Overview Display"));
+    connect(newOverViewDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewOverViewDisplay()));
+
+    newGroupingAssistantDisplay = displayMenu->addAction(tr("New &Grouping Assistant Display"));
+    connect(newGroupingAssistantDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewGroupingAssistantDisplay()));
+
+    mRenameActiveDisplay = displayMenu->addAction(tr("&Rename Active Display"));
+    mRenameActiveDisplay->setShortcuts(Qt::CTRL + Qt::Key_R);
+    connect(mRenameActiveDisplay,SIGNAL(triggered()), this,SLOT(renameActiveDisplay()));
+
+    mCloseActiveDisplay = displayMenu->addAction(tr("&Close Active Display"));
+    mCloseActiveDisplay->setShortcuts(Qt::CTRL + Qt::Key_W);
+    connect(mCloseActiveDisplay,SIGNAL(triggered()), this,SLOT(slotDisplayClose()));
+
+    mNewTraceDisplay = displayMenu->addAction(tr("New &Trace Display"));
+    connect(mNewTraceDisplay,SIGNAL(triggered()), this,SLOT(slotNewTraceDisplay()));
+
+    //Actions menu
+    QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
+    mDeleteArtifact = actionMenu->addAction(tr("Delete &Artifact Cluster(s)"),QIcon(":/icons/delete_artefact"));
+    mDeleteArtifact->setShortcuts(Qt::SHIFT + Qt::Key_Delete);
+    connect(mDeleteArtifact,SIGNAL(triggered()), clusterPalette,SLOT(moveClustersToArtefact()));
+
+    mDeleteNoisy = actionMenu->addAction(tr("Delete &Noisy Cluster(s)"),QIcon(":/icons/delete_noise"));
+    mDeleteNoisy->setShortcuts(Qt::Key_Delete);
+    connect(mDeleteNoisy,SIGNAL(triggered()), clusterPalette,SLOT(moveClustersToNoise()));
+
+    mGroupeClusters = actionMenu->addAction(tr("&Group Clusters"),QIcon(":/icons/group"));
+    mGroupeClusters->setShortcuts(Qt::Key_G);
+    connect(mGroupeClusters,SIGNAL(triggered()), clusterPalette,SLOT(groupClusters()));
+
+    mUpdateDisplay = actionMenu->addAction(tr("&Update Display"),QIcon(":/icons/update"));
+    connect(mUpdateDisplay,SIGNAL(triggered()), clusterPalette,SLOT(updateClusters()));
+
+    mRenumberClusters = actionMenu->addAction(tr("&Renumber Clusters"),0);
+    mRenumberClusters->setShortcuts(Qt::Key_R);
+    connect(mRenumberClusters,SIGNAL(triggered()), doc,SLOT(renumberClusters()));
+
+    new QAction(tr("&Update Error Matrix"),QIcon(":/icons/grouping_assistant_update"),Qt::Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
+                "update_errorMatrix");
+    mReCluster = actionMenu->addAction(tr("Re&cluster"),0);
+    mReCluster->setShortcuts(Qt::SHIFT  + Qt::Key_R);
+    connect(mReCluster,SIGNAL(triggered()), this,SLOT(slotRecluster()));
+
+    mAbortReclustering = actionMenu->addAction(tr("&Abort Reclustering"),0);
+    connect(mAbortReclustering,SIGNAL(triggered()), this,SLOT(slotStopRecluster()));
+
+    //Tools menu
+    QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
+    mZoomAction = toolsMenu->addAction(tr("Zoom"),QIcon(":/icons/zoom_tool"));
+    mZoomAction->setShortcuts(Qt::Key_Z);
+    connect(mZoomAction,SIGNAL(triggered()), this,SLOT(slotZoom()));
+
+    mNewCluster = toolsMenu->addAction(tr("New Cluster"),QIcon(":/icons/new_cluster"));
+    mNewCluster->setShortcuts(Qt::Key_C);
+    connect(mNewCluster,SIGNAL(triggered()), this,SLOT(slotSingleNew()));
+
+    mSplitClusters = toolsMenu->addAction(tr("&Split Clusters"),QIcon(":/icons/new_clusters"));
+    mSplitClusters->setShortcuts(Qt::Key_S);
+    connect(mSplitClusters,SIGNAL(triggered()), this,SLOT(slotMultipleNew()));
+
+    mDeleteArtifactSpikes = toolsMenu->addAction(tr("Delete &Artifact Spikes"),QIcon(":/icons/delete_artefact_tool"));
+    mDeleteArtifactSpikes->setShortcuts(Qt::Key_A);
+    connect(mDeleteArtifactSpikes,SIGNAL(triggered()), this,SLOT(slotDeleteArtefact()));
+
+    mDeleteNoisySpikes = toolsMenu->addAction(tr("Delete &Noisy Spikes"),QIcon(":/icons/delete_noise_tool"));
+    mDeleteNoisySpikes->setShortcuts(Qt::Key_N);
+    connect(mDeleteNoisySpikes,SIGNAL(triggered()), this,SLOT(slotDeleteNoise()));
+
+    mSelectTime = toolsMenu->addAction(tr("Select Time"),QIcon(":/icons/time_tool"));
+    mSelectTime->setShortcuts(Qt::Key_W);
+    connect(mSelectTime,SIGNAL(triggered()), this,SLOT(slotSelectTime()));
+
 }
 
 void KlustersApp::initActions()
 {
-
-    //Displays menu
-    viewMenu = new QActionMenu(tr("&Window"), actionCollection(), "window_menu");
-    newClusterDisplay = MENU->addAction(tr("New C&luster Display"));
-    newClusterDisplay->setShortcuts(0);
-    connect(newClusterDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewClusterDisplay()));
-
-    newWaveformDisplay = MENU->addAction(tr("New &Waveform Display"));
-    newWaveformDisplay->setShortcuts(0);
-    connect(newWaveformDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewWaveformDisplay()));
-
-    newCrosscorrelationDisplay = MENU->addAction(tr("New C&orrelation Display"));
-    newCrosscorrelationDisplay->setShortcuts(0);
-    connect(newCrosscorrelationDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewCrosscorrelationDisplay()));
-
-    newOverViewDisplay = MENU->addAction(tr("New &Overview Display"));
-    newOverViewDisplay->setShortcuts(0);
-    connect(newOverViewDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewOverViewDisplay()));
-
-    newGroupingAssistantDisplay =
-            VARIABLE = MENU->addAction(tr("New &Grouping Assistant Display"));
-    VARIABLE->setShortcuts(0);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotWindowNewGroupingAssistantDisplay()));
-
-    VARIABLE = MENU->addAction(tr("&Rename Active Display"));
-    VARIABLE->setShortcuts(Qt::CTRL + Qt::Key_R);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(renameActiveDisplay()));
-
-    VARIABLE = MENU->addAction(tr("&Close Active Display"));
-    VARIABLE->setShortcuts(Qt::CTRL + Qt::Key_W);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDisplayClose()));
-
-    VARIABLE = MENU->addAction(tr("New &Trace Display"));
-    VARIABLE->setShortcuts(0);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotNewTraceDisplay()));
-
-
-    //Not used for the moment.
-    connect(viewMenu->popupMenu(),SIGNAL(aboutToShow()), this, SLOT(viewMenuAboutToShow()));
-
-
-
-    //Actions menu
-    VARIABLE = MENU->addAction(tr("Delete &Artifact Cluster(s)"),QIcon(":/icons/delete_artefact"));
-    VARIABLE->setShortcuts(Qt::SHIFT + Qt::Key_Delete);
-    connect(VARIABLE,SIGNAL(triggered()), clusterPalette,SLOT(moveClustersToArtefact()));
-
-    VARIABLE = MENU->addAction(tr("Delete &Noisy Cluster(s)"),QIcon(":/icons/delete_noise"));
-    VARIABLE->setShortcuts(Qt::Key_Delete);
-    connect(VARIABLE,SIGNAL(triggered()), clusterPalette,SLOT(moveClustersToNoise()));
-
-    VARIABLE = MENU->addAction(tr("&Group Clusters"),QIcon(":/icons/group"));
-    VARIABLE->setShortcuts(Qt::Key_G);
-    connect(VARIABLE,SIGNAL(triggered()), clusterPalette,SLOT(groupClusters()));
-
-    VARIABLE = MENU->addAction(tr("&Update Display"),QIcon(":/icons/update"));
-    VARIABLE->setShortcuts(0);
-    connect(VARIABLE,SIGNAL(triggered()), clusterPalette,SLOT(updateClusters()));
-
-    VARIABLE = MENU->addAction(tr("&Renumber Clusters"),0);
-    VARIABLE->setShortcuts(Qt::Key_R);
-    connect(VARIABLE,SIGNAL(triggered()), doc,SLOT(renumberClusters()));
-
-    new QAction(tr("&Update Error Matrix"),QIcon(":/icons/grouping_assistant_update"),Qt::Key_U,this, SLOT(slotUpdateErrorMatrix()),actionCollection(),
-                "update_errorMatrix");
-    VARIABLE = MENU->addAction(tr("Re&cluster"),0);
-    VARIABLE->setShortcuts(Qt::SHIFT  + Qt::Key_R);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotRecluster()));
-
-    VARIABLE = MENU->addAction(tr("&Abort Reclustering"),0);
-    VARIABLE->setShortcuts(0);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotStopRecluster()));
-
-
-    //Tools menu
-    VARIABLE = MENU->addAction(tr("Zoom"),QIcon(":/icons/zoom_tool"));
-    VARIABLE->setShortcuts(Qt::Key_Z);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotZoom()));
-
-    VARIABLE = MENU->addAction(tr("New Cluster"),QIcon(":/icons/new_cluster"));
-    VARIABLE->setShortcuts(Qt::Key_C);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotSingleNew()));
-
-    VARIABLE = MENU->addAction(tr("&Split Clusters"),QIcon(":/icons/new_clusters"));
-    VARIABLE->setShortcuts(Qt::Key_S);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotMultipleNew()));
-
-    VARIABLE = MENU->addAction(tr("Delete &Artifact Spikes"),QIcon(":/icons/delete_artefact_tool"));
-    VARIABLE->setShortcuts(Qt::Key_A);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDeleteArtefact()));
-
-    VARIABLE = MENU->addAction(tr("Delete &Noisy Spikes"),QIcon(":/icons/delete_noise_tool"));
-    VARIABLE->setShortcuts(Qt::Key_N);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDeleteNoise()));
-
-    VARIABLE = MENU->addAction(tr("Select Time"),QIcon(":/icons/time_tool"));
-    VARIABLE->setShortcuts(Qt::Key_W);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotSelectTime()));
-
     //Waveforms menu
     timeFrameMode = new KToggleAction(tr("&Time Frame"), Qt::Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
     overlayPresentation = new KToggleAction(tr("&Overlay"), Qt::Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
@@ -1734,30 +1717,6 @@ void KlustersApp::slotStatusMsg(const QString &text)
     statusBar()->showMessage(text);
 }
 
-void KlustersApp::viewMenuAboutToShow()
-{
-    /*  viewMenu->popupMenu()->clear();
-  viewMenu->insert(newClusterView);
-  viewMenu->insert(newWaveformView);
-  viewMenu->insert(newCrosscorrelationView);
-  viewMenu->insert(newOverView);  */
-
-    /*if ( pWorkspace->windowList().isEmpty() ){
-    windowNewWindow->setEnabled(false);
-  }
-  else{
-    windowNewWindow->setEnabled(true);
-  }
-  viewMenu->popupMenu()->insertSeparator();
-
-  QWidgetList windows = pWorkspace->windowList();
-  for ( int i = 0; i < int(windows.count()); ++i )
-  {
-    int id = viewMenu->popupMenu()->insertItem(QString("&%1 ").arg(i+1)+windows.at(i)->caption(), this, SLOT( viewMenuActivated( int ) ) );
-    viewMenu->popupMenu()->setItemParameter( id, i );
-    viewMenu->popupMenu()->setItemChecked( id, pWorkspace->activeWindow() == windows.at(i) );
-  }*/
-}
 
 void KlustersApp::viewMenuActivated( int id )
 {
