@@ -268,9 +268,21 @@ void KlustersApp::createMenus()
 
     //Waveforms menu
     QMenu *waveFormsMenu = menuBar()->addMenu(tr("&Waveforms"));
-    timeFrameMode = new KToggleAction(tr("&Time Frame"), Qt::Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
-    overlayPresentation = new KToggleAction(tr("&Overlay"), Qt::Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
-    meanPresentation = new KToggleAction(tr("&Mean and Standard Deviation"), Qt::Key_M,this, SLOT(slotMeanPresentation()),actionCollection(), "mean");
+    timeFrameMode = MENU->addAction(tr("&Time Frame"));
+    timeFrameMode->setShortcuts(Qt::Key_T);
+    timeFrameMode->setCheckable(true);
+    connect(timeFrameMode,SIGNAL(triggered()), this,SLOT(slotTimeFrameMode()));
+
+    overlayPresentation = MENU->addAction(tr("&Overlay"));
+    overlayPresentation->setShortcuts(Qt::Key_O);
+    overlayPresentation->setCheckable(true);
+    connect(overlayPresentation,SIGNAL(triggered()), this,SLOT(setOverLayPresentation()));
+
+    meanPresentation = MENU->addAction(tr("&Mean and Standard Deviation"));
+    meanPresentation->setShortcuts(Qt::Key_M);
+    meanPresentation->setCheckable(true);
+    connect(meanPresentation,SIGNAL(triggered()), this,SLOT(slotMeanPresentation()));
+
 
     mIncreaseAmplitude = waveFormsMenu->addAction(tr("&Increase Amplitude"));
     mIncreaseAmplitude->setShortcuts(Qt::Key_I);
@@ -286,11 +298,29 @@ void KlustersApp::createMenus()
 
     //Correlations menu
     QMenu *correlationsMenu = menuBar()->addMenu(tr("&Correlations"));
-    scaleByMax = new KRadioAction(tr("Scale by &Maximum"),Qt::SHIFT + Qt::Key_M,this,SLOT(slotScaleByMax()),actionCollection(), "scale_by_max");
+    scaleByMax = MENU->addAction(tr("Scale by &Maximum"));
+    grp = new QActionGroup(this);
+    grp->addAction(scaleByMax);
+    scaleByMax->setShortcuts(Qt::SHIFT + Qt::Key_M);
+    scaleByMax->setCheckable(true);
+    connect(scaleByMax,SIGNAL(triggered()), this,SLOT(slotScaleByMax()));
+
     scaleByMax->setExclusiveGroup("scale");
-    scaleByShouler = new KRadioAction(tr("Scale by &Asymptote"),Qt::SHIFT + Qt::Key_A,this,SLOT(slotScaleByShouler()),actionCollection(), "scale_by_shouler");
+    scaleByShouler = MENU->addAction(tr("Scale by &Asymptote"));
+    grp = new QActionGroup(this);
+    grp->addAction(scaleByShouler);
+    scaleByShouler->setShortcuts(Qt::SHIFT + Qt::Key_A);
+    scaleByShouler->setCheckable(true);
+    connect(scaleByShouler,SIGNAL(triggered()), this,SLOT(slotScaleByShouler()));
+
     scaleByShouler->setExclusiveGroup("scale");
-    noScale = new KRadioAction(tr("&Uniform Scale"),Qt::SHIFT + Qt::Key_U,this,SLOT(slotNoScale()),actionCollection(), "raw_data");
+    noScale = MENU->addAction(tr("&Uniform Scale"));
+    grp = new QActionGroup(this);
+    grp->addAction(noScale);
+    noScale->setShortcuts(Qt::SHIFT + Qt::Key_U);
+    noScale->setCheckable(true);
+    connect(noScale,SIGNAL(triggered()), this,SLOT(slotNoScale()));
+
     noScale->setExclusiveGroup("scale");
     //Initialize the presentation mode to scale by maximum.
     scaleByMax->setChecked(true);
@@ -302,7 +332,11 @@ void KlustersApp::createMenus()
     mDecreaseAmplitudeCorrelation->setShortcuts(Qt::SHIFT +  Qt::Key_D);
     connect(mDecreaseAmplitudeCorrelation,SIGNAL(triggered()), this,SLOT(slotDecreaseCorrelogramsAmplitude()));
 
-    shoulderLine = new KToggleAction(tr("Asymptote &Line"), Qt::Key_L,this, SLOT(slotShoulderLine()),actionCollection(), "shoulder_line");
+    shoulderLine = MENU->addAction(tr("Asymptote &Line"));
+    shoulderLine->setShortcuts(Qt::Key_L);
+    shoulderLine->setCheckable(true);
+    connect(shoulderLine,SIGNAL(triggered()), this,SLOT(slotShoulderLine()));
+
 
 
 
@@ -316,7 +350,11 @@ void KlustersApp::createMenus()
     mDecreaseChannelAmplitudes->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
     connect(mDecreaseChannelAmplitudes,SIGNAL(triggered()), this,SLOT(slotDecreaseAllChannelsAmplitude()));
 
-    showHideLabels = new KToggleAction(tr("Show &Labels"),0,Qt::CTRL + Qt::Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
+    showHideLabels = MENU->addAction(tr("Show &Labels"),0);
+    showHideLabels->setShortcuts(Qt::CTRL + Qt::Key_L);
+    showHideLabels->setCheckable(true);
+    connect(showHideLabels,SIGNAL(triggered()), this,SLOT(slotShowLabels()));
+
     showHideLabels->setChecked(false);
     mNextSpike = traceMenu->addAction(tr("&Next Spike"),QIcon(":/icons/forwardCluster"));
     mNextSpike->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
@@ -329,17 +367,39 @@ void KlustersApp::createMenus()
 
     //Settings menu
     QMenu *settingsMenu = menuBar()->addMenu(tr("Settings"));
-    viewActionBar = new KToggleAction(tr("Show Actions"),0,this, SLOT(slotViewActionBar()),actionCollection(), "show_actionBar");
+    viewActionBar = MENU->addAction(tr("Show Actions"));
+    viewActionBar->setCheckable(true);
+    connect(viewActionBar,SIGNAL(triggered()), this,SLOT(slotViewActionBar()));
+
     viewActionBar->setChecked(true);
-    viewToolBar = new KToggleAction(tr("Show Tools"),0,this, SLOT(slotViewToolBar()),actionCollection(), "show_toolBar");
+    viewToolBar = MENU->addAction(tr("Show Tools"));
+    viewToolBar->setCheckable(true);
+    connect(viewToolBar,SIGNAL(triggered()), this,SLOT(slotViewToolBar()));
+
     viewToolBar->setChecked(true);
-    viewParameterBar = new KToggleAction(tr("Show Parameters"),0,this, SLOT(slotViewParameterBar()),actionCollection(), "show_parameterBar");
+    viewParameterBar = MENU->addAction(tr("Show Parameters"));
+    viewParameterBar->setCheckable(true);
+    connect(viewParameterBar,SIGNAL(triggered()), this,SLOT(slotViewParameterBar()));
+
     viewParameterBar->setChecked(true);
-    KRadioAction* immediateSelection = new KRadioAction(tr("Immediate Update"),0,this,SLOT(slotImmediateSelection()),actionCollection(), "immediate_selection");
+    KRadioAction* immediateSelection = MENU->addAction(tr("Immediate Update"));
+    grp = new QActionGroup(this);
+    grp->addAction(KRadioAction* immediateSelection);
+    KRadioAction* immediateSelection->setCheckable(true);
+    connect(KRadioAction* immediateSelection,SIGNAL(triggered()), this,SLOT(slotImmediateSelection()));
+
     immediateSelection->setExclusiveGroup("selection");
-    KRadioAction* delaySelection = new KRadioAction(tr("Delayed Update"),0,this,SLOT(slotDelaySelection()),actionCollection(), "delay_selection");
+    KRadioAction* delaySelection = MENU->addAction(tr("Delayed Update"));
+    grp = new QActionGroup(this);
+    grp->addAction(KRadioAction* delaySelection);
+    KRadioAction* delaySelection->setCheckable(true);
+    connect(KRadioAction* delaySelection,SIGNAL(triggered()), this,SLOT(slotDelaySelection()));
+
     delaySelection->setExclusiveGroup("selection");
-    viewClusterInfo = new KToggleAction(tr("Show Cluster Info"),0,this, SLOT(slotViewClusterInfo()),actionCollection(), "show_clusterInfo");
+    viewClusterInfo = MENU->addAction(tr("Show Cluster Info"));
+    viewClusterInfo->setCheckable(true);
+    connect(viewClusterInfo,SIGNAL(triggered()), this,SLOT(slotViewClusterInfo()));
+
     viewClusterInfo->setChecked(false);
 
     //Initialize the update mode
