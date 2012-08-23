@@ -541,6 +541,19 @@ private:
     QAction *mDeleteArtifactSpikes;
     QAction *mDeleteNoisySpikes;
     QAction *mSelectTime;
+    QAction *mSelectAllAction;
+    QAction *mSelectAllExceptAction;
+    QAction *mSaveAction;
+    QAction *mSaveAsAction;
+    QAction *mCloseAction;
+    QAction *mImportFile;
+    QAction *mIncreaseAmplitude;
+    QAction *mDecreaseAmplitude;
+    QAction *mDecreaseAmplitudeCorrelation;
+    QAction *mIncreaseChannelAmplitudes;
+    QAction *mDecreaseChannelAmplitudes;
+    QAction *mNextSpike;
+    QAction *mPreviousSpike;
 
     /**Spine box enabling to choose the absciss dimension*/
     QSpinBox* dimensionX;

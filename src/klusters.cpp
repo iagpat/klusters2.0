@@ -134,43 +134,42 @@ void KlustersApp::createMenus()
 
     //KDAB_TODO fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
 
-    QAction *saveAction = fileMenu->addAction(tr("Save..."));
+    mSaveAction = fileMenu->addAction(tr("Save..."));
     saveAction->setShortcuts(QKeySequence::Save);
     connect(openAction, SIGNAL(triggered()), this, SLOT(slotFileSave()));
 
-    QAction *saveAsAction = fileMenu->addAction(tr("&Save As..."));
-    saveAsAction->setShortcuts(QKeySequence::SaveAs);
-    connect(openAsAction, SIGNAL(triggered()), this, SLOT(slotFileSaveAs()));
+    mSaveAsAction = fileMenu->addAction(tr("&Save As..."));
+    mSaveAsAction->setShortcuts(QKeySequence::SaveAs);
+    connect(mSaveAsAction, SIGNAL(triggered()), this, SLOT(slotFileSaveAs()));
 
-    QAction *closeAction = fileMenu->addAction(tr("Close"));
-    closeAction->setShortcuts(QKeySequence::Close);
-    connect(closeAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
+    mCloseAction = fileMenu->addAction(tr("Close"));
+    mCloseAction->setShortcuts(QKeySequence::Close);
+    connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
 
 #if 0
     KStdAction::print(this, SLOT(slotFilePrint()), actionCollection());
     KStdAction::quit(this, SLOT(close()), actionCollection());
     viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
     viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-    VARIABLE = MENU->addAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")));
+
+    VARIABLE = fileMenu->addAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")));
     VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
     connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
-
-    VARIABLE = MENU->addAction(tr("&Import File"));
-    VARIABLE->setShortcuts(Qt::CTRL + Qt::Key_I);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotFileImport()));
-
-
 #endif
+    mImportFile = fileMenu->addAction(tr("&Import File"));
+    mImportFile->setShortcuts(Qt::CTRL + Qt::Key_I);
+    connect(v,SIGNAL(triggered()), this,SLOT(slotFileImport()));
+
+
     //Edit Menu
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
-    QAction *selectAllAction = editMenu->addAction(tr("Select &All"));
-    selectAllAction->setShortcuts(QKeySequence::SelectAll);
-    connect(selectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAll()));
+    mSelectAllAction = editMenu->addAction(tr("Select &All"));
+    mSelectAllAction->setShortcuts(QKeySequence::SelectAll);
+    connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAll()));
 
-
-    QAction *selectAllExceptAction = editMenu->addAction(tr("Select &All"));
-    selectAllExceptAction->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
-    connect(selectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
+    mSelectAllExceptAction = editMenu->addAction(tr("Select &All"));
+    mSelectAllExceptAction->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
+    connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
 
     KStdAction::undo(this, SLOT(slotUndo()), actionCollection());
     KStdAction::redo(this, SLOT(slotRedo()), actionCollection());
@@ -260,27 +259,26 @@ void KlustersApp::createMenus()
     mSelectTime->setShortcuts(Qt::Key_W);
     connect(mSelectTime,SIGNAL(triggered()), this,SLOT(slotSelectTime()));
 
-}
-
-void KlustersApp::initActions()
-{
     //Waveforms menu
+    QMenu *waveFormsMenu = menuBar()->addMenu(tr("&Waveforms"));
     timeFrameMode = new KToggleAction(tr("&Time Frame"), Qt::Key_T,this, SLOT(slotTimeFrameMode()),actionCollection(), "time_frame");
     overlayPresentation = new KToggleAction(tr("&Overlay"), Qt::Key_O,this, SLOT(setOverLayPresentation()),actionCollection(), "overlay");
     meanPresentation = new KToggleAction(tr("&Mean and Standard Deviation"), Qt::Key_M,this, SLOT(slotMeanPresentation()),actionCollection(), "mean");
-    VARIABLE = MENU->addAction(tr("&Increase Amplitude"));
-    VARIABLE->setShortcuts(Qt::Key_I);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotIncreaseAmplitude()));
 
-    VARIABLE = MENU->addAction(tr("&Decrease Amplitude"));
-    VARIABLE->setShortcuts(Qt::Key_D);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDecreaseAmplitude()));
+    mIncreaseAmplitude = waveFormsMenu->addAction(tr("&Increase Amplitude"));
+    mIncreaseAmplitude->setShortcuts(Qt::Key_I);
+    connect(mIncreaseAmplitude,SIGNAL(triggered()), this,SLOT(slotIncreaseAmplitude()));
+
+    mDecreaseAmplitude = waveFormsMenu->addAction(tr("&Decrease Amplitude"));
+    mDecreaseAmplitude->setShortcuts(Qt::Key_D);
+    connect(mDecreaseAmplitude,SIGNAL(triggered()), this,SLOT(slotDecreaseAmplitude()));
 
     timeFrameMode->setChecked(false);
     overlayPresentation->setChecked(false);
     meanPresentation->setChecked(false);
 
     //Correlations menu
+    QMenu *correlationsMenu = menuBar()->addMenu(tr("&Correlations"));
     scaleByMax = new KRadioAction(tr("Scale by &Maximum"),Qt::SHIFT + Qt::Key_M,this,SLOT(slotScaleByMax()),actionCollection(), "scale_by_max");
     scaleByMax->setExclusiveGroup("scale");
     scaleByShouler = new KRadioAction(tr("Scale by &Asymptote"),Qt::SHIFT + Qt::Key_A,this,SLOT(slotScaleByShouler()),actionCollection(), "scale_by_shouler");
@@ -289,37 +287,41 @@ void KlustersApp::initActions()
     noScale->setExclusiveGroup("scale");
     //Initialize the presentation mode to scale by maximum.
     scaleByMax->setChecked(true);
-    VARIABLE = MENU->addAction(tr("&Increase Amplitude"));
+    VARIABLE = correlationsMenu->addAction(tr("&Increase Amplitude"));
     VARIABLE->setShortcuts(Qt::SHIFT + Qt::Key_I);
     connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotIncreaseCorrelogramsAmplitude()));
 
-    VARIABLE = MENU->addAction(tr("&Decrease Amplitude"));
-    VARIABLE->setShortcuts(Qt::SHIFT +  Qt::Key_D);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDecreaseCorrelogramsAmplitude()));
+    mDecreaseAmplitudeCorrelation = correlationsMenu->addAction(tr("&Decrease Amplitude"));
+    mDecreaseAmplitudeCorrelation->setShortcuts(Qt::SHIFT +  Qt::Key_D);
+    connect(mDecreaseAmplitudeCorrelation,SIGNAL(triggered()), this,SLOT(slotDecreaseCorrelogramsAmplitude()));
 
     shoulderLine = new KToggleAction(tr("Asymptote &Line"), Qt::Key_L,this, SLOT(slotShoulderLine()),actionCollection(), "shoulder_line");
 
-    //Traces menu
-    VARIABLE = MENU->addAction(tr("&Increase Channel Amplitudes"));
-    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_I);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotIncreaseAllChannelsAmplitude()));
 
-    VARIABLE = MENU->addAction(tr("&Decrease Channel Amplitudes"));
-    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotDecreaseAllChannelsAmplitude()));
+
+    //Traces menu
+    QMenu *traceMenu = menuBar()->addMenu(tr("T&races"));
+    mIncreaseChannelAmplitudes = traceMenu->addAction(tr("&Increase Channel Amplitudes"));
+    mIncreaseChannelAmplitudes->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_I);
+    connect(mIncreaseChannelAmplitudes,SIGNAL(triggered()), this,SLOT(slotIncreaseAllChannelsAmplitude()));
+
+    mDecreaseChannelAmplitudes = traceMenu->addAction(tr("&Decrease Channel Amplitudes"));
+    mDecreaseChannelAmplitudes->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
+    connect(mDecreaseChannelAmplitudes,SIGNAL(triggered()), this,SLOT(slotDecreaseAllChannelsAmplitude()));
 
     showHideLabels = new KToggleAction(tr("Show &Labels"),0,Qt::CTRL + Qt::Key_L, this, SLOT(slotShowLabels()), actionCollection(),"show_labels");
     showHideLabels->setChecked(false);
-    VARIABLE = MENU->addAction(tr("&Next Spike"),QIcon(":/icons/forwardCluster"));
-    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotShowNextCluster()));
+    mNextSpike = traceMenu->addAction(tr("&Next Spike"),QIcon(":/icons/forwardCluster"));
+    mNextSpike->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
+    connect(mNextSpike,SIGNAL(triggered()), this,SLOT(slotShowNextCluster()));
 
-    VARIABLE = MENU->addAction(tr("&Previous Spike"),QIcon(":/icons/backCluster"));
-    VARIABLE->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_B);
-    connect(VARIABLE,SIGNAL(triggered()), this,SLOT(slotShowPreviousCluster()));
+    mPreviousSpike = traceMenu->addAction(tr("&Previous Spike"),QIcon(":/icons/backCluster"));
+    mPreviousSpike->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_B);
+    connect(mPreviousSpike,SIGNAL(triggered()), this,SLOT(slotShowPreviousCluster()));
 
 
     //Settings menu
+    QMenu *settingsMenu = menuBar()->addMenu(tr("Settings"));
     viewActionBar = new KToggleAction(tr("Show Actions"),0,this, SLOT(slotViewActionBar()),actionCollection(), "show_actionBar");
     viewActionBar->setChecked(true);
     viewToolBar = new KToggleAction(tr("Show Tools"),0,this, SLOT(slotViewToolBar()),actionCollection(), "show_toolBar");
@@ -357,6 +359,12 @@ void KlustersApp::initActions()
     connect(doc, SIGNAL(updateUndoNb(int)), this, SLOT(slotUpdateUndoNb(int)));
     connect(doc, SIGNAL(updateRedoNb(int)), this, SLOT(slotUpdateRedoNb(int)));
     connect(doc, SIGNAL(spikesDeleted()), this, SLOT(slotSpikesDeleted()));
+
+
+}
+
+void KlustersApp::initActions()
+{
 
 }
 
