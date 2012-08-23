@@ -355,7 +355,7 @@ void KlustersApp::createMenus()
     mDecreaseAmplitudeCorrelation->setShortcut(Qt::SHIFT +  Qt::Key_D);
     connect(mDecreaseAmplitudeCorrelation,SIGNAL(triggered()), this,SLOT(slotDecreaseCorrelogramsAmplitude()));
 
-    shoulderLine = MENU->addAction(tr("Asymptote &Line"));
+    shoulderLine = correlationsMenu->addAction(tr("Asymptote &Line"));
     shoulderLine->setShortcut(Qt::Key_L);
     shoulderLine->setCheckable(true);
     connect(shoulderLine,SIGNAL(triggered()), this,SLOT(slotShoulderLine()));
@@ -373,7 +373,7 @@ void KlustersApp::createMenus()
     mDecreaseChannelAmplitudes->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
     connect(mDecreaseChannelAmplitudes,SIGNAL(triggered()), this,SLOT(slotDecreaseAllChannelsAmplitude()));
 
-    showHideLabels = MENU->addAction(tr("Show &Labels"),0);
+    showHideLabels = traceMenu->addAction(tr("Show &Labels"));
     showHideLabels->setShortcut(Qt::CTRL + Qt::Key_L);
     showHideLabels->setCheckable(true);
     connect(showHideLabels,SIGNAL(triggered()), this,SLOT(slotShowLabels()));
@@ -905,7 +905,9 @@ void KlustersApp::openDocumentFile(const QString& url)
             QString title = "File not found: ";
             title.append(filePath);
             int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists, do you want to remove it from the list?"), tr(title.toLatin1()));
-            if(answer == QMessageBox::Yes) fileOpenRecent->removeURL(url);
+            if(answer == QMessageBox::Yes) {
+                //KDAB_PENDING fileOpenRecent->removeURL(url);
+            }
             else  {
                 //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
             }
@@ -917,7 +919,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     //Do not handle remote files
     else{
         KMessageBox::sorry(this,tr("Sorry, Klusters does not handle remote files."),tr("Remote file handling"));
-        fileOpenRecent->removeURL(url);
+        //KDAB_PENDING fileOpenRecent->removeURL(url);
         filePath = "";
         slotStatusMsg(tr("Ready."));
         return;
