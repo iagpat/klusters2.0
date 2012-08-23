@@ -158,6 +158,11 @@ void KlustersApp::createMenus()
     mQuitAction->setShortcuts(QKeySequence::Print);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
 
+    mRenumberAndSave = fileMenu->addAction(tr("Re&number and Save"),QIcon(QPixmap("filesave.png")));
+    mRenumberAndSave->setShortcuts(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    connect(mRenumberAndSave,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
+
+
 #if 0
     viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
     viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
@@ -194,7 +199,7 @@ void KlustersApp::createMenus()
 
     //Displays menu
     QMenu *displayMenu = menuBar()->addMenu(tr("&Displays"));
-    viewMenu = new QActionMenu(tr("&Window"), actionCollection(), "window_menu");
+    //viewMenu = new QActionMenu(tr("&Window"), actionCollection(), "window_menu");
     newClusterDisplay = displayMenu->addAction(tr("New C&luster Display"));
     connect(newClusterDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewClusterDisplay()));
 

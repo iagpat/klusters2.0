@@ -505,7 +505,7 @@ private:
     QAction* fileOpenRecent;
     QAction* viewMainToolBar;
     QAction* viewStatusBar;
-    QActionMenu* viewMenu;
+    //QActionMenu* viewMenu;
     QAction* newClusterDisplay;
     QAction* newWaveformDisplay;
     QAction* newCrosscorrelationDisplay;
@@ -562,6 +562,7 @@ private:
     QAction *mQuitAction;
     QAction *mOpenAction;
     QAction *mRedo;
+    QAction *mRenumberAndSave;
 
     /**Spine box enabling to choose the absciss dimension*/
     QSpinBox* dimensionX;
@@ -619,10 +620,10 @@ private:
             QIntValidator(minimum,maximum,parent,name){
             klusters = dynamic_cast<KlustersApp*>(parent);
         };
-        inline ~Validator(){};
+        inline ~Validator(){}
         inline void fixup (QString& input) const{
-            input = QString("%1").arg(klusters->timeWindow);
-        };
+            input = QString::fromLatin1("%1").arg(klusters->timeWindow);
+        }
     private:
         KlustersApp* klusters;
     };
@@ -690,16 +691,16 @@ private:
     public:
         inline BinSizeValidator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
             klusters = dynamic_cast<KlustersApp*>(parent);
-        };
+        }
         inline BinSizeValidator(int minimum,int maximum,QObject* parent, const char* name = 0):
             QIntValidator(minimum,maximum,parent,name){
             klusters = dynamic_cast<KlustersApp*>(parent);
-        };
-        inline ~BinSizeValidator(){};
+        }
+        inline ~BinSizeValidator(){}
         inline void fixup (QString& input) const{
             //If the state determine in validate was invalid, fix by setting back the last correct value.
             input = QString("%1").arg(klusters->binSize);
-        };
+        }
         inline QValidator::State validate(QString &input,int& pos) const{
             QValidator::State state = QIntValidator::validate(input,pos);
             //Let the QIntValidator validates the value as to know if it is a correct integer (within the range).
@@ -720,7 +721,7 @@ private:
                 }
                 return state;
             }
-        };
+        }
     private:
         KlustersApp* klusters;
     };
