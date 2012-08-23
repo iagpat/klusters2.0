@@ -715,7 +715,7 @@ void KlustersApp::initDisplay(){
     //discard any settings concerning the positions of the channels.
     if(configuration().getNbChannels() != 0 && configuration().getNbChannels() != doc->nbOfchannels()) channelPositions.clear();
 
-    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
+    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::Qt::WDestructiveClose,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
                                           false,false,DEFAULT_BIN_SIZE.toInt(),INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
@@ -843,11 +843,11 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
 
         KlustersView* view;
 
-        if(!isProcessWidget) view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,WDestructiveClose,statusBar(),
+        if(!isProcessWidget) view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
                                                      displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                                      nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
-        else view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,WDestructiveClose,statusBar(),
+        else view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
                                      displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                      nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
 
