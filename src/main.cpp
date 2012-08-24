@@ -20,12 +20,16 @@
 #include <qdir.h>
 #include <qstring.h>
 #include <QApplication>
+#include <QAction>
 
 //Application include files
 #include "klusters.h"
 
 #include "timer.h"
 #include "config-klusters.h"
+
+#if KDAB_PENDING
+
 static const char *description =
 	I18N_NOOP("Klusters - Manual clustering of neuronal action potential");
 // INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
@@ -39,7 +43,7 @@ static KCmdLineOptions options[] =
 
 int nbUndo;
 QString version = VERSION;
-
+#endif
 int main(int argc, char* argv[])
 { 
     QApplication::setOrganizationName("sourceforge");

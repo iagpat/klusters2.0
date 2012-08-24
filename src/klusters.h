@@ -37,7 +37,7 @@
 // include files for KDE
 #include <QDockWidget>
 #include <QMainWindow>
-
+#include <QAction>
 
 
 //include files application specific
@@ -51,7 +51,7 @@ class SaveThread;
 class PrefDialog;
 class ProcessWidget;
 class QProcess;
-class QAction;
+
 
 /**
   * The Klusters main window and central class. It sets up the main
