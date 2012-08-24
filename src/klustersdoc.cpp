@@ -30,7 +30,8 @@
 #include <QEvent>
 #include <QMessageBox>
 #include <QDebug>
-
+#include <QAction>
+#include <QUrl>
 
 // application specific includes
 #include "klusters.h"
@@ -218,7 +219,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     modified = false;
 
     //Store the baseName for future use
-    QString fileName = url.fileName();
+    QString fileName = QUrl(url).fileName();
     QStringList fileParts = QStringList::split(".", fileName);
     if(fileParts.count() < 3) return INCORRECT_FILE;
     baseName = fileParts[0];
@@ -228,23 +229,23 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     //Create the files url to open (baseName.spk.x,baseName.clu.x,baseName.fet.x,baseName.par.x,baseName.par and baseName.xml)
     //and store the url (corresponding to the cluster file). If the xml format parameter file does not exist, the parameter files
     // baseName.par.x,baseName.par will be used otherwise the baseName.xml will be used.
-    QString spkFileUrl(url);
+    QUrl spkFileUrl(url);
     spkFileUrl.setFileName(baseName +".spk."+ electrodeGroupID);
-    QString cluFileUrl(url);
+    QUrl cluFileUrl(url);
     cluFileUrl.setFileName(baseName +".clu."+ electrodeGroupID);
     docUrl = cluFileUrl;
-    cluFileSaveUrl = QString(cluFileUrl);
+    cluFileSaveUrl = QUrl(cluFileUrl);
     cluFileSaveUrl.setFileName("." + cluFileUrl.fileName() +".autoSave");
-    QString fetFileUrl(url);
+    QUrl fetFileUrl(url);
     fetFileUrl.setFileName(baseName +".fet."+ electrodeGroupID);
 
     //Parameter files
-    QString xmlParFileUrl(url);
+    QUrl xmlParFileUrl(url);
     xmlParFileUrl.setFileName(baseName +".xml");
     xmlParameterFile = xmlParFileUrl;
-    QString parXFileUrl(url);
+    QUrl parXFileUrl(url);
     parXFileUrl.setFileName(baseName +".par."+ electrodeGroupID);
-    QString parFileUrl(url);
+    QUrl parFileUrl(url);
     parFileUrl.setFileName(baseName +".par");
 
     //Download the spike and fet files in temp files if necessary
@@ -269,8 +270,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     fseeko(spikeFile,0,SEEK_END);
     long spkFileLength = ftell(spikeFile);
     fclose(spikeFile);
-    //Remove the temp file if any
-    KIO::NetAccess::removeTempFile(tmpSpikeFile);
 
     bool isXmlParExist = false;
     QString tmpXmlParFile;
@@ -326,7 +325,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
             {
             case QMessageBox::Yes:
                 QDir dir(crashFileInfo.dir());
-                QString cluName = cluFileInfo.fileName();
+                QUrl cluName = cluFileInfo.fileName();
                 bool renameStatus;
                 if(cluFileInfo.exists()){
                     renameStatus = dir.rename(cluName,cluFileInfo.fileName()+ "." + cluFileInfo.lastModified().toString("MM.dd.yyyy.hh.mm"));
@@ -1885,14 +1884,10 @@ int KlustersDoc::integrateReclusteredClusters(Q3ValueList<int>& clustersToReclus
 
     QString cluFileUrl(cluFileName);
     QString tmpCluFile;
-    if(KIO::NetAccess::exists(cluFileUrl))
-        if(!KIO::NetAccess::download(cluFileUrl,tmpCluFile)){
-            if(!QFile::remove(reclusteringFetFileName))
-                QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary feature file used by the reclustering program.") );
-            if(!QFile::remove(cluFileName))
-                QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary cluster file used by the reclustering program.") );
-            return DOWNLOAD_ERROR;
-        }
+    if(!QFile::exists(cluFileUrl)) {
+        QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary cluster file used by the reclustering program.") );
+        return DOWNLOAD_ERROR;
+    }
 
     FILE* cluFile = fopen(tmpCluFile.toLatin1(),"r");
     if(cluFile == NULL){
@@ -2016,7 +2011,7 @@ void KlustersDoc::reclusteringUpdate(Q3ValueList<int>& clustersToRecluster,Q3Val
 }
 
 void KlustersDoc::createProviders(){
-    QString datUrl(docUrl);
+    QUrl datUrl(docUrl);
     datUrl.setFileName(baseName +".dat");
 
     int resolution = clusteringData->getResolution();
