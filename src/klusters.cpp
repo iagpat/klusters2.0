@@ -1066,7 +1066,9 @@ void KlustersApp::openDocumentFile(const QString& url)
 
         //A traceView is possible only if the variables it needs are available (provided in the new parameter file) and
         //the .dat file exists.
-        if(doc->areTraceDataAvailable() && doc->isTraceViewVariablesAvailable()) slotStateChanged("traceDisplayState");
+        if(doc->areTraceDataAvailable() && doc->isTraceViewVariablesAvailable()) {
+            slotStateChanged("traceDisplayState");
+        }
 
         QApplication::restoreOverrideCursor();
     }
@@ -1635,8 +1637,13 @@ void KlustersApp::slotUndo()
 
     //Update the browsing possibility of the traceView
     KlustersView* view = activeView();
-    if(view->containsTraceView() && view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
-    else  slotStateChanged("noTraceViewBrowsingState");
+    if(view->containsTraceView() && view->clusters().size() != 0) {
+        slotStateChanged("traceViewBrowsingState");
+    }
+    else
+    {
+        slotStateChanged("noTraceViewBrowsingState");
+    }
 
     slotStatusMsg(tr("Ready."));
 }
@@ -1650,21 +1657,32 @@ void KlustersApp::slotRedo()
 
     //Update the browsing possibility of the traceView
     KlustersView* view = activeView();
-    if(view->containsTraceView() && view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
-    else  slotStateChanged("noTraceViewBrowsingState");
+    if(view->containsTraceView() && view->clusters().size() != 0)
+    {
+        slotStateChanged("traceViewBrowsingState");
+    }
+    else  {
+        slotStateChanged("noTraceViewBrowsingState");
+    }
 
     slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotUpdateUndoNb(int undoNb){
     currentNbUndo = undoNb;
-    if(currentNbUndo > 0) slotStateChanged("undoState");
-    else slotStateChanged("emptyUndoState");
+    if(currentNbUndo > 0) {
+        slotStateChanged("undoState");
+    }
+    else {
+        slotStateChanged("emptyUndoState");
+    }
 }
 
 void KlustersApp::slotUpdateRedoNb(int redoNb){
     currentNbRedo = redoNb;
-    if(currentNbRedo == 0) slotStateChanged("emptyRedoState");
+    if(currentNbRedo == 0) {
+        slotStateChanged("emptyRedoState");
+    }
 }
 
 void KlustersApp::slotViewMainToolBar()
@@ -1931,8 +1949,13 @@ void KlustersApp::slotUpdateShownClusters(Q3ValueList<int> selectedClusters){
     if(!doesActiveDisplayContainProcessWidget()){
 
         //Update the browsing possibility of the traceView
-        if(activeView()->containsTraceView() && selectedClusters.size() != 0) slotStateChanged("traceViewBrowsingState");
-        else  slotStateChanged("noTraceViewBrowsingState");
+        if(activeView()->containsTraceView() && selectedClusters.size() != 0) {
+            slotStateChanged("traceViewBrowsingState");
+        }
+        else{
+
+            slotStateChanged("noTraceViewBrowsingState");
+        }
 
         KlustersView* view = activeView();
         doc->shownClustersUpdate(selectedClusters,*view);
@@ -1955,8 +1978,13 @@ void KlustersApp::slotMoveClustersToNoise(Q3ValueList<int> selectedClusters){
     doc->deleteClusters(selectedClusters,*view,1);
 
     //Update the browsing possibility of the traceView
-    if(view->containsTraceView() && view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
-    else  slotStateChanged("noTraceViewBrowsingState");
+    if(view->containsTraceView() && view->clusters().size() != 0) {
+        slotStateChanged("traceViewBrowsingState");
+    }
+    else{
+
+        slotStateChanged("noTraceViewBrowsingState");
+    }
 
     QApplication::restoreOverrideCursor();
     slotStatusMsg(tr("Ready."));
@@ -1969,8 +1997,12 @@ void KlustersApp::slotMoveClustersToArtefact(Q3ValueList<int> selectedClusters){
     doc->deleteClusters(selectedClusters,*view,0);
 
     //Update the browsing possibility of the traceView
-    if(view->containsTraceView() && view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
-    else  slotStateChanged("noTraceViewBrowsingState");
+    if(view->containsTraceView() && view->clusters().size() != 0) {
+        slotStateChanged("traceViewBrowsingState");
+    }
+    else {
+        slotStateChanged("noTraceViewBrowsingState");
+    }
 
     QApplication::restoreOverrideCursor();
     slotStatusMsg(tr("Ready."));
@@ -2000,7 +2032,9 @@ void KlustersApp::slotTabChange(QWidget* widget){
         isInit = true; //prevent the spine boxes or the lineedit and the editline to trigger during initialisation
 
         //The select time tool is useful only if both a clusterView and a traceView are present
-        if(activeView->containsClusterView() && activeView->containsTraceView()) slotStateChanged("traceViewClusterViewState");
+        if(activeView->containsClusterView() && activeView->containsTraceView()) {
+            slotStateChanged("traceViewClusterViewState");
+        }
 
         if(activeView->containsClusterView()){
             //Update the dimension spine boxes
@@ -2100,9 +2134,13 @@ void KlustersApp::slotTabChange(QWidget* widget){
             binSizeLabel->hide();
         }
 
-        if(activeView->containsErrorMatrixView())
+        if(activeView->containsErrorMatrixView()){
             slotStateChanged("errorMatrixViewState");
-        else slotStateChanged("noErrorMatrixViewState");
+        }
+        else{
+
+            slotStateChanged("noErrorMatrixViewState");
+        }
 
         if(activeView->containsTraceView()){
             showHideLabels->setChecked(activeView->getLabelStatus());
@@ -2110,10 +2148,17 @@ void KlustersApp::slotTabChange(QWidget* widget){
             slotStateChanged("traceViewState");
 
             //Update the browsing possibility of the traceView
-            if(activeView->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
-            else  slotStateChanged("noTraceViewBrowsingState");
+            if(activeView->clusters().size() != 0) {
+                slotStateChanged("traceViewBrowsingState");
+            }
+            else{
+                slotStateChanged("noTraceViewBrowsingState");
+            }
         }
-        else slotStateChanged("noTraceViewState");
+        else{
+
+            slotStateChanged("noTraceViewState");
+        }
 
         isInit = false; //now a change in a spine box  or the lineedit
         //will trigger an update of the display
@@ -2127,7 +2172,9 @@ void KlustersApp::slotTabChange(QWidget* widget){
             slotStateChanged("noReclusterState");
             updateUndoRedoDisplay();
         }
-        else slotStateChanged("reclusterState");
+        else{
+            slotStateChanged("reclusterState");
+        }
     }
     else{// a ProcessWidget
         dimensionX->hide();
@@ -2516,7 +2563,10 @@ void KlustersApp::slotProcessExited(QProcess* process){
         processKilled = false;
         slotStateChanged("noReclusterState");
         if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
-        else slotStateChanged("reclusterViewState");
+        else{
+
+            slotStateChanged("reclusterViewState");
+        }
         return;
     }
 
@@ -2533,7 +2583,10 @@ void KlustersApp::slotProcessExited(QProcess* process){
         processKilled = false;
         slotStateChanged("noReclusterState");
         if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
-        else slotStateChanged("reclusterViewState");
+        else{
+
+            slotStateChanged("reclusterViewState");
+        }
         return;
     case KlustersDoc::OPEN_ERROR:
         QApplication::restoreOverrideCursor();
@@ -2543,7 +2596,10 @@ void KlustersApp::slotProcessExited(QProcess* process){
         processKilled = false;
         slotStateChanged("noReclusterState");
         if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
-        else slotStateChanged("reclusterViewState");
+        else{
+
+            slotStateChanged("reclusterViewState");
+        }
         return;
     case KlustersDoc::INCORRECT_CONTENT:
         QApplication::restoreOverrideCursor();
@@ -2553,7 +2609,10 @@ void KlustersApp::slotProcessExited(QProcess* process){
         processKilled = false;
         slotStateChanged("noReclusterState");
         if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
-        else slotStateChanged("reclusterViewState");
+        else{
+
+            slotStateChanged("reclusterViewState");
+        }
         return;
     case KlustersDoc::OK:
         break;
@@ -2586,7 +2645,10 @@ void KlustersApp::slotProcessExited(QProcess* process){
     processKilled = false;
     slotStateChanged("noReclusterState");
     if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
-    else slotStateChanged("reclusterViewState");
+    else{
+
+        slotStateChanged("reclusterViewState");
+    }
     QApplication::restoreOverrideCursor();
 }
 
@@ -2600,13 +2662,23 @@ void KlustersApp::slotOutputTreatmentOver(){
     processOutputsFinished = true;
     slotStateChanged("noRclusterState");
     if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
-    else slotStateChanged("reclusterViewState");
+    else{
+
+        slotStateChanged("reclusterViewState");
+    }
 }
 
 void KlustersApp::updateUndoRedoDisplay(){
-    if(currentNbUndo > 0) slotStateChanged("undoState");
-    else slotStateChanged("emptyUndoState");
-    if(currentNbRedo == 0) slotStateChanged("emptyRedoState");
+    if(currentNbUndo > 0) {
+        slotStateChanged("undoState");
+    }
+    else{
+
+        slotStateChanged("emptyUndoState");
+    }
+    if(currentNbRedo == 0) {
+        slotStateChanged("emptyRedoState");
+    }
 }
 
 void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDockWidget* docWidget){
@@ -2667,7 +2739,9 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDock
             slotStateChanged("traceViewState");
             showHideLabels->setChecked(view->getLabelStatus());
             //Update the browsing possibility of the traceView
-            if(view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
+            if(view->clusters().size() != 0) {
+                slotStateChanged("traceViewBrowsingState");
+            }
             break;
         }
 
@@ -2675,7 +2749,9 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDock
     //will trigger an update of the view contains in the acative display.
 
     //The select time tool is useful only if both a clusterView and a traceView are present
-    if(view->containsClusterView() && view->containsTraceView()) slotStateChanged("traceViewClusterViewState");
+    if(view->containsClusterView() && view->containsTraceView()){
+        slotStateChanged("traceViewClusterViewState");
+    }
 }
 
 void KlustersApp::widgetRemovedFromDisplay(KlustersView::DisplayType displayType){
@@ -2800,8 +2876,13 @@ void KlustersApp::slotShowPreviousCluster(){
 void KlustersApp::slotSpikesDeleted(){
     //Update the browsing possibility of the traceView
     KlustersView* view = activeView();
-    if(view->containsTraceView() && view->clusters().size() != 0) slotStateChanged("traceViewBrowsingState");
-    else  slotStateChanged("noTraceViewBrowsingState");
+    if(view->containsTraceView() && view->clusters().size() != 0) {
+        slotStateChanged("traceViewBrowsingState");
+    }
+    else{
+
+        slotStateChanged("noTraceViewBrowsingState");
+    }
 }
 
 #include "klusters.moc"

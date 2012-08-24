@@ -21,20 +21,21 @@ set(klusters_SRCS array.cpp
 	eventsprovider.cpp 
 	groupingassistant.cpp
         itemcolors.cpp 
-	#klusters.cpp 
-	#klustersdoc.cpp 
-	#klustersview.cpp 
+	klusters.cpp 
+	klustersdoc.cpp 
+
+	klustersview.cpp 
 	klustersxmlreader.cpp
 	main.cpp 
 	minmaxthread.cpp 
 	pair.cpp 
 	parameterxmlmodifier.cpp 
 	prefclusterview.cpp
-	#prefdialog.cpp 
+	prefdialog.cpp 
 	prefgeneral.cpp
 	prefwaveformview.cpp 
 	processlinemaker.cpp 
-	#processwidget.cpp
+	processwidget.cpp
 	savethread.cpp 
 	sortabletable.cpp 
 	tags.cpp 
