@@ -25,6 +25,7 @@
 #include <QEvent>
 #include <QCloseEvent>
 #include <QAction>
+#include <QMenu>
 using namespace std;
 
 // include files for Qt
@@ -549,11 +550,11 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
    QMenu menu(this);
    menu.setTitle(tr("Add a View"));
 
-   QAction* clusterView = menu.insertItem(tr("Add a ClusterView"));
-   QAction* waveformView = menu.insertItem(tr("Add a WaveformView"));
-   QAction* correlationView = menu.insertItem(tr("Add a CorrelationView"));
-   QAction* errorMatrixView = menu.insertItem(tr("Add an ErrorMatrixView"));
-   QAction* traceView = menu.insertItem(tr("Add a TraceView"));
+   QAction* clusterView = menu.addAction(tr("Add a ClusterView"));
+   QAction* waveformView = menu.addAction(tr("Add a WaveformView"));
+   QAction* correlationView = menu.addAction(tr("Add a CorrelationView"));
+   QAction* errorMatrixView = menu.addAction(tr("Add an ErrorMatrixView"));
+   QAction* traceView = menu.addAction(tr("Add a TraceView"));
 
    //A traceView is possible only if the variables it needs are available (provided in the new parameter file) and
    //the .dat file exists.

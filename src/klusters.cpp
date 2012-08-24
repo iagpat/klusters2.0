@@ -927,11 +927,11 @@ void KlustersApp::openDocumentFile(const QString& url)
 
     //Check if the file exists
     if(!file.exists()){
-        QMessageBox::error (this,tr("The selected file does not exist."), tr("Error!"));
+        QMessageBox::critical (this, tr("Error!"),tr("The selected file does not exist."));
         return;
-        slotStatusMsg(tr("Ready."));
-    }
 
+    }
+ slotStatusMsg(tr("Ready."));
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
     
     //If no document is open already open the document asked.
@@ -1692,11 +1692,11 @@ void KlustersApp::slotViewMainToolBar()
     // turn Toolbar on or off
     if(!viewMainToolBar->isChecked())
     {
-        toolBar("mainToolBar")->hide();
+        //KDAB_PENDING toolBar("mainToolBar")->hide();
     }
     else
     {
-        toolBar("mainToolBar")->show();
+        //KDAB_PENDING toolBar("mainToolBar")->show();
     }
 
     slotStatusMsg(tr("Ready."));
@@ -1708,11 +1708,11 @@ void KlustersApp::slotViewActionBar(){
     // turn Toolbar on or off
     if(!viewActionBar->isChecked())
     {
-        toolBar("actionBar")->hide();
+        //KDAB_PENDING toolBar("actionBar")->hide();
     }
     else
     {
-        toolBar("actionBar")->show();
+        //KDAB_PENDING toolBar("actionBar")->show();
     }
     slotStatusMsg(tr("Ready."));
 }
@@ -1740,11 +1740,11 @@ void KlustersApp::slotViewToolBar()
     // turn Toolbar on or off
     if(!viewToolBar->isChecked())
     {
-        toolBar("toolBar")->hide();
+        //KDAB_PENDING toolBar("toolBar")->hide();
     }
     else
     {
-        toolBar("toolBar")->show();
+        //KDAB_PENDING toolBar("toolBar")->show();
     }
 
     slotStatusMsg(tr("Ready."));
