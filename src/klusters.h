@@ -38,7 +38,7 @@
 #include <QDockWidget>
 #include <QMainWindow>
 #include <QAction>
-
+#include <QTableWidget>
 
 //include files application specific
 #include "klustersview.h"
@@ -499,7 +499,7 @@ private:
     /** tabsParent groups all the tabs, it is updated eache time a display is added.
     * It is null when there is only one display open. It enables to get the active tab.
     */
-    KDockTabGroup* tabsParent;
+    QTabWidget* tabsParent;
 
     
     //Action and toolbar pointers

@@ -869,8 +869,8 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //Disconnect the previous connection
         if(tabsParent != NULL) disconnect(tabsParent,0,0,0);
 
-        //The grandParent's widget is the KDockTabGroup regrouping all the tabs
-        tabsParent = static_cast<KDockTabGroup*>(grandParent->widget());
+        //The grandParent's widget is the QTabWidget regrouping all the tabs
+        tabsParent = static_cast<QTabWidget*>(grandParent->widget());
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display change.
@@ -2458,8 +2458,8 @@ void KlustersApp::slotRecluster(){
         //and the new display.
         QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
 
-        //The grandParent's widget is the KDockTabGroup regrouping all the tabs
-        tabsParent = static_cast<KDockTabGroup*>(grandParent->widget());
+        //The grandParent's widget is the QTabWidget regrouping all the tabs
+        tabsParent = static_cast<QTabWidget*>(grandParent->widget());
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display changes.
