@@ -24,8 +24,6 @@
 #include <Q3VBoxLayout>
 #include <QDialogButtonBox>
 
-#include <QLineEdit>
-
 
 
 ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString& caption) :

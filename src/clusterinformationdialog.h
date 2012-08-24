@@ -28,7 +28,7 @@
 //KDE includes
 #include <QDialog>
 
-class QLineEdit;
+#include <QLineEdit>
 class QLabel;
 
 /**
