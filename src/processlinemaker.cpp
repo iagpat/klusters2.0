@@ -16,10 +16,21 @@
 #include "processlinemaker.h"
 #include <QProcess>
 
-ProcessLineMaker::ProcessLineMaker():counterOut(0),counterErr(0),isProcessKilled(false),isWidgetHidden(false),processExited(false){}
+ProcessLineMaker::ProcessLineMaker()
+    :counterOut(0),
+      counterErr(0),
+      isProcessKilled(false),
+      isWidgetHidden(false),
+      processExited(false)
+{
+}
 
-ProcessLineMaker::ProcessLineMaker( const QProcess* proc ):counterOut(0),counterErr(0),isProcessKilled(false),
-isWidgetHidden(false),processExited(false)
+ProcessLineMaker::ProcessLineMaker( const QProcess* proc )
+    :counterOut(0),
+      counterErr(0),
+      isProcessKilled(false),
+      isWidgetHidden(false),
+      processExited(false)
 {
     connect(proc, SIGNAL(receivedStdout(QProcess*,char*,int)),
             this, SLOT(slotReceivedStdout(QProcess*,char*,int)) );

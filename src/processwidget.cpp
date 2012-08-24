@@ -63,10 +63,6 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
 
     //Create the process
     childproc = new QProcess();
-    const char* shellToUse = getenv("SHELL");
-    if(shellToUse != NULL) childproc->setUseShell(true,shellToUse);
-    else childproc->setUseShell(true);
-
 
     procLineMaker = new ProcessLineMaker( childproc );
 
@@ -99,11 +95,9 @@ bool ProcessWidget::startJob(const QString &dir, const QString &command)
     procLineMaker->reset();
     clear();
     addItem(new ProcessListBoxItem(command, ProcessListBoxItem::Diagnostic));
-    childproc->clearArguments();
     if(!dir.isNull()) {
-        QDir::setCurrent(dir);
+        childproc->setWorkingDirectory(dir);
     }
-    
     *childproc << command;
     return childproc->start(QProcess::NotifyOnExit, QProcess::AllOutput);
 }
@@ -118,7 +112,7 @@ void ProcessWidget::killJob()
 
 bool ProcessWidget::isRunning()
 {
-    return childproc->isRunning();
+    return childproc->state() == QProcess::Running;
 }
 
 
@@ -169,7 +163,7 @@ QSize ProcessWidget::minimumSizeHint() const
     // I'm not sure about this, but when I don't use override minimumSizeHint(),
     // the initial size in clearly too small
 
-    return QSize( Q3ListBox::sizeHint().width(),
+    return QSize( QListView::sizeHint().width(),
                   (fontMetrics().lineSpacing()+2)*4 );
 }
 
@@ -185,7 +179,7 @@ void ProcessWidget::maybeScrollToBottom()
 }
 
 void ProcessWidget::hideWidget(){
-    if(childproc->isRunning()) childproc->suspend();
+    if(childproc->state() == QProcess::Running) childproc->suspend();
     emit hidden();
 }
 
