@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- 
+
 #ifndef CORRELATIONVIEW_H
 #define CORRELATIONVIEW_H
 
@@ -43,7 +43,7 @@ class KlustersDoc;
 class KlustersView;
 class CorrelationThread;
 
-  /**
+/**
   * View displaying auto- and cross-correlations of all selected clusters.
   * Using the text boxes in the Parameter Bar, the user can modified the bin size and duration
   * used to compute the correlograms.
@@ -52,135 +52,135 @@ class CorrelationThread;
   * If the view is active, it is also automatically updated when clusers are changed.
   *@author Lynn Hazan
   */
-      
+
 class CorrelationView : public ViewWidget  {
-   Q_OBJECT
-  
+    Q_OBJECT
+
 public:
 
-  friend class CorrelationThread;
+    friend class CorrelationThread;
     
-	CorrelationView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar * statusBar, QWidget* parent=0, Data::ScaleMode scale = Data::MAX,
-                  int binSize = 0, int correlationTimeFrame = 0,bool shoulderLine = false,const char* name=0,
-                  int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
-                  int windowBottomRight = 1001, int border = 0);
-	~CorrelationView();
+    CorrelationView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar * statusBar, QWidget* parent=0, Data::ScaleMode scale = Data::MAX,
+                    int binSize = 0, int correlationTimeFrame = 0,bool shoulderLine = false,const char* name=0,
+                    int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
+                    int windowBottomRight = 1001, int border = 0);
+    ~CorrelationView();
 
-  /**Signals that the widget is about to be deleted.*/
-  void willBeKilled();
+    /**Signals that the widget is about to be deleted.*/
+    void willBeKilled();
 
-  /** Returns the size of the bins to use in the correlograms, given in miliseconds.
+    /** Returns the size of the bins to use in the correlograms, given in miliseconds.
   *@return size of the bins.
   */
-  inline int getBinSize()const{return binSize;};
+    inline int getBinSize()const{return binSize;}
     
-  /** Returns the time frame use to compute the correlograms, given in miliseconds.
+    /** Returns the time frame use to compute the correlograms, given in miliseconds.
   *@return  time frame.
   */
-  inline int getTimeWindow()const{return timeWindow;};
+    inline int getTimeWindow()const{return timeWindow;}
 
-  /**Returns the type of scale used to present the correlation data.
+    /**Returns the type of scale used to present the correlation data.
   * @return type of scale.
   */
-  inline Data::ScaleMode getScaleMode() const {return scaleMode;};
-  
-  /**Returns a boolean indicating if a doted line is drawn at the shoulder level
+    inline Data::ScaleMode getScaleMode() const {return scaleMode;}
+
+    /**Returns a boolean indicating if a doted line is drawn at the shoulder level
   * of the correlograms.
   * @return true if a line is drawn, false otherwise.
   */
-  inline bool isShoulderLine() const {return shoulderLine;};
-  
+    inline bool isShoulderLine() const {return shoulderLine;}
+
 public slots:
 
-  /**Updates the view only for one cluster for which the color has been changed
+    /**Updates the view only for one cluster for which the color has been changed
   * @param clusterId cluster Id for which the color have changed.
   * @param active true if the view is the active one, false otherwise.
   */
-  void singleColorUpdate(int clusterId,bool active);
+    void singleColorUpdate(int clusterId,bool active);
 
-  /**
+    /**
   * Draws an additional cluster to those already shown.
   * This method aims to reduce the number of clusters to draw.
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-  void addClusterToView(int clusterId,bool active);
+    void addClusterToView(int clusterId,bool active);
 
-  /**
+    /**
   * Removes a cluster from those already shown. Which impose to redraw everything
   * @param clusterId cluster Id to remove.
   * @param active true if the view is the active one, false otherwise.
   */
-  void removeClusterFromView(int clusterId,bool active);
+    void removeClusterFromView(int clusterId,bool active);
 
-  /**
+    /**
   * Adds a newly created cluster to those already shown.
   * This method aims to reduce the number of clusters to draw.
   * @param fromClusters list of clusters from which the spikes of the new cluster are coming.
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
  */
-  void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active);
+    void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active);
 
-  /**
+    /**
   * Adds a newly created cluster to those already shown.
   * This method aims to reduce the number of clusters to draw.
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-  inline void addNewClusterToView(int clusterId,bool active){addClusterToView(clusterId,active);};
+    inline void addNewClusterToView(int clusterId,bool active){addClusterToView(clusterId,active);}
 
-  /**
+    /**
   * Updates the content of the widget due to the removal of spikes in a cluster.
   * This method aims to reduce the number of clusters to draw.
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-  void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active);
+    void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active);
 
-  /**
+    /**
   * Updates the content of the widget due to the addition of spikes in a cluster.
   * This method aims to reduce the number of clusters to draw.
   * @param clusterId cluster Id to which the spikes have been added
   * @param active true if the view is the active one, false otherwise.
   */
-  void spikesAddedToCluster(int clusterId,bool active);
+    void spikesAddedToCluster(int clusterId,bool active);
 
-  /**Changes the current mode, call by a selection of a tool
+    /**Changes the current mode, call by a selection of a tool
   * @param selectedMode new mode of drawing (selection or zoom)
   */
-  inline void setMode(BaseFrame::Mode selectedMode){};
+    inline void setMode(BaseFrame::Mode selectedMode){}
 
-  /**Sets the mode of presentation to raw mode, meaning that the value of each bin in a
+    /**Sets the mode of presentation to raw mode, meaning that the value of each bin in a
   * correlogram will be the computed value.
   */
-  void setNoScale();
+    void setNoScale();
 
- /**Sets the mode of presentation to raw mode, meaning that the value of each bin in a
+    /**Sets the mode of presentation to raw mode, meaning that the value of each bin in a
   * correlogram will be the computed value scale by the maximum value.
   */
-  void setMaximumScale();
+    void setMaximumScale();
 
- /**Sets the mode of presentation to raw mode, meaning that the value of each bin in a
+    /**Sets the mode of presentation to raw mode, meaning that the value of each bin in a
   * correlogram will be the computed value scale by the shoulder value.
   */
-  void setShoulderScale();
+    void setShoulderScale();
 
-  /**Changes the size of the bins and the size of the time frame used to compute the correlograms.*/
-  void setBinSizeAndTimeWindow(int size,int width);
+    /**Changes the size of the bins and the size of the time frame used to compute the correlograms.*/
+    void setBinSizeAndTimeWindow(int size,int width);
 
-  /**Increase of the amplitude of the correlograms.
+    /**Increase of the amplitude of the correlograms.
   */
-  void increaseAmplitude();
+    void increaseAmplitude();
 
-  /**Decrease of the amplitude of the correlograms.
+    /**Decrease of the amplitude of the correlograms.
   */
-  void decreaseAmplitude();
+    void decreaseAmplitude();
 
-  /**Enables the caller to know if there is any thread running launch by the view.*/
-  bool isThreadsRunning();
+    /**Enables the caller to know if there is any thread running launch by the view.*/
+    bool isThreadsRunning();
 
-  /**
+    /**
   * Update the clusters which have been modified by the suppression of spikes
   * (used to create a new cluster or simply move to the cluster of noise or artefact).
   * This method is call only during an undo otherwise the updateClusters is call.
@@ -188,11 +188,11 @@ public slots:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-  inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){
-    spikesRemovedFromClusters(modifiedClusters,active);
-  };
+    inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){
+        spikesRemovedFromClusters(modifiedClusters,active);
+    }
 
-  /**
+    /**
   * Update the clusters which have been modified by the suppression of spikes
   * (used to create a new cluster or simply move to the cluster of noise or artefact).
   * This method aims to reduce the number of clusters to draw.
@@ -201,200 +201,200 @@ public slots:
   * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
   */
-  inline void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
-    spikesRemovedFromClusters(modifiedClusters,active);
-  };
+    inline void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
+        spikesRemovedFromClusters(modifiedClusters,active);
+    }
 
-  /**
+    /**
   * Update the presentation of a doted line at the shoulder level.
   * If @p b is true a line will be drawn, none will be drawn otherwise.
   * @param b boolean indicating if a shoulder line has to be drawn.
   */
-  void setShoulderLine(bool b);
+    void setShoulderLine(bool b);
 
- /**Update the information presented in the view if need it.*/
-  void updateDrawing();
+    /**Update the information presented in the view if need it.*/
+    void updateDrawing();
 
- /**
+    /**
  * Update the information presented in the view after a renumbering if need it.
- * @param active true if the view is the active one, false otherwise. 
+ * @param active true if the view is the active one, false otherwise.
  */
- void clustersRenumbered(bool active);
+    void clustersRenumbered(bool active);
 
- /**Prints the currently display information on a printer via the painter @p printPainter.
+    /**Prints the currently display information on a printer via the painter @p printPainter.
  * @param printPainter painter on a printer.
  * @param metrics object providing information about the printer.
- * @param whiteBackground true if the printed background has to be white, false otherwise. 
+ * @param whiteBackground true if the printed background has to be white, false otherwise.
  */
- void print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground);
- 
+    void print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground);
+
 protected:
-  /**
+    /**
   * Draws the contents of the frame
   * @param p painter used to draw the contents
   */
-  void drawContents(QPainter *p);
+    void drawContents(QPainter *p);
 
-  /**Treat the events sent by the CorrelationThread instances.
+    /**Treat the events sent by the CorrelationThread instances.
   * @param event custom event.
   */
-  void customEvent (QCustomEvent* event);
- 
-  /**The view responds to a double click.
+    void customEvent (QCustomEvent* event);
+
+    /**The view responds to a double click.
   * The correlograms are retrieve in case the data have changed (an other view has changed its parameters)
   * as all the views are sharing the same data.
   * @param event mouse event.
   */
-  void mouseDoubleClickEvent (QMouseEvent* event);
+    void mouseDoubleClickEvent (QMouseEvent* event);
 
-  /**The view responds to a mouse click.
+    /**The view responds to a mouse click.
   * The correlograms are retrieve in case the data have changed (an other view has chaneg its parameters.
   * @param event mouse release event.
   */
-  void mouseReleaseEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event);
     
-  /**The view responds to a resize event.
+    /**The view responds to a resize event.
   * The correlograms are retrieve in case the data have changed (an other view has changed its parameters)
   * as all the views are sharing the same data.
   * @param event resize event.
   */
-  void resizeEvent(QResizeEvent* event);
+    void resizeEvent(QResizeEvent* event);
 
-  /**The view responds to a mouse move event.
+    /**The view responds to a mouse move event.
   * The time is display in the status bar.
   * @param event mouse move event.
   */
-  void mouseMoveEvent(QMouseEvent* event);
-   
+    void mouseMoveEvent(QMouseEvent* event);
+
 private:
 
-  /**Type of scale used, raw, scale by the maximum, or scale by the shoulder.
+    /**Type of scale used, raw, scale by the maximum, or scale by the shoulder.
   * The default is raw mode.*/
-  Data::ScaleMode scaleMode;
+    Data::ScaleMode scaleMode;
 
-  /**Creates a thread which will get the correlations information for
+    /**Creates a thread which will get the correlations information for
   * the pairs of clusters contained in @p pairsToCompute due to the clusters in @p clusterIds.
   * @param pairsToCompute couple of clusters for which a correlogram has to be obtained.
-  * @param clusterIds clusters for which the correlograms will be computed.  
+  * @param clusterIds clusters for which the correlograms will be computed.
   */
-  CorrelationThread* getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds);
+    CorrelationThread* getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds);
 
- /**
+    /**
  * Draws the correlograms of the pair of clusters in the list @p pairList on the given painter.
  * @param painter painter on which to draw the correlograms.
  * @param pairList list of pair of clusters for which a correlogram has to be drawn.
  */
- void drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pairList);
-                                                                                                                    
- /**Updates the dimension of the window.*/
- void updateWindow();
+    void drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pairList);
 
- /**
+    /**Updates the dimension of the window.*/
+    void updateWindow();
+
+    /**
  * Asks the correlograms for all the clusters currently shown by launching a CorrelationThread.
  */
- void askForCorrelograms();
+    void askForCorrelograms();
 
- /**Draws the clusters identifiers.
+    /**Draws the clusters identifiers.
  * @param painter painter on which to draw the information.
  */
- void drawClusterIds(QPainter& painter);
- 
- //Members
+    void drawClusterIds(QPainter& painter);
 
- /**List of pointers on the threads which have to be suppress when this object is destroy.*/
- Q3PtrList<CorrelationThread> threadsToBeKill;
+    //Members
 
-  /**True if the correlation information needed to draw the correlograms are available.*/
- bool dataReady;
+    /**List of pointers on the threads which have to be suppress when this object is destroy.*/
+    Q3PtrList<CorrelationThread> threadsToBeKill;
 
- /**List of pairs of clusters for which a correlogram has to be drawn.*/
- Q3ValueList<Pair> pairs;
+    /**True if the correlation information needed to draw the correlograms are available.*/
+    bool dataReady;
 
- /**size of the bins to use in the correlograms, given in miliseconds */
- int binSize;
+    /**List of pairs of clusters for which a correlogram has to be drawn.*/
+    Q3ValueList<Pair> pairs;
 
- /**Time frame use to compute the correlograms, given in miliseconds.*/
- int timeWindow;
+    /**size of the bins to use in the correlograms, given in miliseconds */
+    int binSize;
 
-  /**Minimal abscissa in window coordinate*/
- long abscissaMin;
+    /**Time frame use to compute the correlograms, given in miliseconds.*/
+    int timeWindow;
 
- /**Maximal abscissa in window coordinate*/
- long abscissaMax;
+    /**Minimal abscissa in window coordinate*/
+    long abscissaMin;
 
- /**Minimal ordinate in window coordinate*/
- long ordinateMin;
+    /**Maximal abscissa in window coordinate*/
+    long abscissaMax;
 
- /**Maximal ordinate in window coordinate*/
- long ordinateMax;
+    /**Minimal ordinate in window coordinate*/
+    long ordinateMin;
 
- /**The width border*/
- uint widthBorder;
+    /**Maximal ordinate in window coordinate*/
+    long ordinateMax;
 
- /**The height border*/
- uint heightBorder;
+    /**The width border*/
+    uint widthBorder;
 
- /**The width of a bins.*/
- int binWidth;
+    /**The height border*/
+    uint heightBorder;
 
- /**Abscissa space between two correlograms.*/
- uint Xspace;
+    /**The width of a bins.*/
+    int binWidth;
 
- /**Ordinate space between two correlograms*/
- uint Yspace;
+    /**Abscissa space between two correlograms.*/
+    uint Xspace;
 
- /**Size in pixels corresponding to the maximale value of a correlogram.*/
- uint YsizeForMaxAmp;
+    /**Ordinate space between two correlograms*/
+    uint Yspace;
 
- /**Factor use to calculate the ordinate value to been drawn.
+    /**Size in pixels corresponding to the maximale value of a correlogram.*/
+    uint YsizeForMaxAmp;
+
+    /**Factor use to calculate the ordinate value to been drawn.
  * The factor equals YsizeForMaxAmp multipled by a zoom factor.
  */
- float Yfactor;
+    float Yfactor;
 
- /**The delta between the starting abscisses of two correlograms.*/
- int shift;
+    /**The delta between the starting abscisses of two correlograms.*/
+    int shift;
 
- /**Number of bins per correlogram (2k + 1).*/
- int nbBins;
- 
- /**List of pairs corresponding to clusters to update.*/
- Q3ValueList<Pair> pairUpdateList;
+    /**Number of bins per correlogram (2k + 1).*/
+    int nbBins;
 
- /**Boolean indicating if a shoulder line has to be drawn on the correlograms.*/
- bool shoulderLine;
+    /**List of pairs corresponding to clusters to update.*/
+    Q3ValueList<Pair> pairUpdateList;
 
- /**Step in pixels between two tick marks.*/
- float tickMarkStep;
+    /**Boolean indicating if a shoulder line has to be drawn on the correlograms.*/
+    bool shoulderLine;
 
- /**Number of tick marks in a time window*/
- int nbTickMarks;
+    /**Step in pixels between two tick marks.*/
+    float tickMarkStep;
 
- /**Abscissa of the tick mark for the center bin (time = 0)*/
- int tickMarkZero;
+    /**Number of tick marks in a time window*/
+    int nbTickMarks;
 
- /**Map of firing rate for the autocorrelograms.*/
- QMap<int,QString> firingRates;
+    /**Abscissa of the tick mark for the center bin (time = 0)*/
+    int tickMarkZero;
 
- /**True if the view has been zoomed, false ohterwise.*/
- bool isZoomed;
+    /**Map of firing rate for the autocorrelograms.*/
+    QMap<int,QString> firingRates;
 
- /**True if the widget is about to be deleted, false otherwise.*/
- bool goingToDie;
+    /**True if the view has been zoomed, false ohterwise.*/
+    bool isZoomed;
 
- /**Border on the left and right sides inside the window (QRect corresponding
+    /**True if the widget is about to be deleted, false otherwise.*/
+    bool goingToDie;
+
+    /**Border on the left and right sides inside the window (QRect corresponding
  * to the part of the drawing which will actually be drawn onto the widget).*/
- static const int XMARGIN;
+    static const int XMARGIN;
 
- /**Border on the top and bottom sides inside the window (QRect corresponding
+    /**Border on the top and bottom sides inside the window (QRect corresponding
  * to the part of the drawing which will actually be drawn onto the widget).*/
- static const int YMARGIN;
+    static const int YMARGIN;
 
- /*True if the view is currently been printed, false otherwise.**/
- bool printState;
+    /*True if the view is currently been printed, false otherwise.**/
+    bool printState;
 
- /**The region representing the area to print.*/
- QRegion printRegion;
- 
+    /**The region representing the area to print.*/
+    QRegion printRegion;
+
 };
 
 #endif

@@ -24,60 +24,64 @@
 #include <Q3VBoxLayout>
 #include <QDialogButtonBox>
 
+#include <QLineEdit>
+
+
+
 ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString& caption) :
-        QDialog(parent)
+    QDialog(parent)
 {
     setWindowTitle(caption);
     setModal(true);
-	page = new QWidget(this);
-	//KDAB_PENDING: add spacingHint
-	layout = new Q3VBoxLayout(page,0/*,spacingHint()*/);
+    page = new QWidget(this);
+    //KDAB_PENDING: add spacingHint
+    layout = new Q3VBoxLayout(page,0/*,spacingHint()*/);
 
-	//Structure information (label and lineedit)
+    //Structure information (label and lineedit)
     QLabel *label1 = new QLabel(tr("Structure"),page,"structure_label");
-	layout->addWidget(label1);
+    layout->addWidget(label1);
 
-	structure = new QLineEdit(page,"structure");
-	structure->setMinimumWidth(fontMetrics().maxWidth()*20);
-	structure->setFocus();
-	layout->addWidget(structure);
+    structure = new QLineEdit(page,"structure");
+    structure->setMinimumWidth(fontMetrics().maxWidth()*20);
+    structure->setFocus();
+    layout->addWidget(structure);
 
-	//Type information (label and lineedit)
+    //Type information (label and lineedit)
     QLabel *label2 = new QLabel(tr("Type"),page,"type_label");
-	layout->addWidget(label2);
+    layout->addWidget(label2);
 
-	type = new QLineEdit(page,"type");
-	type->setMinimumWidth(fontMetrics().maxWidth()*20);
-	layout->addWidget(type);
-	
-	//Id information (label and lineedit)
+    type = new QLineEdit(page,"type");
+    type->setMinimumWidth(fontMetrics().maxWidth()*20);
+    layout->addWidget(type);
+
+    //Id information (label and lineedit)
     QLabel *label3 = new QLabel(tr("Isolation distance"),page,"id_label");
-	layout->addWidget(label3);
+    layout->addWidget(label3);
 
-	id = new QLineEdit(page,"id");
-	id->setMinimumWidth(fontMetrics().maxWidth()*20);
-	layout->addWidget(id);
-	
-	//Quality information (label and lineedit)
+    id = new QLineEdit(page,"id");
+    id->setMinimumWidth(fontMetrics().maxWidth()*20);
+    layout->addWidget(id);
+
+    //Quality information (label and lineedit)
     QLabel *label4 = new QLabel(tr("Quality"),page,"quality_label");
-	layout->addWidget(label4);
+    layout->addWidget(label4);
 
-	quality = new QLineEdit(page,"quality");
-	quality->setMinimumWidth(fontMetrics().maxWidth()*20);
-	layout->addWidget(quality);
-	
-	//Type information (label and lineedit)
+    quality = new QLineEdit(page,"quality");
+    quality->setMinimumWidth(fontMetrics().maxWidth()*20);
+    layout->addWidget(quality);
+
+    //Type information (label and lineedit)
     QLabel *label5 = new QLabel(tr("Notes"),page,"notes_label");
-	layout->addWidget(label5);
+    layout->addWidget(label5);
 
-	notes = new QLineEdit(page,"notes");
-	notes->setMinimumWidth(fontMetrics().maxWidth()*20);
-	layout->addWidget(notes);
+    notes = new QLineEdit(page,"notes");
+    notes->setMinimumWidth(fontMetrics().maxWidth()*20);
+    layout->addWidget(notes);
 
-	layout->addStretch(10);
+    layout->addStretch(10);
 
     QDialogButtonBox*buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
-                                                       | QDialogButtonBox::Cancel);
+                                                      | QDialogButtonBox::Cancel);
     layout->addWidget(buttonBox);
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));

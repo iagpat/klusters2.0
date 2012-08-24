@@ -41,7 +41,7 @@ public:
     array = new T[nbRows * nbColumns];
   }
   
-  inline Array():nbColumns(0),nbRows(0),array(0L){};
+  inline Array():nbColumns(0),nbRows(0),array(0L){}
   
  	inline ~Array(){
     delete []array;
@@ -181,8 +181,8 @@ protected:
   using Array<T>::array;
 
 public:
-	inline pArray(){};
-	inline ~pArray(){};
+    inline pArray(){}
+    inline ~pArray(){}
 
 
   /**

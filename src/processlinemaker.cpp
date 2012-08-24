@@ -35,7 +35,7 @@ void ProcessLineMaker::slotReceivedStdout( const QString& s )
     // Flush stderr buffer
     if (!stderrbuf.isEmpty()) {
         emit receivedStderrLine(stderrbuf);
-        stderrbuf = "";
+        stderrbuf.clear();
     }
     stdoutbuf += s;
     int pos;

@@ -2,8 +2,8 @@
                           correlationthread.h  -  description
                              -------------------
     begin                : Fri Nov 14 2003
-    copyright            : (C) 2003 by 
-    email                : 
+    copyright            : (C) 2003 by
+    email                :
  ***************************************************************************/
 
 /***************************************************************************
@@ -31,7 +31,7 @@
 #include <Q3ValueList>
 
 
- /** Thread used to compute the correlograms displayed in the CorrelationView.
+/** Thread used to compute the correlograms displayed in the CorrelationView.
  * No heavy computation is done is this class, the thread calls the Data object which
  * will do the work.
  *@author Lynn Hazan
@@ -41,60 +41,60 @@ class CorrelationThread : public QThread {
 
 
 public:
-  //Only the method getCorrelations of CorrelationView has access to the private part of CorrelationThread,
-  //the constructor of CorrelationThread being private, only this method con create a new CorrelationThread
-  friend CorrelationThread* CorrelationView::getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds);
+    //Only the method getCorrelations of CorrelationView has access to the private part of CorrelationThread,
+    //the constructor of CorrelationThread being private, only this method con create a new CorrelationThread
+    friend CorrelationThread* CorrelationView::getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds);
 
-	inline ~CorrelationThread(){};
-  inline Q3ValueList<Pair>* triggeringPairs(){return clusterPairs;};
-  inline const Q3ValueList<int>& triggeringClusters(){return clusterIds;};
+    inline ~CorrelationThread(){};
+    inline Q3ValueList<Pair>* triggeringPairs(){return clusterPairs;}
+    inline const Q3ValueList<int>& triggeringClusters(){return clusterIds;}
 
-  /**Asks the thread to stop his work as soon as possible.*/
-  inline void stopProcessing(){haveToStopProcessing = true;};
+    /**Asks the thread to stop his work as soon as possible.*/
+    inline void stopProcessing(){haveToStopProcessing = true;}
 
-  class CorrelationsEvent;
-  friend class CorrelationsEvent;
+    class CorrelationsEvent;
+    friend class CorrelationsEvent;
 
-  inline CorrelationsEvent* getCorrelationsEvent(){
-    return new CorrelationsEvent(*this);
-  };
+    inline CorrelationsEvent* getCorrelationsEvent(){
+        return new CorrelationsEvent(*this);
+    };
 
-  /**
+    /**
   * Internal class use to send information to the CorrelationView to inform it that
   * the data requested have been collected.
   * @author Lynn Hazan
   */
-  class CorrelationsEvent : public QCustomEvent{
-   //Only the method getCorrelationsEvent of CorrelationThread has access to the private part of CorrelationsEvent,
-   //the constructor of CorrelationsEvent being private, only this method con create a new CorrelationsEvent
-   friend CorrelationsEvent* CorrelationThread::getCorrelationsEvent();
+    class CorrelationsEvent : public QCustomEvent{
+        //Only the method getCorrelationsEvent of CorrelationThread has access to the private part of CorrelationsEvent,
+        //the constructor of CorrelationsEvent being private, only this method con create a new CorrelationsEvent
+        friend CorrelationsEvent* CorrelationThread::getCorrelationsEvent();
 
-  public:
-    inline CorrelationThread* parentThread(){return &correlationThread;};
-    inline ~CorrelationsEvent(){};
+    public:
+        inline CorrelationThread* parentThread(){return &correlationThread;}
+        inline ~CorrelationsEvent(){}
 
-  private:
-    CorrelationsEvent(CorrelationThread& thread):QCustomEvent(QEvent::User + 300),correlationThread(thread){};
+    private:
+        CorrelationsEvent(CorrelationThread& thread):QCustomEvent(QEvent::User + 300),correlationThread(thread){}
 
-    CorrelationThread& correlationThread;
-  };
+        CorrelationThread& correlationThread;
+    };
 
 protected:
     void run();
 
 private:
     inline CorrelationThread(CorrelationView& view,Data& d,Q3ValueList<Pair>* pairs,Q3ValueList<int> clusterIds):correlationView(view),data(d),haveToStopProcessing(false){
-      clusterPairs = pairs;
-      this->clusterIds = clusterIds;
-      start();
-    };
+        clusterPairs = pairs;
+        this->clusterIds = clusterIds;
+        start();
+    }
 
     CorrelationView& correlationView;
     Data& data;
     Q3ValueList<Pair>* clusterPairs;
     Q3ValueList<int> clusterIds;
     /**True if the thread has to stop processing, false otherwise.*/
-    bool haveToStopProcessing;    
+    bool haveToStopProcessing;
 
 };
 

@@ -55,8 +55,8 @@ private:
     }
 	 
     ChannelColor(const ChannelColor& origin):channelId(origin.channelId),
-					  color(origin.color),groupColor(origin.groupColor),spikeGroupColor(origin.spikeGroupColor){};
-    ~ChannelColor(){};
+                      color(origin.color),groupColor(origin.groupColor),spikeGroupColor(origin.spikeGroupColor){}
+    ~ChannelColor(){}
   };
 
   /**list of the ChannelColor contained in the class.*/
@@ -81,7 +81,7 @@ public:
   /**
   * Suppress all the elements of
   */
-  inline void removeAll(){channelList.clear();};
+  inline void removeAll(){channelList.clear();}
   
   /**
   * Returns the color for a channel with a given id (@p identifier).
@@ -144,7 +144,7 @@ public:
   * Returns the number of channels.
   * @return the number of channels in the list
   */
-  virtual inline uint numberOfChannels() const {return channelList.count();};
+  virtual inline uint numberOfChannels() const {return channelList.count();}
 
   /**
   * Appends a channel to the list of channels.

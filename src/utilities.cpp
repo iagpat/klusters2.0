@@ -20,33 +20,31 @@
 #include "utilities.h"
 
 #include <QTemporaryFile>
-//Added by qt3to4:
-#include <Q3TextStream>
 
 //include files for c/c++ libraries
 #include <stdlib.h>
 
-int Utilities::getNbLines(QString path){ 
- int numLines = 0;
- QFile file(path);
- if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-     while (!file.atEnd()) {
-         file.readLine();
-         ++numLines;
-     }
- }
- return numLines;
+int Utilities::getNbLines(const QString& path){
+    int numLines = 0;
+    QFile file(path);
+    if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        while (!file.atEnd()) {
+            file.readLine();
+            ++numLines;
+        }
+    }
+    return numLines;
 }
 
 
 
-void Utilities::createBackup(QString path){
- QFile original(path);
- QFile backup(path+"~");
- original.open(QIODevice::ReadOnly);
- backup.open(QIODevice::WriteOnly);
- backup.write(original.readAll());
- original.close();
- backup.close();
+void Utilities::createBackup(const QString& path){
+    QFile original(path);
+    QFile backup(path+"~");
+    original.open(QIODevice::ReadOnly);
+    backup.open(QIODevice::WriteOnly);
+    backup.write(original.readAll());
+    original.close();
+    backup.close();
 }
 

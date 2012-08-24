@@ -14,7 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
- //include files for the application
+//include files for the application
 #include "correlationthread.h"
 
 //QT include files
@@ -32,30 +32,30 @@
 #include <iomanip> // Required for formated I/O.
 
 void CorrelationThread::run(){
- if(!haveToStopProcessing){
-  //Convert the miliseconds in recording units.
-  double binSizeInRU = static_cast<double>((static_cast<double>(correlationView.binSize) * 1000.0) / data.samplingInterval);
-  double timeWindowInRU = static_cast<double>((static_cast<double>(correlationView.timeWindow) * 1000.0) / data.samplingInterval);
+    if(!haveToStopProcessing){
+        //Convert the miliseconds in recording units.
+        double binSizeInRU = static_cast<double>((static_cast<double>(correlationView.binSize) * 1000.0) / data.samplingInterval);
+        double timeWindowInRU = static_cast<double>((static_cast<double>(correlationView.timeWindow) * 1000.0) / data.samplingInterval);
 
-  //Calculate the number of bins to compute - so there are a total of nBins = 1+2*halfBins bins
-  //(halfBins + 1/2 for each half time window)
-  int halfBins = ((correlationView.timeWindow / correlationView.binSize) - 1) / 2;
+        //Calculate the number of bins to compute - so there are a total of nBins = 1+2*halfBins bins
+        //(halfBins + 1/2 for each half time window)
+        int halfBins = ((correlationView.timeWindow / correlationView.binSize) - 1) / 2;
 
-  Q3ValueList<Pair>::iterator pairIterator;
-  for(pairIterator = clusterPairs->begin(); pairIterator != clusterPairs->end(); ++pairIterator){
-   if(!haveToStopProcessing){
-    Data::Status status = data.getCorrelograms(*pairIterator,correlationView.binSize,correlationView.timeWindow,binSizeInRU,timeWindowInRU,halfBins);
-    if(status == Data::NOT_AVAILABLE) continue;
-    else if(status == Data::IN_PROCESS)
-     while(!haveToStopProcessing && (data.getCorrelograms(*pairIterator,correlationView.binSize,correlationView.timeWindow,binSizeInRU,timeWindowInRU,halfBins) == Data::IN_PROCESS))
-      {sleep(1);}
-   }
-  }
- }
+        Q3ValueList<Pair>::iterator pairIterator;
+        for(pairIterator = clusterPairs->begin(); pairIterator != clusterPairs->end(); ++pairIterator){
+            if(!haveToStopProcessing){
+                Data::Status status = data.getCorrelograms(*pairIterator,correlationView.binSize,correlationView.timeWindow,binSizeInRU,timeWindowInRU,halfBins);
+                if(status == Data::NOT_AVAILABLE) continue;
+                else if(status == Data::IN_PROCESS)
+                    while(!haveToStopProcessing && (data.getCorrelograms(*pairIterator,correlationView.binSize,correlationView.timeWindow,binSizeInRU,timeWindowInRU,halfBins) == Data::IN_PROCESS))
+                    {sleep(1);}
+            }
+        }
+    }
 
- //Send an event to the CorrelationView to let it know that the data requested are available.
- CorrelationsEvent* event = getCorrelationsEvent();
- QApplication::postEvent(&correlationView,event);
+    //Send an event to the CorrelationView to let it know that the data requested are available.
+    CorrelationsEvent* event = getCorrelationsEvent();
+    QApplication::postEvent(&correlationView,event);
 
- delete clusterPairs;
+    delete clusterPairs;
 }

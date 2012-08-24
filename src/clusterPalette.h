@@ -38,7 +38,7 @@ class Q3IconViewItem;
 // forward declaration of the KlustersDoc class
 class KlustersDoc;
 
- /**
+/**
   * This class represents the Cluster Panel of the application.
   * It receives the user selections and triggers the actions which have to be done.
   *@author Lynn Hazan
@@ -50,18 +50,18 @@ class ClusterPalette : public Q3VBox
     Q_OBJECT
     
 public:
-	/**
-	* @param backgroundColor backgroundColor of the cluster palette.
-	* @param parent the parent QWidget.
-	* @param statusBar a reference to the application status bar.
-	* @param name name of the widget (can be used for introspection).
-	* @param wflags common QWidget flags.
-	*/
-	ClusterPalette(QColor backgroundColor,QWidget* parent = 0,QStatusBar * statusBar = 0, const char* name = 0, Qt::WFlags fl = 0 );
-   /*
+    /**
+    * @param backgroundColor backgroundColor of the cluster palette.
+    * @param parent the parent QWidget.
+    * @param statusBar a reference to the application status bar.
+    * @param name name of the widget (can be used for introspection).
+    * @param wflags common QWidget flags.
+    */
+    ClusterPalette(QColor backgroundColor,QWidget* parent = 0,QStatusBar * statusBar = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    /*
    *  Destroys the object and frees any allocated resources.
    */
-   ~ClusterPalette();
+    ~ClusterPalette();
 
     //Mode of action, in immediate the change of color
     //and the selection of cluster is immediately trigger
@@ -76,41 +76,41 @@ public:
     /**Returns the list of selected clusters*/
     Q3ValueList<int> selectedClusters();
 
-	 /** Hides the user cluster information, that is show the normal cluster palette.*/
-	 void hideUserClusterInformation();
-	 
-	 /** Shows the user cluster information, that is show a modified cluster palette presenting the cluster ids and the user cluster information.
-	  * @param electrodeGroupId id of the current electrode group.
-	 */
-	 void showUserClusterInformation(int electrodeGroupId);
+    /** Hides the user cluster information, that is show the normal cluster palette.*/
+    void hideUserClusterInformation();
+
+    /** Shows the user cluster information, that is show a modified cluster palette presenting the cluster ids and the user cluster information.
+      * @param electrodeGroupId id of the current electrode group.
+     */
+    void showUserClusterInformation(int electrodeGroupId);
 
     /**updates the background color of the palette.*/
     void changeBackgroundColor(QColor color){
-     backgroundColor = color;
-     int h;
-     int s;
-     int v;
-     color.getHsv(&h,&s,&v);
-     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
-     else iconView->setPaletteForegroundColor(Qt::white);      
-     iconView->setPaletteBackgroundColor(color);
-     
-     //get the list of selected clusters
-     Q3ValueList<int> selected = selectedClusters();
-     
-     //Set isInSelectItems to true to prevent the emission of signals due to selectionChange
-     isInSelectItems = true;
+        backgroundColor = color;
+        int h;
+        int s;
+        int v;
+        color.getHsv(&h,&s,&v);
+        if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
+        else iconView->setPaletteForegroundColor(Qt::white);
+        iconView->setPaletteBackgroundColor(color);
 
-     //Redraw the icons
-     updateClusterList();
-     
-     //reselect the clusters
-     selectItems(selected);
-     
-     //reset isInSelectItems to false to enable again the the emission of signals due to selectionChange
-     isInSelectItems = false;
+        //get the list of selected clusters
+        Q3ValueList<int> selected = selectedClusters();
 
-     update(); 
+        //Set isInSelectItems to true to prevent the emission of signals due to selectionChange
+        isInSelectItems = true;
+
+        //Redraw the icons
+        updateClusterList();
+
+        //reselect the clusters
+        selectItems(selected);
+
+        //reset isInSelectItems to false to enable again the the emission of signals due to selectionChange
+        isInSelectItems = false;
+
+        update();
     }
 
 public slots:
@@ -121,18 +121,18 @@ public slots:
     virtual void updateClusters();
 
 protected slots:
-	/** The right click on a cluster icon bring a dialog allowing the user to enter information on the cluster
-	* (structure, type, isolation distance, quality and notes).
-	*/
+    /** The right click on a cluster icon bring a dialog allowing the user to enter information on the cluster
+    * (structure, type, isolation distance, quality and notes).
+    */
     virtual void slotRightPressed(Q3IconViewItem* item);
     virtual void slotMousePressed(int button,Q3IconViewItem* item);
     virtual void slotClickRedraw();
     virtual void languageChange();
-	 /**
-	 * When moving the mouse over an cluster icon, the statusBar is updated with the information the user might could provided
-	  * (structure, type, isolation distance, quality and notes).
-	 */
-	 virtual void slotOnItem(Q3IconViewItem* item);
+    /**
+     * When moving the mouse over an cluster icon, the statusBar is updated with the information the user might could provided
+      * (structure, type, isolation distance, quality and notes).
+     */
+    virtual void slotOnItem(Q3IconViewItem* item);
     
 signals:
     void singleChangeColor(int selectedCluster);
@@ -140,8 +140,8 @@ signals:
     void groupClusters(Q3ValueList<int> selectedClusters);
     void moveClustersToNoise(Q3ValueList<int> selectedClusters);
     void moveClustersToArtefact(Q3ValueList<int> selectedClusters);
-	 void clusterInformationModified();    
-	
+    void clusterInformationModified();
+
 private:
     Q3IconView* iconView;
     KlustersDoc* doc;
@@ -157,11 +157,11 @@ private:
     /**Current palette background Color.*/
     QColor backgroundColor;
 
-	 /**Pointer to the status bar of the application.*/
-	 QStatusBar* statusBar;
+    /**Pointer to the status bar of the application.*/
+    QStatusBar* statusBar;
 
-	 /**Allows to update correctly the cluster text.*/
-	 bool isInUserClusterInfoMode;
+    /**Allows to update correctly the cluster text.*/
+    bool isInUserClusterInfoMode;
 
 };
 

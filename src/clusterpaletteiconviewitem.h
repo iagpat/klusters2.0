@@ -31,25 +31,25 @@ class QPixmap;
 //#include "clusterpalettetooltip.h"
 
 /**
-	@author Lynn Hazan <lynn.hazan@myrealbox.com>
-	This class represents the items in the clusterpalette. It overwrites thr default
-	QIconViewItem to enable the use of a custom toolTip class (#ClusterPaletteToolTip).
+    @author Lynn Hazan <lynn.hazan@myrealbox.com>
+    This class represents the items in the clusterpalette. It overwrites thr default
+    QIconViewItem to enable the use of a custom toolTip class (#ClusterPaletteToolTip).
 */
 class ClusterPaletteIconViewItem : public Q3IconViewItem
 {
-	public:
-		ClusterPaletteIconViewItem(Q3IconView*, QString);
-		ClusterPaletteIconViewItem(Q3IconView* parent, QString text, const QPixmap & icon );
+public:
+    ClusterPaletteIconViewItem(Q3IconView*, QString);
+    ClusterPaletteIconViewItem(Q3IconView* parent, QString text, const QPixmap & icon );
 
-		~ClusterPaletteIconViewItem();
+    ~ClusterPaletteIconViewItem();
 
-        void  setToolTipText(const QString&);
-		inline const QString   getToolTipText(void) const { return(toolTipText); }
+    void  setToolTipText(const QString&);
+    inline const QString   getToolTipText(void) const { return(toolTipText); }
 
-	private:
-		QString               toolTipText;
-		//KDAB_PENDING
-		//ClusterPaletteToolTip*    toolTip;
+private:
+    QString               toolTipText;
+    //KDAB_PENDING
+    //ClusterPaletteToolTip*    toolTip;
 };
 
 #endif

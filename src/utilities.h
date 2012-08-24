@@ -56,19 +56,19 @@ public:
      }
      if(newList.count() > oldList.count()) return true;
      else return false;
-    };
+    }
 
     /**Counts and returns the number of lines in the file @p path.
     * @param path file path.
     * @return the number of lines in the file. 
     */
-    static int getNbLines(QString path);
+    static int getNbLines(const QString &path);
     
     /**Creates a backup of the file @p path. The backup file name is the original
     * file name with an additional ~.
     * @param path file path.
     */
-    static void createBackup(QString path);
+    static void createBackup(const QString &path);
 };
 
 #endif

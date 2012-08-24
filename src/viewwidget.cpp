@@ -22,13 +22,13 @@
 #include <QDebug>
 
 ViewWidget::ViewWidget(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar* statusBar,QWidget* parent, const char* name,
-int minSize,int maxSize ,int windowTopLeft ,int windowBottomRight,int border,int Xborder,int Yborder):
-BaseFrame(Xborder,Yborder,parent,name,backgroundColor,minSize,maxSize,windowTopLeft,windowBottomRight,border),
-doublebuffer(),view(view),doc(doc),statusBar(statusBar){
+                       int minSize,int maxSize ,int windowTopLeft ,int windowBottomRight,int border,int Xborder,int Yborder):
+    BaseFrame(Xborder,Yborder,parent,name,backgroundColor,minSize,maxSize,windowTopLeft,windowBottomRight,border),
+    doublebuffer(),view(view),doc(doc),statusBar(statusBar){
 }
 
 ViewWidget::~ViewWidget(){
-  qDebug() << "in ~ViewWidget(): ";
+    qDebug() << "in ~ViewWidget(): ";
 }
 
 

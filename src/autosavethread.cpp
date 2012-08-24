@@ -26,24 +26,24 @@
 #include <stdio.h>
 
 void AutoSaveThread::run(){
- //Open the temp file in write mode   
- FILE* cluFile = fopen(autoSaveUrl.toLatin1(),"w");
-  
- //If can be open, save the data.
- if(cluFile != NULL){
-  data.saveClusters(cluFile);
-  //close the file
-  fclose(cluFile);
-   
-  //Send an event to the document to warn it that the thread has finish.
-  AutoSaveEvent* event = autoSaveEvent();
-  QApplication::postEvent(doc,event);
- }
- else{
-  //Send an event to the document to warn it that the thread could not save the file.
-  AutoSaveEvent* event = autoSaveEvent();
-  event->setIOerror(true);
-  QApplication::postEvent(doc,event); 
- }    
+    //Open the temp file in write mode
+    FILE* cluFile = fopen(autoSaveUrl.toLatin1(),"w");
+
+    //If can be open, save the data.
+    if(cluFile != NULL){
+        data.saveClusters(cluFile);
+        //close the file
+        fclose(cluFile);
+
+        //Send an event to the document to warn it that the thread has finish.
+        AutoSaveEvent* event = autoSaveEvent();
+        QApplication::postEvent(doc,event);
+    }
+    else{
+        //Send an event to the document to warn it that the thread could not save the file.
+        AutoSaveEvent* event = autoSaveEvent();
+        event->setIOerror(true);
+        QApplication::postEvent(doc,event);
+    }
 }
 

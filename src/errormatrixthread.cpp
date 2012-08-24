@@ -21,11 +21,11 @@
 #include <qapplication.h>
 
 void ErrorMatrixThread::run(){
- if(!haveToStopProcessing) probabilities =
-    assistant.computeMeanProbabilities(data,clusterList,computedClusterList,ignoreClusterIndex);
+    if(!haveToStopProcessing) probabilities =
+            assistant.computeMeanProbabilities(data,clusterList,computedClusterList,ignoreClusterIndex);
 
- //Send an event to the ErrorMatrixView to let it know that the computation is finish.
- ErrorMatrixEvent* event = getErrorMatrixEvent();
- QApplication::postEvent(&errorMatrixView,event);
+    //Send an event to the ErrorMatrixView to let it know that the computation is finish.
+    ErrorMatrixEvent* event = getErrorMatrixEvent();
+    QApplication::postEvent(&errorMatrixView,event);
 }
 

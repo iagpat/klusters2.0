@@ -31,9 +31,9 @@
 #include <QEvent>
 #include <Q3ValueList>
 
-  /**Thread used to compute the Error Matrix. Each element in the matrix
+/**Thread used to compute the Error Matrix. Each element in the matrix
   * indicates how likely it is that the two clusters corresponding to the row and column
-  * of the element contain spikes from the same neuron. 
+  * of the element contain spikes from the same neuron.
   *@author Lynn Hazan
   * @since klusters 1.1
   */
@@ -41,67 +41,67 @@
 class ErrorMatrixThread : public QThread  {
 public:
 
-  //Only the method computeMatrix of ErrorMatrixView has access to the private part of ErrorMatrixThread,
-  //the constructor of ErrorMatrixThread being private, only this method con create a new ErrorMatrixThread
-  friend ErrorMatrixThread* ErrorMatrixView::computeMatrix();
+    //Only the method computeMatrix of ErrorMatrixView has access to the private part of ErrorMatrixThread,
+    //the constructor of ErrorMatrixThread being private, only this method con create a new ErrorMatrixThread
+    friend ErrorMatrixThread* ErrorMatrixView::computeMatrix();
 
-	inline ~ErrorMatrixThread(){};
-  inline Array<double>* getProbabilities(){return probabilities;};
-  inline Q3ValueList<int> getClusterList(){return clusterList;};
-  inline Q3ValueList<int> getComputedClusterList(){return computedClusterList;};
-  inline Q3ValueList<int> getIgnoreClusterIndex(){return ignoreClusterIndex;};
-  
-  /**Asks the thread to stop his work as soon as possible.*/
-  inline void stopProcessing(){
-   haveToStopProcessing = true;
-   assistant.stopComputing();
-  };
+    inline ~ErrorMatrixThread(){}
+    inline Array<double>* getProbabilities(){return probabilities;}
+    inline Q3ValueList<int> getClusterList(){return clusterList;}
+    inline Q3ValueList<int> getComputedClusterList(){return computedClusterList;}
+    inline Q3ValueList<int> getIgnoreClusterIndex(){return ignoreClusterIndex;}
 
-  class ErrorMatrixEvent;
-  friend class ErrorMatrixEvent;
+    /**Asks the thread to stop his work as soon as possible.*/
+    inline void stopProcessing(){
+        haveToStopProcessing = true;
+        assistant.stopComputing();
+    };
 
-  inline ErrorMatrixEvent* getErrorMatrixEvent(){
-    return new ErrorMatrixEvent(*this);
-  };
+    class ErrorMatrixEvent;
+    friend class ErrorMatrixEvent;
 
-  /**
+    inline ErrorMatrixEvent* getErrorMatrixEvent(){
+        return new ErrorMatrixEvent(*this);
+    };
+
+    /**
   * Internal class use to send information to the ErrorMatrixView to inform it that
   * the matrix has been computed.
   * @since klusters 1.1
   */
-  class ErrorMatrixEvent : public QCustomEvent{
-   //Only the method getErrorMatrixEvent of ErrorMatrixThread has access to the private part of ErrorMatrixEvent,
-   //the constructor of ErrorMatrixEvent being private, only this method con create a new ErrorMatrixEvent
-   friend ErrorMatrixEvent* ErrorMatrixThread::getErrorMatrixEvent();
+    class ErrorMatrixEvent : public QCustomEvent{
+        //Only the method getErrorMatrixEvent of ErrorMatrixThread has access to the private part of ErrorMatrixEvent,
+        //the constructor of ErrorMatrixEvent being private, only this method con create a new ErrorMatrixEvent
+        friend ErrorMatrixEvent* ErrorMatrixThread::getErrorMatrixEvent();
 
-  public:
-    inline ErrorMatrixThread* parentThread(){return &errorMatrixThread;};
-    inline ~ErrorMatrixEvent(){};
+    public:
+        inline ErrorMatrixThread* parentThread(){return &errorMatrixThread;}
+        inline ~ErrorMatrixEvent(){}
 
-  private:
-    ErrorMatrixEvent(ErrorMatrixThread& thread):QCustomEvent(QEvent::User + 600),errorMatrixThread(thread){};
+    private:
+        ErrorMatrixEvent(ErrorMatrixThread& thread):QCustomEvent(QEvent::User + 600),errorMatrixThread(thread){}
 
-    ErrorMatrixThread& errorMatrixThread;
-  };
+        ErrorMatrixThread& errorMatrixThread;
+    };
 
 protected:
-  void run();
-           
+    void run();
+
 private:
 
- inline ErrorMatrixThread(ErrorMatrixView& view,Data& d):errorMatrixView(view),data(d),haveToStopProcessing(false){
-   start();   
- };
+    inline ErrorMatrixThread(ErrorMatrixView& view,Data& d):errorMatrixView(view),data(d),haveToStopProcessing(false){
+        start();
+    }
 
- ErrorMatrixView& errorMatrixView;
- Data& data;
- Array<double>* probabilities;
- Q3ValueList<int> clusterList;
- Q3ValueList<int> computedClusterList;
- Q3ValueList<int> ignoreClusterIndex;
- /**True if the thread has to stop processing, false otherwise.*/
- bool haveToStopProcessing;
- GroupingAssistant assistant;
+    ErrorMatrixView& errorMatrixView;
+    Data& data;
+    Array<double>* probabilities;
+    Q3ValueList<int> clusterList;
+    Q3ValueList<int> computedClusterList;
+    Q3ValueList<int> ignoreClusterIndex;
+    /**True if the thread has to stop processing, false otherwise.*/
+    bool haveToStopProcessing;
+    GroupingAssistant assistant;
 
 };
 

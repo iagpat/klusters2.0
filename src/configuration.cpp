@@ -32,7 +32,7 @@ const int  Configuration::nbUndoDefault = 2;
 const QColor Configuration::backgroundColorDefault = QColor(Qt::black);
 const QString Configuration::reclusteringExecutableDefault = "KlustaKwik";
 const QString Configuration::reclusteringArgsDefault =
-      "%fileBaseName %electrodeGroupID -MinClusters 2 -MaxClusters 12 -UseFeatures %features";
+        "%fileBaseName %electrodeGroupID -MinClusters 2 -MaxClusters 12 -UseFeatures %features";
 
 Configuration::Configuration():nbChannels(0) {
     read(); // read the settings or set them to the default values
@@ -87,8 +87,8 @@ void Configuration::write() const {
 }
 
 Configuration& configuration() {
-  //The C++ standard requires that static variables in functions
-  //have to be created upon first call of the function.
-  static Configuration conf;
-  return conf;
+    //The C++ standard requires that static variables in functions
+    //have to be created upon first call of the function.
+    static Configuration conf;
+    return conf;
 }

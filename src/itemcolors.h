@@ -50,16 +50,18 @@ private:
     bool isChanged;
     QString label;
 
-    ItemColor(int id, QColor c,QString l = ""){
+    ItemColor(int id, const QColor& c,const QString& l = ""){
       itemId = id;
       color = c;
       isChanged = false;
-      if(l == "") label = QString("%1").arg(id);
-      else label = l;      
+      if(l == "")
+          label = QString("%1").arg(id);
+      else
+          label = l;
     }
     ItemColor(const ItemColor& origin):itemId(origin.itemId),
-     color(origin.color),isChanged(origin.isChanged),label(origin.label){};
-    ~ItemColor(){};
+     color(origin.color),isChanged(origin.isChanged),label(origin.label){}
+    ~ItemColor(){}
   };
 
   /**list of the ItemColor contained in the class.*/
@@ -87,7 +89,7 @@ public:
   /**
   * Suppress all the elements of
   */
-  inline void removeAll(){itemList.clear();};
+  inline void removeAll(){itemList.clear();}
   
   /**
   * Returns the color for a item with a given id or position in the list (@p identifier).
@@ -117,7 +119,7 @@ public:
   * @param itemId the item id
   * @return the index in the list corresponding to the item id or -1 if not found
   */
-  inline int itemIndex(int itemId) const{return itemColorIndex(itemId);};
+  inline int itemIndex(int itemId) const{return itemColorIndex(itemId);}
 
   /**
   * Returns the item label corresponding to a given position in the list (@p index).
@@ -162,19 +164,19 @@ public:
   * Returns the number of items.
   * @return the number of items in the list,
   */
-  virtual inline uint numberOfItems() const {return itemList.count();};
+  virtual inline uint numberOfItems() const {return itemList.count();}
 
   /**
   * Returns true if at least the color of one item have changed, otherwise returns false.
   * @return the color status for the list of items.
   */
-  virtual inline bool isColorChanged()const{return colorChanged;};
+  virtual inline bool isColorChanged()const{return colorChanged;}
 
   /**
   * Sets the color status for the entire list of items.
   * @param changed color status.
   */
-  virtual inline void setColorChanged(bool changed){colorChanged = changed;};
+  virtual inline void setColorChanged(bool changed){colorChanged = changed;}
 
 
   /**

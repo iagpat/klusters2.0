@@ -55,10 +55,10 @@ public:
   void setBackgroundColor(const QColor& color);
 
   /**Sets the reclustering executable.*/
-  void setReclusteringExecutable(QString executable);
+  void setReclusteringExecutable(const QString& executable);
 
   /**Sets the arguments for the reclustering.*/
-  void setReclusteringArguments(QString arguments);
+  void setReclusteringArguments(const QString &arguments);
   
   /**Returns true if a crash and recovery autosave is performed, false othewise.*/
   bool isCrashRecovery() const;

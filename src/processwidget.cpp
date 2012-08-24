@@ -131,14 +131,14 @@ void ProcessWidget::slotProcessExited(QProcess* )
 void ProcessWidget::insertStdoutLine(const QString &line)
 {
     addItem(new ProcessListBoxItem(line.trimmed(),
-                                      ProcessListBoxItem::Normal));
+                                   ProcessListBoxItem::Normal));
 }
 
 
 void ProcessWidget::insertStderrLine(const QString &line)
 {
     addItem(new ProcessListBoxItem(line.trimmed(),
-                                      ProcessListBoxItem::Error));
+                                   ProcessListBoxItem::Error));
 }
 
 

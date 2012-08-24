@@ -25,21 +25,21 @@
 
 
 void SaveThread::save(const QString& url,KlustersDoc* doc,bool isSaveAs){
-  this->url = url;
-  this->doc = doc;
-  this->isSaveAs = isSaveAs;
-  start();
+    this->url = url;
+    this->doc = doc;
+    this->isSaveAs = isSaveAs;
+    start();
 }
 
 void SaveThread::run(){
-  bool status = true;
-  int saveStatus = doc->saveDocument(url);
-  if(saveStatus != KlustersDoc::OK){
-   status = false;     
-  }
-  //Send an event to the application to upload, if need it the file where the cluster information
-  // have been store, and update the menu and the status bar.
-  SaveDoneEvent* event = saveDoneEvent(status);
-  event->setTemporaryFile(doc->temporaryFile());
-  QApplication::postEvent(parent,event);
+    bool status = true;
+    int saveStatus = doc->saveDocument(url);
+    if(saveStatus != KlustersDoc::OK){
+        status = false;
+    }
+    //Send an event to the application to upload, if need it the file where the cluster information
+    // have been store, and update the menu and the status bar.
+    SaveDoneEvent* event = saveDoneEvent(status);
+    event->setTemporaryFile(doc->temporaryFile());
+    QApplication::postEvent(parent,event);
 }

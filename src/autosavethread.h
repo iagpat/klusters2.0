@@ -40,44 +40,44 @@
 class AutoSaveThread : public QThread {
 public:
 
-	inline ~AutoSaveThread(){qDebug()<<"in ~AutoSaveThread";};
-  //The default saving interval is 5 minutes.
-  inline AutoSaveThread(Data& d, KlustersDoc* doc,QString saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
-    qDebug()<<"in constructor AutoSaveThread"; 
-  };
+    inline ~AutoSaveThread(){qDebug()<<"in ~AutoSaveThread";}
+    //The default saving interval is 5 minutes.
+    inline AutoSaveThread(Data& d, KlustersDoc* doc,QString saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
+        qDebug()<<"in constructor AutoSaveThread";
+    };
 
-  inline void removeTmpFile(){
-    //delete the temporary files
-    QFile::remove(autoSaveUrl); 
-  };
-  void run();
+    inline void removeTmpFile(){
+        //delete the temporary files
+        QFile::remove(autoSaveUrl);
+    };
+    void run();
 
-  class AutoSaveEvent;
-  friend class AutoSaveEvent;
+    class AutoSaveEvent;
+    friend class AutoSaveEvent;
 
-  inline AutoSaveEvent* autoSaveEvent(){
-    return new AutoSaveEvent();
-  };
+    inline AutoSaveEvent* autoSaveEvent(){
+        return new AutoSaveEvent();
+    }
 
-  /**
+    /**
   * Internal class use to inform the document object (KlustersDoc) that the thread has finished.
   *
   */
-  class AutoSaveEvent : public QCustomEvent{
-   //Only the method autoSaveEvent of AutoSaveThread has access to the private part of AutoSaveEvent,
-   //the constructor of AutoSaveEvent being private, only this method con create a new AutoSaveEvent
-   friend AutoSaveEvent* AutoSaveThread::autoSaveEvent();
+    class AutoSaveEvent : public QCustomEvent{
+        //Only the method autoSaveEvent of AutoSaveThread has access to the private part of AutoSaveEvent,
+        //the constructor of AutoSaveEvent being private, only this method con create a new AutoSaveEvent
+        friend AutoSaveEvent* AutoSaveThread::autoSaveEvent();
 
-  public:
-   inline ~AutoSaveEvent(){};
-   inline bool isIOerror(){return IOerror;}
-   inline void setIOerror(bool status){IOerror = status;}
-    
-  private:
-    AutoSaveEvent():QCustomEvent(QEvent::User + 500){IOerror = false;};
-    bool IOerror;
-  }; 
-      
+    public:
+        inline ~AutoSaveEvent(){}
+        inline bool isIOerror(){return IOerror;}
+        inline void setIOerror(bool status){IOerror = status;}
+
+    private:
+        AutoSaveEvent():QCustomEvent(QEvent::User + 500){IOerror = false;}
+        bool IOerror;
+    };
+
 private:
     Data& data;
     KlustersDoc* doc;

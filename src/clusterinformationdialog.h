@@ -22,13 +22,14 @@
 
 //QT includes
 #include "qlayout.h"
-#include "qlabel.h"
-#include "qlineedit.h"
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 
 //KDE includes
 #include <QDialog>
+
+class QLineEdit;
+class QLabel;
 
 /**
     @author Lynn Hazan <lynn.hazan@myrealbox.com>
@@ -41,17 +42,17 @@ public:
     ClusterInformationDialog(QWidget *parent = 0,const QString& caption = tr("Cluster information"));
     virtual ~ClusterInformationDialog();
 
-    inline const QString getStructure() { return structure->text(); }
-    inline const QString getType() { return type->text(); }
-    inline const QString getId() { return id->text(); }
-    inline const QString getQuality() { return quality->text(); }
-    inline const QString getNotes() { return notes->text(); }
+    inline const QString getStructure() const { return structure->text(); }
+    inline const QString getType()  const { return type->text(); }
+    inline const QString getId() const { return id->text(); }
+    inline const QString getQuality()  const { return quality->text(); }
+    inline const QString getNotes() const { return notes->text(); }
 
-    inline void setStructure(QString pStructure) { structure->setText(pStructure); }
-    inline void setType(QString pType) { type->setText(pType); }
-    inline void setId(QString pID) { id->setText(pID); }
-    inline void setQuality(QString pQuality) { quality->setText(pQuality); }
-    inline void setNotes(QString pNotes) { notes->setText(pNotes); }
+    inline void setStructure(const QString& pStructure) { structure->setText(pStructure); }
+    inline void setType(const QString& pType) { type->setText(pType); }
+    inline void setId(const QString& pID) { id->setText(pID); }
+    inline void setQuality(const QString& pQuality) { quality->setText(pQuality); }
+    inline void setNotes(const QString& pNotes) { notes->setText(pNotes); }
 
 private:
     QWidget			*page;
