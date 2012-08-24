@@ -44,6 +44,7 @@
 #include <QToolBar>
 #include <QKeySequence>
 #include <QFileDialog>
+#include <QTime>
 // application specific includes
 #include "klusters.h"
 #include "klustersdoc.h"
@@ -190,7 +191,7 @@ void KlustersApp::createMenus()
 
     mRedo = editMenu->addAction(tr("Redo"));
     mRedo->setShortcut(QKeySequence::Redo);
-    connect(mRedo, SIGNAL(triggered()), this, SLOT(slotRedo());
+    connect(mRedo, SIGNAL(triggered()), this, SLOT(slotRedo()));
 
 
     mSelectAllExceptAction = editMenu->addAction(tr("Select &All"));
@@ -556,6 +557,7 @@ void KlustersApp::initSelectionBoxes(){
 }
 
 void KlustersApp::executePreferencesDlg(){
+#if KDAB_PENDING
     if(prefDialog == 0L){
         if(mainDock) prefDialog = new PrefDialog(this,doc->nbOfchannels());  // create dialog on demand
         else prefDialog = new PrefDialog(this);
@@ -580,6 +582,7 @@ void KlustersApp::executePreferencesDlg(){
             applyPreferences();                      // let settings take effect
         }
     }
+#endif
 }
 
 void KlustersApp::applyPreferences() {  
@@ -698,10 +701,10 @@ void KlustersApp::initDisplay(){
     mainDock = new QDockWidget( tr(doc->documentName().toLatin1()),0);
 
             //KDAB_PENDING look at last element createDockWidget( "1", QPixmap(), 0L, tr(doc->documentName().toLatin1()), "Overview Display");
-    mainDock->setDockWindowTransient(this,true);
+    //KDAB_PENDING mainDock->setDockWindowTransient(this,true);
 
     //If the setting dialog exists (has already be open once), enable the settings for the channels.
-    if(prefDialog != 0L) prefDialog->enableChannelSettings(true);
+    //KDAB_PENDING if(prefDialog != 0L) prefDialog->enableChannelSettings(true);
 
     //No clusters are shown by default.
     Q3ValueList<int>* clusterList = new Q3ValueList<int>();
@@ -730,11 +733,11 @@ void KlustersApp::initDisplay(){
 
     mainDock->setWidget(view);
     //allow dock on the left side only
-    mainDock->setDockSite(QDockWidget::DockLeft);
-    setView(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
-    setMainDockWidget(mainDock);
+    //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
+    //KDAB_PENDING setView(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
+    //KDAB_PENDING setMainDockWidget(mainDock);
     //disable docking abilities of mainDock itself
-    mainDock->setEnableDocking(QDockWidget::DockNone);
+    //KDAB_PENDING mainDock->setEnableDocking(QDockWidget::DockNone);
 
     //Initialize and dock the clusterpanel
     //Create the cluster list and select the clusters which will be drawn
@@ -742,14 +745,14 @@ void KlustersApp::initDisplay(){
     clusterPalette->selectItems(*clusterList);
 
     //allow dock on the right side only
-    clusterPanel->setDockSite(QDockWidget::DockRight);
+    //KDAB_PENDING clusterPanel->setDockSite(QDockWidget::DockRight);
 
     //Dock the clusterPanel on the left
-    clusterPanel->setEnableDocking(QDockWidget::DockFullSite);
-    clusterPanel->manualDock(mainDock,QDockWidget::DockLeft,0);  // relation target/this (in percent)
+    //KDAB_PENDING clusterPanel->setEnableDocking(QDockWidget::DockFullSite);
+    //KDAB_PENDING clusterPanel->manualDock(mainDock,QDockWidget::DockLeft,0);  // relation target/this (in percent)
 
     //forbit docking abilities of clusterPanel itself
-    clusterPanel->setEnableDocking(QDockWidget::DockNone);
+    //KDAB_PENDING clusterPanel->setEnableDocking(QDockWidget::DockNone);
 
     //Update the Time frame and sample related widgets
     spikesTodisplay->setValue(DEFAULT_NB_SPIKES_DISPLAYED);
@@ -774,7 +777,7 @@ void KlustersApp::initDisplay(){
     }
 
     //show all the encapsulated widgets of all controlled dockwidgets
-    dockManager->activate();
+    //KDAB_PENDING dockManager->activate();
 
     //Enable some actions now that a document is open (see the klustersui.rc file)
     //KDAB_PENDING slotStateChanged("documentState");
@@ -861,36 +864,36 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         display->setWidget(view);
 
         //Temporarily allow addition of a new dockWidget in the center
-        mainDock->setDockSite(QDockWidget::DockCenter);
+        //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockCenter);
         //Add the new display as a tab and get a new DockWidget, grandParent of the target (mainDock)
         //and the new display.
-        QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
+        //KDAB_PENDING QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
 
         //Disconnect the previous connection
-        if(tabsParent != NULL) disconnect(tabsParent,0,0,0);
+        //KDAB_PENDING if(tabsParent != NULL) disconnect(tabsParent,0,0,0);
 
         //The grandParent's widget is the QTabWidget regrouping all the tabs
-        tabsParent = static_cast<QTabWidget*>(grandParent->widget());
+        //KDAB_PENDING tabsParent = static_cast<QTabWidget*>(grandParent->widget());
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display change.
-        connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
+        //KDAB_PENDING connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
         //KDAB_PENDING slotStateChanged("tabState");
 
         //Back to enable dock to the left side only
-        mainDock->setDockSite(QDockWidget::DockLeft);
+        //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
 
         // forbit docking abilities of display itself
-        display->setEnableDocking(QDockWidget::DockNone);
+        //KDAB_PENDING display->setEnableDocking(QDockWidget::DockNone);
         // allow others to dock to the left side only
-        display->setDockSite(QDockWidget::DockLeft);
+        //KDAB_PENDING display->setDockSite(QDockWidget::DockLeft);
 
         //Keep track of the number of displays
         displayCount ++;
 
         //show all the encapsulated widgets of all controlled dockwidgets
-        dockManager->activate();
+        //KDAB_PENDING dockManager->activate();
     }
 }
 
@@ -900,6 +903,7 @@ void KlustersApp::openDocumentFile(const QString& url)
 
     filePath = url;
     QFileInfo file(filePath);
+#if KDAB_PENDING
     if(url.protocol() == "file"){
         if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
             QString title = "File not found: ";
@@ -918,13 +922,13 @@ void KlustersApp::openDocumentFile(const QString& url)
     }
     //Do not handle remote files
     else{
-        KMessageBox::sorry(this,tr("Sorry, Klusters does not handle remote files."),tr("Remote file handling"));
+        QMessageBox::critical(this,tr("Remote file handling"),tr("Sorry, Klusters does not handle remote files."));
         //KDAB_PENDING fileOpenRecent->removeURL(url);
         filePath = "";
         slotStatusMsg(tr("Ready."));
         return;
     }
-
+#endif
     //Check if the file exists
     if(!file.exists()){
         QMessageBox::critical (this, tr("Error!"),tr("The selected file does not exist."));
@@ -1059,7 +1063,7 @@ void KlustersApp::openDocumentFile(const QString& url)
         }
 
         //Save the recent file list
-        fileOpenRecent->saveEntries(config);
+        //KDAB_PENDING fileOpenRecent->saveEntries(config);
 
         setCaption(doc->documentName());
         initDisplay();
@@ -1075,6 +1079,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     // check, if this document is already open. If yes, do not do anything
     else{
         QString docName = doc->documentName();
+#if KDAB_PENDING
         QStringList fileParts = QStringList::split(".", url.fileName());
         QString electrodNb;
         if(fileParts.count() < 3) electrodNb = "";
@@ -1100,6 +1105,7 @@ void KlustersApp::openDocumentFile(const QString& url)
 
             QApplication::restoreOverrideCursor();
         }
+#endif
     }
 
     slotStatusMsg(tr("Ready."));
@@ -1197,7 +1203,7 @@ void KlustersApp::readProperties()
 bool KlustersApp::queryClose()
 {  
     //Save the recent file list
-    fileOpenRecent->saveEntries(config);
+    //KDAB_PENDING     fileOpenRecent->saveEntries(config);
     
     //call when the kDockMainWindow will be close
     //implement to ask the user to save if necessary before closing
@@ -1252,9 +1258,11 @@ void KlustersApp::customEvent (QCustomEvent* event){
             //If the requested save location is remote, the temporary file needs now
             //to be uploaded. The save process is made in a thread and it seams that
             //the KDE upload can not be call asynchronously, so the upload is call after the end of the thread.
+#if KDAB_PENDING
             if(!KIO::NetAccess::upload(saveEvent->temporaryFile(),doc->url())){
                 QMessageBox::critical (0,tr("Could not save the current document !"), tr("I/O Error !"));
             }
+#endif
             if(saveEvent->isItSaveAs()){
                 //KDAB_PENDING fileOpenRecent->addURL(doc->url());
                 setCaption(doc->documentName());
@@ -1359,7 +1367,7 @@ void KlustersApp::slotFileClose(){
                 //reset the cluster palette and hide the cluster panel
                 clusterPalette->reset();
                 clusterPanel->hide();
-                clusterPanel->undock();
+                //KDAB_PENDING clusterPanel->undock();
                 //The last display is the mainDock
                 if((mainDock->widget())->isA("KlustersView")) delete mainDock;
                 else{
@@ -1426,9 +1434,8 @@ void KlustersApp::slotFileRenumberAndSave(){
 void KlustersApp::slotFileSaveAs()
 {
     slotStatusMsg(tr("Saving file with a new filename..."));
-
-    QString url=KFileDialog::getSaveURL(QDir::currentPath(),
-                                        tr("*|All files"), this, tr("Save as..."));
+    QString url=QFileDialog::getSaveFileName(this,tr("Save as..."),QDir::currentPath(),
+                                        tr("*|All files") );
     if(!url.isEmpty()){
         //KDAB_PENDING slotStateChanged("SavingState");
         saveThread->save(url,doc,true);
@@ -1450,9 +1457,11 @@ void KlustersApp::slotDisplayClose()
         if(current == mainDock){
             if(tabsParent->currentPageIndex() == 0){
                 mainDock = static_cast<QDockWidget*>(tabsParent->page(1));
-                setMainDockWidget(mainDock);
+                //KDAB_PENDING setMainDockWidget(mainDock);
             }
-            else setMainDockWidget(static_cast<QDockWidget*>(tabsParent->page(0)));
+            else  {
+                //KDAB_PENDING setMainDockWidget(static_cast<QDockWidget*>(tabsParent->page(0)));
+            }
         }
         //Remove the display from the group of tabs
         tabsParent->removePage(current);
@@ -1500,7 +1509,7 @@ void KlustersApp::slotDisplayClose()
             //reset the cluster palette and hide the cluster panel
             clusterPalette->reset();
             clusterPanel->hide();
-            clusterPanel->undock();
+            //KDAB_PENDING clusterPanel->undock();
             //try to close the document
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
@@ -1539,7 +1548,7 @@ void KlustersApp::slotDisplayClose()
             //reset the cluster palette and hide the cluster panel
             clusterPalette->reset();
             clusterPanel->hide();
-            clusterPanel->undock();
+            //KDAB_PENDING clusterPanel->undock();
             //try to close the document
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
@@ -1582,17 +1591,12 @@ void KlustersApp::slotFilePrint()
 
     printer->setOrientation(QPrinter::Landscape);
     printer->setColorMode(QPrinter::Color);
-    //REmove it
-    //printer->addDialogPage(new printDialogPage(this));
 
     if (printer->setup(this))
     {
-        //retrieve the backgroundColor setting from KPrinter object, //1 <=> white background
-        int backgroundColor = printer->option("kde-klusters-backgroundColor").toInt();
         if(!doesActiveDisplayContainProcessWidget()){
             KlustersView* view = activeView();
-            if(backgroundColor == 1) view->print(printer,filePath,true);
-            else view->print(printer,filePath,false);
+            view->print(printer,filePath,false);
         }
         else{
             QDockWidget* dock = static_cast<QDockWidget*>(tabsParent->currentPage());
@@ -2299,7 +2303,7 @@ void KlustersApp::resetState(){
     setCaption("");
 
     //If the a setting dialog exists (has already be open once), disable the settings for the channels.
-    if(prefDialog != 0L) prefDialog->enableChannelSettings(false);
+    //KDAB_PENDING if(prefDialog != 0L) prefDialog->enableChannelSettings(false);
 }
 
 void KlustersApp::slotUpdateCorrelogramsHalfDuration(){
@@ -2500,32 +2504,32 @@ void KlustersApp::slotRecluster(){
         display->setWidget(processWidget);
 
         //Temporarily allow addition of a new dockWidget in the center
-        mainDock->setDockSite(QDockWidget::DockCenter);
+        //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockCenter);
         //Add the new display as a tab and get a new DockWidget, grandParent of the target (mainDock)
         //and the new display.
-        QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
+        //KDAB_PENDING QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
 
         //The grandParent's widget is the QTabWidget regrouping all the tabs
-        tabsParent = static_cast<QTabWidget*>(grandParent->widget());
+        //KDAB_PENDING tabsParent = static_cast<QTabWidget*>(grandParent->widget());
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display changes.
-        connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
+        //KDAB_PENDING connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
         //Back to enable dock to the left side only
-        mainDock->setDockSite(QDockWidget::DockLeft);
+        //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
 
         // forbit docking abilities of display itself
-        display->setEnableDocking(QDockWidget::DockNone);
+        //KDAB_PENDING display->setEnableDocking(QDockWidget::DockNone);
 
         // allow others to dock to the left side only
-        display->setDockSite(QDockWidget::DockLeft);
+        //KDAB_PENDING display->setDockSite(QDockWidget::DockLeft);
 
         //Keep track of the number of displays
         displayCount ++;
 
         //show all the encapsulated widgets of all controlled dockwidgets
-        dockManager->activate();
+        //KDAB_PENDING dockManager->activate();
     }
 
     //Rest the different variables.
@@ -2550,6 +2554,7 @@ void KlustersApp::slotRecluster(){
 }
 
 void KlustersApp::slotProcessExited(QProcess* process){
+#if KDAB_PENDING
     //Check if the process has exited "voluntarily" and if so if it was successful
     if(!process->normalExit() || (process->normalExit() && process->exitStatus())){
         if(process->normalExit() || (!process->normalExit() && !processKilled))
@@ -2650,6 +2655,7 @@ void KlustersApp::slotProcessExited(QProcess* process){
         //KDAB_PENDING slotStateChanged("reclusterViewState");
     }
     QApplication::restoreOverrideCursor();
+#endif
 }
 
 void KlustersApp::slotStopRecluster(){
@@ -2816,11 +2822,13 @@ void KlustersApp::renameActiveDisplay(){
     current = static_cast<QDockWidget*>(tabsParent->currentPage());
 
     bool ok;
+#if KDAB_PENDING
     QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString(), &ok, this, current->tabPageLabel());
     if(!newLabel.isEmpty() && ok){
         tabsParent->setTabLabel(current,newLabel);
-        current->setTabPageLabel(newLabel);
+        //KDAB_PENDING current->setTabPageLabel(newLabel);
     }
+#endif
 }
 
 void KlustersApp::slotShowLabels(){
