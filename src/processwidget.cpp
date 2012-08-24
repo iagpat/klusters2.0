@@ -98,8 +98,12 @@ bool ProcessWidget::startJob(const QString &dir, const QString &command)
     if(!dir.isNull()) {
         childproc->setWorkingDirectory(dir);
     }
+#if KDAB_PENDING
     *childproc << command;
     return childproc->start(QProcess::NotifyOnExit, QProcess::AllOutput);
+#else
+    return false;
+#endif
 }
 
 
@@ -179,14 +183,18 @@ void ProcessWidget::maybeScrollToBottom()
 }
 
 void ProcessWidget::hideWidget(){
+#if KDAB_PENDING
     if(childproc->state() == QProcess::Running) childproc->suspend();
     emit hidden();
+#endif
 }
 
 
 void ProcessWidget::slotOutputTreatmentOver(){
+#if KDAB_PENDING
     childFinished(childproc->normalExit(), childproc->exitStatus());
     emit processOutputsFinished();
+#endif
 }
 
 void ProcessWidget::print(QPrinter *printer, const QString &filePath){
