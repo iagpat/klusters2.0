@@ -235,7 +235,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     cluFileUrl.setFileName(baseName +".clu."+ electrodeGroupID);
     docUrl = cluFileUrl;
     cluFileSaveUrl = QUrl(cluFileUrl);
-    cluFileSaveUrl.setFileName("." + cluFileUrl.fileName() +".autoSave");
+    //KDAB_PENDING cluFileSaveUrl.setFileName("." + cluFileUrl/*.fileName()*/ +".autoSave");
     QUrl fetFileUrl(url);
     fetFileUrl.setFileName(baseName +".fet."+ electrodeGroupID);
 
@@ -249,9 +249,9 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     parFileUrl.setFileName(baseName +".par");
 
     //Download the spike and fet files in temp files if necessary
-    if(!KIO::NetAccess::download(spkFileUrl, tmpSpikeFile)) return SPK_DOWNLOAD_ERROR;
+    //KDAB_PENDING if(!KIO::NetAccess::download(spkFileUrl, tmpSpikeFile)) return SPK_DOWNLOAD_ERROR;
     QString tmpFetFile;
-    if(!KIO::NetAccess::download(fetFileUrl, tmpFetFile)) return FET_DOWNLOAD_ERROR;
+    //KDAB_PENDING if(!KIO::NetAccess::download(fetFileUrl, tmpFetFile)) return FET_DOWNLOAD_ERROR;
 
     //Open the the spike and fet files. Only the fet file will be loaded the spike file
     // will be used on the fly when waveforms will need to be drawn.
@@ -280,7 +280,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     QFile parXFile;
     QFile parFile;
     if(xmlParFileInfo.exists()){
-        if(!KIO::NetAccess::download(xmlParFileUrl,tmpXmlParFile)) return PARXML_DOWNLOAD_ERROR;
+        //KDAB_PENDING if(!KIO::NetAccess::download(xmlParFileUrl,tmpXmlParFile)) return PARXML_DOWNLOAD_ERROR;
         isXmlParExist = true;
         //Check if the generic parameter file also exist, if so, warn the user that the xml format parameter file will be used.
         QFileInfo parFileInfo(parFileUrl);
@@ -296,13 +296,13 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
         }
     }
     else{
-        if(!KIO::NetAccess::download(parXFileUrl, tmpParXFile)) return PARX_DOWNLOAD_ERROR;
+        //KDAB_PENDING if(!KIO::NetAccess::download(parXFileUrl, tmpParXFile)) return PARX_DOWNLOAD_ERROR;
         parXFile.setName(tmpParXFile);
         if(!parXFile.open(QIODevice::ReadOnly)){
             fclose(fetFile);
             return OPEN_ERROR;
         }
-        if(!KIO::NetAccess::download(parFileUrl, tmpParFile)) return PAR_DOWNLOAD_ERROR;
+        //KDAB_PENDING if(!KIO::NetAccess::download(parFileUrl, tmpParFile)) return PAR_DOWNLOAD_ERROR;
         parFile.setName(tmpParFile);
         if(!parFile.open(QIODevice::ReadOnly)){
             fclose(fetFile);
@@ -319,6 +319,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
         if((cluFileInfo.exists() && crashFileInfo.lastModified() > cluFileInfo.lastModified()) ||
                 !cluFileInfo.exists()){
             QApplication::restoreOverrideCursor();
+#if KDAB_PENDING
             switch(KMessageBox::questionYesNo(0,tr("A more recent copy of the cluster file (a rescue file) was found on the disk. This indicates that Klusters crashed while editing these data during a previous session.\n"
                                                    "Do you wish to use the newer copy (The old copy will be saved under another name)?"),
                                               tr("More recent cluster file found"), tr("Use newer copy"), tr("Discard newer copy") ))
@@ -339,10 +340,11 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
                 break;
             }
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
+#endif
         }
     }
 
-
+#if KDAB_PENDING
     //Treat the cluster file separately as it can be empty
     if(KIO::NetAccess::exists(cluFileUrl)){
         if(!KIO::NetAccess::download(cluFileUrl, tmpCluFile)){
@@ -428,7 +430,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
             fclose(fetFile);
         }
     }//end the cluster file does not exist
-
+#endif
 
     //Constructs the clusterColorList
     Q3ValueList<dataType> clusterList = clusteringData->clusterIds();
@@ -538,7 +540,7 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
     //if it was a saveAs, the url has changed, update it
     if(docUrl != saveUrl){
         docUrl = saveUrl;
-        QString fileName = docUrl.fileName();
+        QString fileName = docUrl/*.fileName()*/;
         QStringList fileParts = QStringList::split(".", fileName);
         baseName = fileParts[0];
         if(fileParts.count() > 2) for(uint i = 1;i < fileParts.count()-2; ++i)baseName += "." + fileParts[i];
@@ -546,7 +548,7 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
         else electrodeGroupID = fileParts[fileParts.count()-1];
 
         QString xmlParFileUrl(saveUrl);
-        xmlParFileUrl.setFileName(baseName +".xml");
+        //KDAB_PENDING xmlParFileUrl.setFileName(baseName +".xml");
         xmlParameterFile = xmlParFileUrl;
     }
 
@@ -630,7 +632,8 @@ bool KlustersDoc::canCloseView(){
 }
 
 QString KlustersDoc::documentName(){
-    return docUrl.directory() + "/" + baseName + "-" + electrodeGroupID;
+    //KDAB_PENDING return docUrl.directory() + "/" + baseName + "-" + electrodeGroupID;
+    return QString();
 }
 
 QString KlustersDoc::documentBaseName(){
@@ -638,7 +641,8 @@ QString KlustersDoc::documentBaseName(){
 }
 
 QString KlustersDoc::documentDirectory(){
-    return docUrl.directory();
+    //KDAB_PENDING return docUrl.directory();
+    return QString();
 }
 
 void KlustersDoc::setGain(int acquisitionGain){
