@@ -15,8 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-//General C++ include files
-#include <iostream>
 //Added by qt3to4:
 #include <Q3ValueList>
 #include <Q3PtrList>
@@ -26,7 +24,6 @@
 #include <QCloseEvent>
 #include <QAction>
 #include <QMenu>
-using namespace std;
 
 // include files for Qt
 #include <qpainter.h>

@@ -26,9 +26,6 @@
 //include files for the application
 #include "channellist.h"
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 
 ChannelList::ChannelList(QWidget * parent, const char * name, Qt::WFlags f):Q3ListBox( parent, name, f ){

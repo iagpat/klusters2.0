@@ -25,13 +25,13 @@
 #include <math.h>
 #include <stdio.h>
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
-GroupingAssistant::GroupingAssistant():existCluster1(false),initIndex(1),haveToStopComputing(false){
+GroupingAssistant::GroupingAssistant():existCluster1(false),initIndex(1),haveToStopComputing(false)
+{
 }
-GroupingAssistant::~GroupingAssistant(){
+
+GroupingAssistant::~GroupingAssistant()
+{
 }
 
 Array<double>* GroupingAssistant::computeMeanProbabilities(Data& clusteringData,Q3ValueList<int>& clusterList,Q3ValueList<int>& computedClusterList,Q3ValueList<int>& ignoreClusterIndex){

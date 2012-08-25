@@ -38,9 +38,6 @@
 #include "viewwidget.h"
 #include "types.h"
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 class KlustersDoc;
 class KlustersView;

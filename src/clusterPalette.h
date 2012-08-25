@@ -28,9 +28,6 @@
 
 class QStatusBar;
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 class Q3IconView;
 class Q3IconViewItem;

@@ -33,9 +33,6 @@
 #include <QMouseEvent>
 #include <QEvent>
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 ErrorMatrixView::ErrorMatrixView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar* statusBar,QWidget *parent,const char* name,int minSize, int 
                                  maxSize, int windowTopLeft ,int windowBottomRight,int border) :

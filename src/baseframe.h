@@ -29,10 +29,6 @@
 //include files for the application
 #include "zoomwindow.h"
 
-//General C++ include files
-#include <iostream>
-using namespace std;
-
 /**
   * Frame base class containing the following features:
   * <ul>
@@ -79,12 +75,12 @@ public:
    * to the part of the drawing which will actually be drawn onto the widget).
    * @param border size of the border between the frame and the contents.
    */
-    BaseFrame(int Xborder,int Yborder,QWidget* parent=0, const char* name=0,QColor backgroundColor = Qt::black,
+    BaseFrame(int Xborder,int Yborder,QWidget* parent=0, const char* name=0,const QColor &backgroundColor = Qt::black,
               int minSize = 500, int maxSize = 4000, int windowTopLeft = -500,int windowBottomRight = 1001, int border = 0);
     ~BaseFrame();
 
     /**Signals that the widget is about to be deleted.*/
-    virtual inline void willBeKilled(){};
+    virtual inline void willBeKilled(){}
 
     /**Sets the borders of the frame.
    * @param x border on the left and right sides inside the window (QRect corresponding
@@ -95,18 +91,18 @@ public:
     inline void setBorders(int x,int y){
         Xborder = x;
         Yborder = y;
-    };
+    }
 
 public slots:
 
     /**Update the information presented in the view if need it.*/
-    virtual inline void updateDrawing(){};
+    virtual inline void updateDrawing(){}
 
     /***If the frame is contained in a dockWidget, this slot can be used
   * when the enclosing dockwidget is being closed.
   * Emits the parentDockBeingClosed signal.
   */
-    virtual inline void dockBeingClosed(){emit parentDockBeingClosed(this);};
+    virtual inline void dockBeingClosed(){emit parentDockBeingClosed(this);}
 
     /***Changes the color of the background.*/
     virtual void changeBackgroundColor(QColor color);
@@ -114,7 +110,7 @@ public slots:
     /**Change the current mode, call by a selection of a tool.
   * @param selectedMode new mode of drawing.
   */
-    virtual inline void setMode(BaseFrame::Mode selectedMode){mode = selectedMode;};
+    virtual inline void setMode(BaseFrame::Mode selectedMode){mode = selectedMode;}
 
 signals:
     /***Signals that the enclosing dockwidget is being closed
@@ -170,7 +166,7 @@ protected:
   */
     inline QPoint viewportToWorld(const QPoint& point){
         return viewportToWorld(point.x(), point.y());
-    };
+    }
 
     /**
   * Translates a point (@p wx, @p wy) in the world to a QPoint on the viewport (relative to the widget).
@@ -188,7 +184,7 @@ protected:
   */
     inline QPoint worldToViewport(const QPoint& point){
         return worldToViewport(point.x(), point.y());
-    };
+    }
 
     /**
   * Translates the abscissa @p wx  in the world to the abscissa on the viewport (relative to the widget).
@@ -217,7 +213,7 @@ protected:
     inline long worldToViewportWidth(long width){
         float widthRatio = (static_cast<float>(viewport.width())/static_cast<float>(((QRect)window).width()));
         return static_cast<long>(width * widthRatio);
-    };
+    }
 
     /**
   * Translates the height @p height in the world to a height on the viewport (relative to the widget).
@@ -227,7 +223,7 @@ protected:
     inline long worldToViewportHeight(long height){
         float heightRatio = (static_cast<float>(viewport.height())/static_cast<float>(((QRect)window).height()));
         return static_cast<long>(height * heightRatio);
-    };
+    }
 
     /**
   * Translates the width @p width on the viewport (relative to the widget) to a width in the world.
@@ -237,7 +233,7 @@ protected:
     inline long viewportToWorldWidth(long width){
         float widthRatio = (static_cast<float>(((QRect)window).width())/static_cast<float>(viewport.width()));
         return static_cast<long>(width * widthRatio);
-    };
+    }
 
     /**
   * Translates the height @p height on the viewport (relative to the widget) to a height in the world.
@@ -247,7 +243,7 @@ protected:
     inline long viewportToWorldHeight(long height){
         float heightRatio = (static_cast<float>(((QRect)window).height())/static_cast<float>(viewport.height()));
         return static_cast<long>(height * heightRatio);
-    };
+    }
 
     /** Sets if a rubber band has to be drawn while the mode is not ZOOM, and how it sould be drawn.
   * @param draw true if a rubber band has to be drawn, false otherwise.
@@ -256,7 +252,7 @@ protected:
     inline void drawRubberBand(bool draw,bool vertical = false){
         isRubberBandToBeDrawn = draw;
         wholeHeightRectangle = vertical;
-    };
+    }
 
     //Members
 

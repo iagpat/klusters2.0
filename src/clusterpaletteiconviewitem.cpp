@@ -23,9 +23,6 @@
 //includes pour QT
 #include <qpixmap.h>
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(Q3IconView* parent, QString label)
     :Q3IconViewItem(parent, label)

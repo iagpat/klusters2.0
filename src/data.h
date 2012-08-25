@@ -36,13 +36,9 @@
 #include <qthread.h>
 
 
-//include files for common C/c++
-#include <iostream>
 #include <stdexcept>
 #include <math.h>
 #include <vector>
-
-using namespace std;
 
 // forward declaration
 class MinMaxThread;

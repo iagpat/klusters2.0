@@ -25,9 +25,6 @@
 //Added by qt3to4:
 #include <Q3ValueList>
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 /**
   * This is the one and only configuration object.

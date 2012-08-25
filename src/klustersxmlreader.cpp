@@ -20,11 +20,7 @@
 #include "tags.h"
 #include "clusteruserinformation.h"
 
-//General C++ include files
-#include <iostream>
-//Added by qt3to4:
 #include <Q3ValueList>
-using namespace std;
 
 //include files for QT
 #include <qfileinfo.h>

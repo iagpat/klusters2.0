@@ -28,11 +28,7 @@
 //includes files for KDE
 
 
-//General C++ include files
-#include <iostream>
 #include <stdlib.h>
-
-using namespace std;
 
 TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvider& tracesProvider,bool multiColumns,bool verticalLines,
                          bool raster,bool waveforms,bool labelsDisplay,Q3ValueList<int>& channelsToDisplay,int gain,int acquisitionGain,

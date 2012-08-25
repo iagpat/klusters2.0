@@ -41,10 +41,7 @@
 //Unix include file
 #include <unistd.h>
 
-//General C++ include files
-#include <iostream>
 #include <iomanip> // Required for formated I/O.
-using namespace std;
 
 // application specific includes
 #include "clustersprovider.h"

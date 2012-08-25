@@ -26,12 +26,8 @@
 #include <qfile.h>
 #include <qfileinfo.h>
  
-//General C++ include files
-#include <iostream>
 #include <fstream>
 #include <stdlib.h>
-
-using namespace std;
 
 /**
 @author Lynn Hazan

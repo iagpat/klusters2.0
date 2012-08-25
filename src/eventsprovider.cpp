@@ -23,8 +23,6 @@
 #include <Q3ValueList>
 #include <QDebug>
 
-//General C++ include files
-#include <iostream>
 #include <fstream>
 #include <iomanip> // Required for formated I/O.
 using namespace std;

@@ -24,8 +24,6 @@
 #include "waveformthread.h"
 #include "types.h"
 
-//General C,C++ include files
-#include <iostream>
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -42,10 +40,6 @@
 #include <QMouseEvent>
 #include <QEvent>
 
-// include files for kde
-
-
-using namespace std;
 
 const int WaveformView::XMARGIN = 0;
 const int WaveformView::YMARGIN = 0;

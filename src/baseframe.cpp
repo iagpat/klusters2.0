@@ -28,12 +28,8 @@
 
 //include files for c/c++ libraries
 #include <math.h>
-#include <iostream>
-#include <stdlib.h>
 
-using namespace std;
-
-BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,QColor backgroundColor,
+BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,const QColor& backgroundColor,
                       int minSize,int maxSize ,int windowTopLeft ,int windowBottomRight,int border):
     Q3Frame(parent,name,Qt::WRepaintNoErase|Qt::WResizeNoErase),
     MIN_SIZE(minSize),MAX_SIZE(maxSize),BORDER(border),WINDOW_TOP_LEFT(windowTopLeft),WINDOW_BOTTOM_RIGHT(windowBottomRight),
@@ -51,8 +47,10 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,Q
     int s;
     int v;
     backgroundColor.hsv(&h,&s,&v);
-    if((s <= 80 && v >= 240) || (s <= 40 && v >= 220)) colorLegend = Qt::black;
-    else colorLegend = Qt::white;
+    if((s <= 80 && v >= 240) || (s <= 40 && v >= 220))
+        colorLegend = Qt::black;
+    else
+        colorLegend = Qt::white;
 
 
     //Set the minimum size to ensure that the frame rectangle may never be null or invalid.
@@ -73,8 +71,10 @@ void BaseFrame::changeBackgroundColor(QColor color){
     int s;
     int v;
     color.hsv(&h,&s,&v);
-    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) colorLegend = Qt::black;
-    else colorLegend = Qt::white;
+    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
+        colorLegend = Qt::black;
+    else
+        colorLegend = Qt::white;
     drawContentsMode = REDRAW;
 }
 

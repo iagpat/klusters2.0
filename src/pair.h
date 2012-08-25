@@ -22,8 +22,6 @@
 #include <qstring.h>
 
 
-//General C++ include files
-#include <iostream>
 #include <stdlib.h>
 using namespace std;
 

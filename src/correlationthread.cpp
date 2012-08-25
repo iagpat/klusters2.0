@@ -22,8 +22,6 @@
 //Added by qt3to4:
 #include <Q3ValueList>
 
-//General C++ include files
-#include <iostream>
 #include <math.h>
 #include <stdlib.h>
 

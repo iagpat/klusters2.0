@@ -22,8 +22,6 @@
 #include "correlationthread.h"
 #include "correlationview.h"
 
-//General C++ include files
-#include <iostream>
 #include <math.h>
 #include <stdlib.h>
 
@@ -38,10 +36,6 @@
 #include <QMouseEvent>
 #include <QEvent>
 
-// include files for kde
-
-
-using namespace std;
 
 const int CorrelationView::XMARGIN = 10;
 const int CorrelationView::YMARGIN = 0;
