@@ -87,9 +87,6 @@ KlustersApp::KlustersApp()
     //create the thread which will be used to save the cluster file
     saveThread = new SaveThread(this);
 
-    //Prepare the actions
-    initActions();
-
     createMenus();
 
     //Prepare the spineboxes and line edit
@@ -454,16 +451,22 @@ void KlustersApp::createMenus()
 
 }
 
-void KlustersApp::initActions()
+void KlustersApp::createToolBar()
 {
+    mActionBar = new QToolBar(tr("Actions"));
+    addToolBar(mActionBar);
 
+    mToolBar = new QToolBar(tr("Tools"));
+    addToolBar(mToolBar);
+
+
+    mClusterBar = new QToolBar(tr("Clusters Actions"));
+    addToolBar(mClusterBar);
 }
 
 void KlustersApp::initSelectionBoxes(){
     QFont font("Helvetica",9);
 
-    QToolBar *topBar = new QToolBar(tr("Tools"));
-    addToolBar(Qt::TopToolBarArea, topBar);
 
     paramBar = addToolBar(tr("Parameters"));
 
@@ -906,16 +909,14 @@ void KlustersApp::openDocumentFile(const QString& url)
 #if KDAB_PENDING
     if(url.protocol() == "file"){
         if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
-            QString title = "File not found: ";
-            title.append(filePath);
-            int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists, do you want to remove it from the list?"), tr(title.toLatin1()));
+            QString title = tr("File not found: %1").arg(filePath);
+            int answer = QMessageBox::question(this,title, tr("The selected file no longer exists, do you want to remove it from the list?"),QMessageBox::Yes|QMessageBox::No);
             if(answer == QMessageBox::Yes) {
                 //KDAB_PENDING fileOpenRecent->removeURL(url);
-            }
-            else  {
+            }else  {
                 //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
             }
-            filePath = "";
+            filePath.clear();
             slotStatusMsg(tr("Ready."));
             return;
         }
@@ -1230,7 +1231,7 @@ void KlustersApp::customEvent (QCustomEvent* event){
             //the KDE upload can not be call asynchronously, so the upload is call after the end of the thread.
 #if KDAB_PENDING
             if(!KIO::NetAccess::upload(saveEvent->temporaryFile(),doc->url())){
-                QMessageBox::critical (0,tr("Could not save the current document !"), tr("I/O Error !"));
+                QMessageBox::critical (0,, tr("I/O Error !"),tr("Could not save the current document !"));
             }
 #endif
             if(saveEvent->isItSaveAs()){
@@ -1677,6 +1678,7 @@ void KlustersApp::slotViewMainToolBar()
 }
 
 void KlustersApp::slotViewActionBar(){
+
     slotStatusMsg(tr("Toggle the action..."));
 
     // turn Toolbar on or off

@@ -44,12 +44,12 @@ public:
     //The default saving interval is 5 minutes.
     inline AutoSaveThread(Data& d, KlustersDoc* doc,QString saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
         qDebug()<<"in constructor AutoSaveThread";
-    };
+    }
 
     inline void removeTmpFile(){
         //delete the temporary files
         QFile::remove(autoSaveUrl);
-    };
+    }
     void run();
 
     class AutoSaveEvent;

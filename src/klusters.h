@@ -429,8 +429,7 @@ private slots:
 private:
     void createMenus();
 
-    /** Initializes the QActions of the application */
-    void initActions();
+    void createToolBar();
 
     /**Initializes the different parameter widgets.*/
     void initSelectionBoxes();
@@ -492,6 +491,11 @@ private:
     */
     QTabWidget* tabsParent;
 
+    QToolBar* paramBar;
+    QToolBar* mActionBar;
+    QToolBar* mToolBar;
+    QToolBar* mClusterBar;
+
     
     //Action and toolbar pointers
     QAction* fileOpenRecent;
@@ -514,7 +518,6 @@ private:
     QAction* scaleByMax;
     QAction* scaleByShouler;
     QAction* shoulderLine;
-    QToolBar* paramBar;
     QAction* showHideLabels;
 
     QAction *mRenameActiveDisplay;

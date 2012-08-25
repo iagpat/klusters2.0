@@ -185,12 +185,13 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
 
         QMessageBox::critical(this,QObject::tr("IO Error"), QObject::tr("An error has occured, the data file could not be opened or the file size is incorrect."));
         if(mode == SELECT) setCursor(selectCursor);
-        if(mode == ZOOM) setCursor(zoomCursor);
-        if(mode == MEASURE) setCursor(measureCursor);
-        if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        if(mode == ADD_EVENT) setCursor(addEventCursor);
-        if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        else if(mode == ZOOM) setCursor(zoomCursor);
+        else if(mode == MEASURE) setCursor(measureCursor);
+        else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
+        else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
+        else if(mode == ADD_EVENT) setCursor(addEventCursor);
+        else if(mode == DRAW_LINE) setCursor(drawLineCursor);
+
         return;
     }
 
@@ -203,12 +204,12 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
     //No clusters or events selected
     if(clustersData.count() == 0 && eventsData.count() == 0){
         if(mode == SELECT) setCursor(selectCursor);
-        if(mode == ZOOM) setCursor(zoomCursor);
-        if(mode == MEASURE) setCursor(measureCursor);
-        if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        if(mode == ADD_EVENT) setCursor(addEventCursor);
-        if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        else if(mode == ZOOM) setCursor(zoomCursor);
+        else if(mode == MEASURE) setCursor(measureCursor);
+        else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
+        else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
+        else if(mode == ADD_EVENT) setCursor(addEventCursor);
+        else if(mode == DRAW_LINE) setCursor(drawLineCursor);
 
         //Everything has to be redraw
         repaint(false);
@@ -228,12 +229,12 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
         }
         if(ready){
             if(mode == SELECT) setCursor(selectCursor);
-            if(mode == ZOOM) setCursor(zoomCursor);
-            if(mode == MEASURE) setCursor(measureCursor);
-            if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-            if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-            if(mode == ADD_EVENT) setCursor(addEventCursor);
-            if(mode == DRAW_LINE) setCursor(drawLineCursor);
+            else if(mode == ZOOM) setCursor(zoomCursor);
+            else if(mode == MEASURE) setCursor(measureCursor);
+            else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
+            else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
+            else if(mode == ADD_EVENT) setCursor(addEventCursor);
+            else if(mode == DRAW_LINE) setCursor(drawLineCursor);
 
             //Everything has to be redraw
             repaint(false);
@@ -264,12 +265,12 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator,QString p
     }
     if(dataReady && ready){
         if(mode == SELECT) setCursor(selectCursor);
-        if(mode == ZOOM) setCursor(zoomCursor);
-        if(mode == MEASURE) setCursor(measureCursor);
-        if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        if(mode == ADD_EVENT) setCursor(addEventCursor);
-        if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        else if(mode == ZOOM) setCursor(zoomCursor);
+        else if(mode == MEASURE) setCursor(measureCursor);
+        else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
+        else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
+        else if(mode == ADD_EVENT) setCursor(addEventCursor);
+        else if(mode == DRAW_LINE) setCursor(drawLineCursor);
 
         //Everything has to be redraw
         drawContentsMode = REDRAW;
@@ -300,12 +301,12 @@ void TraceView::dataAvailable(Array<dataType>& times,Array<int>& ids,QObject* in
     }
     if(dataReady && ready){
         if(mode == SELECT) setCursor(selectCursor);
-        if(mode == ZOOM) setCursor(zoomCursor);
-        if(mode == MEASURE) setCursor(measureCursor);
-        if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        if(mode == ADD_EVENT) setCursor(addEventCursor);
-        if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        else if(mode == ZOOM) setCursor(zoomCursor);
+        else if(mode == MEASURE) setCursor(measureCursor);
+        else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
+        else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
+        else if(mode == ADD_EVENT) setCursor(addEventCursor);
+        else if(mode == DRAW_LINE) setCursor(drawLineCursor);
 
         //Everything has to be redraw
         drawContentsMode = REDRAW;
