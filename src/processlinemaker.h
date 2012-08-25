@@ -25,9 +25,6 @@
 #include <qobject.h>
 
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 // forward declaration 
 class QProcess;

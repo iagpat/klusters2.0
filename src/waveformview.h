@@ -34,9 +34,6 @@
 #include "zoomwindow.h"
 #include "viewwidget.h"
 
-//C, C++ include files
-#include <iostream>
-using namespace std;
 
 
 // forward declaration

@@ -19,10 +19,7 @@
 //#define _LARGEFILE_SOURCE already defined in /usr/include/features.h
 #define _FILE_OFFSET_BITS 64
 
-//General C++ include files
-#include <iostream>
 #include <fstream>
-using namespace std;
 #include <QDebug>
 
 //include files for the application
