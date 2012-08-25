@@ -129,17 +129,6 @@ protected:
      * so it can safely be closed later (without user interaction).
      */
     bool queryExit();
-    /**
-     * This function is called when it is time for Klusters to save its
-     * properties for session management purposes.
-     */
-    void saveProperties();
-    /**
-     * This function is called when this Klusters is restored. The KConfig
-     * object points to the session management config file that was saved.
-     * with @ref saveProperties
-     */
-    void readProperties();
     
     void customEvent (QCustomEvent* event);
     
@@ -168,6 +157,8 @@ public slots:
 
     /**Initializes some of the variables defined in the settings (preferences).*/
     void initializePreferences();
+
+    void slotStateChanged(const QString& state);
 
 private slots:
     /** Open a file and load it into the document.*/

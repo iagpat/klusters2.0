@@ -108,7 +108,7 @@ KlustersApp::KlustersApp()
     //KDAB_PENDING fileOpenRecent->loadEntries(config);
 
     //Disable some actions at startup (see the klustersui.rc file)
-    //KDAB_PENDING slotStateChanged("initState");
+    slotStateChanged("initState");
 }
 
 KlustersApp::~KlustersApp()
@@ -780,7 +780,7 @@ void KlustersApp::initDisplay(){
     //KDAB_PENDING dockManager->activate();
 
     //Enable some actions now that a document is open (see the klustersui.rc file)
-    //KDAB_PENDING slotStateChanged("documentState");
+    slotStateChanged("documentState");
 }
 
 void KlustersApp::createDisplay(KlustersView::DisplayType type)
@@ -879,7 +879,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //the active display change.
         //KDAB_PENDING connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
-        //KDAB_PENDING slotStateChanged("tabState");
+        slotStateChanged("tabState");
 
         //Back to enable dock to the left side only
         //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
@@ -1071,7 +1071,7 @@ void KlustersApp::openDocumentFile(const QString& url)
         //A traceView is possible only if the variables it needs are available (provided in the new parameter file) and
         //the .dat file exists.
         if(doc->areTraceDataAvailable() && doc->isTraceViewVariablesAvailable()) {
-            //KDAB_PENDING slotStateChanged("traceDisplayState");
+            slotStateChanged("traceDisplayState");
         }
 
         QApplication::restoreOverrideCursor();
@@ -1169,36 +1169,6 @@ KlustersView* KlustersApp::activeView(){
     return static_cast<KlustersView*>(current->widget());
 }
 
-void KlustersApp::saveProperties()
-{
-#if KDAB_PENDING
-    // the 'config' object points to the session managed
-    // config file.  anything you write here will be available
-    // later when this app is restored
-
-    //Save the recent file list
-    fileOpenRecent->saveEntries(config);
-    config->writePathEntry("openFile",filePath);
-#endif
-}
-
-void KlustersApp::readProperties()
-{
-#if KDAB_PENDING
-    // the 'config' object points to the session managed
-    // config file.  this function is automatically called whenever
-    // the app is being restored.  read in here whatever you wrote
-    // in 'saveProperties'
-
-    // initialize the recent file list
-    fileOpenRecent->loadEntries(config);
-    filePath = config->readPathEntry("openFile");
-    QString url;
-    url.setPath(filePath);
-    openDocumentFile(url);
-#endif
-}
-
 //TO implement , see documentation
 bool KlustersApp::queryClose()
 {  
@@ -1272,7 +1242,7 @@ void KlustersApp::customEvent (QCustomEvent* event){
             QMessageBox::critical (0,tr("Could not save the current document !"), tr("I/O Error !"));
 
         slotStatusMsg(tr("Ready."));
-        //KDAB_PENDING slotStateChanged("SavingDoneState");
+        slotStateChanged("SavingDoneState");
     }
     //Event sent by klusterDoc to advice that there is some threads still running.
     if(event->type() == QEvent::User + 400){
@@ -1420,13 +1390,13 @@ void KlustersApp::slotFileSave()
 {
     slotStatusMsg(tr("Saving file..."));
 
-    //KDAB_PENDING slotStateChanged("SavingState");
+    slotStateChanged("SavingState");
     saveThread->save(doc->url(),doc,false);
 }
 
 void KlustersApp::slotFileRenumberAndSave(){
     slotStatusMsg(tr("Renumbering and saving..."));
-    //KDAB_PENDING slotStateChanged("SavingState");
+    slotStateChanged("SavingState");
     doc->renumberClusters();
     slotFileSave();
 }
@@ -1437,7 +1407,7 @@ void KlustersApp::slotFileSaveAs()
     QString url=QFileDialog::getSaveFileName(this,tr("Save as..."),QDir::currentPath(),
                                         tr("*|All files") );
     if(!url.isEmpty()){
-        //KDAB_PENDING slotStateChanged("SavingState");
+        slotStateChanged("SavingState");
         saveThread->save(url,doc,true);
     }
 }
@@ -1468,7 +1438,7 @@ void KlustersApp::slotDisplayClose()
         displayCount --;
         //If there is only one display left, the group of tabs will be deleted so we set tabsParent to null
         if(nbOfTabs == 2){
-            //KDAB_PENDING slotStateChanged("noTabState");
+            slotStateChanged("noTabState");
             tabsParent = 0L;
         }
 
@@ -1479,7 +1449,7 @@ void KlustersApp::slotDisplayClose()
 
             //Update the Displays menu if the current display is a grouping assistant.
             if(view->containsErrorMatrixView()){
-                //KDAB_PENDING slotStateChanged("groupingAssistantDisplayNotExists");
+                slotStateChanged("groupingAssistantDisplayNotExists");
                 errorMatrixExists = false;
             }
 
@@ -1642,11 +1612,11 @@ void KlustersApp::slotUndo()
     //Update the browsing possibility of the traceView
     KlustersView* view = activeView();
     if(view->containsTraceView() && view->clusters().size() != 0) {
-        //KDAB_PENDING slotStateChanged("traceViewBrowsingState");
+        slotStateChanged("traceViewBrowsingState");
     }
     else
     {
-        //KDAB_PENDING slotStateChanged("noTraceViewBrowsingState");
+        slotStateChanged("noTraceViewBrowsingState");
     }
 
     slotStatusMsg(tr("Ready."));
@@ -1663,10 +1633,10 @@ void KlustersApp::slotRedo()
     KlustersView* view = activeView();
     if(view->containsTraceView() && view->clusters().size() != 0)
     {
-        //KDAB_PENDING slotStateChanged("traceViewBrowsingState");
+        slotStateChanged("traceViewBrowsingState");
     }
     else  {
-        //KDAB_PENDING slotStateChanged("noTraceViewBrowsingState");
+        slotStateChanged("noTraceViewBrowsingState");
     }
 
     slotStatusMsg(tr("Ready."));
@@ -1675,17 +1645,17 @@ void KlustersApp::slotRedo()
 void KlustersApp::slotUpdateUndoNb(int undoNb){
     currentNbUndo = undoNb;
     if(currentNbUndo > 0) {
-        //KDAB_PENDING slotStateChanged("undoState");
+        slotStateChanged("undoState");
     }
     else {
-        //KDAB_PENDING slotStateChanged("emptyUndoState");
+        slotStateChanged("emptyUndoState");
     }
 }
 
 void KlustersApp::slotUpdateRedoNb(int redoNb){
     currentNbRedo = redoNb;
     if(currentNbRedo == 0) {
-        //KDAB_PENDING slotStateChanged("emptyRedoState");
+        slotStateChanged("emptyRedoState");
     }
 }
 
@@ -1826,7 +1796,7 @@ void KlustersApp::slotWindowNewGroupingAssistantDisplay()
     slotStatusMsg(tr("Opening a new grouping assistant view..."));
 
     createDisplay(KlustersView::GROUPING_ASSISTANT_VIEW);
-    //KDAB_PENDING slotStateChanged("groupingAssistantDisplayExists");
+    slotStateChanged("groupingAssistantDisplayExists");
     errorMatrixExists = true;
 
     slotStatusMsg(tr("Ready."));
@@ -1954,11 +1924,11 @@ void KlustersApp::slotUpdateShownClusters(Q3ValueList<int> selectedClusters){
 
         //Update the browsing possibility of the traceView
         if(activeView()->containsTraceView() && selectedClusters.size() != 0) {
-            //KDAB_PENDING slotStateChanged("traceViewBrowsingState");
+            slotStateChanged("traceViewBrowsingState");
         }
         else{
 
-            //KDAB_PENDING slotStateChanged("noTraceViewBrowsingState");
+            slotStateChanged("noTraceViewBrowsingState");
         }
 
         KlustersView* view = activeView();
@@ -1983,11 +1953,11 @@ void KlustersApp::slotMoveClustersToNoise(Q3ValueList<int> selectedClusters){
 
     //Update the browsing possibility of the traceView
     if(view->containsTraceView() && view->clusters().size() != 0) {
-        //KDAB_PENDING slotStateChanged("traceViewBrowsingState");
+        slotStateChanged("traceViewBrowsingState");
     }
     else{
 
-        //KDAB_PENDING slotStateChanged("noTraceViewBrowsingState");
+        slotStateChanged("noTraceViewBrowsingState");
     }
 
     QApplication::restoreOverrideCursor();
@@ -2002,10 +1972,10 @@ void KlustersApp::slotMoveClustersToArtefact(Q3ValueList<int> selectedClusters){
 
     //Update the browsing possibility of the traceView
     if(view->containsTraceView() && view->clusters().size() != 0) {
-        //KDAB_PENDING slotStateChanged("traceViewBrowsingState");
+        slotStateChanged("traceViewBrowsingState");
     }
     else {
-        //KDAB_PENDING slotStateChanged("noTraceViewBrowsingState");
+        slotStateChanged("noTraceViewBrowsingState");
     }
 
     QApplication::restoreOverrideCursor();
@@ -2015,13 +1985,13 @@ void KlustersApp::slotMoveClustersToArtefact(Q3ValueList<int> selectedClusters){
 
 void KlustersApp::slotImmediateSelection(){
     //Disable the update action (see the klustersui.rc file)
-    //KDAB_PENDING slotStateChanged("immediateSelectionState");
+    slotStateChanged("immediateSelectionState");
     clusterPalette->setImmediateMode();
     clusterPalette->updateClusters();
 }
 void KlustersApp::slotDelaySelection(){
     //Enable the update action (see the klustersui.rc file)
-    //KDAB_PENDING slotStateChanged("delaySelectionState");
+    slotStateChanged("delaySelectionState");
     clusterPalette->setDelayMode();
 }
 
@@ -2037,7 +2007,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
 
         //The select time tool is useful only if both a clusterView and a traceView are present
         if(activeView->containsClusterView() && activeView->containsTraceView()) {
-            //KDAB_PENDING slotStateChanged("traceViewClusterViewState");
+            slotStateChanged("traceViewClusterViewState");
         }
 
         if(activeView->containsClusterView()){
@@ -2046,20 +2016,20 @@ void KlustersApp::slotTabChange(QWidget* widget){
             int y =  activeView->ordinateDimension();
             dimensionX->setValue(x);
             dimensionY->setValue(y);
-            //KDAB_PENDING slotStateChanged("clusterViewState");
+            slotStateChanged("clusterViewState");
             dimensionX->show();
             dimensionY->show();
             featureXLabel->show();
         }
         else{
-            //KDAB_PENDING slotStateChanged("noClusterViewState");
+            slotStateChanged("noClusterViewState");
             dimensionX->hide();
             dimensionY->hide();
             featureXLabel->hide();
         }
 
         if(activeView->containsWaveformView()){
-            //KDAB_PENDING slotStateChanged("waveformsViewState");
+            slotStateChanged("waveformsViewState");
             if(activeView->isOverLayPresentation()) overlayPresentation->setChecked(true);
             else overlayPresentation->setChecked(false);
             if(activeView->isMeanPresentation()) meanPresentation->setChecked(true);
@@ -2094,7 +2064,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
             timeFrameMode->setChecked(false);
             overlayPresentation->setChecked(false);
             meanPresentation->setChecked(false);
-            //KDAB_PENDING slotStateChanged("noWaveformsViewState");
+            slotStateChanged("noWaveformsViewState");
             duration->hide();
             durationLabel->hide();
             start->hide();
@@ -2104,7 +2074,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
         }
 
         if(activeView->containsCorrelationView()){
-            //KDAB_PENDING slotStateChanged("correlationViewState");
+            slotStateChanged("correlationViewState");
             Data::ScaleMode correlationScale = activeView->scaleMode();
             switch(correlationScale){
             case Data::RAW :
@@ -2131,7 +2101,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
             shoulderLine->setChecked(activeView->isShoulderLine());
         }
         else{
-            //KDAB_PENDING slotStateChanged("noCorrelationViewState");
+            slotStateChanged("noCorrelationViewState");
             correlogramsHalfDuration->hide();
             correlogramsHalfDurationLabel->hide();
             binSizeBox->hide();
@@ -2139,29 +2109,29 @@ void KlustersApp::slotTabChange(QWidget* widget){
         }
 
         if(activeView->containsErrorMatrixView()){
-            //KDAB_PENDING slotStateChanged("errorMatrixViewState");
+            slotStateChanged("errorMatrixViewState");
         }
         else{
 
-            //KDAB_PENDING slotStateChanged("noErrorMatrixViewState");
+            slotStateChanged("noErrorMatrixViewState");
         }
 
         if(activeView->containsTraceView()){
             showHideLabels->setChecked(activeView->getLabelStatus());
             activeView->updateClustersProvider();
-            //KDAB_PENDING slotStateChanged("traceViewState");
+            slotStateChanged("traceViewState");
 
             //Update the browsing possibility of the traceView
             if(activeView->clusters().size() != 0) {
-                //KDAB_PENDING slotStateChanged("traceViewBrowsingState");
+                slotStateChanged("traceViewBrowsingState");
             }
             else{
-                //KDAB_PENDING slotStateChanged("noTraceViewBrowsingState");
+                slotStateChanged("noTraceViewBrowsingState");
             }
         }
         else{
 
-            //KDAB_PENDING slotStateChanged("noTraceViewState");
+            slotStateChanged("noTraceViewState");
         }
 
         isInit = false; //now a change in a spine box  or the lineedit
@@ -2173,11 +2143,11 @@ void KlustersApp::slotTabChange(QWidget* widget){
 
         //Check if a reclustering process is working in order to correctly set up the menus
         if(processFinished){
-            //KDAB_PENDING slotStateChanged("noReclusterState");
+            slotStateChanged("noReclusterState");
             updateUndoRedoDisplay();
         }
         else{
-            //KDAB_PENDING slotStateChanged("reclusterState");
+            slotStateChanged("reclusterState");
         }
     }
     else{// a ProcessWidget
@@ -2205,7 +2175,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
             clusterPalette->selectItems(emptyList);
         }
 
-        //KDAB_PENDING slotStateChanged("reclusterViewState");
+        slotStateChanged("reclusterViewState");
     }
 }
 
@@ -2295,10 +2265,10 @@ void KlustersApp::resetState(){
     filePath = "";
 
     //Disable some actions when no document is open (see the klustersui.rc file)
-    //KDAB_PENDING slotStateChanged("initState");
+    slotStateChanged("initState");
     //A traceView is possible only if the variables it needs are available (provided in the new parameter file) and
     //the .dat file exists. Therefore disable the menu entry by default.
-    //KDAB_PENDING slotStateChanged("noTraceDisplayState");
+    slotStateChanged("noTraceDisplayState");
 
     setCaption("");
 
@@ -2537,7 +2507,7 @@ void KlustersApp::slotRecluster(){
     processFinished = false;
     processOutputsFinished = false;
     processKilled = false;
-    //KDAB_PENDING slotStateChanged("reclusterState");
+    slotStateChanged("reclusterState");
 
     //Start the process
     bool status;
@@ -2548,7 +2518,7 @@ void KlustersApp::slotRecluster(){
                                                      "One possible reason is that the automatic reclustering program could not be found."));
         processFinished = true;
         processKilled = false;
-        //KDAB_PENDING slotStateChanged("noReclusterState");
+        slotStateChanged("noReclusterState");
         updateUndoRedoDisplay();
     }
 }
@@ -2566,11 +2536,11 @@ void KlustersApp::slotProcessExited(QProcess* process){
         processFinished = true;
         processOutputsFinished = true;
         processKilled = false;
-        //KDAB_PENDING slotStateChanged("noReclusterState");
+        slotStateChanged("noReclusterState");
         if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
         else{
 
-            //KDAB_PENDING slotStateChanged("reclusterViewState");
+            slotStateChanged("reclusterViewState");
         }
         return;
     }
@@ -2586,11 +2556,11 @@ void KlustersApp::slotProcessExited(QProcess* process){
         processFinished = true;
         processOutputsFinished = true;
         processKilled = false;
-        //KDAB_PENDING slotStateChanged("noReclusterState");
+        slotStateChanged("noReclusterState");
         if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
         else{
 
-            //KDAB_PENDING slotStateChanged("reclusterViewState");
+            slotStateChanged("reclusterViewState");
         }
         return;
     case KlustersDoc::OPEN_ERROR:
@@ -2599,11 +2569,11 @@ void KlustersApp::slotProcessExited(QProcess* process){
         processFinished = true;
         processOutputsFinished = true;
         processKilled = false;
-        //KDAB_PENDING slotStateChanged("noReclusterState");
+        slotStateChanged("noReclusterState");
         if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
         else{
 
-            //KDAB_PENDING slotStateChanged("reclusterViewState");
+            slotStateChanged("reclusterViewState");
         }
         return;
     case KlustersDoc::INCORRECT_CONTENT:
@@ -2612,11 +2582,11 @@ void KlustersApp::slotProcessExited(QProcess* process){
         processFinished = true;
         processOutputsFinished = true;
         processKilled = false;
-        //KDAB_PENDING slotStateChanged("noReclusterState");
+        slotStateChanged("noReclusterState");
         if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
         else{
 
-            //KDAB_PENDING slotStateChanged("reclusterViewState");
+            slotStateChanged("reclusterViewState");
         }
         return;
     case KlustersDoc::OK:
@@ -2648,11 +2618,11 @@ void KlustersApp::slotProcessExited(QProcess* process){
 
     processFinished = true;
     processKilled = false;
-    //KDAB_PENDING slotStateChanged("noReclusterState");
+    slotStateChanged("noReclusterState");
     if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
     else{
 
-        //KDAB_PENDING slotStateChanged("reclusterViewState");
+        slotStateChanged("reclusterViewState");
     }
     QApplication::restoreOverrideCursor();
 #endif
@@ -2661,29 +2631,29 @@ void KlustersApp::slotProcessExited(QProcess* process){
 void KlustersApp::slotStopRecluster(){
     processWidget->killJob();
     processKilled = true;
-    //KDAB_PENDING slotStateChanged("stoppedReclusterState");
+    slotStateChanged("stoppedReclusterState");
 }
 
 void KlustersApp::slotOutputTreatmentOver(){
     processOutputsFinished = true;
-    //KDAB_PENDING slotStateChanged("noRclusterState");
+    slotStateChanged("noRclusterState");
     if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
     else{
 
-        //KDAB_PENDING slotStateChanged("reclusterViewState");
+        slotStateChanged("reclusterViewState");
     }
 }
 
 void KlustersApp::updateUndoRedoDisplay(){
     if(currentNbUndo > 0) {
-        //KDAB_PENDING slotStateChanged("undoState");
+        slotStateChanged("undoState");
     }
     else{
 
-        //KDAB_PENDING slotStateChanged("emptyUndoState");
+        slotStateChanged("emptyUndoState");
     }
     if(currentNbRedo == 0) {
-        //KDAB_PENDING slotStateChanged("emptyRedoState");
+        slotStateChanged("emptyRedoState");
     }
 }
 
@@ -2699,13 +2669,13 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDock
             //Update the dimension spine boxes with the initial values.
             dimensionX->setValue(1);
             dimensionY->setValue(2);
-            //KDAB_PENDING slotStateChanged("clusterViewState");
+            slotStateChanged("clusterViewState");
             dimensionX->show();
             dimensionY->show();
             featureXLabel->show();
             break;
         case KlustersView::WAVEFORMS:
-            //KDAB_PENDING slotStateChanged("waveformsViewState");
+            slotStateChanged("waveformsViewState");
             overlayPresentation->setChecked(false);
             meanPresentation->setChecked(false);
             timeFrameMode->setChecked(false);
@@ -2718,7 +2688,7 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDock
             spikesTodisplayLabel->show();
             break;
         case KlustersView::CORRELATIONS:
-            //KDAB_PENDING slotStateChanged("correlationViewState");
+            slotStateChanged("correlationViewState");
             //Update the lineEdit
             scaleByMax->setChecked(true);
             correlogramTimeFrame = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
@@ -2733,8 +2703,8 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDock
             shoulderLine->setChecked(true);
             break;
         case KlustersView::ERROR_MATRIX :
-            //KDAB_PENDING slotStateChanged("errorMatrixViewState");
-            //KDAB_PENDING slotStateChanged("groupingAssistantDisplayExists");
+            slotStateChanged("errorMatrixViewState");
+            slotStateChanged("groupingAssistantDisplayExists");
             errorMatrixExists = true;
             break;
         case KlustersView::OVERVIEW:
@@ -2742,11 +2712,11 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDock
         case KlustersView::GROUPING_ASSISTANT_VIEW:
             break;
         case KlustersView::TRACES:
-            //KDAB_PENDING slotStateChanged("traceViewState");
+            slotStateChanged("traceViewState");
             showHideLabels->setChecked(view->getLabelStatus());
             //Update the browsing possibility of the traceView
             if(view->clusters().size() != 0) {
-                //KDAB_PENDING slotStateChanged("traceViewBrowsingState");
+                slotStateChanged("traceViewBrowsingState");
             }
             break;
         }
@@ -2756,14 +2726,14 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDock
 
     //The select time tool is useful only if both a clusterView and a traceView are present
     if(view->containsClusterView() && view->containsTraceView()){
-        //KDAB_PENDING slotStateChanged("traceViewClusterViewState");
+        slotStateChanged("traceViewClusterViewState");
     }
 }
 
 void KlustersApp::widgetRemovedFromDisplay(KlustersView::DisplayType displayType){
     switch(displayType){
     case KlustersView::CLUSTERS:
-        //KDAB_PENDING slotStateChanged("noClusterViewState");
+        slotStateChanged("noClusterViewState");
         dimensionX->hide();
         dimensionY->hide();
         featureXLabel->hide();
@@ -2772,7 +2742,7 @@ void KlustersApp::widgetRemovedFromDisplay(KlustersView::DisplayType displayType
         timeFrameMode->setChecked(false);
         overlayPresentation->setChecked(false);
         meanPresentation->setChecked(false);
-        //KDAB_PENDING slotStateChanged("noWaveformsViewState");
+        slotStateChanged("noWaveformsViewState");
         duration->hide();
         durationLabel->hide();
         start->hide();
@@ -2781,15 +2751,15 @@ void KlustersApp::widgetRemovedFromDisplay(KlustersView::DisplayType displayType
         spikesTodisplayLabel->hide();
         break;
     case KlustersView::CORRELATIONS:
-        //KDAB_PENDING slotStateChanged("noCorrelationViewState");
+        slotStateChanged("noCorrelationViewState");
         correlogramsHalfDuration->hide();
         correlogramsHalfDurationLabel->hide();
         binSizeBox->hide();
         binSizeLabel->hide();
         break;
     case KlustersView::ERROR_MATRIX :
-        //KDAB_PENDING slotStateChanged("noErrorMatrixViewState");
-        //KDAB_PENDING slotStateChanged("groupingAssistantDisplayNotExists");
+        slotStateChanged("noErrorMatrixViewState");
+        slotStateChanged("groupingAssistantDisplayNotExists");
         errorMatrixExists = false;
         break;
     case KlustersView::OVERVIEW:
@@ -2797,7 +2767,7 @@ void KlustersApp::widgetRemovedFromDisplay(KlustersView::DisplayType displayType
     case KlustersView::GROUPING_ASSISTANT_VIEW:
         break;
     case KlustersView::TRACES:
-        //KDAB_PENDING slotStateChanged("noTraceViewState");
+        slotStateChanged("noTraceViewState");
         break;
     }
 }
@@ -2885,12 +2855,52 @@ void KlustersApp::slotSpikesDeleted(){
     //Update the browsing possibility of the traceView
     KlustersView* view = activeView();
     if(view->containsTraceView() && view->clusters().size() != 0) {
-        //KDAB_PENDING slotStateChanged("traceViewBrowsingState");
+        slotStateChanged("traceViewBrowsingState");
     }
     else{
 
-        //KDAB_PENDING slotStateChanged("noTraceViewBrowsingState");
+        slotStateChanged("noTraceViewBrowsingState");
     }
+}
+
+void KlustersApp::slotStateChanged(const QString& state)
+{
+    if(state == QLatin1String("initState")) {
+    } else if(state == QLatin1String("documentState")) {
+    } else if(state == QLatin1String("traceDisplayState")) {
+    } else if(state == QLatin1String("noTraceDisplayState")) {
+    } else if(state == QLatin1String("immediateSelectionState")) {
+    } else if(state == QLatin1String("delaySelectionState")) {
+    } else if(state == QLatin1String("SavingState")) {
+    } else if(state == QLatin1String("SavingDoneState")) {
+    } else if(state == QLatin1String("undoState")) {
+    } else if(state == QLatin1String("emptyRedoState")) {
+    } else if(state == QLatin1String("emptyUndoState")) {
+    } else if(state == QLatin1String("noWaveformsViewState")) {
+    } else if(state == QLatin1String("waveformsViewState")) {
+    } else if(state == QLatin1String("noClusterViewState")) {
+    } else if(state == QLatin1String("clusterViewState")) {
+    } else if(state == QLatin1String("noCorrelationViewState")) {
+    } else if(state == QLatin1String("correlationViewState")) {
+    } else if(state == QLatin1String("noErrorMatrixViewState")) {
+    } else if(state == QLatin1String("errorMatrixViewState")) {
+    } else if(state == QLatin1String("groupingAssistantDisplayExists")) {
+    } else if(state == QLatin1String("groupingAssistantDisplayNotExists")) {
+    } else if(state == QLatin1String("reclusterViewState")) {
+    } else if(state == QLatin1String("reclusterState")) {
+    } else if(state == QLatin1String("noReclusterState")) {
+    } else if(state == QLatin1String("stoppedReclusterState")) {
+    } else if(state == QLatin1String("tabState")) {
+    } else if(state == QLatin1String("noTabState")) {
+    } else if(state == QLatin1String("traceViewState")) {
+    } else if(state == QLatin1String("noTraceViewState")) {
+    } else if(state == QLatin1String("traceViewClusterViewState")) {
+    } else if(state == QLatin1String("traceViewBrowsingState")) {
+    } else if(state == QLatin1String("noTraceViewBrowsingState")) {
+    } else {
+        qDebug() <<" State unknown :"<<state;
+    }
+
 }
 
 #include "klusters.moc"
