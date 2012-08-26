@@ -36,7 +36,7 @@
 #include <qcolordialog.h>
 #include <qcolor.h>
 //Added by qt3to4:
-#include <Q3Frame>
+#include <QFrame>
 #include <Q3ValueList>
 //KDE includes
 
@@ -56,7 +56,7 @@ ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,QStatusBar
     iconView = new Q3IconView(this, "ClusterPalette");
     QFont font( "Helvetica",10);
     iconView->setFont(font);
-    iconView->setFrameStyle(Q3Frame::NoFrame);
+    iconView->setFrameStyle(QFrame::NoFrame);
     iconView->setArrangement(Q3IconView::LeftToRight);
     iconView->setResizeMode(Q3IconView::Adjust);
     iconView->setPaletteBackgroundColor(backgroundColor);

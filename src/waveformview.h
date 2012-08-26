@@ -19,7 +19,6 @@
 #define WAVEFORMVIEW_H
 
 // include files for QT
-#include <q3frame.h>
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qpixmap.h>

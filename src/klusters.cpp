@@ -521,7 +521,7 @@ void KlustersApp::initSelectionBoxes(){
     dimensionX->setWrapping(true);
     dimensionY->setWrapping(true);
     featureXLabel = new QLabel("Features (x,y) ",paramBar);
-    featureXLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
+    featureXLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     featureXLabel->setFont(font);
     //Insert the spine boxes in the main tool bar and make the connections
     paramBar->addWidget(featureXLabel);
@@ -540,10 +540,10 @@ void KlustersApp::initSelectionBoxes(){
     //to maximum of time for the current document (set when the document will be opened)
     duration->setValidator(&validator);
     durationLabel = new QLabel("  Duration (s)",paramBar);
-    durationLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
+    durationLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     durationLabel->setFont(font);
     startLabel = new QLabel("  Start time (s)",paramBar);
-    startLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
+    startLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     startLabel->setFont(font);
     paramBar->addWidget(startLabel);
     start->setMinimumSize(70,start->minimumHeight());
@@ -561,7 +561,7 @@ void KlustersApp::initSelectionBoxes(){
     //Enable to step the value from the highest value to the lowest value and vice versa
     spikesTodisplay->setWrapping(true);
     spikesTodisplayLabel = new QLabel("  Waveforms",paramBar);
-    spikesTodisplayLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
+    spikesTodisplayLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     spikesTodisplayLabel->setFont(font);
     paramBar->addWidget(spikesTodisplayLabel);
     spikesTodisplay->setMinimumSize(70,spikesTodisplay->minimumHeight());
@@ -576,7 +576,7 @@ void KlustersApp::initSelectionBoxes(){
     //to maximum of time for the current document in miliseconds (set when the document will be opened)
     binSizeBox->setValidator(&binSizeValidator);
     binSizeLabel = new QLabel("  Bin size (ms)",paramBar);
-    binSizeLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
+    binSizeLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     binSizeLabel->setFont(font);
     paramBar->addWidget(binSizeLabel);
     binSizeBox->setMinimumSize(30,binSizeBox->minimumHeight());
@@ -590,7 +590,7 @@ void KlustersApp::initSelectionBoxes(){
     //to half the maximum of time for the current document in miliseconds (set when the document will be opened)
     correlogramsHalfDuration->setValidator(&correlogramsHalfTimeFrameValidator);
     correlogramsHalfDurationLabel = new QLabel("  Duration (ms)",paramBar);
-    correlogramsHalfDurationLabel->setFrameStyle(QFrame::StyledPanel|Q3Frame::Plain);
+    correlogramsHalfDurationLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     correlogramsHalfDurationLabel->setFont(font);
     paramBar->addWidget(correlogramsHalfDurationLabel);
     correlogramsHalfDuration->setMinimumSize(70,correlogramsHalfDuration->minimumHeight());
