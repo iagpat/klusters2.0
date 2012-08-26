@@ -274,7 +274,7 @@ void KlustersApp::createMenus()
     //Tools menu
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
     mZoomAction = toolsMenu->addAction(tr("Zoom"));
-    mZoomAction->setIcon(QIcon(":/icons/zoom_tool"));
+    mZoomAction->setIcon(QIcon(":/icons/zoom_tool.png"));
     mZoomAction->setShortcut(Qt::Key_Z);
     connect(mZoomAction,SIGNAL(triggered()), this,SLOT(slotZoom()));
 

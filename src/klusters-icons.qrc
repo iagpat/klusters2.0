@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/icons">
+    <qresource prefix="/">
         <file>icons/backCluster.png</file>
         <file>icons/clusterview.png</file>
         <file>icons/delete_artefact.png</file>
