@@ -35,7 +35,9 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,c
     viewport(QRect()),window (QRect(QPoint(0,-WINDOW_TOP_LEFT),QPoint(WINDOW_BOTTOM_RIGHT,0))),
     firstClick(0,0),isDoubleClick(false),rubber(0),
     drawContentsMode(REDRAW),Xborder(Xborder),Yborder(Yborder),isRubberBandToBeDrawn(false),
-    wholeHeightRectangle(false){
+    wholeHeightRectangle(false),
+    mRubberBand(0)
+{
 
     //Setting of the frame
     setLineWidth (BORDER);
@@ -81,24 +83,21 @@ void BaseFrame::changeBackgroundColor(QColor color){
 void BaseFrame::mousePressEvent(QMouseEvent* e){
     if(mode == ZOOM || isRubberBandToBeDrawn){
         //Test if a selected rectangle exist, if so draw it and delete it.
-        if(rubber){
-            drawRubber();
-            delete rubber;
-            rubber = 0;
-        }
-
         if(e->button() == Qt::LeftButton){
             //Assign firstClick
+            firstClick = e->pos();
+            if (!mRubberBand)
+                mRubberBand = new QRubberBand(QRubberBand::Rectangle, this);
             QRect r((QRect)window);
-
-            if(r.left() != 0) firstClick = viewportToWorld(e->x(),e->y() - Yborder);
-            else firstClick = viewportToWorld(e->x() - Xborder,e->y() - Yborder);
-
             //Construct the rubber starting on the selected point (width = 1 and not 0 because bottomRight = left+width-1, same trick for height ;0))
             //or using only the abscissa and the ordinate if the top of the window if the rubber band has to
             //drawn on whole the height of the window.
-            if(isRubberBandToBeDrawn && wholeHeightRectangle) rubber = new QRect(firstClick.x(),r.top(),1,1);
-            else rubber = new QRect(firstClick.x(),firstClick.y(),1,1);
+            if(isRubberBandToBeDrawn && wholeHeightRectangle)
+                rubber = new QRect(firstClick.x(),r.top(),1,1);
+            else
+                rubber = new QRect(firstClick.x(),firstClick.y(),1,1);
+            mRubberBand->setGeometry(*rubber);
+            mRubberBand->show();
         }
     }
 }
@@ -112,7 +111,6 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
         if(isRubberBandToBeDrawn){
             //Test if a selected rectangle exist, if so draw it and delete it.
             if(rubber){
-                drawRubber();
                 delete rubber;
                 rubber = 0;
             }
@@ -127,7 +125,6 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
 
             //Test if a selected rectangle exist, if so draw it and delete it.
             if(rubber){
-                drawRubber();
                 delete rubber;
                 rubber = 0;
             }
@@ -171,19 +168,8 @@ void BaseFrame::mouseMoveEvent(QMouseEvent* e){
     if(e->state() == Qt::LeftButton){
         //Test if a selected rectangle exist, if so draw to erase the previous one,
         //update it and draw again.
-        if(rubber){
-            QPoint current;
-            QRect r((QRect)window);
-            if(r.left() != 0) current = viewportToWorld(e->x(),e->y() - Yborder);
-            else current = viewportToWorld(e->x()- Xborder,e->y() - Yborder);
-            if(current == rubber->bottomRight()) return; //did not move
-            drawRubber();
-            rubber->setRight(current.x());
-            //The ordinate is the bottom of the window if the rubber band has to
-            //drawn on whole the height of the window.
-            if(isRubberBandToBeDrawn && wholeHeightRectangle) rubber->setBottom(r.bottom());
-            else rubber->setBottom(current.y());
-            drawRubber();
+        if(mRubberBand) {
+            mRubberBand->setGeometry(QRect(firstClick, e->pos()).normalized());
         }
     }
 }
@@ -351,31 +337,6 @@ long BaseFrame::worldToViewportOrdinate(long wy){
     viewportY += frameWidth();
 
     return static_cast<long>(viewportY);
-}
-
-void BaseFrame::drawRubber(){
-    if(!rubber) return;
-#if KDAD_PENDING //port to qrubberband
-    QPainter painter;
-    painter.begin(this);
-    //set the window (part of the word I want to show)
-    QRect r((QRect)window);
-
-    painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
-    painter.setViewport(viewport);
-    
-    painter.setRasterOp(NotROP);
-    painter.setPen(QPen(Qt::color0,1));
-    painter.setBrush(Qt::NoBrush);
-
-    QRect normalizeRubber = rubber->normalize(); //not mandatory as it seems that drawPrimitive does the job (but more secure)
-
-    style().drawPrimitive(QStyle::PE_FocusRect, &painter,
-                          QRect(normalizeRubber.x(), normalizeRubber.y(), normalizeRubber.width(),normalizeRubber.height()),
-                          colorGroup(), Qt::State_None, colorGroup().background() );
-
-    painter.end();
-#endif
 }
 
 

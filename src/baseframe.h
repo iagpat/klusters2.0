@@ -25,6 +25,7 @@
 //Added by qt3to4:
 #include <QResizeEvent>
 #include <QMouseEvent>
+#include <QRubberBand>
 
 //include files for the application
 #include "zoomwindow.h"
@@ -201,11 +202,6 @@ protected:
     long worldToViewportOrdinate(long wy);
 
     /**
-  * Draws the rectangle specifying the select area.
-  */
-    void  drawRubber();
-
-    /**
   * Translates the width @p width in the world to a width on the viewport (relative to the widget).
   * @param width width in the world's coordinates system.
   * @return width in the viewport's coordinates system.
@@ -317,7 +313,7 @@ protected:
 
     /**Color use to display the legends.*/
     QColor colorLegend;
-
+    QRubberBand *mRubberBand;
 };
 
 #endif
