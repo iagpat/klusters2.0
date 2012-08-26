@@ -72,8 +72,16 @@ KlustersApp::KlustersApp()
 {
     initClusterPanel();
 
-    createToolBar();
+    mActionBar = new QToolBar(tr("Actions"));
+
+    mToolBar = new QToolBar(tr("Tools"));
+
+    mClusterBar = new QToolBar(tr("Clusters Actions"));
+
+
+
     createMenus();
+    createToolBar();
 
     //Gets the configuration object of the application throught the static reference to the application kapp
     printer = new QPrinter;
@@ -250,7 +258,7 @@ void KlustersApp::createMenus()
 
     mRenumberClusters = actionMenu->addAction(tr("&Renumber Clusters"));
     mRenumberClusters->setShortcut(Qt::Key_R);
-    connect(mRenumberClusters,SIGNAL(triggered()), this,SLOT(renumberClusters()));
+    connect(mRenumberClusters,SIGNAL(triggered()), doc,SLOT(renumberClusters()));
 
     mUpdateErrorMatrix = actionMenu->addAction(tr("&Update Error Matrix"));
     mUpdateErrorMatrix->setShortcut(Qt::Key_U);
@@ -455,16 +463,25 @@ void KlustersApp::createMenus()
 
 }
 
+
 void KlustersApp::createToolBar()
 {
-    mActionBar = new QToolBar(tr("Actions"));
     addToolBar(mActionBar);
 
-    mToolBar = new QToolBar(tr("Tools"));
+    mToolBar->addAction(mZoomAction);
+    mToolBar->addSeparator();
+    mToolBar->addAction(mNewCluster);
+    mToolBar->addAction(mSplitClusters);
+    mToolBar->addSeparator();
+    mToolBar->addAction(mDeleteArtifact);
+    mToolBar->addAction(mDeleteNoisySpikes);
+    mToolBar->addSeparator();
+    mToolBar->addAction(mSelectTime);
     addToolBar(mToolBar);
 
 
-    mClusterBar = new QToolBar(tr("Clusters Actions"));
+    mClusterBar->addAction(mPreviousSpike);
+    mClusterBar->addAction(mNextSpike);
     addToolBar(mClusterBar);
 }
 
