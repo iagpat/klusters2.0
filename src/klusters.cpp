@@ -71,6 +71,9 @@ KlustersApp::KlustersApp()
       processOutputsFinished(true),processKilled(false),errorMatrixExists(false),filePath("")
 {
 
+    createToolBar();
+    createMenus();
+
     //Gets the configuration object of the application throught the static reference to the application kapp
     printer = new QPrinter;
 
@@ -82,12 +85,12 @@ KlustersApp::KlustersApp()
     initStatusBar();
     initClusterPanel();
 
+
     //Create a KlustersDoc which will hold the document manipulated by the application.
     doc = new KlustersDoc(this,*clusterPalette,configuration().isCrashRecovery(),configuration().crashRecoveryInterval());
     //create the thread which will be used to save the cluster file
     saveThread = new SaveThread(this);
 
-    createMenus();
 
     //Prepare the spineboxes and line edit
     initSelectionBoxes();
@@ -1684,11 +1687,11 @@ void KlustersApp::slotViewActionBar(){
     // turn Toolbar on or off
     if(!viewActionBar->isChecked())
     {
-        //KDAB_PENDING toolBar("actionBar")->hide();
+        mActionBar->hide();
     }
     else
     {
-        //KDAB_PENDING toolBar("actionBar")->show();
+        mActionBar->show();
     }
     slotStatusMsg(tr("Ready."));
 }
@@ -1716,11 +1719,11 @@ void KlustersApp::slotViewToolBar()
     // turn Toolbar on or off
     if(!viewToolBar->isChecked())
     {
-        //KDAB_PENDING toolBar("toolBar")->hide();
+        mToolBar->hide();
     }
     else
     {
-        //KDAB_PENDING toolBar("toolBar")->show();
+        mToolBar->show();
     }
 
     slotStatusMsg(tr("Ready."));

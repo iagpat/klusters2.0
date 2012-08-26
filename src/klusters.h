@@ -322,7 +322,7 @@ private slots:
     inline void slotMeanPresentation(){
         if(meanPresentation->isChecked())activeView()->setMeanPresentation();
         else activeView()->setAllWaveformsPresentation();
-    };
+    }
 
     /**Triggers the increase of the amplitude of the waveforms in the waveform view.
    */
@@ -340,7 +340,7 @@ private slots:
         if(!isInit){
             activeView()->setDisplayNbSpikes(static_cast<long>(nbSpikes));
         }
-    };
+    }
 
     /**Informs the active display to present the correlations with a new time frame.*/
     void slotUpdateCorrelogramsHalfDuration();
@@ -372,7 +372,7 @@ private slots:
    * at the shoulder level on the correlograms.*/
     inline void slotShoulderLine(){
         activeView()->updateShoulderLine(shoulderLine->isChecked());
-    };
+    }
 
     /**Triggers the update of the errorMatrix view in the grouping assistant view.
    */
