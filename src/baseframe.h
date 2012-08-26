@@ -20,7 +20,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3frame.h>
+#include <qframe.h>
 #include <qcursor.h>
 //Added by qt3to4:
 #include <QResizeEvent>
@@ -44,7 +44,7 @@
   *@author Lynn Hazan
   */
 
-class BaseFrame : public Q3Frame  {
+class BaseFrame : public QFrame  {
     Q_OBJECT
 
 public:

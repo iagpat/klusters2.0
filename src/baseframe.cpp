@@ -23,7 +23,6 @@
 #include <qstyle.h>
 //Added by qt3to4:
 #include <QResizeEvent>
-#include <Q3Frame>
 #include <QMouseEvent>
 
 //include files for c/c++ libraries
@@ -31,7 +30,7 @@
 
 BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,const QColor& backgroundColor,
                       int minSize,int maxSize ,int windowTopLeft ,int windowBottomRight,int border):
-    Q3Frame(parent,name,Qt::WRepaintNoErase|Qt::WResizeNoErase),
+    QFrame(parent,name,Qt::WRepaintNoErase|Qt::WResizeNoErase),
     MIN_SIZE(minSize),MAX_SIZE(maxSize),BORDER(border),WINDOW_TOP_LEFT(windowTopLeft),WINDOW_BOTTOM_RIGHT(windowBottomRight),
     viewport(QRect()),window (QRect(QPoint(0,-WINDOW_TOP_LEFT),QPoint(WINDOW_BOTTOM_RIGHT,0))),
     firstClick(0,0),isDoubleClick(false),rubber(0),
@@ -41,7 +40,7 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,c
     //Setting of the frame
     setLineWidth (BORDER);
     setPaletteBackgroundColor(backgroundColor);
-    setFrameStyle(Q3Frame::Box|Q3Frame::Plain);
+    setFrameStyle(QFrame::Box|QFrame::Plain);
 
     int h;
     int s;
@@ -59,10 +58,11 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,c
 
     //Create and set the zoom cursor (a magnifier).
 
-    zoomCursor = QCursor(QPixmap(":/icons/zoom_cursor"),7,7);
+    zoomCursor = QCursor(QPixmap(":/cursors/zoom_cursor"),7,7);
 }
 
-BaseFrame::~BaseFrame(){
+BaseFrame::~BaseFrame()
+{
 }
 
 void BaseFrame::changeBackgroundColor(QColor color){

@@ -63,11 +63,11 @@ ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,QColor backgroundCo
     //Update the dimension of the window and the values of dimensionX and dimensionY
     updatedDimensions(view.abscissaDimension(),view.ordinateDimension());
 
-    newClusterCursor = QCursor(QPixmap(":/icons/new_cluster_cursor"),0,0);
-    newClustersCursor = QCursor(QPixmap(":/icons/new_clusters_cursor"),0,0);
-    deleteNoiseCursor = QCursor(QPixmap(":/icons/delete_noise_cursor"),0,0);
-    deleteArtefactCursor = QCursor(QPixmap(":/icons/delete_artefact_cursor"),0,0);
-    selectTimeCursor = QCursor(QPixmap(":/icons/select_time_cursor"),0,0);
+    newClusterCursor = QCursor(QPixmap(":/cursors/new_cluster_cursor"),0,0);
+    newClustersCursor = QCursor(QPixmap(":/cursors/new_clusters_cursor"),0,0);
+    deleteNoiseCursor = QCursor(QPixmap(":/cursors/delete_noise_cursor"),0,0);
+    deleteArtefactCursor = QCursor(QPixmap(":/cursors/delete_artefact_cursor"),0,0);
+    selectTimeCursor = QCursor(QPixmap(":/cursors/select_time_cursor"),0,0);
 
     //The default tool is the zoom.
     setCursor(zoomCursor);
