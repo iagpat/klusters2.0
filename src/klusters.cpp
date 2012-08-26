@@ -456,9 +456,10 @@ void KlustersApp::createMenus()
 
     viewClusterInfo->setChecked(false);
 
-#if KDAB_PENDING
     //Initialize the update mode
-    immediateSelection->setChecked(true);
+    mImmediateSelection->setChecked(true);
+
+#if KDAB_PENDING
 
     KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
 
