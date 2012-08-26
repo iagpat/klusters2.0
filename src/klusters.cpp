@@ -278,6 +278,8 @@ void KlustersApp::createMenus()
     mZoomAction->setShortcut(Qt::Key_Z);
     connect(mZoomAction,SIGNAL(triggered()), this,SLOT(slotZoom()));
 
+    toolsMenu->addSeparator();
+
     mNewCluster = toolsMenu->addAction(tr("New Cluster"));
     mNewCluster->setIcon(QIcon(":/icons/new_cluster"));
     mNewCluster->setShortcut(Qt::Key_C);
@@ -288,6 +290,8 @@ void KlustersApp::createMenus()
     mSplitClusters->setShortcut(Qt::Key_S);
     connect(mSplitClusters,SIGNAL(triggered()), this,SLOT(slotMultipleNew()));
 
+    toolsMenu->addSeparator();
+
     mDeleteArtifactSpikes = toolsMenu->addAction(tr("Delete &Artifact Spikes"));
     mDeleteArtifactSpikes->setIcon(QIcon(":/icons/delete_artefact_tool"));
     mDeleteArtifactSpikes->setShortcut(Qt::Key_A);
@@ -297,6 +301,8 @@ void KlustersApp::createMenus()
     mDeleteNoisySpikes->setIcon(QIcon(":/icons/delete_noise_tool"));
     mDeleteNoisySpikes->setShortcut(Qt::Key_N);
     connect(mDeleteNoisySpikes,SIGNAL(triggered()), this,SLOT(slotDeleteNoise()));
+
+    toolsMenu->addSeparator();
 
     mSelectTime = toolsMenu->addAction(tr("Select Time"));
     mSelectTime->setIcon(QIcon(":/icons/time_tool"));
@@ -319,6 +325,8 @@ void KlustersApp::createMenus()
     meanPresentation->setShortcut(Qt::Key_M);
     meanPresentation->setCheckable(true);
     connect(meanPresentation,SIGNAL(triggered()), this,SLOT(slotMeanPresentation()));
+
+    waveFormsMenu->addSeparator();
 
 
     mIncreaseAmplitude = waveFormsMenu->addAction(tr("&Increase Amplitude"));
@@ -355,6 +363,15 @@ void KlustersApp::createMenus()
     noScale->setCheckable(true);
     connect(noScale,SIGNAL(triggered()), this,SLOT(slotNoScale()));
 
+    correlationsMenu->addSeparator();
+
+    shoulderLine = correlationsMenu->addAction(tr("Asymptote &Line"));
+    shoulderLine->setShortcut(Qt::Key_L);
+    shoulderLine->setCheckable(true);
+    connect(shoulderLine,SIGNAL(triggered()), this,SLOT(slotShoulderLine()));
+
+    correlationsMenu->addSeparator();
+
     //Initialize the presentation mode to scale by maximum.
     scaleByMax->setChecked(true);
     mIncreaseAmplitudeCorrelation = correlationsMenu->addAction(tr("&Increase Amplitude"));
@@ -365,10 +382,8 @@ void KlustersApp::createMenus()
     mDecreaseAmplitudeCorrelation->setShortcut(Qt::SHIFT +  Qt::Key_D);
     connect(mDecreaseAmplitudeCorrelation,SIGNAL(triggered()), this,SLOT(slotDecreaseCorrelogramsAmplitude()));
 
-    shoulderLine = correlationsMenu->addAction(tr("Asymptote &Line"));
-    shoulderLine->setShortcut(Qt::Key_L);
-    shoulderLine->setCheckable(true);
-    connect(shoulderLine,SIGNAL(triggered()), this,SLOT(slotShoulderLine()));
+
+
 
 
 
@@ -383,12 +398,9 @@ void KlustersApp::createMenus()
     mDecreaseChannelAmplitudes->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
     connect(mDecreaseChannelAmplitudes,SIGNAL(triggered()), this,SLOT(slotDecreaseAllChannelsAmplitude()));
 
-    showHideLabels = traceMenu->addAction(tr("Show &Labels"));
-    showHideLabels->setShortcut(Qt::CTRL + Qt::Key_L);
-    showHideLabels->setCheckable(true);
-    connect(showHideLabels,SIGNAL(triggered()), this,SLOT(slotShowLabels()));
 
-    showHideLabels->setChecked(false);
+    traceMenu->addSeparator();
+
     mNextSpike = traceMenu->addAction(tr("&Next Spike"));
     mNextSpike->setIcon(QIcon(":/icons/forwardCluster"));
     mNextSpike->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_F);
@@ -398,6 +410,16 @@ void KlustersApp::createMenus()
     mPreviousSpike->setIcon(QIcon(":/icons/backCluster"));
     mPreviousSpike->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_B);
     connect(mPreviousSpike,SIGNAL(triggered()), this,SLOT(slotShowPreviousCluster()));
+
+
+    traceMenu->addSeparator();
+
+    showHideLabels = traceMenu->addAction(tr("Show &Labels"));
+    showHideLabels->setShortcut(Qt::CTRL + Qt::Key_L);
+    showHideLabels->setCheckable(true);
+    connect(showHideLabels,SIGNAL(triggered()), this,SLOT(slotShowLabels()));
+
+    showHideLabels->setChecked(false);
 
 
     //Settings menu
