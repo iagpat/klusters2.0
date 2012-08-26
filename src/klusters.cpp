@@ -70,6 +70,7 @@ KlustersApp::KlustersApp()
       correlogramsHalfTimeFrameValidator(this),prefDialog(0L),processWidget(0L),processFinished(true),processOutputDock(0L),
       processOutputsFinished(true),processKilled(false),errorMatrixExists(false),filePath("")
 {
+    initClusterPanel();
 
     createToolBar();
     createMenus();
@@ -83,7 +84,6 @@ KlustersApp::KlustersApp()
     ///////////////////////////////////////////////////////////////////
     // call inits to invoke all other construction parts
     initStatusBar();
-    initClusterPanel();
 
 
     //Create a KlustersDoc which will hold the document manipulated by the application.
@@ -250,11 +250,12 @@ void KlustersApp::createMenus()
 
     mRenumberClusters = actionMenu->addAction(tr("&Renumber Clusters"));
     mRenumberClusters->setShortcut(Qt::Key_R);
-    connect(mRenumberClusters,SIGNAL(triggered()), doc,SLOT(renumberClusters()));
+    connect(mRenumberClusters,SIGNAL(triggered()), this,SLOT(renumberClusters()));
 
     mUpdateErrorMatrix = actionMenu->addAction(tr("&Update Error Matrix"));
     mUpdateErrorMatrix->setShortcut(Qt::Key_U);
-    connect(mUpdateErrorMatrix,SIGNAL(triggered()), doc,SLOT(slotUpdateErrorMatrix()));
+    connect(mUpdateErrorMatrix,SIGNAL(triggered()), this,SLOT(slotUpdateErrorMatrix()));
+
     mReCluster = actionMenu->addAction(tr("Re&cluster"));
     mReCluster->setShortcut(Qt::SHIFT  + Qt::Key_R);
     connect(mReCluster,SIGNAL(triggered()), this,SLOT(slotRecluster()));
