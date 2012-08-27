@@ -21,7 +21,7 @@
 
 #include <fstream>
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 using namespace std;
 
 //include files for QT
@@ -72,7 +72,7 @@ bool ParameterXmlModifier::writeTofile(const QString& url) {
     newChild = root.insertAfter(units,spikeDetection);
 	 
     if (newChild.isNull()) {
-        Q3TextStream stream(&parameterFile);
+        QTextStream stream(&parameterFile);
         stream<< initialXmlDocument;
         parameterFile.close();
         return false;
@@ -81,7 +81,7 @@ bool ParameterXmlModifier::writeTofile(const QString& url) {
 
     QString xmlDocument = doc.toString();
 
-    Q3TextStream stream(&parameterFile);
+    QTextStream stream(&parameterFile);
     stream<< xmlDocument;
     parameterFile.close();
 

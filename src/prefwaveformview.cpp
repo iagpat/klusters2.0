@@ -20,7 +20,7 @@
 // include files for QT
 #include <qpainter.h>
 #include <qfile.h>
-#include <q3textstream.h>
+#include <QTextStream>
 #include <qmessagebox.h>
 #include <QFileDialog>
 
@@ -117,7 +117,7 @@ void PrefWaveformView::loadChannelOrder(){
             return;
         }
 
-        Q3TextStream positionStream(&channelFile);
+        QTextStream positionStream(&channelFile);
         QString line;
         int channel = 0;
         for(line = positionStream.readLine(); !line.isNull();line = positionStream.readLine()){

@@ -29,7 +29,6 @@
 #include <qpainter.h>
 #include <qdir.h>
 #include <qlabel.h>
-#include <q3deepcopy.h>
 #include <q3paintdevicemetrics.h>
 #include <QDebug>
 
