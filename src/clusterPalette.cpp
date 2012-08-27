@@ -29,7 +29,7 @@
 #include <qpainter.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <q3whatsthis.h>
+
 #include <qpixmap.h>
 #include <q3popupmenu.h>
 #include <qbitmap.h>

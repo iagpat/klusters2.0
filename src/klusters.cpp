@@ -18,7 +18,7 @@
 // include files for QT
 #include <qdir.h>
 #include <q3vbox.h>
-#include <q3whatsthis.h>
+
 #include <qtooltip.h>
 #include <qtoolbutton.h>
 #include <qstring.h>
