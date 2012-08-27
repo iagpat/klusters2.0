@@ -382,12 +382,6 @@ void KlustersApp::createMenus()
     mDecreaseAmplitudeCorrelation->setShortcut(Qt::SHIFT +  Qt::Key_D);
     connect(mDecreaseAmplitudeCorrelation,SIGNAL(triggered()), this,SLOT(slotDecreaseCorrelogramsAmplitude()));
 
-
-
-
-
-
-
     //Traces menu
     QMenu *traceMenu = menuBar()->addMenu(tr("T&races"));
     mIncreaseChannelAmplitudes = traceMenu->addAction(tr("&Increase Channel Amplitudes"));
@@ -2900,7 +2894,7 @@ void KlustersApp::slotShowPreviousCluster(){
 void KlustersApp::slotSpikesDeleted(){
     //Update the browsing possibility of the traceView
     KlustersView* view = activeView();
-    if(view->containsTraceView() && view->clusters().size() != 0) {
+    if(view->containsTraceView() && !view->clusters().isEmpty()) {
         slotStateChanged("traceViewBrowsingState");
     }
     else{
