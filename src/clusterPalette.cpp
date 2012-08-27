@@ -452,12 +452,10 @@ void ClusterPalette::selectItems(Q3ValueList<int> selectedClusters){
     //Loop on the clusters to be selected
     Q3ValueList<int>::iterator clusterIterator;
     ClusterPaletteIconViewItem* currentIcon = 0L;
-#if KDAB_PENDING
     for(clusterIterator = selectedClusters.begin(); clusterIterator != selectedClusters.end(); ++clusterIterator){
-        currentIcon =  static_cast<ClusterPaletteIconViewItem*>(iconView->findItem(QString("%1").arg(*clusterIterator),Qt::BeginsWith));
+        currentIcon =  static_cast<ClusterPaletteIconViewItem*>(iconView->findItem(QString("%1").arg(*clusterIterator),Q3IconView::BeginsWith));
         currentIcon->setSelected(true,true);
     }
-#endif
     //Last item in selection gets focus if it exists
     if(selectedClusters.size() != 0) iconView->setCurrentItem(currentIcon);
 
