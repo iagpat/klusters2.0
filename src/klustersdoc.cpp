@@ -320,9 +320,9 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
                 !cluFileInfo.exists()){
             QApplication::restoreOverrideCursor();
 #if KDAB_PENDING
-            switch(KMessageBox::questionYesNo(0,tr("A more recent copy of the cluster file (a rescue file) was found on the disk. This indicates that Klusters crashed while editing these data during a previous session.\n"
+            switch(KMessageBox::questionYesNo(0, tr("More recent cluster file found"), tr("A more recent copy of the cluster file (a rescue file) was found on the disk. This indicates that Klusters crashed while editing these data during a previous session.\n"
                                                    "Do you wish to use the newer copy (The old copy will be saved under another name)?"),
-                                              tr("More recent cluster file found"), tr("Use newer copy"), tr("Discard newer copy") ))
+                                               tr("Use newer copy"), tr("Discard newer copy") ))
             {
             case QMessageBox::Yes:
                 QDir dir(crashFileInfo.dir());

@@ -453,6 +453,11 @@ void KlustersApp::createMenus()
     //Initialize the update mode
     mImmediateSelection->setChecked(true);
 
+
+    QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
+    QAction *about = helpMenu->addAction(tr("About"));
+    connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
+
 #if KDAB_PENDING
 
     KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
@@ -3016,6 +3021,11 @@ void KlustersApp::slotStateChanged(const QString& state)
     } else {
         qDebug() <<" State unknown :"<<state;
     }
+
+}
+
+void KlustersApp::slotAbout()
+{
 
 }
 

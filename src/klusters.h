@@ -295,7 +295,7 @@ private slots:
             startTime = start;
             activeView()->updateTimeFrame(static_cast<long>(start),timeWindow);
         }
-    };
+    }
 
     /**Informs the active display to present the waveforms for an updated time frame.*/
     void slotUpdateDuration();
@@ -425,6 +425,8 @@ private slots:
 
     /**Updates the status modified of the current opend document.*/
     void slotClusterInformationModified();
+
+    void slotAbout();
 
 private:
     void createMenus();

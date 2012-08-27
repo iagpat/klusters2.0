@@ -26,153 +26,149 @@
 
 
 PrefWaveformView::PrefWaveformView(QWidget *parent,int nbChannels,const char *name):
-PrefWaveformViewLayout(parent),nbChannels(nbChannels){
- if(nbChannels > 0) initializeChannelList();
- else{
-   saveButton->setEnabled(false);
-   loadButton->setEnabled(false);
-   channelList->setEnabled(false);
- }
+    PrefWaveformViewLayout(parent),nbChannels(nbChannels){
+    if(nbChannels > 0) initializeChannelList();
+    else{
+        saveButton->setEnabled(false);
+        loadButton->setEnabled(false);
+        channelList->setEnabled(false);
+    }
 
- connect(saveButton,SIGNAL(clicked()),this,SLOT(saveChannelOrder()));
- connect(loadButton,SIGNAL(clicked()),this,SLOT(loadChannelOrder()));
- connect(channelList,SIGNAL(positionsChanged()),this,SLOT(updateChannelPositions()));
- 
+    connect(saveButton,SIGNAL(clicked()),this,SLOT(saveChannelOrder()));
+    connect(loadButton,SIGNAL(clicked()),this,SLOT(loadChannelOrder()));
+    connect(channelList,SIGNAL(positionsChanged()),this,SLOT(updateChannelPositions()));
+
 }
 PrefWaveformView::~PrefWaveformView(){
 }
 
 void PrefWaveformView::initializeChannelList(){
- ///Initialize the position of the channels.
- //The first one in the file will be the first one (at the top), second one will be beneath and so on.
- for(int i = 0; i < nbChannels; ++i){
-  channelPositions.append(i);
-  channelList->insertItem(QString("%1").arg(i + 1));
- } 
+    ///Initialize the position of the channels.
+    //The first one in the file will be the first one (at the top), second one will be beneath and so on.
+    for(int i = 0; i < nbChannels; ++i){
+        channelPositions.append(i);
+        channelList->insertItem(QString("%1").arg(i + 1));
+    }
 }
 
 void PrefWaveformView::resetChannelList(int nb){
- nbChannels = nb;
- channelPositions.clear();
- channelList->clear();
+    nbChannels = nb;
+    channelPositions.clear();
+    channelList->clear();
 
- ///Initialize the position of the channels.
- //The first one in the file will be the first one (at the top), second one will be beneath and so on.
- for(int i = 0; i < nbChannels; ++i){
-  channelPositions.append(i);
-  channelList->insertItem(QString("%1").arg(i + 1));
- }
- 
- saveButton->setEnabled(true);
- loadButton->setEnabled(true);
- channelList->setEnabled(true);
+    ///Initialize the position of the channels.
+    //The first one in the file will be the first one (at the top), second one will be beneath and so on.
+    for(int i = 0; i < nbChannels; ++i){
+        channelPositions.append(i);
+        channelList->insertItem(QString("%1").arg(i + 1));
+    }
+
+    saveButton->setEnabled(true);
+    loadButton->setEnabled(true);
+    channelList->setEnabled(true);
 }
 
 void PrefWaveformView::saveChannelOrder(){
-#if KDAB_PENDING	
-  QString url = KFileDialog::getSaveURL(QDir::currentPath(),
-        tr("*|All files"), this, tr("Save as..."));
+    const QString url = QFileDialog::getSaveFileName(this, tr("Save as..."),QDir::currentPath(), tr("*|All files") );
+    if(!url.isEmpty()){
+        FILE* channelFile = fopen(url.toLatin1(),"w");
+        if(channelFile == NULL){
+            QMessageBox::critical (this,tr("Error !"),
+                                   tr("The selected file could not be opened, possibly because of access permissions !")
+                                   );
+            return;
+        }
 
-  if(!url.isEmpty()){
-  FILE* channelFile = fopen(url.toLatin1(),"w");
-   if(channelFile == NULL){
-    QMessageBox::critical (this,tr("Error !"),
-         tr("The selected file could not be opened, possibly because of access permissions !")
-         );
-    return;
-   }
+        int writeStatus = 0;
+        for(int i = 0; i< nbChannels; ++i)
+            writeStatus = fprintf(channelFile, "%i\n",channelPositions[i]);
 
-   int writeStatus = 0;  
-   for(int i = 0; i< nbChannels; ++i) 
-    writeStatus = fprintf(channelFile, "%i\n",channelPositions[i]);
+        fclose(channelFile);
 
-   fclose(channelFile);
-   
-   if(writeStatus < 0){
-    QMessageBox::critical (this,tr("IO Error !"),
-         tr("The data could not have been saved due to an writing error.")
-         );
-    return;     
-   }
-  } 
-#endif
+        if(writeStatus < 0){
+            QMessageBox::critical (this,tr("IO Error !"),
+                                   tr("The data could not have been saved due to an writing error.")
+                                   );
+            return;
+        }
+    }
 }
 
 void PrefWaveformView::loadChannelOrder(){
     QString url = QFileDialog::getOpenFileName(this, tr("Load File..."),QString(),
-      tr("*|All files") );
+                                               tr("*|All files") );
 
- QMap<int,int> positions;
-      
- if(!url.isEmpty()){
-   QString tmpChannelFile = url;
-   if(!QFile(tmpChannelFile).exists()){
-     QMessageBox::critical (this,tr("Error !"),
-         tr("The selected file could not be downloaded !")
-         );
-     return;
-   }
+    QMap<int,int> positions;
 
-   QFile channelFile(tmpChannelFile);
-   if(!channelFile.open(QIODevice::ReadOnly)){
-    QMessageBox::critical (this,tr("Error !"),
-         tr("The selected file could not be opened !")
-         );
-    return;
-   }
+    if(!url.isEmpty()){
+        QString tmpChannelFile = url;
+        if(!QFile(tmpChannelFile).exists()){
+            QMessageBox::critical (this,tr("Error !"),
+                                   tr("The selected file could not be downloaded !")
+                                   );
+            return;
+        }
 
-   Q3TextStream positionStream(&channelFile);
-   QString line;
-   int channel = 0;
-   for(line = positionStream.readLine(); !line.isNull();line = positionStream.readLine()){
-     bool ok;
-     int position = line.toInt(&ok,10);
-     if(!ok){
-      QMessageBox::critical (this,tr("Error !"),
-          tr("The selected file does not have the correct format (list of channels number),\n"
-           "it can not be used."));
+        QFile channelFile(tmpChannelFile);
+        if(!channelFile.open(QIODevice::ReadOnly)){
+            QMessageBox::critical (this,tr("Error !"),
+                                   tr("The selected file could not be opened !")
+                                   );
+            return;
+        }
 
-      channelFile.close();
+        Q3TextStream positionStream(&channelFile);
+        QString line;
+        int channel = 0;
+        for(line = positionStream.readLine(); !line.isNull();line = positionStream.readLine()){
+            bool ok;
+            int position = line.toInt(&ok,10);
+            if(!ok){
+                QMessageBox::critical (this,tr("Error !"),
+                                       tr("The selected file does not have the correct format (list of channels number),\n"
+                                          "it can not be used."));
 
-      return;
-     }
-     //The channels are counted from 0 to nbChannels - 1.
-     positions.insert(channel,position);
-     channel++;
-   }
-      
-   channelFile.close();
+                channelFile.close();
 
- }
+                return;
+            }
+            //The channels are counted from 0 to nbChannels - 1.
+            positions.insert(channel,position);
+            channel++;
+        }
 
- if(nbChannels != static_cast<int>(positions.count())){
-  QMessageBox::critical (this,tr("Error !"),
-         tr("The number of channels in the selected file does not correspond to the number of channels of the current file !\n"
-              "This file can not be used for the current document.")
-         );
-  return;
- }
+        channelFile.close();
 
- //Update the list with the positions get from the file.
- channelList->clear();
- for(int i = 0; i< nbChannels; ++i){
-  channelList->insertItem(QString("%1").arg(i + 1),positions[i]);
-  channelPositions[i] = positions[i];
- }
+    }
 
- //signal to the dialog that channel positions have changed so it can update the Apply button.
- emit positionsChanged();   
+    if(nbChannels != static_cast<int>(positions.count())){
+        QMessageBox::critical (this,tr("Error !"),
+                               tr("The number of channels in the selected file does not correspond to the number of channels of the current file !\n"
+                                  "This file can not be used for the current document.")
+                               );
+        return;
+    }
+
+    //Update the list with the positions get from the file.
+    channelList->clear();
+    for(int i = 0; i< nbChannels; ++i){
+        channelList->insertItem(QString("%1").arg(i + 1),positions[i]);
+        channelPositions[i] = positions[i];
+    }
+
+    //signal to the dialog that channel positions have changed so it can update the Apply button.
+    emit positionsChanged();
 }
 
 void PrefWaveformView::updateChannelPositions(){
- for(int i = 0; i< nbChannels; ++i){
-  QString currentChannel = (channelList->item(i))->text();
-  int currentChannelInt = currentChannel.toInt() - 1;
-  channelPositions[currentChannelInt] = i;
- }
+    for(int i = 0; i< nbChannels; ++i){
+        QString currentChannel = (channelList->item(i))->text();
+        int currentChannelInt = currentChannel.toInt() - 1;
+        channelPositions[currentChannelInt] = i;
+    }
 
- //signal to the dialog that channel positions have changed so it can update the Apply button.
- emit positionsChanged();
+    //signal to the dialog that channel positions have changed so it can update the Apply button.
+    emit positionsChanged();
 }
 
 
