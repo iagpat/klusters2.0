@@ -31,7 +31,6 @@
 #include <qtooltip.h>
 
 #include <qpixmap.h>
-#include <q3popupmenu.h>
 #include <qbitmap.h>
 #include <qcolordialog.h>
 #include <qcolor.h>

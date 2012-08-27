@@ -27,7 +27,7 @@
 #include <cstring>
 
 //Qt include files
-#include <q3textstream.h>
+#include <qtextstream.h>
 #include <qstringlist.h>
 #include <qstring.h>
 #include <qregexp.h>
@@ -146,8 +146,8 @@ bool Data::configure(QFile& parFile,int electrodeGroupID,QString& errorInformati
 }
 
 bool Data::configure(QFile& parXFile,QFile& parFile,QString& errorInformation){
-    Q3TextStream parX(&parXFile);
-    Q3TextStream par(&parFile);
+    QTextStream parX(&parXFile);
+    QTextStream par(&parFile);
     Q3ValueList <QStringList> parXData;
     Q3ValueList <QStringList> parData;
 
@@ -3505,7 +3505,7 @@ void Data::createFeatureFile(Q3ValueList<int>& clustersToRecluster,QFile& fetFil
     }
 
     //Write all the features to file
-    Q3TextStream fetStream(&fetFile);
+    QTextStream fetStream(&fetFile);
     fetStream <<nbDimensions<< endl;
     //loop on all the spikes
     for(dataType i = 1; i <= reclusteringNbSpikes;++i){

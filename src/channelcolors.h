@@ -21,7 +21,6 @@
 // include files for Qt
 #include <q3ptrlist.h>
 #include <qcolor.h>
-#include <q3valuelist.h>
 
 /**
   * This class represents the list of the channels with their associated id, colors

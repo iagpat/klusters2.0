@@ -34,7 +34,6 @@
 #include <QPixmap>
 #include <Q3ValueList>
 #include <QEvent>
-#include <Q3Frame>
 #include <QCustomEvent>
 #include <QDebug>
 #include <QStatusBar>

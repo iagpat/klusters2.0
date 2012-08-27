@@ -45,7 +45,7 @@ public:
     //the constructor of CorrelationThread being private, only this method con create a new CorrelationThread
     friend CorrelationThread* CorrelationView::getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds);
 
-    inline ~CorrelationThread(){};
+    inline ~CorrelationThread(){}
     inline Q3ValueList<Pair>* triggeringPairs(){return clusterPairs;}
     inline const Q3ValueList<int>& triggeringClusters(){return clusterIds;}
 
