@@ -2906,16 +2906,92 @@ void KlustersApp::slotSpikesDeleted(){
 void KlustersApp::slotStateChanged(const QString& state)
 {
     if(state == QLatin1String("initState")) {
+        mOpenAction->setEnabled(true);
+        // <Action name="file_open_recent" />
+        mSaveAction->setEnabled(false);
+        mSaveAsAction->setEnabled(false);
+        mRenumberAndSave->setEnabled(false);
+        mPrintAction->setEnabled(false);
+        mCloseAction->setEnabled(false);
+        mImportFile->setEnabled(false);
+        mUndo->setEnabled(false);
+        mRedo->setEnabled(false);
+        mSelectAllAction->setEnabled(false);
+        mSelectAllExceptAction->setEnabled(false);
+        mNewCluster->setEnabled(false);
+        /*
+        <Action name="new_clusterDisplay" />
+        <Action name="new_waveformDisplay" />
+        <Action name="new_crosscorrelationDisplay" />
+        <Action name="new_overViewDisplay" />
+        <Action name="new_goupingAssistantDisplay" />
+        <Action name="trace_display" />
+        */
+        mCloseActiveDisplay->setEnabled(false);
+        mRenameActiveDisplay->setEnabled(false);
+
+        /*
+        <Action name="move_clusters_to_artifact" />
+        <Action name="move_clusters_to_noise" />
+        */
+
+        mGroupeClusters->setEnabled(false);
+        mUpdateDisplay->setEnabled(false);
+/*
+        <Action name="renumber" />
+        <Action name="recluster" />
+        <Action name="stop_recluster" />
+        <Action name="update_errorMatrix" />
+        <Action name="zoom" />
+        <Action name="single_new" />
+        <Action name="multiple_new" />
+        <Action name="delete_artifact" />
+        <Action name="delete_noise" />
+        <Action name="time_frame" />
+        <Action name="overlay" />
+        <Action name="mean" />
+        <Action name="increase" />
+        <Action name="decrease" />
+        <Action name="raw_data" />
+        <Action name="scale_by_max" />
+        <Action name="scale_by_shouler" />
+        <Action name="shoulder_line" />
+        <Action name="increase_correlograms" />
+        <Action name="decrease_correlograms" />
+        <Action name="time" />
+        <Action name="increase_all_channels" />
+        <Action name="decrease_all_channels" />
+        <Action name="show_labels"/>
+        <Action name="show_next_cluster" />
+        <Action name="show_previous_cluster" />
+*/
+
+
     } else if(state == QLatin1String("documentState")) {
     } else if(state == QLatin1String("traceDisplayState")) {
+        //<Action name="trace_display" />
     } else if(state == QLatin1String("noTraceDisplayState")) {
+        //<Action name="trace_display" />
     } else if(state == QLatin1String("immediateSelectionState")) {
+        mUpdateDisplay->setEnabled(false);
     } else if(state == QLatin1String("delaySelectionState")) {
+        mUpdateDisplay->setEnabled(true);
     } else if(state == QLatin1String("SavingState")) {
+        mSaveAction->setEnabled(false);
+        mSaveAsAction->setEnabled(false);
+        mRenumberAndSave->setEnabled(false);
     } else if(state == QLatin1String("SavingDoneState")) {
+        mSaveAction->setEnabled(true);
+        mSaveAsAction->setEnabled(true);
+        mRenumberAndSave->setEnabled(true);
     } else if(state == QLatin1String("undoState")) {
+        mUndo->setEnabled(true);
+        mRedo->setEnabled(true);
     } else if(state == QLatin1String("emptyRedoState")) {
+        mRedo->setEnabled(false);
     } else if(state == QLatin1String("emptyUndoState")) {
+        mUndo->setEnabled(false);
+        mRedo->setEnabled(true);
     } else if(state == QLatin1String("noWaveformsViewState")) {
     } else if(state == QLatin1String("waveformsViewState")) {
     } else if(state == QLatin1String("noClusterViewState")) {

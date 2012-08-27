@@ -611,11 +611,11 @@ private:
     public:
         inline Validator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
             klusters = dynamic_cast<KlustersApp*>(parent);
-        };
+        }
         inline Validator(int minimum,int maximum,QObject* parent, const char* name = 0):
             QIntValidator(minimum,maximum,parent,name){
             klusters = dynamic_cast<KlustersApp*>(parent);
-        };
+        }
         inline ~Validator(){}
         inline void fixup (QString& input) const{
             input = QString::fromLatin1("%1").arg(klusters->timeWindow);
@@ -740,12 +740,12 @@ private:
     public:
         inline CorrelogramsHalfTimeFrameValidator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
             klusters = dynamic_cast<KlustersApp*>(parent);
-        };
+        }
         inline CorrelogramsHalfTimeFrameValidator(int minimum,int maximum,QObject* parent, const char* name = 0):
             QIntValidator(minimum,maximum,parent,name){
             klusters = dynamic_cast<KlustersApp*>(parent);
-        };
-        inline ~CorrelogramsHalfTimeFrameValidator(){};
+        }
+        inline ~CorrelogramsHalfTimeFrameValidator(){}
         inline void fixup (QString& input) const{
             int halfTimeFrame = input.toInt();
 
