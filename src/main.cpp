@@ -30,10 +30,6 @@
 
 #if KDAB_PENDING
 
-static const char *description =
-	I18N_NOOP("Klusters - Manual clustering of neuronal action potential");
-// INSERT A DESCRIPTION FOR YOUR APPLICATION HERE
-
 static KCmdLineOptions options[] =
 {
   { "+file", I18N_NOOP("Document to open"), 0 },
@@ -60,14 +56,6 @@ int main(int argc, char* argv[])
 #if 0 //TODO
 
 
-	KAboutData aboutData( "klusters", I18N_NOOP("Klusters"),
-		VERSION, description, KAboutData::License_GPL,
-		"(c) 2003-2004-2005-2007, Lynn Hazan", 0, 0, "lynn.hazan@myrealbox.com");
-	aboutData.addAuthor("Lynn Hazan",I18N_NOOP("Designer and developer"), "lynn.hazan@myrealbox.com");
-  aboutData.addAuthor("Michael Zugaro",I18N_NOOP("Co-designed the basic data model and algorithms,\nand the interface. Tested the application."), "michael.zugaro@college-de-france.fr");
-  aboutData.addAuthor("Ken Harris",I18N_NOOP("Provided the algorithms for the grouping Assistant."), "kdharris@andromeda.rutgers.edu");
-	aboutData.addCredit("CMBN Members",I18N_NOOP("Helped define the set of features and tested the application."),0, "http://osiris.rutgers.edu");  
-	KCmdLineArgs::init( argc, argv, &aboutData );
 	KCmdLineArgs::addCmdLineOptions(options); // Add our own options.
 
   KApplication app;
