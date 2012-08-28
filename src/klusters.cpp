@@ -104,10 +104,6 @@ KlustersApp::KlustersApp()
 
     setMinimumSize(QSize(600,400));
 
-    // Apply the saved mainwindow settings, if any, and ask the mainwindow
-    // to automatically save settings if changed: window size, toolbar
-    // position, icon size, etc.
-    //KDAB_PENDING setAutoSaveSettings();
 
     slotUpdateParameterBar();
 
@@ -174,11 +170,6 @@ void KlustersApp::createMenus()
     connect(mRenumberAndSave,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
 
 
-#if 0
-    viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
-    viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
-
-#endif
 
 
     //Edit Menu
@@ -417,6 +408,17 @@ void KlustersApp::createMenus()
 
     //Settings menu
     QMenu *settingsMenu = menuBar()->addMenu(tr("Settings"));
+
+    mViewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
+    mViewStatusBar->setCheckable(true);
+    connect(mViewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
+#if 0
+    viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
+
+#endif
+
+
+
     viewActionBar = settingsMenu->addAction(tr("Show Actions"));
     viewActionBar->setCheckable(true);
     connect(viewActionBar,SIGNAL(triggered()), this,SLOT(slotViewActionBar()));

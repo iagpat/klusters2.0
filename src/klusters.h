@@ -562,6 +562,7 @@ private:
     QAction *mRenumberAndSave;
     QAction *mUpdateErrorMatrix;
 
+    QAction *mViewStatusBar;
     /**Spine box enabling to choose the absciss dimension*/
     QSpinBox* dimensionX;
 
