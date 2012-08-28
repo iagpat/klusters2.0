@@ -57,7 +57,7 @@ public:
 
     inline CorrelationsEvent* getCorrelationsEvent(){
         return new CorrelationsEvent(*this);
-    };
+    }
 
     /**
   * Internal class use to send information to the CorrelationView to inform it that

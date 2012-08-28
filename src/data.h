@@ -281,7 +281,7 @@ public:
         friend Iterator Data::iterator(dataType clusterId);
 
     public:
-        inline ~Iterator(){};
+        inline ~Iterator(){}
         /**
     * Returns a QPoint for the given dimensions for the current spike for the cluster on which this class iterates
     * Caution: in Qt graphical coordinate system, the Y axis is inverted (increasing downwards),
@@ -295,7 +295,7 @@ public:
             dataType featuresRowIndex = (*data.spikesByCluster)(1,index);
             return QPoint(data.features(featuresRowIndex,dimensionX),
                           - data.features(featuresRowIndex,dimensionY));
-        };
+        }
         /**
     * Returns the specified feature for the current spike for the cluster on which this class iterates.
     * @param dimension the feature requested
@@ -303,18 +303,18 @@ public:
     */
         inline dataType operator()(dataType dimension) const{
             return data.features((*data.spikesByCluster)(1,index),dimension);
-        };
+        }
         /**Increments the iterator.*/
-        inline void next(){index++;};
+        inline void next(){index++;}
         /**Check if there is more spikes*/
-        inline bool hasNext(){return (lastIndex >= index);};
+        inline bool hasNext(){return (lastIndex >= index);}
 
     private:
         inline Iterator(dataType clusterId, const Data& d):data(d),clusterId(clusterId){
             ClusterInfo clusterInfo = (*data.clusterInfoMap)[clusterId];
             index = clusterInfo.firstSpikePosition();
             lastIndex = index + clusterInfo.nbSpikes() - 1;
-        };
+        }
         /**Returns true if the iterator has reach the last spike for the cluster on which it iterates,
       * false otherwise.
       */
@@ -333,13 +333,13 @@ public:
   * @param dimension for which the maximum is requested. Numbering starts at 1
   * @return maximum of the dimension
   */
-    inline dataType maxDimension(int dimension){return dimensionMaxima(dimension,1);};
+    inline dataType maxDimension(int dimension){return dimensionMaxima(dimension,1);}
 
     /**Returns the minimum for the dimension
   * @param dimension for which the minimum is requested. Numbering starts at 1
   * @return minimum of the dimension
   */
-    inline dataType minDimension(int dimension){return dimensionMinima(dimension,1);};
+    inline dataType minDimension(int dimension){return dimensionMinima(dimension,1);}
 
     /**Saves the clusters information to file
   * @param clusterFile the .clu.i file
@@ -349,24 +349,23 @@ public:
 
     /**Returns the number of points used to describe a waveform. Each point
   correspond to a diffrent instant in time.*/
-    inline int nbOfSampleInWaveform()const{return nbSamplesInWaveform;};
+    inline int nbOfSampleInWaveform()const{return nbSamplesInWaveform;}
 
     /**Returns the position of the peak among the points decribing the waveform.*/
-    inline int positionOfPeakInWaveform()const{return peakPositionInWaveform;};
+    inline int positionOfPeakInWaveform()const{return peakPositionInWaveform;}
 
     /**Returns the number of channels used.*/
-    inline int nbOfchannels()const{return nbChannels;};
+    inline int nbOfchannels()const{return nbChannels;}
 
     /**Returns the total number of PCAs used
   * (number of channels times number of PCA by channel).*/
-    inline int totalNbOfPCAs()const{return (nbChannels*nbFeaturesbyChannel);};
+    inline int totalNbOfPCAs()const{return (nbChannels*nbFeaturesbyChannel);}
 
     /**Returns the sampling interval (time between two samples) in second.*/
-    inline double intervalOfSampling()const{return samplingInterval;};
+    inline double intervalOfSampling()const{return samplingInterval;}
 
     /**Returns the dimension for the time.*/
-    inline int timeDimension()const{return nbDimensions;};
-
+    inline int timeDimension()const{return nbDimensions;}
     /**Returns the maximum value for the time dimension in seconds.*/
     inline long maxTime(){
         double maximumTimeInRecordingUnits = static_cast<double>(maxDimension(nbDimensions));
@@ -380,7 +379,7 @@ public:
     /**Gives information on how the data were recorded. True if the data where recording using a 12 or 16 bits recording system which
   * gives data coded on 2 bytes, false otherwise, (the recording is then assume to be 32 bits
   * and then the data are coded on 4 bytes).*/
-    inline bool isRecordingTwoBytes(){return isTwoBytesRecording;};
+    inline bool isRecordingTwoBytes(){return isTwoBytesRecording;}
 
     /**Gets a onr row SortableTable with the spike positions for the cluster @p clusterId.
   * @param clusterId d of the cluster for which the spike position are search.
@@ -392,7 +391,7 @@ public:
     /**Returns the number of points corresponding to a spike. This equals to:
   * nbChannels * nbSamplesInWaveform
   */
-    inline int nbPtsBySpike(){return nbChannels * nbSamplesInWaveform;};
+    inline int nbPtsBySpike(){return nbChannels * nbSamplesInWaveform;}
 
     /**Returns the number of spikes of the cluster
   * @param clusterId id of the cluster for which the number of spikes is requested.
@@ -406,7 +405,7 @@ public:
     /**Returns the total number of spikes.
   * @return the total number of spikes.
   */
-    inline dataType totalNbOfSpikes() const{return nbSpikes;};
+    inline dataType totalNbOfSpikes() const{return nbSpikes;}
 
     /**
   * String indicating in scale mode the user is using (raw, scale by the maximum,
@@ -496,28 +495,28 @@ public:
   * Informs if the the variables need it by the traceView are available. Those variables are retrieve only from
   * the parameter file in xml format (the new for
   * @return true if the variables are available, false otherwise.*/
-    inline bool isTraceViewVariablesAvailable()const {return traceViewVariablesAvailable;};
+    inline bool isTraceViewVariablesAvailable()const {return traceViewVariablesAvailable;}
 
     /**
   *Returns the acquisition system resolution.
   */
-    inline int getResolution()const{return nbBits;};
+    inline int getResolution()const{return nbBits;}
     /**Returns the total number of channels used during the recording.*/
-    inline int getTotalNbChannels()const{return totalNbChannels;};
+    inline int getTotalNbChannels()const{return totalNbChannels;}
     /**Returns the sampling rate in microseconds.*/
-    inline double getSamplingRate()const{return samplingRate;};
+    inline double getSamplingRate()const{return samplingRate;}
     /**Returns the acquisition system voltage range.*/
-    inline int getVoltageRange()const{return voltageRange;};
+    inline int getVoltageRange()const{return voltageRange;}
     /**Returns the acquisition system offset.*/
-    inline int getOffset()const{return initialOffset;};
+    inline int getOffset()const{return initialOffset;}
     /**Returns the acquisition system amplification.*/
-    inline int getAmplification()const{return amplification;};
+    inline int getAmplification()const{return amplification;}
     /**Returns the number of samples used to describe a waveform.*/
-    inline int getNbSamplesInWaveform()const{return nbSamplesInWaveform;};
+    inline int getNbSamplesInWaveform()const{return nbSamplesInWaveform;}
     /**Returns the sample index of the peak.*/
-    inline int getPeakPositionInWaveform()const{return peakPositionInWaveform;};
+    inline int getPeakPositionInWaveform()const{return peakPositionInWaveform;}
     /**Returns the list of channels of the current electrode.*/
-    inline Q3ValueList<int>& getCurrentChannels(){return currentChannels;};
+    inline Q3ValueList<int>& getCurrentChannels(){return currentChannels;}
 
 private:
 
@@ -612,25 +611,25 @@ private:
     class ClusterInfo {
 
     public:
-        inline ClusterInfo(QString pStructure = "",QString pType = "",QString pID = "",QString pQuality = "",QString pNotes = ""):structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){};
-        inline ClusterInfo(dataType position, dataType nb,QString pStructure = "",QString pType = "",QString pID = "",QString pQuality = "",QString pNotes =""):position(position),spikeNb(nb),structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){};
-        inline ~ClusterInfo(){};
-        inline dataType firstSpikePosition() const {return position;};
-        inline dataType nbSpikes() const {return spikeNb;};
-        inline void setNbSpikes(dataType nbSpikes){spikeNb = nbSpikes;};
-        inline void setFirstSpikePosition(dataType position){this->position = position;};
+        inline ClusterInfo(const QString& pStructure = "", const QString& pType = "",const QString& pID = "",const QString& pQuality = "",const QString& pNotes = ""):structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){}
+        inline ClusterInfo(dataType position, dataType nb,QString pStructure = "",QString pType = "",QString pID = "",QString pQuality = "",QString pNotes =""):position(position),spikeNb(nb),structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){}
+        inline ~ClusterInfo(){}
+        inline dataType firstSpikePosition() const {return position;}
+        inline dataType nbSpikes() const {return spikeNb;}
+        inline void setNbSpikes(dataType nbSpikes){spikeNb = nbSpikes;}
+        inline void setFirstSpikePosition(dataType position){this->position = position;}
 
-        inline QString getStructure() const { return structure; };
-        inline QString getType() const { return type; };
-        inline QString getId() const { return ID; };
-        inline QString getQuality() const { return quality; };
-        inline QString getNotes() const { return notes; };
+        inline QString getStructure() const { return structure; }
+        inline QString getType() const { return type; }
+        inline QString getId() const { return ID; }
+        inline QString getQuality() const { return quality; }
+        inline QString getNotes() const { return notes; }
 
-        inline void setStructure(QString pStructure) { structure = pStructure; };
-        inline void setType(QString pType) { type = pType; };
-        inline void setId(QString pId) { ID = pId; };
-        inline void setQuality(QString pQuality) { quality = pQuality; };
-        inline void setNotes(QString pNotes) { notes = pNotes; };
+        inline void setStructure(const QString& pStructure) { structure = pStructure; }
+        inline void setType(const QString& pType) { type = pType; }
+        inline void setId(const QString& pId) { ID = pId; }
+        inline void setQuality(const QString& pQuality) { quality = pQuality; }
+        inline void setNotes(const QString& pNotes) { notes = pNotes; }
 
     private:
         dataType position;
@@ -698,23 +697,23 @@ private:
         inline WaveformStatus(Status sample = NOT_AVAILABLE,Status timeFrame = NOT_AVAILABLE,Status sampleMean = NOT_AVAILABLE,Status timeFrameMean = NOT_AVAILABLE )
             :sample(sample),timeFrame(timeFrame),sampleMean(sampleMean),timeFrameMean(timeFrameMean){
             clusterModified = false;
-        };
-        inline WaveformStatus(const WaveformStatus& s):sample(s.sample),timeFrame(s.timeFrame),sampleMean(s.sampleMean),timeFrameMean(s.timeFrameMean), clusterModified(s.clusterModified){};
-        inline ~WaveformStatus(){};
-        inline void setSampleStatus(Status status){sample = status;};
-        inline Status sampleStatus() const {return sample;};
-        inline void setTimeFrameStatus(Status status){timeFrame = status;};
-        inline Status timeFrameStatus() const {return timeFrame;};
-        inline void setSampleMeanStatus(Status status){sampleMean = status;};
-        inline Status sampleMeanStatus() const {return sampleMean;};
-        inline void setTimeFrameMeanStatus(Status status){timeFrameMean = status;};
-        inline Status timeFrameMeanStatus() const {return timeFrameMean;};
+        }
+        inline WaveformStatus(const WaveformStatus& s):sample(s.sample),timeFrame(s.timeFrame),sampleMean(s.sampleMean),timeFrameMean(s.timeFrameMean), clusterModified(s.clusterModified){}
+        inline ~WaveformStatus(){}
+        inline void setSampleStatus(Status status){sample = status;}
+        inline Status sampleStatus() const {return sample;}
+        inline void setTimeFrameStatus(Status status){timeFrame = status;}
+        inline Status timeFrameStatus() const {return timeFrame;}
+        inline void setSampleMeanStatus(Status status){sampleMean = status;}
+        inline Status sampleMeanStatus() const {return sampleMean;}
+        inline void setTimeFrameMeanStatus(Status status){timeFrameMean = status;}
+        inline Status timeFrameMeanStatus() const {return timeFrameMean;}
         inline bool isInProcess() const {
             if(sample == IN_PROCESS || timeFrame == IN_PROCESS || sampleMean == IN_PROCESS || timeFrameMean == IN_PROCESS) return true;
             else return false;
-        };
-        inline void setClusterModified(bool modified){clusterModified = modified;};
-        inline bool isClusterModified()  const {return clusterModified;};
+        }
+        inline void setClusterModified(bool modified){clusterModified = modified;}
+        inline bool isClusterModified()  const {return clusterModified;}
     private:
         Status sample;
         Status timeFrame;
@@ -733,21 +732,21 @@ private:
     class Waveforms{
 
     public:
-        virtual inline ~Waveforms(){};
-        inline dataType indexOfTimeEnd() const {return timeEndIndex;};
-        inline void setIndexOfTimeEnd(dataType index){timeEndIndex = index;};
-        inline dataType startTime() const {return timeStart;};
-        inline void setStartTime(dataType time){timeStart = time;};
-        inline dataType endTime() const {return timeEnd;};
-        inline void setEndTime(dataType time){timeEnd = time;};
+        virtual inline ~Waveforms(){}
+        inline dataType indexOfTimeEnd() const {return timeEndIndex;}
+        inline void setIndexOfTimeEnd(dataType index){timeEndIndex = index;}
+        inline dataType startTime() const {return timeStart;}
+        inline void setStartTime(dataType time){timeStart = time;}
+        inline dataType endTime() const {return timeEnd;}
+        inline void setEndTime(dataType time){timeEnd = time;}
         inline dataType nbOfSpikes(WaveformMode waveformMode){
             mode = waveformMode;
             if(waveformMode == SAMPLE) return nbSampleSpikes;
             else return nbTimeFrameSpikes;
-        };
-        inline dataType nbOfSpikesAsked() const {return nbSpikesAsked;};
-        inline void setNbOfSpikesAsked(dataType nb) {nbSpikesAsked = nb;};
-        inline void setMode(WaveformMode waveformMode){mode = waveformMode;};
+        }
+        inline dataType nbOfSpikesAsked() const {return nbSpikesAsked;}
+        inline void setNbOfSpikesAsked(dataType nb) {nbSpikesAsked = nb;}
+        inline void setMode(WaveformMode waveformMode){mode = waveformMode;}
 
         virtual void setSize(dataType size,WaveformMode waveformMode) = 0;
         virtual dataType getSample(dataType index) const = 0;
@@ -767,7 +766,7 @@ private:
             timeEnd = endTime;
             nbPtsBySpike = data.nbChannels * data.nbSamplesInWaveform;
             nbSpikesAsked = 0;
-        };
+        }
 
     protected:
         Data& data;
@@ -803,7 +802,7 @@ private:
             timeFrameMeanTable = 0L;
             sampleStDeviationTable = 0L;
             timeFrameStDeviationTable = 0L;
-        };
+        }
         inline ~WaveformData(){
             if(sampleSpikesTable != 0L) delete []sampleSpikesTable;
             if(timeFrameSpikesTable != 0L) delete []timeFrameSpikesTable;
@@ -811,27 +810,27 @@ private:
             if(timeFrameMeanTable != 0L) delete []timeFrameMeanTable;
             if(sampleStDeviationTable != 0L) delete []sampleStDeviationTable;
             if(timeFrameStDeviationTable != 0L) delete []timeFrameStDeviationTable;
-        };
+        }
         /**Specifies the number of spikes which can be store.*/
         void setSize(dataType size,WaveformMode waveformMode = SAMPLE);
         inline dataType getSample(dataType index) const {
             return static_cast<dataType>(sampleSpikesTable[index]);
-        };
+        }
         inline dataType getTimeFrame(dataType index) const {
             return static_cast<dataType>(timeFrameSpikesTable[index]);
-        };
+        }
         inline dataType getSampleMean(dataType index) const {
             return static_cast<dataType>(sampleMeanTable[index]);
-        };
+        }
         inline dataType getTimeFrameMean(dataType index) const {
             return static_cast<dataType>(timeFrameMeanTable[index]);
-        };
+        }
         inline dataType getSampleStDeviation(dataType index) const {
             return static_cast<dataType>(sampleStDeviationTable[index]);
-        };
+        }
         inline dataType getTimeFrameStDeviation(dataType index) const {
             return static_cast<dataType>(timeFrameStDeviationTable[index]);
-        };
+        }
         void read(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* spikeFile,dataType nbSpkToDisplay);
         void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end);
         void calculateMean(WaveformMode waveformMode = SAMPLE);
@@ -870,30 +869,30 @@ private:
     class CorrelationsInProcess{
 
     public:
-        inline CorrelationsInProcess(){};
-        inline ~CorrelationsInProcess(){};
+        inline CorrelationsInProcess(){}
+        inline ~CorrelationsInProcess(){}
         inline void addProcess(dataType clusterId){
             if(clusters.contains(clusterId)) clusters[clusterId]++;
             else {
                 clusters.insert(clusterId,1);
                 clustersModified.insert(clusterId,false);
             }
-        };
+        }
         inline void removeProcess(dataType clusterId){
             if(clusters.contains(clusterId) && clusters[clusterId] > 1)clusters[clusterId]--;
             else if(clusters.contains(clusterId) && clusters[clusterId] == 1){
                 clusters.remove(clusterId);
                 clustersModified.remove(clusterId);
             }
-        };
+        }
         inline void removeCluster(dataType clusterId){
             clusters.remove(clusterId);
             clustersModified.remove(clusterId);
-        };
-        inline bool contains(dataType clusterId) const {return clusters.contains(clusterId);};
+        }
+        inline bool contains(dataType clusterId) const {return clusters.contains(clusterId);}
 
-        inline void setClusterModified(dataType clusterId,bool modified){clustersModified[clusterId] = modified;};
-        inline bool isClusterModified(dataType clusterId)  const {return clustersModified[clusterId];};
+        inline void setClusterModified(dataType clusterId,bool modified){clustersModified[clusterId] = modified;}
+        inline bool isClusterModified(dataType clusterId)  const {return clustersModified[clusterId];}
 
     private:
         QMap<dataType,int> clusters;
@@ -915,17 +914,17 @@ private:
     public:
         inline Correlation(Data& d):data(d){
             reset();
-        };
+        }
         inline Correlation(Data& d,int size,int timeWindow):data(d),binSize(size),timeFrame(timeWindow){
             values = 0L;
             max = 0;
             asymptote = 0;
             nbBins = 0;
             firingRate = 0;
-        };
+        }
         inline ~Correlation(){
             if(values != 0L) delete []values;
-        };
+        }
         inline void reset(){
             if(values != 0L) delete []values;
             values = 0L;
@@ -935,28 +934,28 @@ private:
             timeFrame = 0;
             nbBins = 0;
             firingRate = 0;
-        };
-        inline void setStatus(Status s){status = s;};
-        inline Status getStatus() const {return status;};
+        }
+        inline void setStatus(Status s){status = s;}
+        inline Status getStatus() const {return status;}
         inline Status getStatus(int size,int timeWindow) const {
             if(binSize != size || timeFrame != timeWindow) return NOT_AVAILABLE;
             else return status;
-        };
+        }
         /**Returns the size of a bin in miliseconds*/
-        inline int getBinSize() const {return binSize;};
-        inline void setBinSize(int size){binSize = size;};
+        inline int getBinSize() const {return binSize;}
+        inline void setBinSize(int size){binSize = size;}
         /**Returns the size of the time window in miliseconds*/
-        inline int getTimeWindow() const {return timeFrame;};
-        inline void setTimeWindow(int timeWindow){timeFrame = timeWindow;};
-        inline uint getMaximum() const {return max;};
-        inline void setMaximum(uint m){max = m;};
-        inline float getShoulder() const {return asymptote;};
-        inline void setShoulder(float s){asymptote = s;};
+        inline int getTimeWindow() const {return timeFrame;}
+        inline void setTimeWindow(int timeWindow){timeFrame = timeWindow;}
+        inline uint getMaximum() const {return max;}
+        inline void setMaximum(uint m){max = m;}
+        inline float getShoulder() const {return asymptote;}
+        inline void setShoulder(float s){asymptote = s;}
         void calculateCorrelation(SortableTable& spikesOfCluster1,SortableTable& spikesOfCluster2,double binSizeInRU,double timeWindowInRU,int halfBins,bool autoCorrelogram);
-        inline int getNbBins(){return nbBins;};
-        inline void setNbBins(int nb){nbBins = nb;};
-        inline uint getValue(int index){return values[index];};
-        inline float getFiringRate() const {return firingRate;};
+        inline int getNbBins(){return nbBins;}
+        inline void setNbBins(int nb){nbBins = nb;}
+        inline uint getValue(int index){return values[index];}
+        inline float getFiringRate() const {return firingRate;}
 
     private:
         Data& data;
