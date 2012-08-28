@@ -23,7 +23,7 @@
 #include <qfont.h>
 #include <qcolor.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 
 /**
@@ -59,9 +59,9 @@ public:
     inline void setNbUndo(int nb){nbUndo = nb;}
 
     /**Sets the positions of the channels.*/
-    inline void setChannelPositions(Q3ValueList<int> positions){
+    inline void setChannelPositions(QList<int> positions){
         channelPositions.clear();
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = positions.begin(); iterator != positions.end(); ++iterator)
             channelPositions.append(*iterator);
     }
@@ -114,7 +114,7 @@ public:
     inline int getNbUndo() const{return nbUndo;}
 
     /**Returns the positions of the channels.*/
-    inline Q3ValueList<int>* getChannelPositions() {return &channelPositions;}
+    inline QList<int>* getChannelPositions() {return &channelPositions;}
 
     /**Returns the number of channels.*/
     inline int getNbChannels() const{return nbChannels;}
@@ -166,7 +166,7 @@ private:
     /**Number of step in the undo/redo mechanism.*/
     int  nbUndo;
     /**Positions of the channels in the waveform view.*/
-    Q3ValueList<int> channelPositions;
+    QList<int> channelPositions;
     /**Number of channels.*/
     int nbChannels;
     /**Background color of the views.*/

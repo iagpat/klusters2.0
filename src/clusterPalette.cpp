@@ -36,7 +36,7 @@
 #include <qcolor.h>
 //Added by qt3to4:
 #include <QFrame>
-#include <Q3ValueList>
+#include <QList>
 //KDE includes
 
 #include <QStatusBar>
@@ -331,11 +331,11 @@ void ClusterPalette::slotMousePressed(int button,Q3IconViewItem* item){
     }
 }
 
-Q3ValueList<int> ClusterPalette::selectedClusters(){
+QList<int> ClusterPalette::selectedClusters(){
     //Get the list of clusters with their color
     ItemColors& clusterColors = doc->clusterColors();
 
-    Q3ValueList<int> selectedClusters;
+    QList<int> selectedClusters;
 
     ClusterPaletteIconViewItem* clusterPaletteItem;
 
@@ -357,7 +357,7 @@ void ClusterPalette::slotClickRedraw (){
     isUpToDate = false;
 
     if(mode == IMMEDIATE && !isInSelectItems){
-        Q3ValueList<int> selection = selectedClusters();
+        QList<int> selection = selectedClusters();
         emit updateShownClusters(selection);
         isUpToDate = true;
     }
@@ -365,7 +365,7 @@ void ClusterPalette::slotClickRedraw (){
 
 
 void ClusterPalette::groupClusters(){
-    Q3ValueList<int> selected = selectedClusters();
+    QList<int> selected = selectedClusters();
     //To group clusters, there must be more then one cluster !!!
     if(selected.size()>1){
         emit groupClusters(selected);
@@ -374,7 +374,7 @@ void ClusterPalette::groupClusters(){
 }
 
 void ClusterPalette::moveClustersToNoise(){
-    Q3ValueList<int> selected = selectedClusters();
+    QList<int> selected = selectedClusters();
 
     if(!selected.isEmpty()){
         emit moveClustersToNoise(selected);
@@ -383,7 +383,7 @@ void ClusterPalette::moveClustersToNoise(){
 }
 
 void ClusterPalette::moveClustersToArtefact(){
-    Q3ValueList<int> selected = selectedClusters();
+    QList<int> selected = selectedClusters();
     if(!selected.isEmpty()){
         emit moveClustersToArtefact(selected);
         isUpToDate = true;
@@ -444,7 +444,7 @@ void ClusterPalette::languageChange()
     setCaption( tr( "Cluster palette" ) );
 }
 
-void ClusterPalette::selectItems(Q3ValueList<int> selectedClusters){
+void ClusterPalette::selectItems(QList<int> selectedClusters){
     //Set isInSelectItems to true to prevent the emission of signals due to selectionChange
     isInSelectItems = true;
 
@@ -452,7 +452,7 @@ void ClusterPalette::selectItems(Q3ValueList<int> selectedClusters){
     iconView->selectAll(false);
 
     //Loop on the clusters to be selected
-    Q3ValueList<int>::iterator clusterIterator;
+    QList<int>::iterator clusterIterator;
     ClusterPaletteIconViewItem* currentIcon = 0L;
     for(clusterIterator = selectedClusters.begin(); clusterIterator != selectedClusters.end(); ++clusterIterator){
         currentIcon =  static_cast<ClusterPaletteIconViewItem*>(iconView->findItem(QString("%1").arg(*clusterIterator),Q3IconView::BeginsWith));

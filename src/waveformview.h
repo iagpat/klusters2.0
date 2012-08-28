@@ -22,7 +22,7 @@
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qpixmap.h>
-#include <q3valuelist.h>
+#include <QList>
 #include <q3ptrlist.h>
 //Added by qt3to4:
 #include <QCustomEvent>
@@ -57,7 +57,7 @@ public:
 
     friend class WaveformThread;
 
-    WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,Q3ValueList<int> positions,QStatusBar * statusBar, QWidget* parent=0,
+    WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,QList<int> positions,QStatusBar * statusBar, QWidget* parent=0,
                  bool isTimeFrameMode = false,long start = 0,long timeFrameWidth = 0,long nbSpkToDisplay =0,bool overLay = false,bool mean = false,
                  const char* name=0,int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
                  int windowBottomRight = 1001, int border = 0);
@@ -101,7 +101,7 @@ public slots:
   * @param clusterId cluster Id to add to the clusters already drawn
    * @param active true if the view is the active one, false otherwise.
  */
-    void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active);
+    void addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active);
 
     /**
   * Adds a newly created cluster to those already shown.
@@ -117,7 +117,7 @@ public slots:
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-    void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active);
+    void spikesRemovedFromClusters(QList<int>& fromClusters,bool active);
 
     /**
   * Updates the content of the widget due to the addition of spikes in a cluster.
@@ -141,7 +141,7 @@ public slots:
   * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
   */
-    inline void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
+    inline void updateClusters(QList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
         spikesRemovedFromClusters(modifiedClusters,active);
     };
 
@@ -153,7 +153,7 @@ public slots:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){
+    inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){
         spikesRemovedFromClusters(modifiedClusters,active);
     };
 
@@ -224,7 +224,7 @@ public slots:
     /**Initialize the position of the channels in the view.
  * @param positions positions of the channels to use in the view set by the user in the settings dialog.
  */
-    inline void setChannelPositions(Q3ValueList<int>& positions){
+    inline void setChannelPositions(QList<int>& positions){
         delete []channelPositions;
         //nbchannels = positions.size(), this has been check in the calling functions.
         channelPositions = new int[nbchannels];
@@ -391,7 +391,7 @@ private:
     bool dataReady;
 
     /**List of the clusters to be disregared because they have been changed.*/
-    Q3ValueList<int> clustersToDisregard;
+    QList<int> clustersToDisregard;
 
     /**The number of spikes to display in sample mode.*/
     long nbSpkToDisplay;
@@ -417,7 +417,7 @@ private:
   * @param painter painter on which to draw the waveforms
   * @param clusterList list of clusters to draw
   */
-    void drawWaveforms(QPainter& painter,const Q3ValueList<int>& clusterList);
+    void drawWaveforms(QPainter& painter,const QList<int>& clusterList);
 
     /**Updates the dimension of the window.*/
     void updateWindow();
@@ -435,14 +435,14 @@ private:
   * Asks the waveform information for the clusters listed in @p clusterIds by launching a WaveformThread.
   * @param clusterIds ids of the clusters to ask waveform information for.
   */
-    void askForWaveformInformation(Q3ValueList<int> clusterIds);
+    void askForWaveformInformation(QList<int> clusterIds);
 
     /**
   * Adds the clusters to the list of those to be updated
   * and get the updated waveform information for it.
   * @param clustersToUpdate list of clusters to update
   */
-    void updateClusters(Q3ValueList<int>& clustersToUpdate);
+    void updateClusters(QList<int>& clustersToUpdate);
 
     /**Draws the clusters identifiers.
   * @param painter painter on which to draw the information

@@ -22,7 +22,7 @@
 
 // include files for Qt
 #include <q3strlist.h>
-#include <q3valuelist.h>
+#include <QList>
 #include <qspinbox.h> 
 #include <qvalidator.h>
 #include <qlineedit.h>
@@ -257,21 +257,21 @@ private slots:
     /**Draws the clusters contain in @p selectedClusters list.
     * @param selectedClusters list of clusters which have been selected to be shown.
     */
-    void slotUpdateShownClusters(Q3ValueList<int> selectedClusters);
+    void slotUpdateShownClusters(QList<int> selectedClusters);
     /**Groups the clusters contain in @p selectedClusters list and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be grouped.
     */
-    void slotGroupClusters(Q3ValueList<int> selectedClusters);
+    void slotGroupClusters(QList<int> selectedClusters);
     /**Calls the document to move the clusters contain in @p selectedClusters list
     * to the cluster of noise (cluster 1) and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be moved
     */
-    void slotMoveClustersToNoise(Q3ValueList<int> selectedClusters);
+    void slotMoveClustersToNoise(QList<int> selectedClusters);
     /**Calls the document to move the clusters contain in @p selectedClusters list
     * to the cluster of artefact (cluster 0) and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be moved
     */
-    void slotMoveClustersToArtefact(Q3ValueList<int> selectedClusters);
+    void slotMoveClustersToArtefact(QList<int> selectedClusters);
     /**Sets the selection mode to immediate, disenabling the update action.*/
     void slotImmediateSelection();
     /**Set the selection mode to delay, enabling the update action.*/
@@ -777,7 +777,7 @@ private:
     int waveformsGain;
 
     /**Position of the channels in the waveform views.*/
-    Q3ValueList<int> channelPositions;
+    QList<int> channelPositions;
 
     /**Background color for the views.*/
     QColor backgroundColor;
@@ -795,10 +795,10 @@ private:
     bool processOutputsFinished;
 
     /**List of the clusters to recluster.*/
-    Q3ValueList<int> clustersToRecluster;
+    QList<int> clustersToRecluster;
 
     /**List of the clusters created by the reclustering.*/
-    Q3ValueList<int> clustersFromReclustering;
+    QList<int> clustersFromReclustering;
 
     /**Path to the reclustering executable.*/
     QString reclusteringExecutable;

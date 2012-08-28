@@ -37,7 +37,7 @@
 //Added by qt3to4:
 #include <QCustomEvent>
 #include <Q3PointArray>
-#include <Q3ValueList>
+#include <QList>
 #include <QMouseEvent>
 #include <QEvent>
 
@@ -80,9 +80,9 @@ ClusterView::~ClusterView(){
     qDebug() << "in ~ClusterView(): ";
 }
 
-void ClusterView::drawClusters(QPainter& painter,const Q3ValueList<int>& clustersList,bool drawCircles){
+void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,bool drawCircles){
     //Loop on the clusters to be drawn
-    Q3ValueList<int>::const_iterator clusterIterator;
+    QList<int>::const_iterator clusterIterator;
 
     ItemColors& clusterColors = doc.clusterColors();
     Data& clusteringData = doc.data();

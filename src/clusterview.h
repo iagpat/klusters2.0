@@ -25,7 +25,7 @@
 #include <q3pointarray.h>
 #include <qtimer.h>
 #include <qregion.h>
-#include <q3valuelist.h>
+#include <QList>
 //Added by qt3to4:
 #include <QCustomEvent>
 #include <QResizeEvent>
@@ -118,7 +118,7 @@ public slots:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active){
+    inline void addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active){
         addClusterToUpdate(clusterId);
     };
 
@@ -138,7 +138,7 @@ public slots:
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active){redraw();};
+    inline void spikesRemovedFromClusters(QList<int>& fromClusters,bool active){redraw();};
 
     /**
   * Update the content of the widget due to the addition of spikes in a cluster.
@@ -169,7 +169,7 @@ public slots:
   * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
   */
-    void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
+    void updateClusters(QList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
         if(isModifiedByDeletion) redraw();
     };
 
@@ -181,7 +181,7 @@ public slots:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){redraw();};
+    inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){redraw();};
 
     /**Updates the time interval in second and in recording unit using @p step given in second.
   * @param step the interval to use in second.
@@ -247,7 +247,7 @@ private:
   * @param painter painter on which to draw the spikes
   * @param clustersList list of clusters to draw
   */
-    void drawClusters(QPainter& painter,const Q3ValueList<int>& clustersList,bool drawCircles = false);
+    void drawClusters(QPainter& painter,const QList<int>& clustersList,bool drawCircles = false);
 
     /**
   * Returns the color associated with one of the selection mode. This color will

@@ -24,7 +24,7 @@
 //include files for QT
 #include <qthread.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <QDebug>
 
 /**Thread used to compute the minimum and maximum values for each dimension (feature).
@@ -41,12 +41,12 @@ public:
     inline ~MinMaxThread(){qDebug()<<"in ~MinMaxThread";}
 
   inline void run(){data.minMaxDimensionCalculation(modifiedClusters);}
-  inline void setModifiedClusters(Q3ValueList<int> clusters){modifiedClusters = clusters;}
+  inline void setModifiedClusters(QList<int> clusters){modifiedClusters = clusters;}
   
 private:
     Data& data;
       inline MinMaxThread(Data& d):data(d){}
-    Q3ValueList<int> modifiedClusters;  
+    QList<int> modifiedClusters;  
 };
 
 

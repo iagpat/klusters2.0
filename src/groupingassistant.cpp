@@ -19,7 +19,7 @@
 
 //Include files for QT
 #include <qmap.h>
-#include <q3valuelist.h>
+#include <QList>
 
 //include files for c/c++ libraires.
 #include <math.h>
@@ -34,7 +34,7 @@ GroupingAssistant::~GroupingAssistant()
 {
 }
 
-Array<double>* GroupingAssistant::computeMeanProbabilities(Data& clusteringData,Q3ValueList<int>& clusterList,Q3ValueList<int>& computedClusterList,Q3ValueList<int>& ignoreClusterIndex){
+Array<double>* GroupingAssistant::computeMeanProbabilities(Data& clusteringData,QList<int>& clusterList,QList<int>& computedClusterList,QList<int>& ignoreClusterIndex){
     Array<double>* probabilities;
 
     if(haveToStopComputing) return new Array<double>(0,0); //We do not care about what is return as it will not be used.
@@ -94,7 +94,7 @@ Array<double>* GroupingAssistant::computeMeanProbabilities(Data& clusteringData,
 }
 
 
-Array<double>* GroupingAssistant::computeProbabilities(Data& clusteringData,Q3ValueList<int>& clusterList,Q3ValueList<int>& computedClusterList,Q3ValueList<int>& ignoreClusterIndex){
+Array<double>* GroupingAssistant::computeProbabilities(Data& clusteringData,QList<int>& clusterList,QList<int>& computedClusterList,QList<int>& ignoreClusterIndex){
     dataType nbSpikes = clusteringData.totalNbOfSpikes();
     //The number of dimensions includes the number of PCA by channels and the any additionnal features
     //like the Valley to peak amplitude,the peak to valley amplitude,the max of the to previous data
@@ -301,7 +301,7 @@ int GroupingAssistant::cholesky(Array<double>& out,int nbDimensions,int clusterI
 }
 
 
-void GroupingAssistant::meanCovarianceComputation(int nbClusters,int nbDimensions,dataType nbSpikes,Data& clusteringData,Q3ValueList<int>& ignoreClusterIndex){
+void GroupingAssistant::meanCovarianceComputation(int nbClusters,int nbDimensions,dataType nbSpikes,Data& clusteringData,QList<int>& ignoreClusterIndex){
     //initialize dataMinusMean,means and covariances.
     Array<double> dataMinusMean;
     dataMinusMean.setSize(1,nbDimensions);

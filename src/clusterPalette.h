@@ -23,7 +23,7 @@
 #include <q3iconview.h>
 #include <qtooltip.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 class QStatusBar;
 
@@ -65,12 +65,12 @@ public:
     
     virtual void createClusterList(KlustersDoc* doc);
     virtual void updateClusterList();
-    void selectItems(Q3ValueList<int> selectedClusters);
+    void selectItems(QList<int> selectedClusters);
     virtual inline void setImmediateMode(){mode = IMMEDIATE;}
     virtual inline void setDelayMode(){mode = DELAY;}
     virtual void reset();
     /**Returns the list of selected clusters*/
-    Q3ValueList<int> selectedClusters();
+    QList<int> selectedClusters();
 
     /** Hides the user cluster information, that is show the normal cluster palette.*/
     void hideUserClusterInformation();
@@ -92,7 +92,7 @@ public:
         iconView->setPaletteBackgroundColor(color);
 
         //get the list of selected clusters
-        Q3ValueList<int> selected = selectedClusters();
+        QList<int> selected = selectedClusters();
 
         //Set isInSelectItems to true to prevent the emission of signals due to selectionChange
         isInSelectItems = true;
@@ -132,10 +132,10 @@ protected slots:
     
 signals:
     void singleChangeColor(int selectedCluster);
-    void updateShownClusters(Q3ValueList<int> selectedClusters);
-    void groupClusters(Q3ValueList<int> selectedClusters);
-    void moveClustersToNoise(Q3ValueList<int> selectedClusters);
-    void moveClustersToArtefact(Q3ValueList<int> selectedClusters);
+    void updateShownClusters(QList<int> selectedClusters);
+    void groupClusters(QList<int> selectedClusters);
+    void moveClustersToNoise(QList<int> selectedClusters);
+    void moveClustersToArtefact(QList<int> selectedClusters);
     void clusterInformationModified();
 
 private:

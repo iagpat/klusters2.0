@@ -28,7 +28,7 @@
 // include files for Qt
 #include <q3paintdevicemetrics.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <QCustomEvent>
 #include <QMouseEvent>
 #include <QEvent>
@@ -213,7 +213,7 @@ void ErrorMatrixView::drawClusterIds(QPainter& painter){
     //The ordinate of the legend for the current matrix cell.
     uint Y = 0;
 
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = clusterList.begin(); iterator != clusterList.end(); ++iterator){
         //the abscissa is increase by the font size to adjust for conversion from world coordinates to viewport coordinates.
         QRect r(worldToViewport(X,-Y).x() + 15,worldToViewport(X,-Y).y() + 2,worldToViewportWidth(cellWidth),12);
@@ -311,9 +311,9 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
     int cluster1 = clusterList[cluster1Index];
     int cluster2 = clusterList[cluster2Index];
     Pair pair(cluster1,cluster2);
-    Q3ValueList<int> clustersToShow;
-    Q3ValueList<int> previousSelectedClusters;
-    Q3ValueList<dataType> existingClusters = doc.data().clusterIds();
+    QList<int> clustersToShow;
+    QList<int> previousSelectedClusters;
+    QList<dataType> existingClusters = doc.data().clusterIds();
 
     //Check if the clusters still exist.
     if(existingClusters.contains(static_cast<dataType>(cluster1))){
@@ -331,7 +331,7 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
     if((e->state() & Qt::ControlModifier) && selectedPairs.contains(pair)){
         selectedPairs.remove(pair);
         clustersToShow.clear();
-        Q3ValueList<Pair>::iterator iterator;
+        QList<Pair>::iterator iterator;
         for(iterator = selectedPairs.begin(); iterator != selectedPairs.end(); ++iterator){
             int firstCluster = static_cast<Pair>(*iterator).getX();
             int secondCluster = static_cast<Pair>(*iterator).getY();
@@ -363,13 +363,13 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
 }
 
 
-void ErrorMatrixView::clustersGrouped(Q3ValueList<int>& groupedClusters, int newClusterId){
-    Q3ValueList<int> deletedList;
+void ErrorMatrixView::clustersGrouped(QList<int>& groupedClusters, int newClusterId){
+    QList<int> deletedList;
 
     //Store all the grouped clusters, used in the error matrix,
     //in the modifiedClusterList and ask to redraw the error matrix
     //in order to signal to the user that the error matrix in no more up to date.
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = groupedClusters.begin(); iterator != groupedClusters.end(); ++iterator)
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
@@ -383,13 +383,13 @@ void ErrorMatrixView::clustersGrouped(Q3ValueList<int>& groupedClusters, int new
     drawContentsMode = REDRAW;
 }
 
-void ErrorMatrixView::clustersDeleted(Q3ValueList<int>& deletedClusters,int destinationCluster){ 
-    Q3ValueList<int> deletedList;
+void ErrorMatrixView::clustersDeleted(QList<int>& deletedClusters,int destinationCluster){
+    QList<int> deletedList;
 
     //Store all the deletedClusters clusters, used in the error matrix,
     //in the modifiedClusterList and ask to redraw the error matrix
     //in order to signal to the user that the error matrix in no more up to date.
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
@@ -403,14 +403,14 @@ void ErrorMatrixView::clustersDeleted(Q3ValueList<int>& deletedClusters,int dest
     drawContentsMode = REDRAW;
 }
 
-void ErrorMatrixView::removeSpikesFromClusters(Q3ValueList<int>& fromClusters, int destinationClusterId,Q3ValueList<int>& emptiedClusters){
-    Q3ValueList<int>::iterator iterator;
+void ErrorMatrixView::removeSpikesFromClusters(QList<int>& fromClusters, int destinationClusterId,QList<int>& emptiedClusters){
+    QList<int>::iterator iterator;
     for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator)
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
         }
 
-    Q3ValueList<int> deletedList;
+    QList<int> deletedList;
     for(iterator = emptiedClusters.begin(); iterator != emptiedClusters.end(); ++iterator)
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
@@ -423,14 +423,14 @@ void ErrorMatrixView::removeSpikesFromClusters(Q3ValueList<int>& fromClusters, i
     drawContentsMode = REDRAW;
 }
 
-void ErrorMatrixView::newClusterAdded(Q3ValueList<int>& fromClusters,int clusterId,Q3ValueList<int>& emptiedClusters){
-    Q3ValueList<int>::iterator iterator;
+void ErrorMatrixView::newClusterAdded(QList<int>& fromClusters,int clusterId,QList<int>& emptiedClusters){
+    QList<int>::iterator iterator;
     for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator)
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
         }
 
-    Q3ValueList<int> deletedList;
+    QList<int> deletedList;
     for(iterator = emptiedClusters.begin(); iterator != emptiedClusters.end(); ++iterator)
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
@@ -443,13 +443,13 @@ void ErrorMatrixView::newClusterAdded(Q3ValueList<int>& fromClusters,int cluster
     drawContentsMode = REDRAW;
 }
 
-void ErrorMatrixView::newClustersAdded(QMap<int,int>& fromToNewClusterIds,Q3ValueList<int>& emptiedClusters){
-    Q3ValueList<int> fromClusters = fromToNewClusterIds.keys();
+void ErrorMatrixView::newClustersAdded(QMap<int,int>& fromToNewClusterIds,QList<int>& emptiedClusters){
+    QList<int> fromClusters = fromToNewClusterIds.keys();
 
     //Store all the clusters from where spikes have been taken, used in the error matrix,
     //in the modifiedClusterList and ask to redraw the error matrix
     //in order to signal to the user that the error matrix in no more up to date.
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator)
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
@@ -460,11 +460,11 @@ void ErrorMatrixView::newClustersAdded(QMap<int,int>& fromToNewClusterIds,Q3Valu
 }
 
 
-void ErrorMatrixView::newClustersAdded(Q3ValueList<int>& clustersToRecluster){
+void ErrorMatrixView::newClustersAdded(QList<int>& clustersToRecluster){
     //Store all the automatically reclustered clusters, used in the error matrix,
     //in the modifiedClusterList and ask to redraw the error matrix
     //in order to signal to the user that the error matrix in no more up to date.
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = clustersToRecluster.begin(); iterator != clustersToRecluster.end(); ++iterator)
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
@@ -511,13 +511,13 @@ void ErrorMatrixView::undoRenumbering(QMap<int,int>& clusterIdsNewOld){
     }
 }
 
-void ErrorMatrixView::undoAdditionModification(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters){
+void ErrorMatrixView::undoAdditionModification(QList<int>& addedClusters,QList<int>& updatedClusters){
     if(nbActions > 0){
         nbActions--;
         nbRedo++;
         isNotUpToDate = false;
 
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = updatedClusters.begin(); iterator != updatedClusters.end(); ++iterator){
 
             if(modifiedClusterList.contains(*iterator)){
@@ -525,8 +525,8 @@ void ErrorMatrixView::undoAdditionModification(Q3ValueList<int>& addedClusters,Q
             }
 
             if(deletedMap.contains(*iterator)){
-                Q3ValueList<int> deletedList = deletedMap[*iterator];
-                Q3ValueList<int>::iterator iterator2;
+                QList<int> deletedList = deletedMap[*iterator];
+                QList<int>::iterator iterator2;
                 for(iterator2 = deletedList.begin(); iterator2 != deletedList.end(); ++iterator2)
                     modifiedClusterList.remove(*iterator2);
             }
@@ -553,17 +553,17 @@ void ErrorMatrixView::undoAdditionModification(Q3ValueList<int>& addedClusters,Q
 }
 
 
-void ErrorMatrixView::undoAddition(Q3ValueList<int>& addedClusters){
+void ErrorMatrixView::undoAddition(QList<int>& addedClusters){
     if(nbActions > 0){
         nbActions--;
         nbRedo++;
         isNotUpToDate = false;
 
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = addedClusters.begin(); iterator != addedClusters.end(); ++iterator){
             if(deletedMap.contains(*iterator)){
-                Q3ValueList<int> deletedList = deletedMap[*iterator];
-                Q3ValueList<int>::iterator iterator2;
+                QList<int> deletedList = deletedMap[*iterator];
+                QList<int>::iterator iterator2;
                 for(iterator2 = deletedList.begin(); iterator2 != deletedList.end(); ++iterator2)
                     modifiedClusterList.remove(*iterator2);
 
@@ -590,20 +590,20 @@ void ErrorMatrixView::undoAddition(Q3ValueList<int>& addedClusters){
 }
 
 
-void ErrorMatrixView::undoModification(Q3ValueList<int>& updatedClusters){
+void ErrorMatrixView::undoModification(QList<int>& updatedClusters){
     if(nbActions > 0){
         nbActions--;
         nbRedo++;
         isNotUpToDate = false;
 
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = updatedClusters.begin(); iterator != updatedClusters.end(); ++iterator){
             if(modifiedClusterList.contains(*iterator)){
                 modifiedClusterList.remove(*iterator);
             }
             if(deletedMap.contains(*iterator)){
-                Q3ValueList<int> deletedList = deletedMap[*iterator];
-                Q3ValueList<int>::iterator iterator2;
+                QList<int> deletedList = deletedMap[*iterator];
+                QList<int>::iterator iterator2;
                 for(iterator2 = deletedList.begin(); iterator2 != deletedList.end(); ++iterator2){
                     modifiedClusterList.remove(*iterator2);
                 }
@@ -659,7 +659,7 @@ void ErrorMatrixView::redoRenumbering(QMap<int,int>& clusterIdsOldNew){
 }
 
 
-void ErrorMatrixView::redoAdditionModification(Q3ValueList<int>& addedClusters,Q3ValueList<int>& modifiedClusters,bool isModifiedByDeletion,Q3ValueList<int>& deletedClusters){
+void ErrorMatrixView::redoAdditionModification(QList<int>& addedClusters,QList<int>& modifiedClusters,bool isModifiedByDeletion,QList<int>& deletedClusters){
     if(nbPreviousRedo == 1){
         nbPreviousRedo--;
         isNotUpToDate = false;
@@ -676,7 +676,7 @@ void ErrorMatrixView::redoAdditionModification(Q3ValueList<int>& addedClusters,Q
         nbRedo--;
         isNotUpToDate = false;
 
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = modifiedClusters.begin(); iterator != modifiedClusters.end(); ++iterator)
             if(clusterList.contains(*iterator)){
                 modifiedClusterList.append(*iterator);
@@ -697,7 +697,7 @@ void ErrorMatrixView::redoAdditionModification(Q3ValueList<int>& addedClusters,Q
 }
 
 
-void ErrorMatrixView::redoAddition(Q3ValueList<int>& addedClusters,Q3ValueList<int>& deletedClusters){
+void ErrorMatrixView::redoAddition(QList<int>& addedClusters,QList<int>& deletedClusters){
     if(nbPreviousRedo == 1){
         nbPreviousRedo--;
         isNotUpToDate = false;
@@ -714,7 +714,7 @@ void ErrorMatrixView::redoAddition(Q3ValueList<int>& addedClusters,Q3ValueList<i
         nbRedo--;
         isNotUpToDate = false;
 
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
             if(clusterList.contains(*iterator)){
                 modifiedClusterList.append(*iterator);
@@ -730,7 +730,7 @@ void ErrorMatrixView::redoAddition(Q3ValueList<int>& addedClusters,Q3ValueList<i
 }
 
 
-void ErrorMatrixView::redoModification(Q3ValueList<int>& updatedClusters,bool isModifiedByDeletion,Q3ValueList<int>& deletedClusters){
+void ErrorMatrixView::redoModification(QList<int>& updatedClusters,bool isModifiedByDeletion,QList<int>& deletedClusters){
     if(nbPreviousRedo == 1){
         nbPreviousRedo--;
         isNotUpToDate = false;
@@ -747,7 +747,7 @@ void ErrorMatrixView::redoModification(Q3ValueList<int>& updatedClusters,bool is
         nbRedo--;
         isNotUpToDate = false;
 
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = updatedClusters.begin(); iterator != updatedClusters.end(); ++iterator)
             if(modifiedClusterList.contains(*iterator)) modifiedClusterList.remove(*iterator);
             else if(clusterList.contains(*iterator)){
@@ -769,7 +769,7 @@ void ErrorMatrixView::redoModification(Q3ValueList<int>& updatedClusters,bool is
 }
 
 
-void ErrorMatrixView::redoDeletion(Q3ValueList<int>& deletedClusters){
+void ErrorMatrixView::redoDeletion(QList<int>& deletedClusters){
     if(nbPreviousRedo == 1){
         nbPreviousRedo--;
         isNotUpToDate = false;
@@ -786,7 +786,7 @@ void ErrorMatrixView::redoDeletion(Q3ValueList<int>& deletedClusters){
         nbRedo--;
         isNotUpToDate = false;
 
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
             if(clusterList.contains(*iterator)){
                 modifiedClusterList.append(*iterator);

@@ -27,7 +27,7 @@
 //Added by qt3to4:
 #include <QCustomEvent>
 #include <QEvent>
-#include <Q3ValueList>
+#include <QList>
 
 /**Thread used to retrieve the waveforms and compute the means and standard deviations
  * which will be displayed in the WaveformView.
@@ -46,8 +46,8 @@ public:
     inline ~WaveformThread(){};
 
     void getWaveformInformation(int clusterId,WaveformView::PresentationMode mode);
-    void getWaveformInformation(Q3ValueList<int> clusterIds,WaveformView::PresentationMode mode);
-    void getMean(Q3ValueList<int> clusterIds,WaveformView::PresentationMode mode);
+    void getWaveformInformation(QList<int> clusterIds,WaveformView::PresentationMode mode);
+    void getMean(QList<int> clusterIds,WaveformView::PresentationMode mode);
     /**Gets the mean and standard deviation for the cluster or the clusters set previously.
   * @param
   */
@@ -55,7 +55,7 @@ public:
 
     inline bool isSingleTriggeringCluster(){return treatSingleCluster;}
     inline int triggeringCluster(){return clusterId;}
-    inline Q3ValueList<int> triggeringClusters(){return clusterIds;}
+    inline QList<int> triggeringClusters(){return clusterIds;}
     inline bool isMeanRequested(){return  meanRequested;}
 
     /**Asks the thread to stop his work as soon as possible.*/
@@ -122,7 +122,7 @@ private:
 
     WaveformView& waveformView;
     int clusterId;
-    Q3ValueList<int> clusterIds;
+    QList<int> clusterIds;
     bool treatSingleCluster;
     bool meanRequested;
     Data& data;

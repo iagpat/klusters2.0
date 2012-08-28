@@ -20,7 +20,7 @@
 #include <qregexp.h>
 //Added by qt3to4:
 #include <QTextStream>
-#include <Q3ValueList>
+#include <QList>
 #include <QDebug>
 
 #include <fstream>
@@ -336,7 +336,7 @@ void EventsProvider::retrieveData(long startTime,long endTime,QObject* initiator
     emit dataReady(finalTimes,finalIds,initiator,name);
 }
 
-void EventsProvider::requestNextEventData(long startTime,long timeFrame,Q3ValueList<int> selectedIds,QObject* initiator){
+void EventsProvider::requestNextEventData(long startTime,long timeFrame,QList<int> selectedIds,QObject* initiator){
     long initialStartTime = startTime;
     //Compute the start time for the event look up
     startTime = initialStartTime + static_cast<long>(timeFrame * eventPosition);
@@ -547,7 +547,7 @@ void EventsProvider::requestNextEventData(long startTime,long timeFrame,Q3ValueL
     emit nextEventDataReady(finalTimes,finalIds,initiator,name,startingTime);
 }
 
-void EventsProvider::requestPreviousEventData(long startTime,long timeFrame,Q3ValueList<int> selectedIds,QObject* initiator){
+void EventsProvider::requestPreviousEventData(long startTime,long timeFrame,QList<int> selectedIds,QObject* initiator){
     long initialStartTime = startTime;
     //Compute the start time for the event look up
     startTime = initialStartTime + static_cast<long>(timeFrame * eventPosition);
@@ -1196,7 +1196,7 @@ void EventsProvider::addEventDescription(QString eventDescriptionToAdd){
 
     //Add the new description to the list of existing ones and compute the new descriptionLength
     idsDescriptions.clear();
-    Q3ValueList<EventDescription> descriptions = eventIds.keys();
+    QList<EventDescription> descriptions = eventIds.keys();
 
     descriptions.append(EventDescription(eventDescriptionToAdd));
 
@@ -1251,9 +1251,9 @@ void EventsProvider::removeEventDescription(QString eventDescriptionToRemove){
 
     //Remove the description of the list of existing ones and compute the new descriptionLength
     idsDescriptions.clear();
-    Q3ValueList<EventDescription> descriptions = eventIds.keys();
+    QList<EventDescription> descriptions = eventIds.keys();
 
-    Q3ValueList<EventDescription> newDescriptions = eventIds.keys();
+    QList<EventDescription> newDescriptions = eventIds.keys();
     newDescriptions.remove(EventDescription(eventDescriptionToRemove));
 
     //KDAB_PENDING

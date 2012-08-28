@@ -34,7 +34,7 @@
 #include <qcursor.h>
 #include <q3paintdevicemetrics.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <QCustomEvent>
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -44,7 +44,7 @@
 const int WaveformView::XMARGIN = 0;
 const int WaveformView::YMARGIN = 0;
 
-WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,Q3ValueList<int> positions,QStatusBar * statusBar,QWidget* parent,
+WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,QList<int> positions,QStatusBar * statusBar,QWidget* parent,
                            bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
                            bool overLay,bool mean, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
                            int border) :
@@ -154,7 +154,7 @@ void WaveformView::askForWaveformInformation(int clusterId){
     }
 }
 
-void WaveformView::askForWaveformInformation(Q3ValueList<int> clusterIds){  
+void WaveformView::askForWaveformInformation(QList<int> clusterIds){
     //If the widget is not about to be deleted, request the data.
     if(!goingToDie){
         dataReady = false;
@@ -210,7 +210,7 @@ void WaveformView::removeClusterFromView(int clusterId,bool active){
     }
 }
 
-void WaveformView::addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active){
+void WaveformView::addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active){
 
     isZoomed = false;//Hack because all the tabs share the same data.
 
@@ -225,7 +225,7 @@ void WaveformView::addNewClusterToView(Q3ValueList<int>& fromClusters,int cluste
 }
 
 
-void WaveformView::spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active){  
+void WaveformView::spikesRemovedFromClusters(QList<int>& fromClusters,bool active){
     isZoomed = false;//Hack because all the tabs share the same data.
 
     //Update drawContentsMode if need it.
@@ -416,18 +416,18 @@ void WaveformView::drawContents(QPainter *p){
 }
 
 
-void WaveformView::drawWaveforms(QPainter& painter,const Q3ValueList<int>& clusterList){
+void WaveformView::drawWaveforms(QPainter& painter,const QList<int>& clusterList){
     //the clusters will be presented by increasing ids, to do so the lists have to be sorted.
-    Q3ValueList<int> shownClusters;
-    Q3ValueList<int>::const_iterator iterator;
-    Q3ValueList<int> const clusters = view.clusters();
+    QList<int> shownClusters;
+    QList<int>::const_iterator iterator;
+    QList<int> const clusters = view.clusters();
     for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
         shownClusters.append(*iterator);
 
     //KDAB_PENDING
     //qSort(shownClusters);
 
-    Q3ValueList<int> clusterListSorted;
+    QList<int> clusterListSorted;
     for(iterator = clusterList.begin(); iterator != clusterList.end(); ++iterator)
         clusterListSorted.append(*iterator);
 
@@ -435,7 +435,7 @@ void WaveformView::drawWaveforms(QPainter& painter,const Q3ValueList<int>& clust
     //qSort(clusterListSorted);
 
     //Loop on the clusters to be drawn
-    Q3ValueList<int>::const_iterator clusterIterator;
+    QList<int>::const_iterator clusterIterator;
 
     ItemColors& clusterColors = doc.clusterColors();
     Data& clusteringData = doc.data();
@@ -640,9 +640,9 @@ void WaveformView::setDisplayNbSpikes(long nbSpikes){
 
 
 void WaveformView::drawClusterIds(QPainter& painter){
-    Q3ValueList<int> shownClusters;
-    Q3ValueList<int>::const_iterator iterator;
-    Q3ValueList<int> const clusters = view.clusters();
+    QList<int> shownClusters;
+    QList<int>::const_iterator iterator;
+    QList<int> const clusters = view.clusters();
     for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
         shownClusters.append(*iterator);
     //KDAB_PENDING
@@ -692,8 +692,8 @@ void WaveformView::mouseDoubleClickEvent (QMouseEvent *e){
     if((view.clusters().size() > 0)){
         Data& clusteringData = doc.data();
         bool waveformsNotAvailable = false;
-        Q3ValueList<int>::const_iterator clusterIterator;
-        Q3ValueList<int> const clusters = view.clusters();
+        QList<int>::const_iterator clusterIterator;
+        QList<int> const clusters = view.clusters();
         for(clusterIterator = clusters.begin(); clusterIterator != clusters.end(); ++clusterIterator){
             Data::WaveformIterator* waveformIterator;
             if(presentationMode == SAMPLE) waveformIterator = clusteringData.sampleWaveformIterator(static_cast<dataType>(*clusterIterator),nbSpkToDisplay);
@@ -717,8 +717,8 @@ void WaveformView::mouseReleaseEvent(QMouseEvent* e){
     if((e->button() & Qt::LeftButton) && (view.clusters().size() > 0)){
         Data& clusteringData = doc.data();
         bool waveformsNotAvailable = false;
-        Q3ValueList<int>::const_iterator clusterIterator;
-        Q3ValueList<int> const clusters = view.clusters();
+        QList<int>::const_iterator clusterIterator;
+        QList<int> const clusters = view.clusters();
         for(clusterIterator = clusters.begin(); clusterIterator != clusters.end(); ++clusterIterator){
             Data::WaveformIterator* waveformIterator;
             if(presentationMode == SAMPLE) waveformIterator = clusteringData.sampleWaveformIterator(static_cast<dataType>(*clusterIterator),nbSpkToDisplay);
@@ -742,8 +742,8 @@ void WaveformView::resizeEvent(QResizeEvent* e){
     if(view.clusters().size() > 0){
         Data& clusteringData = doc.data();
         bool waveformsNotAvailable = false;
-        Q3ValueList<int>::const_iterator clusterIterator;
-        Q3ValueList<int> const clusters = view.clusters();
+        QList<int>::const_iterator clusterIterator;
+        QList<int> const clusters = view.clusters();
         for(clusterIterator = clusters.begin(); clusterIterator != clusters.end(); ++clusterIterator){
             Data::WaveformIterator* waveformIterator;
             if(presentationMode == SAMPLE) waveformIterator = clusteringData.sampleWaveformIterator(static_cast<dataType>(*clusterIterator),nbSpkToDisplay);

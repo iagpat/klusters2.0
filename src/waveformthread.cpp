@@ -22,7 +22,7 @@
 //QT include files
 #include <qapplication.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <QDebug>
 
 //Unix include file
@@ -35,7 +35,7 @@ void WaveformThread::getWaveformInformation(int clusterId,WaveformView::Presenta
     start();
 }
 
-void WaveformThread::getWaveformInformation(Q3ValueList<int> clusterIds,WaveformView::PresentationMode mode){
+void WaveformThread::getWaveformInformation(QList<int> clusterIds,WaveformView::PresentationMode mode){
     this->clusterIds = clusterIds;
     treatSingleCluster = false;
     this->mode = mode;
@@ -79,7 +79,7 @@ void WaveformThread::run(){
             //iterate on all the clusters contained in clusterIds before returning
             else{
                 if(!haveToStopProcessing){
-                    Q3ValueList<int>::iterator iterator;
+                    QList<int>::iterator iterator;
                     for(iterator = clusterIds.begin(); iterator != clusterIds.end(); ++iterator){
                         if(!haveToStopProcessing){
                             Data::Status status = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay);
@@ -121,7 +121,7 @@ void WaveformThread::run(){
             //iterate on all the clusters contained in clusterIds before returning
             else{
                 if(!haveToStopProcessing){
-                    Q3ValueList<int>::iterator iterator;
+                    QList<int>::iterator iterator;
                     for(iterator = clusterIds.begin(); iterator != clusterIds.end(); ++iterator){
                         if(!haveToStopProcessing){
                             Data::Status status = data.getTimeFrameWaveformPoints(*iterator,waveformView.startTime,waveformView.endTime);
@@ -200,7 +200,7 @@ void WaveformThread::run(){
             //iterate on all the clusters contained in clusterIds before returning
             else{
                 if(!haveToStopProcessing){
-                    Q3ValueList<int>::iterator iterator;
+                    QList<int>::iterator iterator;
                     for(iterator = clusterIds.begin(); iterator != clusterIds.end(); ++iterator){
                         if(!haveToStopProcessing){
                             Data::Status status = data.calculateSampleMean(*iterator,waveformView.nbSpkToDisplay);
@@ -304,7 +304,7 @@ void WaveformThread::run(){
             //iterate on all the clusters contained in clusterIds before returning
             else{
                 if(!haveToStopProcessing){
-                    Q3ValueList<int>::iterator iterator;
+                    QList<int>::iterator iterator;
                     for(iterator = clusterIds.begin(); iterator != clusterIds.end(); ++iterator){
                         if(!haveToStopProcessing){
                             Data::Status status = data.calculateTimeFrameMean(*iterator,waveformView.startTime,waveformView.endTime);
@@ -361,7 +361,7 @@ void WaveformThread::getMean(WaveformView::PresentationMode mode){
     start();
 }
 
-void WaveformThread::getMean(Q3ValueList<int> clusterIds,WaveformView::PresentationMode mode){
+void WaveformThread::getMean(QList<int> clusterIds,WaveformView::PresentationMode mode){
 
     qDebug()<<"in  WaveformThread::getMean";
 

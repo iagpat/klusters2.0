@@ -30,7 +30,7 @@
 #include <qcursor.h>
 #include <q3paintdevicemetrics.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <QCustomEvent>
 #include <QResizeEvent>
 #include <QMouseEvent>
@@ -81,22 +81,24 @@ CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,QColor back
     ordinateMax = 0;
 
     //Create the pairs for the clusters to show.
-    const Q3ValueList<int>& shownClusters = view.clusters();
-    Q3ValueList<int> clusters;
-    Q3ValueList<int>::const_iterator clustersIterator;
+    const QList<int>& shownClusters = view.clusters();
+    QList<int> clusters;
+    QList<int>::const_iterator clustersIterator;
     for(clustersIterator = shownClusters.begin(); clustersIterator != shownClusters.end(); ++clustersIterator)
         clusters.append(*clustersIterator);
     //KDAB_PENDING
     //qSort(clusters);
 
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     int i = 0;
     for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
-        Q3ValueList<int>::iterator iterator2;
-        for(iterator2 = clusters.at(i); iterator2 != clusters.end(); ++iterator2){
+        QList<int>::iterator iterator2;
+#if KDAB_PORTING_ITERATOR	
+        for(iterator2 = (clusters.at(i)); iterator2 != clusters.end(); ++iterator2){
             //Create pairs as (*iterator,*iterator2) where *iterator <= *iterator2
             pairs.append(Pair(*iterator,*iterator2));
         }
+#endif
         ++i;
     }
 
@@ -129,9 +131,9 @@ void CorrelationView::singleColorUpdate(int clusterId,bool active){
     if(active){
         //Add the pairs link to the cluster id to the pairUpdateList,
         // so they will be updated during the next update
-        const Q3ValueList<int>& shownClusters = view.clusters();
+        const QList<int>& shownClusters = view.clusters();
 
-        Q3ValueList<int>::ConstIterator iterator;
+        QList<int>::ConstIterator iterator;
         for(iterator = shownClusters.begin(); iterator != shownClusters.end(); ++iterator){
             //Create pairs as (*iterator,clusterId) where *iterator <= clusterId
             //and (clusterId,*iterator) where *iterator > clusterId
@@ -177,7 +179,7 @@ void CorrelationView::removeClusterFromView(int clusterId,bool active){
 }
 
 
-void CorrelationView::addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active){
+void CorrelationView::addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active){
     isZoomed = false;//Hack because all the tabs share the same data.
 
     //Update drawContentsMode if need it.
@@ -189,7 +191,7 @@ void CorrelationView::addNewClusterToView(Q3ValueList<int>& fromClusters,int clu
     }
 }
 
-void CorrelationView::spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active){
+void CorrelationView::spikesRemovedFromClusters(QList<int>& fromClusters,bool active){
     isZoomed = false;//Hack because all the tabs share the same data.
 
     //Update drawContentsMode if need it.
@@ -281,7 +283,7 @@ void CorrelationView::drawContents(QPainter *p){
 }
 
 
-CorrelationThread* CorrelationView::getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds){
+CorrelationThread* CorrelationView::getCorrelations(QList<Pair>* pairsToCompute,QList<int> clusterIds){
     //The creation of a thread automatically start it.
     return new CorrelationThread(*this,doc.data(),pairsToCompute,clusterIds);
 }
@@ -292,9 +294,9 @@ void CorrelationView::askForCorrelograms(){
         dataReady = false;
 
         //Compute the pairs for all the clusters currently shown.
-        const Q3ValueList<int>& shownClusters = view.clusters();
-        Q3ValueList<int> clusters;
-        Q3ValueList<int>::const_iterator clustersIterator;
+        const QList<int>& shownClusters = view.clusters();
+        QList<int> clusters;
+        QList<int>::const_iterator clustersIterator;
         for(clustersIterator = shownClusters.begin(); clustersIterator != shownClusters.end(); ++clustersIterator)
             clusters.append(*clustersIterator);
         //KDAB_PENDING
@@ -302,16 +304,18 @@ void CorrelationView::askForCorrelograms(){
 
 
         pairs.clear();
-        Q3ValueList<Pair>* clusterPairs = new Q3ValueList<Pair>();
-        Q3ValueList<int>::iterator iterator;
+        QList<Pair>* clusterPairs = new QList<Pair>();
+        QList<int>::iterator iterator;
         int i = 0;
         for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
-            Q3ValueList<int>::iterator iterator2;
+            QList<int>::iterator iterator2;
+#if KDAB_PORTING_ITERATOR
             for(iterator2 = clusters.at(i); iterator2 != clusters.end(); ++iterator2){
                 //Create pairs as (*iterator,*iterator2) where *iterator <= *iterator2
                 pairs.append(Pair(*iterator,*iterator2));
                 clusterPairs->append(Pair(*iterator,*iterator2));
             }
+#endif
             ++i;
         }
 
@@ -364,7 +368,7 @@ void CorrelationView::updateWindow(){
     if(drawContentsMode == REFRESH)drawContentsMode = REDRAW;
 }
 
-void CorrelationView::drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pairList){   
+void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
 
     //Clear the firing rate list
     firingRates.clear();
@@ -374,7 +378,7 @@ void CorrelationView::drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pair
     //qSort(pairList);
 
     //Loop on the pairs to be drawn.
-    Q3ValueList<Pair>::iterator pairIterator;
+    QList<Pair>::iterator pairIterator;
 
     ItemColors& clusterColors = doc.clusterColors();
     Data& clusteringData = doc.data();
@@ -394,11 +398,11 @@ void CorrelationView::drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pair
     //The position of those clusters in the drawing
     //has to been find in order to redraw them at the correct position.
     bool specificPosition = false;
-    Q3ValueList<int> shownClusters;
+    QList<int> shownClusters;
     if(drawContentsMode == UPDATE){
         specificPosition = true;
-        Q3ValueList<int>::const_iterator iterator;
-        Q3ValueList<int> const clusters = view.clusters();
+        QList<int>::const_iterator iterator;
+        QList<int> const clusters = view.clusters();
         for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
             shownClusters.append(*iterator);
         //KDAB_PENDING
@@ -542,9 +546,9 @@ void CorrelationView::setBinSizeAndTimeWindow(int size,int width){
 }
 
 void CorrelationView::drawClusterIds(QPainter& painter){
-    Q3ValueList<int> shownClusters;
-    Q3ValueList<int>::const_iterator iterator;
-    Q3ValueList<int> const clusters = view.clusters();
+    QList<int> shownClusters;
+    QList<int>::const_iterator iterator;
+    QList<int> const clusters = view.clusters();
     for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
         shownClusters.append(*iterator);
     //KDAB_PENDING
@@ -662,7 +666,7 @@ void CorrelationView::mouseDoubleClickEvent (QMouseEvent *e){
     ViewWidget::mouseDoubleClickEvent(e);
     if((view.clusters().size() > 0)){
         Data& clusteringData = doc.data();
-        Q3ValueList<Pair>::iterator pairIterator;
+        QList<Pair>::iterator pairIterator;
         bool correlogramsNotAvailable = false;
         for(pairIterator = pairs.begin(); pairIterator != pairs.end(); ++pairIterator){
             Data::CorrelogramIterator iterator = clusteringData.correlogramIterator(*pairIterator,scaleMode,binSize,timeWindow);
@@ -683,7 +687,7 @@ void CorrelationView::mouseReleaseEvent(QMouseEvent* e){
 
     if((e->button() & Qt::LeftButton) && (view.clusters().size() > 0)){
         Data& clusteringData = doc.data();
-        Q3ValueList<Pair>::iterator pairIterator;
+        QList<Pair>::iterator pairIterator;
         bool correlogramsNotAvailable = false;
         for(pairIterator = pairs.begin(); pairIterator != pairs.end(); ++pairIterator){
             Data::CorrelogramIterator iterator = clusteringData.correlogramIterator(*pairIterator,scaleMode,binSize,timeWindow);
@@ -704,7 +708,7 @@ void CorrelationView::resizeEvent(QResizeEvent* e){
 
     if(view.clusters().size() > 0){
         Data& clusteringData = doc.data();
-        Q3ValueList<Pair>::iterator pairIterator;
+        QList<Pair>::iterator pairIterator;
         bool correlogramsNotAvailable = false;
         for(pairIterator = pairs.begin(); pairIterator != pairs.end(); ++pairIterator){
             Data::CorrelogramIterator iterator = clusteringData.correlogramIterator(*pairIterator,scaleMode,binSize,timeWindow);
@@ -755,9 +759,9 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
             int y = (current.y() - static_cast<int>(heightBorder));
             int yCluster = abs(static_cast<int>(static_cast<float>(y)/static_cast<float>(YsizeForMaxAmp + Yspace)));
             if(xCluster <= yCluster){
-                Q3ValueList<int> shownClusters;
-                Q3ValueList<int>::const_iterator iterator;
-                Q3ValueList<int> const clusters = view.clusters();
+                QList<int> shownClusters;
+                QList<int>::const_iterator iterator;
+                QList<int> const clusters = view.clusters();
                 for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
                     shownClusters.append(*iterator);
                 //KDAB_PENDING

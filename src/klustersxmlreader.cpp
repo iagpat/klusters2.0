@@ -20,7 +20,7 @@
 #include "tags.h"
 #include "clusteruserinformation.h"
 
-#include <Q3ValueList>
+#include <QList>
 
 //include files for QT
 #include <qfileinfo.h>
@@ -124,8 +124,8 @@ int KlustersXmlReader::getNbChannels()const{
 }
 
 
-Q3ValueList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
-    Q3ValueList<int> channels;
+QList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
+    QList<int> channels;
     xmlXPathObjectPtr result;
     xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).toLatin1());
 

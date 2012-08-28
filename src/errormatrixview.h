@@ -22,7 +22,7 @@
 #include <qwidget.h>
 #include <qmap.h>
 #include <qcolor.h>
-#include <q3valuelist.h>
+#include <QList>
 #include <q3ptrlist.h>
 //Added by qt3to4:
 #include <QResizeEvent>
@@ -79,7 +79,7 @@ public slots:
   * @param groupedClusters list of clusters having been grouped.
   * @param newClusterId the id of the cluster created by the grouping of those specified in @p groupedClusters
   */
-    void clustersGrouped(Q3ValueList<int>& groupedClusters, int newClusterId);
+    void clustersGrouped(QList<int>& groupedClusters, int newClusterId);
 
     /**Updates the error matrix drawing by adding a red border
   * if the deletion of clusters have impacted clusters presented in the matrix.
@@ -87,7 +87,7 @@ public slots:
   * @param destinationCluster cluster with which the clusters in @p deletedClusters are merge
   * (cluster 0 or 1 cluster of artefact and cluster of noise respectively).
   */
-    void clustersDeleted(Q3ValueList<int>& deletedClusters,int destinationCluster);
+    void clustersDeleted(QList<int>& deletedClusters,int destinationCluster);
 
     /**
   * Updates the error matrix drawing by adding a red border if spikes have been
@@ -96,7 +96,7 @@ public slots:
   * @param destinationClusterId cluster id to which the spikes have been added
   * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.
   */
-    void removeSpikesFromClusters(Q3ValueList<int>& fromClusters, int destinationClusterId,Q3ValueList<int>& emptiedClusters);
+    void removeSpikesFromClusters(QList<int>& fromClusters, int destinationClusterId,QList<int>& emptiedClusters);
 
     /**
   * Updates the error matrix drawing by adding a red border if the clusters presented in the matrix
@@ -105,7 +105,7 @@ public slots:
   * @param clusterId cluster to add to the clusters already drawn
   * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.
   */
-    void newClusterAdded(Q3ValueList<int>& fromClusters,int clusterId,Q3ValueList<int>& emptiedClusters);
+    void newClusterAdded(QList<int>& fromClusters,int clusterId,QList<int>& emptiedClusters);
 
     /**
   * Updates the error matrix drawing by adding a red border if the clusters presented in the matrix
@@ -114,14 +114,14 @@ public slots:
   * and the values are the ids of the newly created clusters.
   * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.
   */
-    void newClustersAdded(QMap<int,int>& fromToNewClusterIds,Q3ValueList<int>& emptiedClusters);
+    void newClustersAdded(QMap<int,int>& fromToNewClusterIds,QList<int>& emptiedClusters);
 
     /**
   * Updates the error matrix drawing by adding a red border if the clusters presented in the matrix
   * have been modified to create the new clusters.
   * @param clustersToRecluster list of clusters automatically reclustered.
   */
-    void newClustersAdded(Q3ValueList<int>& clustersToRecluster);
+    void newClustersAdded(QList<int>& clustersToRecluster);
 
     /**
   * Updates the error matrix drawing by adding a red border due to an renumbering of the cluster ids.
@@ -138,17 +138,17 @@ public slots:
   * @param addedClusters list of clusters which were added.
   * @param updatedClusters list of clusters which were modified.
   */
-    void undoAdditionModification(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters);
+    void undoAdditionModification(QList<int>& addedClusters,QList<int>& updatedClusters);
 
     /**Updates the error matrix drawing due to reversion of the last user action.
   * @param addedClusters list of clusters which were added.
   */
-    void undoAddition(Q3ValueList<int>& addedClusters);
+    void undoAddition(QList<int>& addedClusters);
 
     /**Updates the error matrix drawing due to reversion of the last user action.
   * @param updatedClusters list of clusters which were modified.
   */
-    void undoModification(Q3ValueList<int>& updatedClusters);
+    void undoModification(QList<int>& updatedClusters);
 
     /** Updates the error matrix drawing by adding a red border.
   * @param clusterIdsOldNew map given for each old clusterId the new clusterId.
@@ -163,14 +163,14 @@ public slots:
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
   * @param deletedClusters list of clusters which were deleted.
   */
-    void redoAdditionModification(Q3ValueList<int>& addedClusters,Q3ValueList<int>& modifiedClusters,bool isModifiedByDeletion,Q3ValueList<int>& deletedClusters);
+    void redoAdditionModification(QList<int>& addedClusters,QList<int>& modifiedClusters,bool isModifiedByDeletion,QList<int>& deletedClusters);
 
     /**Updates the error matrix drawing by adding a red border if the reversion of
   * the last undo action has modified any of the clusters presented in the error matrix.
   * @param addedClusters list of clusters which were added
   * @param deletedClusters list of clusters which were deleted.
   */
-    void redoAddition(Q3ValueList<int>& addedClusters,Q3ValueList<int>& deletedClusters);
+    void redoAddition(QList<int>& addedClusters,QList<int>& deletedClusters);
 
     /**Updates the error matrix drawing by adding a red border if the reversion of
   * the last undo action has modified any of the clusters presented in the error matrix.
@@ -179,13 +179,13 @@ public slots:
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
   * @param deletedClusters list of clusters which were deleted.
   */
-    void redoModification(Q3ValueList<int>& updatedClusters,bool isModifiedByDeletion,Q3ValueList<int>& deletedClusters);
+    void redoModification(QList<int>& updatedClusters,bool isModifiedByDeletion,QList<int>& deletedClusters);
 
     /**Updates the error matrix drawing by adding a red border if the reversion of
   * the last undo action has modified any of the clusters presented in the error matrix.
   * @param deletedClusters list of clusters which were deleted.
   */
-    void redoDeletion(Q3ValueList<int>& deletedClusters);
+    void redoDeletion(QList<int>& deletedClusters);
 
     /**Prints the currently display information on a printer via the painter @p printPainter.
   * @param printPainter painter on a printer.
@@ -218,18 +218,18 @@ private:
     /**Color map use to represent the probabilities of the error matrix.*/
     QMap<int,QColor> colorMap;
     /**List of the clusters present in the error matrix.*/
-    Q3ValueList<int> clusterList;
+    QList<int> clusterList;
     /**List of the clusters present in the error matrix which have a probability calculated.*/
-    Q3ValueList<int> computedClusterList;
+    QList<int> computedClusterList;
     /**List of the clusters present in the error matrix which do not have a probability calculated.*/
-    Q3ValueList<int> ignoreClusterIndex;
+    QList<int> ignoreClusterIndex;
     /**Error matrix.*/
     Array<double>* probabilities;
     /**List of the clusters which have been modified since the last computation of the errror matrix.*/
-    Q3ValueList<int> modifiedClusterList;
+    QList<int> modifiedClusterList;
 
     /**Map of the clusters deleted.*/
-    QMap<int, Q3ValueList<int> > deletedMap;
+    QMap<int, QList<int> > deletedMap;
 
     /**Minimal abscissa in window coordinate*/
     long abscissaMin;
@@ -292,7 +292,7 @@ private:
     bool goingToDie;
 
     /**List of the selected pairs.*/
-    Q3ValueList<Pair> selectedPairs;
+    QList<Pair> selectedPairs;
 
     /**Map keepipng track of the renumbering done on the data.*/
     QMap<int,bool> renumbering;

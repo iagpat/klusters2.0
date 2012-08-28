@@ -30,7 +30,7 @@
 #include <qpainter.h>
 #include <qstyle.h> 
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <QKeyEvent>
 
 //Inclused files for KDE
@@ -86,9 +86,9 @@ public:
   * @param border size of the border between the frame and the contents.
   */
     TraceWidget(long startTime,long duration,bool greyScale,TracesProvider& tracesProvider,bool multiColumns,bool verticalLines,
-                bool raster,bool waveforms,bool labelsDisplay,Q3ValueList<int>& channelsToDisplay,int gain,int acquisitionGain,ChannelColors* channelColors,
-                QMap<int, Q3ValueList<int> >* groupsChannels,QMap<int,int>* channelsGroups,Q3ValueList<int>& channelOffsets,
-                Q3ValueList<int>& gains,const Q3ValueList<int>& skippedChannels,QWidget* parent=0, const char* name=0,QColor backgroundColor = Qt::black,
+                bool raster,bool waveforms,bool labelsDisplay,QList<int>& channelsToDisplay,int gain,int acquisitionGain,ChannelColors* channelColors,
+                QMap<int, QList<int> >* groupsChannels,QMap<int,int>* channelsGroups,QList<int>& channelOffsets,
+                QList<int>& gains,const QList<int>& skippedChannels,QWidget* parent=0, const char* name=0,QColor backgroundColor = Qt::black,
                 QStatusBar* statusBar = 0L,int minSize = 0, int maxSize = 4000, int windowTopLeft = -500,
                 int windowBottomRight = 1001, int border = 0);
 
@@ -153,7 +153,7 @@ public slots:
     /** Informs listener that the channels @p selectedIds have been selected.
   * @Param the list of channels selected by the user in a view.
   */
-    inline void slotChannelsSelected(const Q3ValueList<int>& selectedIds) {emit channelsSelected(selectedIds);}
+    inline void slotChannelsSelected(const QList<int>& selectedIds) {emit channelsSelected(selectedIds);}
 
     /**Change the current mode, call by a selection of a tool.
   * @param selectedMode new mode of drawing.
@@ -165,7 +165,7 @@ public slots:
   * Updates the list of channels shown with @p channelsToShow.
   * @param channelsToShow new list of channels to be shown.
   */
-    inline void showChannels(const Q3ValueList<int>& channelsToShow){
+    inline void showChannels(const QList<int>& channelsToShow){
         view.showChannels(channelsToShow);
     }
 
@@ -175,7 +175,7 @@ public slots:
   * @param name name use to identified the cluster provider containing the clusters to show.
   * @param clustersToShow new list of clusters to be shown.
   */
-    inline void showClusters(QString name,Q3ValueList<int>& clustersToShow){
+    inline void showClusters(QString name,QList<int>& clustersToShow){
         view.showClusters(name,clustersToShow);
     }
 
@@ -185,7 +185,7 @@ public slots:
   * @param name name use to identified the event provider containing the events to show.
   * @param eventsToShow new list of events to be shown.
   */
-    inline void showEvents(QString name,Q3ValueList<int>& eventsToShow){
+    inline void showEvents(QString name,QList<int>& eventsToShow){
         view.showEvents(name,eventsToShow);
     }
 
@@ -226,12 +226,12 @@ public slots:
     /**Triggers the increase of the amplitude of the selected channels.
   * @param channelIds ids of the channels for which the amplitude has to be increased.
   */
-    inline void increaseSelectedChannelsAmplitude(const Q3ValueList<int>& channelIds){view.increaseSelectedChannelsAmplitude(channelIds);}
+    inline void increaseSelectedChannelsAmplitude(const QList<int>& channelIds){view.increaseSelectedChannelsAmplitude(channelIds);}
 
     /**Triggers the decrease of the amplitude of the selected channels.
   * @param channelIds ids of the channels for which the amplitude has to be decreased.
   */
-    inline void decreaseSelectedChannelsAmplitude(const Q3ValueList<int>& channelIds){view.decreaseSelectedChannelsAmplitude(channelIds);}
+    inline void decreaseSelectedChannelsAmplitude(const QList<int>& channelIds){view.decreaseSelectedChannelsAmplitude(channelIds);}
 
     /**Sets the unit gain and the acquisition system gain.
   * @param gain initial gain use to draw the traces in the TraceView.
@@ -253,7 +253,7 @@ public slots:
     /**Selects the channels in the TraceView.
   *@param selectedIds ids of the selected channels.
   */
-    inline void selectChannels(const Q3ValueList<int>& selectedIds){view.selectChannels(selectedIds);}
+    inline void selectChannels(const QList<int>& selectedIds){view.selectChannels(selectedIds);}
 
     /**Resets the offset of the selected channels to the default values.
   * @param selectedChannelDefaultOffsets map given the default offsets for the selected channels.
@@ -263,7 +263,7 @@ public slots:
     /**Resets the gain of the selected channels.
   *@param selectedChannels ids of the selected channels.
   */
-    void resetGains(const Q3ValueList<int>& selectedChannels){view.resetGains(selectedChannels);}
+    void resetGains(const QList<int>& selectedChannels){view.resetGains(selectedChannels);}
 
     /**Informs the view to update the traces for the current time frame.*/
     inline void drawTraces(){view.displayTimeFrame(startTime,timeWindow);}
@@ -310,8 +310,8 @@ public slots:
   * @param clustersToSkip list of clusters to not use while browsing.
   */
     inline void addClusterProvider(ClustersProvider* clustersProvider,QString name,ItemColors* clusterColors,bool active,
-                                   Q3ValueList<int>& clustersToShow,QMap<int, Q3ValueList<int> >* displayGroupsClusterFile,
-                                   QMap<int,int>* channelsSpikeGroups,int nbSamplesBefore,int nbSamplesAfter,const Q3ValueList<int>& clustersToSkip){
+                                   QList<int>& clustersToShow,QMap<int, QList<int> >* displayGroupsClusterFile,
+                                   QMap<int,int>* channelsSpikeGroups,int nbSamplesBefore,int nbSamplesAfter,const QList<int>& clustersToSkip){
         view.addClusterProvider(clustersProvider,name,clusterColors,active,clustersToShow,displayGroupsClusterFile,
                                 channelsSpikeGroups,nbSamplesBefore,nbSamplesAfter,clustersToSkip);
     }
@@ -333,7 +333,7 @@ public slots:
   * @param eventsToNotBrowse list of events to not use while browsing.
   */
     inline void addEventProvider(EventsProvider* eventsProvider,QString name,ItemColors* eventColors,bool active,
-                                 Q3ValueList<int>& eventsToShow,const Q3ValueList<int>& eventsToNotBrowse){
+                                 QList<int>& eventsToShow,const QList<int>& eventsToNotBrowse){
         view.addEventProvider(eventsProvider,name,eventColors,active,eventsToShow,eventsToNotBrowse);
     }
 
@@ -449,7 +449,7 @@ public slots:
   * @param eventsToShow new list of events to be shown.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void updateEvents(QString providerName,Q3ValueList<int>& eventsToShow,bool active){
+    inline void updateEvents(QString providerName,QList<int>& eventsToShow,bool active){
         view.updateEvents(providerName,eventsToShow,active);
     }
 
@@ -471,7 +471,7 @@ public slots:
   * @param providerName name use to identified the event provider containing the modified event.
   * @param eventsToNotBrowse new list of events to not use while browsing.
   */
-    inline void updateNoneBrowsingEventList(QString providerName,const Q3ValueList<int>& eventsToNotBrowse){
+    inline void updateNoneBrowsingEventList(QString providerName,const QList<int>& eventsToNotBrowse){
         view.updateNoneBrowsingEventList(providerName,eventsToNotBrowse);
     }
 
@@ -479,7 +479,7 @@ public slots:
   * @param providerName name use to identified the event provider containing the modified event.
   * @param clustersToNotBrowse new list of clusters to not use while browsing.
   */
-    inline void updateNoneBrowsingClusterList(QString providerName,const Q3ValueList<int>& clustersToNotBrowse){
+    inline void updateNoneBrowsingClusterList(QString providerName,const QList<int>& clustersToNotBrowse){
         view.updateNoneBrowsingClusterList(providerName,clustersToNotBrowse);
     }
 
@@ -496,17 +496,17 @@ public slots:
   * @param clusterColors list of colors for the clusters.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void updateClusters(QString name,Q3ValueList<int>& clustersToShow,ItemColors* clusterColors,bool active){
+    inline void updateClusters(QString name,QList<int>& clustersToShow,ItemColors* clusterColors,bool active){
         view.updateClusters(name,clustersToShow,clusterColors,active);
     }
 
     /**Updates the list of skipped channels.
   * @param skippedChannels list of skipped channels.
   **/
-    inline void updateSkipStatus(const Q3ValueList<int>& skippedChannels){view.skipStatusChanged(skippedChannels);}
+    inline void updateSkipStatus(const QList<int>& skippedChannels){view.skipStatusChanged(skippedChannels);}
 
 signals:
-    void channelsSelected(const Q3ValueList<int>& selectedIds);
+    void channelsSelected(const QList<int>& selectedIds);
 
     /**Informs that the starting time and/or the timeWindow have changed.
   * @param startTime starting time.

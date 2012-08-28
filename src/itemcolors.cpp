@@ -18,7 +18,7 @@
 #include "itemcolors.h"
 
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 #include <QDebug>
 
@@ -154,8 +154,8 @@ int ItemColors::itemColorIndex(int itemId) const{
     return -1;//Normally never reach
 }
 
-Q3ValueList<int> ItemColors::colorChangedItemList(){
-    Q3ValueList<int> changedList;
+QList<int> ItemColors::colorChangedItemList(){
+    QList<int> changedList;
     ItemColor* itemColor;
     for (itemColor = itemList.first(); itemColor; itemColor = itemList.next()){
         if(itemColor->isChanged) changedList.append(itemColor->itemId);
@@ -166,7 +166,7 @@ Q3ValueList<int> ItemColors::colorChangedItemList(){
 void ItemColors::resetAllColorStatus(){
     setColorChanged(false);
 
-    Q3ValueList<int> changedList;
+    QList<int> changedList;
     ItemColor* itemColor;
     for (itemColor = itemList.first(); itemColor; itemColor = itemList.next()){
         if(itemColor->isChanged) itemColor->isChanged = false;

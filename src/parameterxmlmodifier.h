@@ -22,7 +22,7 @@
 
 
 //include files for QT
-#include <q3valuelist.h>
+#include <QList>
 #include <qmap.h>
 #include <QDomNode>
 class ClusterUserInformation;

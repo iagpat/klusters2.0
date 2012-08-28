@@ -32,7 +32,7 @@
 #include <qstring.h>
 #include <qregexp.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <QDebug>
 
 //kde include files
@@ -83,9 +83,9 @@ bool Data::configure(QFile& parFile,int electrodeGroupID,QString& errorInformati
         //Load the info
         nbBits = reader.getResolution();
         samplingRate = reader.getSamplingRate();
-        Q3ValueList<int> channels = reader.getNbChannelsByGroup(electrodeGroupID);
+        QList<int> channels = reader.getNbChannelsByGroup(electrodeGroupID);
 
-        Q3ValueList<int>::iterator it;
+        QList<int>::iterator it;
         for(it = channels.begin(); it != channels.end(); ++it) currentChannels.append(*it);
         nbChannels = currentChannels.size();
         nbSamplesInWaveform = reader.getNbSamples(electrodeGroupID);
@@ -148,8 +148,8 @@ bool Data::configure(QFile& parFile,int electrodeGroupID,QString& errorInformati
 bool Data::configure(QFile& parXFile,QFile& parFile,QString& errorInformation){
     QTextStream parX(&parXFile);
     QTextStream par(&parFile);
-    Q3ValueList <QStringList> parXData;
-    Q3ValueList <QStringList> parData;
+    QList <QStringList> parXData;
+    QList <QStringList> parData;
 
     int lineCounter = 0;
     QString line;
@@ -418,7 +418,7 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QSt
 
     //Calculate the minimum and maximum for each dimension and store them in
     //dimensionMinima and dimensionMaxima respectively
-    Q3ValueList<int> modifiedClusters;
+    QList<int> modifiedClusters;
     minMaxDimensionCalculation(modifiedClusters);
     return true;
 }
@@ -484,7 +484,7 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,QString& errorInforma
 
     //Calculate the minimum and maximum for each dimension and store them in
     //dimensionMinima and dimensionMaxima respectively
-    Q3ValueList<int> modifiedClusters;
+    QList<int> modifiedClusters;
     minMaxDimensionCalculation(modifiedClusters);
     return true;
 }
@@ -508,7 +508,7 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,QString spkFileName,Q
     return true;
 }
 
-void Data::minMaxDimensionCalculation(Q3ValueList<int> modifiedClusters){
+void Data::minMaxDimensionCalculation(QList<int> modifiedClusters){
     //If an undo or redo has started or the cluster 0 has been changed again, do not do any calculation, it will be done on the new data.
     if(undoRedoInProcess || clusterZeroJustModified) return;
 
@@ -607,15 +607,15 @@ void Data::minMaxDimensionCalculation(Q3ValueList<int> modifiedClusters){
 }
 
 
-dataType Data::createNewCluster(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY, Q3ValueList <int>& fromClusters,Q3ValueList <int>& emptyClusters){
+dataType Data::createNewCluster(QRegion& region, const QList <int>& clustersOfOrigin, int dimensionX, int dimensionY, QList <int>& fromClusters,QList <int>& emptyClusters){
     //Set the new cluster number to the biggest existing number plus one
     dataType newClusterId = (*spikesByCluster)(2,nbSpikes) + 1;
     dataType nbSpikesInNewCluster = 0;
 
     //Create the variables to store the number of spikes and the position of the last spike
     //for each cluster contributing to the new cluster. This will be used to sort the new cluster.
-    Q3ValueList<dataType> lastPositions;
-    Q3ValueList<dataType> nbOfspikes;
+    QList<dataType> lastPositions;
+    QList<dataType> nbOfspikes;
 
     //The new information about the cluster will be inserted in the table pointed by spikesByClusterTemp
     SortableTable* spikesByClusterTemp = new SortableTable();
@@ -723,7 +723,7 @@ dataType Data::createNewCluster(QRegion& region, const Q3ValueList <int>& cluste
 
         //Get the list of clusters before applying the changes, this will be used in the clean
         //of the correlation.
-        Q3ValueList<dataType> currentClusterList = clusterIds();
+        QList<dataType> currentClusterList = clusterIds();
 
         //Deal with the undo mechanism
         prepareUndo(spikesByClusterTemp,clusterInfoMapTemp);
@@ -745,7 +745,7 @@ dataType Data::createNewCluster(QRegion& region, const Q3ValueList <int>& cluste
         //Remove the waveform and correlation data for the clusters which gave the spikes for the new cluster.
         //if there is not a thread working with them,otherwise advice the thread of the change,by updating waveformStatus and correlationsInProcess
         // and the thread will remove it.
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator){
             mutex.lock();
             if(waveformStatusMap.contains(*iterator)){
@@ -776,7 +776,7 @@ dataType Data::createNewCluster(QRegion& region, const Q3ValueList <int>& cluste
     else return 0;
 }
 
-QMap<int,int> Data::createNewClusters(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int dimensionX, int dimensionY,Q3ValueList <int>& emptyClusters){
+QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& clustersOfOrigin, int dimensionX, int dimensionY,QList <int>& emptyClusters){
     QMap<int,int> fromToClusterIds;
     QMap<int,int> fromToNewClusterIds;
     ClusterInfoMap clusterInfoMapTemp; //used in the first part of the function
@@ -790,8 +790,8 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const Q3ValueList <int>& 
 
     //Create the variables to store the number of spikes and the position of the first spike
     //for each cluster contributing to a new cluster. This will be used to sort the new clusters.
-    Q3ValueList< Q3ValueList<dataType> > firstPositions;
-    Q3ValueList< Q3ValueList<dataType> > nbOfspikes;
+    QList< QList<dataType> > firstPositions;
+    QList< QList<dataType> > nbOfspikes;
 
     //The new information about the cluster will be inserted in the table pointed by spikesByClusterTemp
     SortableTable* spikesByClusterTemp = new SortableTable();
@@ -834,8 +834,8 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const Q3ValueList <int>& 
 
             //Create the variables to store the number of spikes and the position of the last spike
             //for the new cluster contributing to the new cluster. This will be used to sort the new cluster.
-            Q3ValueList<dataType> currentFirstPositions;
-            Q3ValueList<dataType> currentNbOfspikes;
+            QList<dataType> currentFirstPositions;
+            QList<dataType> currentNbOfspikes;
 
             //Store the last spike position for the current cluster.
             currentFirstPositions.append(1);
@@ -909,7 +909,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const Q3ValueList <int>& 
     if(nbNewClusters > 0){
         int shift =  nbMaxNewClusters - nbNewClusters;
 
-        Q3ValueList<int> keys = fromToClusterIds.keys();
+        QList<int> keys = fromToClusterIds.keys();
 
         //Iteration on the fromToClusterIds
         for(int i = keys.size() - 1; i >= 0; --i){
@@ -943,7 +943,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const Q3ValueList <int>& 
 
         //Get the list of clusters before applying the changes, this will be used in the clean
         //of the correlation.
-        Q3ValueList<dataType> currentClusterList = clusterIds();
+        QList<dataType> currentClusterList = clusterIds();
 
         //Deal with the undo mechanism.
         prepareUndo(spikesByClusterTemp,clusterInfoMapTemp2);
@@ -1009,7 +1009,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const Q3ValueList <int>& 
   Cluster 0 or cluster 1 does not exist.
   Cluster one is the destination and cluster 0 can contain spikes to be deleted.
  */
-void Data::deleteSpikesFromClusters(QRegion& region, const Q3ValueList <int>& clustersOfOrigin, int destinationCluster, int dimensionX, int dimensionY, Q3ValueList <int>& fromClusters,Q3ValueList <int>& emptyClusters){
+void Data::deleteSpikesFromClusters(QRegion& region, const QList <int>& clustersOfOrigin, int destinationCluster, int dimensionX, int dimensionY, QList <int>& fromClusters,QList <int>& emptyClusters){
     //The new information about the cluster will be inserted in the table pointed by spikesByClusterTemp
     SortableTable* spikesByClusterTemp = new SortableTable();
     spikesByClusterTemp->setSize(nbSpikes);
@@ -1018,8 +1018,8 @@ void Data::deleteSpikesFromClusters(QRegion& region, const Q3ValueList <int>& cl
     //for each cluster contributing to the new cluster and the position of the first spike and the number
     //of spikes for the current cluster destination (cluster 0 or cluster 1).
     //This will be used to sort the new cluster.
-    Q3ValueList<dataType> positions;
-    Q3ValueList<dataType> nbOfspikes;
+    QList<dataType> positions;
+    QList<dataType> nbOfspikes;
     dataType firstPosition = 0;
     dataType number = 0;
 
@@ -1167,7 +1167,7 @@ void Data::deleteSpikesFromClusters(QRegion& region, const Q3ValueList <int>& cl
     //process all the other clusters
 
     //Iteration on the clusters in decreasing order
-    Q3ValueList<dataType> clusters = clusterInfoMap->keys();
+    QList<dataType> clusters = clusterInfoMap->keys();
     //KDAB_PENDING
     //qSort(clusters);
     int nbClusters = clusters.size();
@@ -1267,7 +1267,7 @@ void Data::deleteSpikesFromClusters(QRegion& region, const Q3ValueList <int>& cl
 
         //Get the list of clusters before applying the changes, this will be used in the clean
         //of the correlation.
-        Q3ValueList<dataType> currentClusterList = clusterIds();
+        QList<dataType> currentClusterList = clusterIds();
 
         //Deal with the undo mechanism
         prepareUndo(spikesByClusterTemp,clusterInfoMapTemp);
@@ -1289,7 +1289,7 @@ void Data::deleteSpikesFromClusters(QRegion& region, const Q3ValueList <int>& cl
         //Remove the waveform and correlation data for the clusters which gave the spikes for the new cluster.
         //if there is not a thread working with them, otherwise advice the thread of the change,by updating waveformStatus and correlationsInProcess
         // and the thread will remove it.
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator){
             mutex.lock();
             if(waveformStatusMap.contains(*iterator)){
@@ -1315,7 +1315,7 @@ void Data::deleteSpikesFromClusters(QRegion& region, const Q3ValueList <int>& cl
     }
 }
 
-void Data::moveClustersToArtefact(Q3ValueList <int>& clustersToDelete){
+void Data::moveClustersToArtefact(QList <int>& clustersToDelete){
     //If clustersToDelete is not empty, the cluster 0 will be modified and the max and min dimensions
     //have to be recalculated. If minMaxThread is running, clusterZeroJustModified will
     //inform it that it has to stop (the computation will be done again on the new data).
@@ -1330,8 +1330,8 @@ void Data::moveClustersToArtefact(Q3ValueList <int>& clustersToDelete){
 
     //Create the variables to store the number of spikes and the position of the first spike
     //for each cluster contributing to the new cluster. This will be used to sort the new cluster.
-    Q3ValueList<dataType> positions;
-    Q3ValueList<dataType> nbOfspikes;
+    QList<dataType> positions;
+    QList<dataType> nbOfspikes;
 
     dataType upperInsertionIndex = 1;
 
@@ -1386,7 +1386,7 @@ void Data::moveClustersToArtefact(Q3ValueList <int>& clustersToDelete){
 
     //Get the list of clusters before applying the changes, this will be used in the clean
     //of the correlation.
-    Q3ValueList<dataType> currentClusterList = clusterIds();
+    QList<dataType> currentClusterList = clusterIds();
 
     //Deal with the undo mechanism
     prepareUndo(spikesByClusterTemp,clusterInfoMapTemp);
@@ -1403,7 +1403,7 @@ void Data::moveClustersToArtefact(Q3ValueList <int>& clustersToDelete){
     //Remove the waveform and correlation data for the clusters which gave the spikes for the new cluster 0.
     //if there is not a thread working with them, otherwise advice the thread of the change,by updating waveformStatus and correlationsInProcess
     // and the thread will remove it.
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = clustersToDelete.begin(); iterator != clustersToDelete.end(); ++iterator){
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){
@@ -1453,7 +1453,7 @@ void Data::moveClustersToArtefact(Q3ValueList <int>& clustersToDelete){
 }
 
 
-void Data::moveClustersToNoise(Q3ValueList<int>& clustersToDelete){
+void Data::moveClustersToNoise(QList<int>& clustersToDelete){
     //If clustersToDelete contains the cluster 0, the max and min dimensions
     //have to be recalculated. If minMaxThread is running, clusterZeroJustModified will
     //inform it that it has to stop (the computation will be done again on the new data).
@@ -1468,8 +1468,8 @@ void Data::moveClustersToNoise(Q3ValueList<int>& clustersToDelete){
 
     //Create the variables to store the number of spikes and the position of the first spike
     //for each cluster contributing to the new cluster. This will be used to sort the new cluster.
-    Q3ValueList<dataType> positions;
-    Q3ValueList<dataType> nbOfspikes;
+    QList<dataType> positions;
+    QList<dataType> nbOfspikes;
 
     dataType upperInsertionIndex = 1;
 
@@ -1544,7 +1544,7 @@ void Data::moveClustersToNoise(Q3ValueList<int>& clustersToDelete){
 
     //Get the list of clusters before applying the changes, this will be used in the clean
     //of the correlation.
-    Q3ValueList<dataType> currentClusterList = clusterIds();
+    QList<dataType> currentClusterList = clusterIds();
 
     //Deal with the undo mechanism
     prepareUndo(spikesByClusterTemp,clusterInfoMapTemp);
@@ -1555,7 +1555,7 @@ void Data::moveClustersToNoise(Q3ValueList<int>& clustersToDelete){
         while(!minMaxThread->wait()){qDebug()<<"wait for minMaxThread to finish"; };
         //Reset the flag to false so the minMaxThread can do the computation
         clusterZeroJustModified = false;
-        Q3ValueList<int> modifiedClusters;
+        QList<int> modifiedClusters;
         minMaxThread->setModifiedClusters(modifiedClusters);
         minMaxThread->start();
         dimensionChangedUndo.prepend(true);
@@ -1566,7 +1566,7 @@ void Data::moveClustersToNoise(Q3ValueList<int>& clustersToDelete){
     //Remove the waveform and correlation data for the clusters which gave the spikes for the new cluster 1.
     //if there is not a thread working with them, otherwise advice the thread of the change,by updating waveformStatus and correlationsInProcess
     // and the thread will remove it.
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = clustersToDelete.begin(); iterator != clustersToDelete.end(); ++iterator){
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){
@@ -1615,7 +1615,7 @@ void Data::moveClustersToNoise(Q3ValueList<int>& clustersToDelete){
     }
 }
 
-dataType Data::groupClusters(Q3ValueList<int>& clustersToGroup){
+dataType Data::groupClusters(QList<int>& clustersToGroup){
     //If the clusters to group contain the cluster 0, the max and min
     // dimensions have to be recalculated. If minMaxThread is running, clusterZeroJustModified will
     //inform it that it has to stop (the computation will be done again on the new data).
@@ -1627,8 +1627,8 @@ dataType Data::groupClusters(Q3ValueList<int>& clustersToGroup){
 
     //Create the variables to store the number of spikes and the position of the first spike
     //for each cluster contributing to the new cluster. This will be used to sort the new cluster.
-    Q3ValueList<dataType> positions;
-    Q3ValueList<dataType> nbOfspikes;
+    QList<dataType> positions;
+    QList<dataType> nbOfspikes;
 
     //The user information of the different clusters to be grouped will be concatenated.
     QString newStructure;
@@ -1720,7 +1720,7 @@ dataType Data::groupClusters(Q3ValueList<int>& clustersToGroup){
 
     //Get the list of clusters before applying the grouping, this will be used in the clean
     //of the correlation.
-    Q3ValueList<dataType> currentClusterList = clusterIds();
+    QList<dataType> currentClusterList = clusterIds();
 
     //Deal with the undo mechanism
     prepareUndo(spikesByClusterTemp,clusterInfoMapTemp);
@@ -1741,7 +1741,7 @@ dataType Data::groupClusters(Q3ValueList<int>& clustersToGroup){
     //Remove the waveform and correlation data for the clusters which gave the spikes for the new cluster.
     //if there is not a thread working with them, otherwise advice the thread of the change,by updating waveformStatus and correlationsInProcess
     // and the thread will remove it.
-    Q3ValueList<int>::iterator clustersToGroupIterator;
+    QList<int>::iterator clustersToGroupIterator;
     for(clustersToGroupIterator = clustersToGroup.begin(); clustersToGroupIterator != clustersToGroup.end(); ++clustersToGroupIterator){
 
         mutex.lock();
@@ -1827,11 +1827,11 @@ void Data::nbUndoChangedCleaning(int newNbUndo){
     }
 }
 
-void Data::moveClusters(Q3ValueList<int>& clustersToDelete,SortableTable* spikesByClusterTemp,ClusterInfoMap* clusterInfoMapTemp,long upperInsertionIndex,long& nbSpikesInNewCluster,int destinationId,Q3ValueList<long>& positions,Q3ValueList<long>& nbOfspikes){
+void Data::moveClusters(QList<int>& clustersToDelete,SortableTable* spikesByClusterTemp,ClusterInfoMap* clusterInfoMapTemp,long upperInsertionIndex,long& nbSpikesInNewCluster,int destinationId,QList<long>& positions,QList<long>& nbOfspikes){
 
     //For all the clusters to delete, copy the first row of spikesByCluster into spikesByClusterTemp
     //right after the data coming from the current cluster destination (0 or 1)
-    Q3ValueList<int>::iterator clustersToDeleteIterator;
+    QList<int>::iterator clustersToDeleteIterator;
     for(clustersToDeleteIterator = clustersToDelete.begin(); clustersToDeleteIterator != clustersToDelete.end(); ++clustersToDeleteIterator ){
         dataType clusterId = static_cast<dataType>(*clustersToDeleteIterator);
         if(clusterId == destinationId) continue;
@@ -1878,7 +1878,7 @@ void Data::moveClusters(Q3ValueList<int>& clustersToDelete,SortableTable* spikes
     }
 }
 
-void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters){
+void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
     //Inform that an undo is in process
     undoRedoInProcess = true;
 
@@ -1886,14 +1886,14 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
 
     //Get the list of clusters before applying the changes, this will be used in the clean
     //of the correlation.
-    Q3ValueList<dataType> currentClusterList = clusterIds();
+    QList<dataType> currentClusterList = clusterIds();
 
     //If addedClusters or updatedClusters contain any cluster, remove the corresponding entry in waveformDict and correlationDict
     //(the data will have to be uploaded again) if there is not a thread working with it,
     //otherwise advice the thread of the change,by updating waveformStatus and correlationsInProcess
     // and the thread will remove it.
     if(addedClusters.size() > 0){
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = addedClusters.begin(); clustersToRemoveIterator != addedClusters.end(); ++clustersToRemoveIterator){
 
             qDebug()<<"in Data::undo addedClusters.size() > 0, *clustersToRemoveIterator: "<<*clustersToRemoveIterator;
@@ -1924,7 +1924,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
         }
     }
     if(updatedClusters.size() > 0){
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = updatedClusters.begin(); clustersToRemoveIterator != updatedClusters.end(); ++clustersToRemoveIterator){
 
             qDebug()<<"in Data::undo updatedClusters.size() > 0, *clustersToRemoveIterator: "<<*clustersToRemoveIterator;
@@ -1956,11 +1956,11 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
     //Can not do much, all the data will have to be reloaded (it shoud not happen very often)
     if(addedClusters.size() == 0 && updatedClusters.size() == 0){
         //Gets all the clustersId currently available
-        Q3ValueList<dataType> clusters = clusterIds();
+        QList<dataType> clusters = clusterIds();
 
         //Loop on all the clusters and delete the linke information if possible (if a thread is not
         //working with it) otherwise, modify the status so the thread will be delete the onformation.
-        Q3ValueList<dataType>::iterator iterator;
+        QList<dataType>::iterator iterator;
         for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
 
             qDebug()<<"in Data::undo addedClusters.size() == 0 && updatedClusters.size() == 0, *iterator: "<<*iterator;
@@ -2026,7 +2026,7 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
 
             //Reset the flag to false so the minMaxThread can do the computation
             undoRedoInProcess = false;
-            Q3ValueList<int> modifiedClusters;
+            QList<int> modifiedClusters;
             minMaxThread->setModifiedClusters(modifiedClusters);
             minMaxThread->start();
             dimensionChangedRedo.prepend(true);
@@ -2036,18 +2036,18 @@ void Data::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
 }
 
 
-void Data::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters,Q3ValueList<int>& deletedClusters){
+void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>& deletedClusters){
     //Inform that a redo is in process
     undoRedoInProcess = true;
 
     //Get the list of clusters before applying the changes, this will be used in the clean
     //of the correlation.
-    Q3ValueList<dataType> currentClusterList = clusterIds();
+    QList<dataType> currentClusterList = clusterIds();
 
     //If addedClusters or updatedClusters contain any cluster, remove the corresponding entry in waveformDict and correlationDict
     //(the data will have to be uploaded again).
     if(addedClusters.size() > 0){
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = addedClusters.begin(); clustersToRemoveIterator != addedClusters.end(); ++clustersToRemoveIterator){
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
@@ -2073,7 +2073,7 @@ void Data::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
     }
 
     if(updatedClusters.size() > 0){
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = updatedClusters.begin(); clustersToRemoveIterator != updatedClusters.end(); ++clustersToRemoveIterator){
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
@@ -2099,7 +2099,7 @@ void Data::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
     }
 
     if(deletedClusters.size() > 0){
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = deletedClusters.begin(); clustersToRemoveIterator != deletedClusters.end(); ++clustersToRemoveIterator){
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
@@ -2129,11 +2129,11 @@ void Data::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
     //Can do much, all the data will have to be reloaded (it shoud not happen very often)
     if(addedClusters.size() == 0 && updatedClusters.size() == 0){
         //Gets all the clustersId currently available
-        Q3ValueList<dataType> clusters = clusterIds();
+        QList<dataType> clusters = clusterIds();
 
         //Loop on all the clusters and delete the linke information if possible (if a thread is not
         //working with it) otherwise, modify the status so the thread will be delete the onformation.
-        Q3ValueList<dataType>::iterator iterator;
+        QList<dataType>::iterator iterator;
         for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
             mutex.lock();
             if(waveformStatusMap.contains(static_cast<int>(*iterator))){
@@ -2179,7 +2179,7 @@ void Data::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedCluster
 
             //Reset the flag to false so the minMaxThread can do the computation
             undoRedoInProcess = false;
-            Q3ValueList<int> modifiedClusters;
+            QList<int> modifiedClusters;
             minMaxThread->setModifiedClusters(modifiedClusters);
             minMaxThread->start();
             dimensionChangedUndo.prepend(true);
@@ -2318,8 +2318,8 @@ bool Data::saveClusters(FILE* clusterFile){
     }
     //second method
     else if (nbClusters > 1){
-        Q3ValueList<dataType> clusterList = clusterInfoMapTemp.keys();
-        Q3ValueList<dataType>::iterator iterator;
+        QList<dataType> clusterList = clusterInfoMapTemp.keys();
+        QList<dataType>::iterator iterator;
 
         SortableTable final = SortableTable();
         final.setSize(nbSpikes,false);
@@ -2864,7 +2864,7 @@ Data::Status Data::calculateTimeFrameMean(int clusterId,dataType start,dataType 
 }
 
 
-void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp, dataType clusterId,Q3ValueList<dataType> positions,Q3ValueList<dataType> nbOfspikes,int step,bool fromTop){
+void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp, dataType clusterId,QList<dataType> positions,QList<dataType> nbOfspikes,int step,bool fromTop){
     uint nbClusters = static_cast<uint>(positions.size());
     uint indice = 0;
 
@@ -2922,7 +2922,7 @@ void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesB
            nbSpikesOfCluster * sizeof(dataType));
 }
 
-void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp,dataType clusterId,Q3ValueList<dataType> lastPositions,Q3ValueList<dataType> nbOfspikes,dataType firstPosition,dataType number){
+void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp,dataType clusterId,QList<dataType> lastPositions,QList<dataType> nbOfspikes,dataType firstPosition,dataType number){
     //Initialize the variables concerning the previous data of clusterId (which is 0 or 1).
     dataType originalFirstPosition = firstPosition;
     dataType originalNb = number;
@@ -3361,7 +3361,7 @@ void Data::Correlation::calculateCorrelation(SortableTable& spikesOfCluster1,Sor
     }
 }
 
-void Data::cleanCorrelation(dataType clusterId,Q3ValueList<dataType> currentClusterList,bool cleanProcess){
+void Data::cleanCorrelation(dataType clusterId,QList<dataType> currentClusterList,bool cleanProcess){
     mutex.lock();
     if(cleanProcess) correlationsInProcess.removeCluster(clusterId);
 
@@ -3372,7 +3372,7 @@ void Data::cleanCorrelation(dataType clusterId,Q3ValueList<dataType> currentClus
     //Gets all the clustersId currently available
 
     //Remove all the correlations link to clusterId
-    Q3ValueList<dataType>::iterator iterator;
+    QList<dataType>::iterator iterator;
     for(iterator = currentClusterList.begin(); iterator != currentClusterList.end(); ++iterator){
         //Search pairs as (clusterId,*iterator) where clusterId > *iterator
         //and (*iterator,clusterId) where *iterator > clusterId
@@ -3384,9 +3384,9 @@ void Data::cleanCorrelation(dataType clusterId,Q3ValueList<dataType> currentClus
 
 void Data::renumberCorrelation(QMap<int,int>& clusterIdsOldNew){
     //Get all the old cluster ids
-    Q3ValueList<int> oldClusterIds = clusterIdsOldNew.keys();
+    QList<int> oldClusterIds = clusterIdsOldNew.keys();
 
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     mutex.lock();
     int i = 0;
     for(iterator = oldClusterIds.begin(); iterator != oldClusterIds.end(); ++iterator){
@@ -3394,8 +3394,9 @@ void Data::renumberCorrelation(QMap<int,int>& clusterIdsOldNew){
             correlationsInProcess.setClusterModified(*iterator,true);
             continue;
         }
-        Q3ValueList<int>::iterator iterator2;
-        for(iterator2 = oldClusterIds.at(i); iterator2 != oldClusterIds.end(); ++iterator2){
+        QList<int>::iterator iterator2;
+#if KDAB_PORT_ITERATOR
+        for(iterator2 = *oldClusterIds.at(i); /*iterator2 != oldClusterIds.end()*/; ++iterator2){
             //Search pairs as (*iterator,*iterator2) where *iterator > *iterator2
             //and (*iterator2,*iterator) where *iterator2 > *iterator
             if(*iterator2 <= *iterator){
@@ -3407,6 +3408,7 @@ void Data::renumberCorrelation(QMap<int,int>& clusterIdsOldNew){
                 if(dict != 0) correlationDict.insert(Pair(clusterIdsOldNew[*iterator],clusterIdsOldNew[*iterator2]).toString(),dict);
             }
         }
+#endif
         ++i;
     }
     mutex.unlock();
@@ -3478,10 +3480,10 @@ void Data::duplicate(SortableTable* & spikesOfClusterTemp,ClusterInfoMap* & clus
     mutex.unlock();
 }
 
-void Data::createFeatureFile(Q3ValueList<int>& clustersToRecluster,QFile& fetFile){
+void Data::createFeatureFile(QList<int>& clustersToRecluster,QFile& fetFile){
     dataType reclusteringNbSpikes = 0;
     //Loop on the selected clusters to calculate the total number of spikes
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = clustersToRecluster.begin(); iterator != clustersToRecluster.end(); ++iterator ){
         ClusterInfo clusterInfo = (*clusterInfoMap)[static_cast<dataType>(*iterator)];
         reclusteringNbSpikes += clusterInfo.nbSpikes();
@@ -3516,7 +3518,7 @@ void Data::createFeatureFile(Q3ValueList<int>& clustersToRecluster,QFile& fetFil
     }
 }
 
-bool Data::integrateReclusteredClusters(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,FILE* clusterFile){
+bool Data::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,FILE* clusterFile){
     //Replace the cluster ids in reclusteringSpikesByCluster by the new ones.
     if(!loadReclusteredClusters(clusterFile)) return 0;
 
@@ -3594,7 +3596,7 @@ bool Data::integrateReclusteredClusters(Q3ValueList<int>& clustersToRecluster,Q3
 
     //Get the list of clusters before applying the changes, this will be used in the clean
     //of the correlation.
-    Q3ValueList<dataType> currentClusterList = clusterIds();
+    QList<dataType> currentClusterList = clusterIds();
 
     //Deal with the undo mechanism
     prepareUndo(spikesByClusterTemp,clusterInfoMapTemp);
@@ -3616,7 +3618,7 @@ bool Data::integrateReclusteredClusters(Q3ValueList<int>& clustersToRecluster,Q3
     //Remove the waveform and correlation data for the reclustered clusters.
     //If there is not a thread working with them,otherwise advice the thread of the change,by updating waveformStatus and correlationsInProcess
     // and the thread will remove it.
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = clustersToRecluster.begin(); iterator != clustersToRecluster.end(); ++iterator){
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){

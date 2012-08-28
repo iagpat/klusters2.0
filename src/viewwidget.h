@@ -23,7 +23,7 @@
 #include <Q3PaintDeviceMetrics>
 #include <qpixmap.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 //Inclused files for KDE
 #include <QStatusBar>
@@ -121,7 +121,7 @@ public slots:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-    virtual inline void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active){}
+    virtual inline void addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active){}
 
     /**
   * Adds a newly created cluster to those already shown.
@@ -137,7 +137,7 @@ public slots:
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-    virtual inline void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active){}
+    virtual inline void spikesRemovedFromClusters(QList<int>& fromClusters,bool active){}
 
     /**
   * Updates the content of the widget due to the addition of spikes in a cluster.
@@ -160,7 +160,7 @@ public slots:
   * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact abd cluster of noise respectively).
   */
-    virtual inline void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){}
+    virtual inline void updateClusters(QList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){}
 
     /**
   * Updates the clusters which have been modified by the suppression of spikes
@@ -170,7 +170,7 @@ public slots:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-    virtual inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){}
+    virtual inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){}
     /**Enables the caller to know if there is any thread running launch by the viewWidget.*/
     virtual inline bool isThreadsRunning(){return false;}
     /**Prints the currently display information on a printer via the painter @p printPainter.
@@ -195,7 +195,7 @@ public:
     KlustersDoc& doc;
 
     /**List of clusters to update when the view will become the active one*/
-    Q3ValueList<int> clusterUpdateList;
+    QList<int> clusterUpdateList;
 
     /**Pointer to the status bar of the application.*/
     QStatusBar* statusBar;

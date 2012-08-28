@@ -30,7 +30,7 @@
 #include <qpixmap.h>
 #include <q3pointarray.h>
 #include <qtimer.h>
-#include <q3valuelist.h>
+#include <QList>
 #include <q3ptrlist.h>
 //Added by qt3to4:
 #include <QCustomEvent>
@@ -119,7 +119,7 @@ public slots:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
  */
-    void addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,bool active);
+    void addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active);
 
     /**
   * Adds a newly created cluster to those already shown.
@@ -135,7 +135,7 @@ public slots:
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-    void spikesRemovedFromClusters(Q3ValueList<int>& fromClusters,bool active);
+    void spikesRemovedFromClusters(QList<int>& fromClusters,bool active);
 
     /**
   * Updates the content of the widget due to the addition of spikes in a cluster.
@@ -187,7 +187,7 @@ public slots:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void undoUpdateClusters(Q3ValueList<int>& modifiedClusters,bool active){
+    inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){
         spikesRemovedFromClusters(modifiedClusters,active);
     }
 
@@ -200,7 +200,7 @@ public slots:
   * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
   */
-    inline void updateClusters(Q3ValueList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
+    inline void updateClusters(QList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
         spikesRemovedFromClusters(modifiedClusters,active);
     }
 
@@ -276,14 +276,14 @@ private:
   * @param pairsToCompute couple of clusters for which a correlogram has to be obtained.
   * @param clusterIds clusters for which the correlograms will be computed.
   */
-    CorrelationThread* getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds);
+    CorrelationThread* getCorrelations(QList<Pair>* pairsToCompute,QList<int> clusterIds);
 
     /**
  * Draws the correlograms of the pair of clusters in the list @p pairList on the given painter.
  * @param painter painter on which to draw the correlograms.
  * @param pairList list of pair of clusters for which a correlogram has to be drawn.
  */
-    void drawCorrelograms(QPainter& painter,Q3ValueList<Pair>& pairList);
+    void drawCorrelograms(QPainter& painter,QList<Pair>& pairList);
 
     /**Updates the dimension of the window.*/
     void updateWindow();
@@ -307,7 +307,7 @@ private:
     bool dataReady;
 
     /**List of pairs of clusters for which a correlogram has to be drawn.*/
-    Q3ValueList<Pair> pairs;
+    QList<Pair> pairs;
 
     /**size of the bins to use in the correlograms, given in miliseconds */
     int binSize;
@@ -357,7 +357,7 @@ private:
     int nbBins;
 
     /**List of pairs corresponding to clusters to update.*/
-    Q3ValueList<Pair> pairUpdateList;
+    QList<Pair> pairUpdateList;
 
     /**Boolean indicating if a shoulder line has to be drawn on the correlograms.*/
     bool shoulderLine;

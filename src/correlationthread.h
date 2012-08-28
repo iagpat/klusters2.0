@@ -28,7 +28,7 @@
 //Added by qt3to4:
 #include <QCustomEvent>
 #include <QEvent>
-#include <Q3ValueList>
+#include <QList>
 
 
 /** Thread used to compute the correlograms displayed in the CorrelationView.
@@ -43,11 +43,11 @@ class CorrelationThread : public QThread {
 public:
     //Only the method getCorrelations of CorrelationView has access to the private part of CorrelationThread,
     //the constructor of CorrelationThread being private, only this method con create a new CorrelationThread
-    friend CorrelationThread* CorrelationView::getCorrelations(Q3ValueList<Pair>* pairsToCompute,Q3ValueList<int> clusterIds);
+    friend CorrelationThread* CorrelationView::getCorrelations(QList<Pair>* pairsToCompute,QList<int> clusterIds);
 
     inline ~CorrelationThread(){}
-    inline Q3ValueList<Pair>* triggeringPairs(){return clusterPairs;}
-    inline const Q3ValueList<int>& triggeringClusters(){return clusterIds;}
+    inline QList<Pair>* triggeringPairs(){return clusterPairs;}
+    inline const QList<int>& triggeringClusters(){return clusterIds;}
 
     /**Asks the thread to stop his work as soon as possible.*/
     inline void stopProcessing(){haveToStopProcessing = true;}
@@ -83,7 +83,7 @@ protected:
     void run();
 
 private:
-    inline CorrelationThread(CorrelationView& view,Data& d,Q3ValueList<Pair>* pairs,Q3ValueList<int> clusterIds):correlationView(view),data(d),haveToStopProcessing(false){
+    inline CorrelationThread(CorrelationView& view,Data& d,QList<Pair>* pairs,QList<int> clusterIds):correlationView(view),data(d),haveToStopProcessing(false){
         clusterPairs = pairs;
         this->clusterIds = clusterIds;
         start();
@@ -91,8 +91,8 @@ private:
 
     CorrelationView& correlationView;
     Data& data;
-    Q3ValueList<Pair>* clusterPairs;
-    Q3ValueList<int> clusterIds;
+    QList<Pair>* clusterPairs;
+    QList<int> clusterIds;
     /**True if the thread has to stop processing, false otherwise.*/
     bool haveToStopProcessing;
 

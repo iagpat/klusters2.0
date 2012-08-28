@@ -25,7 +25,7 @@
 #include <qspinbox.h>
 #include <qmap.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 
 //include files for the application
@@ -65,7 +65,7 @@ public:
   void resetChannelList(int nb);
 
   /**Returns the positions of the channels to use in the waveform vies.**/
-  inline Q3ValueList<int> getChannelPositions() const {return channelPositions;}
+  inline QList<int> getChannelPositions() const {return channelPositions;}
 
   inline void enableChannelSettings(bool state){
    saveButton->setEnabled(state);
@@ -78,7 +78,7 @@ signals:
   void positionsChanged();
   
 private:
-  Q3ValueList<int> channelPositions;
+  QList<int> channelPositions;
   int nbChannels;
   
 private slots:

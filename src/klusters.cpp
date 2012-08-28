@@ -31,7 +31,7 @@
 //Added by qt3to4:
 #include <QLabel>
 #include <QPixmap>
-#include <Q3ValueList>
+#include <QList>
 #include <QEvent>
 #include <QCustomEvent>
 #include <QDebug>
@@ -473,10 +473,10 @@ void KlustersApp::createMenus()
 #endif
     //Custom connections
     connect(clusterPalette, SIGNAL(singleChangeColor(int)), this, SLOT(slotSingleColorUpdate(int)));
-    connect(clusterPalette, SIGNAL(updateShownClusters(Q3ValueList<int>)), this, SLOT(slotUpdateShownClusters(Q3ValueList<int>)));
-    connect(clusterPalette, SIGNAL(groupClusters(Q3ValueList<int>)), this, SLOT(slotGroupClusters(Q3ValueList<int>)));
-    connect(clusterPalette, SIGNAL(moveClustersToNoise(Q3ValueList<int>)), this, SLOT(slotMoveClustersToNoise(Q3ValueList<int>)));
-    connect(clusterPalette, SIGNAL(moveClustersToArtefact(Q3ValueList<int>)), this, SLOT(slotMoveClustersToArtefact(Q3ValueList<int>)));
+    connect(clusterPalette, SIGNAL(updateShownClusters(QList<int>)), this, SLOT(slotUpdateShownClusters(QList<int>)));
+    connect(clusterPalette, SIGNAL(groupClusters(QList<int>)), this, SLOT(slotGroupClusters(QList<int>)));
+    connect(clusterPalette, SIGNAL(moveClustersToNoise(QList<int>)), this, SLOT(slotMoveClustersToNoise(QList<int>)));
+    connect(clusterPalette, SIGNAL(moveClustersToArtefact(QList<int>)), this, SLOT(slotMoveClustersToArtefact(QList<int>)));
     connect(clusterPalette, SIGNAL(clusterInformationModified()), this, SLOT(slotClusterInformationModified()));
     connect(doc, SIGNAL(updateUndoNb(int)), this, SLOT(slotUpdateUndoNb(int)));
     connect(doc, SIGNAL(updateRedoNb(int)), this, SLOT(slotUpdateRedoNb(int)));
@@ -662,7 +662,7 @@ void KlustersApp::applyPreferences() {
     else doc->stopAutoSaving();
 
     if(configuration().getNbChannels() != 0 && channelPositions != (*configuration().getChannelPositions())){
-        Q3ValueList<int>* positions = configuration().getChannelPositions();
+        QList<int>* positions = configuration().getChannelPositions();
         channelPositions.clear();
         for(int i = 0; i < static_cast<int>(positions->size()); ++i)
             channelPositions.append((*positions)[i]);
@@ -753,7 +753,7 @@ void KlustersApp::initDisplay(){
     //KDAB_PENDING if(prefDialog != 0L) prefDialog->enableChannelSettings(true);
 
     //No clusters are shown by default.
-    Q3ValueList<int>* clusterList = new Q3ValueList<int>();
+    QList<int>* clusterList = new QList<int>();
     
     //Update the dimension and start spine boxes
     dimensionX->setValue(1);
@@ -843,11 +843,11 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         bool isProcessWidget = doesActiveDisplayContainProcessWidget();
 
         //Present the clusters of the current display in the new display (if it was not a processing display).
-        Q3ValueList<int>* clusterList = new Q3ValueList<int>();
+        QList<int>* clusterList = new QList<int>();
         if(!isProcessWidget){
-            const Q3ValueList<int>& currentClusters = activeView()->clusters();
+            const QList<int>& currentClusters = activeView()->clusters();
 
-            Q3ValueList<int>::const_iterator shownClustersIterator;
+            QList<int>::const_iterator shownClustersIterator;
             for(shownClustersIterator = currentClusters.begin(); shownClustersIterator != currentClusters.end(); ++shownClustersIterator )
                 clusterList->append(*shownClustersIterator);
         }
@@ -1962,7 +1962,7 @@ void KlustersApp::slotSingleColorUpdate(int clusterId){
     }
 }
 
-void KlustersApp::slotUpdateShownClusters(Q3ValueList<int> selectedClusters){  
+void KlustersApp::slotUpdateShownClusters(QList<int> selectedClusters){
     //Trigger ths action only if the active display does not contain a ProcessWidget
     if(!doesActiveDisplayContainProcessWidget()){
 
@@ -1980,7 +1980,7 @@ void KlustersApp::slotUpdateShownClusters(Q3ValueList<int> selectedClusters){
     }
 }
 
-void KlustersApp::slotGroupClusters(Q3ValueList<int> selectedClusters){
+void KlustersApp::slotGroupClusters(QList<int> selectedClusters){
     slotStatusMsg(tr("Grouping clusters..."));
     KlustersView* view = activeView();
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -1989,7 +1989,7 @@ void KlustersApp::slotGroupClusters(Q3ValueList<int> selectedClusters){
     slotStatusMsg(tr("Ready."));
 }
 
-void KlustersApp::slotMoveClustersToNoise(Q3ValueList<int> selectedClusters){
+void KlustersApp::slotMoveClustersToNoise(QList<int> selectedClusters){
     slotStatusMsg(tr("Delete &noisy cluster(s)..."));
     KlustersView* view = activeView();
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -2008,7 +2008,7 @@ void KlustersApp::slotMoveClustersToNoise(Q3ValueList<int> selectedClusters){
     slotStatusMsg(tr("Ready."));
 }
 
-void KlustersApp::slotMoveClustersToArtefact(Q3ValueList<int> selectedClusters){
+void KlustersApp::slotMoveClustersToArtefact(QList<int> selectedClusters){
     slotStatusMsg(tr("Delete &artifact cluster(s)..."));
     KlustersView* view = activeView();
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -2215,7 +2215,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
         //Update the palette of clusters
         if(!processFinished) clusterPalette->selectItems(clustersToRecluster);
         else{
-            Q3ValueList<int> emptyList;
+            QList<int> emptyList;
             clusterPalette->selectItems(emptyList);
         }
 
@@ -2401,7 +2401,7 @@ void KlustersApp::slotUpdateErrorMatrix(){
 void KlustersApp::slotSelectAll(){
     //Trigger the action only if the active display does not contain a ProcessWidget
     if(!doesActiveDisplayContainProcessWidget()){
-        Q3ValueList<int> clustersToHide;
+        QList<int> clustersToHide;
         doc->showAllClustersExcept(clustersToHide);
     }
 }
@@ -2409,7 +2409,7 @@ void KlustersApp::slotSelectAll(){
 void KlustersApp::slotSelectAllWO01(){
     //Trigger the action only if the active display does not contain a ProcessWidget
     if(!doesActiveDisplayContainProcessWidget()){
-        Q3ValueList<int> clustersToHide;
+        QList<int> clustersToHide;
         clustersToHide.append(0);
         clustersToHide.append(1);
         doc->showAllClustersExcept(clustersToHide);
@@ -2431,14 +2431,14 @@ void KlustersApp::slotRecluster(){
     }
 
     //Get the clusters to recluster (those selected in the active display)
-    const Q3ValueList<int>& currentClusters = activeView()->clusters();
+    const QList<int>& currentClusters = activeView()->clusters();
     if(currentClusters.size() == 0){
         QMessageBox::critical (this,tr("Error !"),tr("No clusters have been selected to be reclustered."));
         return;
     }
 
     clustersToRecluster.clear();
-    Q3ValueList<int>::const_iterator shownClustersIterator;
+    QList<int>::const_iterator shownClustersIterator;
     for(shownClustersIterator = currentClusters.begin(); shownClustersIterator != currentClusters.end(); ++shownClustersIterator)
         clustersToRecluster.append(*shownClustersIterator);
     //KDAB_PENDING
@@ -2640,7 +2640,7 @@ void KlustersApp::slotProcessExited(QProcess* process){
     QString info = "The automatic reclustering of ";
     if(clustersToRecluster.size() > 1) info.append("clusters ");
     else info.append("cluster ");
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for(iterator = clustersToRecluster.begin(); iterator != clustersToRecluster.end(); ++iterator ){
         info.append(QString::number(*iterator));
         info.append(" ");

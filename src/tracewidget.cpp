@@ -20,7 +20,7 @@
 // include files for QT
 #include <qstring.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <QLabel>
 #include <QKeyEvent>
 
@@ -30,9 +30,9 @@
 #include <stdlib.h>
 
 TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvider& tracesProvider,bool multiColumns,bool verticalLines,
-                         bool raster,bool waveforms,bool labelsDisplay,Q3ValueList<int>& channelsToDisplay,int gain,int acquisitionGain,
-                         ChannelColors* channelColors,QMap<int, Q3ValueList<int> >* groupsChannels,
-                         QMap<int,int>* channelsGroups,Q3ValueList<int>& channelOffsets,Q3ValueList<int>& gains,const Q3ValueList<int>& skippedChannels,QWidget* parent, const char* name,QColor backgroundColor,QStatusBar* statusBar,
+                         bool raster,bool waveforms,bool labelsDisplay,QList<int>& channelsToDisplay,int gain,int acquisitionGain,
+                         ChannelColors* channelColors,QMap<int, QList<int> >* groupsChannels,
+                         QMap<int,int>* channelsGroups,QList<int>& channelOffsets,QList<int>& gains,const QList<int>& skippedChannels,QWidget* parent, const char* name,QColor backgroundColor,QStatusBar* statusBar,
                          int minSize,int maxSize,int windowTopLeft,int windowBottomRight,int border):
     Q3VBox(parent,name),timeWindow(duration),
     view(tracesProvider,greyScale,multiColumns,verticalLines,raster,waveforms,labelsDisplay,channelsToDisplay,gain,acquisitionGain,
@@ -53,7 +53,7 @@ TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvi
     initSelectionWidgets();
     adjustSize();
 
-    connect(&view,SIGNAL(channelsSelected(const Q3ValueList<int>&)),this, SLOT(slotChannelsSelected(const Q3ValueList<int>&)));
+    connect(&view,SIGNAL(channelsSelected(const QList<int>&)),this, SLOT(slotChannelsSelected(const QList<int>&)));
     connect(&view,SIGNAL(setStartAndDuration(long,long)),this, SLOT(slotSetStartAndDuration(long,long)));
     connect(&view,SIGNAL(eventModified(QString,int,double,double)),this, SLOT(slotEventModified(QString,int,double,double)));
     connect(&view,SIGNAL(eventRemoved(QString,int,double)),this, SLOT(slotEventRemoved(QString,int,double)));

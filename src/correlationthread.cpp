@@ -20,7 +20,7 @@
 //QT include files
 #include <qapplication.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 #include <math.h>
 #include <stdlib.h>
@@ -39,7 +39,7 @@ void CorrelationThread::run(){
         //(halfBins + 1/2 for each half time window)
         int halfBins = ((correlationView.timeWindow / correlationView.binSize) - 1) / 2;
 
-        Q3ValueList<Pair>::iterator pairIterator;
+        QList<Pair>::iterator pairIterator;
         for(pairIterator = clusterPairs->begin(); pairIterator != clusterPairs->end(); ++pairIterator){
             if(!haveToStopProcessing){
                 Data::Status status = data.getCorrelograms(*pairIterator,correlationView.binSize,correlationView.timeWindow,binSizeInRU,timeWindowInRU,halfBins);

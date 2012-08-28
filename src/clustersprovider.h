@@ -28,7 +28,7 @@
 #include <q3ptrlist.h>
 #include <qobject.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 
 /**
@@ -70,7 +70,7 @@ public:
   * @param initiator instance requesting the data.
   * @param startTimeInRecordingUnits starting time, in recording units, for the look up.
   */
-    void requestNextClusterData(long startTime,long timeFrame,Q3ValueList<int> selectedIds,QObject* initiator,long startTimeInRecordingUnits);
+    void requestNextClusterData(long startTime,long timeFrame,QList<int> selectedIds,QObject* initiator,long startTimeInRecordingUnits);
 
 
     /**Looks up for the first of the clusters included in the list @p selectedIds existing before the time @p endTime.
@@ -82,11 +82,11 @@ public:
   * @param initiator instance requesting the data.
   * @param startTimeInRecordingUnits starting time, in recording units, for the look up.
   */
-    void requestPreviousClusterData(long startTime,long timeFrame,Q3ValueList<int> selectedIds,QObject* initiator,long startTimeInRecordingUnits);
+    void requestPreviousClusterData(long startTime,long timeFrame,QList<int> selectedIds,QObject* initiator,long startTimeInRecordingUnits);
 
 
     /**Sets the list of cluster Ids to be used when providing data.*/
-    inline void setClusterIdList(Q3ValueList<int>* list){clusterIds = list;};
+    inline void setClusterIdList(QList<int>* list){clusterIds = list;};
 
 
     /**Returns the name of the provider which is the cluster file number.
@@ -134,7 +134,7 @@ private:
     double samplingRate;
 
     /**List of the cluster ids to be used when looking up for the data.*/
-    Q3ValueList<int>* clusterIds;
+    QList<int>* clusterIds;
 
     /**The maximum time of the file in recording units.*/
     dataType fileMaxTime;

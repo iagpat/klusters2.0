@@ -16,7 +16,7 @@
  ***************************************************************************/
 
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 #include <QPixmap>
 #include <QMouseEvent>
@@ -47,9 +47,9 @@ const QString KlustersView::DisplayTypeNames[]={"Cluster Display","Waveform Disp
 
 
 KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor backgroundColor,int initialDimensionX,int initialDimensionY,
-                           Q3ValueList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
-                           Q3ValueList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
-                           int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay, Q3PtrList< Q3ValueList<int> > undoList, Q3PtrList< Q3ValueList<int> > redoList)
+                           QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
+                           QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
+                           int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay, Q3PtrList< QList<int> > undoList, Q3PtrList< QList<int> > redoList)
     : QWidget(parent),doc(pDoc), removedClustersUndoList(undoList),removedClustersRedoList(redoList),dimensionX(initialDimensionX),dimensionY(initialDimensionY),
       currentViewWidget(0L),numberUndo(undoList.count()),inTimeFrameMode(isTimeFrameMode),timeWindow(timeFrameWidth),startTime(start),nbSpkToDisplay(nbSpkToDisplay),
       overLayDisplay(overLay),meanDisplay(mean),
@@ -57,7 +57,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
       mainWindow(mainWindow),traceWidget(0L),startingTime(startingTime),duration(duration),labelsDisplay(labelsDisplay)
 {
     shownClusters = initialClusterList;
-    removedClusters = new Q3ValueList<int>();
+    removedClusters = new QList<int>();
     removedClustersUndoList.setAutoDelete(true);
     removedClustersRedoList.setAutoDelete(true);
 
@@ -151,7 +151,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         isThereTraceView = true;
         //Create the providers (data and cluster) if need it
         if(!doc.isTracesProvider()) doc.createProviders();
-        Q3ValueList<int> skippedChannels;
+        QList<int> skippedChannels;
         //the settings are : greyScale, no vertical lines nor rasters and waveforms, no labels displayed, no channel skipped.
         mainDock->setWidget(new TraceWidget(startingTime,duration,true,*doc.getTraceProvider(),false,false,false,
                                             true,labelsDisplay,doc.getCurrentChannels(),doc.getGain(),doc.getAcquisitionGain(),doc.channelColors(),
@@ -189,7 +189,7 @@ KlustersView::~KlustersView()
     delete removedClusters;
 }
 
-void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
+void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
     /*OVERVIEW type is the combination of 3 base types:
   CLUSTERS on the left side, WAVEFORMS at the right top and CORRELATIONS in the bottom right
  */
@@ -245,7 +245,7 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
     setConnections(CORRELATIONS,correlationView,correlations);
 }
 
-void KlustersView::createGroupingAssistantView(QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
+void KlustersView::createGroupingAssistantView(QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
     //First create the overview
     createOverview(backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
 
@@ -671,7 +671,7 @@ void KlustersView::closeEvent(QCloseEvent* e){
 
 }
 
-bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,Q3ValueList<int> positions){
+bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
 
     //Enable docking abilities
 #if KDAB_PENDING
@@ -687,7 +687,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
     ViewWidget* correlationView;
     ViewWidget* errorMatrixView;
     QDockWidget* traces;
-    Q3ValueList<int> skippedChannels;
+    QList<int> skippedChannels;
 
     bool newViewType = false;
     QString count;
@@ -866,12 +866,12 @@ void KlustersView::updateDimensions(int dimensionX,int dimensionY){
 }
 
 
-void KlustersView::shownClustersUpdate(Q3ValueList<int>& clustersToShow){
+void KlustersView::shownClustersUpdate(QList<int>& clustersToShow){
     //Try to minimize the number of clusters to draw
     Q3ValueVector<int> clustersToRemove;
     
     //If a cluster already shown is not requested, remove it from the view
-    Q3ValueList<int>::iterator shownClustersIterator;
+    QList<int>::iterator shownClustersIterator;
     for(shownClustersIterator = shownClusters->begin(); shownClustersIterator != shownClusters->end(); ++shownClustersIterator ){
         if(clustersToShow.contains(*shownClustersIterator) == 0){
             clustersToRemove.push_back(*shownClustersIterator);
@@ -882,7 +882,7 @@ void KlustersView::shownClustersUpdate(Q3ValueList<int>& clustersToShow){
     removeClustersFromView(clustersToRemove,true);
 
     //If there is a cluster in clustersToShow which is not in shownClusters, add it to the view
-    Q3ValueList<int>::iterator clustersToShowIterator;
+    QList<int>::iterator clustersToShowIterator;
     for(clustersToShowIterator = clustersToShow.begin(); clustersToShowIterator != clustersToShow.end(); ++clustersToShowIterator ){
         if(shownClusters->contains(*clustersToShowIterator) == 0) addClusterToView(*clustersToShowIterator,true);
     }
@@ -894,15 +894,15 @@ void KlustersView::shownClustersUpdate(Q3ValueList<int>& clustersToShow){
 void KlustersView::updateColors(bool active){
     ItemColors& clusterColors = doc.clusterColors();
     if(clusterColors.isColorChanged()){
-        Q3ValueList<int> colorChangedClusterList = clusterColors.colorChangedItemList();
-        Q3ValueList<int>::iterator iterator;
+        QList<int> colorChangedClusterList = clusterColors.colorChangedItemList();
+        QList<int>::iterator iterator;
         for(iterator = colorChangedClusterList.begin(); iterator != colorChangedClusterList.end(); ++iterator ){
             if(shownClusters->contains(*iterator) != 0) singleColorUpdate(*iterator,active);
         }
     }
 }
 
-void KlustersView::groupedClustersUpdate(Q3ValueList<int>& groupedClusters, int newClusterId,bool active){  
+void KlustersView::groupedClustersUpdate(QList<int>& groupedClusters, int newClusterId,bool active){  
     bool isGroupedClustersInShownList = false;
 
     //If a cluster of the groupedClusters is in shownClusters list, remove it
@@ -919,13 +919,13 @@ void KlustersView::groupedClustersUpdate(Q3ValueList<int>& groupedClusters, int 
 }
 
 
-bool KlustersView::clustersDeletionUpdate(Q3ValueList<int>& deletedClusters,int destinationCluster,bool active){
+bool KlustersView::clustersDeletionUpdate(QList<int>& deletedClusters,int destinationCluster,bool active){
     bool isAClusterRemoved = false;
     isAClusterRemoved = clustersDeletionUpdate(deletedClusters,active);
 
     //If the view contains the destinationCluster emit a notice of modification
     if(shownClusters->contains(destinationCluster) != 0){
-        Q3ValueList<int> modifiedcluster;
+        QList<int> modifiedcluster;
         modifiedcluster.append(destinationCluster);
         emit modifiedClusters(modifiedcluster,active,true);
     }
@@ -933,8 +933,8 @@ bool KlustersView::clustersDeletionUpdate(Q3ValueList<int>& deletedClusters,int 
     return isAClusterRemoved;
 }
 
-bool KlustersView::clustersDeletionUpdate(Q3ValueList<int>& deletedClusters,bool active){  
-    Q3ValueList<int> inView = clustersInView(deletedClusters);
+bool KlustersView::clustersDeletionUpdate(QList<int>& deletedClusters,bool active){  
+    QList<int> inView = clustersInView(deletedClusters);
     bool isAClusterRemoved = false;
 
     //the removedClustersUndoList have to be updated
@@ -946,7 +946,7 @@ bool KlustersView::clustersDeletionUpdate(Q3ValueList<int>& deletedClusters,bool
 
         //If one of the clusters in deletedClusters is present in clustersShown list, remove it
         // and call removeClusterFromView on all the widgets
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = inView.begin(); clustersToRemoveIterator != inView.end(); ++clustersToRemoveIterator){
             removeClusterFromView(*clustersToRemoveIterator,active);
         }
@@ -978,19 +978,19 @@ void KlustersView::addClusterToView(int clusterId,bool active){
     emit clusterAddedToView(clusterId,active);
 }
 
-void KlustersView::addNewClusterToView(Q3ValueList<int>& fromClusters,int clusterId,Q3ValueList<int>& emptiedClusters,bool active){  
+void KlustersView::addNewClusterToView(QList<int>& fromClusters,int clusterId,QList<int>& emptiedClusters,bool active){  
     //List containing the clusters of this view which contained spikes of the newly created cluster
-    Q3ValueList<int> fromClustersInView = clustersInView(fromClusters);
+    QList<int> fromClustersInView = clustersInView(fromClusters);
 
     //the removedClustersUndoList have to be updated
-    Q3ValueList<int> emptiedClustersInView = clustersInView(emptiedClusters);
+    QList<int> emptiedClustersInView = clustersInView(emptiedClusters);
     prepareUndo(emptiedClustersInView);
 
 
     //If fromClustersInView in not empty, this view is concerned by the modification
     if(fromClustersInView.size() > 0){
         if(emptiedClusters.size()>0){
-            Q3ValueList<int>::iterator clustersToRemoveIterator;
+            QList<int>::iterator clustersToRemoveIterator;
             for(clustersToRemoveIterator = emptiedClusters.begin(); clustersToRemoveIterator != emptiedClusters.end(); ++clustersToRemoveIterator ){
                 removeClusterFromView(*clustersToRemoveIterator,active);
             }
@@ -1005,13 +1005,13 @@ void KlustersView::addNewClusterToView(Q3ValueList<int>& fromClusters,int cluste
     updateColors(active);
 }
 
-void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,Q3ValueList<int>& emptiedClusters,bool active){
+void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,QList<int>& emptiedClusters,bool active){
     //List containing the clusters of this view which contained spikes of the newly created cluster
-    Q3ValueList<int> fromClusters = fromToNewClusterIds.keys();
-    Q3ValueList<int> fromClustersInView = clustersInView(fromClusters);
+    QList<int> fromClusters = fromToNewClusterIds.keys();
+    QList<int> fromClustersInView = clustersInView(fromClusters);
 
     //the removedClustersUndoList have to be updated
-    Q3ValueList<int> emptiedClustersInView = clustersInView(emptiedClusters);
+    QList<int> emptiedClustersInView = clustersInView(emptiedClusters);
     prepareUndo(emptiedClustersInView);
 
 
@@ -1019,7 +1019,7 @@ void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,Q3Val
     if(fromClustersInView.size() > 0){
 
         if(emptiedClusters.size()>0){
-            Q3ValueList<int>::iterator clustersToRemoveIterator;
+            QList<int>::iterator clustersToRemoveIterator;
             for(clustersToRemoveIterator = emptiedClusters.begin(); clustersToRemoveIterator != emptiedClusters.end(); ++clustersToRemoveIterator ){
                 removeClusterFromView(*clustersToRemoveIterator,active);
             }
@@ -1027,7 +1027,7 @@ void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,Q3Val
 
         emit modifiedClusters(fromClustersInView,active);
 
-        Q3ValueList<int>::iterator fromClusterIterator;
+        QList<int>::iterator fromClusterIterator;
         for (fromClusterIterator = fromClustersInView.begin(); fromClusterIterator != fromClustersInView.end(); ++fromClusterIterator){
             int newClusterId = fromToNewClusterIds[*fromClusterIterator];
             qDebug() << "in KlustersView::addNewClustersToView newClusterId "<<newClusterId;
@@ -1043,11 +1043,11 @@ void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,Q3Val
 }
 
 
-void KlustersView::addNewClustersToView(Q3ValueList<int>& clustersToRecluster,Q3ValueList<int>& reclusteredClusterList,bool active){
+void KlustersView::addNewClustersToView(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,bool active){
     qDebug() << "in KlustersView::addNewClustersToView: ";
 
     //List containing the clusters of this view which contained recluster clusters
-    Q3ValueList<int> inView = clustersInView(clustersToRecluster);
+    QList<int> inView = clustersInView(clustersToRecluster);
 
     //the removedClustersUndoList have to be updated
     prepareUndo(inView);
@@ -1056,13 +1056,13 @@ void KlustersView::addNewClustersToView(Q3ValueList<int>& clustersToRecluster,Q3
     if(inView.size() > 0){
         //prepareUndo(clustersToRecluster);
 
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = clustersToRecluster.begin(); clustersToRemoveIterator != clustersToRecluster.end(); ++clustersToRemoveIterator ){
             qDebug() << "*clustersToRemoveIterator: "<<*clustersToRemoveIterator;
             removeClusterFromView(*clustersToRemoveIterator,active);
         }
 
-        Q3ValueList<int>::iterator iterator;
+        QList<int>::iterator iterator;
         for (iterator = reclusteredClusterList.begin(); iterator != reclusteredClusterList.end(); ++iterator){
             shownClusters->append(*iterator);
             qDebug() << "*iterator to add: "<<*iterator;
@@ -1072,19 +1072,19 @@ void KlustersView::addNewClustersToView(Q3ValueList<int>& clustersToRecluster,Q3
 }
 
 
-void KlustersView::removeSpikesFromClustersInView(Q3ValueList<int>& fromClusters, int destinationClusterId,Q3ValueList<int>& emptiedClusters,bool active){    
+void KlustersView::removeSpikesFromClustersInView(QList<int>& fromClusters, int destinationClusterId,QList<int>& emptiedClusters,bool active){    
     //List containing the clusters of this view which contained spikes which were removed
-    Q3ValueList<int> fromClustersInView = clustersInView(fromClusters);
+    QList<int> fromClustersInView = clustersInView(fromClusters);
 
     //the removedClustersUndoList have to be updated
-    Q3ValueList<int> emptiedClustersInView = clustersInView(emptiedClusters);
+    QList<int> emptiedClustersInView = clustersInView(emptiedClusters);
     prepareUndo(emptiedClustersInView);
 
     //If fromClustersInView in not empty, this view is concerned by the modification
     if(fromClustersInView.size() > 0){
 
         if(emptiedClusters.size()>0){
-            Q3ValueList<int>::iterator clustersToRemoveIterator;
+            QList<int>::iterator clustersToRemoveIterator;
             for(clustersToRemoveIterator = emptiedClusters.begin(); clustersToRemoveIterator != emptiedClusters.end(); ++clustersToRemoveIterator ){
                 removeClusterFromView(*clustersToRemoveIterator,active);
             }
@@ -1104,18 +1104,18 @@ void KlustersView::removeSpikesFromClustersInView(Q3ValueList<int>& fromClusters
     updateColors(active);
 }
 
-Q3ValueList<int> KlustersView::clustersInView(Q3ValueList<int>& clusterlist){
+QList<int> KlustersView::clustersInView(QList<int>& clusterlist){
     //subset of clusterlist with the clusters of this view
-    Q3ValueList<int> clustersInViewList;
+    QList<int> clustersInViewList;
 
-    Q3ValueList<int>::iterator iterator;
+    QList<int>::iterator iterator;
     for (iterator = clusterlist.begin(); iterator != clusterlist.end(); ++iterator){
         if(shownClusters->contains(*iterator) != 0) clustersInViewList.append(*iterator);
     }
     return clustersInViewList;
 }
 
-void KlustersView::prepareUndo(Q3ValueList<int>* removedClustersTemp){
+void KlustersView::prepareUndo(QList<int>* removedClustersTemp){
     //Store the current removedClusters in the undo list and make the temporary become the current one.
     removedClustersUndoList.prepend(removedClusters);
     removedClusters = removedClustersTemp;
@@ -1132,10 +1132,10 @@ void KlustersView::prepareUndo(Q3ValueList<int>* removedClustersTemp){
     removedClustersRedoList.clear();
 }
 
-void KlustersView::prepareUndo(Q3ValueList<int>& newlyRemovedClusters){   
+void KlustersView::prepareUndo(QList<int>& newlyRemovedClusters){   
     //Create a new shownClusters which will hold the new configuration
-    Q3ValueList<int>* removedClustersTemp = new Q3ValueList<int>();
-    Q3ValueList<int>::iterator iterator;
+    QList<int>* removedClustersTemp = new QList<int>();
+    QList<int>::iterator iterator;
     for (iterator = newlyRemovedClusters.begin(); iterator != newlyRemovedClusters.end(); ++iterator)
         removedClustersTemp->append(*iterator);
 
@@ -1176,7 +1176,7 @@ void KlustersView::addRemovedClusters(bool active){
     if(removedClustersUndoList.count()>0){
         qDebug() << "in addRemovedClusters removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
         if(removedClusters->size() > 0){
-            Q3ValueList<int>::iterator newClusterIterator;
+            QList<int>::iterator newClusterIterator;
             for(newClusterIterator = removedClusters->begin(); newClusterIterator != removedClusters->end(); ++newClusterIterator){
                 shownClusters->append(*newClusterIterator);
                 qDebug() << "in addRemovedClusters *newClusterIterator: "<<*newClusterIterator<< endl;
@@ -1184,7 +1184,7 @@ void KlustersView::addRemovedClusters(bool active){
             }
         }
         removedClustersRedoList.prepend(removedClusters);
-        Q3ValueList<int>* removedClustersTemp = removedClustersUndoList.take(0);
+        QList<int>* removedClustersTemp = removedClustersUndoList.take(0);
         removedClusters =  removedClustersTemp;
     }
 }
@@ -1196,16 +1196,16 @@ void KlustersView::undo(bool active){
     qDebug() << "numberUndo in KlustersView::undo added: "<<numberUndo<< endl;
 }
 
-void KlustersView::undoAddedClusters(Q3ValueList<int>& addedClusters,bool active){
+void KlustersView::undoAddedClusters(QList<int>& addedClusters,bool active){
     //If any of the clusters in addedClusters are present, remove them
     //add back the removed clusters
     addRemovedClusters(active);
 
     //List containing the clusters of this view which have to be removed
-    Q3ValueList<int> inView = clustersInView(addedClusters);
+    QList<int> inView = clustersInView(addedClusters);
 
     if(inView.size() > 0){
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = inView.begin(); clustersToRemoveIterator != inView.end(); ++clustersToRemoveIterator){
             removeClusterFromView(*clustersToRemoveIterator,active);
         }
@@ -1214,14 +1214,14 @@ void KlustersView::undoAddedClusters(Q3ValueList<int>& addedClusters,bool active
     qDebug() << "numberUndo in KlustersView::undo modified: "<<numberUndo<<" removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
 }
 
-void KlustersView::undoModifiedClusters(Q3ValueList<int>& updatedClusters,bool active){
+void KlustersView::undoModifiedClusters(QList<int>& updatedClusters,bool active){
     //add back the removed clusters
     addRemovedClusters(active);
 
     //If any of the clusters in modifiedClusters are present, update them
 
     //List containing the clusters of this view which have to be updated
-    Q3ValueList<int> inView = clustersInView(updatedClusters);
+    QList<int> inView = clustersInView(updatedClusters);
     if(inView.size() > 0){
         emit modifiedClustersUndo(inView,active);
     }
@@ -1229,13 +1229,13 @@ void KlustersView::undoModifiedClusters(Q3ValueList<int>& updatedClusters,bool a
     qDebug() << "numberUndo in KlustersView::undo updated: "<<numberUndo<< endl;
 }
 
-void KlustersView::undo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters,bool active){  
+void KlustersView::undo(QList<int>& addedClusters,QList<int>& updatedClusters,bool active){  
     //If any of the clusters in addedClusters are present, remove them.
 
     //List containing the clusters of this view which have to be removed
-    Q3ValueList<int> inView = clustersInView(addedClusters);
+    QList<int> inView = clustersInView(addedClusters);
     if(inView.size() > 0){
-        Q3ValueList<int>::iterator clustersToRemoveIterator;
+        QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = inView.begin(); clustersToRemoveIterator != inView.end(); ++clustersToRemoveIterator){
             removeClusterFromView(*clustersToRemoveIterator,active);
         }
@@ -1261,15 +1261,15 @@ bool KlustersView::removeUndoAddedClusters(bool active){
     //of the removedClustersUndoList and the first element of the removedClustersRedoList become the current removedClusters.
     if(removedClustersRedoList.count()>0){
         removedClustersUndoList.prepend(removedClusters);
-        Q3ValueList<int>* removedClustersTemp = removedClustersRedoList.take(0);
+        QList<int>* removedClustersTemp = removedClustersRedoList.take(0);
         removedClusters =  removedClustersTemp;
 
         //List containing the clusters of this view which have to be removed
-        Q3ValueList<int> clustersToRemoveInView = clustersInView(*removedClusters);
+        QList<int> clustersToRemoveInView = clustersInView(*removedClusters);
 
         if(clustersToRemoveInView.size() > 0){
             isClustersRemoved = true;
-            Q3ValueList<int>::iterator deleteClusterIterator;
+            QList<int>::iterator deleteClusterIterator;
             for(deleteClusterIterator = clustersToRemoveInView.begin(); deleteClusterIterator != clustersToRemoveInView.end(); ++deleteClusterIterator){
                 removeClusterFromView(*deleteClusterIterator,active);
             }
@@ -1279,33 +1279,33 @@ bool KlustersView::removeUndoAddedClusters(bool active){
 }
 
 
-void KlustersView::removeDeletedClusters(bool active,Q3ValueList<int>& clustersToDelete){
+void KlustersView::removeDeletedClusters(bool active,QList<int>& clustersToDelete){
     //List containing the clusters of this view which have to be removed
-    Q3ValueList<int> clustersToRemoveInView = clustersInView(clustersToDelete);
+    QList<int> clustersToRemoveInView = clustersInView(clustersToDelete);
 
     if(clustersToRemoveInView.size() > 0){
-        Q3ValueList<int>::iterator deleteClusterIterator;
+        QList<int>::iterator deleteClusterIterator;
         for(deleteClusterIterator = clustersToRemoveInView.begin(); deleteClusterIterator != clustersToRemoveInView.end(); ++deleteClusterIterator){
             removeClusterFromView(*deleteClusterIterator,active);
         }
     }
 }
 
-void KlustersView::redo(bool active,Q3ValueList<int>& deletedClusters){
+void KlustersView::redo(bool active,QList<int>& deletedClusters){
     removeDeletedClusters(active,deletedClusters);
     removeUndoAddedClusters(active);
 
     numberUndo++;
 }
 
-void KlustersView::redoAddedClusters(Q3ValueList<int>& addedClusters,bool active,Q3ValueList<int>& deletedClusters){     
+void KlustersView::redoAddedClusters(QList<int>& addedClusters,bool active,QList<int>& deletedClusters){     
     bool isClustersRemoved = removeUndoAddedClusters(active);
     removeDeletedClusters(active,deletedClusters);
 
     //Add back all the clusters contained in addedClusters if the view have had initially
     //clusters removed to enable the addition of clusters.
     if(isClustersRemoved){
-        Q3ValueList<int>::iterator newClusterIterator;
+        QList<int>::iterator newClusterIterator;
         for(newClusterIterator = addedClusters.begin(); newClusterIterator != addedClusters.end(); ++newClusterIterator){
             shownClusters->append(*newClusterIterator);
 
@@ -1315,20 +1315,20 @@ void KlustersView::redoAddedClusters(Q3ValueList<int>& addedClusters,bool active
     numberUndo++;
 }
 
-void KlustersView::redoModifiedClusters(Q3ValueList<int>& updatedClusters,bool isModifiedByDeletion,bool active,Q3ValueList<int>& deletedClusters){
+void KlustersView::redoModifiedClusters(QList<int>& updatedClusters,bool isModifiedByDeletion,bool active,QList<int>& deletedClusters){
     removeDeletedClusters(active,deletedClusters);
     removeUndoAddedClusters(active);
 
     //If any of the clusters in modifiedClusters are present, update them
 
     //List containing the clusters of this view which have to be updated
-    Q3ValueList<int> inView = clustersInView(updatedClusters);
+    QList<int> inView = clustersInView(updatedClusters);
     if(inView.size() > 0) emit modifiedClusters(inView,active,isModifiedByDeletion);
 
     numberUndo++;
 }
 
-void KlustersView::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& updatedClusters,bool isModifiedByDeletion,bool active,Q3ValueList<int>& deletedClusters){
+void KlustersView::redo(QList<int>& addedClusters,QList<int>& updatedClusters,bool isModifiedByDeletion,bool active,QList<int>& deletedClusters){
     removeDeletedClusters(active,deletedClusters);
     removeUndoAddedClusters(active);
 
@@ -1338,8 +1338,8 @@ void KlustersView::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& update
     //The 2 lists are the keys and values of a previous map fromClusterId-new clusterId,
     //so they are order in correspondance.
     if(addedClusters.size() == updatedClusters.size()){
-        Q3ValueList<int> inView;
-        Q3ValueList<int>::iterator iterator;
+        QList<int> inView;
+        QList<int>::iterator iterator;
         int index = 0;
         for (iterator = updatedClusters.begin(); iterator != updatedClusters.end(); ++iterator){
             if(shownClusters->contains(*iterator) != 0){
@@ -1355,10 +1355,10 @@ void KlustersView::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& update
     else{
         //If any of the clusters in modifiedClusters are present, update them
         //List containing the clusters of this view which have to be updated
-        Q3ValueList<int> inView = clustersInView(updatedClusters);
+        QList<int> inView = clustersInView(updatedClusters);
         if(inView.size() > 0) {
             //Add back all the clusters contained in addedClusters
-            Q3ValueList<int>::iterator newClusterIterator;
+            QList<int>::iterator newClusterIterator;
             for(newClusterIterator = addedClusters.begin(); newClusterIterator != addedClusters.end(); ++newClusterIterator){
                 //If the clusters have been modified by deletion, that means that the clusters to add
                 //can only be cluster 0 or cluster 1 which were added because they did not exit already.
@@ -1374,10 +1374,10 @@ void KlustersView::redo(Q3ValueList<int>& addedClusters,Q3ValueList<int>& update
 }
 
 void KlustersView::changeClusterIds(QMap<int,int>& clusterIds){
-    Q3ValueList<int>* shownClustersTemp = new Q3ValueList<int>();
+    QList<int>* shownClustersTemp = new QList<int>();
 
     //Update the clusterIds
-    Q3ValueList<int>::iterator shownClustersIterator;
+    QList<int>::iterator shownClustersIterator;
     for(shownClustersIterator = shownClusters->begin(); shownClustersIterator != shownClusters->end(); ++shownClustersIterator){
         shownClustersTemp->append(clusterIds[*shownClustersIterator]);
     }
@@ -1392,7 +1392,7 @@ void KlustersView::renumberClusters(QMap<int,int>& clusterIdsOldNew,bool active)
     //renumber the clusters
     changeClusterIds(clusterIdsOldNew);
 
-    Q3ValueList<int>* removedClustersTemp = new Q3ValueList<int>();
+    QList<int>* removedClustersTemp = new QList<int>();
     prepareUndo(removedClustersTemp);
 
     emit clustersRenumbered(active);
@@ -1440,12 +1440,12 @@ bool KlustersView::isThreadsRunning(){
     else return false;
 }
 
-Q3PtrList< Q3ValueList<int> > KlustersView::getUndoList(){
-    Q3PtrList< Q3ValueList<int> > undoList;
-    Q3ValueList<int>* undo;
+Q3PtrList< QList<int> > KlustersView::getUndoList(){
+    Q3PtrList< QList<int> > undoList;
+    QList<int>* undo;
     for(undo = removedClustersUndoList.first(); undo; undo = removedClustersUndoList.next()){
-        Q3ValueList<int>* undoCopy = new Q3ValueList<int>();
-        Q3ValueList<int>::iterator iterator;
+        QList<int>* undoCopy = new QList<int>();
+        QList<int>::iterator iterator;
         for(iterator = undo->begin(); iterator != undo->end(); ++iterator)
             undoCopy->append(*iterator);
         undoList.append(undoCopy);
@@ -1454,12 +1454,12 @@ Q3PtrList< Q3ValueList<int> > KlustersView::getUndoList(){
     return  undoList;
 }
 
-Q3PtrList< Q3ValueList<int> >  KlustersView::getRedoList(){
-    Q3PtrList< Q3ValueList<int> > redoList;
-    Q3ValueList<int>* redo;
+Q3PtrList< QList<int> >  KlustersView::getRedoList(){
+    Q3PtrList< QList<int> > redoList;
+    QList<int>* redo;
     for(redo = removedClustersRedoList.first(); redo; redo = removedClustersRedoList.next()){
-        Q3ValueList<int>* redoCopy = new Q3ValueList<int>();
-        Q3ValueList<int>::iterator iterator;
+        QList<int>* redoCopy = new QList<int>();
+        QList<int>::iterator iterator;
         for(iterator = redo->begin(); iterator != redo->end(); ++iterator)
             redoCopy->append(*iterator);
         redoList.append(redoCopy);
@@ -1481,13 +1481,13 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(singleColorUpdated(int,bool)),view, SLOT(singleColorUpdate(int,bool)));
         connect(this,SIGNAL(clusterRemovedFromView(int,bool)),view, SLOT(removeClusterFromView(int,bool)));
         connect(this,SIGNAL(clusterAddedToView(int,bool)),view, SLOT(addClusterToView(int,bool)));
-        connect(this,SIGNAL(newClusterAddedToView(Q3ValueList<int>&,int,bool)),view, SLOT(addNewClusterToView(Q3ValueList<int>&,int,bool)));
+        connect(this,SIGNAL(newClusterAddedToView(QList<int>&,int,bool)),view, SLOT(addNewClusterToView(QList<int>&,int,bool)));
         connect(this,SIGNAL(newClusterAddedToView(int,bool)),view, SLOT(addNewClusterToView(int,bool)));
-        connect(this,SIGNAL(spikesRemovedFromClusters(Q3ValueList<int>&,bool)),view, SLOT(spikesRemovedFromClusters(Q3ValueList<int>&,bool)));
+        connect(this,SIGNAL(spikesRemovedFromClusters(QList<int>&,bool)),view, SLOT(spikesRemovedFromClusters(QList<int>&,bool)));
         connect(this,SIGNAL(modeToSet(BaseFrame::Mode)),view, SLOT(setMode(BaseFrame::Mode)));
         connect(this,SIGNAL(spikesAddedToCluster(int,bool)),view, SLOT(spikesAddedToCluster(int,bool)));
-        connect(this,SIGNAL(modifiedClusters(Q3ValueList<int>&,bool,bool)),view, SLOT(updateClusters(Q3ValueList<int>&,bool,bool)));
-        connect(this,SIGNAL(modifiedClustersUndo(Q3ValueList<int>&,bool)),view, SLOT(undoUpdateClusters(Q3ValueList<int>&,bool)));
+        connect(this,SIGNAL(modifiedClusters(QList<int>&,bool,bool)),view, SLOT(updateClusters(QList<int>&,bool,bool)));
+        connect(this,SIGNAL(modifiedClustersUndo(QList<int>&,bool)),view, SLOT(undoUpdateClusters(QList<int>&,bool)));
         connect(this,SIGNAL(updateDrawing()),view, SLOT(updateDrawing()));
         connect(this,SIGNAL(changeBackgroundColor(QColor)),view, SLOT(changeBackgroundColor(QColor)));
     }
@@ -1518,7 +1518,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(decreaseAmplitude()),view, SLOT(decreaseAmplitude()));
         connect(this,SIGNAL(updateDisplayNbSpikes(long)),view, SLOT(setDisplayNbSpikes(long)));
         connect(this,SIGNAL(changeGain(int)),view, SLOT(setGain(int)));
-        connect(this,SIGNAL(changeChannelPositions(Q3ValueList<int>&)),view, SLOT(setChannelPositions(Q3ValueList<int>&)));
+        connect(this,SIGNAL(changeChannelPositions(QList<int>&)),view, SLOT(setChannelPositions(QList<int>&)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));
         connect(view, SIGNAL(parentDockBeingClosed(QWidget*)), this, SLOT(waveformDockClosed(QWidget*)));
     }
@@ -1541,22 +1541,22 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(computeProbabilities()),view, SLOT(updateMatrixContents()));
         connect(view, SIGNAL(parentDockBeingClosed(QWidget*)), this, SLOT(errorMatrixDockClosed(QWidget*)));
         //connection with the document
-        connect(&doc,SIGNAL(clustersGrouped(Q3ValueList<int>&,int)),view, SLOT(clustersGrouped(Q3ValueList<int>&,int)));
-        connect(&doc,SIGNAL(clustersDeleted(Q3ValueList<int>&,int)),view, SLOT(clustersDeleted(Q3ValueList<int>&,int)));
-        connect(&doc,SIGNAL(removeSpikesFromClusters(Q3ValueList<int>&,int,Q3ValueList<int>&)),view, SLOT(removeSpikesFromClusters(Q3ValueList<int>&,int,Q3ValueList<int>&)));
-        connect(&doc,SIGNAL(newClusterAdded(Q3ValueList<int>&,int,Q3ValueList<int>&)),view, SLOT(newClusterAdded(Q3ValueList<int>&,int,Q3ValueList<int>&)));
-        connect(&doc,SIGNAL(newClustersAdded(QMap<int,int>&,Q3ValueList<int>&)),view, SLOT(newClustersAdded(QMap<int,int>&,Q3ValueList<int>&)));
+        connect(&doc,SIGNAL(clustersGrouped(QList<int>&,int)),view, SLOT(clustersGrouped(QList<int>&,int)));
+        connect(&doc,SIGNAL(clustersDeleted(QList<int>&,int)),view, SLOT(clustersDeleted(QList<int>&,int)));
+        connect(&doc,SIGNAL(removeSpikesFromClusters(QList<int>&,int,QList<int>&)),view, SLOT(removeSpikesFromClusters(QList<int>&,int,QList<int>&)));
+        connect(&doc,SIGNAL(newClusterAdded(QList<int>&,int,QList<int>&)),view, SLOT(newClusterAdded(QList<int>&,int,QList<int>&)));
+        connect(&doc,SIGNAL(newClustersAdded(QMap<int,int>&,QList<int>&)),view, SLOT(newClustersAdded(QMap<int,int>&,QList<int>&)));
         connect(&doc,SIGNAL(renumber(QMap<int,int>&)),view, SLOT(renumber(QMap<int,int>&)));
         connect(&doc,SIGNAL(undoRenumbering(QMap<int,int>&)),view, SLOT(undoRenumbering(QMap<int,int>&)));
-        connect(&doc,SIGNAL(undoAdditionModification(Q3ValueList<int>&,Q3ValueList<int>&)),view, SLOT(undoAdditionModification(Q3ValueList<int>&,Q3ValueList<int>&)));
-        connect(&doc,SIGNAL(undoAddition(Q3ValueList<int>&)),view, SLOT(undoAddition(Q3ValueList<int>&)));
-        connect(&doc,SIGNAL(undoModification(Q3ValueList<int>&)),view, SLOT(undoModification(Q3ValueList<int>&)));
+        connect(&doc,SIGNAL(undoAdditionModification(QList<int>&,QList<int>&)),view, SLOT(undoAdditionModification(QList<int>&,QList<int>&)));
+        connect(&doc,SIGNAL(undoAddition(QList<int>&)),view, SLOT(undoAddition(QList<int>&)));
+        connect(&doc,SIGNAL(undoModification(QList<int>&)),view, SLOT(undoModification(QList<int>&)));
         connect(&doc,SIGNAL(redoRenumbering(QMap<int,int>&)),view, SLOT(redoRenumbering(QMap<int,int>&)));
-        connect(&doc,SIGNAL(redoAdditionModification(Q3ValueList<int>&,Q3ValueList<int>&,bool,Q3ValueList<int>&)),view, SLOT(redoAdditionModification(Q3ValueList<int>&,Q3ValueList<int>&,bool,Q3ValueList<int>&)));
-        connect(&doc,SIGNAL(redoAddition(Q3ValueList<int>&,Q3ValueList<int>&)),view, SLOT(redoAddition(Q3ValueList<int>&,Q3ValueList<int>&)));
-        connect(&doc,SIGNAL(redoModification(Q3ValueList<int>&,bool,Q3ValueList<int>&)),view, SLOT(redoModification(Q3ValueList<int>&,bool,Q3ValueList<int>&)));
-        connect(&doc,SIGNAL(redoDeletion(Q3ValueList<int>&)),view, SLOT(redoDeletion(Q3ValueList<int>&)));
-        connect(&doc,SIGNAL(newClustersAdded(Q3ValueList<int>&)),view, SLOT(newClustersAdded(Q3ValueList<int>&)));
+        connect(&doc,SIGNAL(redoAdditionModification(QList<int>&,QList<int>&,bool,QList<int>&)),view, SLOT(redoAdditionModification(QList<int>&,QList<int>&,bool,QList<int>&)));
+        connect(&doc,SIGNAL(redoAddition(QList<int>&,QList<int>&)),view, SLOT(redoAddition(QList<int>&,QList<int>&)));
+        connect(&doc,SIGNAL(redoModification(QList<int>&,bool,QList<int>&)),view, SLOT(redoModification(QList<int>&,bool,QList<int>&)));
+        connect(&doc,SIGNAL(redoDeletion(QList<int>&)),view, SLOT(redoDeletion(QList<int>&)));
+        connect(&doc,SIGNAL(newClustersAdded(QList<int>&)),view, SLOT(newClustersAdded(QList<int>&)));
         connect(this,SIGNAL(changeBackgroundColor(QColor)),view, SLOT(changeBackgroundColor(QColor)));
     }
 
@@ -1564,7 +1564,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
     if(displayType == TRACES){
         connect(this,SIGNAL(updateContents()),view, SLOT(updateContents()));
         connect(this,SIGNAL(singleColorUpdated(int,bool)),view, SLOT(updateDrawing()));
-        connect(this,SIGNAL(updateClusters(QString,Q3ValueList<int>&,ItemColors*,bool)),view,SLOT(updateClusters(QString,Q3ValueList<int>&,ItemColors*,bool)));
+        connect(this,SIGNAL(updateClusters(QString,QList<int>&,ItemColors*,bool)),view,SLOT(updateClusters(QString,QList<int>&,ItemColors*,bool)));
 
         connect(this,SIGNAL(updateDrawing()),view, SLOT(updateDrawing()));
         connect(this,SIGNAL(changeBackgroundColor(QColor)),view, SLOT(changeBackgroundColor(QColor)));
