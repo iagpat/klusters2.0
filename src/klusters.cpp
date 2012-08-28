@@ -1471,10 +1471,10 @@ void KlustersApp::slotDisplayClose()
         if(current == mainDock){
             if(tabsParent->currentPageIndex() == 0){
                 mainDock = static_cast<QDockWidget*>(tabsParent->page(1));
-                //KDAB_PENDING setMainDockWidget(mainDock);
+                setCentralWidget(mainDock);
             }
             else  {
-                //KDAB_PENDING setMainDockWidget(static_cast<QDockWidget*>(tabsParent->page(0)));
+                setCentralWidget(static_cast<QDockWidget*>(tabsParent->page(0)));
             }
         }
         //Remove the display from the group of tabs
