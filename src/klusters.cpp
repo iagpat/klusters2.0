@@ -781,7 +781,8 @@ void KlustersApp::initDisplay(){
     mainDock->setWidget(view);
     //allow dock on the left side only
     //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
-    //KDAB_PENDING setView(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
+    setCentralWidget(mainDock);
+
     //KDAB_PENDING setMainDockWidget(mainDock);
     //disable docking abilities of mainDock itself
     //KDAB_PENDING mainDock->setEnableDocking(QDockWidget::DockNone);
