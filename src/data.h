@@ -1135,23 +1135,23 @@ public:
   */
     class WaveformIterator{
     public:
-        virtual ~WaveformIterator(){};
-        inline void setSpikesAvailable(bool available){spikesAvailable = available;};
-        inline bool areSpikesAvailable(){return spikesAvailable;};
-        inline void setMeanAvailable(bool available){meanAvailable = available;};
-        inline bool isMeanAvailable(){return meanAvailable;};
-        virtual inline dataType nextSpike(){return 0;};
-        virtual inline dataType nextMeanValue(){return 0;};
-        virtual inline dataType nextStDeviationValue(){return 0;};
-        virtual inline dataType nbOfSpikes() const{return 0;};
+        virtual ~WaveformIterator(){}
+        inline void setSpikesAvailable(bool available){spikesAvailable = available;}
+        inline bool areSpikesAvailable(){return spikesAvailable;}
+        inline void setMeanAvailable(bool available){meanAvailable = available;}
+        inline bool isMeanAvailable(){return meanAvailable;}
+        virtual inline dataType nextSpike(){return 0;}
+        virtual inline dataType nextMeanValue(){return 0;}
+        virtual inline dataType nextStDeviationValue(){return 0;}
+        virtual inline dataType nbOfSpikes() const{return 0;}
 
-        inline WaveformIterator(){init();};
+        inline WaveformIterator(){init();}
 
     protected:
         inline WaveformIterator(Waveforms* waveformsData){
             init();
             waveforms = waveformsData;
-        };
+        }
         inline void init(){
             waveforms = 0L;
             spikesIndex = -1;
@@ -1296,32 +1296,32 @@ public:
         friend TimeFrameWaveformIterator* Data::timeFrameWaveformIterator(dataType clusterId,dataType startTime,dataType endTime);
 
     public:
-        inline ~TimeFrameWaveformIterator(){};
+        inline ~TimeFrameWaveformIterator(){}
         inline dataType nextSpike(){
             ++spikesIndex;
             return - static_cast<dataType>(waveforms->getTimeFrame(spikesIndex));
-        };
+        }
         inline dataType nextMeanValue(){
             ++meanIndex;
             return - static_cast<dataType>(waveforms->getTimeFrameMean(meanIndex));
-        };
+        }
         inline dataType nextStDeviationValue(){
             ++stDeviationIndex;
             return - static_cast<dataType>(waveforms->getTimeFrameStDeviation(stDeviationIndex));
-        };
+        }
         inline dataType nbOfSpikes() const{
             return waveforms->nbOfSpikes(TIME_FRAME);
-        };
+        }
 
     private:
-        inline TimeFrameWaveformIterator(): WaveformIterator(){};
-        inline TimeFrameWaveformIterator(Waveforms* waveformsData): WaveformIterator(waveformsData){};
+        inline TimeFrameWaveformIterator(): WaveformIterator(){}
+        inline TimeFrameWaveformIterator(Waveforms* waveformsData): WaveformIterator(waveformsData){}
         inline void updateStatus(dataType start,dataType end){
             if(waveforms->startTime() != start || waveforms->endTime() != end){
                 setSpikesAvailable(false);
                 setMeanAvailable(false);
             }
-        };
+        }
 
     };
     /**
@@ -1368,25 +1368,25 @@ public:
         friend CorrelogramIterator Data::correlogramIterator(Pair pair,ScaleMode scale,int binSize,int timeframe);
 
     public:
-        inline ~CorrelogramIterator(){};
+        inline ~CorrelogramIterator(){}
         /**Returns the current value and increments the iterator.*/
         inline float next(){
             float value =  - (static_cast<float>(correlation->getValue(index)) / static_cast<float>(scale));
             index++;
             return value;
-        };
+        }
         /**Check if there is more values.*/
-        inline bool hasNext(){return (lastIndex >= index);};
+        inline bool hasNext(){return (lastIndex >= index);}
         /**Returns true if there is data corresponding to the parameters given
     * in the iterator constructor.
     */
-        inline bool isDataAvailable(){return dataAvailable;};
+        inline bool isDataAvailable(){return dataAvailable;}
 
-        inline float getShoulder() const {return - correlation->getShoulder();};
+        inline float getShoulder() const {return - correlation->getShoulder();}
 
-        inline float getScaledShoulder() const {return - correlation->getShoulder() / static_cast<float>(scale);};
+        inline float getScaledShoulder() const {return - correlation->getShoulder() / static_cast<float>(scale);}
 
-        inline float getFiringRate() const {return correlation->getFiringRate(); };
+        inline float getFiringRate() const {return correlation->getFiringRate(); }
     private:
         inline CorrelogramIterator(const Data& d,Pair pair,ScaleMode scaleMode,int binSize,int timeframe):data(d){
             index = 0;
