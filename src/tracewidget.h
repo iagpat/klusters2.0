@@ -100,19 +100,19 @@ public:
  */
     inline long timeFrameWidth() const {
         return timeWindow;
-    };
+    }
 
     /**Returns the start time of the time frame used by the TraceView.
  */
     inline long timeFrameStart() const {
         return startTime;
-    };
+    }
 
     /**Installs the event filter on the view contained in the widget.*/
     inline void installEventFilter(QObject* filterObject){
         QObject::installEventFilter(filterObject);
         view.installEventFilter(filterObject);
-    };
+    }
 
 public slots:
 
@@ -133,33 +133,33 @@ public slots:
   * Sets the mode of presentation to single or multiple columns.
   * @param multiple true if the traces are presented on multiple columns, false if they are presented on a single column.
   */
-    inline void setMultiColumns(bool multiple){view.setMultiColumns(multiple);};
+    inline void setMultiColumns(bool multiple){view.setMultiColumns(multiple);}
 
     /**Displays or hides vertical lines to show the clusters.
   * @param lines true if the vertical lines are drawn for each cluster, false otherwise.
   */
-    inline void setClusterVerticalLines(bool lines){view.setClusterVerticalLines(lines);};
+    inline void setClusterVerticalLines(bool lines){view.setClusterVerticalLines(lines);}
 
     /**Displays or hides a raster to show the clusters.
   * @param raster true if a raster is drawn, false otherwise.
   */
-    inline void setClusterRaster(bool raster){view.setClusterRaster(raster);};
+    inline void setClusterRaster(bool raster){view.setClusterRaster(raster);}
 
     /**Displays or hides the cluster waveforms on top of the traces.
   * @param waveforms true if the waveforms are drawn, false otherwise.
   */
-    inline void setClusterWaveforms(bool waveforms){view.setClusterWaveforms(waveforms);};
+    inline void setClusterWaveforms(bool waveforms){view.setClusterWaveforms(waveforms);}
 
     /** Informs listener that the channels @p selectedIds have been selected.
   * @Param the list of channels selected by the user in a view.
   */
-    inline void slotChannelsSelected(const Q3ValueList<int>& selectedIds) {emit channelsSelected(selectedIds);};
+    inline void slotChannelsSelected(const Q3ValueList<int>& selectedIds) {emit channelsSelected(selectedIds);}
 
     /**Change the current mode, call by a selection of a tool.
   * @param selectedMode new mode of drawing.
   * @param active true if the view is the active one, false otherwise.
   */
-    virtual inline void setMode(BaseFrame::Mode selectedMode,bool active){view.setMode(selectedMode,active);};
+    virtual inline void setMode(BaseFrame::Mode selectedMode,bool active){view.setMode(selectedMode,active);}
 
     /**
   * Updates the list of channels shown with @p channelsToShow.
@@ -167,7 +167,7 @@ public slots:
   */
     inline void showChannels(const Q3ValueList<int>& channelsToShow){
         view.showChannels(channelsToShow);
-    };
+    }
 
     /**
   * Updates the list of clusters shown with @p clustersToShow for the cluster provider identified
@@ -177,7 +177,7 @@ public slots:
   */
     inline void showClusters(QString name,Q3ValueList<int>& clustersToShow){
         view.showClusters(name,clustersToShow);
-    };
+    }
 
     /**
   * Updates the list of events shown with @p eventsToShow for the event provider identified
@@ -187,94 +187,94 @@ public slots:
   */
     inline void showEvents(QString name,Q3ValueList<int>& eventsToShow){
         view.showEvents(name,eventsToShow);
-    };
+    }
 
     /**Changes the color of a channel.
   * @param channelId id of the channel to redraw.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void channelColorUpdate(int channelId,bool active){view.channelColorUpdate(channelId,active);};
+    inline void channelColorUpdate(int channelId,bool active){view.channelColorUpdate(channelId,active);}
 
     /**Changes the color of a cluster.
   * @param name name use to identified the cluster provider containing the updated cluster.
   * @param clusterId id of the cluster to redraw.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void  clusterColorUpdate(QString name,int clusterId,bool active){view.clusterColorUpdate(name,clusterId,active);};
+    inline void  clusterColorUpdate(QString name,int clusterId,bool active){view.clusterColorUpdate(name,clusterId,active);}
 
     /**Changes the color of a event.
   * @param name name use to identified the event provider containing the updated event.
   * @param eventId id of the event to redraw.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void  eventColorUpdate(QString name,int eventId,bool active){view.eventColorUpdate(name,eventId,active);};
+    inline void  eventColorUpdate(QString name,int eventId,bool active){view.eventColorUpdate(name,eventId,active);}
 
     /**Changes the color of a group of channels.
   * @param groupId id of the group for which the color have been changed.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void groupColorUpdate(int groupId,bool active){view.groupColorUpdate(groupId,active);};
+    inline void groupColorUpdate(int groupId,bool active){view.groupColorUpdate(groupId,active);}
 
     /**Triggers the increase of the amplitude of all the channels.
   */
-    inline void increaseAllChannelsAmplitude(){view.increaseAllAmplitude();};
+    inline void increaseAllChannelsAmplitude(){view.increaseAllAmplitude();}
 
     /**Triggers the decrease of the amplitude of all the channels.
   */
-    inline void decreaseAllChannelsAmplitude(){view.decreaseAllAmplitude();};
+    inline void decreaseAllChannelsAmplitude(){view.decreaseAllAmplitude();}
 
     /**Triggers the increase of the amplitude of the selected channels.
   * @param channelIds ids of the channels for which the amplitude has to be increased.
   */
-    inline void increaseSelectedChannelsAmplitude(const Q3ValueList<int>& channelIds){view.increaseSelectedChannelsAmplitude(channelIds);};
+    inline void increaseSelectedChannelsAmplitude(const Q3ValueList<int>& channelIds){view.increaseSelectedChannelsAmplitude(channelIds);}
 
     /**Triggers the decrease of the amplitude of the selected channels.
   * @param channelIds ids of the channels for which the amplitude has to be decreased.
   */
-    inline void decreaseSelectedChannelsAmplitude(const Q3ValueList<int>& channelIds){view.decreaseSelectedChannelsAmplitude(channelIds);};
+    inline void decreaseSelectedChannelsAmplitude(const Q3ValueList<int>& channelIds){view.decreaseSelectedChannelsAmplitude(channelIds);}
 
     /**Sets the unit gain and the acquisition system gain.
   * @param gain initial gain use to draw the traces in the TraceView.
   * @param acquisitionGain acquisition gain.
   */
-    inline void setGains(int gain,int acquisitionGain){view.setGains(gain,acquisitionGain);};
+    inline void setGains(int gain,int acquisitionGain){view.setGains(gain,acquisitionGain);}
 
     /**Update the information presented in the view if need it.*/
-    inline void updateDrawing(){view.updateDrawing();};
+    inline void updateDrawing(){view.updateDrawing();}
 
     /**Update the TraceView.*/
-    inline void updateContents(){view.update();};
+    inline void updateContents(){view.update();}
 
     /**Triggers the update of the display due to a change in the display groups.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void groupsModified(bool active){view.groupsModified(active);};
+    inline void groupsModified(bool active){view.groupsModified(active);}
 
     /**Selects the channels in the TraceView.
   *@param selectedIds ids of the selected channels.
   */
-    inline void selectChannels(const Q3ValueList<int>& selectedIds){view.selectChannels(selectedIds);};
+    inline void selectChannels(const Q3ValueList<int>& selectedIds){view.selectChannels(selectedIds);}
 
     /**Resets the offset of the selected channels to the default values.
   * @param selectedChannelDefaultOffsets map given the default offsets for the selected channels.
   */
-    inline void resetOffsets(const QMap<int,int>& selectedChannelDefaultOffsets){view.resetOffsets(selectedChannelDefaultOffsets);};
+    inline void resetOffsets(const QMap<int,int>& selectedChannelDefaultOffsets){view.resetOffsets(selectedChannelDefaultOffsets);}
 
     /**Resets the gain of the selected channels.
   *@param selectedChannels ids of the selected channels.
   */
-    void resetGains(const Q3ValueList<int>& selectedChannels){view.resetGains(selectedChannels);};
+    void resetGains(const Q3ValueList<int>& selectedChannels){view.resetGains(selectedChannels);}
 
     /**Informs the view to update the traces for the current time frame.*/
-    inline void drawTraces(){view.displayTimeFrame(startTime,timeWindow);};
+    inline void drawTraces(){view.displayTimeFrame(startTime,timeWindow);}
 
     /**Informs the view to reset its state.*/
-    inline void reset(){view.reset();};
+    inline void reset(){view.reset();}
 
     /**Informs the view to show or hide the labels display next to the traces.
   * @param show true if the labels have to be shown, false otherwise.
   */
-    inline void showLabels(bool show){view.showHideLabels(show);};
+    inline void showLabels(bool show){view.showHideLabels(show);}
 
     /**Displays the traces starting at the given time @p time in miliseconds and for the given duration @p duration.
   * The selection widgets are updated accordingly.
@@ -288,7 +288,7 @@ public slots:
   * @param show true if the bar has to be shown false otherwise.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void showCalibration(bool show,bool active){view.showCalibration(show,active);};
+    inline void showCalibration(bool show,bool active){view.showCalibration(show,active);}
 
     /**
   * Updates the different time selection widgets due to a modification of the sampling rate for the document.
@@ -314,7 +314,7 @@ public slots:
                                    QMap<int,int>* channelsSpikeGroups,int nbSamplesBefore,int nbSamplesAfter,const Q3ValueList<int>& clustersToSkip){
         view.addClusterProvider(clustersProvider,name,clusterColors,active,clustersToShow,displayGroupsClusterFile,
                                 channelsSpikeGroups,nbSamplesBefore,nbSamplesAfter,clustersToSkip);
-    };
+    }
 
     /**Removes a provider of cluster data.
   * @param name name use to identified the cluster provider.
@@ -322,7 +322,7 @@ public slots:
   */
     inline void removeClusterProvider(QString name,bool active){
         view.removeClusterProvider(name,active);
-    };
+    }
 
     /**Adds a new provider of event data.
   * @param eventsProvider provider of event data.
@@ -335,7 +335,7 @@ public slots:
     inline void addEventProvider(EventsProvider* eventsProvider,QString name,ItemColors* eventColors,bool active,
                                  Q3ValueList<int>& eventsToShow,const Q3ValueList<int>& eventsToNotBrowse){
         view.addEventProvider(eventsProvider,name,eventColors,active,eventsToShow,eventsToNotBrowse);
-    };
+    }
 
 
     /**Removes a provider of event data.
@@ -344,7 +344,7 @@ public slots:
   */
     inline void removeEventProvider(QString name,bool active){
         view.removeEventProvider(name,active);
-    };
+    }
 
     /**Prints the current information drawn in the traceView.
   * @param printPainter painter on a printer.
@@ -367,19 +367,19 @@ public slots:
         printPainter.setViewport(newViewport);
         view.print(printPainter,metrics,whiteBackground);
         printPainter.resetXForm();
-    };
+    }
 
     /**Retrieves the next cluster.*/
-    inline void showNextCluster(){view.showNextCluster();};
+    inline void showNextCluster(){view.showNextCluster();}
 
     /**Retrieves the previous cluster.*/
-    inline void showPreviousCluster(){view.showPreviousCluster();};
+    inline void showPreviousCluster(){view.showPreviousCluster();}
 
     /**Retrieves the next event.*/
-    inline void showNextEvent(){view.showNextEvent();};
+    inline void showNextEvent(){view.showNextEvent();}
 
     /**Retrieves the previous event.*/
-    inline void showPreviousEvent(){view.showPreviousEvent();};
+    inline void showPreviousEvent(){view.showPreviousEvent();}
 
     /**Informs that an event has been modified.
   * @param providerName name use to identified the event provider containing the modified event.
@@ -389,7 +389,7 @@ public slots:
   */
     inline void slotEventModified(QString providerName,int selectedEventId,double time,double newTime){
         emit eventModified(providerName,selectedEventId,time,newTime);
-    };
+    }
 
     /**Informs that an event has been removed.
   * @param providerName name use to identified the event provider containing the removed event.
@@ -398,7 +398,7 @@ public slots:
   */
     inline void slotEventRemoved(QString providerName,int selectedEventId,double time){
         emit eventRemoved(providerName,selectedEventId,time);
-    };
+    }
 
     /**Updates the traceView if concerned by the modification of the event.
   * @param providerName name use to identified the event provider containing the modified event.
@@ -411,11 +411,11 @@ public slots:
         long newEventTime = static_cast<long>(floor(0.5 + newTime));
         if((eventTime >= startTime  && eventTime <= (startTime + timeWindow)) ||
                 (newEventTime >= startTime  && newEventTime <= (startTime + timeWindow))) view.updateEvents(providerName,active);
-    };
+    }
 
     /**Deletes the selected event.
   */
-    inline void removeEvent(){view.removeEvent();};
+    inline void removeEvent(){view.removeEvent();}
 
     /**Updates the traceView if concerned by the modification of the event.
   * @param providerName name use to identified the event provider containing the removed event.
@@ -425,7 +425,7 @@ public slots:
     inline void updateEvents(bool active,QString providerName,double time){
         long eventTime = static_cast<long>(floor(0.5 + time));
         if((eventTime >= startTime  && eventTime <= (startTime + timeWindow))) view.updateEvents(providerName,active);
-    };
+    }
 
     /**Informs the traceView of the properties for the next event to be added.
   * @param providerName name use to identified the event provider which will contain the added event.
@@ -433,7 +433,7 @@ public slots:
   */
     inline void eventToAddProperties(QString providerName,QString eventDescription){
         view.eventToAddProperties(providerName,eventDescription);
-    };
+    }
 
     /**Informs that an event has been added.
   * @param providerName name use to identified the event provider containing the added event.
@@ -442,7 +442,7 @@ public slots:
   */
     inline void slotEventAdded(QString providerName,QString addedEventDescription,double time){
         emit eventAdded(providerName,addedEventDescription,time);
-    };
+    }
 
     /**Updates the event data provided by @p providerName due to the addition of an event.
   * @param providerName name use to identified the event provider containing the modified event.
@@ -451,7 +451,7 @@ public slots:
   */
     inline void updateEvents(QString providerName,Q3ValueList<int>& eventsToShow,bool active){
         view.updateEvents(providerName,eventsToShow,active);
-    };
+    }
 
     /** Updates the description of a spike waveform.
   * @param nbSamplesBefore number of samples contained in the waveform of a spike before the sample of the peak.
@@ -460,12 +460,12 @@ public slots:
   */
     inline void updateWaveformInformation(int nbSamplesBefore, int nbSamplesAfter,bool active){
         view.updateWaveformInformation(nbSamplesBefore,nbSamplesAfter,active);
-    };
+    }
 
     /**Updates the cluster information presented on the display.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void updateClusterData(bool active){view.updateClusterData(active);};
+    inline void updateClusterData(bool active){view.updateClusterData(active);}
 
     /**Updates the list of events to not use while browsing.
   * @param providerName name use to identified the event provider containing the modified event.
@@ -473,7 +473,7 @@ public slots:
   */
     inline void updateNoneBrowsingEventList(QString providerName,const Q3ValueList<int>& eventsToNotBrowse){
         view.updateNoneBrowsingEventList(providerName,eventsToNotBrowse);
-    };
+    }
 
     /**Updates the list of clusters to not use while browsing.
   * @param providerName name use to identified the event provider containing the modified event.
@@ -481,13 +481,13 @@ public slots:
   */
     inline void updateNoneBrowsingClusterList(QString providerName,const Q3ValueList<int>& clustersToNotBrowse){
         view.updateNoneBrowsingClusterList(providerName,clustersToNotBrowse);
-    };
+    }
 
     /***If the frame is contained in a dockWidget, this slot can be used
   * when the enclosing dockwidget is being closed.
   * Emits the parentDockBeingClosed signal.
   */
-    virtual inline void dockBeingClosed(){emit parentDockBeingClosed(this);};
+    virtual inline void dockBeingClosed(){emit parentDockBeingClosed(this);}
 
     /**Updates the display due to modification of clusters provided by the cluster provider identified
   * by @p name.
@@ -498,12 +498,12 @@ public slots:
   */
     inline void updateClusters(QString name,Q3ValueList<int>& clustersToShow,ItemColors* clusterColors,bool active){
         view.updateClusters(name,clustersToShow,clusterColors,active);
-    };
+    }
 
     /**Updates the list of skipped channels.
   * @param skippedChannels list of skipped channels.
   **/
-    inline void updateSkipStatus(const Q3ValueList<int>& skippedChannels){view.skipStatusChanged(skippedChannels);};
+    inline void updateSkipStatus(const Q3ValueList<int>& skippedChannels){view.skipStatusChanged(skippedChannels);}
 
 signals:
     void channelsSelected(const Q3ValueList<int>& selectedIds);
