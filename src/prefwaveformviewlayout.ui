@@ -39,7 +39,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="Q3GroupBox" name="groupBox1">
+      <widget class="QGroupBox" name="groupBox1">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -148,7 +148,7 @@
       </spacer>
      </item>
      <item>
-      <widget class="Q3GroupBox" name="groupBox2">
+      <widget class="QGroupBox" name="groupBox2">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -349,12 +349,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <customwidgets>
-  <customwidget>
-   <class>Q3GroupBox</class>
-   <extends>QGroupBox</extends>
-   <header>Qt3Support/Q3GroupBox</header>
-   <container>1</container>
-  </customwidget>
   <customwidget>
    <class>ChannelList</class>
    <extends>QWidget</extends>
