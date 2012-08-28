@@ -780,12 +780,10 @@ void KlustersApp::initDisplay(){
 
     mainDock->setWidget(view);
     //allow dock on the left side only
-    //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
     setCentralWidget(mainDock);
 
-    //KDAB_PENDING setMainDockWidget(mainDock);
     //disable docking abilities of mainDock itself
-    //KDAB_PENDING mainDock->setEnableDocking(QDockWidget::DockNone);
+    mainDock->setAllowedAreas(Qt::NoDockWidgetArea);
 
     //Initialize and dock the clusterpanel
     //Create the cluster list and select the clusters which will be drawn
@@ -793,14 +791,14 @@ void KlustersApp::initDisplay(){
     clusterPalette->selectItems(*clusterList);
 
     //allow dock on the right side only
-    //KDAB_PENDING clusterPanel->setDockSite(QDockWidget::DockRight);
+    mainDock->setAllowedAreas(Qt::RightDockWidgetArea);
 
     //Dock the clusterPanel on the left
     //KDAB_PENDING clusterPanel->setEnableDocking(QDockWidget::DockFullSite);
     //KDAB_PENDING clusterPanel->manualDock(mainDock,QDockWidget::DockLeft,0);  // relation target/this (in percent)
 
     //forbit docking abilities of clusterPanel itself
-    //KDAB_PENDING clusterPanel->setEnableDocking(QDockWidget::DockNone);
+    clusterPanel->setAllowedAreas(Qt::NoDockWidgetArea);
 
     //Update the Time frame and sample related widgets
     spikesTodisplay->setValue(DEFAULT_NB_SPIKES_DISPLAYED);
@@ -933,7 +931,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
 
         // forbit docking abilities of display itself
-        //KDAB_PENDING display->setEnableDocking(QDockWidget::DockNone);
+        display->setAllowedAreas(Qt::NoDockWidgetArea);
         // allow others to dock to the left side only
         //KDAB_PENDING display->setDockSite(QDockWidget::DockLeft);
 
@@ -2537,7 +2535,7 @@ void KlustersApp::slotRecluster(){
         //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
 
         // forbit docking abilities of display itself
-        //KDAB_PENDING display->setEnableDocking(QDockWidget::DockNone);
+        display->setAllowedAreas(Qt::NoDockWidgetArea);
 
         // allow others to dock to the left side only
         //KDAB_PENDING display->setDockSite(QDockWidget::DockLeft);
