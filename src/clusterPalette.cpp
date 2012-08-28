@@ -45,14 +45,16 @@
 #include <vector>
 
 ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,QStatusBar * statusBar, const char* name, Qt::WFlags fl )
-    : Q3VBox( parent, name, fl ),doc(0L),mode(IMMEDIATE),isInSelectItems(false),isUpToDate(true),backgroundColor(backgroundColor),statusBar(statusBar),isInUserClusterInfoMode(false)
+    : QWidget( parent, name, fl ),doc(0L),mode(IMMEDIATE),isInSelectItems(false),isUpToDate(true),backgroundColor(backgroundColor),statusBar(statusBar),isInUserClusterInfoMode(false)
 {
+    QVBoxLayout *layout = new QVBoxLayout;
     //Set the palette color
 
     setPaletteBackgroundColor(backgroundColor);
     setPaletteForegroundColor(Qt::white);
 
     iconView = new Q3IconView(this, "ClusterPalette");
+    layout->addWidget(iconView);
     QFont font( "Helvetica",10);
     iconView->setFont(font);
     iconView->setFrameStyle(QFrame::NoFrame);
@@ -90,6 +92,7 @@ ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,QStatusBar
     connect(iconView,SIGNAL(mouseButtonPressed(int,Q3IconViewItem* ,const QPoint&)),this, SLOT(slotMousePressed(int,Q3IconViewItem*)));
 
     connect(iconView,SIGNAL(onItem(Q3IconViewItem*)),this, SLOT(slotOnItem(Q3IconViewItem*)));
+    setLayout(layout);
 }
 
 

@@ -20,7 +20,6 @@
 //QT include files
 #include <qvariant.h>
 #include <qwidget.h>
-#include <q3vbox.h>
 #include <q3iconview.h>
 #include <qtooltip.h>
 //Added by qt3to4:
@@ -42,7 +41,7 @@ class KlustersDoc;
   */
 
 
-class ClusterPalette : public Q3VBox
+class ClusterPalette : public QWidget
 {
     Q_OBJECT
     
