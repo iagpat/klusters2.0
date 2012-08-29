@@ -139,6 +139,12 @@ void KlustersApp::createMenus()
 
     //KDAB_TODO fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
 
+    mImportFile = fileMenu->addAction(tr("&Import File"));
+    mImportFile->setShortcut(Qt::CTRL + Qt::Key_I);
+    connect(mImportFile,SIGNAL(triggered()), this,SLOT(slotFileImport()));
+
+    fileMenu->addSeparator();
+
     mSaveAction = fileMenu->addAction(tr("Save..."));
     mSaveAction->setShortcut(QKeySequence::Save);
     connect(mSaveAction, SIGNAL(triggered()), this, SLOT(slotFileSave()));
@@ -147,40 +153,35 @@ void KlustersApp::createMenus()
     mSaveAsAction->setShortcut(QKeySequence::SaveAs);
     connect(mSaveAsAction, SIGNAL(triggered()), this, SLOT(slotFileSaveAs()));
 
-    mCloseAction = fileMenu->addAction(tr("Close"));
-    mCloseAction->setShortcut(QKeySequence::Close);
-    connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
+    mRenumberAndSave = fileMenu->addAction(tr("Re&number and Save"));
+    mRenumberAndSave->setIcon(QIcon(QPixmap("filesave.png")));
+    mRenumberAndSave->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    connect(mRenumberAndSave,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
+
+    fileMenu->addSeparator();
 
     mPrintAction = fileMenu->addAction(tr("Print"));
     mPrintAction->setShortcut(QKeySequence::Print);
     connect(mPrintAction, SIGNAL(triggered()), this, SLOT(slotFilePrint()));
 
-    mImportFile = fileMenu->addAction(tr("&Import File"));
-    mImportFile->setShortcut(Qt::CTRL + Qt::Key_I);
-    connect(mImportFile,SIGNAL(triggered()), this,SLOT(slotFileImport()));
+    fileMenu->addSeparator();
+
+    mCloseAction = fileMenu->addAction(tr("Close"));
+    mCloseAction->setShortcut(QKeySequence::Close);
+    connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
+
+    fileMenu->addSeparator();
 
     mQuitAction = fileMenu->addAction(tr("Quit"));
     mQuitAction->setShortcut(QKeySequence::Print);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
 
-    mRenumberAndSave = fileMenu->addAction(tr("Re&number and Save"));
-    mRenumberAndSave->setIcon(QIcon(QPixmap("filesave.png")));
-    mRenumberAndSave->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
-    connect(mRenumberAndSave,SIGNAL(triggered()), this,SLOT(slotFileRenumberAndSave()));
 
 
 
 
     //Edit Menu
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
-    mSelectAllAction = editMenu->addAction(tr("Select &All"));
-    mSelectAllAction->setShortcut(QKeySequence::SelectAll);
-    connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAll()));
-
-    mSelectAllExceptAction = editMenu->addAction(tr("Select &All"));
-    mSelectAllExceptAction->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
-    connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
-
 
     mUndo = editMenu->addAction(tr("Undo"));
     mUndo->setShortcut(QKeySequence::Undo);
@@ -190,39 +191,18 @@ void KlustersApp::createMenus()
     mRedo->setShortcut(QKeySequence::Redo);
     connect(mRedo, SIGNAL(triggered()), this, SLOT(slotRedo()));
 
+    editMenu->addSeparator();
 
-    mSelectAllExceptAction = editMenu->addAction(tr("Select &All"));
+    mSelectAllAction = editMenu->addAction(tr("Select &All"));
+    mSelectAllAction->setShortcut(QKeySequence::SelectAll);
+    connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAll()));
+
+    editMenu->addSeparator();
+
+    mSelectAllExceptAction = editMenu->addAction(tr("Select All Except 0 and 1"));
     mSelectAllExceptAction->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
     connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
 
-    //Displays menu
-    QMenu *displayMenu = menuBar()->addMenu(tr("&Displays"));
-    //viewMenu = new QActionMenu(tr("&Window"), actionCollection(), "window_menu");
-    newClusterDisplay = displayMenu->addAction(tr("New C&luster Display"));
-    connect(newClusterDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewClusterDisplay()));
-
-    newWaveformDisplay = displayMenu->addAction(tr("New &Waveform Display"));
-    connect(newWaveformDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewWaveformDisplay()));
-
-    newCrosscorrelationDisplay = displayMenu->addAction(tr("New C&orrelation Display"));
-    connect(newCrosscorrelationDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewCrosscorrelationDisplay()));
-
-    newOverViewDisplay = displayMenu->addAction(tr("New &Overview Display"));
-    connect(newOverViewDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewOverViewDisplay()));
-
-    newGroupingAssistantDisplay = displayMenu->addAction(tr("New &Grouping Assistant Display"));
-    connect(newGroupingAssistantDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewGroupingAssistantDisplay()));
-
-    mRenameActiveDisplay = displayMenu->addAction(tr("&Rename Active Display"));
-    mRenameActiveDisplay->setShortcut(Qt::CTRL + Qt::Key_R);
-    connect(mRenameActiveDisplay,SIGNAL(triggered()), this,SLOT(renameActiveDisplay()));
-
-    mCloseActiveDisplay = displayMenu->addAction(tr("&Close Active Display"));
-    mCloseActiveDisplay->setShortcut(Qt::CTRL + Qt::Key_W);
-    connect(mCloseActiveDisplay,SIGNAL(triggered()), this,SLOT(slotDisplayClose()));
-
-    mNewTraceDisplay = displayMenu->addAction(tr("New &Trace Display"));
-    connect(mNewTraceDisplay,SIGNAL(triggered()), this,SLOT(slotNewTraceDisplay()));
 
     //Actions menu
     QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
@@ -245,13 +225,19 @@ void KlustersApp::createMenus()
     mUpdateDisplay->setIcon(QIcon(":/icons/update"));
     connect(mUpdateDisplay,SIGNAL(triggered()), clusterPalette,SLOT(updateClusters()));
 
+    actionMenu->addSeparator();
+
     mRenumberClusters = actionMenu->addAction(tr("&Renumber Clusters"));
     mRenumberClusters->setShortcut(Qt::Key_R);
     connect(mRenumberClusters,SIGNAL(triggered()), doc,SLOT(renumberClusters()));
 
+    actionMenu->addSeparator();
+
     mUpdateErrorMatrix = actionMenu->addAction(tr("&Update Error Matrix"));
     mUpdateErrorMatrix->setShortcut(Qt::Key_U);
     connect(mUpdateErrorMatrix,SIGNAL(triggered()), this,SLOT(slotUpdateErrorMatrix()));
+
+    actionMenu->addSeparator();
 
     mReCluster = actionMenu->addAction(tr("Re&cluster"));
     mReCluster->setShortcut(Qt::SHIFT  + Qt::Key_R);
@@ -259,6 +245,7 @@ void KlustersApp::createMenus()
 
     mAbortReclustering = actionMenu->addAction(tr("&Abort Reclustering"));
     connect(mAbortReclustering,SIGNAL(triggered()), this,SLOT(slotStopRecluster()));
+
 
     //Tools menu
     QMenu *toolsMenu = menuBar()->addMenu(tr("&Tools"));
@@ -298,6 +285,8 @@ void KlustersApp::createMenus()
     mSelectTime->setShortcut(Qt::Key_W);
     connect(mSelectTime,SIGNAL(triggered()), this,SLOT(slotSelectTime()));
 
+
+
     //Waveforms menu
     QMenu *waveFormsMenu = menuBar()->addMenu(tr("&Waveforms"));
     timeFrameMode = waveFormsMenu->addAction(tr("&Time Frame"));
@@ -329,6 +318,7 @@ void KlustersApp::createMenus()
     timeFrameMode->setChecked(false);
     overlayPresentation->setChecked(false);
     meanPresentation->setChecked(false);
+
 
     //Correlations menu
     QMenu *correlationsMenu = menuBar()->addMenu(tr("&Correlations"));
@@ -371,6 +361,8 @@ void KlustersApp::createMenus()
     mDecreaseAmplitudeCorrelation->setShortcut(Qt::SHIFT +  Qt::Key_D);
     connect(mDecreaseAmplitudeCorrelation,SIGNAL(triggered()), this,SLOT(slotDecreaseCorrelogramsAmplitude()));
 
+
+
     //Traces menu
     QMenu *traceMenu = menuBar()->addMenu(tr("T&races"));
     mIncreaseChannelAmplitudes = traceMenu->addAction(tr("&Increase Channel Amplitudes"));
@@ -403,6 +395,48 @@ void KlustersApp::createMenus()
     connect(showHideLabels,SIGNAL(triggered()), this,SLOT(slotShowLabels()));
 
     showHideLabels->setChecked(false);
+
+
+
+    //Displays menu
+    QMenu *displayMenu = menuBar()->addMenu(tr("&Displays"));
+    //viewMenu = new QActionMenu(tr("&Window"), actionCollection(), "window_menu");
+    newClusterDisplay = displayMenu->addAction(tr("New C&luster Display"));
+    connect(newClusterDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewClusterDisplay()));
+
+    newWaveformDisplay = displayMenu->addAction(tr("New &Waveform Display"));
+    connect(newWaveformDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewWaveformDisplay()));
+
+    newCrosscorrelationDisplay = displayMenu->addAction(tr("New C&orrelation Display"));
+    connect(newCrosscorrelationDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewCrosscorrelationDisplay()));
+
+    // ???????????????
+    newOverViewDisplay = displayMenu->addAction(tr("New &Overview Display"));
+    connect(newOverViewDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewOverViewDisplay()));
+
+    newGroupingAssistantDisplay = displayMenu->addAction(tr("New &Grouping Assistant Display"));
+    connect(newGroupingAssistantDisplay,SIGNAL(triggered()), this,SLOT(slotWindowNewGroupingAssistantDisplay()));
+
+
+    mNewTraceDisplay = displayMenu->addAction(tr("New &Trace Display"));
+    connect(mNewTraceDisplay,SIGNAL(triggered()), this,SLOT(slotNewTraceDisplay()));
+
+
+    displayMenu->addSeparator();
+
+    mRenameActiveDisplay = displayMenu->addAction(tr("&Rename Active Display"));
+    mRenameActiveDisplay->setShortcut(Qt::CTRL + Qt::Key_R);
+    connect(mRenameActiveDisplay,SIGNAL(triggered()), this,SLOT(renameActiveDisplay()));
+
+    displayMenu->addSeparator();
+
+    mCloseActiveDisplay = displayMenu->addAction(tr("&Close Active Display"));
+    mCloseActiveDisplay->setShortcut(Qt::CTRL + Qt::Key_W);
+    connect(mCloseActiveDisplay,SIGNAL(triggered()), this,SLOT(slotDisplayClose()));
+
+
+
+
 
 
     //Settings menu
