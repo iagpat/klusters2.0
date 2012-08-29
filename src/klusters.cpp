@@ -1029,7 +1029,7 @@ void KlustersApp::openDocumentFile(const QString& url)
         //KDAB_PENDING fileOpenRecent->addURL(url);
 
         // Open the file (that will also initialize the doc)
-        QString errorInformation = "";
+        QString errorInformation;
         int returnStatus = doc->openDocument(url,errorInformation);
         if(returnStatus == KlustersDoc::INCORRECT_FILE)
         {
@@ -1161,14 +1161,18 @@ void KlustersApp::openDocumentFile(const QString& url)
     // check, if this document is already open. If yes, do not do anything
     else{
         QString docName = doc->documentName();
-#if KDAB_PENDING
-        QStringList fileParts = QStringList::split(".", url.fileName());
+        QFileInfo urlFileInfo(url);
+        QStringList fileParts = QStringList::split(".", urlFileInfo.fileName());
         QString electrodNb;
-        if(fileParts.count() < 3) electrodNb = "";
-        else electrodNb = fileParts[fileParts.count()-1];;
+        if(fileParts.count() < 3)
+            electrodNb.clear();
+        else
+            electrodNb = fileParts[fileParts.count()-1];;
+
         QString baseName = fileParts[0];
-        for(uint i = 1;i < fileParts.count()-2; ++i) baseName += "." + fileParts[i];
-        QString name = url.directory() + "/" + baseName + "-" + electrodNb;
+        for(uint i = 1;i < fileParts.count()-2; ++i)
+            baseName += "." + fileParts[i];
+        QString name = urlFileInfo.absolutePath() + QDir::separator() + baseName + "-" + electrodNb;
 
         if(docName == name){
             //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
@@ -1182,12 +1186,13 @@ void KlustersApp::openDocumentFile(const QString& url)
             filePath = doc->url();
 
 
+            QStringList command;
+            command <<filePath;
             QProcess::startDetached("klusters", QStringList()<<command);
 
 
             QApplication::restoreOverrideCursor();
         }
-#endif
     }
 
     slotStatusMsg(tr("Ready."));
