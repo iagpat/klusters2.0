@@ -197,7 +197,7 @@ void KlustersDoc::closeDocument(){
 }
 
 
-bool KlustersDoc::importDocument(const QString &url, const char *format /*=0*/){
+bool KlustersDoc::importDocument(const QString &url, const char *format ){
     bool returnValue = true;
 
     //1 - Get the base name of the file
@@ -206,7 +206,7 @@ bool KlustersDoc::importDocument(const QString &url, const char *format /*=0*/){
     return  returnValue;
 }
 
-int KlustersDoc::openDocument(const QString &url,QString& errorInformation, const char *format /*=0*/){
+int KlustersDoc::openDocument(const QString &url,QString& errorInformation, const char *format ){
     //1 - Get the base name of the file
     //2 - load the config information: read the different files, initialize clusteringData (loadConfigFromNewFormat())
     //3 - load the spikes, clusters, time and PCA information (loadDataFromNewFormat())
@@ -644,7 +644,7 @@ bool KlustersDoc::canCloseView(){
 
 QString KlustersDoc::documentName(){
     QFileInfo docUrlFileInfo(docUrl);
-    return docUrlFileInfo.absoluteFilePath() + QDir::separator() + baseName + "-" + electrodeGroupID;
+    return docUrlFileInfo.absolutePath() + QDir::separator() + baseName + "-" + electrodeGroupID;
 }
 
 QString KlustersDoc::documentBaseName() const{
