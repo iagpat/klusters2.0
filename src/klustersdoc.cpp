@@ -246,7 +246,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
 
 
     QString fetFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".fet."+ electrodeGroupID;
-
     //Parameter files
     QString xmlParFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".xml";
     xmlParameterFile = xmlParFileUrl;
@@ -546,15 +545,21 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
     //if it was a saveAs, the url has changed, update it
     if(docUrl != saveUrl){
         docUrl = saveUrl;
-        QString fileName = docUrl/*.fileName()*/;
-        QStringList fileParts = QStringList::split(".", fileName);
+        QFileInfo docUrlFileInfo(docUrl);
+        QString fileName = docUrlFileInfo.fileName();
+        const QStringList fileParts = QStringList::split(".", fileName);
         baseName = fileParts[0];
-        if(fileParts.count() > 2) for(uint i = 1;i < fileParts.count()-2; ++i)baseName += "." + fileParts[i];
-        if(fileParts.count() < 3) electrodeGroupID = "";
-        else electrodeGroupID = fileParts[fileParts.count()-1];
+        if(fileParts.count() > 2)  {
+            for(uint i = 1;i < fileParts.count()-2; ++i){
+                baseName += "." + fileParts[i];
+            }
+        }
+        if(fileParts.count() < 3)
+            electrodeGroupID.clear();
+        else
+            electrodeGroupID = fileParts[fileParts.count()-1];
 
-        QString xmlParFileUrl(saveUrl);
-        //KDAB_PENDING xmlParFileUrl.setFileName(baseName +".xml");
+        QString xmlParFileUrl = docUrlFileInfo.absoluteFilePath() + QDir::separator()+ baseName +".xml";
         xmlParameterFile = xmlParFileUrl;
     }
 
@@ -638,17 +643,17 @@ bool KlustersDoc::canCloseView(){
 }
 
 QString KlustersDoc::documentName(){
-    //KDAB_PENDING return docUrl.directory() + "/" + baseName + "-" + electrodeGroupID;
-    return QString();
+    QFileInfo docUrlFileInfo(docUrl);
+    return docUrlFileInfo.absoluteFilePath() + QDir::separator() + baseName + "-" + electrodeGroupID;
 }
 
-QString KlustersDoc::documentBaseName(){
+QString KlustersDoc::documentBaseName() const{
     return baseName;
 }
 
-QString KlustersDoc::documentDirectory(){
-    //KDAB_PENDING return docUrl.directory();
-    return QString();
+QString KlustersDoc::documentDirectory() const {
+    QFileInfo docUrlFileInfo(docUrl);
+    return docUrlFileInfo.absolutePath();
 }
 
 void KlustersDoc::setGain(int acquisitionGain){

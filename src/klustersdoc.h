@@ -129,10 +129,10 @@ public:
     QString documentName();
 
     /**Returns the base name of the document (common name for all the files). */
-    QString documentBaseName();
+    QString documentBaseName() const;
 
     /**Sends back the directory where is store the document.*/
-    QString documentDirectory();
+    QString documentDirectory() const;
 
     /**Returns the reference on the list of ClusterColor objects.
     * @return ItemColors containing the information on the clusters and their associated color.
