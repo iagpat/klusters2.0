@@ -119,14 +119,10 @@ KlustersApp::~KlustersApp()
     delete printer;
     delete doc;
     delete saveThread;
-    if(processWidget != 0L){
-        delete processWidget;
-        processWidget = 0L;
-    }
-    if(processOutputDock != 0L){
-        delete processOutputDock;
-        processOutputDock = 0L;
-    }
+    delete processWidget;
+    processWidget = 0L;
+    delete processOutputDock;
+    processOutputDock = 0L;
 }
 
 void KlustersApp::createMenus()
@@ -175,10 +171,6 @@ void KlustersApp::createMenus()
     mQuitAction = fileMenu->addAction(tr("Quit"));
     mQuitAction->setShortcut(QKeySequence::Print);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
-
-
-
-
 
     //Edit Menu
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
@@ -783,7 +775,7 @@ void KlustersApp::initDisplay(){
     binSizeValidator.setRange(0,maximumTime);
 
     //Create the mainDock (first view)
-    mainDock = new QDockWidget( tr(doc->documentName().toLatin1()),0);
+    mainDock = new QDockWidget( doc->documentName(),0);
 
             //KDAB_PENDING look at last element createDockWidget( "1", QPixmap(), 0L, tr(doc->documentName().toLatin1()), "Overview Display");
     //KDAB_PENDING mainDock->setDockWindowTransient(this,true);
@@ -802,7 +794,8 @@ void KlustersApp::initDisplay(){
 
     //If 2 documents, opened one after the other, do not have the same number of channels
     //discard any settings concerning the positions of the channels.
-    if(configuration().getNbChannels() != 0 && configuration().getNbChannels() != doc->nbOfchannels()) channelPositions.clear();
+    if(configuration().getNbChannels() != 0 && configuration().getNbChannels() != doc->nbOfchannels())
+        channelPositions.clear();
 
     KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,

@@ -31,6 +31,7 @@
 #include <qlabel.h>
 #include <q3paintdevicemetrics.h>
 #include <QDebug>
+#include <QHBoxLayout>
 
 // application specific includes
 #include "klusters.h"
@@ -70,12 +71,16 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
     //To add a new base type just add a new case with the appropriate widget (do not to add the include line)
     switch(type){
     case CLUSTERS:
+    {
         isThereWaveformView = false;
         isThereClusterView = true;
         isThereCorrelationView = false;
         isThereErrorMatrixView = false;
         isThereTraceView = false;
         mainDock->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,mainDock));
+        QHBoxLayout *lay = new QHBoxLayout;
+        setLayout(lay);
+        lay->addWidget(mainDock);
 #if KDAB_PENDING
 
         setMainDockWidget(mainDock);
@@ -86,8 +91,10 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         mainDock->installEventFilter(this);
         viewCounter.insert("ClusterView",1);
         setConnections(CLUSTERS,currentViewWidget,mainDock);
+    }
         break;
     case WAVEFORMS:
+    {
         isThereWaveformView = true;
         isThereClusterView = false;
         isThereCorrelationView = false;
@@ -95,6 +102,10 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         isThereTraceView = false;
         mainDock->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,mainDock,
                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));
+        QHBoxLayout *lay = new QHBoxLayout;
+        setLayout(lay);
+        lay->addWidget(mainDock);
+
 #if KDAB_PENDING
 
         setMainDockWidget(mainDock);
@@ -105,8 +116,10 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         mainDock->installEventFilter(this);
         viewCounter.insert("WaveformView",1);
         setConnections(WAVEFORMS,currentViewWidget,mainDock);
+    }
         break;
     case CORRELATIONS:
+    {
         isThereWaveformView = false;
         isThereClusterView = false;
         isThereCorrelationView = true;
@@ -114,6 +127,10 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         isThereTraceView = false;
         mainDock->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,mainDock,correlationScale,
                                                 binSize,correlogramTimeFrame,shoulderLine));
+        QHBoxLayout *lay = new QHBoxLayout;
+        setLayout(lay);
+        lay->addWidget(mainDock);
+
 #if KDAB_PENDING
 
         setMainDockWidget(mainDock);
@@ -124,6 +141,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         mainDock->installEventFilter(this);
         viewCounter.insert("CorrelationView",1);
         setConnections(CORRELATIONS,currentViewWidget,mainDock);
+    }
         break;
     case OVERVIEW:
         isThereWaveformView = true;
@@ -144,6 +162,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
     case ERROR_MATRIX:
         break;
     case TRACES:
+    {
         isThereWaveformView = false;
         isThereClusterView = false;
         isThereCorrelationView = false;
@@ -157,6 +176,10 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
                                             true,labelsDisplay,doc.getCurrentChannels(),doc.getGain(),doc.getAcquisitionGain(),doc.channelColors(),
                                             doc.getDisplayGroupsChannels(),doc.getDisplayChannelsGroups(),offsets,gains,skippedChannels,mainDock,"traces",
                                             backgroundColor,statusBar,5));
+        QHBoxLayout *lay = new QHBoxLayout;
+        setLayout(lay);
+        lay->addWidget(mainDock);
+
 #if KDAB_PENDING
 
         setMainDockWidget(mainDock);
@@ -173,6 +196,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         mainDock->installEventFilter(this);
         viewCounter.insert("TraceView",1);
         setConnections(TRACES,traceWidget,mainDock);
+    }
         break;
     }
 #if KDAB_PENDING
@@ -196,6 +220,10 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
     //The main dock will be the cluster view
     ClusterView* view = new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,mainDock);
     mainDock->setWidget(view);
+    QHBoxLayout *lay = new QHBoxLayout;
+    setLayout(lay);
+    lay->addWidget(mainDock);
+
 #if KDAB_PENDING
 
     setMainDockWidget(mainDock);
@@ -601,7 +629,8 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
 
             //A traceView is possible only if the variables it needs are available (provided in the new parameter file) and
             //the .dat file exists.
-            if(!doc.areTraceDataAvailable() || !doc.isTraceViewVariablesAvailable()) traceView->setEnabled(false);
+            if(!doc.areTraceDataAvailable() || !doc.isTraceViewVariablesAvailable())
+                traceView->setEnabled(false);
 
             //For the moment only one WaveformView and TraceView are allowed per View.
             if(viewCounter.contains("WaveformView"))
@@ -701,7 +730,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
         else viewCounter["ClusterView"]++;
 
         isThereClusterView = true;
-        count = QString("%1").arg(viewCounter["ClusterView"]);
+        count = QString::fromLatin1("%1").arg(viewCounter["ClusterView"]);
 
         clusters = new QDockWidget(tr(doc.documentName().toLatin1()));
                 //createDockWidget(count.prepend("ClusterView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
@@ -738,10 +767,11 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
             newViewType = true;
             viewCounter.insert("WaveformView",1);
         }
-        else  viewCounter["WaveformView"]++;
+        else
+            viewCounter["WaveformView"]++;
 
         isThereWaveformView = true;
-        count = QString("%1").arg(viewCounter["WaveformView"]);
+        count = QString::fromLatin1("%1").arg(viewCounter["WaveformView"]);
 
         waveforms = new QDockWidget(tr(doc.documentName().toLatin1()));
                 //createDockWidget(count.prepend("WaveformView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
@@ -766,7 +796,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
         else  viewCounter["CorrelationView"]++;
 
         isThereCorrelationView = true;
-        count = QString("%1").arg(viewCounter["CorrelationView"]);
+        count = QString::fromLatin1("%1").arg(viewCounter["CorrelationView"]);
 
         correlations = new QDockWidget(tr(doc.documentName().toLatin1()));
 
@@ -1016,9 +1046,9 @@ void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,QList
 
 
     //If fromClustersInView in not empty, this view is concerned by the modification
-    if(fromClustersInView.size() > 0){
+    if(!fromClustersInView.isEmpty()){
 
-        if(emptiedClusters.size()>0){
+        if(!emptiedClusters.isEmpty()){
             QList<int>::iterator clustersToRemoveIterator;
             for(clustersToRemoveIterator = emptiedClusters.begin(); clustersToRemoveIterator != emptiedClusters.end(); ++clustersToRemoveIterator ){
                 removeClusterFromView(*clustersToRemoveIterator,active);
@@ -1053,7 +1083,7 @@ void KlustersView::addNewClustersToView(QList<int>& clustersToRecluster,QList<in
     prepareUndo(inView);
 
     //If inView in not empty, this view is concerned by the modification
-    if(inView.size() > 0){
+    if(!inView.isEmpty()){
         //prepareUndo(clustersToRecluster);
 
         QList<int>::iterator clustersToRemoveIterator;
@@ -1323,7 +1353,8 @@ void KlustersView::redoModifiedClusters(QList<int>& updatedClusters,bool isModif
 
     //List containing the clusters of this view which have to be updated
     QList<int> inView = clustersInView(updatedClusters);
-    if(inView.size() > 0) emit modifiedClusters(inView,active,isModifiedByDeletion);
+    if(inView.size() > 0)
+        emit modifiedClusters(inView,active,isModifiedByDeletion);
 
     numberUndo++;
 }
