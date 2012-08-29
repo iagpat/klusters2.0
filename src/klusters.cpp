@@ -76,6 +76,8 @@ KlustersApp::KlustersApp()
 
     mClusterBar = new QToolBar(tr("Clusters Actions"));
 
+    //Create a KlustersDoc which will hold the document manipulated by the application.
+    doc = new KlustersDoc(this,*clusterPalette,configuration().isCrashRecovery(),configuration().crashRecoveryInterval());
 
 
     createMenus();
@@ -92,8 +94,6 @@ KlustersApp::KlustersApp()
     initStatusBar();
 
 
-    //Create a KlustersDoc which will hold the document manipulated by the application.
-    doc = new KlustersDoc(this,*clusterPalette,configuration().isCrashRecovery(),configuration().crashRecoveryInterval());
     //create the thread which will be used to save the cluster file
     saveThread = new SaveThread(this);
 
@@ -1226,7 +1226,8 @@ void KlustersApp::importDocumentFile(const QString& url)
 
     //If the document asked is not the already open. Open a new instance of the application with it.
     //Only one document at the time is allowed.
-    else{
+    else
+    {
         //TODO
         QApplication::restoreOverrideCursor();
     }
