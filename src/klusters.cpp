@@ -442,16 +442,10 @@ void KlustersApp::createMenus()
     //Settings menu
     QMenu *settingsMenu = menuBar()->addMenu(tr("Settings"));
 
-    mViewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
-    mViewStatusBar->setCheckable(true);
-    connect(mViewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
-#if 0
+#if KDAB_PENDING
     viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
 
 #endif
-
-
-
     viewActionBar = settingsMenu->addAction(tr("Show Actions"));
     viewActionBar->setCheckable(true);
     connect(viewActionBar,SIGNAL(triggered()), this,SLOT(slotViewActionBar()));
@@ -467,6 +461,21 @@ void KlustersApp::createMenus()
     connect(viewParameterBar,SIGNAL(triggered()), this,SLOT(slotViewParameterBar()));
 
     viewParameterBar->setChecked(true);
+
+    viewClusterInfo = settingsMenu->addAction(tr("Show Cluster Info"));
+    viewClusterInfo->setCheckable(true);
+    connect(viewClusterInfo,SIGNAL(triggered()), this,SLOT(slotViewClusterInfo()));
+
+    viewClusterInfo->setChecked(false);
+
+
+
+    mViewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
+    mViewStatusBar->setCheckable(true);
+    connect(mViewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
+
+    settingsMenu->addSeparator();
+
     mImmediateSelection = settingsMenu->addAction(tr("Immediate Update"));
     grp = new QActionGroup(this);
     grp->addAction(mImmediateSelection);
@@ -478,24 +487,20 @@ void KlustersApp::createMenus()
     mDelaySelection->setCheckable(true);
     connect(mDelaySelection,SIGNAL(triggered()), this,SLOT(slotDelaySelection()));
 
-    viewClusterInfo = settingsMenu->addAction(tr("Show Cluster Info"));
-    viewClusterInfo->setCheckable(true);
-    connect(viewClusterInfo,SIGNAL(triggered()), this,SLOT(slotViewClusterInfo()));
-
-    viewClusterInfo->setChecked(false);
 
     //Initialize the update mode
     mImmediateSelection->setChecked(true);
+    settingsMenu->addSeparator();
 
+#if KDAB_PENDING
 
+    KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
+#endif
     QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
     QAction *about = helpMenu->addAction(tr("About"));
     connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
 
 #if KDAB_PENDING
-
-    KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
-
     fileOpenRecent->setStatusText(tr("Opens a recently used file"));
     actionCollection()->action(KStdAction::stdName(KStdAction::Save))->setStatusText(tr("Saves the actual document"));
     actionCollection()->action(KStdAction::stdName(KStdAction::SaveAs))->setStatusText(tr("Saves the actual document as..."));
