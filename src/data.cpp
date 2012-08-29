@@ -1168,8 +1168,7 @@ void Data::deleteSpikesFromClusters(QRegion& region, const QList <int>& clusters
 
     //Iteration on the clusters in decreasing order
     QList<dataType> clusters = clusterInfoMap->keys();
-    //KDAB_PENDING
-    //qSort(clusters);
+    qSort(clusters);
     int nbClusters = clusters.size();
 
     for(int i = nbClusters - 1; i >=0 ; --i){
