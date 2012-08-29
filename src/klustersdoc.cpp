@@ -212,6 +212,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     //3 - load the spikes, clusters, time and PCA information (loadDataFromNewFormat())
 
     //Initialize the members specific to a document
+    qDebug()<<" int KlustersDoc::openDocument(const QString &url,QString& errorInformation, const char *format /*=0*/){"<<url;
     clusteringData = new Data();
     clusterColorList = new ItemColors();
     addedClusters = new QList<int>();
@@ -219,39 +220,53 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     modified = false;
 
     //Store the baseName for future use
-    QString fileName = QUrl(url).fileName();
-    QStringList fileParts = QStringList::split(".", fileName);
-    if(fileParts.count() < 3) return INCORRECT_FILE;
+    QFileInfo urlFileInfo(url);
+
+    QString fileName = urlFileInfo.fileName();
+    const QStringList fileParts = QStringList::split(".", fileName);
+    if(fileParts.count() < 3)
+        return INCORRECT_FILE;
     baseName = fileParts[0];
-    for(uint i = 1;i < fileParts.count()-2; ++i) baseName += "." + fileParts[i];
+
+    for(uint i = 1;i < fileParts.count()-2; ++i)
+        baseName += "." + fileParts[i];
+
     electrodeGroupID = fileParts[fileParts.count()-1];
 
     //Create the files url to open (baseName.spk.x,baseName.clu.x,baseName.fet.x,baseName.par.x,baseName.par and baseName.xml)
     //and store the url (corresponding to the cluster file). If the xml format parameter file does not exist, the parameter files
     // baseName.par.x,baseName.par will be used otherwise the baseName.xml will be used.
-    QUrl spkFileUrl(url);
-    spkFileUrl.setFileName(baseName +".spk."+ electrodeGroupID);
-    QUrl cluFileUrl(url);
-    cluFileUrl.setFileName(baseName +".clu."+ electrodeGroupID);
+
+    QString spkFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".spk."+ electrodeGroupID;
+
+    QString cluFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".clu."+ electrodeGroupID;
     docUrl = cluFileUrl;
-    cluFileSaveUrl = QUrl(cluFileUrl);
-    //KDAB_PENDING cluFileSaveUrl.setFileName("." + cluFileUrl/*.fileName()*/ +".autoSave");
-    QUrl fetFileUrl(url);
-    fetFileUrl.setFileName(baseName +".fet."+ electrodeGroupID);
+
+    cluFileSaveUrl = urlFileInfo.absolutePath() + QDir::separator() + "." + urlFileInfo.fileName() + ".autosave";
+
+
+    QString fetFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".fet."+ electrodeGroupID;
 
     //Parameter files
-    QUrl xmlParFileUrl(url);
-    xmlParFileUrl.setFileName(baseName +".xml");
+    QString xmlParFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".xml";
     xmlParameterFile = xmlParFileUrl;
-    QUrl parXFileUrl(url);
-    parXFileUrl.setFileName(baseName +".par."+ electrodeGroupID);
-    QUrl parFileUrl(url);
-    parFileUrl.setFileName(baseName +".par");
+
+
+
+    QString parXFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".par."+ electrodeGroupID;
+
+
+    QString parFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".par";
+
 
     //Download the spike and fet files in temp files if necessary
-    //KDAB_PENDING if(!KIO::NetAccess::download(spkFileUrl, tmpSpikeFile)) return SPK_DOWNLOAD_ERROR;
-    QString tmpFetFile;
-    //KDAB_PENDING if(!KIO::NetAccess::download(fetFileUrl, tmpFetFile)) return FET_DOWNLOAD_ERROR;
+    if(!QFile(spkFileUrl).exists())
+        return SPK_DOWNLOAD_ERROR;
+    QString tmpSpikeFile = spkFileUrl;
+
+    if(!QFile(fetFileUrl).exists())
+        return FET_DOWNLOAD_ERROR;
+    QString tmpFetFile = fetFileUrl;
 
     //Open the the spike and fet files. Only the fet file will be loaded the spike file
     // will be used on the fly when waveforms will need to be drawn.
@@ -280,13 +295,13 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     QFile parXFile;
     QFile parFile;
     if(xmlParFileInfo.exists()){
-        //KDAB_PENDING if(!KIO::NetAccess::download(xmlParFileUrl,tmpXmlParFile)) return PARXML_DOWNLOAD_ERROR;
+        tmpXmlParFile = xmlParFileUrl;
         isXmlParExist = true;
         //Check if the generic parameter file also exist, if so, warn the user that the xml format parameter file will be used.
         QFileInfo parFileInfo(parFileUrl);
         if(parFileInfo.exists()){
             QApplication::restoreOverrideCursor();
-            QMessageBox::information(0, tr("Warning!"), tr("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl.fileName()).arg(parFileUrl.fileName()).arg(xmlParFileUrl.fileName()));
+            QMessageBox::information(0, tr("Warning!"), tr("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl).arg(parFileUrl).arg(xmlParFileUrl));
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         }
         xmlParFile.setName(tmpXmlParFile);
@@ -296,13 +311,17 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
         }
     }
     else{
-        //KDAB_PENDING if(!KIO::NetAccess::download(parXFileUrl, tmpParXFile)) return PARX_DOWNLOAD_ERROR;
+        if(!QFile(parXFileUrl).exists())
+            return PARX_DOWNLOAD_ERROR;
+        tmpParXFile = parXFileUrl;
         parXFile.setName(tmpParXFile);
         if(!parXFile.open(QIODevice::ReadOnly)){
             fclose(fetFile);
             return OPEN_ERROR;
         }
-        //KDAB_PENDING if(!KIO::NetAccess::download(parFileUrl, tmpParFile)) return PAR_DOWNLOAD_ERROR;
+        if(!QFile(parFileUrl).exists())
+            return PAR_DOWNLOAD_ERROR;
+        tmpParFile = parFileUrl;
         parFile.setName(tmpParFile);
         if(!parFile.open(QIODevice::ReadOnly)){
             fclose(fetFile);
