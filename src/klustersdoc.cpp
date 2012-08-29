@@ -363,21 +363,9 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
         }
     }
 
-#if KDAB_PENDING
     //Treat the cluster file separately as it can be empty
-    if(KIO::NetAccess::exists(cluFileUrl)){
-        if(!KIO::NetAccess::download(cluFileUrl, tmpCluFile)){
-            if(isXmlParExist){
-                xmlParFile.close();
-            }
-            else{
-                parXFile.close();
-                parFile.close();
-            }
-            fclose(fetFile);
-            return DOWNLOAD_ERROR;
-        }
-
+    if(QFile(cluFileUrl).exists()){
+        tmpCluFile = cluFileUrl;
         FILE* cluFile = fopen(tmpCluFile.toLatin1(),"r");
         if(cluFile == NULL){
             if(isXmlParExist){
@@ -449,7 +437,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
             fclose(fetFile);
         }
     }//end the cluster file does not exist
-#endif
 
     //Constructs the clusterColorList
     QList<dataType> clusterList = clusteringData->clusterIds();
