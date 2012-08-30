@@ -29,7 +29,6 @@ using namespace std;
 
 // include files for KDE
 
-#include <QProcess>
 #include <QTemporaryFile>
 
 //Unix include file
