@@ -34,7 +34,8 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
     page = new QWidget(this);
 
     //KDAB_PENDING: add spacingHint
-    layout = new Q3VBoxLayout(page,0/*,spacingHint()*/);
+    layout = new Q3VBoxLayout(page,0);
+    layout->setMargin(2);
     setLayout(layout);
     //Structure information (label and lineedit)
     QLabel *label1 = new QLabel(tr("Structure"),page,"structure_label");

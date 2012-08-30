@@ -844,7 +844,7 @@ void ErrorMatrixView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics
     }
 
     printPainter.fillRect(back,backgroundColor());
-    //KDAB_PENDING printPainter.setClipRect(back,Qt::CoordPainter);
+    printPainter.setClipRect(back);
 
     //Paint the matrix
     drawMatrix(printPainter);

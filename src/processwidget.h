@@ -25,9 +25,9 @@
 
 //include files for Qt
 #include <qcolor.h>
+#include <QProcess>
 
 //forward declaration 
-class QProcess;
 class ProcessLineMaker;
 
 class QPrinter;
@@ -120,7 +120,7 @@ protected:
     virtual QSize minimumSizeHint() const;
     
 protected slots:
-    void slotProcessExited(QProcess*);
+    void slotProcessExited( int, QProcess::ExitStatus);
     void slotOutputTreatmentOver();
     
 private:

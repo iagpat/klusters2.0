@@ -76,10 +76,10 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
     connect(this, SIGNAL(hidden()),
             procLineMaker, SLOT(slotWidgetHidden()));
 
-    connect(childproc, SIGNAL(processExited(QProcess*)),
-            this, SLOT(slotProcessExited(QProcess*) )) ;
-    connect(this, SIGNAL(processExited(QProcess*)),
-            procLineMaker, SLOT(slotProcessExited())) ;
+    connect(childproc, SIGNAL(finished( int, QProcess::ExitStatus )),
+            this, SLOT(slotProcessExited( int, QProcess::ExitStatus) )) ;
+    connect(this, SIGNAL(finished( int, QProcess::ExitStatus )),
+            procLineMaker, SLOT(slotProcessExited()));
 }
 
 
@@ -98,12 +98,8 @@ bool ProcessWidget::startJob(const QString &dir, const QString &command)
     if(!dir.isNull()) {
         childproc->setWorkingDirectory(dir);
     }
-#if KDAB_PENDING
-    *childproc << command;
-    return childproc->start(QProcess::NotifyOnExit, QProcess::AllOutput);
-#else
-    return false;
-#endif
+    childproc->start(command);
+    return childproc->waitForStarted();
 }
 
 
@@ -120,7 +116,7 @@ bool ProcessWidget::isRunning()
 }
 
 
-void ProcessWidget::slotProcessExited(QProcess* )
+void ProcessWidget::slotProcessExited(int , QProcess::ExitStatus)
 {
     emit processExited(childproc);
 }
