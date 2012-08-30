@@ -247,6 +247,7 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
     viewList.append(waveformView);
     waveformView->installEventFilter(this);//To enable right click popup menu
     waveforms->installEventFilter(this);
+    mainWindow.addDockWidget(Qt::RightDockWidgetArea,waveforms);
 #if KDAB_PENDING
 
     waveforms->setAllowedAreas(mainDock,QDockWidget::DockRight,50);
@@ -264,6 +265,7 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
     viewList.append(correlationView);
     correlationView->installEventFilter(this);//To enable right click popup menu
     correlations->installEventFilter(this);
+    mainWindow.addDockWidget(Qt::BottomDockWidgetArea,waveforms);
 #if KDAB_PENDING
 
     correlations->setAllowedAreas(waveforms,QDockWidget::DockBottom,50);
@@ -286,6 +288,7 @@ void KlustersView::createGroupingAssistantView(QColor backgroundColor,QStatusBar
     viewList.append(errorMatrixView);
     errorMatrixView->installEventFilter(this);//To enable right click popup menu
     errorMatrix->installEventFilter(this);
+    mainWindow.addDockWidget(Qt::BottomDockWidgetArea,errorMatrix);
 #if KDAB_PENDING
 
     errorMatrix->setAllowedAreas(mainDock,QDockWidget::DockBottom,50);
@@ -741,6 +744,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
         viewList.append(clusterView);
         clusterView->installEventFilter(this);//To enable right click popup menu
         clusters->installEventFilter(this);
+        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,clusters);
 #if KDAB_PENDING
 
         clusters->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
@@ -788,6 +792,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
         waveforms->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
         waveforms->setEnableDocking(QDockWidget::DockCorner);
 #endif
+        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,waveforms);
         setConnections(WAVEFORMS,waveformView,waveforms);
         break;
     case CORRELATIONS:
@@ -808,6 +813,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
         viewList.append(correlationView);
         correlationView->installEventFilter(this);//To enable right click popup menu
         correlations->installEventFilter(this);
+        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,correlations);
 #if KDAB_PENDING
 
         correlations->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
@@ -836,6 +842,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
         viewList.append(errorMatrixView);
         errorMatrixView->installEventFilter(this);//To enable right click popup menu
         errorMatrix->installEventFilter(this);
+        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,errorMatrix);
 #if KDAB_PENDING
 
         errorMatrix->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
@@ -874,7 +881,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
 
         traces->installEventFilter(this);//To enable right click popup menu
         traceWidget->installEventFilter(this);
-
+        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,traces);
 #if KDAB_PENDING
         traces->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
         traces->setEnableDocking(QDockWidget::DockCorner);

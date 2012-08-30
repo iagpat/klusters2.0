@@ -925,11 +925,13 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
 
         KlustersView* view;
 
-        if(!isProcessWidget) view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
+        if(!isProcessWidget)
+            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
                                                      displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                                      nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
-        else view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
+        else
+            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
                                      displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                      nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
 
@@ -964,6 +966,8 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
 
         // forbit docking abilities of display itself
         display->setAllowedAreas(Qt::NoDockWidgetArea);
+        addDockWidget(Qt::LeftDockWidgetArea,display);
+
         // allow others to dock to the left side only
         //KDAB_PENDING display->setDockSite(QDockWidget::DockLeft);
 
@@ -2573,7 +2577,7 @@ void KlustersApp::slotRecluster(){
 
         // forbit docking abilities of display itself
         display->setAllowedAreas(Qt::NoDockWidgetArea);
-
+        addDockWidget(Qt::NoDockWidgetArea,display);
         // allow others to dock to the left side only
         //KDAB_PENDING display->setDockSite(QDockWidget::DockLeft);
 
