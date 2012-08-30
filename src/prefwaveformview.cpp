@@ -139,6 +139,8 @@ void PrefWaveformView::loadChannelOrder(){
 
         channelFile.close();
 
+    } else {
+      return;
     }
 
     if(nbChannels != static_cast<int>(positions.count())){
