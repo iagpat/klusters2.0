@@ -57,6 +57,6 @@ qt4_wrap_ui(klusters_SRCS ${klusters_UI})
 
 add_executable(klusters ${klusters_SRCS} )
 
-target_link_libraries(klusters ${QT_LIBRARIES} ${LIBXML2_LIBRARIES} ${QT_QT3SUPPORT_LIBRARY} ${QT_QTXML_LIBRARY})
+target_link_libraries(klusters ${QT_LIBRARIES} ${LIBXML2_LIBRARIES} ${QT_QT3SUPPORT_LIBRARY} ${QT_QTXML_LIBRARY} ${LIBKLUSTERSSHARED_LIBRARY})
 
 install(PROGRAMS klusters DESTINATION bin)
