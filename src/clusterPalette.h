@@ -53,7 +53,7 @@ public:
     * @param name name of the widget (can be used for introspection).
     * @param wflags common QWidget flags.
     */
-    ClusterPalette(QColor backgroundColor,QWidget* parent = 0,QStatusBar * statusBar = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    ClusterPalette(const QColor &backgroundColor, QWidget* parent = 0, QStatusBar * statusBar = 0, const char* name = 0, Qt::WFlags fl = 0 );
     /*
    *  Destroys the object and frees any allocated resources.
    */

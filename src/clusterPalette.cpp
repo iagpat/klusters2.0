@@ -44,7 +44,7 @@
 //General C++ include files
 #include <vector>
 
-ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,QStatusBar * statusBar, const char* name, Qt::WFlags fl )
+ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QStatusBar * statusBar, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl ),doc(0L),mode(IMMEDIATE),isInSelectItems(false),isUpToDate(true),backgroundColor(backgroundColor),statusBar(statusBar),isInUserClusterInfoMode(false)
 {
     QVBoxLayout *layout = new QVBoxLayout;
@@ -63,6 +63,8 @@ ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,QStatusBar
     iconView->setResizeMode(Q3IconView::Adjust);
     iconView->setPaletteBackgroundColor(backgroundColor);
     iconView->setAutoFillBackground(true);
+    iconView->viewport()->setAutoFillBackground(true);
+    iconView->viewport()->setPaletteBackgroundColor(backgroundColor);
     iconView->setHScrollBarMode(Q3ScrollView::AlwaysOff);
     iconView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
 
@@ -126,7 +128,7 @@ void ClusterPalette::updateClusterList(){
         painter.begin(&pix);
         painter.fillRect(0,0,12,12,clusterColors.color(i,ItemColors::BY_INDEX));
         painter.end();
-        QString clusterText = QString("%1").arg(clusterColors.itemId(i));
+        QString clusterText = QString::fromLatin1("%1").arg(clusterColors.itemId(i));
 
         if(isInUserClusterInfoMode){
             if(clusterColors.itemId(i) == 0){
