@@ -253,7 +253,7 @@ protected:
   * Draws the contents of the frame.
   * @param p painter used to draw the contents of the frame.
   */
-    void drawContents(QPainter *p);
+    void paintEvent ( QPaintEvent *);
 
     /**Treat the events sent by the WaveformThread instances*/
     void customEvent(QCustomEvent* event);

@@ -232,7 +232,7 @@ protected:
   * Draws the contents of the frame
   * @param p painter used to draw the contents
   */
-    void drawContents(QPainter *p);
+    void paintEvent ( QPaintEvent *);
 
     /**Treat the events sent by the CorrelationThread instances.
   * @param event custom event.

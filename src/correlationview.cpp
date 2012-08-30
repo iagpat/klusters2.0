@@ -219,7 +219,8 @@ void CorrelationView::spikesAddedToCluster(int clusterId,bool active){
 }
 
 
-void CorrelationView::drawContents(QPainter *p){ 
+void CorrelationView::paintEvent ( QPaintEvent *){
+    QPainter p(this);
     if((drawContentsMode == UPDATE || drawContentsMode == REDRAW) && dataReady){
 
         QRect contentsRec = contentsRect();
@@ -228,8 +229,10 @@ void CorrelationView::drawContents(QPainter *p){
 
         //If the border is not visible (the user zoomed without taking it in his selection), the viewport and the contentsRec
         //have the same size.
-        if(r.left() != 0) viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height() -10);
-        else viewport = QRect(contentsRec.left() + XMARGIN,contentsRec.top(),contentsRec.width() - XMARGIN,contentsRec.height() -10);
+        if(r.left() != 0)
+            viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height() -10);
+        else
+            viewport = QRect(contentsRec.left() + XMARGIN,contentsRec.top(),contentsRec.width() - XMARGIN,contentsRec.height() -10);
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
         doublebuffer.resize(contentsRec.width(),contentsRec.height());
@@ -277,7 +280,7 @@ void CorrelationView::drawContents(QPainter *p){
     //if drawContentsMode == REFRESH, we reuse the double buffer (pixmap)
     
     //Draw the double buffer (pixmap) by copying it into the widget device.
-    p->drawPixmap(0, 0, doublebuffer);
+    p.drawPixmap(0, 0, doublebuffer);
     setCursor(zoomCursor);
 }
 

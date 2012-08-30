@@ -358,7 +358,8 @@ void WaveformView::customEvent(QCustomEvent* event){
     }
 }
 
-void WaveformView::drawContents(QPainter *p){
+void WaveformView::paintEvent ( QPaintEvent *){
+    QPainter p(this);
     if((drawContentsMode == UPDATE || drawContentsMode == REDRAW) && dataReady){
         QRect contentsRec = contentsRect();
         viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height() - 10);
@@ -400,7 +401,8 @@ void WaveformView::drawContents(QPainter *p){
         painter.resetXForm() ;
 
         //Draw the cluster Ids below the waveforms if they are not in overlay presentation.
-        if(!overLayPresentation) drawClusterIds(painter);
+        if(!overLayPresentation)
+            drawClusterIds(painter);
 
         //Closes the painter on the double buffer
         painter.end();
@@ -411,7 +413,7 @@ void WaveformView::drawContents(QPainter *p){
     //if drawContentsMode == REFRESH, we reuse the double buffer (pixmap)
 
     //Draw the double buffer (pixmap) by copying it into the widget device.
-    p->drawPixmap(0, 0, doublebuffer);
+    p.drawPixmap(0, 0, doublebuffer);
     setCursor(zoomCursor);
 }
 

@@ -106,7 +106,8 @@ void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,
     painter.setBrush(Qt::NoBrush);
 }
 
-void ClusterView::drawContents(QPainter* p){
+void ClusterView::paintEvent ( QPaintEvent*){
+    QPainter p(this);
     if(drawContentsMode == UPDATE || drawContentsMode == REDRAW){
         viewport = contentsRect();
 
@@ -166,7 +167,7 @@ void ClusterView::drawContents(QPainter* p){
     //if drawContentsMode == REFRESH, we reuse the double buffer (pixmap)
 
     //Draw the double buffer (pixmap) by copying it into the paint device.
-    p->drawPixmap(0, 0, doublebuffer);
+    p.drawPixmap(0, 0, doublebuffer);
 }
 
 void ClusterView::resetSelectionPolygon(){

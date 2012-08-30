@@ -149,7 +149,8 @@ void ErrorMatrixView::updateWindow(){
 }
 
 
-void ErrorMatrixView::drawContents(QPainter* p){
+void ErrorMatrixView::paintEvent ( QPaintEvent*){
+    QPainter p(this);
     if(drawContentsMode == REDRAW){
         QRect contentsRec = contentsRect();
         viewport = QRect(contentsRec.left() + 15,contentsRec.top(),contentsRec.width() - 15,contentsRec.height() - 15);
@@ -174,7 +175,8 @@ void ErrorMatrixView::drawContents(QPainter* p){
         doublebuffer.fill(backgroundColor());
 
         //Paint the matrix
-        if(dataReady)drawMatrix(painter);
+        if(dataReady)
+            drawMatrix(painter);
 
         if(dataReady && init){
             //Allowed to detect where the mouse is in order to write the corresponding probability
@@ -198,7 +200,7 @@ void ErrorMatrixView::drawContents(QPainter* p){
     //if drawContentsMode == REFRESH, we reuse the double buffer (pixmap)
 
     //Draw the double buffer (pixmap) by copying it into the paint device.
-    p->drawPixmap(0, 0, doublebuffer);
+    p.drawPixmap(0, 0, doublebuffer);
 }
 
 void ErrorMatrixView::drawClusterIds(QPainter& painter){

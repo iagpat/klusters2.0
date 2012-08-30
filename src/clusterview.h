@@ -214,7 +214,7 @@ protected:
   * Draws the contents of the frame
   * @param p painter used to draw the contents
   */
-    virtual void drawContents(QPainter* p);
+    void paintEvent ( QPaintEvent*);
 
     virtual inline void resizeEvent(QResizeEvent* event){
         //Trigger parent event

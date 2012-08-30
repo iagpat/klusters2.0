@@ -437,8 +437,9 @@ void TraceView::showHideLabels(bool show){
     update();
 }
 
-void TraceView::drawContents(QPainter* p){
+void TraceView::paintEvent ( QPaintEvent*){
     bool isInitAndResized = false;
+    QPainter p(this);
     if(isInit){
         if(resized) isInitAndResized = true;
 
@@ -489,8 +490,10 @@ void TraceView::drawContents(QPainter* p){
 
         //If the left margin is not visible (the user zoomed without taking it in his selection), the viewport and the contentsRec
         //have the same size.
-        if(r.left() != 0) viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height());
-        else viewport = QRect(contentsRec.left() + xMargin,contentsRec.top(),contentsRec.width() - xMargin,contentsRec.height());
+        if(r.left() != 0)
+            viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height());
+        else
+            viewport = QRect(contentsRec.left() + xMargin,contentsRec.top(),contentsRec.width() - xMargin,contentsRec.height());
 
         if(resized) updateWindow();
 
@@ -538,7 +541,7 @@ void TraceView::drawContents(QPainter* p){
     //if drawContentsMode == REFRESH, we reuse the double buffer (pixmap)
 
     //Draw the double buffer (pixmap) by copying it into the widget device.
-    p->drawPixmap(0, 0, doublebuffer);
+    p.drawPixmap(0, 0, doublebuffer);
 
     if(resized){
         resized = false;
