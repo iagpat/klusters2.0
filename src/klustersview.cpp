@@ -612,14 +612,15 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
                 || object->isA("TraceWidget"))
             widget = dynamic_cast<QWidget*>(object);
         //if the object is a TraceView take its container the TraceWidget
-        else if(object->isA("TraceView")) widget = traceWidget;
-        else return QWidget::eventFilter(object,event);    // standard event processing
+        else if(object->isA("TraceView"))
+            widget = traceWidget;
+        else
+            return QWidget::eventFilter(object,event);    // standard event processing
 
         QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
         if(mouseEvent->button() == Qt::RightButton){
             //Create the popmenu
-            QMenu menu(this);
-            menu.setTitle(tr("Add a View"));
+            QMenu menu(tr("Add a View"),this);
 
             QAction* clusterView = menu.addAction(tr("Add a ClusterView"));
             QAction* waveformView = menu.addAction(tr("Add a WaveformView"));
@@ -735,7 +736,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
         clusters = new QDockWidget(tr(doc.documentName().toLatin1()));
                 //createDockWidget(count.prepend("ClusterView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
         clusters->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,clusters));
-        clusterView = dynamic_cast<ViewWidget*>(clusters->widget());
+        clusterView = static_cast<ViewWidget*>(clusters->widget());
         viewList.append(clusterView);
         clusterView->installEventFilter(this);//To enable right click popup menu
         clusters->installEventFilter(this);
@@ -914,7 +915,8 @@ void KlustersView::shownClustersUpdate(QList<int>& clustersToShow){
     //If there is a cluster in clustersToShow which is not in shownClusters, add it to the view
     QList<int>::iterator clustersToShowIterator;
     for(clustersToShowIterator = clustersToShow.begin(); clustersToShowIterator != clustersToShow.end(); ++clustersToShowIterator ){
-        if(shownClusters->contains(*clustersToShowIterator) == 0) addClusterToView(*clustersToShowIterator,true);
+        if(shownClusters->contains(*clustersToShowIterator) == 0)
+            addClusterToView(*clustersToShowIterator,true);
     }
 
     //Show all the enclosed widgets of the dockWindows.
@@ -927,7 +929,8 @@ void KlustersView::updateColors(bool active){
         QList<int> colorChangedClusterList = clusterColors.colorChangedItemList();
         QList<int>::iterator iterator;
         for(iterator = colorChangedClusterList.begin(); iterator != colorChangedClusterList.end(); ++iterator ){
-            if(shownClusters->contains(*iterator) != 0) singleColorUpdate(*iterator,active);
+            if(shownClusters->contains(*iterator) != 0)
+                singleColorUpdate(*iterator,active);
         }
     }
 }
