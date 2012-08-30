@@ -741,6 +741,7 @@ void KlustersApp::initClusterPanel()
     clusterPalette = new ClusterPalette(backgroundColor,clusterPanel,statusBar(),"ClusterPalette");
     //Place the clusterPalette frame in the clusterPanel (the view)
     clusterPanel->setWidget(clusterPalette);
+    addDockWidget(Qt::LeftDockWidgetArea,clusterPanel);
 }
 
 void KlustersApp::initDisplay(){
