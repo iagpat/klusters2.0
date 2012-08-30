@@ -32,10 +32,10 @@ ProcessLineMaker::ProcessLineMaker( const QProcess* proc )
       isWidgetHidden(false),
       processExited(false)
 {
-    connect(proc, SIGNAL(receivedStdout(QProcess*,char*,int)),
+    connect(proc, SIGNAL(readyReadStandardOutput ()),
             this, SLOT(slotReceivedStdout(QProcess*,char*,int)) );
     
-    connect(proc, SIGNAL(receivedStderr(QProcess*,char*,int)),
+    connect(proc, SIGNAL(readyReadStandardError ()),
             this, SLOT(slotReceivedStderr(QProcess*,char*,int)) );
 }
 
@@ -65,7 +65,8 @@ void ProcessLineMaker::slotReceivedStdout( const QString& s )
 
     //The process has benn killed and all the process'outputs sent to be print,
     //warn the processWidget.
-    if(counterOut == 0 && (isProcessKilled || isWidgetHidden || processExited)) emit outputTreatmentOver(); 
+    if(counterOut == 0 && (isProcessKilled || isWidgetHidden || processExited))
+        emit outputTreatmentOver();
 }
 
 
@@ -90,13 +91,14 @@ void ProcessLineMaker::slotReceivedStderr( const QString& s )
     // Do not remove this line! It makes the method thread safe.
     //  Because we can be interrupted whenever more data is available,
     //  this prevents printing the same data twice.
-    lineErr = "";
+    lineErr.clear();
 
     counterErr--;
     
     //The process has benn killed and all the process'outputs sent to be print,
     //warn the processWidget.
-    if(counterErr == 0 && (isProcessKilled || isWidgetHidden)) emit outputTreatmentOver();     
+    if(counterErr == 0 && (isProcessKilled || isWidgetHidden))
+        emit outputTreatmentOver();
 }
 
 

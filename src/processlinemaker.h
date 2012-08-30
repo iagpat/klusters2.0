@@ -63,13 +63,6 @@ public slots:
         if(counterOut == 0 && counterErr == 0) emit outputTreatmentOver();
     }
 
-protected slots:
-    inline void slotReceivedStdout(QProcess* process, char* buffer,int buflen){
-        slotReceivedStdout(QString::fromLocal8Bit(buffer,buflen));
-    }
-    inline void slotReceivedStderr(QProcess* process,char* buffer, int buflen){
-        slotReceivedStderr(QString::fromLocal8Bit(buffer,buflen));
-    }
 
 signals:
     void receivedStdoutLine( const QString& line );
