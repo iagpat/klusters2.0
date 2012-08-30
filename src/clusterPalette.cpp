@@ -50,6 +50,7 @@ ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,QStatusBar
     QVBoxLayout *layout = new QVBoxLayout;
     //Set the palette color
 
+    setAutoFillBackground(true);
     setPaletteBackgroundColor(backgroundColor);
     setPaletteForegroundColor(Qt::white);
 
@@ -61,6 +62,7 @@ ClusterPalette::ClusterPalette(QColor backgroundColor,QWidget* parent,QStatusBar
     iconView->setArrangement(Q3IconView::LeftToRight);
     iconView->setResizeMode(Q3IconView::Adjust);
     iconView->setPaletteBackgroundColor(backgroundColor);
+    iconView->setAutoFillBackground(true);
     iconView->setHScrollBarMode(Q3ScrollView::AlwaysOff);
     iconView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
 
