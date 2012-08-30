@@ -34,11 +34,11 @@
 #include <QEvent>
 #include <QShowEvent>
 
-// include files for KDE
 #include <QDockWidget>
 #include <QMainWindow>
 #include <QAction>
 #include <QTableWidget>
+#include <QProcess>
 
 //include files application specific
 #include "klustersview.h"
@@ -50,7 +50,6 @@ class ClusterPalette;
 class SaveThread;
 class PrefDialog;
 class ProcessWidget;
-class QProcess;
 
 
 /**
@@ -394,7 +393,7 @@ private slots:
     /**Triggers the update of data incorporating the new data from the reclustering.
    * @param process process which has just finished.
    */
-    void slotProcessExited(QProcess* process);
+    void slotProcessExited(int, QProcess::ExitStatus);
 
     /**Updates internal state indicating that the outputs of the separate process, which
    * has been killed, is finished.*/

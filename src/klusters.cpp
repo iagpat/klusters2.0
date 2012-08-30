@@ -2551,8 +2551,8 @@ void KlustersApp::slotRecluster(){
                 //KDAB_PENDING createDockWidget(QString(QChar(displayCount)),0, 0L, tr("Recluster output"), tr("Recluster output"));
 
         processWidget = new ProcessWidget(display);
-        connect(processWidget,SIGNAL(processExited(QProcess*)), this, SLOT(slotProcessExited(QProcess*)));
-        connect(processWidget,SIGNAL(processOutputsFinished()), this, SLOT(slotOutputTreatmentOver()));
+        connect(processWidget,SIGNAL(finished( int, QProcess::ExitStatus)), this, SLOT(slotProcessExited(int, QProcess::ExitStatus)));
+        connect(processWidget,SIGNAL(finished( int, QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
 
         //install the new view in the display so it can be see in the future tab.
         display->setWidget(processWidget);
@@ -2607,7 +2607,7 @@ void KlustersApp::slotRecluster(){
     }
 }
 
-void KlustersApp::slotProcessExited(QProcess* process){
+void KlustersApp::slotProcessExited(int, QProcess::ExitStatus){
 #if KDAB_PENDING
     //Check if the process has exited "voluntarily" and if so if it was successful
     if(!process->normalExit() || (process->normalExit() && process->exitStatus())){
