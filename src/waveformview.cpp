@@ -792,7 +792,7 @@ void WaveformView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bo
     }
 
     printPainter.fillRect(back,backgroundColor());
-    //KDAB_PENDING printPainter.setClipRect(back,QPainter::CoordPainter);
+    printPainter.setClipRect(back);
 
     //Paint all the waveforms in the shownclusters list (in the double buffer)
     drawWaveforms(printPainter,view.clusters());

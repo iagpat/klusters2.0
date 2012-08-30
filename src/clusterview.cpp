@@ -666,7 +666,7 @@ void ClusterView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,boo
     }
 
     printPainter.fillRect(back,backgroundColor());
-    //KDAB_PENDING printPainter.setClipRect(back,QPainter::CoordPainter);
+    printPainter.setClipRect(back);
 
     //Draw the axes
     drawAxes(printPainter);

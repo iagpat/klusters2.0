@@ -475,10 +475,10 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
         if(printState){
             QRegion region = QRegion (X,-(Y+YsizeForMaxAmp),binWidth * nbBins + 1,YsizeForMaxAmp + 1);
             QRegion intersection = printRegion.intersect(region);
-            //KDAB_PENDING painter.setClipRegion(intersection,QPainter::CoordPainter);
+            painter.setClipRegion(intersection);
         }
         else  {
-            //KDAB_PENDING painter.setClipRect(X,-(Y+YsizeForMaxAmp),binWidth * nbBins + 1,YsizeForMaxAmp + 1,QPainter::CoordPainter);
+            painter.setClipRect(X,-(Y+YsizeForMaxAmp),binWidth * nbBins + 1,YsizeForMaxAmp + 1);
         }
         //Iterate over the values of the current correlogram and draw them.
         for(;iterator.hasNext();){
@@ -491,7 +491,7 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
         }
         //Draw a bottom line.
         if(printState)  {
-            //KDAB_PENDING painter.setClipRegion(printRegion,QPainter::CoordPainter);
+            painter.setClipRegion(printRegion);
         }
         else painter.setClipping(false);
         painter.setPen(clusterColor);
@@ -811,7 +811,7 @@ void CorrelationView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics
     }
 
     printPainter.fillRect(back,backgroundColor());
-    //KDAB_PENDING printPainter.setClipRegion(printRegion,QPainter::CoordPainter);
+    printPainter.setClipRegion(printRegion);
 
     //Paint all the correlograms in the pairs list (in the double buffer)
     drawCorrelograms(printPainter,pairs);
