@@ -47,8 +47,7 @@ void PrefGeneral::setCrashRecoveryIndex(int index){crashRecoveryComboBox->setCur
 void PrefGeneral::setNbUndo(int nb){undoSpinBox->setValue(nb);}
 
 void PrefGeneral::setBackgroundColor(const QColor& color) {
-    //KDAB-PENDING
-    //backgroundColorButton->setColor(color);
+    backgroundColorButton->setColor(color);
 }
 
 void PrefGeneral::setReclusteringExecutable(const QString& executable) {reclusteringExecutableLineEdit->setText(executable);}
@@ -63,8 +62,7 @@ int PrefGeneral::getNbUndo() const{return undoSpinBox->value();}
 
 QColor PrefGeneral::getBackgroundColor() const
 {
-    //KDAB_PENDING
-    //return backgroundColorButton->color();
+    return backgroundColorButton->color();
 }
 
 QString PrefGeneral::getReclusteringExecutable() const{return reclusteringExecutableLineEdit->text();}
