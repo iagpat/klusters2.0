@@ -1314,11 +1314,9 @@ void KlustersApp::customEvent (QCustomEvent* event){
             //If the requested save location is remote, the temporary file needs now
             //to be uploaded. The save process is made in a thread and it seams that
             //the KDE upload can not be call asynchronously, so the upload is call after the end of the thread.
-#if KDAB_PENDING
-            if(!KIO::NetAccess::upload(saveEvent->temporaryFile(),doc->url())){
-                QMessageBox::critical (0,, tr("I/O Error !"),tr("Could not save the current document !"));
+            if(!QFile::copy(saveEvent->temporaryFile(),doc->url())) {
+                QMessageBox::critical (this, tr("I/O Error !"),tr("Could not save the current document !"));
             }
-#endif
             if(saveEvent->isItSaveAs()){
                 //KDAB_PENDING fileOpenRecent->addURL(doc->url());
                 setCaption(doc->documentName());
