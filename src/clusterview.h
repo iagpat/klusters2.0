@@ -396,11 +396,11 @@ private:
         friend ComputeEvent* ClusterView::getComputeEvent(Q3PointArray selectionPolygon);
 
     public:
-        inline ~ComputeEvent(){};
-        inline Q3PointArray polygon(){return selectionPolygon;};
+        inline ~ComputeEvent(){}
+        inline Q3PointArray polygon(){return selectionPolygon;}
 
     private:
-        ComputeEvent(Q3PointArray polygon):QCustomEvent(QEvent::User + 700),selectionPolygon(polygon){};
+        ComputeEvent(Q3PointArray polygon):QCustomEvent(QEvent::User + 700),selectionPolygon(polygon){}
 
         Q3PointArray selectionPolygon;
     };

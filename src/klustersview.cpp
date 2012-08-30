@@ -57,6 +57,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
       binSize(binSize),correlogramTimeFrame(correlationTimeFrame),correlationScale(scale),shoulderLine(shoulderLine),
       mainWindow(mainWindow),traceWidget(0L),startingTime(startingTime),duration(duration),labelsDisplay(labelsDisplay)
 {
+    setAutoFillBackground(true);
     shownClusters = initialClusterList;
     removedClusters = new QList<int>();
     removedClustersUndoList.setAutoDelete(true);

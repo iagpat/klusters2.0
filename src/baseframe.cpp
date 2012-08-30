@@ -39,6 +39,7 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,c
     mRubberBand(0)
 {
 
+    setAutoFillBackground(true);
     //Setting of the frame
     setLineWidth (BORDER);
     setPaletteBackgroundColor(backgroundColor);
@@ -153,9 +154,11 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
                 float factor;
 
                 //Shrink asked
-                if(e->state() & Qt::ShiftModifier) factor = static_cast<float>(0.5);
+                if(e->state() & Qt::ShiftModifier)
+                    factor = static_cast<float>(0.5);
                 //Enlarge asked
-                else factor = static_cast<float>(2);
+                else
+                    factor = static_cast<float>(2);
 
                 //modify the window rectangle
                 isZoomed = window.zoom(factor, secondClick);
