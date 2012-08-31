@@ -481,29 +481,19 @@ void KlustersApp::createMenus()
     mDelaySelection->setCheckable(true);
     connect(mDelaySelection,SIGNAL(triggered()), this,SLOT(slotDelaySelection()));
 
+    settingsMenu->addSeparator();
+    mPreferenceAction = settingsMenu->addAction(tr("Preferences"));
+    connect(mPreferenceAction,SIGNAL(triggered()), this,SLOT(executePreferencesDlg()));
+
 
     //Initialize the update mode
     mImmediateSelection->setChecked(true);
     settingsMenu->addSeparator();
 
-#if KDAB_PENDING
-
-    KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
-#endif
     QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
     QAction *about = helpMenu->addAction(tr("About"));
     connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
 
-#if KDAB_PENDING
-    fileOpenRecent->setStatusText(tr("Opens a recently used file"));
-    actionCollection()->action(KStdAction::stdName(KStdAction::Save))->setStatusText(tr("Saves the actual document"));
-    actionCollection()->action(KStdAction::stdName(KStdAction::SaveAs))->setStatusText(tr("Saves the actual document as..."));
-    actionCollection()->action(KStdAction::stdName(KStdAction::Close))->setStatusText(tr("Closes the actual document"));
-    actionCollection()->action(KStdAction::stdName(KStdAction::Print))->setStatusText(tr("Prints out the actual document"));
-    actionCollection()->action(KStdAction::stdName(KStdAction::Quit))->setStatusText(tr("Quits the application"));
-    viewMainToolBar->setStatusText(tr("Enables/disables the main tool bar"));
-    viewStatusBar->setStatusText(tr("Enables/disables the status bar"));
-#endif
     //Custom connections
     connect(clusterPalette, SIGNAL(singleChangeColor(int)), this, SLOT(slotSingleColorUpdate(int)));
     connect(clusterPalette, SIGNAL(updateShownClusters(QList<int>)), this, SLOT(slotUpdateShownClusters(QList<int>)));

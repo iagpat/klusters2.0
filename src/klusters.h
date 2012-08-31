@@ -562,6 +562,7 @@ QRecentFileAction* mFileOpenRecent;
     QAction *mRedo;
     QAction *mRenumberAndSave;
     QAction *mUpdateErrorMatrix;
+    QAction *mPreferenceAction;
 
     QAction *mViewStatusBar;
     /**Spine box enabling to choose the absciss dimension*/
