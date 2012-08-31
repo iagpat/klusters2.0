@@ -42,7 +42,7 @@ class ProcessLineMaker : public QObject
 
 public:
     ProcessLineMaker();
-    ProcessLineMaker(const QProcess*);
+    ProcessLineMaker(QProcess*);
     inline void processKilled(){isProcessKilled = true;}
     inline void reset(){
         counterOut = 0;
@@ -53,14 +53,15 @@ public:
     }
 
 public slots:
-    void slotReceivedStdout(const QString& s);
-    void slotReceivedStderr(const QString& s);
+    void slotReceivedStdout();
+    void slotReceivedStderr();
     inline void slotWidgetHidden(){isWidgetHidden = true;}
 
     inline void slotProcessExited(){
         processExited = true;
         //In case the outputs from the process are already finished.
-        if(counterOut == 0 && counterErr == 0) emit outputTreatmentOver();
+        if(counterOut == 0 && counterErr == 0)
+            emit outputTreatmentOver();
     }
 
 
@@ -70,6 +71,7 @@ signals:
     void outputTreatmentOver();
 
 private:
+    QProcess *mProc;
     QString stdoutbuf;
     QString stderrbuf;
     QString lineOut;

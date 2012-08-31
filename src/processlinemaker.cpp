@@ -17,7 +17,8 @@
 #include <QProcess>
 
 ProcessLineMaker::ProcessLineMaker()
-    :counterOut(0),
+    : mProc(0),
+      counterOut(0),
       counterErr(0),
       isProcessKilled(false),
       isWidgetHidden(false),
@@ -25,22 +26,25 @@ ProcessLineMaker::ProcessLineMaker()
 {
 }
 
-ProcessLineMaker::ProcessLineMaker( const QProcess* proc )
-    :counterOut(0),
+ProcessLineMaker::ProcessLineMaker( QProcess* proc )
+    : mProc(proc),
+      counterOut(0),
       counterErr(0),
       isProcessKilled(false),
       isWidgetHidden(false),
       processExited(false)
 {
-    connect(proc, SIGNAL(readyReadStandardOutput ()),
-            this, SLOT(slotReceivedStdout(QProcess*,char*,int)) );
+    connect(mProc, SIGNAL(readyReadStandardOutput ()),
+            this, SLOT(slotReceivedStdout()) );
     
-    connect(proc, SIGNAL(readyReadStandardError ()),
-            this, SLOT(slotReceivedStderr(QProcess*,char*,int)) );
+    connect(mProc, SIGNAL(readyReadStandardError ()),
+            this, SLOT(slotReceivedStderr()) );
 }
 
-void ProcessLineMaker::slotReceivedStdout( const QString& s )
+void ProcessLineMaker::slotReceivedStdout()
 {
+    QString s = QString::fromLocal8Bit(mProc->readAllStandardOutput());
+
     counterOut++;
     
     // Flush stderr buffer
@@ -70,14 +74,15 @@ void ProcessLineMaker::slotReceivedStdout( const QString& s )
 }
 
 
-void ProcessLineMaker::slotReceivedStderr( const QString& s )
+void ProcessLineMaker::slotReceivedStderr()
 {
+    QString s = QString::fromLocal8Bit(mProc->readAllStandardError());
     counterErr++;
   
     // Flush stdout buffer
     if (!stdoutbuf.isEmpty()) {
         emit receivedStdoutLine(stdoutbuf);
-        stdoutbuf = "";
+        stdoutbuf.clear();
     }
     
     stderrbuf += s;
