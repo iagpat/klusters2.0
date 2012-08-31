@@ -28,6 +28,9 @@
 #include <qapplication.h>
 #include <qinputdialog.h>
 #include <QPrinter>
+
+#include <qrecentfileaction.h>
+
 //Added by qt3to4:
 #include <QLabel>
 #include <QPixmap>
@@ -106,9 +109,6 @@ KlustersApp::KlustersApp()
 
     slotUpdateParameterBar();
 
-    // initialize the recent file list
-    //KDAB_PENDING fileOpenRecent->loadEntries(config);
-
     //Disable some actions at startup (see the klustersui.rc file)
     slotStateChanged("initState");
 }
@@ -133,7 +133,9 @@ void KlustersApp::createMenus()
     mOpenAction->setShortcut(QKeySequence::Open);
     connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
-    //KDAB_TODO fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
+    mFileOpenRecent = new QRecentFileAction(this);
+    fileMenu->addAction(mFileOpenRecent);
+    connect(mFileOpenRecent, SIGNAL(recentFileSelected(QString)), this, SLOT(slotFileOpenRecent(QString)));
 
     mImportFile = fileMenu->addAction(tr("&Import File"));
     mImportFile->setShortcut(Qt::CTRL + Qt::Key_I);
@@ -985,30 +987,19 @@ void KlustersApp::openDocumentFile(const QString& url)
 
     filePath = url;
     QFileInfo file(filePath);
-#if KDAB_PENDING
-    if(url.protocol() == "file"){
-        if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
-            QString title = tr("File not found: %1").arg(filePath);
-            int answer = QMessageBox::question(this,title, tr("The selected file no longer exists, do you want to remove it from the list?"),QMessageBox::Yes|QMessageBox::No);
-            if(answer == QMessageBox::Yes) {
-                //KDAB_PENDING fileOpenRecent->removeURL(url);
-            }else  {
-                //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
-            }
-            filePath.clear();
-            slotStatusMsg(tr("Ready."));
-            return;
+    if(!file.exists()){
+        QString title = tr("File not found: %1").arg(filePath);
+        int answer = QMessageBox::question(this,title, tr("The selected file no longer exists, do you want to remove it from the list?"),QMessageBox::Yes|QMessageBox::No);
+        if(answer == QMessageBox::Yes) {
+            mFileOpenRecent->removeRecentFile(url);
+        } else  {
+            mFileOpenRecent->addRecentFile(url); //hack, unselect the item
         }
-    }
-    //Do not handle remote files
-    else{
-        QMessageBox::critical(this,tr("Remote file handling"),tr("Sorry, Klusters does not handle remote files."));
-        //KDAB_PENDING fileOpenRecent->removeURL(url);
-        filePath = "";
+        filePath.clear();
         slotStatusMsg(tr("Ready."));
         return;
     }
-#endif
+
     //Check if the file exists
     if(!file.exists()){
         QMessageBox::critical (this, tr("Error!"),tr("The selected file does not exist."));
@@ -1024,7 +1015,7 @@ void KlustersApp::openDocumentFile(const QString& url)
         currentNbUndo = 0;
         currentNbRedo = 0;
 
-        //KDAB_PENDING fileOpenRecent->addURL(url);
+        mFileOpenRecent->addRecentFile(url);
 
         // Open the file (that will also initialize the doc)
         QString errorInformation;
@@ -1142,9 +1133,6 @@ void KlustersApp::openDocumentFile(const QString& url)
             return;
         }
 
-        //Save the recent file list
-        //KDAB_PENDING fileOpenRecent->saveEntries(config);
-
         setCaption(doc->documentName());
         initDisplay();
 
@@ -1173,14 +1161,14 @@ void KlustersApp::openDocumentFile(const QString& url)
         QString name = urlFileInfo.absolutePath() + QDir::separator() + baseName + "-" + electrodNb;
 
         if(docName == name){
-            //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
+            mFileOpenRecent->addRecentFile(url); //hack, unselect the item
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
         }
         //If the document asked is not the already open. Open a new instance of the application with it.
         else{
-            //KDAB_PENDING fileOpenRecent->addURL(url);
+            mFileOpenRecent->removeRecentFile(url);
             filePath = doc->url();
 
 
@@ -1212,7 +1200,7 @@ void KlustersApp::importDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             return;
         }
-        //KDAB_PENDING fileOpenRecent->addURL(url);
+        mFileOpenRecent->addRecentFile(url);
         initDisplay();
         QApplication::restoreOverrideCursor();
     }
@@ -1258,9 +1246,6 @@ KlustersView* KlustersApp::activeView(){
 //TO implement , see documentation
 bool KlustersApp::queryClose()
 {  
-    //Save the recent file list
-    //KDAB_PENDING     fileOpenRecent->saveEntries(config);
-    
     //call when the kDockMainWindow will be close
     //implement to ask the user to save if necessary before closing
     if(doc == 0) return true;
@@ -1318,7 +1303,7 @@ void KlustersApp::customEvent (QCustomEvent* event){
                 QMessageBox::critical (this, tr("I/O Error !"),tr("Could not save the current document !"));
             }
             if(saveEvent->isItSaveAs()){
-                //KDAB_PENDING fileOpenRecent->addURL(doc->url());
+                mFileOpenRecent->addRecentFile(doc->url());
                 setCaption(doc->documentName());
             }
         }
@@ -2951,7 +2936,7 @@ void KlustersApp::slotStateChanged(const QString& state)
 {
     if(state == QLatin1String("initState")) {
         mOpenAction->setEnabled(true);
-        // <Action name="file_open_recent" />
+        mFileOpenRecent->setEnabled(false);
         mSaveAction->setEnabled(false);
         mSaveAsAction->setEnabled(false);
         mRenumberAndSave->setEnabled(false);

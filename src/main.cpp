@@ -28,17 +28,6 @@
 #include "timer.h"
 #include "config-klusters.h"
 
-#if KDAB_PENDING
-
-static KCmdLineOptions options[] =
-{
-  { "+file", I18N_NOOP("Document to open"), 0 },
-  { 0, 0, 0 }
-  // INSERT YOUR COMMANDLINE OPTIONS HERE
-};
-
-QString version = VERSION;
-#endif
 int nbUndo;
 
 int main(int argc, char* argv[])
@@ -49,56 +38,22 @@ int main(int argc, char* argv[])
 
     QStringList args;
     for (int i = 1; i < argc; ++i) {
-      args.push_back(QString::fromLocal8Bit(argv[i]));
+        args.push_back(QString::fromLocal8Bit(argv[i]));
     }
     QApplication app(argc, argv);
 
-#if 0 //TODO
-
-
-	KCmdLineArgs::addCmdLineOptions(options); // Add our own options.
-
-  KApplication app;
-
-  // see if we are starting with session management
-  if (app.isRestored())
-  {
-    RESTORE(KlustersApp);
-  }
-  else
-  {
-    // no session.. just start up normally
-    KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
     KlustersApp* Klusters = new KlustersApp();
     Klusters->show();
-
-    //Only one document can be open at the time
-    if(args->count()){
-      QString file = args->arg(0);
-      if(file.left(1) != "/"){
-       QString url = QString();
-       url.setPath((QDir::currentPath()).append("/"));
-       url.setFileName(file);
-       Klusters->openDocumentFile(url);
-      }
-      else  Klusters->openDocumentFile(file);
-    } 
-
-		args->clear();
-  }
-#endif
-  KlustersApp* Klusters = new KlustersApp();
-  Klusters->show();
-  if(args.count()){
-    QString file = args.at(0);
-    if(file.left(1) != "/"){
-     QString url;
-     url = QDir::currentPath()+ ("/") + file;
-     Klusters->openDocumentFile(url);
-    } else {
-        Klusters->openDocumentFile(file);
+    if(args.count()){
+        QString file = args.at(0);
+        if(file.left(1) != "/"){
+            QString url;
+            url = QDir::currentPath()+ QDir::separator() + file;
+            Klusters->openDocumentFile(url);
+        } else {
+            Klusters->openDocumentFile(file);
+        }
     }
-  }
 
-  return app.exec();
+    return app.exec();
 }

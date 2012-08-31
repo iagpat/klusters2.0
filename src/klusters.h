@@ -50,6 +50,7 @@ class ClusterPalette;
 class SaveThread;
 class PrefDialog;
 class ProcessWidget;
+class QRecentFileAction;
 
 
 /**
@@ -497,6 +498,7 @@ private:
     QToolBar* mToolBar;
     QToolBar* mClusterBar;
 
+QRecentFileAction* mFileOpenRecent;
     
     //Action and toolbar pointers
     QAction* fileOpenRecent;
