@@ -24,6 +24,7 @@
 #include <QCloseEvent>
 #include <QAction>
 #include <QMenu>
+#include <QWidgetAction>
 
 // include files for Qt
 #include <qpainter.h>
@@ -625,7 +626,12 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
         if(mouseEvent->button() == Qt::RightButton){
             //Create the popmenu
             QMenu menu(tr("Add a View"),this);
-
+            QWidgetAction *act = new QWidgetAction(&menu);
+            QLabel *lab = new QLabel(tr("Add a View"));
+            lab->setAlignment(Qt::AlignCenter);
+            act->setDefaultWidget(lab);
+            menu.addAction(act);
+            menu.addSeparator();
             QAction* clusterView = menu.addAction(tr("Add a ClusterView"));
             QAction* waveformView = menu.addAction(tr("Add a WaveformView"));
             QAction* correlationView = menu.addAction(tr("Add a CorrelationView"));
