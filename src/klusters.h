@@ -497,6 +497,7 @@ private:
     QToolBar* mActionBar;
     QToolBar* mToolBar;
     QToolBar* mClusterBar;
+    QToolBar* mMainToolBar;
 
 QRecentFileAction* mFileOpenRecent;
     

@@ -73,6 +73,8 @@ KlustersApp::KlustersApp()
 {
     initClusterPanel();
 
+    mMainToolBar = new QToolBar();
+
     mActionBar = new QToolBar(tr("Actions"));
 
     mToolBar = new QToolBar(tr("Tools"));
@@ -511,6 +513,16 @@ void KlustersApp::createMenus()
 
 void KlustersApp::createToolBar()
 {
+
+    mMainToolBar->addAction(mOpenAction);
+    mMainToolBar->addAction(mSaveAction);
+    mMainToolBar->addAction(mPrintAction);
+    mMainToolBar->addSeparator();
+    mMainToolBar->addAction(mUndo);
+    mMainToolBar->addAction(mRedo);
+
+    addToolBar(mMainToolBar);
+
     addToolBar(mActionBar);
 
     mToolBar->addAction(mZoomAction);
