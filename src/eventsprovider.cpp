@@ -25,7 +25,7 @@
 
 #include <fstream>
 #include <iomanip> // Required for formated I/O.
-using namespace std;
+
 
 // include files for KDE
 

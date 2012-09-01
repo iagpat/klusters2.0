@@ -22,8 +22,8 @@
 #include <cstring>
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 /**
   * This Array class is a template class that provides arrays of simple types.

@@ -41,7 +41,7 @@
 #include <QMouseEvent>
 #include <QEvent>
 
-using namespace std;
+
 
 const QColor ClusterView::NEW_CLUSTER_COLOR(Qt::green);
 const QColor ClusterView::DELETE_NOISE_COLOR(220,220,220);

@@ -22,10 +22,10 @@
 #include <QList>
 
 //General C++ include files
-#include <iostream>
+
 #include <iomanip>
 #include <fstream>
-using namespace std;
+
 
 // include files for KDE
 

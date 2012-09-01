@@ -23,7 +23,7 @@
 
 
 #include <stdlib.h>
-using namespace std;
+
 
 /**
   * Class used to represent the clusters corresponding to a given correlogram.

@@ -22,7 +22,7 @@
 #include <fstream>
 //Added by qt3to4:
 #include <QTextStream>
-using namespace std;
+
 
 //include files for QT
 #include <qfile.h>
