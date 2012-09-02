@@ -64,12 +64,31 @@ const QString KlustersApp::DEFAULT_BIN_SIZE = "1";
 
 
 KlustersApp::KlustersApp()
-    : QMainWindow(0,"Klusters"), displayCount(0),mainDock(0),
-      clusterPanel(0),clusterPalette(0),tabsParent(0),dimensionX(0L),dimensionY(0L),isInit(true),
-      currentNbUndo(0),currentNbRedo(0),timeWindow(INITIAL_WAVEFORM_TIME_WINDOW.toLong()),validator(this),spikesTodisplayStep(20),
-      correlogramTimeFrame(INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1),binSize(DEFAULT_BIN_SIZE.toInt()),binSizeValidator(this),
-      correlogramsHalfTimeFrameValidator(this),prefDialog(0L),processWidget(0L),processFinished(true),processOutputDock(0L),
-      processOutputsFinished(true),processKilled(false),errorMatrixExists(false),filePath("")
+    : QMainWindow(0,"Klusters"),
+      displayCount(0),
+      mainDock(0),
+      clusterPanel(0),
+      clusterPalette(0),
+      tabsParent(0),
+      dimensionX(0L),
+      dimensionY(0L),
+      isInit(true),
+      currentNbUndo(0),
+      currentNbRedo(0),
+      timeWindow(INITIAL_WAVEFORM_TIME_WINDOW.toLong()),
+      validator(this),
+      spikesTodisplayStep(20),
+      correlogramTimeFrame(INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1),
+      binSize(DEFAULT_BIN_SIZE.toInt()),
+      binSizeValidator(this),
+      correlogramsHalfTimeFrameValidator(this),
+      prefDialog(0L),
+      processWidget(0L),
+      processFinished(true),
+      processOutputDock(0L),
+      processOutputsFinished(true),
+      processKilled(false),
+      errorMatrixExists(false)
 {
     initClusterPanel();
 
@@ -438,10 +457,12 @@ void KlustersApp::createMenus()
     //Settings menu
     QMenu *settingsMenu = menuBar()->addMenu(tr("Settings"));
 
-#if KDAB_PENDING
-    viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
 
-#endif
+    viewMainToolBar = settingsMenu->addAction(tr("Show Main Toolbar"));
+
+    viewMainToolBar->setCheckable(true);
+    connect(viewMainToolBar,SIGNAL(triggered()), this,SLOT(slotViewMainToolBar()));
+
     viewActionBar = settingsMenu->addAction(tr("Show Actions"));
     viewActionBar->setCheckable(true);
     connect(viewActionBar,SIGNAL(triggered()), this,SLOT(slotViewActionBar()));
@@ -2594,10 +2615,10 @@ void KlustersApp::slotRecluster(){
     }
 }
 
-void KlustersApp::slotProcessExited(int, QProcess::ExitStatus){
+void KlustersApp::slotProcessExited(int, QProcess::ExitStatus status){
 #if KDAB_PENDING
     //Check if the process has exited "voluntarily" and if so if it was successful
-    if(!process->normalExit() || (process->normalExit() && process->exitStatus())){
+    if(!(status == QProcess::NormalExit) || (process->normalExit() && process->exitStatus())){
         if(process->normalExit() || (!process->normalExit() && !processKilled))
             QMessageBox::critical (this,tr("Error !"),tr("The reclustering program did not finished normaly.\n"
                                                          "Check the output log for more information."));
