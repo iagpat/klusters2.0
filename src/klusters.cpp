@@ -2968,12 +2968,12 @@ void KlustersApp::slotStateChanged(const QString& state)
 
         mGroupeClusters->setEnabled(false);
         mUpdateDisplay->setEnabled(false);
+        mZoomAction->setEnabled(false);
 /*
         <Action name="renumber" />
         <Action name="recluster" />
         <Action name="stop_recluster" />
         <Action name="update_errorMatrix" />
-        <Action name="zoom" />
         <Action name="single_new" />
         <Action name="multiple_new" />
         <Action name="delete_artifact" />
@@ -2997,9 +2997,49 @@ void KlustersApp::slotStateChanged(const QString& state)
         <Action name="show_previous_cluster" />
 */
 
+        mOpenAction->setEnabled(true);
+        mFileOpenRecent->setEnabled(true);
 
     } else if(state == QLatin1String("documentState")) {
+        mSaveAction->setEnabled(true);
+        mSaveAsAction->setEnabled(true);
+        mPrintAction->setEnabled(true);
+        mRenumberAndSave->setEnabled(true);
+        mCloseAction->setEnabled(true);
+        mSelectAllAction->setEnabled(true);
+        mSelectAllExceptAction->setEnabled(true);
+        mZoomAction->setEnabled(true);
+        /*
+   <Action name="new_clusterDisplay" />
+   <Action name="new_waveformDisplay" />
+   <Action name="new_crosscorrelationDisplay" />
+   <Action name="new_overViewDisplay" />
+   <Action name="new_goupingAssistantDisplay" />
+   <Action name="close_display" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+   <Action name="recluster" />
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />
+   <Action name="raw_data" />
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+
+   */
     } else if(state == QLatin1String("traceDisplayState")) {
+
         //<Action name="trace_display" />
     } else if(state == QLatin1String("noTraceDisplayState")) {
         //<Action name="trace_display" />
@@ -3024,26 +3064,234 @@ void KlustersApp::slotStateChanged(const QString& state)
         mUndo->setEnabled(false);
         mRedo->setEnabled(true);
     } else if(state == QLatin1String("noWaveformsViewState")) {
+        /*
+  <Disable>
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />
+  </Disable>
+*/
+
+
     } else if(state == QLatin1String("waveformsViewState")) {
+
+        /*
+  <Enable>
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+  </Enable>
+*/
     } else if(state == QLatin1String("noClusterViewState")) {
+        mZoomAction->setEnabled(false);
+
+        /*
+        <Disable>
+         <Action name="single_new" />
+         <Action name="multiple_new" />
+         <Action name="delete_artifact" />
+         <Action name="delete_noise" />
+         <Action name="time" />
+        </Disable>
+        */
+
+
     } else if(state == QLatin1String("clusterViewState")) {
+        mZoomAction->setEnabled(true);
+
+        /*
+  <Enable>
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+  </Enable>
+*/
     } else if(state == QLatin1String("noCorrelationViewState")) {
+        /*
+  <Disable>
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+  </Disable>
+*/
     } else if(state == QLatin1String("correlationViewState")) {
+
+        /*
+  <Enable>
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+  </Enable>
+*/
     } else if(state == QLatin1String("noErrorMatrixViewState")) {
+        mUpdateErrorMatrix->setEnabled(false);
     } else if(state == QLatin1String("errorMatrixViewState")) {
+        mUpdateErrorMatrix->setEnabled(true);
+
+        /*
+  <Disable>
+   <Action name="new_goupingAssistantDisplay" />
+  </Disable>
+  <Enable>
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+  </Enable>
+*/
+
+
     } else if(state == QLatin1String("groupingAssistantDisplayExists")) {
+        mNewTraceDisplay->setEnabled(false);
     } else if(state == QLatin1String("groupingAssistantDisplayNotExists")) {
+        mNewTraceDisplay->setEnabled(true);
     } else if(state == QLatin1String("reclusterViewState")) {
+        mZoomAction->setEnabled(false);
+        /*
+  <Disable>
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="time_frame" />
+   <Action name="overlay" />
+   <Action name="mean" />
+   <Action name="increase" />
+   <Action name="decrease" />
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+   <Action name="scale_by_max" />
+   <Action name="scale_by_shouler" />
+   <Action name="raw_data" />
+   <Action name="shoulder_line" />
+   <Action name="increase_correlograms" />
+   <Action name="decrease_correlograms" />
+   <Action name="update_errorMatrix" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+   <Action name="recluster" />
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />
+  </Disable>
+*/
+        mUndo->setEnabled(false);
+        mRedo->setEnabled(false);
+
     } else if(state == QLatin1String("reclusterState")) {
+        mUndo->setEnabled(false);
+        mRedo->setEnabled(false);
+        /*
+  <Disable>
+   <Action name="recluster" />
+   <Action name="single_new" />
+   <Action name="multiple_new" />
+   <Action name="delete_artifact" />
+   <Action name="delete_noise" />
+   <Action name="move_clusters_to_artifact" />
+   <Action name="move_clusters_to_noise" />
+   <Action name="group_clusters" />
+   <Action name="renumber" />
+  </Disable>
+  <Enable>
+   <Action name="stop_recluster" />
+  </Enable>
+
+  */
     } else if(state == QLatin1String("noReclusterState")) {
+        /*
+  <Enable>
+   <Action name="recluster" />
+  </Enable>
+  <Disable>
+   <Action name="stop_recluster" />
+  </Disable>
+*/
     } else if(state == QLatin1String("stoppedReclusterState")) {
+        /*
+  <Disable>
+   <Action name="stop_recluster" />
+  </Disable>
+*/
     } else if(state == QLatin1String("tabState")) {
+        /*
+  <Enable>
+   <Action name="rename_display" />
+  </Enable>
+*/
     } else if(state == QLatin1String("noTabState")) {
+        /*
+  <Disable>
+   <Action name="rename_display" />
+  </Disable>
+*/
     } else if(state == QLatin1String("traceViewState")) {
+        /*
+  <Enable>
+   <Action name="increase_all_channels" />
+   <Action name="decrease_all_channels" />
+   <Action name="show_labels"/>
+  </Enable>
+*/
     } else if(state == QLatin1String("noTraceViewState")) {
+        /*
+  <Disable>
+   <Action name="time" />
+   <Action name="increase_all_channels" />
+   <Action name="decrease_all_channels" />
+   <Action name="show_labels"/>
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />
+  </Disable>
+*/
     } else if(state == QLatin1String("traceViewClusterViewState")) {
+        /*
+  <Enable>
+   <Action name="time" />
+  </Enable>
+*/
     } else if(state == QLatin1String("traceViewBrowsingState")) {
+        /*
+  <Enable>
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />
+  </Enable>
+*/
     } else if(state == QLatin1String("noTraceViewBrowsingState")) {
+        /*
+  <Disable>
+   <Action name="show_next_cluster" />
+   <Action name="show_previous_cluster" />
+  </Disable>
+*/
     } else {
         qDebug() <<" State unknown :"<<state;
     }
