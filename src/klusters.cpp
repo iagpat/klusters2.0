@@ -2993,7 +2993,6 @@ void KlustersApp::slotStateChanged(const QString& state)
 /*
         <Action name="renumber" />
         <Action name="recluster" />
-        <Action name="stop_recluster" />
         <Action name="update_errorMatrix" />
         <Action name="single_new" />
         <Action name="multiple_new" />
@@ -3013,13 +3012,14 @@ void KlustersApp::slotStateChanged(const QString& state)
         <Action name="time" />
         <Action name="increase_all_channels" />
         <Action name="decrease_all_channels" />
-        <Action name="show_labels"/>
         <Action name="show_next_cluster" />
         <Action name="show_previous_cluster" />
 */
 
+        showHideLabels->setEnabled(false);
         mOpenAction->setEnabled(true);
         mFileOpenRecent->setEnabled(true);
+        mAbortReclustering->setEnabled(false);
 
     } else if(state == QLatin1String("documentState")) {
         mSaveAction->setEnabled(true);
@@ -3242,57 +3242,41 @@ void KlustersApp::slotStateChanged(const QString& state)
    <Action name="group_clusters" />
    <Action name="renumber" />
   </Disable>
-  <Enable>
-   <Action name="stop_recluster" />
-  </Enable>
 
   */
+        mAbortReclustering->setEnabled(true);
     } else if(state == QLatin1String("noReclusterState")) {
         /*
   <Enable>
    <Action name="recluster" />
   </Enable>
-  <Disable>
-   <Action name="stop_recluster" />
-  </Disable>
 */
+        mAbortReclustering->setEnabled(false);
     } else if(state == QLatin1String("stoppedReclusterState")) {
-        /*
-  <Disable>
-   <Action name="stop_recluster" />
-  </Disable>
-*/
+        mAbortReclustering->setEnabled(false);
     } else if(state == QLatin1String("tabState")) {
-        /*
-  <Enable>
-   <Action name="rename_display" />
-  </Enable>
-*/
+        mRenameActiveDisplay->setEnabled(true);
     } else if(state == QLatin1String("noTabState")) {
-        /*
-  <Disable>
-   <Action name="rename_display" />
-  </Disable>
-*/
+        mRenameActiveDisplay->setEnabled(false);
     } else if(state == QLatin1String("traceViewState")) {
         /*
   <Enable>
    <Action name="increase_all_channels" />
    <Action name="decrease_all_channels" />
-   <Action name="show_labels"/>
   </Enable>
 */
+        showHideLabels->setEnabled(true);
     } else if(state == QLatin1String("noTraceViewState")) {
         /*
   <Disable>
    <Action name="time" />
    <Action name="increase_all_channels" />
    <Action name="decrease_all_channels" />
-   <Action name="show_labels"/>
    <Action name="show_next_cluster" />
    <Action name="show_previous_cluster" />
   </Disable>
 */
+        showHideLabels->setEnabled(false);
     } else if(state == QLatin1String("traceViewClusterViewState")) {
         /*
   <Enable>
