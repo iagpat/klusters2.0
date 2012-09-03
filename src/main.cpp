@@ -54,6 +54,7 @@ int main(int argc, char* argv[])
             Klusters->openDocumentFile(file);
         }
     }
-
-    return app.exec();
+    int ret = app.exec();
+    delete Klusters;
+    return ret;
 }
