@@ -579,10 +579,10 @@ void CorrelationView::drawClusterIds(QPainter& painter){
         QRect r;
         if(isMargin) r = QRect(worldToViewport(X,-Y).x() + 10,worldToViewport(X,-Y).y() - 2,worldToViewportWidth(width),10);
         else r = QRect(worldToViewport(X,-Y).x() + 10  - XMARGIN,worldToViewport(X,-Y).y() - 2,worldToViewportWidth(width),10);
-        painter.drawText(r,Qt::AlignHCenter,QString("%1").arg(*iterator));
+        painter.drawText(r,Qt::AlignHCenter,QString::fromLatin1("%1").arg(*iterator));
 
         if(shoulderLine){
-            QString firingRate = "";
+            QString firingRate;
             if(firingRates.contains(*iterator)) firingRate = firingRates[*iterator];
             if(nbClusters == 1){
                 firingX = X;
@@ -904,7 +904,7 @@ void  CorrelationView::setShoulderLine(bool b){
     shoulderLine = b;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }

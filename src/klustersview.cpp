@@ -83,10 +83,6 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         QHBoxLayout *lay = new QHBoxLayout;
         setLayout(lay);
         lay->addWidget(mainDock);
-#if KDAB_PENDING
-
-        setMainDockWidget(mainDock);
-#endif
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
         currentViewWidget->installEventFilter(this);//To enable right click popup menu
@@ -108,10 +104,6 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         setLayout(lay);
         lay->addWidget(mainDock);
 
-#if KDAB_PENDING
-
-        setMainDockWidget(mainDock);
-#endif
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
         currentViewWidget->installEventFilter(this);//To enable right click popup menu
@@ -133,10 +125,6 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         setLayout(lay);
         lay->addWidget(mainDock);
 
-#if KDAB_PENDING
-
-        setMainDockWidget(mainDock);
-#endif
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
         currentViewWidget->installEventFilter(this);//To enable right click popup menu
@@ -182,10 +170,6 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,QColor back
         setLayout(lay);
         lay->addWidget(mainDock);
 
-#if KDAB_PENDING
-
-        setMainDockWidget(mainDock);
-#endif
         traceWidget = dynamic_cast<TraceWidget*>(mainDock->widget());
         //Set the list of the current view as the list of clusters to look up in the ClusterProvider.
         doc.getClustersProvider()->setClusterIdList(shownClusters);
@@ -226,10 +210,6 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
     setLayout(lay);
     lay->addWidget(mainDock);
 
-#if KDAB_PENDING
-
-    setMainDockWidget(mainDock);
-#endif
     currentViewWidget = view;
     viewList.append(currentViewWidget);
     currentViewWidget->installEventFilter(this);//To enable right click popup menu
