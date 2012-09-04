@@ -98,7 +98,7 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
     connect(prefGeneral->crashRecoveryCheckBox,SIGNAL(clicked()),this,SLOT(enableApply()));
     connect(prefGeneral->crashRecoveryComboBox,SIGNAL(activated(int)),this,SLOT(enableApply()));
     connect(prefGeneral->undoSpinBox,SIGNAL(valueChanged(int)),this,SLOT(enableApply()));
-    connect(prefGeneral->backgroundColorButton,SIGNAL(changed(const QColor&)),this,SLOT(enableApply()));
+    connect(prefGeneral->backgroundColorButton,SIGNAL(colorChanged(const QColor&)),this,SLOT(enableApply()));
     connect(prefGeneral->reclusteringExecutableLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(enableApply()));
     //connect(prefGeneral,SIGNAL(reclusteringArgsUpdate()),this,SLOT(enableApply()));
     connect(prefGeneral->reclusteringArgsLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(enableApply()));
