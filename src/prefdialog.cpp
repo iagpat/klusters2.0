@@ -17,9 +17,7 @@
 // include files for QT
 #include <qlayout.h>        // for QVBoxLayout
 #include <qlabel.h>         // for QLabel
-#include <q3frame.h>         // for QFrame
 //Added by qt3to4:
-#include <Q3VBoxLayout>
 #include <QMessageBox>
 
 //include files for the application
@@ -31,9 +29,6 @@
 #include "prefclusterview.h"        // class PrefClusterView
 #include "channellist.h"
 
-//General C++ include files
-#include <iostream>
-using namespace std;
 
 /**
   *@author Lynn Hazan
@@ -50,12 +45,6 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
 
     setHelp("settings","klusters");
     
-    /*
-    //adding page "General options"
-    Q3Frame *frame = addPage(tr("General"), tr("Klusters General Configuration"),
-        KGlobal::iconLoader()->loadIcon("kfm",KIcon::Panel,0,false) );
-    */
-
     QWidget * w = new QWidget(this);
     prefGeneral = new PrefGeneral(w);
     QPageWidgetItem *item = new QPageWidgetItem(prefGeneral,tr("General"));
@@ -68,13 +57,6 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
 
 
     //adding page "Cluster view configuration"
-    /*
-    frame = addPage(tr("Cluster view"), tr("Cluster View configuration"),
-        QIcon(":icons/clusterview"));
-    frameLayout = new Q3VBoxLayout( frame, 0, 0 );
-    prefclusterView = new PrefClusterView(frame);
-    frameLayout->addWidget(prefclusterView);
-*/
     w = new QWidget(this);
     prefclusterView = new PrefClusterView(w);
 
@@ -85,13 +67,6 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
 
 
     //adding page "Waveform view configuration"
-    /*
-    frame = addPage(tr("Waveform view"), tr("Waveform View configuration"),
-        QIcon(":icons/waveformview"));
-    frameLayout = new Q3VBoxLayout( frame, 0, 0 );
-    prefWaveformView = new PrefWaveformView(frame,nbChannels);
-    frameLayout->addWidget(prefWaveformView);
-*/
     w = new QWidget(this);
     prefWaveformView = new PrefWaveformView(w,nbChannels);
 
