@@ -57,10 +57,13 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
     */
 
     QWidget * w = new QWidget(this);
-    QVBoxLayout*lay = new QVBoxLayout;
-    w->setLayout(lay);
     prefGeneral = new PrefGeneral(w);
-    addPage(w,tr("General"));
+    QPageWidgetItem *item = new QPageWidgetItem(prefGeneral,tr("General"));
+    item->setHeader(tr("Klusters General Configuration"));
+    item->setIcon(QIcon(":/icons/kfm"));
+
+
+    addPage(item);
 
 
 
@@ -73,10 +76,12 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
     frameLayout->addWidget(prefclusterView);
 */
     w = new QWidget(this);
-    lay = new QVBoxLayout;
     prefclusterView = new PrefClusterView(w);
-    addPage(w,tr("Cluster view"));
 
+    item = new QPageWidgetItem(prefclusterView,tr("Cluster view"));
+    item->setHeader(tr("Cluster View configuration"));
+    item->setIcon(QIcon(":/icons/clusterview"));
+    addPage(item);
 
 
     //adding page "Waveform view configuration"
@@ -88,9 +93,12 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
     frameLayout->addWidget(prefWaveformView);
 */
     w = new QWidget(this);
-    lay = new QVBoxLayout;
     prefWaveformView = new PrefWaveformView(w,nbChannels);
-    addPage(w,tr("Waveform view"));
+
+    item = new QPageWidgetItem(prefWaveformView,tr("Waveform view"));
+    item->setHeader(tr("Waveform View configuration"));
+    item->setIcon(QIcon(":/icons/waveformview"));
+    addPage(item);
 
 
 
