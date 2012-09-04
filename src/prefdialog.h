@@ -22,7 +22,7 @@
 #include <qwidget.h>
 
 // include files for KDE
-#include <QDialog>
+#include <qpagedialog.h>
 
 class PrefGeneral;
 class PrefWaveformView;
@@ -33,7 +33,7 @@ class PrefClusterView;
   *@author Lynn Hazan
   */
   
-class PrefDialog : public QDialog {
+class PrefDialog : public QPageDialog {
     Q_OBJECT
   public:
     /// Constructor

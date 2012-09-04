@@ -659,7 +659,6 @@ void KlustersApp::initSelectionBoxes(){
 }
 
 void KlustersApp::executePreferencesDlg(){
-#if KDAB_PENDING
     if(prefDialog == 0L){
         if(mainDock) prefDialog = new PrefDialog(this,doc->nbOfchannels());  // create dialog on demand
         else prefDialog = new PrefDialog(this);
@@ -684,7 +683,6 @@ void KlustersApp::executePreferencesDlg(){
             applyPreferences();                      // let settings take effect
         }
     }
-#endif
 }
 
 void KlustersApp::applyPreferences() {  

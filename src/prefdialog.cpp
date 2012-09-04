@@ -20,7 +20,7 @@
 #include <q3frame.h>         // for QFrame
 //Added by qt3to4:
 #include <Q3VBoxLayout>
-
+#include <QMessageBox>
 
 //include files for the application
 #include "prefdialog.h"     // class PrefDialog
@@ -40,30 +40,59 @@ using namespace std;
 */
 
 PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFlags f)
- : KDialogBase(IconList, tr("Preferences"), Help|Default|Ok|Apply|Cancel, Ok, parent, name, f)
+ : QPageDialog(parent)
 {
+
+    setButtons(Help | Default | Ok | Apply | Cancel);
+    setDefaultButton(Ok);
+    setFaceType(List);
+    setCaption(tr("Preferences"));
+
     setHelp("settings","klusters");
     
+    /*
     //adding page "General options"
     Q3Frame *frame = addPage(tr("General"), tr("Klusters General Configuration"),
         KGlobal::iconLoader()->loadIcon("kfm",KIcon::Panel,0,false) );
-    Q3VBoxLayout *frameLayout = new Q3VBoxLayout( frame, 0, 0 );
-    prefGeneral = new PrefGeneral(frame);
-    frameLayout->addWidget(prefGeneral);
+    */
+
+    QWidget * w = new QWidget(this);
+    QVBoxLayout*lay = new QVBoxLayout;
+    w->setLayout(lay);
+    prefGeneral = new PrefGeneral(w);
+    addPage(w,tr("General"));
+
+
 
     //adding page "Cluster view configuration"
+    /*
     frame = addPage(tr("Cluster view"), tr("Cluster View configuration"),
         QIcon(":icons/clusterview"));
     frameLayout = new Q3VBoxLayout( frame, 0, 0 );
     prefclusterView = new PrefClusterView(frame);
     frameLayout->addWidget(prefclusterView);
+*/
+    w = new QWidget(this);
+    lay = new QVBoxLayout;
+    prefclusterView = new PrefClusterView(w);
+    addPage(w,tr("Cluster view"));
+
+
 
     //adding page "Waveform view configuration"
+    /*
     frame = addPage(tr("Waveform view"), tr("Waveform View configuration"),
         QIcon(":icons/waveformview"));
     frameLayout = new Q3VBoxLayout( frame, 0, 0 );
     prefWaveformView = new PrefWaveformView(frame,nbChannels);
     frameLayout->addWidget(prefWaveformView);
+*/
+    w = new QWidget(this);
+    lay = new QVBoxLayout;
+    prefWaveformView = new PrefWaveformView(w,nbChannels);
+    addPage(w,tr("Waveform view"));
+
+
 
     // connect interactive widgets and selfmade signals to the enableApply slotDefault
     connect(prefGeneral->crashRecoveryCheckBox,SIGNAL(clicked()),this,SLOT(enableApply()));
@@ -77,6 +106,11 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
     connect(prefclusterView->intervalSpinBox,SIGNAL(valueChanged(int)),this,SLOT(enableApply()));
     connect(prefWaveformView->gainSpinBox,SIGNAL(valueChanged(int)),this,SLOT(enableApply()));
     connect(prefWaveformView,SIGNAL(positionsChanged()),this,SLOT(enableApply()));
+
+
+    connect(this, SIGNAL(applyClicked()), SLOT(slotApply()));
+    connect(this, SIGNAL(defaultClicked()), SLOT(slotDefault()));
+
 
     applyEnable = false;
 }
@@ -114,9 +148,9 @@ void PrefDialog::updateConfiguration(){
 
 
 void PrefDialog::slotDefault() {
-  if (KMessageBox::warningContinueCancel(this, tr("This will set the default options "
-      "in ALL pages of the preferences dialog! Do you wish to continue?"), tr("Set default options?"),
-      tr("Set defaults"))==KMessageBox::Continue){
+  if (QMessageBox::warning(this, tr("Set default options?"), tr("This will set the default options "
+      "in ALL pages of the preferences dialog! Do you wish to continue?"),
+      tr("Set defaults"))==QMessageBox::Ok){
         
    prefGeneral->setCrashRecovery(configuration().isCrashRecoveryDefault());
    prefGeneral->setCrashRecoveryIndex(configuration().crashRecoveryIntervalIndexDefault());
