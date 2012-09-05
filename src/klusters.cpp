@@ -805,7 +805,7 @@ void KlustersApp::initDisplay(){
     //KDAB_PENDING mainDock->setDockWindowTransient(this,true);
 
     //If the setting dialog exists (has already be open once), enable the settings for the channels.
-    //KDAB_PENDING if(prefDialog != 0L) prefDialog->enableChannelSettings(true);
+    if(prefDialog != 0L) prefDialog->enableChannelSettings(true);
 
     //No clusters are shown by default.
     QList<int>* clusterList = new QList<int>();
@@ -2364,7 +2364,7 @@ void KlustersApp::resetState(){
     setCaption("");
 
     //If the a setting dialog exists (has already be open once), disable the settings for the channels.
-    //KDAB_PENDING if(prefDialog != 0L) prefDialog->enableChannelSettings(false);
+    if(prefDialog != 0L) prefDialog->enableChannelSettings(false);
 }
 
 void KlustersApp::slotUpdateCorrelogramsHalfDuration(){
