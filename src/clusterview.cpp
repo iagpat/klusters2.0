@@ -172,7 +172,7 @@ void ClusterView::paintEvent ( QPaintEvent*){
 
 void ClusterView::resetSelectionPolygon(){
 
-    if(selectionPolygon.size()>0){
+    if(!selectionPolygon.isEmpty()){
         //Erase the existing polygon
 
         //Select the appropriate color
@@ -212,7 +212,7 @@ void ClusterView::resetSelectionPolygon(){
 }
 
 
-void ClusterView::eraseTheLastDrawnLine(QColor polygonColor){
+void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
     //Paint in the buffer to allow the selection to be redrawn after a refresh
     QPainter painter;
     painter.begin(&doublebuffer);
@@ -262,7 +262,7 @@ void ClusterView::eraseTheLastDrawnLine(QColor polygonColor){
     painter.end();
 }
 
-void ClusterView::eraseTheLastMovingLine(QColor polygonColor){
+void ClusterView::eraseTheLastMovingLine(const QColor& polygonColor){
     //The user moved since the last left click, a line has been drawn in the mouseMoveEvent
     if(nbSelectionPoints != selectionPolygon.size()){
         //set existLastMovingLine to true to correctely erase the closed polygon

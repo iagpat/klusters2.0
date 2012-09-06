@@ -129,10 +129,7 @@ void TraceWidget::initSelectionWidgets(){
     scrollBar = new QScrollBar(0,recordingLength - timeWindow,lineStep,pageStep,pageStep,Qt::Horizontal,selectionWidgets);
     scrollBar->setValue(startTime);
     connect(scrollBar,SIGNAL(sliderReleased()),this, SLOT(slotScrollBarUpdated()));
-    connect(scrollBar,SIGNAL(nextLine()),this, SLOT(slotScrollBarUpdated()));
-    connect(scrollBar,SIGNAL(nextPage()),this, SLOT(slotScrollBarUpdated()));
-    connect(scrollBar,SIGNAL(prevLine()),this, SLOT(slotScrollBarUpdated()));
-    connect(scrollBar,SIGNAL(prevPage()),this, SLOT(slotScrollBarUpdated()));
+    connect(scrollBar,SIGNAL(sliderMoved(int)),this, SLOT(slotScrollBarUpdated()));
 
     //enable the user to use the keyboard to interact with the scrollbar.
     scrollBar->setMouseTracking(false);

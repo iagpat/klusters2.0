@@ -282,13 +282,13 @@ private:
   * Erase the last line drawn while drawing the polygon of selection in the double buffer.
   * @param polygonColor color used to draw the line (to erase the line another line is draw on top of it)
   */
-    void eraseTheLastDrawnLine(QColor polygonColor);
+    void eraseTheLastDrawnLine(const QColor &polygonColor);
 
     /**
   * Erase the last line drawn during a mousemove event while drawing the polygon of selection in the double buffer.
   * @param polygonColor color used to draw the line (to erase the line another line is draw on top of it)
   */
-    void eraseTheLastMovingLine(QColor polygonColor);
+    void eraseTheLastMovingLine(const QColor &polygonColor);
 
     /**
   * Adds a cluster to the list of clusters to update
