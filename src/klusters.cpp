@@ -28,7 +28,7 @@
 #include <qapplication.h>
 #include <qinputdialog.h>
 #include <QPrinter>
-
+#include <QSplitter>
 #include <qrecentfileaction.h>
 
 //Added by qt3to4:
@@ -90,7 +90,7 @@ KlustersApp::KlustersApp()
       processKilled(false),
       errorMatrixExists(false)
 {
-    initClusterPanel();
+    initView();
 
     mMainToolBar = new QToolBar();
 
@@ -144,6 +144,17 @@ KlustersApp::~KlustersApp()
     processWidget = 0L;
     delete processOutputDock;
     processOutputDock = 0L;
+}
+
+void KlustersApp::initView()
+{
+    initClusterPanel();
+    QWidget *w = new QWidget;
+    QSplitter *splitter = new QSplitter;
+    splitter->addWidget(clusterPanel);
+    tabsParent = new QTabWidget();
+    splitter->addWidget(tabsParent);
+    setCentralWidget(splitter);
 }
 
 void KlustersApp::createMenus()
@@ -764,7 +775,7 @@ void KlustersApp::initClusterPanel()
     clusterPalette = new ClusterPalette(backgroundColor,clusterPanel,statusBar(),"ClusterPalette");
     //Place the clusterPalette frame in the clusterPanel (the view)
     clusterPanel->setWidget(clusterPalette);
-    addDockWidget(Qt::LeftDockWidgetArea,clusterPanel);
+    clusterPanel->setFeatures(QDockWidget::NoDockWidgetFeatures);
 }
 
 void KlustersApp::initDisplay(){
@@ -835,7 +846,7 @@ void KlustersApp::initDisplay(){
 
     mainDock->setWidget(view);
     //allow dock on the left side only
-    setCentralWidget(mainDock);
+    tabsParent->addTab(mainDock,QString());
 
     //disable docking abilities of mainDock itself
     mainDock->setAllowedAreas(Qt::NoDockWidgetArea);

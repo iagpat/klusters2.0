@@ -123,6 +123,7 @@ public:
     */
     void updateCorrelogramViewVariables(int binSize,int timeWindow,bool isShoulderLine, Data::ScaleMode correlationScale);
     
+
 protected:
     /** queryExit is called by KDocMainWindow when the last window of the application is going to be closed during the closeEvent().
      * Its purpose is purely to prepare the application (with possible user interaction)
@@ -429,6 +430,7 @@ private slots:
     void slotAbout();
 
 private:
+    void initView();
     void createMenus();
 
     void createToolBar();
