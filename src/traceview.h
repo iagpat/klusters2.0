@@ -560,7 +560,7 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent* event);
 
 private:
-
+    void updateCursor();
     /**True if the the colors are in grey-scale*/
     bool greyScaleMode;
 

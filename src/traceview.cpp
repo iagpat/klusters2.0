@@ -152,12 +152,12 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
 
     //Create the cursors
 
-    measureCursor = QCursor(QPixmap(":/cursors/measure_cursor",0,0));
-    selectTimeCursor = QCursor(QPixmap(":/cursors/select_time_cursor",0,0));
-    selectEventCursor = QCursor(QPixmap(":/cursors/select_event_cursor",0,0));
-    addEventCursor = QCursor(QPixmap(":/cursors/add_event_cursor",0,0));
-    selectCursor = QCursor(QPixmap(":/cursors/select_channels_cursor",0,0));
-    drawLineCursor = QCursor(QPixmap(":/cursors/time_line_cursor",0,0));
+    measureCursor = QCursor(QPixmap(":/cursors/measure_cursor.png",0,0));
+    selectTimeCursor = QCursor(QPixmap(":/cursors/select_time_cursor.png",0,0));
+    selectEventCursor = QCursor(QPixmap(":/cursors/select_event_cursor.png",0,0));
+    addEventCursor = QCursor(QPixmap(":/cursors/add_event_cursor.png",0,0));
+    selectCursor = QCursor(QPixmap(":/cursors/select_channels_cursor.png",0,0));
+    drawLineCursor = QCursor(QPixmap(":/cursors/time_line_cursor.png",0,0));
 
     //Set the cursor shap to a magnifier as the only action allowed on the widget is to zoom.
     setCursor(zoomCursor);
@@ -181,13 +181,7 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
         QApplication::restoreOverrideCursor();
 
         QMessageBox::critical(this,QObject::tr("IO Error"), QObject::tr("An error has occured, the data file could not be opened or the file size is incorrect."));
-        if(mode == SELECT) setCursor(selectCursor);
-        else if(mode == ZOOM) setCursor(zoomCursor);
-        else if(mode == MEASURE) setCursor(measureCursor);
-        else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        else if(mode == ADD_EVENT) setCursor(addEventCursor);
-        else if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        updateCursor();
 
         return;
     }
@@ -200,14 +194,7 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
     //The following code was done in case of threads, without thread the trace data arrive always last
     //No clusters or events selected
     if(clustersData.count() == 0 && eventsData.count() == 0){
-        if(mode == SELECT) setCursor(selectCursor);
-        else if(mode == ZOOM) setCursor(zoomCursor);
-        else if(mode == MEASURE) setCursor(measureCursor);
-        else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        else if(mode == ADD_EVENT) setCursor(addEventCursor);
-        else if(mode == DRAW_LINE) setCursor(drawLineCursor);
-
+        updateCursor();
         //Everything has to be redraw
         repaint(false);
     }
@@ -225,18 +212,30 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
             if(!ready) break;
         }
         if(ready){
-            if(mode == SELECT) setCursor(selectCursor);
-            else if(mode == ZOOM) setCursor(zoomCursor);
-            else if(mode == MEASURE) setCursor(measureCursor);
-            else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-            else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-            else if(mode == ADD_EVENT) setCursor(addEventCursor);
-            else if(mode == DRAW_LINE) setCursor(drawLineCursor);
-
+            updateCursor();
             //Everything has to be redraw
             repaint(false);
         }
     }
+
+}
+
+void TraceView::updateCursor()
+{
+    if(mode == SELECT)
+        setCursor(selectCursor);
+    else if(mode == ZOOM)
+        setCursor(zoomCursor);
+    else if(mode == MEASURE)
+        setCursor(measureCursor);
+    else if(mode == SELECT_TIME)
+        setCursor(selectTimeCursor);
+    else if(mode == SELECT_EVENT)
+        setCursor(selectEventCursor);
+    else if(mode == ADD_EVENT)
+        setCursor(addEventCursor);
+    else if(mode == DRAW_LINE)
+        setCursor(drawLineCursor);
 
 }
 
@@ -261,13 +260,7 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator,QString p
         if(!ready) break;
     }
     if(dataReady && ready){
-        if(mode == SELECT) setCursor(selectCursor);
-        else if(mode == ZOOM) setCursor(zoomCursor);
-        else if(mode == MEASURE) setCursor(measureCursor);
-        else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        else if(mode == ADD_EVENT) setCursor(addEventCursor);
-        else if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        updateCursor();
 
         //Everything has to be redraw
         drawContentsMode = REDRAW;
@@ -297,13 +290,7 @@ void TraceView::dataAvailable(Array<dataType>& times,Array<int>& ids,QObject* in
         if(!ready) break;
     }
     if(dataReady && ready){
-        if(mode == SELECT) setCursor(selectCursor);
-        else if(mode == ZOOM) setCursor(zoomCursor);
-        else if(mode == MEASURE) setCursor(measureCursor);
-        else if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        else if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        else if(mode == ADD_EVENT) setCursor(addEventCursor);
-        else if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        updateCursor();
 
         //Everything has to be redraw
         drawContentsMode = REDRAW;
@@ -3765,13 +3752,7 @@ void TraceView::nextEventDataAvailable(Array<dataType>& times,Array<int>& ids,QO
         }
     }
     else if(ready && (nextEventProvider.second == startTime || nextEventProvider.second > recordingLength)){
-        if(mode == SELECT) setCursor(selectCursor);
-        if(mode == ZOOM) setCursor(zoomCursor);
-        if(mode == MEASURE) setCursor(measureCursor);
-        if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        if(mode == ADD_EVENT) setCursor(addEventCursor);
-        if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        updateCursor();
     }
 }
 
@@ -3819,13 +3800,8 @@ void TraceView::previousEventDataAvailable(Array<dataType>& times,Array<int>& id
     }
     //if the new start time is equals to the current one or superior to the recording lenght do not do anything
     else if(ready && previousEventProvider.second == startTime){
-        if(mode == SELECT) setCursor(selectCursor);
-        if(mode == ZOOM) setCursor(zoomCursor);
-        if(mode == MEASURE) setCursor(measureCursor);
-        if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        if(mode == ADD_EVENT) setCursor(addEventCursor);
-        if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        updateCursor();
+
     }
     else if(ready && previousEventProvider.second > recordingLength){
         long timeFrameWidth = endTime - startTime;
@@ -4130,20 +4106,7 @@ void TraceView::nextClusterDataAvailable(Array<dataType>& data,QObject* initiato
     }
     else if(ready && (startTimeInRecordingUnits == previousStartTimeInRecordingUnits || nextClusterProvider.second > recordingLength)){
         startTimeInRecordingUnits = 0;
-        if(mode == SELECT)
-            setCursor(selectCursor);
-        else if(mode == ZOOM)
-            setCursor(zoomCursor);
-        else if(mode == MEASURE)
-            setCursor(measureCursor);
-        else if(mode == SELECT_TIME)
-            setCursor(selectTimeCursor);
-        else if(mode == SELECT_EVENT)
-            setCursor(selectEventCursor);
-        else if(mode == ADD_EVENT)
-            setCursor(addEventCursor);
-        else if(mode == DRAW_LINE)
-            setCursor(drawLineCursor);
+        updateCursor();
     }
 }
 
@@ -4193,20 +4156,7 @@ void TraceView::previousClusterDataAvailable(Array<dataType>& data,QObject* init
     }
     //if the new start time (in recording unit) is equals to the current one do not do anything
     else if(ready && startTimeInRecordingUnits == previousStartTimeInRecordingUnits){
-        if(mode == SELECT)
-            setCursor(selectCursor);
-        else if(mode == ZOOM)
-            setCursor(zoomCursor);
-        else if(mode == MEASURE)
-            setCursor(measureCursor);
-        else if(mode == SELECT_TIME)
-            setCursor(selectTimeCursor);
-        else if(mode == SELECT_EVENT)
-            setCursor(selectEventCursor);
-        else if(mode == ADD_EVENT)
-            setCursor(addEventCursor);
-        else if(mode == DRAW_LINE)
-            setCursor(drawLineCursor);
+        updateCursor();
     }
     //if the new start time is superior to the recording lenght, look up in all the files at the last timeFrameWidth of the data file
     else if(ready && previousClusterProvider.second > recordingLength){
