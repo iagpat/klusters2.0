@@ -473,13 +473,13 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
 
     if(dimensionX == timeDimension){
         int timeInS = static_cast<int>(current.x() * samplingInterval / 1000000.0);
-        statusBar->showMessage("Coordinates: (" + QString("%1").arg(timeInS) + ", " + QString("%1").arg(-current.y()) + ")");
+        statusBar->showMessage("Coordinates: (" + QString::fromLatin1("%1").arg(timeInS) + ", " + QString::fromLatin1("%1").arg(-current.y()) + ")");
     }
     else if(dimensionY == timeDimension){
         int timeInS = static_cast<int>(current.y() * samplingInterval / 1000000.0);
-        statusBar->showMessage("Coordinates: (" + QString("%1").arg(current.x()) + ", " + QString("%1").arg(-timeInS) + ")");
+        statusBar->showMessage("Coordinates: (" + QString::fromLatin1("%1").arg(current.x()) + ", " + QString::fromLatin1("%1").arg(-timeInS) + ")");
     }
-    else  statusBar->showMessage("Coordinates: (" + QString("%1").arg(current.x()) + ", " + QString("%1").arg(-current.y()) + ")");
+    else  statusBar->showMessage("Coordinates: (" + QString::fromLatin1("%1").arg(current.x()) + ", " + QString::fromLatin1("%1").arg(-current.y()) + ")");
 
 
 
@@ -612,7 +612,7 @@ void ClusterView::drawTimeInformation(QPainter& painter){
             QPoint bottomInViewport = worldToViewport(i,markHeight);
 
             painter.drawLine(topInViewport,bottomInViewport);
-            painter.drawText(topInViewport.x() + 1,legendOrdinate,QString("%1").arg(time));
+            painter.drawText(topInViewport.x() + 1,legendOrdinate,QString::fromLatin1("%1").arg(time));
 
             time += timeStepInSecond;
         }
@@ -635,7 +635,7 @@ void ClusterView::drawTimeInformation(QPainter& painter){
                 QPoint bottomInViewport = worldToViewport(markHeight,-i);
 
                 painter.drawLine(topInViewport,bottomInViewport);
-                painter.drawText(legendAbsciss,topInViewport.y(),QString("%1").arg(time));
+                painter.drawText(legendAbsciss,topInViewport.y(),QString::fromLatin1("%1").arg(time));
 
                 time += timeStepInSecond;
             }

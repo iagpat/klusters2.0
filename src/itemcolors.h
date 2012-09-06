@@ -55,7 +55,7 @@ private:
       color = c;
       isChanged = false;
       if(l == "")
-          label = QString("%1").arg(id);
+          label = QString::fromLatin1("%1").arg(id);
       else
           label = l;
     }

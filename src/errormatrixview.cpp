@@ -219,7 +219,7 @@ void ErrorMatrixView::drawClusterIds(QPainter& painter){
     for(iterator = clusterList.begin(); iterator != clusterList.end(); ++iterator){
         //the abscissa is increase by the font size to adjust for conversion from world coordinates to viewport coordinates.
         QRect r(worldToViewport(X,-Y).x() + 15,worldToViewport(X,-Y).y() + 2,worldToViewportWidth(cellWidth),12);
-        painter.drawText(r,Qt::AlignHCenter,QString("%1").arg(*iterator));
+        painter.drawText(r,Qt::AlignHCenter,QString::fromLatin1("%1").arg(*iterator));
         X += cellWidth;
     }
 
@@ -229,7 +229,7 @@ void ErrorMatrixView::drawClusterIds(QPainter& painter){
 
     for(iterator = clusterList.begin(); iterator != clusterList.end(); ++iterator){
         QRect r(worldToViewport(X,-Y).x(),worldToViewport(X,-Y).y(),15,worldToViewportHeight(cellWidth));
-        painter.drawText(r,Qt::AlignCenter,QString("%1").arg(*iterator));
+        painter.drawText(r,Qt::AlignCenter,QString::fromLatin1("%1").arg(*iterator));
         Y -= cellWidth;
     }
 }
@@ -295,9 +295,9 @@ void ErrorMatrixView::mouseMoveEvent(QMouseEvent* e){
     int indexMax = clusterList.size() - 1;
     if((cluster1Index > -1) && (cluster1Index <= indexMax) &&
             (cluster2Index > -1) && (cluster2Index <= indexMax)){
-        statusBar->showMessage("Clusters (" + QString("%1").arg(clusterList[cluster2Index]) + "," +
-                               QString("%1").arg(clusterList[cluster1Index]) + "): p = " +
-                               QString("%1").arg((*probabilities)(cluster2Index + 1,cluster1Index + 1)));
+        statusBar->showMessage("Clusters (" + QString::fromLatin1("%1").arg(clusterList[cluster2Index]) + "," +
+                               QString::fromLatin1("%1").arg(clusterList[cluster1Index]) + "): p = " +
+                               QString::fromLatin1("%1").arg((*probabilities)(cluster2Index + 1,cluster1Index + 1)));
     }
 }
 

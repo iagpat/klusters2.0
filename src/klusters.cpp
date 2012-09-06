@@ -2127,7 +2127,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
                 startTime =  activeView->timeFrameStart();
                 start->setValue(startTime);
                 start->setLineStep(timeWindow);
-                duration->setText(QString("%1").arg(timeWindow));
+                duration->setText(QString::fromLatin1("%1").arg(timeWindow));
                 duration->show();
                 durationLabel->show();
                 start->show();
@@ -2177,8 +2177,8 @@ void KlustersApp::slotTabChange(QWidget* widget){
             //Update the lineEdit
             correlogramTimeFrame = activeView->correlationTimeFrameWidth();
             binSize = activeView->sizeOfBin();
-            correlogramsHalfDuration->setText(QString("%1").arg(correlogramTimeFrame / 2));
-            binSizeBox->setText(QString("%1").arg(binSize));
+            correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
+            binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
             correlogramsHalfDuration->show();
             correlogramsHalfDurationLabel->show();
             binSizeBox->show();
@@ -2293,7 +2293,7 @@ void KlustersApp::slotTimeFrameMode(){
             startTime =  activeView()->timeFrameStart();
             start->setValue(startTime);
             start->setLineStep(timeWindow);
-            duration->setText(QString("%1").arg(timeWindow));
+            duration->setText(QString::fromLatin1("%1").arg(timeWindow));
             duration->show();
             durationLabel->show();
             start->show();
@@ -2366,7 +2366,7 @@ void KlustersApp::slotUpdateCorrelogramsHalfDuration(){
     if(!isInit){
         int halfTimeFrame = (correlogramsHalfDuration->displayText()).toInt();
         if(halfTimeFrame > (maximumTime - binSize) / 2){
-            correlogramsHalfDuration->setText(QString("%1").arg((correlogramTimeFrame - binSize) / 2));
+            correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg((correlogramTimeFrame - binSize) / 2));
             return;
         }
 
@@ -2376,7 +2376,7 @@ void KlustersApp::slotUpdateCorrelogramsHalfDuration(){
 
         correlogramTimeFrame = (2*k+1)*binSize;
         if(k != x){
-            correlogramsHalfDuration->setText(QString("%1").arg(static_cast<int>(correlogramTimeFrame / 2)));
+            correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(static_cast<int>(correlogramTimeFrame / 2)));
         }
         activeView()->updateBinSizeAndTimeFrame(binSize,correlogramTimeFrame);
     }
@@ -2776,8 +2776,8 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDock
             scaleByMax->setChecked(true);
             correlogramTimeFrame = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
             binSize = DEFAULT_BIN_SIZE.toInt();
-            correlogramsHalfDuration->setText(QString("%1").arg(correlogramTimeFrame / 2));
-            binSizeBox->setText(QString("%1").arg(binSize));
+            correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
+            binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
             correlogramsHalfDuration->show();
             correlogramsHalfDurationLabel->show();
             binSizeBox->show();
@@ -2897,8 +2897,8 @@ void KlustersApp::updateCorrelogramViewVariables(int binSize,int timeWindow,bool
     //timeWindow is the time frame use to compute the correlograms, the lineedit correlogramsHalfDuration contains half of it.
     correlogramTimeFrame = timeWindow;
     //int k = ((static_cast<float>(correlogramTimeFrame) / static_cast<float>(binSize)) - 1) / 2;
-    //correlogramsHalfDuration->setText(QString("%1").arg(k * binSize));
-    correlogramsHalfDuration->setText(QString("%1").arg(static_cast<int>(correlogramTimeFrame / 2)));
+    //correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(k * binSize));
+    correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(static_cast<int>(correlogramTimeFrame / 2)));
     shoulderLine->setChecked(isShoulderLine);
 
     switch(correlationScale){

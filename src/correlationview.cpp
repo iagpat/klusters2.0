@@ -444,7 +444,7 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
             //Get the firing rate and ensure that there always 2 digits after the dot.
             float firingRate = iterator.getFiringRate();
             firingRate = floor((firingRate * 100) + 0.5) / 100;
-            QString firingRateString = QString("%1").arg(firingRate);
+            QString firingRateString = QString::fromLatin1("%1").arg(firingRate);
             QStringList parts = QStringList::split(".", firingRateString);
             if(parts.count() == 1) firingRateString += ".00";
             else{
@@ -634,7 +634,7 @@ void CorrelationView::drawClusterIds(QPainter& painter){
 
     for(iterator = shownClusters.begin(); iterator != shownClusters.end(); ++iterator){
         QRect r(worldToViewport(X,-Y).x(),worldToViewport(X,-Y).y(),10,worldToViewportHeight(YsizeForMaxAmp + Yspace));
-        painter.drawText(r,Qt::AlignCenter,QString("%1").arg(*iterator));
+        painter.drawText(r,Qt::AlignCenter,QString::fromLatin1("%1").arg(*iterator));
         Y += yshift;
     }
 }
@@ -766,7 +766,7 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
 
                 statusBar->showMessage("Time (ms): "+ QString("%1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]));
             }
-            else statusBar->showMessage("Time (ms): "+ QString("%1").arg(time));
+            else statusBar->showMessage("Time (ms): "+ QString::fromLatin1("%1").arg(time));
         }
     }
 

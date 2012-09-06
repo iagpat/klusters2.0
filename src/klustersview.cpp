@@ -845,7 +845,7 @@ bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColo
         else viewCounter["TraceView"]++;
 
         isThereTraceView = true;
-        count = QString("%1").arg(viewCounter["TraceView"]);
+        count = QString::fromLatin1("%1").arg(viewCounter["TraceView"]);
 
         traces = new QDockWidget(tr(doc.documentName().toLatin1()));
                 //createDockWidget(count.prepend("TraceView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));

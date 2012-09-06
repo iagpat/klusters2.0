@@ -139,7 +139,7 @@ QDomNode ParameterXmlModifier::findDirectChild(QString childName,QString grandCh
 
 bool ParameterXmlModifier::setClusterUserInformation (int pGroup,QMap<int,ClusterUserInformation>& clusterUserInformationMap) {
 
-	QString vGroupId = QString("%1").arg(pGroup);
+	QString vGroupId = QString::fromLatin1("%1").arg(pGroup);
 	
  //attention il faut garder les informtion des autres groupes.
 	
@@ -193,11 +193,11 @@ bool ParameterXmlModifier::setClusterUserInformation (int pGroup,QMap<int,Cluste
         notes = currentClusterUserInformation.getNotes();
 
 		  QDomElement groupElement = doc.createElement(GROUP);
-		  QDomText groupValue = doc.createTextNode(QString("%1").arg(group));
+		  QDomText groupValue = doc.createTextNode(QString::fromLatin1("%1").arg(group));
 		  groupElement.appendChild(groupValue);
 		  
 		  QDomElement clusterElement = doc.createElement(CLUSTER);
-		  QDomText clusterValue = doc.createTextNode(QString("%1").arg(clusterId));
+		  QDomText clusterValue = doc.createTextNode(QString::fromLatin1("%1").arg(clusterId));
 		  clusterElement.appendChild(clusterValue);
 		  
         QDomElement structureElement = doc.createElement(STRUCTURE);

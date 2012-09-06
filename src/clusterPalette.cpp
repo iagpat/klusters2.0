@@ -203,9 +203,9 @@ void ClusterPalette::slotRightPressed(Q3IconViewItem* item){
 
                 //update the text of the item
                 if(isInUserClusterInfoMode){
-                    item->setText(QString("%1").arg(clusterNumber) + ": " + clusterInformationDialog->getStructure()+ ",  " + clusterInformationDialog->getType() + ", " + clusterInformationDialog->getId() + ", " + clusterInformationDialog->getQuality() + ", " + clusterInformationDialog->getNotes());
+                    item->setText(QString::fromLatin1("%1").arg(clusterNumber) + ": " + clusterInformationDialog->getStructure()+ ",  " + clusterInformationDialog->getType() + ", " + clusterInformationDialog->getId() + ", " + clusterInformationDialog->getQuality() + ", " + clusterInformationDialog->getNotes());
 
-                    QString clusterText = QString("%1").arg(clusterNumber);
+                    QString clusterText = QString::fromLatin1("%1").arg(clusterNumber);
                     bool first = true;
 
                     if( clusterInformationDialog->getStructure() != ""){
@@ -459,7 +459,7 @@ void ClusterPalette::selectItems(QList<int> selectedClusters){
     QList<int>::iterator clusterIterator;
     ClusterPaletteIconViewItem* currentIcon = 0L;
     for(clusterIterator = selectedClusters.begin(); clusterIterator != selectedClusters.end(); ++clusterIterator){
-        currentIcon =  static_cast<ClusterPaletteIconViewItem*>(iconView->findItem(QString("%1").arg(*clusterIterator),Q3IconView::BeginsWith));
+        currentIcon =  static_cast<ClusterPaletteIconViewItem*>(iconView->findItem(QString::fromLatin1("%1").arg(*clusterIterator),Q3IconView::BeginsWith));
         currentIcon->setSelected(true,true);
     }
     //Last item in selection gets focus if it exists
@@ -572,7 +572,7 @@ void ClusterPalette::hideUserClusterInformation(){
 
     for(Q3IconViewItem* item = iconView->firstItem(); item; item = item->nextItem()){
         clusterId = clusterColors.itemId(item->index());
-        item->setText(QString("%1").arg(clusterId));
+        item->setText(QString::fromLatin1("%1").arg(clusterId));
     }
 
     iconView->setWordWrapIconText(true);

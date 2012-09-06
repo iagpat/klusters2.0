@@ -701,7 +701,7 @@ QRecentFileAction* mFileOpenRecent;
         inline ~BinSizeValidator(){}
         inline void fixup (QString& input) const{
             //If the state determine in validate was invalid, fix by setting back the last correct value.
-            input = QString("%1").arg(klusters->binSize);
+            input = QString::fromLatin1("%1").arg(klusters->binSize);
         }
         inline QValidator::State validate(QString &input,int& pos) const{
             QValidator::State state = QIntValidator::validate(input,pos);
@@ -718,8 +718,8 @@ QRecentFileAction* mFileOpenRecent;
 
                 klusters->correlogramTimeFrame = (2*k+1) * sizeOfBin;
                 if(k != x){
-                    // klusters->correlogramsHalfDuration->setText(QString("%1").arg(k * sizeOfBin));
-                    klusters->correlogramsHalfDuration->setText(QString("%1").arg(static_cast<int>(klusters->correlogramTimeFrame / 2)));
+                    // klusters->correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(k * sizeOfBin));
+                    klusters->correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(static_cast<int>(klusters->correlogramTimeFrame / 2)));
                 }
                 return state;
             }
@@ -757,7 +757,7 @@ QRecentFileAction* mFileOpenRecent;
 
             //The value entered was not an integer
             if(halfTimeFrame == 0){
-                input = QString("%1").arg((klusters->correlogramTimeFrame - klusters->binSize) / 2);
+                input = QString::fromLatin1("%1").arg((klusters->correlogramTimeFrame - klusters->binSize) / 2);
                 return;
             }
         };

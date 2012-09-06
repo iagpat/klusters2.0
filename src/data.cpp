@@ -750,7 +750,7 @@ dataType Data::createNewCluster(QRegion& region, const QList <int>& clustersOfOr
             mutex.lock();
             if(waveformStatusMap.contains(*iterator)){
                 if(!waveformStatusMap[*iterator].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*iterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
                     waveformStatusMap.remove(*iterator);
                 }
                 else{
@@ -971,7 +971,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& cluste
             mutex.lock();
             if(waveformStatusMap.contains(clusterId)){
                 if(!waveformStatusMap[clusterId].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(clusterId));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(clusterId));
                     waveformStatusMap.remove(clusterId);
                 }
                 else{
@@ -1293,7 +1293,7 @@ void Data::deleteSpikesFromClusters(QRegion& region, const QList <int>& clusters
             mutex.lock();
             if(waveformStatusMap.contains(*iterator)){
                 if(!waveformStatusMap[*iterator].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*iterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
                     waveformStatusMap.remove(*iterator);
                 }
                 else{
@@ -1407,7 +1407,7 @@ void Data::moveClustersToArtefact(QList <int>& clustersToDelete){
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){
             if(!waveformStatusMap[*iterator].isInProcess()){
-                waveformDict.remove(QString("%1").arg(*iterator));
+                waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
                 waveformStatusMap.remove(*iterator);
             }
             else{
@@ -1570,7 +1570,7 @@ void Data::moveClustersToNoise(QList<int>& clustersToDelete){
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){
             if(!waveformStatusMap[*iterator].isInProcess()){
-                waveformDict.remove(QString("%1").arg(*iterator));
+                waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
                 waveformStatusMap.remove(*iterator);
             }
             else{
@@ -1746,7 +1746,7 @@ dataType Data::groupClusters(QList<int>& clustersToGroup){
         mutex.lock();
         if(waveformStatusMap.contains(*clustersToGroupIterator)){
             if(!waveformStatusMap[*clustersToGroupIterator].isInProcess()){
-                waveformDict.remove(QString("%1").arg(*clustersToGroupIterator));
+                waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToGroupIterator));
                 waveformStatusMap.remove(*clustersToGroupIterator);
             }
             else{
@@ -1899,7 +1899,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*clustersToRemoveIterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -1931,7 +1931,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*clustersToRemoveIterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -1968,7 +1968,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
             mutex.lock();
             if(waveformStatusMap.contains(static_cast<int>(*iterator))){
                 if(!waveformStatusMap[static_cast<int>(*iterator)].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*iterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
                     waveformStatusMap.remove(static_cast<int>(*iterator));
                 }
                 else{
@@ -2051,7 +2051,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*clustersToRemoveIterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -2077,7 +2077,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*clustersToRemoveIterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -2103,7 +2103,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*clustersToRemoveIterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -2137,7 +2137,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
             mutex.lock();
             if(waveformStatusMap.contains(static_cast<int>(*iterator))){
                 if(!waveformStatusMap[static_cast<int>(*iterator)].isInProcess()){
-                    waveformDict.remove(QString("%1").arg(*iterator));
+                    waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
                     waveformStatusMap.remove(static_cast<int>(*iterator));
                 }
                 else{
@@ -2250,8 +2250,8 @@ void Data::renumber(QMap<int,int>& clusterIdsOldNew,QMap<int,int>& clusterIdsNew
             mutex.lock();
             if(waveformStatusMap.contains(static_cast<int>(clusterId))){
                 if(!waveformStatusMap[static_cast<int>(clusterId)].isInProcess()){
-                    Waveforms* waveforms = waveformDict.take(QString("%1").arg(clusterId));
-                    waveformDict.insert(QString("%1").arg(clusterNumber),waveforms);
+                    Waveforms* waveforms = waveformDict.take(QString::fromLatin1("%1").arg(clusterId));
+                    waveformDict.insert(QString::fromLatin1("%1").arg(clusterNumber),waveforms);
                     WaveformStatus waveformStatus = waveformStatusMap[static_cast<int>(clusterId)];
                     waveformStatusMap.insert(clusterNumber,waveformStatus);
                     waveformStatusMap.remove(static_cast<int>(clusterId));
@@ -2391,7 +2391,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
 
     //Take a sample of the spikes (displayNbSpikes) evenly distributed on all the recording.
 
-    QString clusterIdString = QString("%1").arg(clusterId);
+    QString clusterIdString = QString::fromLatin1("%1").arg(clusterId);
     SortableTable positionOfSpikes = SortableTable();
     Waveforms* waveforms;
     dataType nbSpikesOfCluster = 0;
@@ -2489,7 +2489,7 @@ Data::Status Data::getTimeFrameWaveformPoints(int clusterId,dataType start,dataT
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)))return NOT_AVAILABLE;
 
     //Take all the spikes in a given time frame
-    QString clusterIdString = QString("%1").arg(clusterId);
+    QString clusterIdString = QString::fromLatin1("%1").arg(clusterId);
     SortableTable positionOfSpikes = SortableTable();
     dataType nbSpikesOfCluster = 0;
     dataType startInRecordingUnits = start * static_cast<dataType>(1000000.0 / samplingInterval);
@@ -2756,7 +2756,7 @@ void Data::WaveformData<T>::calculateMean(WaveformMode waveformMode){
 Data::Status Data::calculateSampleMean(int clusterId,dataType nbSpkToDisplay){
     //Calculate the mean and the standard deviation for
     //a sample of the spikes (displayNbSpikes) evenly distributed on all the recording.
-    QString clusterIdString = QString("%1").arg(clusterId);
+    QString clusterIdString = QString::fromLatin1("%1").arg(clusterId);
     Waveforms* waveforms;
 
     //Does this cluster already processed?
@@ -2810,7 +2810,7 @@ Data::Status Data::calculateTimeFrameMean(int clusterId,dataType start,dataType 
     //Calculate the mean and the standard deviation for
     //a sample of the spikes (displayNbSpikes) evenly distributed on all the recording.
 
-    QString clusterIdString = QString("%1").arg(clusterId);
+    QString clusterIdString = QString::fromLatin1("%1").arg(clusterId);
     Waveforms* waveforms;
 
     //Does this cluster already processed?
@@ -3622,7 +3622,7 @@ bool Data::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<in
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){
             if(!waveformStatusMap[*iterator].isInProcess()){
-                waveformDict.remove(QString("%1").arg(*iterator));
+                waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
                 waveformStatusMap.remove(*iterator);
             }
             else{

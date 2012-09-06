@@ -1184,7 +1184,7 @@ public:
   * @return the sampleWaveformIterator on the spikes of the given cluster.
   */
     inline SampleWaveformIterator* sampleWaveformIterator(dataType clusterId,dataType nbSampleSpikes){
-        QString clusterIdString = QString("%1").arg(clusterId);
+        QString clusterIdString = QString::fromLatin1("%1").arg(clusterId);
         int clusterIdInt = static_cast<int>(clusterId);
         SampleWaveformIterator* waveformIterator;
 
@@ -1261,7 +1261,7 @@ public:
   * @return the TimeFrameWaveformIterator on the spikes of the given cluster.
   */
     inline TimeFrameWaveformIterator* timeFrameWaveformIterator(dataType clusterId,dataType startTime,dataType endTime){
-        QString clusterIdString = QString("%1").arg(clusterId);
+        QString clusterIdString = QString::fromLatin1("%1").arg(clusterId);
         int clusterIdInt = static_cast<int>(clusterId);
         TimeFrameWaveformIterator* waveformIterator;
 

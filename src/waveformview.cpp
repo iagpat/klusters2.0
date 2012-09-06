@@ -660,7 +660,7 @@ void WaveformView::drawClusterIds(QPainter& painter){
 
     for(iterator = shownClusters.begin(); iterator != shownClusters.end(); ++iterator){
         //the abscissa is increase by the font size to adjust for conversion from world coordinates to viewport coordinates.
-        painter.drawText(worldToViewport(X,-Y).x() + 8,worldToViewport(X,-Y).y() + 8,QString("%1").arg(*iterator));
+        painter.drawText(worldToViewport(X,-Y).x() + 8,worldToViewport(X,-Y).y() + 8,QString::fromLatin1("%1").arg(*iterator));
         X += shift;
     }
 }
