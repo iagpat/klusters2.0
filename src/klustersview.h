@@ -165,7 +165,6 @@ class KlustersView : public QWidget
 
     /**Show all the encapsulated widgets contain in the view. The widgets know how to draw themselves.*/
     inline void showAllWidgets(){
-     // dockManager->activate();
       emit updateContents();
     }
 

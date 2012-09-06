@@ -877,9 +877,6 @@ void KlustersApp::initDisplay(){
         spikesTodisplayLabel->show();
     }
 
-    //show all the encapsulated widgets of all controlled dockwidgets
-    //KDAB_PENDING dockManager->activate();
-
     //Enable some actions now that a document is open (see the klustersui.rc file)
     slotStateChanged("documentState");
 }
@@ -997,8 +994,6 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //Keep track of the number of displays
         displayCount ++;
 
-        //show all the encapsulated widgets of all controlled dockwidgets
-        //KDAB_PENDING dockManager->activate();
     }
 }
 
@@ -2588,8 +2583,6 @@ void KlustersApp::slotRecluster(){
         //Keep track of the number of displays
         displayCount ++;
 
-        //show all the encapsulated widgets of all controlled dockwidgets
-        //KDAB_PENDING dockManager->activate();
     }
 
     //Rest the different variables.
@@ -2900,7 +2893,7 @@ void KlustersApp::updateCorrelogramViewVariables(int binSize,int timeWindow,bool
 
     //Update the boxes
     this->binSize = binSize;
-    binSizeBox->setText(QString("%1").arg(binSize));
+    binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
     //timeWindow is the time frame use to compute the correlograms, the lineedit correlogramsHalfDuration contains half of it.
     correlogramTimeFrame = timeWindow;
     //int k = ((static_cast<float>(correlogramTimeFrame) / static_cast<float>(binSize)) - 1) / 2;
