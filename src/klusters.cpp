@@ -2988,10 +2988,10 @@ void KlustersApp::slotStateChanged(const QString& state)
         mUpdateDisplay->setEnabled(false);
         mZoomAction->setEnabled(false);
         mUpdateErrorMatrix->setEnabled(false);
+        mNewCluster->setEnabled(false);
 /*
         <Action name="renumber" />
         <Action name="recluster" />
-        <Action name="single_new" />
         <Action name="multiple_new" />
         <Action name="delete_artifact" />
         <Action name="delete_noise" />
@@ -3003,8 +3003,9 @@ void KlustersApp::slotStateChanged(const QString& state)
         <Action name="raw_data" />
         <Action name="scale_by_max" />
         <Action name="scale_by_shouler" />
-        <Action name="shoulder_line" />
 */
+
+        shoulderLine->setEnabled(false);
 
         mSelectTime->setEnabled(false);
 
@@ -3033,6 +3034,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mZoomAction->setEnabled(true);
         newClusterDisplay->setEnabled(true);
         mCloseActiveDisplay->setEnabled(true);
+        mNewCluster->setEnabled(true);
         /*
    <Action name="new_waveformDisplay" />
    <Action name="new_crosscorrelationDisplay" />
@@ -3043,7 +3045,6 @@ void KlustersApp::slotStateChanged(const QString& state)
    <Action name="group_clusters" />
    <Action name="renumber" />
    <Action name="recluster" />
-   <Action name="single_new" />
    <Action name="multiple_new" />
    <Action name="delete_artifact" />
    <Action name="delete_noise" />
@@ -3055,9 +3056,10 @@ void KlustersApp::slotStateChanged(const QString& state)
    <Action name="raw_data" />
    <Action name="scale_by_max" />
    <Action name="scale_by_shouler" />
-   <Action name="shoulder_line" />
 
    */
+        shoulderLine->setEnabled(true);
+
         mIncreaseAmplitude->setEnabled(true);
         mDecreaseAmplitude->setEnabled(true);
 
@@ -3115,9 +3117,9 @@ void KlustersApp::slotStateChanged(const QString& state)
     } else if(state == QLatin1String("noClusterViewState")) {
         mZoomAction->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
-        /*
+mNewCluster->setEnabled(false);
+/*
         <Disable>
-         <Action name="single_new" />
          <Action name="multiple_new" />
          <Action name="delete_artifact" />
          <Action name="delete_noise" />
@@ -3129,11 +3131,10 @@ void KlustersApp::slotStateChanged(const QString& state)
     } else if(state == QLatin1String("clusterViewState")) {
         mZoomAction->setEnabled(true);
         mDeleteNoisy->setEnabled(true);
-
+mNewCluster->setEnabled(true);
 
         /*
   <Enable>
-   <Action name="single_new" />
    <Action name="multiple_new" />
    <Action name="delete_artifact" />
    <Action name="move_clusters_to_artifact" />
@@ -3148,22 +3149,22 @@ void KlustersApp::slotStateChanged(const QString& state)
    <Action name="scale_by_max" />
    <Action name="scale_by_shouler" />
    <Action name="raw_data" />
-   <Action name="shoulder_line" />
   </Disable>
 */
         mIncreaseAmplitude->setEnabled(false);
         mDecreaseAmplitude->setEnabled(false);
+        shoulderLine->setEnabled(false);
 
     } else if(state == QLatin1String("correlationViewState")) {
         mIncreaseAmplitude->setEnabled(true);
         mDecreaseAmplitude->setEnabled(true);
+        shoulderLine->setEnabled(true);
 
         /*
   <Enable>
    <Action name="scale_by_max" />
    <Action name="scale_by_shouler" />
    <Action name="raw_data" />
-   <Action name="shoulder_line" />
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
    <Action name="group_clusters" />
@@ -3195,9 +3196,9 @@ void KlustersApp::slotStateChanged(const QString& state)
     } else if(state == QLatin1String("reclusterViewState")) {
         mZoomAction->setEnabled(false);
         mUpdateErrorMatrix->setEnabled(false);
+        mNewCluster->setEnabled(false);
         /*
   <Disable>
-   <Action name="single_new" />
    <Action name="multiple_new" />
    <Action name="delete_artifact" />
    <Action name="delete_noise" />
@@ -3209,11 +3210,6 @@ void KlustersApp::slotStateChanged(const QString& state)
    <Action name="scale_by_max" />
    <Action name="scale_by_shouler" />
    <Action name="raw_data" />
-   <Action name="shoulder_line" />
-   <Action name="scale_by_max" />
-   <Action name="scale_by_shouler" />
-   <Action name="raw_data" />
-   <Action name="shoulder_line" />
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
    <Action name="group_clusters" />
@@ -3222,6 +3218,7 @@ void KlustersApp::slotStateChanged(const QString& state)
   </Disable>
 */
 
+        shoulderLine->setEnabled(false);
         mIncreaseAmplitude->setEnabled(false);
         mDecreaseAmplitude->setEnabled(false);
 
@@ -3233,10 +3230,10 @@ void KlustersApp::slotStateChanged(const QString& state)
     } else if(state == QLatin1String("reclusterState")) {
         mUndo->setEnabled(false);
         mRedo->setEnabled(false);
+        mNewCluster->setEnabled(false);
         /*
   <Disable>
    <Action name="recluster" />
-   <Action name="single_new" />
    <Action name="multiple_new" />
    <Action name="delete_artifact" />
    <Action name="delete_noise" />
