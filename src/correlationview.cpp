@@ -92,7 +92,7 @@ CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,QColor back
     int i = 0;
     for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
         QList<int>::iterator iterator2;
-#if KDAB_PORTING_ITERATOR	
+#if KDAB_PORTING_ITERATOR
         for(iterator2 = (clusters.at(i)); iterator2 != clusters.end(); ++iterator2){
             //Create pairs as (*iterator,*iterator2) where *iterator <= *iterator2
             pairs.append(Pair(*iterator,*iterator2));

@@ -20,12 +20,6 @@
 #ifndef CLUSTERINFORMATIONDIALOG_H
 #define CLUSTERINFORMATIONDIALOG_H
 
-//QT includes
-#include "qlayout.h"
-//Added by qt3to4:
-#include <Q3VBoxLayout>
-
-//KDE includes
 #include <QDialog>
 
 #include <QLineEdit>
@@ -62,7 +56,6 @@ private:
     QLineEdit		*id;
     QLineEdit		*quality;
     QLineEdit		*notes;
-    Q3VBoxLayout		*layout;
 
 };
 

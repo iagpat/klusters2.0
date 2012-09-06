@@ -21,7 +21,7 @@
 #include "clusterinformationdialog.h"
 //Added by qt3to4:
 #include <QLabel>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QDialogButtonBox>
 
 
@@ -33,8 +33,7 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
     setModal(true);
     page = new QWidget(this);
 
-    //KDAB_PENDING: add spacingHint
-    layout = new Q3VBoxLayout(page,0);
+    QVBoxLayout*  layout = new QVBoxLayout(page);
     layout->setMargin(2);
     setLayout(layout);
     //Structure information (label and lineedit)

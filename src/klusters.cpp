@@ -2882,18 +2882,17 @@ void KlustersApp::renameActiveDisplay(){
     current = static_cast<QDockWidget*>(tabsParent->currentPage());
 
     bool ok;
-#if KDAB_PENDING
-    QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString(), &ok, this, current->tabPageLabel());
+    QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString(), &ok, this, current->windowTitle());
     if(!newLabel.isEmpty() && ok){
         tabsParent->setTabLabel(current,newLabel);
-        //KDAB_PENDING current->setTabPageLabel(newLabel);
+        current->setWindowTitle(newLabel);
     }
-#endif
 }
 
 void KlustersApp::slotShowLabels(){
     KlustersView* currentView = activeView();
-    if(currentView->containsTraceView()) currentView->showLabelsUpdate(showHideLabels->isChecked());
+    if(currentView->containsTraceView())
+        currentView->showLabelsUpdate(showHideLabels->isChecked());
 }
 
 void KlustersApp::updateCorrelogramViewVariables(int binSize,int timeWindow,bool isShoulderLine, Data::ScaleMode correlationScale){

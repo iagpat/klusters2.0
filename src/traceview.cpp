@@ -2014,12 +2014,12 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
             nbMiliseconds = 0;
             nbSeconds++;
         }
-        message = "Duration: "+ QString("%1 min %2 s %3 ms ").arg(nbMinutes).arg(nbSeconds).arg(nbMiliseconds);
+        message = tr("Duration: %1").arg(QString::fromLatin1("%1 min %2 s %3 ms ").arg(nbMinutes).arg(nbSeconds).arg(nbMiliseconds));
 
 
         int delta = current.y() - lastClickOrdinate;
         float voltage = (delta/channelFactors[channelforVoltageComputation])/acquisitionGain;
-        message.append(" Voltage: "+ QString("%1 mV").arg(fabs(voltage),0,'f',2));
+        message.append(tr(" Voltage: %1").arg(QString("%1 mV").arg(fabs(voltage),0,'f',2)));
     }
     else{
         //Compute the time
@@ -2049,7 +2049,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
 
             //between columns
             if(relativeTime > timeFrameWidth){
-                message = "";
+                message.clear();
             }
             else{
                 float time;
@@ -2249,7 +2249,8 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
 
     //Paint the line while dragging
     if(mode == DRAW_LINE && (event->state() == Qt::LeftButton)){
-        if(linePositions.size() != 0) drawTimeLine(x,false);
+        if(linePositions.size() != 0)
+            drawTimeLine(x,false);
     }
 
     //The parent implementation takes care of the rubber band
@@ -4129,13 +4130,20 @@ void TraceView::nextClusterDataAvailable(Array<dataType>& data,QObject* initiato
     }
     else if(ready && (startTimeInRecordingUnits == previousStartTimeInRecordingUnits || nextClusterProvider.second > recordingLength)){
         startTimeInRecordingUnits = 0;
-        if(mode == SELECT) setCursor(selectCursor);
-        if(mode == ZOOM) setCursor(zoomCursor);
-        if(mode == MEASURE) setCursor(measureCursor);
-        if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        if(mode == ADD_EVENT) setCursor(addEventCursor);
-        if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        if(mode == SELECT)
+            setCursor(selectCursor);
+        else if(mode == ZOOM)
+            setCursor(zoomCursor);
+        else if(mode == MEASURE)
+            setCursor(measureCursor);
+        else if(mode == SELECT_TIME)
+            setCursor(selectTimeCursor);
+        else if(mode == SELECT_EVENT)
+            setCursor(selectEventCursor);
+        else if(mode == ADD_EVENT)
+            setCursor(addEventCursor);
+        else if(mode == DRAW_LINE)
+            setCursor(drawLineCursor);
     }
 }
 
@@ -4185,17 +4193,24 @@ void TraceView::previousClusterDataAvailable(Array<dataType>& data,QObject* init
     }
     //if the new start time (in recording unit) is equals to the current one do not do anything
     else if(ready && startTimeInRecordingUnits == previousStartTimeInRecordingUnits){
-        if(mode == SELECT) setCursor(selectCursor);
-        if(mode == ZOOM) setCursor(zoomCursor);
-        if(mode == MEASURE) setCursor(measureCursor);
-        if(mode == SELECT_TIME) setCursor(selectTimeCursor);
-        if(mode == SELECT_EVENT) setCursor(selectEventCursor);
-        if(mode == ADD_EVENT) setCursor(addEventCursor);
-        if(mode == DRAW_LINE) setCursor(drawLineCursor);
+        if(mode == SELECT)
+            setCursor(selectCursor);
+        else if(mode == ZOOM)
+            setCursor(zoomCursor);
+        else if(mode == MEASURE)
+            setCursor(measureCursor);
+        else if(mode == SELECT_TIME)
+            setCursor(selectTimeCursor);
+        else if(mode == SELECT_EVENT)
+            setCursor(selectEventCursor);
+        else if(mode == ADD_EVENT)
+            setCursor(addEventCursor);
+        else if(mode == DRAW_LINE)
+            setCursor(drawLineCursor);
     }
     //if the new start time is superior to the recording lenght, look up in all the files at the last timeFrameWidth of the data file
     else if(ready && previousClusterProvider.second > recordingLength){
-        clusterProviderToSkip = "";
+        clusterProviderToSkip.clear();
         long timeFrameWidth = endTime - startTime;
         previousClusterProvider.first = "";
         previousClusterProvider.second = 0;
