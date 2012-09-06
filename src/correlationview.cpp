@@ -35,7 +35,7 @@
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QEvent>
-
+#include <QDebug>
 
 const int CorrelationView::XMARGIN = 10;
 const int CorrelationView::YMARGIN = 0;
@@ -88,17 +88,10 @@ CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,QColor back
         clusters.append(*clustersIterator);
     qSort(clusters);
 
-    QList<int>::iterator iterator;
-    int i = 0;
-    for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
-        QList<int>::iterator iterator2;
-#if KDAB_PORTING_ITERATOR
-        for(iterator2 = (clusters.at(i)); iterator2 != clusters.end(); ++iterator2){
-            //Create pairs as (*iterator,*iterator2) where *iterator <= *iterator2
-            pairs.append(Pair(*iterator,*iterator2));
+    for(int j = 0; j<clusters.size(); ++j) {
+        for(int h = j; h<clusters.size(); ++h) {
+            pairs.append(Pair(clusters.at(j),clusters.at(h)));
         }
-#endif
-        ++i;
     }
 
     updateWindow();
@@ -257,7 +250,7 @@ void CorrelationView::paintEvent ( QPaintEvent *){
             drawCorrelograms(painter,pairs);
         }
         //The update mode applies only when the color of a cluster has changed.
-        if(drawContentsMode == UPDATE){
+        else if(drawContentsMode == UPDATE){
             //Paint the correlograms contained in clusterUpdateList
             drawCorrelograms(painter,pairUpdateList);
 
@@ -306,19 +299,12 @@ void CorrelationView::askForCorrelograms(){
 
         pairs.clear();
         QList<Pair>* clusterPairs = new QList<Pair>();
-        QList<int>::iterator iterator;
-        int i = 0;
-        for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
-            QList<int>::iterator iterator2;
-#if KDAB_PORTING_ITERATOR
-            for(iterator2 = clusters.at(i); iterator2 != clusters.end(); ++iterator2){
-                //Create pairs as (*iterator,*iterator2) where *iterator <= *iterator2
-                pairs.append(Pair(*iterator,*iterator2));
-                clusterPairs->append(Pair(*iterator,*iterator2));
+        for(int j = 0; j<clusters.size(); ++j) {
+            for(int h = j; h<clusters.size(); ++h) {
+                pairs.append(Pair(clusters.at(j),clusters.at(h)));
             }
-#endif
-            ++i;
         }
+
 
         //Create a thread to get the correlation data for that cluster.
         CorrelationThread* correlationThread = getCorrelations(clusterPairs,clusters);
@@ -371,6 +357,9 @@ void CorrelationView::updateWindow(){
 
 void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
 
+    if(pairList.isEmpty())
+        return;
+
     //Clear the firing rate list
     firingRates.clear();
 
@@ -390,6 +379,7 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
     //Number of verticals.
     int verticalNb = 0;
     //Clusters corresponding to the previous pair, they are initialized with the first pair.
+
     int previousCluster1 = pairList[0].getX();
     int previousCluster2 = pairList[0].getY();
     QColor clusterColor;
