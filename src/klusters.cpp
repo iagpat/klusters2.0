@@ -2982,10 +2982,11 @@ void KlustersApp::slotStateChanged(const QString& state)
         mZoomAction->setEnabled(false);
         mUpdateErrorMatrix->setEnabled(false);
         mNewCluster->setEnabled(false);
+        mSplitClusters->setEnabled(false);
+
 /*
         <Action name="renumber" />
         <Action name="recluster" />
-        <Action name="multiple_new" />
         <Action name="delete_artifact" />
         <Action name="delete_noise" />
         <Action name="time_frame" />
@@ -3028,6 +3029,8 @@ void KlustersApp::slotStateChanged(const QString& state)
         newClusterDisplay->setEnabled(true);
         mCloseActiveDisplay->setEnabled(true);
         mNewCluster->setEnabled(true);
+        mSplitClusters->setEnabled(true);
+mGroupeClusters->setEnabled(true);
         /*
    <Action name="new_waveformDisplay" />
    <Action name="new_crosscorrelationDisplay" />
@@ -3035,10 +3038,8 @@ void KlustersApp::slotStateChanged(const QString& state)
    <Action name="new_goupingAssistantDisplay" />
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
-   <Action name="group_clusters" />
    <Action name="renumber" />
    <Action name="recluster" />
-   <Action name="multiple_new" />
    <Action name="delete_artifact" />
    <Action name="delete_noise" />
    <Action name="time_frame" />
@@ -3103,17 +3104,18 @@ void KlustersApp::slotStateChanged(const QString& state)
    <Action name="decrease" />
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
-   <Action name="group_clusters" />
    <Action name="renumber" />
   </Enable>
 */
+        mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noClusterViewState")) {
         mZoomAction->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
 mNewCluster->setEnabled(false);
+mSplitClusters->setEnabled(false);
+
 /*
         <Disable>
-         <Action name="multiple_new" />
          <Action name="delete_artifact" />
          <Action name="delete_noise" />
         </Disable>
@@ -3125,17 +3127,17 @@ mNewCluster->setEnabled(false);
         mZoomAction->setEnabled(true);
         mDeleteNoisy->setEnabled(true);
 mNewCluster->setEnabled(true);
+mSplitClusters->setEnabled(true);
 
         /*
   <Enable>
-   <Action name="multiple_new" />
    <Action name="delete_artifact" />
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
-   <Action name="group_clusters" />
    <Action name="renumber" />
   </Enable>
 */
+mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noCorrelationViewState")) {
         /*
   <Disable>
@@ -3160,10 +3162,10 @@ mNewCluster->setEnabled(true);
    <Action name="raw_data" />
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
-   <Action name="group_clusters" />
    <Action name="renumber" />
   </Enable>
 */
+        mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noErrorMatrixViewState")) {
         mUpdateErrorMatrix->setEnabled(false);
     } else if(state == QLatin1String("errorMatrixViewState")) {
@@ -3176,11 +3178,10 @@ mNewCluster->setEnabled(true);
   <Enable>
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
-   <Action name="group_clusters" />
    <Action name="renumber" />
   </Enable>
 */
-
+mGroupeClusters->setEnabled(true);
 
     } else if(state == QLatin1String("groupingAssistantDisplayExists")) {
         mNewTraceDisplay->setEnabled(false);
@@ -3190,9 +3191,10 @@ mNewCluster->setEnabled(true);
         mZoomAction->setEnabled(false);
         mUpdateErrorMatrix->setEnabled(false);
         mNewCluster->setEnabled(false);
+        mSplitClusters->setEnabled(false);
+
         /*
   <Disable>
-   <Action name="multiple_new" />
    <Action name="delete_artifact" />
    <Action name="delete_noise" />
    <Action name="time_frame" />
@@ -3205,12 +3207,12 @@ mNewCluster->setEnabled(true);
    <Action name="raw_data" />
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
-   <Action name="group_clusters" />
    <Action name="renumber" />
    <Action name="recluster" />
   </Disable>
 */
 
+        mGroupeClusters->setEnabled(false);
         shoulderLine->setEnabled(false);
         mIncreaseAmplitude->setEnabled(false);
         mDecreaseAmplitude->setEnabled(false);
@@ -3224,15 +3226,16 @@ mNewCluster->setEnabled(true);
         mUndo->setEnabled(false);
         mRedo->setEnabled(false);
         mNewCluster->setEnabled(false);
+        mSplitClusters->setEnabled(false);
+        mGroupeClusters->setEnabled(false);
+
         /*
   <Disable>
    <Action name="recluster" />
-   <Action name="multiple_new" />
    <Action name="delete_artifact" />
    <Action name="delete_noise" />
    <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
-   <Action name="group_clusters" />
    <Action name="renumber" />
   </Disable>
 
