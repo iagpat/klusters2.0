@@ -970,14 +970,15 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //KDAB_PENDING QDockWidget* grandParent = display->manualDock(mainDock,QDockWidget::DockCenter);
 
         //Disconnect the previous connection
-        //KDAB_PENDING if(tabsParent != NULL) disconnect(tabsParent,0,0,0);
+        if(tabsParent != NULL)
+            disconnect(tabsParent,0,0,0);
 
         //The grandParent's widget is the QTabWidget regrouping all the tabs
         //KDAB_PENDING tabsParent = static_cast<QTabWidget*>(grandParent->widget());
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display change.
-        //KDAB_PENDING connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
+        connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
         slotStateChanged("tabState");
 
@@ -2569,7 +2570,7 @@ void KlustersApp::slotRecluster(){
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display changes.
-        //KDAB_PENDING connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
+        connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
         //Back to enable dock to the left side only
         //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockLeft);
