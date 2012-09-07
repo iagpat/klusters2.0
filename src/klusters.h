@@ -504,9 +504,7 @@ private:
 QRecentFileAction* mFileOpenRecent;
     
     //Action and toolbar pointers
-    QAction* fileOpenRecent;
     QAction* viewMainToolBar;
-    QAction* viewStatusBar;
     //QActionMenu* viewMenu;
     QAction* newClusterDisplay;
     QAction* newWaveformDisplay;

@@ -1820,7 +1820,7 @@ void KlustersApp::slotViewStatusBar()
     slotStatusMsg(tr("Toggle the statusbar..."));
     ///////////////////////////////////////////////////////////////////
     //turn Statusbar on or off
-    if(!viewStatusBar->isChecked())
+    if(!mViewStatusBar->isChecked())
     {
         statusBar()->hide();
     }
