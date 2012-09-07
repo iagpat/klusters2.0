@@ -174,11 +174,11 @@ bool ParameterXmlModifier::setClusterUserInformation (int pGroup,QMap<int,Cluste
     QMap<int,ClusterUserInformation>::Iterator iterator;
     int clusterId = 0;
 	 int group = 0;
-    QString structure = "";
-    QString type = "";
-    QString ID = "";
-    QString quality = "";
-    QString notes = "";
+    QString structure;
+    QString type;
+    QString ID;
+    QString quality;
+    QString notes;
     ClusterUserInformation currentClusterUserInformation;
 
     for (iterator = clusterUserInformationMap.begin(); iterator != clusterUserInformationMap.end(); ++iterator) {

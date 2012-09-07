@@ -939,7 +939,7 @@ void TraceView::updateWindow(){
 void TraceView::drawTrace(QPainter& painter,int limit,int basePosition,int X,int channelId,int nbSamplesToDraw,bool mouseMoveEvent){
     bool areClustersToDraw = false;
     int clusterFileId = 0;
-    QString providerName = "";
+    QString providerName;
     if(!clusterProviders.isEmpty()){
         clusterFileId = (*channelClusterFiles)[channelId];
         providerName = QString::fromLatin1("%1").arg(clusterFileId);
@@ -1169,7 +1169,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
         else{
             bool areClustersToDraw = false;
             int clusterFileId = 0;
-            QString providerName = "";
+            QString providerName;
             if(!clusterProviders.isEmpty()){
                 areClustersToDraw = true;
                 clusterFileId = (*channelClusterFiles)[*iterator];
@@ -1658,7 +1658,7 @@ void TraceView::drawTraces(QPainter& painter){
                 else{
                     bool areClustersToDraw = false;
                     int clusterFileId = 0;
-                    QString providerName = "";
+                    QString providerName;
 
                     if(!clusterProviders.isEmpty()){
                         areClustersToDraw = true;

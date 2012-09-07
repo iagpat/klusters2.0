@@ -382,11 +382,11 @@ void KlustersXmlReader::getClusterUserInformation (int pGroup, QMap<int,ClusterU
             for(int i = 0; i < nbUnits; ++i){
                 int groupId = 0;
                 int clusterId = 0;
-                QString structure = "";
-                QString type = "";
-                QString ID = "";
-                QString quality = "";
-                QString notes = "";
+                QString structure;
+                QString type;
+                QString ID;
+                QString quality;
+                QString notes;
                 ClusterUserInformation currentClusterUserInformation = ClusterUserInformation();
                 xmlNodePtr child;
 
