@@ -2353,7 +2353,7 @@ void KlustersApp::resetState(){
     processOutputDock = 0L;
     displayCount = 0;
     errorMatrixExists = false;
-    filePath = "";
+    filePath.clear();
 
     //Disable some actions when no document is open (see the klustersui.rc file)
     slotStateChanged("initState");

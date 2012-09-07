@@ -83,7 +83,7 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
 
     //Event related variables
     eventsData.setAutoDelete(true);
-    selectedEvent.first = "";
+    selectedEvent.first.clear();
     selectedEvent.second = 0;
 
     //Set the default modes
@@ -331,7 +331,7 @@ void TraceView::updateClusterData(bool active){
                 iterator.current()->setStatus(false);
                 static_cast<ClustersProvider*>(clusterProviders[iterator.currentKey()])->requestData(startTime,endTime,this,startTimeInRecordingUnits);
             }
-            else clusterProviderToSkip = "";
+            else clusterProviderToSkip.clear();
         }
     }
 
@@ -373,7 +373,7 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
                 iterator.current()->setStatus(false);
                 static_cast<ClustersProvider*>(clusterProviders[iterator.currentKey()])->requestData(startTime,endTime,this,startTimeInRecordingUnits);
             }
-            else clusterProviderToSkip = "";
+            else clusterProviderToSkip.clear();
         }
     }
 
@@ -398,7 +398,7 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
                 iterator.current()->setStatus(false);
                 static_cast<EventsProvider*>(eventProviders[iterator.currentKey()])->requestData(startTime,endTime,this);
             }
-            else eventProviderToSkip = "";
+            else eventProviderToSkip.clear();
         }
     }
 
@@ -1440,12 +1440,13 @@ void TraceView::drawTraces(QPainter& painter){
                 else{
                     bool areClustersToDraw = false;
                     int clusterFileId = 0;
-                    QString providerName = "";
+                    QString providerName;
                     if(!clusterProviders.isEmpty()){
                         areClustersToDraw = true;
                         clusterFileId = (*channelClusterFiles)[channelId];
                         providerName = QString::fromLatin1("%1").arg(clusterFileId);
-                        if(clustersData.find(providerName) != 0) areClustersToDraw = true;
+                        if(clustersData.find(providerName) != 0)
+                            areClustersToDraw = true;
                     }
 
                     if(!waveforms || (waveforms && !areClustersToDraw) || (waveforms && areClustersToDraw && !selectedClusters.contains(clusterFileId))){
@@ -2740,7 +2741,7 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
                 }
             }
             previousDragAbscissa = 0;
-            selectedEvent.first = "";
+            selectedEvent.first.clear();
             selectedEvent.second = 0;
             startEventDragging = true;
             drawContentsMode = REDRAW;
@@ -3659,7 +3660,7 @@ void TraceView::showNextEvent(){
         if(!selectedEvents.isEmpty() && idsToBrowse.count() != 0){
             setCursor(Qt::WaitCursor);
             long timeFrameWidth = endTime - startTime;
-            nextEventProvider.first = "";
+            nextEventProvider.first.clear();
             nextEventProvider.second = 0;
             Q3DictIterator<EventData> iterator(eventsData);
             for(;iterator.current();++iterator){
@@ -3705,7 +3706,7 @@ void TraceView::showPreviousEvent(){
         if(!selectedEvents.isEmpty() && idsToBrowse.count() != 0){
             setCursor(Qt::WaitCursor);
             long timeFrameWidth = endTime - startTime;
-            previousEventProvider.first = "";
+            previousEventProvider.first.clear();
             previousEventProvider.second = 0;
             Q3DictIterator<EventData> iterator(eventsData);
             for(;iterator.current();++iterator){
@@ -3746,7 +3747,7 @@ void TraceView::nextEventDataAvailable(Array<dataType>& times,Array<int>& ids,QO
         if((nextEventProvider.second + timeFrameWidth > recordingLength)){
             //new start time =  recordingLength - timeFrameWidth
             //update the traceWidget time widgets and retrieve the data for the new start time for all the providers.
-            eventProviderToSkip = "";
+            eventProviderToSkip.clear();
             emit setStartAndDuration(recordingLength - timeFrameWidth,timeFrameWidth);
         }
         else{
@@ -3793,7 +3794,7 @@ void TraceView::previousEventDataAvailable(Array<dataType>& times,Array<int>& id
     if(ready && previousEventProvider.second != startTime && previousEventProvider.second < recordingLength){
         long timeFrameWidth = endTime - startTime;
         if(previousEventProvider.second + timeFrameWidth > recordingLength){
-            eventProviderToSkip = "";
+            eventProviderToSkip.clear();
             emit setStartAndDuration(recordingLength - timeFrameWidth,timeFrameWidth);
         }
         else{
@@ -3809,7 +3810,7 @@ void TraceView::previousEventDataAvailable(Array<dataType>& times,Array<int>& id
     }
     else if(ready && previousEventProvider.second > recordingLength){
         long timeFrameWidth = endTime - startTime;
-        previousEventProvider.first = "";
+        previousEventProvider.first.clear();
         previousEventProvider.second = 0;
         Q3DictIterator<EventData> iterator(eventsData);
         for(;iterator.current();++iterator){
@@ -3965,7 +3966,7 @@ void TraceView::removeEvent(){
     }
 
     previousDragAbscissa = 0;
-    selectedEvent.first = "";
+    selectedEvent.first.clear();
     selectedEvent.second = 0;
     startEventDragging = true;
     drawContentsMode = REDRAW;
@@ -4008,7 +4009,7 @@ void TraceView::showNextCluster(){
         if(!selectedClusters.isEmpty() && idsToBrowse.count() != 0){
             setCursor(Qt::WaitCursor);
             long timeFrameWidth = endTime - startTime;
-            nextClusterProvider.first = "";
+            nextClusterProvider.first.clear();
             nextClusterProvider.second = 0;
             previousStartTimeInRecordingUnits = startTimeInRecordingUnits;
             Q3DictIterator<ClusterData> iterator(clustersData);
@@ -4055,7 +4056,7 @@ void TraceView::showPreviousCluster(){
         if(!selectedClusters.isEmpty() && idsToBrowse.count() != 0){
             setCursor(Qt::WaitCursor);
             long timeFrameWidth = endTime - startTime;
-            previousClusterProvider.first = "";
+            previousClusterProvider.first.clear();
             previousClusterProvider.second = 0;
             previousStartTimeInRecordingUnits = startTimeInRecordingUnits;
             Q3DictIterator<ClusterData> iterator(clustersData);
@@ -4099,7 +4100,7 @@ void TraceView::nextClusterDataAvailable(Array<dataType>& data,QObject* initiato
         if(nextClusterProvider.second + timeFrameWidth > recordingLength){
             //new start time =  recordingLength - timeFrameWidth
             //update the traceWidget time widgets and retrieve the data for the new start time for all the providers.
-            clusterProviderToSkip = "";
+            clusterProviderToSkip.clear();
             emit setStartAndDuration(recordingLength - timeFrameWidth,timeFrameWidth);
         }
         else{
@@ -4148,7 +4149,7 @@ void TraceView::previousClusterDataAvailable(Array<dataType>& data,QObject* init
     if(ready && startTimeInRecordingUnits != previousStartTimeInRecordingUnits && previousClusterProvider.second < recordingLength){
         long timeFrameWidth = endTime - startTime;
         if(previousClusterProvider.second + timeFrameWidth > recordingLength){
-            clusterProviderToSkip = "";
+            clusterProviderToSkip.clear();
 
             emit setStartAndDuration(recordingLength - timeFrameWidth,timeFrameWidth);
         }
@@ -4166,7 +4167,7 @@ void TraceView::previousClusterDataAvailable(Array<dataType>& data,QObject* init
     else if(ready && previousClusterProvider.second > recordingLength){
         clusterProviderToSkip.clear();
         long timeFrameWidth = endTime - startTime;
-        previousClusterProvider.first = "";
+        previousClusterProvider.first.clear();
         previousClusterProvider.second = 0;
         Q3DictIterator<ClusterData> iterator(clustersData);
         for(;iterator.current();++iterator){

@@ -63,7 +63,7 @@ void ProcessLineMaker::slotReceivedStdout()
     // Do not remove this line! It makes the method thread safe.
     //  Because we can be interrupted whenever more data is available,
     //  this prevents printing the same data twice.
-    lineOut = "";
+    lineOut.clear();
 
     counterOut--;
 

@@ -151,8 +151,8 @@ void KlustersDoc::closeDocument(){
     //If a document has been open reset the members
     viewList->clear();
     docUrl = QString();
-    baseName = "";
-    xmlParameterFile = "";
+    baseName.clear();
+    xmlParameterFile.clear();
     clusterColorListUndoList.clear();
     clusterColorListRedoList.clear();
     addedClustersUndoList.clear();
@@ -174,8 +174,8 @@ void KlustersDoc::closeDocument(){
         modifiedClusters = 0L;
     }
     //Remove the temp files if any
-    tmpCluFile = "";
-    tmpSpikeFile = "";
+    tmpCluFile.clear();
+    tmpSpikeFile.clear();
 
     //Variables link to TraceView
     if(channelColorList != 0L){
