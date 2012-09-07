@@ -44,7 +44,7 @@
 const int WaveformView::XMARGIN = 0;
 const int WaveformView::YMARGIN = 0;
 
-WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int acquisitionGain,QList<int> positions,QStatusBar * statusBar,QWidget* parent,
+WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int acquisitionGain,QList<int> positions,QStatusBar * statusBar,QWidget* parent,
                            bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
                            bool overLay,bool mean, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
                            int border) :
@@ -123,8 +123,10 @@ WaveformThread* WaveformView::getWaveforms(){
 }
 
 bool WaveformView::isThreadsRunning(){
-    if(threadsToBeKill.count() == 0) return false;
-    else return true;
+    if(threadsToBeKill.count() == 0)
+        return false;
+    else
+        return true;
 }
 
 void WaveformView::singleColorUpdate(int clusterId,bool active){
@@ -186,7 +188,7 @@ void WaveformView::addClusterToView(int clusterId,bool active){
         if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
         //The data have to be collected, if need it, for all the clusters.
-        if(active && view.clusters().size() > 0){
+        if(active && !view.clusters().isEmpty()){
             setCursor(Qt::WaitCursor);
             askForWaveformInformation(view.clusters());
         }
@@ -204,7 +206,7 @@ void WaveformView::removeClusterFromView(int clusterId,bool active){
     if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
     //The data have to be collected, if need it, for all the clusters.
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -218,7 +220,7 @@ void WaveformView::addNewClusterToView(QList<int>& fromClusters,int clusterId,bo
     if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
     //The data have to be collected, if need it, for all the clusters.
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -232,7 +234,7 @@ void WaveformView::spikesRemovedFromClusters(QList<int>& fromClusters,bool activ
     if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
     //The data have to be collected, if need it, for all the clusters.
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -245,7 +247,7 @@ void WaveformView::spikesAddedToCluster(int clusterId,bool active){
     if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
     //The data have to be collected, if need it, for all the clusters.
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -565,7 +567,7 @@ void WaveformView::setMeanPresentation(){
     drawContentsMode = REDRAW;
 
     dataReady = false;
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         //Create a thread to get the waveform data for the clusters.
         WaveformThread* waveformThread = getWaveforms();
         threadsToBeKill.append(waveformThread);
@@ -580,7 +582,7 @@ void WaveformView::setAllWaveformsPresentation(){
     drawContentsMode = REDRAW;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -593,7 +595,7 @@ void WaveformView::setSampleMode(){
     drawContentsMode = REDRAW;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -605,7 +607,7 @@ void WaveformView::setTimeFrameMode(){
     drawContentsMode = REDRAW;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -620,7 +622,7 @@ void WaveformView::setTimeFrame(long start, long width){
     drawContentsMode = REDRAW;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -632,7 +634,7 @@ void WaveformView::setDisplayNbSpikes(long nbSpikes){
     drawContentsMode = REDRAW;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -667,7 +669,7 @@ void WaveformView::drawClusterIds(QPainter& painter){
 
 void WaveformView::updateDrawing(){
     //The data have to be collected if need it and everything has to be redrawn
-    if(view.clusters().size() > 0 && drawContentsMode == REDRAW){
+    if(!view.clusters().isEmpty() && drawContentsMode == REDRAW){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -679,7 +681,7 @@ void WaveformView::clustersRenumbered(bool active){
     //when the view willbecome active (updateDrawing will be called).
     drawContentsMode = REDRAW;
 
-    if(view.clusters().size() > 0 && active){
+    if(!view.clusters().isEmpty() && active){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -688,7 +690,7 @@ void WaveformView::clustersRenumbered(bool active){
 void WaveformView::mouseDoubleClickEvent (QMouseEvent *e){
     //Trigger parent event
     ViewWidget::mouseDoubleClickEvent(e);
-    if((view.clusters().size() > 0)){
+    if((!view.clusters().isEmpty())){
         Data& clusteringData = doc.data();
         bool waveformsNotAvailable = false;
         QList<int>::const_iterator clusterIterator;
@@ -713,7 +715,7 @@ void WaveformView::mouseReleaseEvent(QMouseEvent* e){
     //Trigger parent event
     ViewWidget::mouseReleaseEvent(e);
 
-    if((e->button() & Qt::LeftButton) && (view.clusters().size() > 0)){
+    if((e->button() & Qt::LeftButton) && (!view.clusters().isEmpty())){
         Data& clusteringData = doc.data();
         bool waveformsNotAvailable = false;
         QList<int>::const_iterator clusterIterator;
@@ -738,7 +740,7 @@ void WaveformView::mouseReleaseEvent(QMouseEvent* e){
 void WaveformView::resizeEvent(QResizeEvent* e){
     drawContentsMode = REDRAW;
 
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         Data& clusteringData = doc.data();
         bool waveformsNotAvailable = false;
         QList<int>::const_iterator clusterIterator;
@@ -823,7 +825,7 @@ void WaveformView::increaseAmplitude(){
     Yfactor = static_cast<float>(YsizeForMaxAmp)/static_cast<float>(pow(0.75,gain) * acquisitionGain);
     
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -837,7 +839,7 @@ void WaveformView::decreaseAmplitude(){
     Yfactor = static_cast<float>(YsizeForMaxAmp)/static_cast<float>(pow(0.75,gain) * acquisitionGain);
     
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -852,7 +854,7 @@ void WaveformView::setOverLayPresentation(){
     //     update();
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }
@@ -867,7 +869,7 @@ void WaveformView::setSideBySidePresentation(){
     //     update();
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveformInformation(view.clusters());
     }

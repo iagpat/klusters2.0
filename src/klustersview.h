@@ -131,7 +131,7 @@ class KlustersView : public QWidget
     * @param positions positions of the channels to use in the view set by the user in the settings dialog.
     * @return false if there was already a view of @displayType in the view, true otherwise.
     */
-    bool addView(QDockWidget* docWidget,DisplayType displayType,QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
+    bool addView(QDockWidget* docWidget,DisplayType displayType,const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
     
     /**List of the names for the different type of view available.*/
     static const QString DisplayTypeNames[];
@@ -873,7 +873,7 @@ protected:
     * @param maxAmplitude initial gain use to draw the waveforms in the waveform view.
     * @param positions initial position of the channels in the waveform view.
     */
-    void createOverview(QColor backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
+    void createOverview(const QColor& backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
 
     /** Creates the Grouping Assistant view:
     * an Overview (composition of the 3 basic views) to which have been added
@@ -885,7 +885,7 @@ protected:
     * @param maxAmplitude initial gain use to draw the waveforms in the waveform view.
     * @param positions initial position of the channels in the waveform view.
     */
-    void createGroupingAssistantView(QColor backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
+    void createGroupingAssistantView(const QColor& backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
 
     /**
     * Adds a cluster to the view. The @p clusterId is added to both the shownClusters list

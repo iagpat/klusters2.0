@@ -2236,7 +2236,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
 
     //Paint the line while dragging
     if(mode == DRAW_LINE && (event->state() == Qt::LeftButton)){
-        if(linePositions.size() != 0)
+        if(!linePositions.isEmpty())
             drawTimeLine(x,false);
     }
 
@@ -2665,11 +2665,14 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                 drawTraces(deselectedChannels,false);
             }
             if(mode == SELECT_EVENT){
-                if(deselectedEvent.first != "") drawEvent(deselectedEvent.first,deselectedEvent.second,deselectedEventIndex,false);
-                if(selectedEvent.first != "") drawEvent(selectedEvent.first,selectedEvent.second,selectedEventPosition[0],true);
+                if(deselectedEvent.first != "")
+                    drawEvent(deselectedEvent.first,deselectedEvent.second,deselectedEventIndex,false);
+                if(selectedEvent.first != "")
+                    drawEvent(selectedEvent.first,selectedEvent.second,selectedEventPosition[0],true);
             }
             if(mode == DRAW_LINE){
-                if(linePositions.size() != 0) drawTimeLine(lastClickAbscissa,true);
+                if(linePositions.size() != 0)
+                    drawTimeLine(lastClickAbscissa,true);
             }
             previousDragOrdinate = 0;
         }//mode == SELECT && shownChannels.size() != 0 || mode == MEASURE || mode == SELECT_TIME || mode == SELECT_EVENT || mode == ADD_EVENT || mode == DRAW_LINE
@@ -2925,7 +2928,8 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
     }
     if(mode == DRAW_LINE && (event->button() & Qt::LeftButton)){
         //erase the line
-        if(linePositions.size() != 0) drawTimeLine(0,false,true);
+        if(!linePositions.isEmpty())
+            drawTimeLine(0,false,true);
         linePositions.clear();
         previousDragAbscissa = 0;
     }

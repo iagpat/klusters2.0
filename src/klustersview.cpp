@@ -199,7 +199,7 @@ KlustersView::~KlustersView()
     delete removedClusters;
 }
 
-void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
+void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
     /*OVERVIEW type is the combination of 3 base types:
   CLUSTERS on the left side, WAVEFORMS at the right top and CORRELATIONS in the bottom right
  */
@@ -257,7 +257,7 @@ void KlustersView::createOverview(QColor backgroundColor,QStatusBar* statusBar,i
     setConnections(CORRELATIONS,correlationView,correlations);
 }
 
-void KlustersView::createGroupingAssistantView(QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
+void KlustersView::createGroupingAssistantView(const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
     //First create the overview
     createOverview(backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
 
@@ -691,7 +691,7 @@ void KlustersView::closeEvent(QCloseEvent* e){
 
 }
 
-bool KlustersView::addView(QDockWidget* dockWidget,DisplayType displayType,QColor backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
+bool KlustersView::addView(QDockWidget* dockWidget, DisplayType displayType, const QColor &backgroundColor, QStatusBar* statusBar, int timeInterval, int maxAmplitude, QList<int> positions){
 
     //Enable docking abilities
 #if KDAB_PENDING
