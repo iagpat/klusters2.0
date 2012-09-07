@@ -50,7 +50,7 @@ class ChannelColors;
   * Class containing the TraceView and all the widgets used to select the position in the file.
   * @author Lynn Hazan
   */
-class TraceWidget : public Q3VBox  {
+class TraceWidget : public QWidget  {
     Q_OBJECT
 
 public:
@@ -117,7 +117,7 @@ public:
 public slots:
 
     /***Changes the color of the background.*/
-    void changeBackgroundColor(QColor color);
+    void changeBackgroundColor(const QColor &color);
 
     /**All the channels are now display either in a gradation of grey or in color.
   * @param grey true if the channels have to be displayed in grey false otherwise.

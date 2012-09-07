@@ -23,6 +23,7 @@
 #include <QList>
 #include <QLabel>
 #include <QKeyEvent>
+#include <QVBoxLayout>
 
 //includes files for KDE
 
@@ -34,19 +35,24 @@ TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvi
                          ChannelColors* channelColors,QMap<int, QList<int> >* groupsChannels,
                          QMap<int,int>* channelsGroups,QList<int>& channelOffsets,QList<int>& gains,const QList<int>& skippedChannels,QWidget* parent, const char* name,QColor backgroundColor,QStatusBar* statusBar,
                          int minSize,int maxSize,int windowTopLeft,int windowBottomRight,int border):
-    Q3VBox(parent,name),timeWindow(duration),
+    QWidget(parent),timeWindow(duration),
     view(tracesProvider,greyScale,multiColumns,verticalLines,raster,waveforms,labelsDisplay,channelsToDisplay,gain,acquisitionGain,
          startTime,timeWindow,channelColors,groupsChannels,channelsGroups,channelOffsets,gains,skippedChannels,this,name,
          backgroundColor,statusBar,minSize,maxSize,windowTopLeft,windowBottomRight,border),startTime(startTime),
     validator(this),isInit(true),updateView(true){
 
+    QVBoxLayout *layout = new QVBoxLayout;
+    setLayout(layout);
+
     recordingLength = tracesProvider.recordingLength();
 
     selectionWidgets = new Q3HBox(this);
-    setMargin(0);
-    setSpacing(0);
-    setStretchFactor(selectionWidgets,0);
-    setStretchFactor(&view,200);
+    layout->setMargin(0);
+    layout->setSpacing(0);
+    layout->addWidget(selectionWidgets);
+    layout->addWidget(&view);
+    layout->setStretchFactor(selectionWidgets,0);
+    layout->setStretchFactor(&view,200);
 
     setFocusPolicy(Qt::StrongFocus);
 
@@ -66,7 +72,7 @@ TraceWidget::~TraceWidget(){
 }
 
 
-void TraceWidget::changeBackgroundColor(QColor color){
+void TraceWidget::changeBackgroundColor(const QColor& color){
     view.changeBackgroundColor(color);
     update();
 }
