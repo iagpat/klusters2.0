@@ -31,7 +31,7 @@
 #include <qmessagebox.h>
 //Added by qt3to4:
 #include <QMouseEvent>
-#include <Q3PointArray>
+#include <QPolygon>
 #include <QDebug>
 
 // include files for kde
@@ -1178,7 +1178,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
             }
 
             if(!waveforms || (waveforms && !areClustersToDraw) || (waveforms && areClustersToDraw && !selectedClusters.contains(clusterFileId))){
-                Q3PointArray trace(nbSamples);
+                QPolygon trace(nbSamples);
                 for(int i = 0; i < nbSamples;++i){
                     int y = basePosition - static_cast<long>(data(i + 1,*iterator + 1) * channelFactors[*iterator]);
                     trace.setPoint(i,X,y);
@@ -1202,7 +1202,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
             else{
                 //Array containing 3 lines: sample index, abscissa and ordinate
                 Array<dataType> traceInfo(3,nbSamples);
-                Q3PointArray trace(nbSamples);
+                QPolygon trace(nbSamples);
                 for(int i = 1; i <= nbSamples;++i){
                     int y = basePosition - static_cast<long>(data(i,*iterator + 1) * channelFactors[*iterator]);
                     trace.setPoint(i - 1,X,y);
@@ -1245,7 +1245,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
                         for(int j = currentIndex; j <= nbSamples;++j){
                             if(firstIndex > traceInfo(1,j)) continue;//case 1
                             else if(firstIndex == traceInfo(1,j)){//case 2
-                                Q3PointArray trace(nbWaveformSamples);
+                                QPolygon trace(nbWaveformSamples);
                                 int pos = 0;
                                 for(int k = firstIndex;k<= lastIndex;++k){
                                     trace.setPoint(pos,traceInfo(2,k),traceInfo(3,k));
@@ -1449,7 +1449,7 @@ void TraceView::drawTraces(QPainter& painter){
                     }
 
                     if(!waveforms || (waveforms && !areClustersToDraw) || (waveforms && areClustersToDraw && !selectedClusters.contains(clusterFileId))){
-                        Q3PointArray trace(nbSamples);
+                        QPolygon trace(nbSamples);
                         for(int i = 0; i < nbSamples;++i){
                             int y = positions[j] - static_cast<long>(data(i + 1,channelId + 1) * channelFactors[channelId]);
                             trace.setPoint(i,X + x,y);
@@ -1460,7 +1460,7 @@ void TraceView::drawTraces(QPainter& painter){
                     else{
                         //Array containing 3 lines: sample index, abscissa and ordinate
                         Array<dataType> traceInfo(3,nbSamples);
-                        Q3PointArray trace(nbSamples);
+                        QPolygon trace(nbSamples);
                         for(int i = 1; i <= nbSamples;++i){
                             int y = positions[j] - static_cast<long>(data(i,channelId + 1) * channelFactors[channelId]);
                             trace.setPoint(i - 1,X + x,y);
@@ -1494,7 +1494,7 @@ void TraceView::drawTraces(QPainter& painter){
                                 for(int j = currentIndex; j <= nbSamples;++j){
                                     if(firstIndex > traceInfo(1,j)) continue;//case 1
                                     else if(firstIndex == traceInfo(1,j)){//case 2
-                                        Q3PointArray trace(nbWaveformSamples);
+                                        QPolygon trace(nbWaveformSamples);
                                         int pos = 0;
                                         for(int k = firstIndex;k<= lastIndex;++k){
                                             trace.setPoint(pos,traceInfo(2,k),traceInfo(3,k));
@@ -1667,7 +1667,7 @@ void TraceView::drawTraces(QPainter& painter){
                     }
 
                     if(!waveforms || (waveforms && !areClustersToDraw) || (waveforms && areClustersToDraw && !selectedClusters.contains(clusterFileId))){
-                        Q3PointArray trace(nbSamples);
+                        QPolygon trace(nbSamples);
                         for(int i = 0; i < nbSamples;++i){
                             int y = positions[j] - static_cast<long>(data(i + 1,channelId + 1) * channelFactors[channelId]);
                             trace.setPoint(i,X,y);
@@ -1678,7 +1678,7 @@ void TraceView::drawTraces(QPainter& painter){
                     else{
                         //Array containing 3 lines: sample index, abscissa and ordinate
                         Array<dataType> traceInfo(3,nbSamples);
-                        Q3PointArray trace(nbSamples);
+                        QPolygon trace(nbSamples);
                         for(int i = 1; i <= nbSamples;++i){
                             int y = positions[j] - static_cast<long>(data(i,channelId + 1) * channelFactors[channelId]);
                             trace.setPoint(i - 1,X,y);
@@ -1713,7 +1713,7 @@ void TraceView::drawTraces(QPainter& painter){
                                 for(int j = currentIndex; j <= nbSamples;++j){
                                     if(firstIndex > traceInfo(1,j)) continue;//case 1
                                     else if(firstIndex == traceInfo(1,j)){//case 2
-                                        Q3PointArray trace(nbWaveformSamples);
+                                        QPolygon trace(nbWaveformSamples);
                                         int pos = 0;
                                         for(int k = firstIndex;k<= lastIndex;++k){
                                             trace.setPoint(pos,traceInfo(2,k),traceInfo(3,k));
@@ -2099,7 +2099,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
                     drawTrace(painter,limit,basePosition,X,*channelIterator,nbSamplesToDraw,true);
                 }
                 else{
-                    Q3PointArray trace(nbSamples);
+                    QPolygon trace(nbSamples);
                     for(int i = 0; i < nbSamples;++i){
                         int y = basePosition - static_cast<long>(data(i + 1,*channelIterator + 1) * channelFactors[*channelIterator]);
                         trace.setPoint(i,X,y);
@@ -2118,7 +2118,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
                 drawTrace(painter,limit,basePosition,X,*channelIterator,nbSamplesToDraw,true);
             }
             else{
-                Q3PointArray trace(nbSamples);
+                QPolygon trace(nbSamples);
                 for(int i = 0; i < nbSamples;++i){
                     int y = basePosition - static_cast<long>(data(i + 1,*channelIterator + 1) * channelFactors[*channelIterator]);
                     trace.setPoint(i,X,y);
