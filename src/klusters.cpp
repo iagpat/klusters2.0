@@ -1309,7 +1309,7 @@ bool KlustersApp::queryExit()
     return true;
 }
 
-void KlustersApp::customEvent (QCustomEvent* event){
+void KlustersApp::customEvent (QEvent* event){
     //Event sent by the SaveThread
     if(event->type() == QEvent::User + 100){
         slotStatusMsg(tr("Save file done."));

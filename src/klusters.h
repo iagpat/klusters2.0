@@ -130,7 +130,7 @@ protected:
      */
     bool queryExit();
     
-    void customEvent (QCustomEvent* event);
+    void customEvent (QEvent *event);
     
     inline void showEvent(QShowEvent* event){slotUpdateParameterBar();}
 

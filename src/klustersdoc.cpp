@@ -492,7 +492,7 @@ void KlustersDoc::launchAutoSave(){
     if(!endAutoSaving)autoSaveThread->start();
 }
 
-void KlustersDoc::customEvent(QCustomEvent* event){
+void KlustersDoc::customEvent(QEvent *event){
     //The autoSaveThread has finish, it can be delete.
     if(event->type() == QEvent::User + 500){
         if(endAutoSaving){

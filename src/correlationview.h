@@ -236,7 +236,7 @@ protected:
     /**Treat the events sent by the CorrelationThread instances.
   * @param event custom event.
   */
-    void customEvent (QCustomEvent* event);
+    void customEvent (QEvent* event);
 
     /**The view responds to a double click.
   * The correlograms are retrieve in case the data have changed (an other view has changed its parameters)

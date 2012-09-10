@@ -309,7 +309,7 @@ public:
    */
     bool stopAutoSaving(bool currentDocument = false);
 
-    void customEvent (QCustomEvent* event);
+    void customEvent (QEvent* event);
 
     /**Sets the acquisition system gain.
     * @param acquisitionGain acquisition system gain.

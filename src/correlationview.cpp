@@ -312,7 +312,7 @@ void CorrelationView::askForCorrelograms(){
     }
 }
 
-void CorrelationView::customEvent(QCustomEvent* event){
+void CorrelationView::customEvent(QEvent *event){
     //Event sent by a CorrelationThread to inform that the data are available.
     if(event->type() == QEvent::User + 300){
         CorrelationThread::CorrelationsEvent* correlationEvent = (CorrelationThread::CorrelationsEvent*) event;
