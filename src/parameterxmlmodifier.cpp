@@ -30,7 +30,6 @@
 
 using namespace klusters;
 
-extern QString version;
 
 ParameterXmlModifier::ParameterXmlModifier() {}
 ParameterXmlModifier::~ParameterXmlModifier() {}

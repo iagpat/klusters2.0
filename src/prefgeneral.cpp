@@ -23,7 +23,7 @@
 // include files for KDE
 
 
-PrefGeneral::PrefGeneral(QWidget *parent, const char *name ) : PrefGeneralLayout(parent) {
+PrefGeneral::PrefGeneral(QWidget *parent ) : PrefGeneralLayout(parent) {
     connect(crashRecoveryCheckBox,SIGNAL(stateChanged(int)),this,SLOT(updateCrashRecoveryTimeInterval(int)));
     connect(reclusteringExecutableButton,SIGNAL(clicked()),this,SLOT(updateReclusteringExecutable()));
 

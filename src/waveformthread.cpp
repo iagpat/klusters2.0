@@ -35,7 +35,7 @@ void WaveformThread::getWaveformInformation(int clusterId,WaveformView::Presenta
     start();
 }
 
-void WaveformThread::getWaveformInformation(QList<int> clusterIds,WaveformView::PresentationMode mode){
+void WaveformThread::getWaveformInformation(const QList<int>& clusterIds,WaveformView::PresentationMode mode){
     this->clusterIds = clusterIds;
     treatSingleCluster = false;
     this->mode = mode;
@@ -361,7 +361,7 @@ void WaveformThread::getMean(WaveformView::PresentationMode mode){
     start();
 }
 
-void WaveformThread::getMean(QList<int> clusterIds,WaveformView::PresentationMode mode){
+void WaveformThread::getMean(const QList<int>& clusterIds,WaveformView::PresentationMode mode){
 
     qDebug()<<"in  WaveformThread::getMean";
 

@@ -43,11 +43,11 @@ public:
     //the constructor of WaveformThread being private, only this method con create a new WaveformThread
     friend WaveformThread* WaveformView::getWaveforms();
 
-    inline ~WaveformThread(){};
+    inline ~WaveformThread(){}
 
     void getWaveformInformation(int clusterId,WaveformView::PresentationMode mode);
-    void getWaveformInformation(QList<int> clusterIds,WaveformView::PresentationMode mode);
-    void getMean(QList<int> clusterIds,WaveformView::PresentationMode mode);
+    void getWaveformInformation(const QList<int> &clusterIds, WaveformView::PresentationMode mode);
+    void getMean(const QList<int> &clusterIds, WaveformView::PresentationMode mode);
     /**Gets the mean and standard deviation for the cluster or the clusters set previously.
   * @param
   */
