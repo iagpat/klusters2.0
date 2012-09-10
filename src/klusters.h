@@ -21,7 +21,6 @@
 
 
 // include files for Qt
-#include <q3strlist.h>
 #include <QList>
 #include <qspinbox.h> 
 #include <qvalidator.h>

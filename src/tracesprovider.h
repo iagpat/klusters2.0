@@ -24,7 +24,6 @@
 #include <types.h>
 
 // include files for QT
-#include <q3ptrlist.h>
 #include <qobject.h>
 
 /**Class providing the row recorded data (contained in a .dat or .eeg file).

@@ -19,7 +19,7 @@
 
 //QT includes
 #include <qicon.h>
-
+#include <QFileDialog>
 // include files for KDE
 
 
@@ -75,7 +75,7 @@ void PrefGeneral::updateCrashRecoveryTimeInterval(int state){
 }
 
 void PrefGeneral::updateReclusteringExecutable(){
-    QString executable = Q3FileDialog::getOpenFileName(QString(),
+    QString executable = QFileDialog::getOpenFileName(QString(),
                                                        QString(), this, tr("Select the Reclustering executable..."));
 
     setReclusteringExecutable(executable);

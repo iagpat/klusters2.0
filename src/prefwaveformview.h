@@ -21,7 +21,6 @@
 // include files for QT
 #include <qwidget.h>
 #include <qabstractbutton.h>
-#include <q3iconview.h>
 #include <qspinbox.h>
 #include <qmap.h>
 //Added by qt3to4:

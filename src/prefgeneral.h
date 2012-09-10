@@ -25,7 +25,6 @@
 #include <qspinbox.h>
 #include <qpushbutton.h>
 #include <qlineedit.h>
-#include <q3filedialog.h>
 
 
 //include files for the application

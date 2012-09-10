@@ -20,7 +20,6 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3vbox.h>
 #include <qspinbox.h>
 #include <qvalidator.h>
 #include <qlineedit.h>

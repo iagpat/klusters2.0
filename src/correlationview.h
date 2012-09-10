@@ -28,7 +28,6 @@
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qpixmap.h>
-#include <q3pointarray.h>
 #include <qtimer.h>
 #include <QList>
 #include <q3ptrlist.h>
