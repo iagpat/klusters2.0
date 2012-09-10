@@ -35,7 +35,7 @@
 #include <qcursor.h>
 #include <q3paintdevicemetrics.h>
 //Added by qt3to4:
-#include <QCustomEvent>
+
 #include <QPolygon>
 #include <QList>
 #include <QMouseEvent>

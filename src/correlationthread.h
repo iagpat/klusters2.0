@@ -26,7 +26,7 @@
 //include files for QT
 #include <qthread.h>
 //Added by qt3to4:
-#include <QCustomEvent>
+
 #include <QEvent>
 #include <QList>
 
@@ -64,7 +64,7 @@ public:
   * the data requested have been collected.
   * @author Lynn Hazan
   */
-    class CorrelationsEvent : public QCustomEvent{
+    class CorrelationsEvent : public QEvent{
         //Only the method getCorrelationsEvent of CorrelationThread has access to the private part of CorrelationsEvent,
         //the constructor of CorrelationsEvent being private, only this method con create a new CorrelationsEvent
         friend CorrelationsEvent* CorrelationThread::getCorrelationsEvent();
@@ -74,7 +74,8 @@ public:
         inline ~CorrelationsEvent(){}
 
     private:
-        CorrelationsEvent(CorrelationThread& thread):QCustomEvent(QEvent::User + 300),correlationThread(thread){}
+        CorrelationsEvent(CorrelationThread& thread)
+            :QEvent(QEvent::Type(QEvent::User + 300)),correlationThread(thread){}
 
         CorrelationThread& correlationThread;
     };

@@ -27,7 +27,7 @@
 #include <qregion.h>
 #include <QList>
 //Added by qt3to4:
-#include <QCustomEvent>
+
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QEvent>
@@ -390,7 +390,7 @@ private:
   * to close the polygon of selection before asking for the computation.
   *@author Lynn Hazan
   */
-    class ComputeEvent : public QCustomEvent{
+    class ComputeEvent : public QEvent{
         //Only the method getComputeEvent of ClusterView has access to the private part of ComputeEvent,
         //the constructor of ComputeEvent being private, only this method con create a new ComputeEvent
         friend ComputeEvent* ClusterView::getComputeEvent(QPolygon selectionPolygon);
@@ -400,7 +400,7 @@ private:
         inline QPolygon polygon(){return selectionPolygon;}
 
     private:
-        ComputeEvent(QPolygon polygon):QCustomEvent(QEvent::User + 700),selectionPolygon(polygon){}
+        ComputeEvent(QPolygon polygon):QEvent(QEvent::Type(QEvent::User + 700)),selectionPolygon(polygon){}
 
         QPolygon selectionPolygon;
     };

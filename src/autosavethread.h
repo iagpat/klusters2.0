@@ -27,7 +27,6 @@
 #include <qstring.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <QCustomEvent>
 #include <QDebug>
 // include files for KDE
 
@@ -63,7 +62,7 @@ public:
   * Internal class use to inform the document object (KlustersDoc) that the thread has finished.
   *
   */
-    class AutoSaveEvent : public QCustomEvent{
+    class AutoSaveEvent : public QEvent{
         //Only the method autoSaveEvent of AutoSaveThread has access to the private part of AutoSaveEvent,
         //the constructor of AutoSaveEvent being private, only this method con create a new AutoSaveEvent
         friend AutoSaveEvent* AutoSaveThread::autoSaveEvent();
@@ -74,7 +73,7 @@ public:
         inline void setIOerror(bool status){IOerror = status;}
 
     private:
-        AutoSaveEvent():QCustomEvent(QEvent::User + 500){IOerror = false;}
+        AutoSaveEvent():QEvent(QEvent::Type(QEvent::User + 500)){IOerror = false;}
         bool IOerror;
     };
 

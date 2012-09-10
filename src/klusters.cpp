@@ -36,7 +36,7 @@
 #include <QPixmap>
 #include <QList>
 #include <QEvent>
-#include <QCustomEvent>
+
 #include <QDebug>
 #include <QStatusBar>
 #include <QProcess>

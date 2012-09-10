@@ -27,7 +27,7 @@
 //include files for QT
 #include <qthread.h>
 //Added by qt3to4:
-#include <QCustomEvent>
+
 #include <QEvent>
 #include <QList>
 
@@ -69,7 +69,7 @@ public:
   * the matrix has been computed.
   * @since klusters 1.1
   */
-    class ErrorMatrixEvent : public QCustomEvent{
+    class ErrorMatrixEvent : public QEvent{
         //Only the method getErrorMatrixEvent of ErrorMatrixThread has access to the private part of ErrorMatrixEvent,
         //the constructor of ErrorMatrixEvent being private, only this method con create a new ErrorMatrixEvent
         friend ErrorMatrixEvent* ErrorMatrixThread::getErrorMatrixEvent();
@@ -79,7 +79,7 @@ public:
         inline ~ErrorMatrixEvent(){}
 
     private:
-        ErrorMatrixEvent(ErrorMatrixThread& thread):QCustomEvent(QEvent::User + 600),errorMatrixThread(thread){}
+        ErrorMatrixEvent(ErrorMatrixThread& thread):QEvent(QEvent::Type(QEvent::User + 600)),errorMatrixThread(thread){}
 
         ErrorMatrixThread& errorMatrixThread;
     };

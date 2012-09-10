@@ -25,7 +25,7 @@
 //include files for QT
 #include <qthread.h>
 //Added by qt3to4:
-#include <QCustomEvent>
+
 #include <QEvent>
 #include <QList>
 
@@ -72,7 +72,7 @@ public:
   * Internal class use to send information to the WaveformView to inform it that
   * the data requested have been collected.
   */
-    class GetWaveformsEvent : public QCustomEvent{
+    class GetWaveformsEvent : public QEvent{
         //Only the method getWaveformsEvent of WaveformThread has access to the private part of GetWaveformsEvent,
         //the constructor of GetWaveformsEvent being private, only this method con create a new GetWaveformsEvent
         friend GetWaveformsEvent* WaveformThread::getWaveformsEvent();
@@ -82,7 +82,7 @@ public:
         inline ~GetWaveformsEvent(){}
 
     private:
-        GetWaveformsEvent(WaveformThread& thread):QCustomEvent(QEvent::User + 200),waveformThread(thread){}
+        GetWaveformsEvent(WaveformThread& thread):QEvent(QEvent::Type(QEvent::User + 200)),waveformThread(thread){}
 
         WaveformThread& waveformThread;
     };
@@ -99,7 +99,7 @@ public:
   * there is not data available for the requested cluster. A reason being that the cluster has been suppress
   * after the thread has been launched.
   */
-    class NoWaveformDataEvent : public QCustomEvent{
+    class NoWaveformDataEvent : public QEvent{
         //Only the method getWaveformsEvent of WaveformThread has access to the private part of GetWaveformsEvent,
         //the constructor of GetWaveformsEvent being private, only this method con create a new GetWaveformsEvent
         friend NoWaveformDataEvent* WaveformThread::noWaveformDataEvent();
@@ -109,7 +109,7 @@ public:
         inline ~NoWaveformDataEvent(){}
 
     private:
-        NoWaveformDataEvent(WaveformThread& thread):QCustomEvent(QEvent::User + 250),waveformThread(thread){}
+        NoWaveformDataEvent(WaveformThread& thread):QEvent(QEvent::Type(QEvent::User + 250)),waveformThread(thread){}
 
         WaveformThread& waveformThread;
     };

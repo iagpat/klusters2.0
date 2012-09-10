@@ -25,7 +25,7 @@
 //include files for QT
 #include <qthread.h>
 //Added by qt3to4:
-#include <QCustomEvent>
+
 #include <QEvent>
 #include <QDebug>
 
@@ -66,7 +66,7 @@ public:
   * the save process.
   *
   */
-    class SaveDoneEvent : public QCustomEvent{
+    class SaveDoneEvent : public QEvent{
         //Only the method saveDoneEvent of SaveThread has access to the private part of SaveDoneEvent,
         //the constructor of saveDoneEvent being private, only this method con create a new saveDoneEvent
         friend SaveDoneEvent* SaveThread::saveDoneEvent(bool status);
@@ -79,7 +79,7 @@ public:
         inline ~SaveDoneEvent(){}
 
     private:
-        SaveDoneEvent(const SaveThread& thread,bool status):QCustomEvent(QEvent::User + 100),saveThread(thread),saveOk(status){}
+        SaveDoneEvent(const SaveThread& thread,bool status):QEvent(QEvent::Type(QEvent::User + 100)),saveThread(thread),saveOk(status){}
 
         const SaveThread& saveThread;
         QString tempCluFile;
