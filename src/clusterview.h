@@ -65,17 +65,17 @@ public:
     inline bool isASelectionInProcess() const{
         if(selectionPolygon.size() == 0) return false;
         else return true;
-    };
+    }
 
     /**Returns the current abscissa dimension.
   */
-    inline int getDimensionX() const{return dimensionX;};
+    inline int getDimensionX() const{return dimensionX;}
 
     /**Returns the current ordinate dimension.
   */
-    inline int getDimensionY() const{return dimensionY;};
+    inline int getDimensionY() const{return dimensionY;}
 
-    inline BaseFrame::Mode getMode() const {return mode;};
+    inline BaseFrame::Mode getMode() const {return mode;}
 
 public slots:
 
@@ -92,7 +92,7 @@ public slots:
   */
     virtual inline void singleColorUpdate(int clusterId,bool active){
         addClusterToUpdate(clusterId);
-    };
+    }
 
     /**
   * Draws an additional cluster to those already shown.
@@ -102,14 +102,14 @@ public slots:
   */
     inline void addClusterToView(int clusterId,bool active){
         addClusterToUpdate(clusterId);
-    };
+    }
 
     /**
   * Removes a cluster from those already shown. Which impose to redraw everything
   * @param clusterId cluster Id to remove.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void removeClusterFromView(int clusterId,bool active){redraw();};
+    inline void removeClusterFromView(int clusterId,bool active){redraw();}
 
     /**
   * Adds a newly created cluster to those already shown.
@@ -120,7 +120,7 @@ public slots:
   */
     inline void addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active){
         addClusterToUpdate(clusterId);
-    };
+    }
 
     /**
   * Adds a newly created cluster to those already shown.
@@ -130,7 +130,7 @@ public slots:
   */
     inline void addNewClusterToView(int clusterId,bool active){
         addClusterToUpdate(clusterId);
-    };
+    }
 
     /**
   * Update the content of the widget due to the removal of spikes in a cluster.
@@ -138,7 +138,7 @@ public slots:
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void spikesRemovedFromClusters(QList<int>& fromClusters,bool active){redraw();};
+    inline void spikesRemovedFromClusters(QList<int>& fromClusters,bool active){redraw();}
 
     /**
   * Update the content of the widget due to the addition of spikes in a cluster.
@@ -148,11 +148,11 @@ public slots:
   */
     void spikesAddedToCluster(int clusterId,bool active){
         addClusterToUpdate(clusterId);
-    };
+    }
 
     /**Method call when no spikes have been found in a polygon of selection
   */
-    inline void emptySelection(){drawContentsMode = UPDATE;};
+    inline void emptySelection(){drawContentsMode = UPDATE;}
 
     /**Change the current mode, call by a selection of a tool
   * @param selectedMode new mode of drawing (selection or zoom)
@@ -171,7 +171,7 @@ public slots:
   */
     void updateClusters(QList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
         if(isModifiedByDeletion) redraw();
-    };
+    }
 
     /**
   * Update the clusters which have been modified by the suppression of spikes
@@ -181,7 +181,7 @@ public slots:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){redraw();};
+    inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){redraw();}
 
     /**Updates the time interval in second and in recording unit using @p step given in second.
   * @param step the interval to use in second.
@@ -189,7 +189,7 @@ public slots:
     inline void setTimeStepInSecond(int step){
         timeStepInSecond = step;
         timeStepInRecordingUnit =  static_cast<long>((static_cast<double>(timeStepInSecond) * 1000000.0) / samplingInterval);
-    };
+    }
 
     /**Updates the time interval between time lines. The update is made both in second and
   * in recording unit using @p step given in second. This is an overloaded member function to be called when the user changes the settings.
@@ -200,7 +200,7 @@ public slots:
         timeStepInSecond = step;
         timeStepInRecordingUnit =  static_cast<long>((static_cast<double>(timeStepInSecond) * 1000000.0) / samplingInterval);
         if(active)redraw();
-    };
+    }
 
     /**Prints the currently display information on a printer via the painter @p printPainter.
   * @param printPainter painter on a printer.
@@ -219,14 +219,14 @@ protected:
     virtual inline void resizeEvent(QResizeEvent* event){
         //Trigger parent event
         ViewWidget::resizeEvent(event);
-    };
+    }
     void mouseReleaseEvent(QMouseEvent* event);
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
     virtual inline  void mouseDoubleClickEvent(QMouseEvent* event){
         //Trigger parent event
         ViewWidget::mouseDoubleClickEvent(event);
-    };
+    }
     /**Treat the events informing that it is time to compute the new data
   * due to the selection polygon.
   */
@@ -271,7 +271,7 @@ private:
         }
         //never reach
         return QColor(0,0,0);
-    };
+    }
 
     /**
   * Erase any polygon of selection in the double buffer and reset the associated variables.
@@ -311,7 +311,7 @@ private:
 
         //reset the information on the polygon to enable a mousetrack in mousemovEvent
         polygonClosed = false;
-    };
+    }
 
     /**Draws information on the time axis.
   * @param painter painter on which to draw the information
@@ -382,7 +382,7 @@ private:
     /**Returns a new ComputeEvent.*/
     inline ComputeEvent* getComputeEvent(QPolygon polygon){
         return new ComputeEvent(polygon);
-    };
+    }
 
     /**
   * Internal class use to inform the Cluster View that it is time to compute the new data

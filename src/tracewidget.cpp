@@ -112,7 +112,7 @@ void TraceWidget::initSelectionWidgets(){
     startMilisecond->setValue(remainingMiliseconds);
 
 
-    durationLabel = new QLabel("  Duration (ms)",selectionWidgets);
+    durationLabel = new QLabel(tr("  Duration (ms)"),selectionWidgets);
     durationLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     durationLabel->setFont(font);
     duration = new QLineEdit(QString::fromLatin1("%1").arg(timeWindow),selectionWidgets);
