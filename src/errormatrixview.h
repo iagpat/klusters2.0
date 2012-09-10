@@ -202,7 +202,7 @@ protected:
     void paintEvent ( QPaintEvent*);
 
     /**Treat the events sent by the groupAssistantThread instances*/
-    void customEvent(QCustomEvent* event);
+    void customEvent(QEvent* event);
 
     inline void resizeEvent(QResizeEvent* event){
         //Trigger parent event

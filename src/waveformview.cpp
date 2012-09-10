@@ -253,7 +253,7 @@ void WaveformView::spikesAddedToCluster(int clusterId,bool active){
     }
 }
 
-void WaveformView::customEvent(QCustomEvent* event){  
+void WaveformView::customEvent(QEvent *event){
     //Event sent by a WaveformThread to inform that the data are available.
     if(event->type() == QEvent::User + 200){
         WaveformThread::GetWaveformsEvent* waveformsEvent = (WaveformThread::GetWaveformsEvent*) event;

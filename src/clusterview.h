@@ -230,7 +230,7 @@ protected:
     /**Treat the events informing that it is time to compute the new data
   * due to the selection polygon.
   */
-    virtual void customEvent(QCustomEvent* event);
+    virtual void customEvent(QEvent* event);
 
 signals:
     void moveToTime(long startTime);

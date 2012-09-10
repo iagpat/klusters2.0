@@ -529,7 +529,7 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
     }
 }
 
-void ClusterView::customEvent(QCustomEvent* event){
+void ClusterView::customEvent(QEvent* event){
     if(event->type() == QEvent::User + 700){
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 

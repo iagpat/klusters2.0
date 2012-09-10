@@ -256,7 +256,7 @@ protected:
     void paintEvent ( QPaintEvent *);
 
     /**Treat the events sent by the WaveformThread instances*/
-    void customEvent(QCustomEvent* event);
+    void customEvent(QEvent* event);
 
     /**The view responds to a double click.
   * The waveforms are retrieve in case the data have changed (an other view has changed its parameters)

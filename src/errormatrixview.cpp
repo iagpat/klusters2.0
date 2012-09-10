@@ -71,7 +71,7 @@ bool ErrorMatrixView::isThreadsRunning(){
     else return true;
 }
 
-void ErrorMatrixView::customEvent(QCustomEvent* event){
+void ErrorMatrixView::customEvent(QEvent* event){
     //Event sent by a ErrorMatrixThread to inform that the data are available.
     if(event->type() == QEvent::User + 600){
 
