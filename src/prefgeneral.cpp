@@ -70,8 +70,10 @@ QString PrefGeneral::getReclusteringExecutable() const{return reclusteringExecut
 QString PrefGeneral::getReclusteringArguments() const{return reclusteringArgsLineEdit->text();}
 
 void PrefGeneral::updateCrashRecoveryTimeInterval(int state){
-    if(state == QCheckBox::On) crashRecoveryComboBox->setEnabled(true);
-    else if(state == QCheckBox::Off) crashRecoveryComboBox->setEnabled(false);
+    if(state == QCheckBox::On)
+        crashRecoveryComboBox->setEnabled(true);
+    else if(state == QCheckBox::Off)
+        crashRecoveryComboBox->setEnabled(false);
 }
 
 void PrefGeneral::updateReclusteringExecutable(){

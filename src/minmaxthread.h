@@ -34,19 +34,19 @@
 
 class MinMaxThread : public QThread  {
 public:
-  //Only the method minmaxCalculator of Data has access to the private part of MinMaxThread,
-  //the constructor of MinMaxThread being private, only this method con create a new MinMaxThread
-  friend MinMaxThread* Data::minMaxCalculator();
+    //Only the method minmaxCalculator of Data has access to the private part of MinMaxThread,
+    //the constructor of MinMaxThread being private, only this method con create a new MinMaxThread
+    friend MinMaxThread* Data::minMaxCalculator();
 
     inline ~MinMaxThread(){qDebug()<<"in ~MinMaxThread";}
 
-  inline void run(){data.minMaxDimensionCalculation(modifiedClusters);}
-  inline void setModifiedClusters(QList<int> clusters){modifiedClusters = clusters;}
-  
+    inline void run(){data.minMaxDimensionCalculation(modifiedClusters);}
+    inline void setModifiedClusters(QList<int> clusters){modifiedClusters = clusters;}
+
 private:
     Data& data;
-      inline MinMaxThread(Data& d):data(d){}
-    QList<int> modifiedClusters;  
+    inline MinMaxThread(Data& d):data(d){}
+    QList<int> modifiedClusters;
 };
 
 

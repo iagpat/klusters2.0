@@ -2,8 +2,8 @@
                           pair.h  -  description
                              -------------------
     begin                : Thu Nov 13 2003
-    copyright            : (C) 2003 by 
-    email                : 
+    copyright            : (C) 2003 by
+    email                :
  ***************************************************************************/
 
 /***************************************************************************
@@ -33,38 +33,38 @@
 
 class Pair {
 public: 
-  inline Pair(){x = 0; y = 0;}
-  inline Pair(int x, int y):x(x),y(y){}
-  inline int getX(){return x;}
-  inline int getY(){return y;}
-  inline void setX(int x){this->x = x;}
-  inline void setY(int y){this->y = y;}
-  
-  inline QString toString(){
-   QString s = QString::fromLatin1("%1-%2").arg(x).arg(y);
-   return s;
-  };
-  inline bool operator==(const Pair& p){
-   return (x == p.x && y == p.y);
-  }
-  inline bool operator <(const Pair& p){
-   return ((x < p.x) || (x == p.x) && (y < p.y));
-  }
-  inline bool operator <=(const Pair& p){
-   return ((x < p.x) || (x == p.x) && (y <= p.y));
-  }
-  inline bool operator >(const Pair& p){
-   return ((x > p.x) || (x == p.x) && (y > p.y));
-  }
-  inline bool operator >=(const Pair& p){
-   return ((x > p.x) || (x == p.x) && (y >= p.y));
-  }
-  
+    inline Pair(){x = 0; y = 0;}
+    inline Pair(int x, int y):x(x),y(y){}
+    inline int getX(){return x;}
+    inline int getY(){return y;}
+    inline void setX(int x){this->x = x;}
+    inline void setY(int y){this->y = y;}
+
+    inline QString toString(){
+        QString s = QString::fromLatin1("%1-%2").arg(x).arg(y);
+        return s;
+    }
+    inline bool operator==(const Pair& p){
+        return (x == p.x && y == p.y);
+    }
+    inline bool operator <(const Pair& p){
+        return ((x < p.x) || (x == p.x) && (y < p.y));
+    }
+    inline bool operator <=(const Pair& p){
+        return ((x < p.x) || (x == p.x) && (y <= p.y));
+    }
+    inline bool operator >(const Pair& p){
+        return ((x > p.x) || (x == p.x) && (y > p.y));
+    }
+    inline bool operator >=(const Pair& p){
+        return ((x > p.x) || (x == p.x) && (y >= p.y));
+    }
+
     inline ~Pair(){}
 
 private:
-  int x;
-  int y;
+    int x;
+    int y;
 
 
 };

@@ -36,81 +36,81 @@ For the moment this class only adds the cluster user information (in the units s
 class ParameterXmlModifier {
 public:
 
-  /**Constructor.
+    /**Constructor.
   */
-  ParameterXmlModifier();
+    ParameterXmlModifier();
 
-  ~ParameterXmlModifier();
+    ~ParameterXmlModifier();
 
- /**Opens and parses the file with the @p url.
+    /**Opens and parses the file with the @p url.
   * @param url url of the file to open.
   * @return true if the file was correctly parse, false othewise.
   */
-  bool parseFile(const QString& url);
-  
-  /**Writes the modified xml tree to a parameter file given by @p url.
+    bool parseFile(const QString& url);
+
+    /**Writes the modified xml tree to a parameter file given by @p url.
   * @param url url of the file to write to.
   * @return true if the parameter file could be write to disk, false otherwise.
   */
-   bool writeTofile(const QString& url);
- 
-  /**
+    bool writeTofile(const QString& url);
+
+    /**
   * Finds the first child node with the tag name @p childName direct child of the root node.
   * @param childName name of the child node tag to look up.
   * @return the first node starting from root having @p tagName as tag name.
   */
-  QDomNode findDirectChild(QString childName);
-  
-  /**
+    QDomNode findDirectChild(QString childName);
+
+    /**
   * Finds the first child node with the tag name @p childName direct child of the @p ancestor node.
   * @param childName name of thechild node tag to look up.
-  * @param ancestor starting node from which to look up for the node.  
+  * @param ancestor starting node from which to look up for the node.
   * @return the first node starting from @p ancestor having @p tagName as tag name.
   */
-  QDomNode findDirectChild(QString childName,QDomNode ancestor);
+    QDomNode findDirectChild(QString childName,QDomNode ancestor);
 
- /**
+    /**
   * Finds the first child node with the tag name @p childName direct child of the @p ancestor node.
   * This node has to contain a direct child node with the tag name @p grandChildName with a text
-  * value of @p value. 
+  * value of @p value.
   * @param childName name of the child node tag to look up.
-  * @param grandChildName name of the grandchild node tag to look up.  
-  * @param value value of the textNode contained in @p grandChildName.  
-  * @param ancestor starting node from which to look up for the child node.  
+  * @param grandChildName name of the grandchild node tag to look up.
+  * @param value value of the textNode contained in @p grandChildName.
+  * @param ancestor starting node from which to look up for the child node.
   * @return the first child node corresponding to the criteria.
   */
-  QDomNode findDirectChild(QString childName,QString grandChildName,QString value,QDomNode ancestor);
+    QDomNode findDirectChild(QString childName,QString grandChildName,QString value,QDomNode ancestor);
 
- /** Sets the map of cluster user information.
-	* @param pGroup the electrod group id for which the cluster user information have to be retrieved (corresponds to the 	currently opened cluster file). 
-	* @param clusterUserInformationMap map given the cluster user information, the key is the cluster id and the value an instance of ClusterUserInformation.
-	* @return true if the modification succeded, false otherwise.   
+    /** Sets the map of cluster user information.
+    * @param pGroup the electrod group id for which the cluster user information have to be retrieved (corresponds to the 	currently opened cluster file).
+    * @param clusterUserInformationMap map given the cluster user information, the key is the cluster id and the value an instance of ClusterUserInformation.
+    * @return true if the modification succeded, false otherwise.
   */
-  bool setClusterUserInformation (int pGroup,QMap<int,ClusterUserInformation>& clusterUserInformationMap);
-  
-  
-  private:
+    bool setClusterUserInformation (int pGroup,QMap<int,ClusterUserInformation>& clusterUserInformationMap);
 
-  /**The session document.*/    
-  QDomDocument doc;
 
-  /**The root element.*/
-  QDomNode root;   
+private:
+
+    /**The session document.*/
+    QDomDocument doc;
+
+    /**The root element.*/
+    QDomNode root;
     
- /**The acquisition system element.*/
-  QDomNode acquisitionSystem;
+    /**The acquisition system element.*/
+    QDomNode acquisitionSystem;
 
-  /**The spike description element.*/
-  QDomNode spikeDetection;
+    /**The spike description element.*/
+    QDomNode spikeDetection;
     
-  /**The units element.*/
-  QDomNode units;
-  		  
-  /**The parameter file as it has been loaded.*/
-  QString initialXmlDocument;
-  
-  static const QString parameterVersion; 
-                        
+    /**The units element.*/
+    QDomNode units;
+
+    /**The parameter file as it has been loaded.*/
+    QString initialXmlDocument;
+
+    static const QString parameterVersion;
+
 };
 
 #endif

@@ -30,57 +30,57 @@
 //include files for the application
 #include <prefgenerallayout.h>
 
-  /**
+/**
   * Class representing the Klusters General Configuration page of the Klusters preferences dialog.
   *@author Lynn Hazan
   */
 
 class PrefGeneral : public PrefGeneralLayout  {
-   Q_OBJECT
+    Q_OBJECT
 public: 
-	PrefGeneral(QWidget *parent=0, const char *name=0);
-	~PrefGeneral();
+    PrefGeneral(QWidget *parent=0, const char *name=0);
+    ~PrefGeneral();
 
-  /**Sets the use of a crash and recovery autosave.*/
-  void setCrashRecovery(bool use);
+    /**Sets the use of a crash and recovery autosave.*/
+    void setCrashRecovery(bool use);
 
-  /**Sets the index of time interval between 2 crash and recovery autosave.*/
-  void setCrashRecoveryIndex(int index);
+    /**Sets the index of time interval between 2 crash and recovery autosave.*/
+    void setCrashRecoveryIndex(int index);
 
-  /**Sets the number of step in the undo/redo mechanism.*/
-  void setNbUndo(int nb);
+    /**Sets the number of step in the undo/redo mechanism.*/
+    void setNbUndo(int nb);
 
-  /**Sets the background color.*/
-  void setBackgroundColor(const QColor& color);
+    /**Sets the background color.*/
+    void setBackgroundColor(const QColor& color);
 
-  /**Sets the reclustering executable.*/
-  void setReclusteringExecutable(const QString& executable);
+    /**Sets the reclustering executable.*/
+    void setReclusteringExecutable(const QString& executable);
 
-  /**Sets the arguments for the reclustering.*/
-  void setReclusteringArguments(const QString &arguments);
-  
-  /**Returns true if a crash and recovery autosave is performed, false othewise.*/
-  bool isCrashRecovery() const;
+    /**Sets the arguments for the reclustering.*/
+    void setReclusteringArguments(const QString &arguments);
 
-  /**Returns the index of the time interval between 2 crash and recovery autosave in minutes.*/
-  int crashRecoveryIntervalIndex() const;
+    /**Returns true if a crash and recovery autosave is performed, false othewise.*/
+    bool isCrashRecovery() const;
 
-  /**Returns the number of step in the undo/redo mechanism.*/
-  int getNbUndo() const;
+    /**Returns the index of the time interval between 2 crash and recovery autosave in minutes.*/
+    int crashRecoveryIntervalIndex() const;
 
-  /**Returns the background color.*/
-  QColor getBackgroundColor() const;
+    /**Returns the number of step in the undo/redo mechanism.*/
+    int getNbUndo() const;
 
-  /**Returns the reclustering executable.*/
-  QString getReclusteringExecutable() const;
+    /**Returns the background color.*/
+    QColor getBackgroundColor() const;
 
-  /**Returns the arguments for the reclustering.*/
-  QString getReclusteringArguments() const;
-       
+    /**Returns the reclustering executable.*/
+    QString getReclusteringExecutable() const;
+
+    /**Returns the arguments for the reclustering.*/
+    QString getReclusteringArguments() const;
+
 private slots:
-  void updateCrashRecoveryTimeInterval(int state);
+    void updateCrashRecoveryTimeInterval(int state);
 
-  void updateReclusteringExecutable();
+    void updateReclusteringExecutable();
 };
 
 #endif

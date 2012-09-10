@@ -26,25 +26,25 @@
 #include <prefclusterviewlayout.h>
 
 
-  /**
+/**
   * Class representing the Cluster View configuration page of the Klusters preferences dialog.
   *@author Lynn Hazan
   */
 
 class PrefClusterView : public PrefClusterViewLayout  {
-   Q_OBJECT
+    Q_OBJECT
 public: 
-	PrefClusterView(QWidget *parent=0);
-	~PrefClusterView();
+    PrefClusterView(QWidget *parent=0);
+    ~PrefClusterView();
 
-  /**Sets the time interval between 2 lines drawn in the cluster views
+    /**Sets the time interval between 2 lines drawn in the cluster views
   * when the time dimension in selected. The time @p time is in second.*/
-  void setTimeInterval(int time);
+    void setTimeInterval(int time);
 
-  /**Returns the time interval between 2 lines drawn in the cluster views
+    /**Returns the time interval between 2 lines drawn in the cluster views
   * when the time dimension in selected. The time is in second.*/
-  int getTimeInterval() const;
-       
+    int getTimeInterval() const;
+
 };
 
 #endif

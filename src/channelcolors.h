@@ -46,7 +46,7 @@ private:
     QColor groupColor;
     QColor spikeGroupColor;
 
-    ChannelColor(int id,QColor c,QColor gc,QColor gdc){
+    ChannelColor(int id,const QColor& c,const QColor& gc,const QColor& gdc){
       channelId = id;
       color = c;
       groupColor = gc;

@@ -24,11 +24,11 @@ PrefClusterView::~PrefClusterView(){
 }
 
 void PrefClusterView::setTimeInterval(int time){
- intervalSpinBox->setValue(time);
+    intervalSpinBox->setValue(time);
 }
 
 int PrefClusterView::getTimeInterval() const{
- return intervalSpinBox->value();
+    return intervalSpinBox->value();
 }
 
 #include "prefclusterview.moc"
