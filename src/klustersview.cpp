@@ -893,7 +893,7 @@ void KlustersView::updateDimensions(int dimensionX,int dimensionY){
 
 void KlustersView::shownClustersUpdate(QList<int>& clustersToShow){
     //Try to minimize the number of clusters to draw
-    Q3ValueVector<int> clustersToRemove;
+    QVector<int> clustersToRemove;
     
     //If a cluster already shown is not requested, remove it from the view
     QList<int>::iterator shownClustersIterator;
@@ -991,7 +991,7 @@ void KlustersView::removeClusterFromView(int clusterId,bool active){
     emit clusterRemovedFromView(clusterId,active);
 }
 
-void KlustersView::removeClustersFromView(Q3ValueVector<int> clusterIds,bool active){
+void KlustersView::removeClustersFromView(QVector<int> clusterIds, bool active){
     int size = clusterIds.size();
     for(int i = 0; i<size; ++i){
         shownClusters->remove(clusterIds[i]);
