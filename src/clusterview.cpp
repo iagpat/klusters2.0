@@ -36,7 +36,7 @@
 #include <q3paintdevicemetrics.h>
 //Added by qt3to4:
 #include <QCustomEvent>
-#include <Q3PointArray>
+#include <QPolygon>
 #include <QList>
 #include <QMouseEvent>
 #include <QEvent>
@@ -435,7 +435,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
                 //Send an event to inform that the data have to be recompute accordingly to the selection polygon.
                 //This asynchronous event will allow the widget to close the polygon
                 //before asking the document to compute the data.
-                ComputeEvent* event = getComputeEvent(selectionPolygon.copy());
+                ComputeEvent* event = getComputeEvent(selectionPolygon);
                 QApplication::postEvent(this,event);
 
             }
@@ -535,9 +535,9 @@ void ClusterView::customEvent(QCustomEvent* event){
 
         ComputeEvent* computeEvent = (ComputeEvent*) event;
         //Get the polygon
-        Q3PointArray polygon = computeEvent->polygon();
+        QPolygon polygon = computeEvent->polygon();
         QRegion selectionArea;
-        Q3PointArray reviewPolygon;
+        QPolygon reviewPolygon;
         long Xdimension = 0;
         long Ydimension = 0;
 

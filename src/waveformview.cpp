@@ -30,7 +30,7 @@
 
 // include files for Qt
 #include <qpaintdevice.h>
-#include <q3pointarray.h>
+#include <QPolygon>
 #include <qcursor.h>
 #include <q3paintdevicemetrics.h>
 //Added by qt3to4:
@@ -475,9 +475,9 @@ void WaveformView::drawWaveforms(QPainter& painter,const QList<int>& clusterList
         if(meanPresentation){
             if(!waveformIterator->isMeanAvailable()) continue;
             int x = 0;
-            Q3PointArray mean;
-            Q3PointArray max;
-            Q3PointArray min;
+            QPolygon mean;
+            QPolygon max;
+            QPolygon min;
             for(int i = 0; i < nbSamplesInWaveform; ++i){
                 for(int j = 0; j < nbchannels; ++j){
                     Y = Y0 - channelPositions[j] * (YsizeForMaxAmp + Yspace);
@@ -512,7 +512,7 @@ void WaveformView::drawWaveforms(QPainter& painter,const QList<int>& clusterList
             long nbOfSpikes = waveformIterator->nbOfSpikes();
             for(long i = 0; i < nbOfSpikes; ++i){
                 int x = 0;
-                Q3PointArray spike(nbchannels * nbSamplesInWaveform);
+                QPolygon spike(nbchannels * nbSamplesInWaveform);
                 for(int i = 0; i < nbSamplesInWaveform; ++i){
                     for(int j = 0; j < nbchannels; ++j){
                         Y = Y0 - channelPositions[j] * (YsizeForMaxAmp + Yspace);

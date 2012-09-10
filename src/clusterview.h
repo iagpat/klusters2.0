@@ -22,7 +22,7 @@
 #include <qpainter.h>
 #include <qstyle.h>
 #include <qpixmap.h>
-#include <q3pointarray.h>
+#include <QPolygon>
 #include <qtimer.h>
 #include <qregion.h>
 #include <QList>
@@ -323,7 +323,7 @@ private:
     /**
   * Points defining the selection polygon.
   */
-    Q3PointArray selectionPolygon;
+    QPolygon selectionPolygon;
 
     /**
   * Number of points defining the selection polygon.
@@ -380,7 +380,7 @@ private:
     friend class ComputeEvent;
 
     /**Returns a new ComputeEvent.*/
-    inline ComputeEvent* getComputeEvent(Q3PointArray polygon){
+    inline ComputeEvent* getComputeEvent(QPolygon polygon){
         return new ComputeEvent(polygon);
     };
 
@@ -393,16 +393,16 @@ private:
     class ComputeEvent : public QCustomEvent{
         //Only the method getComputeEvent of ClusterView has access to the private part of ComputeEvent,
         //the constructor of ComputeEvent being private, only this method con create a new ComputeEvent
-        friend ComputeEvent* ClusterView::getComputeEvent(Q3PointArray selectionPolygon);
+        friend ComputeEvent* ClusterView::getComputeEvent(QPolygon selectionPolygon);
 
     public:
         inline ~ComputeEvent(){}
-        inline Q3PointArray polygon(){return selectionPolygon;}
+        inline QPolygon polygon(){return selectionPolygon;}
 
     private:
-        ComputeEvent(Q3PointArray polygon):QCustomEvent(QEvent::User + 700),selectionPolygon(polygon){}
+        ComputeEvent(QPolygon polygon):QCustomEvent(QEvent::User + 700),selectionPolygon(polygon){}
 
-        Q3PointArray selectionPolygon;
+        QPolygon selectionPolygon;
     };
 
 };
