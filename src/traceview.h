@@ -207,40 +207,42 @@ public:
             setCursor(selectCursor);
             drawRubberBand(false);
         }
-        if(selectedMode == SELECT_EVENT){
+        else if(selectedMode == SELECT_EVENT){
             setCursor(selectEventCursor);
             drawRubberBand(false);
         }
-        if(selectedMode == ADD_EVENT){
+        else if(selectedMode == ADD_EVENT){
             setCursor(addEventCursor);
             drawRubberBand(false);
         }
-        if(selectedMode == ZOOM){
+        else if(selectedMode == ZOOM){
             setCursor(zoomCursor);
             drawRubberBand(false);
         }
-        if(selectedMode == MEASURE){
+        else if(selectedMode == MEASURE){
             drawRubberBand(true);
             setCursor(measureCursor);
         }
-        if(selectedMode == SELECT_TIME){
+        else if(selectedMode == SELECT_TIME){
             drawRubberBand(true,true);
             setCursor(selectTimeCursor);
         }
-        if(selectedMode == DRAW_LINE){
+        else if(selectedMode == DRAW_LINE){
             setCursor(drawLineCursor);
             drawRubberBand(false);
         }
-        if(previousMode == SELECT){
+        else if(previousMode == SELECT){
             selectedChannels.clear();
             drawContentsMode = REDRAW;
-            if(active) update();
+            if(active)
+                update();
         }
-        if(previousMode == SELECT_EVENT){
+        else if(previousMode == SELECT_EVENT){
             selectedEvent.first.clear();
             selectedEvent.second = 0;
             drawContentsMode = REDRAW;
-            if(active) update();
+            if(active)
+                update();
         }
         if(previousMode == ADD_EVENT){
             newEventPosition = -1;
@@ -248,7 +250,7 @@ public:
         if(previousMode == DRAW_LINE){
             linePositions.clear();
         }
-    };
+    }
 
     /**Selects the channels .
   *@param selectedIds ids of the selected channels.
