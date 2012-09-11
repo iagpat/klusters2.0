@@ -20,7 +20,7 @@
 
 // include files for Qt
 #include <qwidget.h>
-#include <Q3PaintDeviceMetrics>
+
 #include <qpixmap.h>
 //Added by qt3to4:
 #include <QList>
@@ -178,7 +178,7 @@ public slots:
   * @param metrics object providing information about the printer.
   * @param whiteBackground true if the printed background has to be white, false otherwise.
   */
-    virtual inline void print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground){}
+    virtual inline void print(QPainter& printPainter,int width,int height, bool whiteBackground){}
 public: 
     //Members
 

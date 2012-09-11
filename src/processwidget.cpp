@@ -25,7 +25,7 @@
 #include <QScrollBar>
 
 #include <QProcess>
-#include <q3paintdevicemetrics.h>
+
 
 //include files for c/c++ libraries
 #include <stdlib.h>
@@ -195,7 +195,8 @@ void ProcessWidget::slotOutputTreatmentOver(){
 
 void ProcessWidget::print(QPrinter *printer, const QString &filePath){
     QPainter printPainter;
-    Q3PaintDeviceMetrics metrics(printer);// need width/height of printer surface
+    const int height = printer->height();
+    const int width = printer->width();
     const int Margin = 20;
     int yPos = 0;       // y-position for each line
 
@@ -209,9 +210,9 @@ void ProcessWidget::print(QPrinter *printer, const QString &filePath){
 
     for(int i = 0; i< count(); i++){
         // no more room on the current page
-        if(Margin + yPos > metrics.height() - Margin) {
+        if(Margin + yPos > height - Margin) {
             printPainter.setPen(Qt::black);
-            printPainter.drawText(Margin,Margin + yPos + fontMetrics.lineSpacing(),metrics.width(),fontMetrics.lineSpacing(),
+            printPainter.drawText(Margin,Margin + yPos + fontMetrics.lineSpacing(),width,fontMetrics.lineSpacing(),
                                   Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
 
             printer->newPage();
@@ -222,7 +223,7 @@ void ProcessWidget::print(QPrinter *printer, const QString &filePath){
         printPainter.setPen(boxItem->color());
 
         printPainter.drawText(Margin,Margin + yPos,
-                              metrics.width(),fontMetrics.lineSpacing(),
+                              width,fontMetrics.lineSpacing(),
                               Qt::ExpandTabs | Qt::DontClip, boxItem->text());
 
         yPos = yPos + fontMetrics.lineSpacing();

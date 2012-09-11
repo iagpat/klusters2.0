@@ -246,7 +246,7 @@ public slots:
  * @param metrics object providing information about the printer.
  * @param whiteBackground true if the printed background has to be white, false otherwise.
  */
-    void print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground);
+    void print(QPainter& printPainter,int width,int height, bool whiteBackground);
 
 protected:
     /**

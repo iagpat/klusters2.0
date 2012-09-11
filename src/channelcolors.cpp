@@ -48,8 +48,10 @@ QColor ChannelColors::color(int identifier){
     theChannelColor = channelColor(identifier);
 
     //In case no ChannelColor have been find (should not happen), return black.
-    if(theChannelColor == NULL) return QColor(Qt::black);
-    else return theChannelColor->color;
+    if(theChannelColor == NULL)
+        return QColor(Qt::black);
+    else
+        return theChannelColor->color;
 }
 
 

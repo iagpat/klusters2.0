@@ -33,7 +33,7 @@
 #include <qpaintdevice.h>
 #include <qapplication.h>
 #include <qcursor.h>
-#include <q3paintdevicemetrics.h>
+
 //Added by qt3to4:
 
 #include <QPolygon>
@@ -644,7 +644,7 @@ void ClusterView::drawTimeInformation(QPainter& painter){
 }
 
 
-void ClusterView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground){
+void ClusterView::print(QPainter& printPainter,int width,int height, bool whiteBackground){
     //Draw the double buffer (pixmap) by copying it into the printer device throught the painter.
     QRect viewportOld = QRect(viewport.left(),viewport.top(),viewport.width(),viewport.height());
 

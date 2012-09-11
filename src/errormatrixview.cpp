@@ -26,7 +26,7 @@
 #include "timer.h"
 
 // include files for Qt
-#include <q3paintdevicemetrics.h>
+
 //Added by qt3to4:
 #include <QList>
 
@@ -812,7 +812,7 @@ void ErrorMatrixView::willBeKilled(){
     }
 }
 
-void ErrorMatrixView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground){
+void ErrorMatrixView::print(QPainter& printPainter,int width,int height, bool whiteBackground){
     //Draw the double buffer (pixmap) by copying it into the printer device throught the painter.
     QRect viewportOld = QRect(viewport.left(),viewport.top(),viewport.width(),viewport.height());
 
@@ -831,9 +831,9 @@ void ErrorMatrixView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics
 
     //Fill the background with the background color and ensure we draw the same portion of the world than on the screen
     QRect back = QRect(r.left(),r.top(),r.width(),r.height());
-    float heightRatio = (static_cast<float>(back.height())/static_cast<float>(metrics.height()));
+    float heightRatio = (static_cast<float>(back.height())/static_cast<float>(height));
     back.setBottom(r.top() + r.height() - 1 + static_cast<long>(15 * heightRatio));
-    float widthRatio = (static_cast<float>(back.width())/static_cast<float>(metrics.width()));
+    float widthRatio = (static_cast<float>(back.width())/static_cast<float>(width));
     if(r.left() == 0) back.setLeft(r.left() - static_cast<long>(15 * widthRatio));
 
     QColor colorLegendTmp = colorLegend;

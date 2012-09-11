@@ -30,7 +30,6 @@
 #include <qpainter.h>
 #include <qdir.h>
 #include <qlabel.h>
-#include <q3paintdevicemetrics.h>
 #include <QDebug>
 #include <QHBoxLayout>
 
@@ -286,8 +285,9 @@ void KlustersView::update(KlustersView* pSender){
 void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackground)
 {
     QPainter printPainter;
-    Q3PaintDeviceMetrics metrics(pPrinter);
 
+    const int width = pPrinter->width();
+    const int height = pPrinter->height();
     printPainter.begin(pPrinter);
 
 
@@ -305,7 +305,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
         QRect newViewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height());
         newViewport.setBottom(printPainter.viewport().bottom() - 20);
         printPainter.setViewport(newViewport);
-        widget->print(printPainter,metrics,whiteBackground);
+        widget->print(printPainter,width,height,whiteBackground);
         printPainter.resetXForm();
 
         printPainter.setFont(f);
@@ -350,7 +350,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
         pPrinter->newPage();
         printPainter.resetXForm();
         //Print the TraceView
-        traceWidget->print(printPainter,metrics,filePath,whiteBackground);
+        traceWidget->print(printPainter,width,height,filePath,whiteBackground);
     }
 
     printPainter.end();

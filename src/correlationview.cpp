@@ -28,7 +28,7 @@
 // include files for Qt
 #include <qpaintdevice.h>
 #include <qcursor.h>
-#include <q3paintdevicemetrics.h>
+
 //Added by qt3to4:
 #include <QList>
 
@@ -764,7 +764,7 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
     ViewWidget::mouseMoveEvent(event);
 }
 
-void CorrelationView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics,bool whiteBackground){
+void CorrelationView::print(QPainter& printPainter,int width,int height, bool whiteBackground){
     printState = true;
 
     //Draw the double buffer (pixmap) by copying it into the printer device throught the painter.
@@ -786,9 +786,9 @@ void CorrelationView::print(QPainter& printPainter,Q3PaintDeviceMetrics& metrics
 
     //Fill the background with the background color and ensure we draw the same portion of the world than on the screen
     QRect back = QRect(r.left(),r.top(),r.width(),r.height());
-    float heightRatio = (static_cast<float>(back.height())/static_cast<float>(metrics.height()));
+    float heightRatio = (static_cast<float>(back.height())/static_cast<float>(height));
     back.setBottom(r.top() + r.height() - 1 + static_cast<long>(10 * heightRatio));
-    float widthRatio = (static_cast<float>(back.width())/static_cast<float>(metrics.width()));
+    float widthRatio = (static_cast<float>(back.width())/static_cast<float>(width));
     if(r.left() == 0) back.setLeft(r.left() - static_cast<long>(XMARGIN * widthRatio));
 
     printRegion = QRegion(back);
