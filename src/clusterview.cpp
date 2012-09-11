@@ -305,7 +305,8 @@ void ClusterView::addClusterToUpdate(int clusterId){
         clusterUpdateList.append(clusterId);
         drawContentsMode = UPDATE;
     }
-    else if(drawContentsMode == UPDATE)clusterUpdateList.append(clusterId);
+    else if(drawContentsMode == UPDATE)
+        clusterUpdateList.append(clusterId);
 }
 
 
@@ -367,10 +368,8 @@ void ClusterView::setMode(BaseFrame::Mode selectedMode){
         setCursor(selectTimeCursor);
         break;
     }
-
-    //Draw the new doublebuffer onto the widget
-    QPainter p(this);
-    p.drawPixmap(0, 0, doublebuffer);
+    drawContentsMode = REFRESH;
+    update();
 }
 
 
@@ -404,14 +403,12 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
             //Erase the last drawn line by drawing into the buffer
             eraseTheLastDrawnLine(color);
 
-            //Draw the new doublebuffer onto the widget
-            QPainter p(this);
-            p.drawPixmap(0, 0, doublebuffer);
+            drawContentsMode = REFRESH;
+            update();
         }
 
         //Close the polygon of selection and trigger the right action depending on the mode
         if(e->button() == Qt::MidButton && selectionPolygon.size()>0){
-            QRegion selectionArea;
 
             //Paint into the buffer to allow the selection to be redrawn after a refresh
             QPainter painter;
@@ -440,14 +437,13 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
 
             }
             //reset the polygon
-            else resetSelectionPolygon();
+            else
+                resetSelectionPolygon();
 
             painter.end();
 
-            //Draw the new doublebuffer onto the widget (show the closed polygon)
-            QPainter p(this);
-            p.drawPixmap(0, 0, doublebuffer);
-
+            drawContentsMode = REFRESH;
+            update();
             statusBar->clear();
         }
 
@@ -522,9 +518,8 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
             }
             painter.end();
 
-            //Draw the new doublebuffer onto the widget
-            QPainter p(this);
-            p.drawPixmap(0, 0, doublebuffer);
+            drawContentsMode = REFRESH;
+            update();
         }
     }
 }
