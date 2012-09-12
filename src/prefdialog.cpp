@@ -107,7 +107,7 @@ void PrefDialog::updateDialog() {
   prefGeneral->setReclusteringArguments(configuration().getReclusteringArguments()); 
   prefclusterView->setTimeInterval(configuration().getTimeInterval());
   prefWaveformView->setGain(configuration().getGain());
-  
+  prefGeneral->setUseWhiteColorDuringPrinting(configuration().getUseWhiteColorDuringPrinting());
   enableButtonApply(false);   // disable apply button
   applyEnable = false;
 }
@@ -124,7 +124,7 @@ void PrefDialog::updateConfiguration(){
   configuration().setGain(prefWaveformView->getGain());
   configuration().setNbChannels(prefWaveformView->getNbChannels());
   configuration().setChannelPositions(prefWaveformView->getChannelPositions()); 
-      
+  configuration().setUseWhiteColorDuringPrinting(prefGeneral->useWhiteColorDuringPrinting());
   enableButtonApply(false);   // disable apply button
   applyEnable = false;
 }
