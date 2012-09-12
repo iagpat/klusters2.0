@@ -83,4 +83,14 @@ void PrefGeneral::updateReclusteringExecutable(){
     setReclusteringExecutable(executable);
 }
 
+bool PrefGeneral::useWhiteColorDuringPrinting() const
+{
+    return useWhiteColorPrinting->isChecked();
+}
+
+void PrefGeneral::setUseWhiteColorDuringPrinting(bool b)
+{
+    useWhiteColorPrinting->setChecked(b);
+}
+
 #include "prefgeneral.moc"

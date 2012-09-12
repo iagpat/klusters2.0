@@ -77,6 +77,9 @@ public:
     /**Returns the arguments for the reclustering.*/
     QString getReclusteringArguments() const;
 
+    bool useWhiteColorDuringPrinting() const;
+
+    void setUseWhiteColorDuringPrinting(bool b);
 private slots:
     void updateCrashRecoveryTimeInterval(int state);
 

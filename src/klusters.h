@@ -820,6 +820,8 @@ QRecentFileAction* mFileOpenRecent;
     /**The path of the currently open document.*/
     QString filePath;
 
+    bool useWhiteColorDuringPrinting;
+
 
 };
 

@@ -97,7 +97,7 @@ public:
         default:
             return 1;
         }
-    };
+    }
 
     /**Returns the index corresponding to the time interval between
     * 2 crash and recovery autosave in minutes.*/
@@ -154,6 +154,10 @@ public:
     /**Returns the default arguments for the reclustering.*/
     inline QString getReclusteringArgumentsDefault() const{return reclusteringArgsDefault;}
 
+    bool getUseWhiteColorDuringPrinting() const { return useWhiteColorDuringPrinting; }
+
+    void setUseWhiteColorDuringPrinting(bool b) { useWhiteColorDuringPrinting = b; }
+
 private:
     /**Boolean indicating if a crash and recovery is ask.*/
     bool crashRecovery;
@@ -176,6 +180,7 @@ private:
     /**Arguments for the reclustering executable.*/
     QString reclusteringArgs;
 
+    bool useWhiteColorDuringPrinting;
     static const bool crashRecoveryDefault;
     static const int  crashRecoveryIndexDefault;
     static const int  gainDefault;

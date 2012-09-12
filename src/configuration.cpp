@@ -48,6 +48,7 @@ void Configuration::read() {
     backgroundColor = settings.value("backgroundColor",&backgroundColorDefault).value<QColor>();
     reclusteringExecutable = settings.value("reclusteringExecutable",reclusteringExecutableDefault).toString();
     reclusteringArgs = settings.value("reclusteringArgs",reclusteringArgsDefault).toString();
+    useWhiteColorDuringPrinting = settings.value("useWhiteColorDuringPrinting",true).toBool();
     settings.endGroup();
 
     //read cluster view options
@@ -71,6 +72,7 @@ void Configuration::write() const {
     settings.setValue("backgroundColor",backgroundColor);
     settings.setValue("reclusteringExecutable",reclusteringExecutable);
     settings.setValue("reclusteringArgs",reclusteringArgs);
+    settings.setValue("useWhiteColorDuringPrinting",useWhiteColorDuringPrinting);
     settings.endGroup();
     
     //write cluster view options

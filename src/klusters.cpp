@@ -671,8 +671,10 @@ void KlustersApp::initSelectionBoxes(){
 
 void KlustersApp::executePreferencesDlg(){
     if(prefDialog == 0L){
-        if(mainDock) prefDialog = new PrefDialog(this,doc->nbOfchannels());  // create dialog on demand
-        else prefDialog = new PrefDialog(this);
+        if(mainDock)
+            prefDialog = new PrefDialog(this,doc->nbOfchannels());  // create dialog on demand
+        else
+            prefDialog = new PrefDialog(this);
         // connect to the "settingsChanged" signal
         connect(prefDialog,SIGNAL(settingsChanged()),this,SLOT(applyPreferences()));
     }
@@ -700,13 +702,15 @@ void KlustersApp::applyPreferences() {
     configuration().write();
     int newNbUndo = configuration().getNbUndo();
     if(nbUndo != newNbUndo){
-        if(mainDock)doc->nbUndoChangedCleaning(newNbUndo);
+        if(mainDock)
+            doc->nbUndoChangedCleaning(newNbUndo);
         nbUndo = newNbUndo;
     }
 
     if(backgroundColor != configuration().getBackgroundColor()){
         backgroundColor = configuration().getBackgroundColor();
-        if(mainDock)doc->setBackgroundColor(backgroundColor);
+        if(mainDock)
+            doc->setBackgroundColor(backgroundColor);
         clusterPalette->changeBackgroundColor(backgroundColor);
     }
 
@@ -717,21 +721,26 @@ void KlustersApp::applyPreferences() {
 
     if(displayTimeInterval != configuration().getTimeInterval()){
         displayTimeInterval = configuration().getTimeInterval();
-        if(mainDock)doc->setTimeStepInSecond(displayTimeInterval);
+        if(mainDock)
+            doc->setTimeStepInSecond(displayTimeInterval);
     }
 
     if(configuration().isCrashRecovery()){
-        if(mainDock)doc->updateAutoSavingInterval(configuration().crashRecoveryInterval());
-        else doc->setAutoSaving(configuration().crashRecoveryInterval());
+        if(mainDock)
+            doc->updateAutoSavingInterval(configuration().crashRecoveryInterval());
+        else
+            doc->setAutoSaving(configuration().crashRecoveryInterval());
     }
-    else doc->stopAutoSaving();
+    else
+        doc->stopAutoSaving();
 
     if(configuration().getNbChannels() != 0 && channelPositions != (*configuration().getChannelPositions())){
         QList<int>* positions = configuration().getChannelPositions();
         channelPositions.clear();
         for(int i = 0; i < static_cast<int>(positions->size()); ++i)
             channelPositions.append((*positions)[i]);
-        if(mainDock)doc->setChannelPositions(channelPositions);
+        if(mainDock)
+            doc->setChannelPositions(channelPositions);
     }
 
     if(reclusteringExecutable != configuration().getReclusteringExecutable())
@@ -739,6 +748,8 @@ void KlustersApp::applyPreferences() {
 
     if(reclusteringArgs != configuration().getReclusteringArguments())
         reclusteringArgs = configuration().getReclusteringArguments();
+
+    useWhiteColorDuringPrinting = configuration().getUseWhiteColorDuringPrinting();
 }
 
 void KlustersApp::initializePreferences(){
@@ -748,6 +759,7 @@ void KlustersApp::initializePreferences(){
     backgroundColor =  configuration().getBackgroundColor();
     reclusteringExecutable =  configuration().getReclusteringExecutable();
     reclusteringArgs = configuration().getReclusteringArguments();
+    useWhiteColorDuringPrinting = configuration().getUseWhiteColorDuringPrinting();
 }
 
 void KlustersApp::initStatusBar()
@@ -1656,7 +1668,10 @@ void KlustersApp::slotFilePrint()
     {
         if(!doesActiveDisplayContainProcessWidget()){
             KlustersView* view = activeView();
-            view->print(printer,filePath,false);
+            if(useWhiteColorDuringPrinting)
+                view->print(printer,filePath,true);
+            else
+                view->print(printer,filePath,false);
         }
         else{
             QDockWidget* dock = static_cast<QDockWidget*>(tabsParent->currentPage());
