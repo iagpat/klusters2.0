@@ -596,7 +596,8 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
 
 
         QWidget* widget;
-        if(object->isA("QDockWidget")) widget = dynamic_cast<QDockWidget*>(object)->widget();
+        if(object->isA("QDockWidget"))
+            widget = dynamic_cast<QDockWidget*>(object)->widget();
         else if(object->isA("ClusterView") || object->isA("WaveformView") || object->isA("CorrelationView") || object->isA("ErrorMatrixView")
                 || object->isA("TraceWidget"))
             widget = dynamic_cast<QWidget*>(object);
@@ -645,38 +646,23 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
             QAction* id = menu.exec(QCursor::pos());
 
             if(id == clusterView){
-#if KDAB_PENDING
-
-                mainWindow.widgetAddToDisplay(CLUSTERS,dockManager->findWidgetParentDock(widget));
-#endif
+                mainWindow.widgetAddToDisplay(CLUSTERS);
                 return true;
             }
             else if(id == waveformView){
-#if KDAB_PENDING
-
-                mainWindow.widgetAddToDisplay(WAVEFORMS,dockManager->findWidgetParentDock(widget));
-#endif
+                mainWindow.widgetAddToDisplay(WAVEFORMS);
                 return true;
             }
             else if(id == correlationView){
-#if KDAB_PENDING
-
-                mainWindow.widgetAddToDisplay(CORRELATIONS,dockManager->findWidgetParentDock(widget));
-#endif
+                mainWindow.widgetAddToDisplay(CORRELATIONS);
                 return true;
             }
             else if(id == errorMatrixView){
-#if KDAB_PENDING
-
-                mainWindow.widgetAddToDisplay(ERROR_MATRIX,dockManager->findWidgetParentDock(widget));
-#endif
+                mainWindow.widgetAddToDisplay(ERROR_MATRIX);
                 return true;
             }
             else if(id == traceView){
-#if KDAB_PENDING
-
-                mainWindow.widgetAddToDisplay(TRACES,dockManager->findWidgetParentDock(widget));
-#endif
+                mainWindow.widgetAddToDisplay(TRACES);
                 return true;
             }
             else return QWidget::eventFilter(object,event);    // standard event processing
@@ -695,7 +681,7 @@ void KlustersView::closeEvent(QCloseEvent* e){
 
 }
 
-bool KlustersView::addView(QDockWidget* dockWidget, DisplayType displayType, const QColor &backgroundColor, QStatusBar* statusBar, int timeInterval, int maxAmplitude, QList<int> positions){
+bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColor, QStatusBar* statusBar, int timeInterval, int maxAmplitude, QList<int> positions){
 
     //Enable docking abilities
 #if KDAB_PENDING
@@ -734,7 +720,7 @@ bool KlustersView::addView(QDockWidget* dockWidget, DisplayType displayType, con
         viewList.append(clusterView);
         clusterView->installEventFilter(this);//To enable right click popup menu
         clusters->installEventFilter(this);
-        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,clusters);
+        addDockWidget(Qt::BottomDockWidgetArea,clusters);
 #if KDAB_PENDING
 
         clusters->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
@@ -782,7 +768,7 @@ bool KlustersView::addView(QDockWidget* dockWidget, DisplayType displayType, con
         waveforms->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
         waveforms->setEnableDocking(QDockWidget::DockCorner);
 #endif
-        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,waveforms);
+        addDockWidget(Qt::BottomDockWidgetArea,waveforms);
         setConnections(WAVEFORMS,waveformView,waveforms);
         break;
     case CORRELATIONS:
@@ -803,7 +789,7 @@ bool KlustersView::addView(QDockWidget* dockWidget, DisplayType displayType, con
         viewList.append(correlationView);
         correlationView->installEventFilter(this);//To enable right click popup menu
         correlations->installEventFilter(this);
-        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,correlations);
+        addDockWidget(Qt::BottomDockWidgetArea,correlations);
 #if KDAB_PENDING
 
         correlations->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
@@ -832,7 +818,7 @@ bool KlustersView::addView(QDockWidget* dockWidget, DisplayType displayType, con
         viewList.append(errorMatrixView);
         errorMatrixView->installEventFilter(this);//To enable right click popup menu
         errorMatrix->installEventFilter(this);
-        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,errorMatrix);
+        addDockWidget(Qt::BottomDockWidgetArea,errorMatrix);
 #if KDAB_PENDING
 
         errorMatrix->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
@@ -871,7 +857,7 @@ bool KlustersView::addView(QDockWidget* dockWidget, DisplayType displayType, con
 
         traces->installEventFilter(this);//To enable right click popup menu
         traceWidget->installEventFilter(this);
-        mainWindow.addDockWidget(Qt::BottomDockWidgetArea,traces);
+        addDockWidget(Qt::BottomDockWidgetArea,traces);
 #if KDAB_PENDING
         traces->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
         traces->setEnableDocking(QDockWidget::DockCorner);

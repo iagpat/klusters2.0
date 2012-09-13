@@ -96,7 +96,7 @@ public:
     * @param displayType type of view to add (ClusterView,WaveformView or CorrelationView).
     * @param docWidget QDockWidget to which the new view will be docked.
     */
-    void widgetAddToDisplay(KlustersView::DisplayType displayType,QDockWidget* docWidget);
+    void widgetAddToDisplay(KlustersView::DisplayType displayType);
 
     /**Updates the menu due to the removal of a view (ClusterView, WaveformView or CorrelationView) in the active display.
     * @param displayType type of view to add (ClusterView,WaveformView or CorrelationView).

@@ -133,7 +133,7 @@ public:
     * @param positions positions of the channels to use in the view set by the user in the settings dialog.
     * @return false if there was already a view of @displayType in the view, true otherwise.
     */
-    bool addView(QDockWidget* docWidget,DisplayType displayType,const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
+    bool addView(DisplayType displayType,const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
     
     /**List of the names for the different type of view available.*/
     static const QString DisplayTypeNames[];

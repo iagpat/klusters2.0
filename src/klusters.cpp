@@ -2719,9 +2719,9 @@ void KlustersApp::updateUndoRedoDisplay(){
     }
 }
 
-void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType,QDockWidget* docWidget){
+void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType){
     KlustersView* view = activeView();
-    bool newWidgetType = view->addView(docWidget,displayType,backgroundColor,statusBar(),displayTimeInterval,waveformsGain,channelPositions);
+    bool newWidgetType = view->addView(displayType,backgroundColor,statusBar(),displayTimeInterval,waveformsGain,channelPositions);
 
     isInit = true; //prevent the spine boxes or the lineedit and the editline to trigger during initialisation.
 
