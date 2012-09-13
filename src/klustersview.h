@@ -97,7 +97,7 @@ class KlustersView : public QWidget
       * @param undoList list of list of removed clusters used to enable undo action.
       * @param redoList list of list of removed clusters used to enable redo action.     
      */
-    KlustersView(KlustersApp& mainWindow,KlustersDoc& doc,QColor backgroundColor,int initialDimensionX,int initialDdimensionY,
+    KlustersView(KlustersApp& mainWindow,KlustersDoc& doc,const QColor& backgroundColor,int initialDimensionX,int initialDdimensionY,
     QList<int>* initialClusterList, DisplayType type,QWidget* parent, const char *name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
     QList<int> positions,bool isTimeFrameMode = false,long start = 0,long timeFrameWidth = 0,long nbSpkToDisplay = 0,bool overLay = false,
     bool mean = false,int binSize = 0, int correlationTimeFrame = 0,Data::ScaleMode scale = Data::MAX,bool shoulderLine = true,

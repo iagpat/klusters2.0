@@ -860,15 +860,12 @@ void KlustersApp::initDisplay(){
 
     DockArea *area = tabsParent->addDockArea(tr("Overview Display"));
     area->setMainWidget(view);
-    area->addDockWidget(Qt::LeftDockWidgetArea,mainDock);
+    area->addDockWidget(Qt::RightDockWidgetArea,mainDock);
 
     //Initialize and dock the clusterpanel
     //Create the cluster list and select the clusters which will be drawn
     clusterPalette->createClusterList(doc);
     clusterPalette->selectItems(*clusterList);
-
-    //allow dock on the right side only
-    mainDock->setAllowedAreas(Qt::RightDockWidgetArea);
 
     //Dock the clusterPanel on the left
     //KDAB_PENDING clusterPanel->setEnableDocking(QDockWidget::DockFullSite);
