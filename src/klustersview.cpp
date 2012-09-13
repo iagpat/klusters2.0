@@ -51,11 +51,29 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
                            QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
                            QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
                            int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay, Q3PtrList< QList<int> > undoList, Q3PtrList< QList<int> > redoList)
-    : QWidget(parent),doc(pDoc), removedClustersUndoList(undoList),removedClustersRedoList(redoList),dimensionX(initialDimensionX),dimensionY(initialDimensionY),
-      currentViewWidget(0L),numberUndo(undoList.count()),inTimeFrameMode(isTimeFrameMode),timeWindow(timeFrameWidth),startTime(start),nbSpkToDisplay(nbSpkToDisplay),
-      overLayDisplay(overLay),meanDisplay(mean),
-      binSize(binSize),correlogramTimeFrame(correlationTimeFrame),correlationScale(scale),shoulderLine(shoulderLine),
-      mainWindow(mainWindow),traceWidget(0L),startingTime(startingTime),duration(duration),labelsDisplay(labelsDisplay)
+    : QWidget(parent),
+      doc(pDoc),
+      removedClustersUndoList(undoList),
+      removedClustersRedoList(redoList),
+      dimensionX(initialDimensionX),
+      dimensionY(initialDimensionY),
+      currentViewWidget(0L),
+      numberUndo(undoList.count()),
+      inTimeFrameMode(isTimeFrameMode),
+      timeWindow(timeFrameWidth),
+      startTime(start),
+      nbSpkToDisplay(nbSpkToDisplay),
+      overLayDisplay(overLay),
+      meanDisplay(mean),
+      binSize(binSize),
+      correlogramTimeFrame(correlationTimeFrame),
+      correlationScale(scale),
+      shoulderLine(shoulderLine),
+      mainWindow(mainWindow),
+      traceWidget(0L),
+      startingTime(startingTime),
+      duration(duration),
+      labelsDisplay(labelsDisplay)
 {
     setAutoFillBackground(true);
     shownClusters = initialClusterList;
