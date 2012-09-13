@@ -48,9 +48,10 @@ const QString KlustersView::DisplayTypeNames[]={"Cluster Display","Waveform Disp
 
 
 KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& pDoc,const QColor& backgroundColor,int initialDimensionX,int initialDimensionY,
-                           QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
+                           QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, Qt::WindowFlags wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
                            QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
-                           int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay, Q3PtrList< QList<int> > undoList, Q3PtrList< QList<int> > redoList)
+                           int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay,
+                           Q3PtrList< QList<int> > undoList, Q3PtrList< QList<int> > redoList)
     : QWidget(parent),
       doc(pDoc),
       removedClustersUndoList(undoList),
@@ -75,6 +76,7 @@ KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& p
       duration(duration),
       labelsDisplay(labelsDisplay)
 {
+    setWindowFlags(wflags);
     setAutoFillBackground(true);
     shownClusters = initialClusterList;
     removedClusters = new QList<int>();

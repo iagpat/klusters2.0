@@ -986,7 +986,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         display->setWidget(view);
 
         area->setMainWidget(view);
-        area->addDockWidget(Qt::NoDockWidgetArea,display);
+        area->addDockWidget(Qt::LeftDockWidgetArea,display);
 
 
 

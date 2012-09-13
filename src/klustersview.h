@@ -54,26 +54,26 @@ class TraceWidget;
  */
 class KlustersView : public QWidget
 {
-  Q_OBJECT
+    Q_OBJECT
 
-  friend class KlustersDoc;
+    friend class KlustersDoc;
 
-  public:
+public:
 
-   /**
+    /**
     * Enum indicating wich type of view the user wants.
     */
     enum DisplayType {CLUSTERS=0,WAVEFORMS=1,CORRELATIONS=2,OVERVIEW=3,GROUPING_ASSISTANT_VIEW=4,ERROR_MATRIX=5,TRACES=6};
-                                 
-   /** Constructs a view.
+
+    /** Constructs a view.
       * @param mainWindow a reference on the main window of the application.
       * @param doc the document instance the view represents.
       * @param backgroundColor color used as background.
       * @param initialDimensionX initial dimension to be presented on the abscissa axis.
       * @param initialDdimensionY initial dimension to be presented on the ordinate axis.
-      * @param initialClusterList list of cluster to be shown at the opening of the view.    
+      * @param initialClusterList list of cluster to be shown at the opening of the view.
       * @param type a DisplayType giving the way the document has to be presented.
-      * @param parent the parent QWidget. 
+      * @param parent the parent QWidget.
       * @param name name of the widget (can be used for introspection).
       * @param wflags common QWidget flags.
       * @param statusBar a reference to the application status bar.
@@ -93,16 +93,16 @@ class KlustersView : public QWidget
       * @param shoulderLine boolean indicating if a doted line is drawn at the shoulder level
       * of the correlograms.
       * @param startingTime starting time in miliseconds used in the TraceView.
-      * @param duration time window in miliseconds used in the TraceView.           
-      * @param labelsDisplay true if labels are drawn next to the traces, false otherwise.   
+      * @param duration time window in miliseconds used in the TraceView.
+      * @param labelsDisplay true if labels are drawn next to the traces, false otherwise.
       * @param undoList list of list of removed clusters used to enable undo action.
-      * @param redoList list of list of removed clusters used to enable redo action.     
+      * @param redoList list of list of removed clusters used to enable redo action.
      */
-    KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& doc,const QColor& backgroundColor,int initialDimensionX,int initialDdimensionY,
-    QList<int>* initialClusterList, DisplayType type,QWidget* parent, const char *name, int wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
-    QList<int> positions,bool isTimeFrameMode = false,long start = 0,long timeFrameWidth = 0,long nbSpkToDisplay = 0,bool overLay = false,
-    bool mean = false,int binSize = 0, int correlationTimeFrame = 0,Data::ScaleMode scale = Data::MAX,bool shoulderLine = true,
-    long startingTime = 0,long duration = 100,bool labelsDisplay = false,Q3PtrList< QList<int> > undoList = Q3PtrList< QList<int> >(), Q3PtrList< QList<int> > redoList = Q3PtrList< QList<int> >());
+    KlustersView(DockArea *area, KlustersApp& mainWindow, KlustersDoc& doc, const QColor& backgroundColor, int initialDimensionX, int initialDdimensionY,
+                 QList<int>* initialClusterList, DisplayType type, QWidget* parent, const char *name, Qt::WindowFlags wflags, QStatusBar * statusBar, int timeInterval, int maxAmplitude,
+                 QList<int> positions, bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay = 0, bool overLay = false,
+                 bool mean = false, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
+                 long startingTime = 0, long duration = 100, bool labelsDisplay = false, Q3PtrList< QList<int> > undoList = Q3PtrList< QList<int> >(), Q3PtrList< QList<int> > redoList = Q3PtrList< QList<int> >());
 
     /** Destructor for the main view */
     ~KlustersView();
@@ -118,12 +118,12 @@ class KlustersView : public QWidget
     * The file name and view-specific parameters are printed below the figure.
     * @param printer printer to print into.
     * @param filePath path of the opened document.
-    * @param whiteBackground true if the printed background has to be white, false otherwise.    
+    * @param whiteBackground true if the printed background has to be white, false otherwise.
     */
     void print(QPrinter* printer,QString filePath,bool whiteBackground);
     
     /**Adds a new view (ClusterView,WaveformView or CorrelationView).
-    * @param docWidget QDockWidget to which the new view will be docked.    
+    * @param docWidget QDockWidget to which the new view will be docked.
     * @param displayType type of view to add.
     * @param backgroundColor color used as background.
     * @param statusBar a reference to the application status bar.
@@ -139,7 +139,7 @@ class KlustersView : public QWidget
 
     /*Updates the dimension used to present the clusters in the Cluster View.
     * @param dimensionX abscissa dimension.
-    * @param dimensionY ordinate dimension.   
+    * @param dimensionY ordinate dimension.
     **/
     void updateDimensions(int dimensionX,int dimensionY);
 
@@ -160,18 +160,18 @@ class KlustersView : public QWidget
 
     /**Checks if some clusters have had their color changed.
     * If so, update clusterUpdateList if needed.
-    * @param active true if the view is the active one, false otherwise.    
+    * @param active true if the view is the active one, false otherwise.
     */
     void updateColors(bool active);
 
     /**Show all the encapsulated widgets contain in the view. The widgets know how to draw themselves.*/
     inline void showAllWidgets(){
-      emit updateContents();
+        emit updateContents();
     }
 
     /**Update all the encapsulated widgets contain in the view. The widgets know how to draw themselves.*/
     inline void updateViewContents(){
-      emit updateDrawing();
+        emit updateDrawing();
     }
 
     /**Updates the view only for one cluster for which the color has been changed.
@@ -179,7 +179,7 @@ class KlustersView : public QWidget
     * @param active true if the view is the active one, false otherwise.
     */
     inline void singleColorUpdate(int clusterId,bool active){
-      emit singleColorUpdated(clusterId,active);
+        emit singleColorUpdated(clusterId,active);
     }
 
     /**
@@ -218,14 +218,14 @@ class KlustersView : public QWidget
     * This method aims to reduce the number of clusters to draw.
     * @param fromClusters list of clusters from which the spikes of the new cluster are coming.
     * @param clusterId cluster to add to the clusters already drawn.
-    * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.  
+    * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.
     * @param active true if the view is the active one, false otherwise.
     */
     void addNewClusterToView(QList<int>& fromClusters,int clusterId,QList<int>& emptiedClusters,bool active);
 
     /**
     * Adds newly created clusters to those already shown.
-    * This method aims to reduce the number of clusters to draw.    
+    * This method aims to reduce the number of clusters to draw.
     * @param fromToNewClusterIds map where the keys are ids of the clusters which really contained spikes in the region
     * and the values are the ids of the newly created clusters.
     * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.
@@ -233,50 +233,50 @@ class KlustersView : public QWidget
     */
     void addNewClustersToView(QMap<int,int>& fromToNewClusterIds,QList<int>& emptiedClusters,bool active);
 
-   /**
+    /**
    * Updates the content of the view due to the removal of spikes in a cluster.
    * This method aims to reduce the number of clusters to draw.
    * @param fromClusters list of clusters from which the spikes have been taken.
    * @param destinationClusterId cluster id to which the spikes have been added
    * @param emptiedClusters list clusters numbers which became empty because all their spikes were put in the new one.
-    * @param active true if the view is the active one, false otherwise.   
+    * @param active true if the view is the active one, false otherwise.
    */
-   void removeSpikesFromClustersInView(QList<int>& fromClusters, int destinationClusterId,QList<int>& emptiedClusters,bool active);
+    void removeSpikesFromClustersInView(QList<int>& fromClusters, int destinationClusterId,QList<int>& emptiedClusters,bool active);
 
-   /**Updates the mode, methode call from the application on the active view after the user selected a tool.
+    /**Updates the mode, methode call from the application on the active view after the user selected a tool.
    * @param selectedMode the new mode.
    */
-   inline void setMode(BaseFrame::Mode selectedMode){
-     emit modeToSet(selectedMode);
-   }
+    inline void setMode(BaseFrame::Mode selectedMode){
+        emit modeToSet(selectedMode);
+    }
 
-   /**Sets the currentViewWidget (not currently used).*/
-   inline void setCurrentViewWidget(ViewWidget* current){currentViewWidget = current;}
+    /**Sets the currentViewWidget (not currently used).*/
+    inline void setCurrentViewWidget(ViewWidget* current){currentViewWidget = current;}
 
-   /**Method called when no spikes have been found in a polygon of selection.
+    /**Method called when no spikes have been found in a polygon of selection.
    */
-   inline void selectionIsEmpty(){emit emptySelection();}
+    inline void selectionIsEmpty(){emit emptySelection();}
 
-   /** Reverts the last user action. If any clusters have been removed they will be added back
+    /** Reverts the last user action. If any clusters have been removed they will be added back
     * @param active true if the view is the active one, false otherwise.*/
-   void undo(bool active);
+    void undo(bool active);
 
-   /** Reverts the last user action. If any clusters have been removed they will be added back
-   * The clusters in @p addedClusters, if present in shownClusters, will be removed. 
+    /** Reverts the last user action. If any clusters have been removed they will be added back
+   * The clusters in @p addedClusters, if present in shownClusters, will be removed.
    * @param addedClusters list of clusters which were added
    * @param active true if the view is the active one, false otherwise.
    */
-   void undoAddedClusters(QList<int>& addedClusters,bool active);
+    void undoAddedClusters(QList<int>& addedClusters,bool active);
 
-   /** Reverts the last user action. If any clusters have been removed they will be added back
-   * The clusters in @p modifiedClusters,if present in shownClusters, will be updated. 
+    /** Reverts the last user action. If any clusters have been removed they will be added back
+   * The clusters in @p modifiedClusters,if present in shownClusters, will be updated.
    * @param updatedClusters list of clusters which were modified
    * @param active true if the view is the active one, false otherwise.
    */
-   void undoModifiedClusters(QList<int>& updatedClusters,bool active);
+    void undoModifiedClusters(QList<int>& updatedClusters,bool active);
 
-   
-   /** Reverts the last user action. If any clusters have been removed they will be added back
+
+    /** Reverts the last user action. If any clusters have been removed they will be added back
    * The clusters in @p addedClusters, if present in shownClusters,
    * will be removed and the clusters in @p modifiedClusters,if present in
    * shownClusters, will be updated.
@@ -284,25 +284,25 @@ class KlustersView : public QWidget
    * @param updatedClusters list of clusters which were modified .
    * @param active true if the view is the active one, false otherwise.
    */
-   void undo(QList<int>& addedClusters,QList<int>& updatedClusters,bool active);
-   
-   /** Revers the last undo action. If any clusters have been added back in the undo
+    void undo(QList<int>& addedClusters,QList<int>& updatedClusters,bool active);
+
+    /** Revers the last undo action. If any clusters have been added back in the undo
    * they will be removed again if they are shown.
    * @param active true if the view is the active one, false otherwise.
    * @param deletedClusters list of clusters which were deleted.
    */
-   void redo(bool active,QList<int>& deletedClusters);
+    void redo(bool active,QList<int>& deletedClusters);
 
-   /** Reverts the last undo action. If any clusters have been added back in the undo
+    /** Reverts the last undo action. If any clusters have been added back in the undo
    * they will be removed again if they are shown.
    * The clusters in @p addedClusters will be added back.
    * @param addedClusters list of clusters which were added
    * @param active true if the view is the active one, false otherwise.
    * @param deletedClusters list of clusters which were deleted.
    */
-   void redoAddedClusters(QList<int>& addedClusters,bool active,QList<int>& deletedClusters);
+    void redoAddedClusters(QList<int>& addedClusters,bool active,QList<int>& deletedClusters);
 
-   /** Reverts the last undo action. If any clusters have been added back in the undo
+    /** Reverts the last undo action. If any clusters have been added back in the undo
    * they will be removed again if they are shown. The boolean @p isModifiedByDeletion is used
    * to reduce the number of cluster to redraw whenever possible.
    * The clusters in @p modifiedClusters, if present in shownClusters, will be updated.
@@ -312,10 +312,10 @@ class KlustersView : public QWidget
    * @param active true if the view is the active one, false otherwise.
    * @param deletedClusters list of clusters which were deleted.
    */
-   void redoModifiedClusters(QList<int>& updatedClusters,bool isModifiedByDeletion,bool active,QList<int>& deletedClusters);
+    void redoModifiedClusters(QList<int>& updatedClusters,bool isModifiedByDeletion,bool active,QList<int>& deletedClusters);
 
 
-   /** Reverts the last undo action. If any clusters have been added back in the undo
+    /** Reverts the last undo action. If any clusters have been added back in the undo
    * they will be removed again if they are shown. The boolean @p isModifiedByDeletion is used
    * to reduce the number of cluster to redraw whenever possible.
    * The clusters in @p addedClusters will be added back and the clusters in @p modifiedClusters,if present in
@@ -327,261 +327,261 @@ class KlustersView : public QWidget
    * @param active true if the view is the active one, false otherwise.
    * @param deletedClusters list of clusters which were deleted.
    */
-   void redo(QList<int>& addedClusters,QList<int>& modifiedClusters,bool isModifiedByDeletion,bool active,QList<int>& deletedClusters);
+    void redo(QList<int>& addedClusters,QList<int>& modifiedClusters,bool isModifiedByDeletion,bool active,QList<int>& deletedClusters);
 
-   /**
+    /**
    * Updates the list of clusterIds shown using the new ids.
    * @param clusterIdsOldNew map given for each old clusterId the new clusterId.
    * @param active true if the view is the active one, false otherwise.
    */
-   void renumberClusters(QMap<int,int>& clusterIdsOldNew,bool active);
-   
-   /**Reverts the last renumbering action.
+    void renumberClusters(QMap<int,int>& clusterIdsOldNew,bool active);
+
+    /**Reverts the last renumbering action.
    * @param clusterIdsNewOld map given for each new clusterId the old clusterId.
    * @param active true if the view is the active one, false otherwise.
    */
-   void undoRenumbering(QMap<int,int>& clusterIdsNewOld,bool active) ;
+    void undoRenumbering(QMap<int,int>& clusterIdsNewOld,bool active) ;
 
-   /**Reverts the last undo action on a renumbering.
+    /**Reverts the last undo action on a renumbering.
    * @param clusterIdsOldNew map given for each old clusterId the new clusterId.
    * @param active true if the view is the active one, false otherwise.
    */
-   void redoRenumbering(QMap<int,int>& clusterIdsOldNew,bool active);
+    void redoRenumbering(QMap<int,int>& clusterIdsOldNew,bool active);
 
-   /**Informs the WaveformView to present the waveforms for an updated time frame.
+    /**Informs the WaveformView to present the waveforms for an updated time frame.
    * @param start the start time of the time frame.
    * @param timeFrameWidth the time amount, in second, to use to show the waveforms.
    */
-   inline void updateTimeFrame(long start,long timeFrameWidth){
-     startTime = start;
-     timeWindow = timeFrameWidth;
-     emit updatedTimeFrame(start,timeFrameWidth);
-   }
-                
-  /**Sets the presentation mode of the waveform view to sample mode, meaning that, for each shown cluster,
+    inline void updateTimeFrame(long start,long timeFrameWidth){
+        startTime = start;
+        timeWindow = timeFrameWidth;
+        emit updatedTimeFrame(start,timeFrameWidth);
+    }
+
+    /**Sets the presentation mode of the waveform view to sample mode, meaning that, for each shown cluster,
   * only one out of the number of spikes to be displayed will be shown.
   */
-  inline void setSampleMode(){
-    inTimeFrameMode = false;
-    emit sampleMode();
-  }
+    inline void setSampleMode(){
+        inTimeFrameMode = false;
+        emit sampleMode();
+    }
 
-  /**Set the presentation mode of the waveform view to time frame mode, meaning that, for each shown cluster,
+    /**Set the presentation mode of the waveform view to time frame mode, meaning that, for each shown cluster,
   * only the spikes within the current time frame will be shown.
   */
-  inline void setTimeFrameMode(){
-    inTimeFrameMode = true;
-    emit timeFrameMode();
-  }
+    inline void setTimeFrameMode(){
+        inTimeFrameMode = true;
+        emit timeFrameMode();
+    }
 
-  /**Sets the way of presenting the information concerning the waveforms selected to
+    /**Sets the way of presenting the information concerning the waveforms selected to
   * only show the waveforms of the mean and the standard deviation.
   */
-  inline void setMeanPresentation(){
-   meanDisplay = true;
-   emit meanPresentation();
-  }
+    inline void setMeanPresentation(){
+        meanDisplay = true;
+        emit meanPresentation();
+    }
 
-  /**Sets the way of presenting the information concerning the waveforms selected to
+    /**Sets the way of presenting the information concerning the waveforms selected to
   * show all the waveforms corresponding to the mode of presentation.
   */
-  inline void setAllWaveformsPresentation(){
-   meanDisplay = false;
-   emit allWaveformsPresentation();
-  }
+    inline void setAllWaveformsPresentation(){
+        meanDisplay = false;
+        emit allWaveformsPresentation();
+    }
 
-  /**Sets the waveforms of each cluster to overlap.
+    /**Sets the waveforms of each cluster to overlap.
   */
-  inline void setOverLayPresentation(){
-   overLayDisplay = true;
-   emit overLayPresentation();
-  }
+    inline void setOverLayPresentation(){
+        overLayDisplay = true;
+        emit overLayPresentation();
+    }
 
-  /** Sets the waveforms of each cluster to be presented side by side.
+    /** Sets the waveforms of each cluster to be presented side by side.
   */
-  inline void setSideBySidePresentation(){
-   overLayDisplay = false;
-   emit sideBySidePresentation();
-  }
+    inline void setSideBySidePresentation(){
+        overLayDisplay = false;
+        emit sideBySidePresentation();
+    }
 
-  /**Triggers the increase of the amplitude of the waveforms in the Waveform view.
+    /**Triggers the increase of the amplitude of the waveforms in the Waveform view.
   */
-  inline void increaseWaveformsAmplitude(){emit increaseAmplitude();}
+    inline void increaseWaveformsAmplitude(){emit increaseAmplitude();}
 
-  /**Triggers the decrease of the amplitude of the waveforms in the Waveform view.
+    /**Triggers the decrease of the amplitude of the waveforms in the Waveform view.
   */
-  inline void decreaseWaveformsAmplitude(){emit decreaseAmplitude();}
-  
-  /**Returns a boolean indicating if the view contains a WaveformView.
+    inline void decreaseWaveformsAmplitude(){emit decreaseAmplitude();}
+
+    /**Returns a boolean indicating if the view contains a WaveformView.
   * @return true if the view contains a WaveformView, false otherwise.*/
-  inline bool containsWaveformView() const {return isThereWaveformView;}
+    inline bool containsWaveformView() const {return isThereWaveformView;}
 
-  /**Returns true if the view contains a WavefromView in time frame mode,
-  * false otherwise.*/  
-  inline bool isInTimeFrameMode() const {return inTimeFrameMode;}
+    /**Returns true if the view contains a WavefromView in time frame mode,
+  * false otherwise.*/
+    inline bool isInTimeFrameMode() const {return inTimeFrameMode;}
 
-  /**Returns the time amount, in second, of the time frame used by the WaveformView.
+    /**Returns the time amount, in second, of the time frame used by the WaveformView.
   */
-  inline long timeFrameWidth() const {
-    return timeWindow;
-  }
+    inline long timeFrameWidth() const {
+        return timeWindow;
+    }
 
-  /**Returns the start time of the time frame used by the WaveformView.
+    /**Returns the start time of the time frame used by the WaveformView.
   */
-  inline long timeFrameStart() const {
-    return startTime;
-  }
+    inline long timeFrameStart() const {
+        return startTime;
+    }
 
-  /**Returns a boolean indicating if the view contains a ClusterView.
+    /**Returns a boolean indicating if the view contains a ClusterView.
   * @return true if the view contains a ClusterView, false otherwise.*/
-  inline bool containsClusterView() const {return isThereClusterView;}
+    inline bool containsClusterView() const {return isThereClusterView;}
 
-  /**Updates the number of spikes to display for each cluster when the waveform presentation
+    /**Updates the number of spikes to display for each cluster when the waveform presentation
   * mode is sample.
   * @param nbSpikes number of spikes to display.
   */
-  inline void setDisplayNbSpikes(int nbSpikes){
-    nbSpkToDisplay = nbSpikes;
-    emit updateDisplayNbSpikes(nbSpikes);
-  }
+    inline void setDisplayNbSpikes(int nbSpikes){
+        nbSpkToDisplay = nbSpikes;
+        emit updateDisplayNbSpikes(nbSpikes);
+    }
 
-  /**Returns the number of spikes displayed in the Waveform View, if any, when the presentation mode is sample.
+    /**Returns the number of spikes displayed in the Waveform View, if any, when the presentation mode is sample.
   * @return number of spikes displayed.
   */
-  inline long displayedNbSpikes() const {return nbSpkToDisplay;}
+    inline long displayedNbSpikes() const {return nbSpkToDisplay;}
 
-  /**Returns a boolean indicating if the means and standard deviation are displayed.
+    /**Returns a boolean indicating if the means and standard deviation are displayed.
   * @return true if the Waveform View, if any, is presenting only the means and standard deviation,
   * false otherwise.
   */
-  inline bool isMeanPresentation() const {return meanDisplay;}
-  
-  /**Returns a boolean indicating if the waveforms are overlaping each other.
+    inline bool isMeanPresentation() const {return meanDisplay;}
+
+    /**Returns a boolean indicating if the waveforms are overlaping each other.
   * @return true if the Waveform View, if any, is presenting the waveforms overlaping each other,
   * false otherwise.
-  */                  
-  inline bool isOverLayPresentation() const {return overLayDisplay;}
+  */
+    inline bool isOverLayPresentation() const {return overLayDisplay;}
 
-  /**Returns the time amount, in second, of the time frame used by the Correlation View.
+    /**Returns the time amount, in second, of the time frame used by the Correlation View.
   * @return time amount in second.
   */
-  inline long correlationTimeFrameWidth() const {
-    return correlogramTimeFrame;
-  }
+    inline long correlationTimeFrameWidth() const {
+        return correlogramTimeFrame;
+    }
 
-  /**Returns the bin size used by the Correlation View.
+    /**Returns the bin size used by the Correlation View.
   * @return bin size.
   */
-  inline long sizeOfBin() const {
-    return binSize;
-  }
+    inline long sizeOfBin() const {
+        return binSize;
+    }
 
-  /**Returns a boolean indicating if the view contains a CorrelationView.
+    /**Returns a boolean indicating if the view contains a CorrelationView.
   * @return true if the view contains a CorrelationView, false otherwise.*/
-  inline bool containsCorrelationView() const {return isThereCorrelationView;}
+    inline bool containsCorrelationView() const {return isThereCorrelationView;}
 
-  /**Returns the type of scale used to present the correlation data.
+    /**Returns the type of scale used to present the correlation data.
   * @return type of scale.
   */
-  inline Data::ScaleMode scaleMode() const {return correlationScale;}
+    inline Data::ScaleMode scaleMode() const {return correlationScale;}
 
-  /**Sets the acquisition system gain.
+    /**Sets the acquisition system gain.
   * @param acquisitionGain acquisition system gain.
   */
-  inline void setGain(int acquisitionGain){emit changeGain(acquisitionGain);}
-  
-  /**Triggers the increase of the amplitude of the correlograms in the Correlation View.
+    inline void setGain(int acquisitionGain){emit changeGain(acquisitionGain);}
+
+    /**Triggers the increase of the amplitude of the correlograms in the Correlation View.
   */
-  inline void increaseCorrelogramsAmplitude(){emit increaseAmplitudeofCorrelograms();}
+    inline void increaseCorrelogramsAmplitude(){emit increaseAmplitudeofCorrelograms();}
 
-  /**Triggers the decrease of the amplitude of the correlograms in the Correlation View.
+    /**Triggers the decrease of the amplitude of the correlograms in the Correlation View.
   */
-  inline void decreaseCorrelogramsAmplitude(){emit decreaseAmplitudeofCorrelograms();}
+    inline void decreaseCorrelogramsAmplitude(){emit decreaseAmplitudeofCorrelograms();}
 
-  /**Removes any scale applied to the correlation data.*/
-  inline void setNoScale(){
-   correlationScale = Data::RAW;
-   emit noScale();
-  }
+    /**Removes any scale applied to the correlation data.*/
+    inline void setNoScale(){
+        correlationScale = Data::RAW;
+        emit noScale();
+    }
 
-  /**Sets the scale of the correlation data to the maximum value.*/
-  inline void setScaleByMax(){
-   correlationScale = Data::MAX;
-   emit maxScale();
-  }
+    /**Sets the scale of the correlation data to the maximum value.*/
+    inline void setScaleByMax(){
+        correlationScale = Data::MAX;
+        emit maxScale();
+    }
 
-  /**Sets the scale of the correlation data to the shoulder value.*/
-  inline void setScaleByShouler(){
-   correlationScale = Data::SHOULDER; 
-   emit shoulderScale();
-  }
+    /**Sets the scale of the correlation data to the shoulder value.*/
+    inline void setScaleByShouler(){
+        correlationScale = Data::SHOULDER;
+        emit shoulderScale();
+    }
 
-  /**Informs the Correlation View to present the correlograms for an updated bin size and time frame.
+    /**Informs the Correlation View to present the correlograms for an updated bin size and time frame.
   * @param size the size of the bin, in second, to use to compute the correlograms.
   * @param timeFrame time frame used to compute the correlograms.
   */
-  inline void updateBinSizeAndTimeFrame(int size,int timeFrame){
-   binSize = size;
-   correlogramTimeFrame = timeFrame;
-   emit updatedBinSizeAndTimeFrame(size,timeFrame);
-  }
+    inline void updateBinSizeAndTimeFrame(int size,int timeFrame){
+        binSize = size;
+        correlogramTimeFrame = timeFrame;
+        emit updatedBinSizeAndTimeFrame(size,timeFrame);
+    }
 
-  /**Enables the caller to know if there is any thread running link to this view,
+    /**Enables the caller to know if there is any thread running link to this view,
   * meaning launch by any of the view's viewWidget.
   * If at least one is running the method returns true, if none are running the method return false.
   */
-  bool isThreadsRunning();
+    bool isThreadsRunning();
 
-  /**
+    /**
   * Update the presentation of a doted line at the shoulder level on the correlograms of the Correlation View if any.
   * If @p b is true a line will be drawn, none will be drawn otherwise.
   * @param b boolean indicating if a shoulder line has to be drawn.
   */
-  inline void updateShoulderLine(bool b){
-   shoulderLine = b;
-   emit setShoulderLine(b);
-  }
+    inline void updateShoulderLine(bool b){
+        shoulderLine = b;
+        emit setShoulderLine(b);
+    }
 
-  /**Returns a boolean indicating if a doted line is drawn at the shoulder level
+    /**Returns a boolean indicating if a doted line is drawn at the shoulder level
   * of the correlograms of the Correlation View if any.
   * @return true if a line is drawn, false otherwise.
   */
-  inline bool isShoulderLine() const {return shoulderLine;}
+    inline bool isShoulderLine() const {return shoulderLine;}
 
-  /**Returns the list of list of removed clusters used to enable undo action.
+    /**Returns the list of list of removed clusters used to enable undo action.
   */
-  Q3PtrList< QList<int> > getUndoList();
+    Q3PtrList< QList<int> > getUndoList();
 
-  /**Returns the list of list of removed clusters used to enable redo action.*/
-  Q3PtrList< QList<int> > getRedoList();
+    /**Returns the list of list of removed clusters used to enable redo action.*/
+    Q3PtrList< QList<int> > getRedoList();
 
-  /**Updates the time interval between time lines drawn in the cluster view for the time dimension.
+    /**Updates the time interval between time lines drawn in the cluster view for the time dimension.
   * @param step the interval to use in second.
   * @param active true if the view is the active one, false otherwise.
   */
-  inline void setTimeStepInSecond(int step,bool active){emit changeTimeInterval(step,active);}
+    inline void setTimeStepInSecond(int step,bool active){emit changeTimeInterval(step,active);}
 
-  /**Initialize the position of the channels in the waveform view.
+    /**Initialize the position of the channels in the waveform view.
   * @param positions positions of the channels to use in the view set by the user in the settings dialog.
   */
-  inline void setChannelPositions(QList<int>& positions){emit changeChannelPositions(positions);}
+    inline void setChannelPositions(QList<int>& positions){emit changeChannelPositions(positions);}
 
-  /**Makes all the internal changes due to a modification of the number of undo.
+    /**Makes all the internal changes due to a modification of the number of undo.
   * @param newNbUndo the futur new number of undo.
   */
-  void nbUndoChangedCleaning(int newNbUndo);
+    void nbUndoChangedCleaning(int newNbUndo);
 
-  /**Updates the probabilitites in the errorMatrix view.*/
-  inline void updateErrorMatrix(){emit computeProbabilities();}
+    /**Updates the probabilitites in the errorMatrix view.*/
+    inline void updateErrorMatrix(){emit computeProbabilities();}
 
-  /**Returns a boolean indicating if the view contains a Grouping Assistant View.
+    /**Returns a boolean indicating if the view contains a Grouping Assistant View.
   * @return true if the view contains a Grouping Assistant View, false otherwise.*/
-  inline bool containsErrorMatrixView() const {return isThereErrorMatrixView;}
+    inline bool containsErrorMatrixView() const {return isThereErrorMatrixView;}
 
-  /***Update the background color of the views.*/
-  inline void updateBackgroundColor(QColor color){emit changeBackgroundColor(color);}
+    /***Update the background color of the views.*/
+    inline void updateBackgroundColor(QColor color){emit changeBackgroundColor(color);}
 
- /**
+    /**
   * Adds the clusters created by the automatic reclustering program to those already shown and remove
   * those reclustered.
   * This method aims to reduce the number of clusters to draw.
@@ -589,98 +589,98 @@ class KlustersView : public QWidget
   * @param reclusteredClusterList list of the newly created clusters.
   * @param active c
   */
-  void addNewClustersToView(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,bool active);
+    void addNewClustersToView(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,bool active);
 
-  /**
+    /**
   * Updates the TraceView after a modification on the clusters.
   * @param name identifier of the cluster file.
   * @param clusterColors list of colors for the clusters.
   * @param active true if the view is the active one, false otherwise.
   */
-  void updateTraceView(QString name,ItemColors* clusterColors,bool active);
-  
-  
-  /**
+    void updateTraceView(QString name,ItemColors* clusterColors,bool active);
+
+
+    /**
   * Updates the ClustersProvider to enable it to work with the current display.
   */
-  void updateClustersProvider();
-  
- /**Returns a boolean indicating if the view contains a TraceView.
-  * @return true if the view contains a TraceView, false otherwise.*/
- inline bool containsTraceView() const {return isThereTraceView;}
-  
- /**Triggers the increase of the amplitude of all the channels.
- */
- inline void increaseAllChannelsAmplitude(){emit increaseAllAmplitude();}
+    void updateClustersProvider();
 
- /**Triggers the decrease of the amplitude of all the channels.
+    /**Returns a boolean indicating if the view contains a TraceView.
+  * @return true if the view contains a TraceView, false otherwise.*/
+    inline bool containsTraceView() const {return isThereTraceView;}
+
+    /**Triggers the increase of the amplitude of all the channels.
  */
- inline void decreaseAllChannelsAmplitude(){emit decreaseAllAmplitude();}
- 
- /**Gets the starting time in miliseconds used in the TraceView.
+    inline void increaseAllChannelsAmplitude(){emit increaseAllAmplitude();}
+
+    /**Triggers the decrease of the amplitude of all the channels.
+ */
+    inline void decreaseAllChannelsAmplitude(){emit decreaseAllAmplitude();}
+
+    /**Gets the starting time in miliseconds used in the TraceView.
   * @return starting time.
   */
-  inline long getStartingTime(){return startingTime;}
+    inline long getStartingTime(){return startingTime;}
 
-  /**Gets the time window in miliseconds used in the TraceView.
+    /**Gets the time window in miliseconds used in the TraceView.
   * @return duration time window.
   */
-  inline long getDuration(){return duration;}
- 
-  /**Displays or hides the labels next to the traces in the TraceView.
+    inline long getDuration(){return duration;}
+
+    /**Displays or hides the labels next to the traces in the TraceView.
   * @param status true if the labels have to be drawn, false otherwise.
   */
-  inline void showLabelsUpdate(bool status){
-   labelsDisplay = status;
-   emit showLabels(status);
-  }
-  
-  /**Returns true if labels are drawn next to the traces in the TraceView, false otherwise.
+    inline void showLabelsUpdate(bool status){
+        labelsDisplay = status;
+        emit showLabels(status);
+    }
+
+    /**Returns true if labels are drawn next to the traces in the TraceView, false otherwise.
   */
-  inline bool getLabelStatus() const{return labelsDisplay;}
-  
-  /**Retrieves the next cluster.*/
-  inline void showNextCluster(){emit nextCluster();}
+    inline bool getLabelStatus() const{return labelsDisplay;}
 
-  /**Retrieves the previous cluster.*/
-  inline void showPreviousCluster(){emit previousCluster();}
-  
- public slots:
+    /**Retrieves the next cluster.*/
+    inline void showNextCluster(){emit nextCluster();}
 
-  /**Takes care of the closing of a ClusterView.
+    /**Retrieves the previous cluster.*/
+    inline void showPreviousCluster(){emit previousCluster();}
+
+public slots:
+
+    /**Takes care of the closing of a ClusterView.
   * @param clusterView the ClusterView to be closed.
   */
-  void clusterDockClosed(QWidget* clusterView);
-  
-  /**Takes care of the closing of a WaveformView.
+    void clusterDockClosed(QWidget* clusterView);
+
+    /**Takes care of the closing of a WaveformView.
   * @param waveformView the WaveformView to be closed.
   */
-  void waveformDockClosed(QWidget* waveformView);
-  
-  /**Takes care of the closing of a CorrelogramView.
+    void waveformDockClosed(QWidget* waveformView);
+
+    /**Takes care of the closing of a CorrelogramView.
   * @param correlogramView the CorrelogramView to be closed.
   */
-  void correlogramDockClosed(QWidget* correlogramView);
-  
-  /**Takes care of the closing of an ErrorMatrixView.
+    void correlogramDockClosed(QWidget* correlogramView);
+
+    /**Takes care of the closing of an ErrorMatrixView.
   * @param errorMatrixView the ErrorMatrixView to be closed.
-  */  
-  void errorMatrixDockClosed(QWidget* errorMatrixView);
-  
-  /**Takes care of the closing of a TraceView.
-  * @param traceWidget the traceView to be closed.*/
-  void traceDockClosed(QWidget* traceWidget);
-                 
-  /**Sets the starting time and the time window in miliseconds used in the TraceView.
-  * @param start starting time.
-  * @param duration time window.   
   */
-  inline void setStartAndDuration(long start,long duration){
-   startingTime = start;
-   this->duration = duration;
-  }
-         
- signals:
+    void errorMatrixDockClosed(QWidget* errorMatrixView);
+
+    /**Takes care of the closing of a TraceView.
+  * @param traceWidget the traceView to be closed.*/
+    void traceDockClosed(QWidget* traceWidget);
+
+    /**Sets the starting time and the time window in miliseconds used in the TraceView.
+  * @param start starting time.
+  * @param duration time window.
+  */
+    inline void setStartAndDuration(long start,long duration){
+        startingTime = start;
+        this->duration = duration;
+    }
+
+signals:
     void updatedDimensions(int dimensionX,int dimensionY);
     void singleColorUpdated(int clusterId,bool active);
     void clusterRemovedFromView(int ClusterId,bool active);
@@ -720,11 +720,11 @@ class KlustersView : public QWidget
     void clustersRenumbered(bool active);
     void updateClusters(QString name,QList<int>& clustersToShow,ItemColors* clustersColors,bool active);
     void increaseAllAmplitude();
-    void decreaseAllAmplitude();    
+    void decreaseAllAmplitude();
     void showLabels(bool show);
     void nextCluster();
-    void previousCluster();    
-                                    
+    void previousCluster();
+
 protected:
     /** overwritten QWidget::closeEvent() to catch closing views. Does nothing, as the closeEvents for
     * KlustersView's are processed by KlustersApp::eventFilter(), so this overwitten closeEvent is necessary
@@ -740,8 +740,8 @@ protected:
     * @param event event sent.
     */
     bool eventFilter(QObject* object,QEvent* event);
-   
-  private:
+
+private:
     //members
     
     /** mainDock is the main DockWidget to which all other dockWidget will be dock. Inititalized in
@@ -778,7 +778,7 @@ protected:
     bool isThereWaveformView;
 
     /**True if the view contains a Waveform view and this one is in
-    * time frame mode, false otherwise. The default is false.*/    
+    * time frame mode, false otherwise. The default is false.*/
     bool inTimeFrameMode;
 
     /**True if the view contains a cluster view, false otherwise.*/
@@ -799,7 +799,7 @@ protected:
     /**Starting time in a WaveformView when looking for the spikes
     * when the presentation mode is time frame. This amount is in second.
     */
-    long startTime;   
+    long startTime;
 
     /**The number of spikes to display in the WaveformView, if any, when that view
     * is in sample mode.*/
@@ -822,7 +822,7 @@ protected:
     /**Width of the time frame to use to compute the correlograms.*/
     int correlogramTimeFrame;
 
-    /**True if the view contains a Correlation View, false otherwise.*/    
+    /**True if the view contains a Correlation View, false otherwise.*/
     bool isThereCorrelationView;
 
     /**Store the type of presentation used in the Correlation View if any.
@@ -833,38 +833,38 @@ protected:
     /**List of the ViewWidgets contained in this view.*/
     Q3PtrList<ViewWidget> viewList;
 
-   /**Boolean indicating if a shoulder line has to be drawn on the correlograms
+    /**Boolean indicating if a shoulder line has to be drawn on the correlograms
    * of the Correlation View if any.*/
-   bool shoulderLine;
+    bool shoulderLine;
 
-   /**Reference on the main window.*/
-   KlustersApp& mainWindow;
+    /**Reference on the main window.*/
+    KlustersApp& mainWindow;
 
-   /**Counter for each type of view (ClusterView, WaveformView, CorrelationView and
+    /**Counter for each type of view (ClusterView, WaveformView, CorrelationView and
    * ErrorMatrixView) in the view.*/
-   QMap<QString,int> viewCounter;
-   
- /**List containing the offset for each channel in a TraceView.*/
-  QList<int> offsets;
+    QMap<QString,int> viewCounter;
 
-  /**List of the exponents used to compute the drawing gain for each channel in a TraceView.*/
-  QList<int> gains;
-   
-  QList<int> clustersToSkip;
-  
-  /**Pointer to the TraceView if any.*/
-  TraceWidget* traceWidget;
-   
-  /*Starting time in miliseconds used in the TraceView.*/
-  long startingTime;
+    /**List containing the offset for each channel in a TraceView.*/
+    QList<int> offsets;
 
-  /*Time window in miliseconds used in the TraceView.*/
-  long duration;
-  
-  /**True if labels are drawn next to the traces, false otherwise.*/
-  bool labelsDisplay;
+    /**List of the exponents used to compute the drawing gain for each channel in a TraceView.*/
+    QList<int> gains;
 
-   //methods
+    QList<int> clustersToSkip;
+
+    /**Pointer to the TraceView if any.*/
+    TraceWidget* traceWidget;
+
+    /*Starting time in miliseconds used in the TraceView.*/
+    long startingTime;
+
+    /*Time window in miliseconds used in the TraceView.*/
+    long duration;
+
+    /**True if labels are drawn next to the traces, false otherwise.*/
+    bool labelsDisplay;
+
+    //methods
     
     /** Creates the OverView View (composition of the 3 basic views).
     * @param backgroundColor color used as background.
@@ -904,7 +904,7 @@ protected:
      */
     void removeClusterFromView(int clusterId,bool active);
 
-   /**
+    /**
     * Removes the clusters from the the list of clusters.
     * @param clusterIds idc of the clusters to be removed
     * @param active true if the view is the active one, false otherwise.
@@ -935,7 +935,7 @@ protected:
     /**
     * In the process of the undo mechanism, the clusters which were removed are added back to the view.
     * @param active true if the view is the active one, false otherwise.
-    */    
+    */
     void addRemovedClusters(bool active);
 
     /**
@@ -946,33 +946,33 @@ protected:
     */
     bool removeUndoAddedClusters(bool active);
 
-   /**
+    /**
    * Updates the list of clusterIds shown using the new ids.
    * @param clusterIds map given for each current clusterId the new clusterId.
    */
-   void changeClusterIds(QMap<int,int>& clusterIds);
+    void changeClusterIds(QMap<int,int>& clusterIds);
 
-   /**
+    /**
    * In the process of the redo mechanism, the clusters which were added back to the list of existing clusters
    * in the undo are removed from the view if present.
    * @param active true if the view is the active one, false otherwise.
    * @param clustersToDelete list of clusters to delete.
    */
-   void removeDeletedClusters(bool active,QList<int>& clustersToDelete);
+    void removeDeletedClusters(bool active,QList<int>& clustersToDelete);
 
-   /**
+    /**
    * Makes signal and slot connection between the current view and one of is contained view (@p view)
    * @param displayType type of view for which connections will be made.
    * @param view view for which connections will be made.
-   * @param dockWidget QDockWidget containing the view for which connections will be made.  
+   * @param dockWidget QDockWidget containing the view for which connections will be made.
    */
-   void setConnections(DisplayType displayType,QWidget* view,QDockWidget* dockWidget);
-   
-   /**
+    void setConnections(DisplayType displayType,QWidget* view,QDockWidget* dockWidget);
+
+    /**
    * Makes signal and slot connection between the current view and the active correlogramView.
    * @param viewWidget view for which connections will be made.
    */
-   void updateCorrelogramConnections(ViewWidget* viewWidget);
+    void updateCorrelogramConnections(ViewWidget* viewWidget);
 };
 
 #endif // KCLUSTERSVIEW_H
