@@ -31,6 +31,7 @@
 #include <QSplitter>
 #include <qrecentfileaction.h>
 #include <qextendtabwidget.h>
+#include <dockarea.h>
 
 //Added by qt3to4:
 #include <QLabel>
@@ -856,11 +857,10 @@ void KlustersApp::initDisplay(){
     doc->addView(view);
 
     mainDock->setWidget(view);
-    //allow dock on the left side only
-    tabsParent->addTab(mainDock,tr("Overview Display"));
 
-    //disable docking abilities of mainDock itself
-    mainDock->setAllowedAreas(Qt::NoDockWidgetArea);
+    DockArea *area = tabsParent->addDockArea(tr("Overview Display"));
+    area->setMainWidget(view);
+    area->addDockWidget(Qt::LeftDockWidgetArea,mainDock);
 
     //Initialize and dock the clusterpanel
     //Create the cluster list and select the clusters which will be drawn
@@ -986,9 +986,11 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //install the new view in the display so it can be see in the future tab.
         display->setWidget(view);
 
-        //Add the new display as a tab and get a new DockWidget, grandParent of the target (mainDock)
-        //and the new display.
-        tabsParent->addTab(display,displayType);
+        DockArea *area = tabsParent->addDockArea(displayType);
+        area->setMainWidget(view);
+        area->addDockWidget(Qt::NoDockWidgetArea,display);
+
+
 
         //Disconnect the previous connection
         if(tabsParent != NULL)
@@ -999,11 +1001,6 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
         slotStateChanged("tabState");
-
-
-        // forbit docking abilities of display itself
-        display->setAllowedAreas(Qt::NoDockWidgetArea);
-
 
         //Keep track of the number of displays
         displayCount ++;
@@ -1252,29 +1249,15 @@ void KlustersApp::importDocumentFile(const QString& url)
 }
 
 bool KlustersApp::doesActiveDisplayContainProcessWidget(){
-    QDockWidget* current;
-
-    //Get the active tab
-    if(tabsParent)
-        current = static_cast<QDockWidget*>(tabsParent->currentPage());
-    //or the active window if there is only one display (which can only be the mainDock)
-    else
-        current = mainDock;
-
-    return (current->widget())->isA("ProcessWidget");
+    DockArea* area = tabsParent->currentDockArea();
+    KlustersView *view = static_cast<KlustersView*>(area->mainWidget());
+    return view->isA("ProcessWidget");
 }
 
 KlustersView* KlustersApp::activeView(){
-    QDockWidget* current;
-
-    //Get the active tab
-    if(tabsParent)
-        current = static_cast<QDockWidget*>(tabsParent->currentPage());
-    //or the active window if there is only one display (which can only be the mainDock)
-    else
-        current = mainDock;
-
-    return static_cast<KlustersView*>(current->widget());
+    DockArea* area = tabsParent->currentDockArea();
+    KlustersView *view = static_cast<KlustersView*>(area->mainWidget());
+    return view;
 }
 
 //TO implement , see documentation
@@ -2377,10 +2360,11 @@ void KlustersApp::resetState(){
     //the .dat file exists. Therefore disable the menu entry by default.
     slotStateChanged("noTraceDisplayState");
 
-    setCaption("");
+    setCaption(QString());
 
     //If the a setting dialog exists (has already be open once), disable the settings for the channels.
-    if(prefDialog != 0L) prefDialog->enableChannelSettings(false);
+    if(prefDialog != 0L)
+        prefDialog->enableChannelSettings(false);
 }
 
 void KlustersApp::slotUpdateCorrelogramsHalfDuration(){
@@ -2550,8 +2534,10 @@ void KlustersApp::slotRecluster(){
         int nbDimensions = doc->nbDimensions();
         int nbExtraFeatures = nbDimensions - totalNbOfPCAs - 1;
         QString features;
-        for(int i = 0; i < totalNbOfPCAs; ++i) features.append("1");
-        for(int i = 0; i < nbExtraFeatures; ++i) features.append("0");
+        for(int i = 0; i < totalNbOfPCAs; ++i)
+            features.append("1");
+        for(int i = 0; i < nbExtraFeatures; ++i)
+            features.append("0");
         features.append("1"); // the time feature.
         command.replace("%features",features);
     }
@@ -2583,9 +2569,8 @@ void KlustersApp::slotRecluster(){
         //the active display changes.
         connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
-        tabsParent->addTab(display,tr("Recluster output"));
-        // forbit docking abilities of display itself
-        display->setAllowedAreas(Qt::NoDockWidgetArea);
+        DockArea *area = tabsParent->addDockArea(tr("Recluster output"));
+        area->addDockWidget(Qt::NoDockWidgetArea,display);
 
         //Keep track of the number of displays
         displayCount ++;
@@ -2881,6 +2866,8 @@ void KlustersApp::renameActiveDisplay(){
     QDockWidget* current;
 
     //Get the active tab
+
+
     current = static_cast<QDockWidget*>(tabsParent->currentPage());
 
     bool ok;
