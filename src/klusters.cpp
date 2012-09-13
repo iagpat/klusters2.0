@@ -844,7 +844,9 @@ void KlustersApp::initDisplay(){
     if(configuration().getNbChannels() != 0 && configuration().getNbChannels() != doc->nbOfchannels())
         channelPositions.clear();
 
-    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
+    DockArea *area = tabsParent->addDockArea(tr("Overview Display"));
+
+    KlustersView* view = new KlustersView(area,*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
                                           false,false,DEFAULT_BIN_SIZE.toInt(),INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
@@ -858,7 +860,6 @@ void KlustersApp::initDisplay(){
 
     mainDock->setWidget(view);
 
-    DockArea *area = tabsParent->addDockArea(tr("Overview Display"));
     area->setMainWidget(view);
     area->addDockWidget(Qt::RightDockWidgetArea,mainDock);
 
@@ -964,14 +965,15 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         }
 
         KlustersView* view;
+        DockArea *area = tabsParent->addDockArea(displayType);
 
         if(!isProcessWidget)
-            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
+            view = new KlustersView(area,*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
                                                      displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                                      nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
         else
-            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
+            view = new KlustersView(area,*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
                                      displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                      nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
 
@@ -983,7 +985,6 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //install the new view in the display so it can be see in the future tab.
         display->setWidget(view);
 
-        DockArea *area = tabsParent->addDockArea(displayType);
         area->setMainWidget(view);
         area->addDockWidget(Qt::NoDockWidgetArea,display);
 
