@@ -47,12 +47,12 @@ extern int nbUndo;
 const QString KlustersView::DisplayTypeNames[]={"Cluster Display","Waveform Display","Correlation Display","Overview Display","Grouping Assistant Display","Error Matrix Display","Trace Display"};
 
 
-KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& pDoc,const QColor& backgroundColor,int initialDimensionX,int initialDimensionY,
+KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColor& backgroundColor,int initialDimensionX,int initialDimensionY,
                            QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, Qt::WindowFlags wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
                            QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
                            int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay,
                            Q3PtrList< QList<int> > undoList, Q3PtrList< QList<int> > redoList)
-    : QWidget(parent),
+    : DockArea(parent),
       doc(pDoc),
       removedClustersUndoList(undoList),
       removedClustersRedoList(redoList),
@@ -85,7 +85,7 @@ KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& p
 
     //Create the mainDock
     mainDock = new QDockWidget(tr(doc.documentName().toLatin1()));
-    area->addDockWidget(Qt::RightDockWidgetArea,mainDock);
+    addDockWidget(Qt::RightDockWidgetArea,mainDock);
     //If the type of view is a not base one, call the function to call the complex views.
     //If the type of view is a base on, construct the appropriate Widget and assign it as the mainDock widget
     //To add a new base type just add a new case with the appropriate widget (do not to add the include line)
@@ -98,9 +98,6 @@ KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& p
         isThereErrorMatrixView = false;
         isThereTraceView = false;
         mainDock->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,mainDock));
-        QHBoxLayout *lay = new QHBoxLayout;
-        setLayout(lay);
-        lay->addWidget(mainDock);
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
         currentViewWidget->installEventFilter(this);//To enable right click popup menu
@@ -118,9 +115,6 @@ KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& p
         isThereTraceView = false;
         mainDock->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,mainDock,
                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));
-        QHBoxLayout *lay = new QHBoxLayout;
-        setLayout(lay);
-        lay->addWidget(mainDock);
 
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
@@ -139,9 +133,6 @@ KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& p
         isThereTraceView = false;
         mainDock->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,mainDock,correlationScale,
                                                 binSize,correlogramTimeFrame,shoulderLine));
-        QHBoxLayout *lay = new QHBoxLayout;
-        setLayout(lay);
-        lay->addWidget(mainDock);
 
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
@@ -157,7 +148,7 @@ KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& p
         isThereCorrelationView = true;
         isThereErrorMatrixView = false;
         isThereTraceView = false;
-        createOverview(area,backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
+        createOverview(backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
         break;
     case GROUPING_ASSISTANT_VIEW:
         isThereWaveformView = true;
@@ -165,7 +156,7 @@ KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& p
         isThereCorrelationView = true;
         isThereErrorMatrixView = true;
         isThereTraceView = false;
-        createGroupingAssistantView(area,backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
+        createGroupingAssistantView(backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
         break;
     case ERROR_MATRIX:
         break;
@@ -184,9 +175,6 @@ KlustersView::KlustersView(DockArea *area,KlustersApp& mainWindow,KlustersDoc& p
                                             true,labelsDisplay,doc.getCurrentChannels(),doc.getGain(),doc.getAcquisitionGain(),doc.channelColors(),
                                             doc.getDisplayGroupsChannels(),doc.getDisplayChannelsGroups(),offsets,gains,skippedChannels,mainDock,"traces",
                                             backgroundColor,statusBar,5));
-        QHBoxLayout *lay = new QHBoxLayout;
-        setLayout(lay);
-        lay->addWidget(mainDock);
 
         traceWidget = dynamic_cast<TraceWidget*>(mainDock->widget());
         //Set the list of the current view as the list of clusters to look up in the ClusterProvider.
@@ -217,16 +205,13 @@ KlustersView::~KlustersView()
     delete removedClusters;
 }
 
-void KlustersView::createOverview(DockArea *area,const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
+void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
     /*OVERVIEW type is the combination of 3 base types:
   CLUSTERS on the left side, WAVEFORMS at the right top and CORRELATIONS in the bottom right
  */
     //The main dock will be the cluster view
     ClusterView* view = new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,mainDock);
     mainDock->setWidget(view);
-    QHBoxLayout *lay = new QHBoxLayout;
-    setLayout(lay);
-    lay->addWidget(mainDock);
 
     currentViewWidget = view;
     viewList.append(currentViewWidget);
@@ -246,7 +231,7 @@ void KlustersView::createOverview(DockArea *area,const QColor& backgroundColor,Q
     viewList.append(waveformView);
     waveformView->installEventFilter(this);//To enable right click popup menu
     waveforms->installEventFilter(this);
-    area->addDockWidget(Qt::BottomDockWidgetArea,waveforms);
+    addDockWidget(Qt::BottomDockWidgetArea,waveforms);
 #if KDAB_PENDING
 
     waveforms->setAllowedAreas(mainDock,QDockWidget::DockRight,50);
@@ -264,7 +249,7 @@ void KlustersView::createOverview(DockArea *area,const QColor& backgroundColor,Q
     viewList.append(correlationView);
     correlationView->installEventFilter(this);//To enable right click popup menu
     correlations->installEventFilter(this);
-    area->addDockWidget(Qt::BottomDockWidgetArea,correlations);
+    addDockWidget(Qt::BottomDockWidgetArea,correlations);
 #if KDAB_PENDING
 
     correlations->setAllowedAreas(waveforms,QDockWidget::DockBottom,50);
@@ -275,9 +260,9 @@ void KlustersView::createOverview(DockArea *area,const QColor& backgroundColor,Q
     setConnections(CORRELATIONS,correlationView,correlations);
 }
 
-void KlustersView::createGroupingAssistantView(DockArea *area,const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
+void KlustersView::createGroupingAssistantView(const QColor& backgroundColor,QStatusBar* statusBar,int timeInterval,int maxAmplitude,QList<int> positions){
     //First create the overview
-    createOverview(area,backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
+    createOverview(backgroundColor,statusBar,timeInterval,maxAmplitude,positions);
 
     //Create and add the errorMatrixView beneath the clusterView (mainDock)
     QDockWidget* errorMatrix = new QDockWidget(tr(doc.documentName().toLatin1()));
@@ -287,7 +272,7 @@ void KlustersView::createGroupingAssistantView(DockArea *area,const QColor& back
     viewList.append(errorMatrixView);
     errorMatrixView->installEventFilter(this);//To enable right click popup menu
     errorMatrix->installEventFilter(this);
-    area->addDockWidget(Qt::BottomDockWidgetArea,errorMatrix);
+    addDockWidget(Qt::BottomDockWidgetArea,errorMatrix);
 #if KDAB_PENDING
 
     errorMatrix->setAllowedAreas(mainDock,QDockWidget::DockBottom,50);

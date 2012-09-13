@@ -39,6 +39,7 @@
 #include "correlationview.h"
 #include <dockarea.h>
 
+
 // forward declarations
 class CorrelationView;
 class KlustersDoc;
@@ -52,7 +53,7 @@ class TraceWidget;
  * The KlustersView class inherits QWidget as a KDockArea to give it the ability to contains dockWidgets.
  * @author Lynn Hazan
  */
-class KlustersView : public QWidget
+class KlustersView : public DockArea
 {
     Q_OBJECT
 
@@ -98,7 +99,7 @@ public:
       * @param undoList list of list of removed clusters used to enable undo action.
       * @param redoList list of list of removed clusters used to enable redo action.
      */
-    KlustersView(DockArea *area, KlustersApp& mainWindow, KlustersDoc& doc, const QColor& backgroundColor, int initialDimensionX, int initialDdimensionY,
+    KlustersView(KlustersApp& mainWindow, KlustersDoc& doc, const QColor& backgroundColor, int initialDimensionX, int initialDdimensionY,
                  QList<int>* initialClusterList, DisplayType type, QWidget* parent, const char *name, Qt::WindowFlags wflags, QStatusBar * statusBar, int timeInterval, int maxAmplitude,
                  QList<int> positions, bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay = 0, bool overLay = false,
                  bool mean = false, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
@@ -874,7 +875,7 @@ private:
     * @param maxAmplitude initial gain use to draw the waveforms in the waveform view.
     * @param positions initial position of the channels in the waveform view.
     */
-    void createOverview(DockArea *area,const QColor& backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
+    void createOverview(const QColor& backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
 
     /** Creates the Grouping Assistant view:
     * an Overview (composition of the 3 basic views) to which have been added
@@ -886,7 +887,7 @@ private:
     * @param maxAmplitude initial gain use to draw the waveforms in the waveform view.
     * @param positions initial position of the channels in the waveform view.
     */
-    void createGroupingAssistantView(DockArea *area,const QColor& backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
+    void createGroupingAssistantView(const QColor& backgroundColor,QStatusBar * statusBar,int timeInterval,int maxAmplitude,QList<int> positions);
 
     /**
     * Adds a cluster to the view. The @p clusterId is added to both the shownClusters list

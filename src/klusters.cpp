@@ -844,11 +844,12 @@ void KlustersApp::initDisplay(){
     if(configuration().getNbChannels() != 0 && configuration().getNbChannels() != doc->nbOfchannels())
         channelPositions.clear();
 
-    DockArea *area = tabsParent->addDockArea(tr("Overview Display"));
-
-    KlustersView* view = new KlustersView(area,*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
+    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
                                           false,false,DEFAULT_BIN_SIZE.toInt(),INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
+
+    tabsParent->addDockArea(view,tr("Overview Display"));
+
 
     view->installEventFilter(this);
 
@@ -858,11 +859,10 @@ void KlustersApp::initDisplay(){
     //Update the document's list of view
     doc->addView(view);
 
-    mainDock->setWidget(view);
 
-    area->setMainWidget(view);
-    area->addDockWidget(Qt::RightDockWidgetArea,mainDock);
+    //view->addDockWidget(Qt::RightDockWidgetArea,mainDock);
 
+    //return;
     //Initialize and dock the clusterpanel
     //Create the cluster list and select the clusters which will be drawn
     clusterPalette->createClusterList(doc);
@@ -905,13 +905,8 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
 {
     if(mainDock){
         qDebug()<<" void KlustersApp::createDisplay(KlustersView::DisplayType type)";
-        QDockWidget* display;
         QString displayName = (doc->documentName()).append(type);
         QString displayType = KlustersView::DisplayTypeNames[type];
-
-        display = new QDockWidget(tr(displayName.toLatin1()),0L);
-        display->setWindowIcon(QIcon("classnew"));
-                //KDAB_PENDING createDockWidget(QString(QChar(displayCount)),QImage("classnew") , 0L, tr(displayName.toLatin1()), displayType);
 
         //Check if the active display contains a ProcessWidget
         bool isProcessWidget = doesActiveDisplayContainProcessWidget();
@@ -956,39 +951,33 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         if(!isProcessWidget && activeView()->containsWaveformView()){
             overLay = activeView()->isOverLayPresentation();
             mean = activeView()->isMeanPresentation();
+
             if(activeView()->isInTimeFrameMode()){
                 inTimeFrameMode = true;
                 startingTime = startTime;
                 timeFrameWidth = timeWindow;
-            }
-            else nbSpkToDisplay = spikesTodisplay->value();
+            } else
+                nbSpkToDisplay = spikesTodisplay->value();
         }
 
         KlustersView* view;
-        DockArea *area = tabsParent->addDockArea(displayType);
 
         if(!isProcessWidget)
-            view = new KlustersView(area,*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
+            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,Qt::WDestructiveClose,statusBar(),
                                                      displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                                      nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
         else
-            view = new KlustersView(area,*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,display,0,Qt::WDestructiveClose,statusBar(),
+            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,Qt::WDestructiveClose,statusBar(),
                                      displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                      nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
 
-
+        view->setWindowTitle(displayName);
+        tabsParent->addDockArea(view,displayType);
         view->installEventFilter(this);
 
         //Update the document's list of view
         doc->addView(view);
-        //install the new view in the display so it can be see in the future tab.
-        display->setWidget(view);
-
-        area->setMainWidget(view);
-        area->addDockWidget(Qt::LeftDockWidgetArea,display);
-
-
 
         //Disconnect the previous connection
         if(tabsParent != NULL)
@@ -1248,13 +1237,13 @@ void KlustersApp::importDocumentFile(const QString& url)
 
 bool KlustersApp::doesActiveDisplayContainProcessWidget(){
     DockArea* area = tabsParent->currentDockArea();
-    KlustersView *view = static_cast<KlustersView*>(area->mainWidget());
+    KlustersView *view = static_cast<KlustersView*>(area);
     return view->isA("ProcessWidget");
 }
 
 KlustersView* KlustersApp::activeView(){
     DockArea* area = tabsParent->currentDockArea();
-    KlustersView *view = static_cast<KlustersView*>(area->mainWidget());
+    KlustersView *view = static_cast<KlustersView*>(area);
     return view;
 }
 
@@ -2086,7 +2075,7 @@ void KlustersApp::slotDelaySelection(){
 void KlustersApp::slotTabChange(QWidget* widget){
     DockArea *area = dynamic_cast<DockArea*>(widget);
     if(area) {
-        KlustersView* activeView = qobject_cast<KlustersView *>(area->mainWidget());
+        KlustersView* activeView = qobject_cast<KlustersView *>(area);
         if(activeView) {
             //Update the content of the view contains in active display.
             activeView->updateViewContents();
