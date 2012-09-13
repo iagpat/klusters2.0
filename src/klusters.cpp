@@ -2084,186 +2084,189 @@ void KlustersApp::slotDelaySelection(){
 }
 
 void KlustersApp::slotTabChange(QWidget* widget){
-    QDockWidget* display = dynamic_cast<QDockWidget*>(widget);
-    if((display->widget())->isA("KlustersView")){
-        KlustersView* activeView = dynamic_cast<KlustersView*>(display->widget());
+    DockArea *area = dynamic_cast<DockArea*>(widget);
+    if(area) {
+        if(area->mainWidget()->isA("KlustersView")) {
+            KlustersView* activeView = dynamic_cast<KlustersView*>(area->mainWidget());
 
-        //Update the content of the view contains in active display.
-        activeView->updateViewContents();
+            //Update the content of the view contains in active display.
+            activeView->updateViewContents();
 
-        isInit = true; //prevent the spine boxes or the lineedit and the editline to trigger during initialisation
+            isInit = true; //prevent the spine boxes or the lineedit and the editline to trigger during initialisation
 
-        //The select time tool is useful only if both a clusterView and a traceView are present
-        if(activeView->containsClusterView() && activeView->containsTraceView()) {
-            slotStateChanged("traceViewClusterViewState");
-        }
+            //The select time tool is useful only if both a clusterView and a traceView are present
+            if(activeView->containsClusterView() && activeView->containsTraceView()) {
+                slotStateChanged("traceViewClusterViewState");
+            }
 
-        if(activeView->containsClusterView()){
-            //Update the dimension spine boxes
-            int x =  activeView->abscissaDimension();
-            int y =  activeView->ordinateDimension();
-            dimensionX->setValue(x);
-            dimensionY->setValue(y);
-            slotStateChanged("clusterViewState");
-            dimensionX->show();
-            dimensionY->show();
-            featureXLabel->show();
-        }
-        else{
-            slotStateChanged("noClusterViewState");
-            dimensionX->hide();
-            dimensionY->hide();
-            featureXLabel->hide();
-        }
+            if(activeView->containsClusterView()){
+                //Update the dimension spine boxes
+                int x =  activeView->abscissaDimension();
+                int y =  activeView->ordinateDimension();
+                dimensionX->setValue(x);
+                dimensionY->setValue(y);
+                slotStateChanged("clusterViewState");
+                dimensionX->show();
+                dimensionY->show();
+                featureXLabel->show();
+            }
+            else{
+                slotStateChanged("noClusterViewState");
+                dimensionX->hide();
+                dimensionY->hide();
+                featureXLabel->hide();
+            }
 
-        if(activeView->containsWaveformView()){
-            slotStateChanged("waveformsViewState");
-            if(activeView->isOverLayPresentation()) overlayPresentation->setChecked(true);
-            else overlayPresentation->setChecked(false);
-            if(activeView->isMeanPresentation()) meanPresentation->setChecked(true);
-            else meanPresentation->setChecked(false);
+            if(activeView->containsWaveformView()){
+                slotStateChanged("waveformsViewState");
+                if(activeView->isOverLayPresentation()) overlayPresentation->setChecked(true);
+                else overlayPresentation->setChecked(false);
+                if(activeView->isMeanPresentation()) meanPresentation->setChecked(true);
+                else meanPresentation->setChecked(false);
 
-            if(activeView->isInTimeFrameMode()){
-                timeFrameMode->setChecked(true);
-                timeWindow = activeView->timeFrameWidth();
-                startTime =  activeView->timeFrameStart();
-                start->setValue(startTime);
-                start->setLineStep(timeWindow);
-                duration->setText(QString::fromLatin1("%1").arg(timeWindow));
-                duration->show();
-                durationLabel->show();
-                start->show();
-                startLabel->show();
-                spikesTodisplay->hide();
-                spikesTodisplayLabel->hide();
+                if(activeView->isInTimeFrameMode()){
+                    timeFrameMode->setChecked(true);
+                    timeWindow = activeView->timeFrameWidth();
+                    startTime =  activeView->timeFrameStart();
+                    start->setValue(startTime);
+                    start->setLineStep(timeWindow);
+                    duration->setText(QString::fromLatin1("%1").arg(timeWindow));
+                    duration->show();
+                    durationLabel->show();
+                    start->show();
+                    startLabel->show();
+                    spikesTodisplay->hide();
+                    spikesTodisplayLabel->hide();
+                }
+                else{
+                    timeFrameMode->setChecked(false);
+                    duration->hide();
+                    durationLabel->hide();
+                    start->hide();
+                    startLabel->hide();
+                    spikesTodisplay->setValue(activeView->displayedNbSpikes());
+                    spikesTodisplay->show();
+                    spikesTodisplayLabel->show();
+                }
             }
             else{
                 timeFrameMode->setChecked(false);
+                overlayPresentation->setChecked(false);
+                meanPresentation->setChecked(false);
+                slotStateChanged("noWaveformsViewState");
                 duration->hide();
                 durationLabel->hide();
                 start->hide();
                 startLabel->hide();
-                spikesTodisplay->setValue(activeView->displayedNbSpikes());
-                spikesTodisplay->show();
-                spikesTodisplayLabel->show();
+                spikesTodisplay->hide();
+                spikesTodisplayLabel->hide();
+            }
+
+            if(activeView->containsCorrelationView()){
+                slotStateChanged("correlationViewState");
+                Data::ScaleMode correlationScale = activeView->scaleMode();
+                switch(correlationScale){
+                case Data::RAW :
+                    noScale->setChecked(true);
+                    break;
+                case Data::MAX :
+                    scaleByMax->setChecked(true);
+                    break;
+                case Data::SHOULDER :
+                    scaleByShouler->setChecked(true);
+                    break;
+                }
+
+                //Update the lineEdit
+                correlogramTimeFrame = activeView->correlationTimeFrameWidth();
+                binSize = activeView->sizeOfBin();
+                correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
+                binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
+                correlogramsHalfDuration->show();
+                correlogramsHalfDurationLabel->show();
+                binSizeBox->show();
+                binSizeLabel->show();
+                //Update the shoulder line menu entry
+                shoulderLine->setChecked(activeView->isShoulderLine());
+            }
+            else{
+                slotStateChanged("noCorrelationViewState");
+                correlogramsHalfDuration->hide();
+                correlogramsHalfDurationLabel->hide();
+                binSizeBox->hide();
+                binSizeLabel->hide();
+            }
+
+            if(activeView->containsErrorMatrixView()){
+                slotStateChanged("errorMatrixViewState");
+            }
+            else{
+
+                slotStateChanged("noErrorMatrixViewState");
+            }
+
+            if(activeView->containsTraceView()){
+                showHideLabels->setChecked(activeView->getLabelStatus());
+                activeView->updateClustersProvider();
+                slotStateChanged("traceViewState");
+
+                //Update the browsing possibility of the traceView
+                if(activeView->clusters().size() != 0) {
+                    slotStateChanged("traceViewBrowsingState");
+                }
+                else{
+                    slotStateChanged("noTraceViewBrowsingState");
+                }
+            }
+            else{
+
+                slotStateChanged("noTraceViewState");
+            }
+
+            isInit = false; //now a change in a spine box  or the lineedit
+            //will trigger an update of the display
+
+            //Update the cluster palette
+            clusterPalette->selectItems(activeView->clusters());
+
+
+            //Check if a reclustering process is working in order to correctly set up the menus
+            if(processFinished){
+                slotStateChanged("noReclusterState");
+                updateUndoRedoDisplay();
+            }
+            else{
+                slotStateChanged("reclusterState");
             }
         }
-        else{
+        else{// a ProcessWidget
+            dimensionX->hide();
+            dimensionY->hide();
+            featureXLabel->hide();
             timeFrameMode->setChecked(false);
             overlayPresentation->setChecked(false);
             meanPresentation->setChecked(false);
-            slotStateChanged("noWaveformsViewState");
             duration->hide();
             durationLabel->hide();
             start->hide();
             startLabel->hide();
             spikesTodisplay->hide();
             spikesTodisplayLabel->hide();
-        }
-
-        if(activeView->containsCorrelationView()){
-            slotStateChanged("correlationViewState");
-            Data::ScaleMode correlationScale = activeView->scaleMode();
-            switch(correlationScale){
-            case Data::RAW :
-                noScale->setChecked(true);
-                break;
-            case Data::MAX :
-                scaleByMax->setChecked(true);
-                break;
-            case Data::SHOULDER :
-                scaleByShouler->setChecked(true);
-                break;
-            }
-
-            //Update the lineEdit
-            correlogramTimeFrame = activeView->correlationTimeFrameWidth();
-            binSize = activeView->sizeOfBin();
-            correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
-            binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
-            correlogramsHalfDuration->show();
-            correlogramsHalfDurationLabel->show();
-            binSizeBox->show();
-            binSizeLabel->show();
-            //Update the shoulder line menu entry
-            shoulderLine->setChecked(activeView->isShoulderLine());
-        }
-        else{
-            slotStateChanged("noCorrelationViewState");
             correlogramsHalfDuration->hide();
             correlogramsHalfDurationLabel->hide();
             binSizeBox->hide();
             binSizeLabel->hide();
-        }
 
-        if(activeView->containsErrorMatrixView()){
-            slotStateChanged("errorMatrixViewState");
-        }
-        else{
-
-            slotStateChanged("noErrorMatrixViewState");
-        }
-
-        if(activeView->containsTraceView()){
-            showHideLabels->setChecked(activeView->getLabelStatus());
-            activeView->updateClustersProvider();
-            slotStateChanged("traceViewState");
-
-            //Update the browsing possibility of the traceView
-            if(activeView->clusters().size() != 0) {
-                slotStateChanged("traceViewBrowsingState");
-            }
+            //Update the palette of clusters
+            if(!processFinished) clusterPalette->selectItems(clustersToRecluster);
             else{
-                slotStateChanged("noTraceViewBrowsingState");
+                QList<int> emptyList;
+                clusterPalette->selectItems(emptyList);
             }
-        }
-        else{
 
-            slotStateChanged("noTraceViewState");
+            slotStateChanged("reclusterViewState");
         }
 
-        isInit = false; //now a change in a spine box  or the lineedit
-        //will trigger an update of the display
-
-        //Update the cluster palette
-        clusterPalette->selectItems(activeView->clusters());
-
-
-        //Check if a reclustering process is working in order to correctly set up the menus
-        if(processFinished){
-            slotStateChanged("noReclusterState");
-            updateUndoRedoDisplay();
-        }
-        else{
-            slotStateChanged("reclusterState");
-        }
-    }
-    else{// a ProcessWidget
-        dimensionX->hide();
-        dimensionY->hide();
-        featureXLabel->hide();
-        timeFrameMode->setChecked(false);
-        overlayPresentation->setChecked(false);
-        meanPresentation->setChecked(false);
-        duration->hide();
-        durationLabel->hide();
-        start->hide();
-        startLabel->hide();
-        spikesTodisplay->hide();
-        spikesTodisplayLabel->hide();
-        correlogramsHalfDuration->hide();
-        correlogramsHalfDurationLabel->hide();
-        binSizeBox->hide();
-        binSizeLabel->hide();
-
-        //Update the palette of clusters
-        if(!processFinished) clusterPalette->selectItems(clustersToRecluster);
-        else{
-            QList<int> emptyList;
-            clusterPalette->selectItems(emptyList);
-        }
-
-        slotStateChanged("reclusterViewState");
     }
 }
 
