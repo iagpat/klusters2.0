@@ -2086,9 +2086,8 @@ void KlustersApp::slotDelaySelection(){
 void KlustersApp::slotTabChange(QWidget* widget){
     DockArea *area = dynamic_cast<DockArea*>(widget);
     if(area) {
-        if(area->mainWidget()->isA("KlustersView")) {
-            KlustersView* activeView = dynamic_cast<KlustersView*>(area->mainWidget());
-
+        KlustersView* activeView = qobject_cast<KlustersView *>(area->mainWidget());
+        if(activeView) {
             //Update the content of the view contains in active display.
             activeView->updateViewContents();
 
@@ -2211,10 +2210,9 @@ void KlustersApp::slotTabChange(QWidget* widget){
                 slotStateChanged("traceViewState");
 
                 //Update the browsing possibility of the traceView
-                if(activeView->clusters().size() != 0) {
+                if(!activeView->clusters().isEmpty()) {
                     slotStateChanged("traceViewBrowsingState");
-                }
-                else{
+                } else {
                     slotStateChanged("noTraceViewBrowsingState");
                 }
             }
@@ -2238,8 +2236,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
             else{
                 slotStateChanged("reclusterState");
             }
-        }
-        else{// a ProcessWidget
+        } else {// a ProcessWidget
             dimensionX->hide();
             dimensionY->hide();
             featureXLabel->hide();
@@ -2263,10 +2260,8 @@ void KlustersApp::slotTabChange(QWidget* widget){
                 QList<int> emptyList;
                 clusterPalette->selectItems(emptyList);
             }
-
             slotStateChanged("reclusterViewState");
         }
-
     }
 }
 
