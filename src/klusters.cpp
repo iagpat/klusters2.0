@@ -2535,8 +2535,8 @@ void KlustersApp::slotRecluster(){
         display = new QDockWidget(tr("Recluster output"),0);
 
         processWidget = new ProcessWidget(display);
-        connect(processWidget,SIGNAL(finished( int, QProcess::ExitStatus)), this, SLOT(slotProcessExited(int, QProcess::ExitStatus)));
-        connect(processWidget,SIGNAL(finished( int, QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
+        connect(processWidget,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(slotProcessExited(int,QProcess::ExitStatus)));
+        connect(processWidget,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
 
         //install the new view in the display so it can be see in the future tab.
         display->setWidget(processWidget);

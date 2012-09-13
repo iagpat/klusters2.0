@@ -91,9 +91,9 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     languageChange();
 
     //Signal and slot connection
-    connect(iconView,SIGNAL(contextMenuRequested(Q3IconViewItem* ,const QPoint&)),this, SLOT(slotRightPressed(Q3IconViewItem*)));
+    connect(iconView,SIGNAL(contextMenuRequested(Q3IconViewItem*,QPoint)),this, SLOT(slotRightPressed(Q3IconViewItem*)));
     connect(iconView,SIGNAL(selectionChanged()),this, SLOT(slotClickRedraw()));
-    connect(iconView,SIGNAL(mouseButtonPressed(int,Q3IconViewItem* ,const QPoint&)),this, SLOT(slotMousePressed(int,Q3IconViewItem*)));
+    connect(iconView,SIGNAL(mouseButtonPressed(int,Q3IconViewItem*,QPoint)),this, SLOT(slotMousePressed(int,Q3IconViewItem*)));
 
     connect(iconView,SIGNAL(onItem(Q3IconViewItem*)),this, SLOT(slotOnItem(Q3IconViewItem*)));
     setLayout(layout);

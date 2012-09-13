@@ -34,10 +34,10 @@ ProcessLineMaker::ProcessLineMaker( QProcess* proc )
       isWidgetHidden(false),
       processExited(false)
 {
-    connect(mProc, SIGNAL(readyReadStandardOutput ()),
+    connect(mProc, SIGNAL(readyReadStandardOutput()),
             this, SLOT(slotReceivedStdout()) );
     
-    connect(mProc, SIGNAL(readyReadStandardError ()),
+    connect(mProc, SIGNAL(readyReadStandardError()),
             this, SLOT(slotReceivedStderr()) );
 }
 

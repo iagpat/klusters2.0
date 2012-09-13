@@ -66,19 +66,19 @@ ProcessWidget::ProcessWidget(QWidget *parent, const char *name)
 
     procLineMaker = new ProcessLineMaker( childproc );
 
-    connect( procLineMaker, SIGNAL(receivedStdoutLine(const QString&)),
-             this, SLOT(insertStdoutLine(const QString&) ));
-    connect( procLineMaker, SIGNAL(receivedStderrLine(const QString&)),
-             this, SLOT(insertStderrLine(const QString&) ));
+    connect( procLineMaker, SIGNAL(receivedStdoutLine(QString)),
+             this, SLOT(insertStdoutLine(QString)));
+    connect( procLineMaker, SIGNAL(receivedStderrLine(QString)),
+             this, SLOT(insertStderrLine(QString)));
     connect( procLineMaker, SIGNAL(outputTreatmentOver()),
              this, SLOT(slotOutputTreatmentOver()));
 
     connect(this, SIGNAL(hidden()),
             procLineMaker, SLOT(slotWidgetHidden()));
 
-    connect(childproc, SIGNAL(finished( int, QProcess::ExitStatus )),
-            this, SLOT(slotProcessExited( int, QProcess::ExitStatus) )) ;
-    connect(this, SIGNAL(finished( int, QProcess::ExitStatus )),
+    connect(childproc, SIGNAL(finished(int,QProcess::ExitStatus)),
+            this, SLOT(slotProcessExited(int,QProcess::ExitStatus))) ;
+    connect(this, SIGNAL(finished(int,QProcess::ExitStatus)),
             procLineMaker, SLOT(slotProcessExited()));
 }
 
