@@ -474,7 +474,7 @@ private:
     /** mainDock is the main DockWidget to which all other dockWidget will be dock. Inititalized in
      * initDisplay()
      */
-    QDockWidget* mainDock;
+    DockArea* mainDock;
 
     /** clustersPanel is the DockWidget containing the ClusterPalette. Inititalized in initClusterPanel()
      */

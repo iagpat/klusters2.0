@@ -823,8 +823,6 @@ void KlustersApp::initDisplay(){
     correlogramsHalfTimeFrameValidator.setRange(0,static_cast<int>((maximumTime - 1) / 2));
     binSizeValidator.setRange(0,maximumTime);
 
-    //Create the mainDock (first view)
-    mainDock = new QDockWidget( doc->documentName(),0);
 
     //If the setting dialog exists (has already be open once), enable the settings for the channels.
     if(prefDialog != 0L)
@@ -848,6 +846,7 @@ void KlustersApp::initDisplay(){
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
                                           false,false,DEFAULT_BIN_SIZE.toInt(),INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
+    mainDock = view;
     tabsParent->addDockArea(view,tr("Overview Display"));
 
 
@@ -859,8 +858,6 @@ void KlustersApp::initDisplay(){
     //Update the document's list of view
     doc->addView(view);
 
-
-    //view->addDockWidget(Qt::RightDockWidgetArea,mainDock);
 
     //return;
     //Initialize and dock the clusterpanel
@@ -1377,9 +1374,9 @@ void KlustersApp::slotFileClose(){
                     //Remove the display from the group of tabs
                     while(true){
                         int nbOfTabs = tabsParent->count();
-                        QDockWidget* current = static_cast<QDockWidget*>(tabsParent->page(0));
+                        DockArea* current = static_cast<DockArea*>(tabsParent->page(0));
                         if(current == mainDock){
-                            current = static_cast<QDockWidget*>(tabsParent->page(1));
+                            current = static_cast<DockArea*>(tabsParent->page(1));
                         }
 
                         if((current->widget())->isA("KlustersView")){
@@ -1412,7 +1409,8 @@ void KlustersApp::slotFileClose(){
                 clusterPanel->hide();
                 //KDAB_PENDING clusterPanel->undock();
                 //The last display is the mainDock
-                if((mainDock->widget())->isA("KlustersView")) delete mainDock;
+                if((mainDock)->isA("KlustersView"))
+                    delete mainDock;
                 else{
                     if(processWidget->isRunning()){
                         processWidget->killJob();
@@ -1487,7 +1485,8 @@ void KlustersApp::slotFileSaveAs()
 
 void KlustersApp::slotDisplayClose()
 {
-    QDockWidget* current;
+#if KDAB_PENDING
+    DockArea* current;
 
     slotStatusMsg(tr("Closing display..."));
 
@@ -1499,7 +1498,7 @@ void KlustersApp::slotDisplayClose()
         //If the active display is the mainDock, assign the mainDock status to an other display (take the first one available)
         if(current == mainDock){
             if(tabsParent->currentPageIndex() == 0){
-                mainDock = static_cast<QDockWidget*>(tabsParent->page(1));
+                mainDock = static_cast<DockArea*>(tabsParent->page(1));
                 setCentralWidget(mainDock);
             }
             else  {
@@ -1625,6 +1624,7 @@ void KlustersApp::slotDisplayClose()
             resetState();
         }
     }
+#endif
     slotStatusMsg(tr("Ready."));
 }
 
