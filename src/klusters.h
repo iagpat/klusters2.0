@@ -50,7 +50,7 @@ class SaveThread;
 class PrefDialog;
 class ProcessWidget;
 class QRecentFileAction;
-
+class QExtendTabWidget;
 
 /**
   * The Klusters main window and central class. It sets up the main
@@ -492,7 +492,7 @@ private:
     /** tabsParent groups all the tabs, it is updated eache time a display is added.
     * It is null when there is only one display open. It enables to get the active tab.
     */
-    QTabWidget* tabsParent;
+    QExtendTabWidget* tabsParent;
 
     QToolBar* paramBar;
     QToolBar* mActionBar;
@@ -500,7 +500,7 @@ private:
     QToolBar* mClusterBar;
     QToolBar* mMainToolBar;
 
-QRecentFileAction* mFileOpenRecent;
+    QRecentFileAction* mFileOpenRecent;
     
     //Action and toolbar pointers
     QAction* viewMainToolBar;
@@ -759,7 +759,7 @@ QRecentFileAction* mFileOpenRecent;
                 input = QString::fromLatin1("%1").arg((klusters->correlogramTimeFrame - klusters->binSize) / 2);
                 return;
             }
-        };
+        }
 
     private:
         KlustersApp* klusters;

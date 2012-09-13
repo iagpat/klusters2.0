@@ -30,6 +30,7 @@
 #include <QPrinter>
 #include <QSplitter>
 #include <qrecentfileaction.h>
+#include <qextendtabwidget.h>
 
 //Added by qt3to4:
 #include <QLabel>
@@ -152,7 +153,7 @@ void KlustersApp::initView()
     QWidget *w = new QWidget;
     QSplitter *splitter = new QSplitter;
     splitter->addWidget(clusterPanel);
-    tabsParent = new QTabWidget();
+    tabsParent = new QExtendTabWidget(this);
     splitter->addWidget(tabsParent);
     setCentralWidget(splitter);
 }
