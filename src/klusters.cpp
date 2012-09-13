@@ -1687,7 +1687,7 @@ void KlustersApp::slotUndo()
 
     //Update the browsing possibility of the traceView
     KlustersView* view = activeView();
-    if(view->containsTraceView() && view->clusters().size() != 0) {
+    if(view->containsTraceView() && !view->clusters().isEmpty()) {
         slotStateChanged("traceViewBrowsingState");
     }
     else
@@ -1707,7 +1707,7 @@ void KlustersApp::slotRedo()
 
     //Update the browsing possibility of the traceView
     KlustersView* view = activeView();
-    if(view->containsTraceView() && view->clusters().size() != 0)
+    if(view->containsTraceView() && !view->clusters().isEmpty())
     {
         slotStateChanged("traceViewBrowsingState");
     }
@@ -1739,16 +1739,7 @@ void KlustersApp::slotViewMainToolBar()
 {
     slotStatusMsg(tr("Toggle the main toolbar..."));
 
-    // turn Toolbar on or off
-    if(!viewMainToolBar->isChecked())
-    {
-        //KDAB_PENDING toolBar("mainToolBar")->hide();
-    }
-    else
-    {
-        //KDAB_PENDING toolBar("mainToolBar")->show();
-    }
-
+    mMainToolBar->setVisible(viewMainToolBar->isChecked());
     slotStatusMsg(tr("Ready."));
 }
 
