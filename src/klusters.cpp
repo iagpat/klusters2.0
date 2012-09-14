@@ -502,6 +502,7 @@ void KlustersApp::createMenus()
 
     mViewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
     mViewStatusBar->setCheckable(true);
+    mViewStatusBar->setChecked(true);
     connect(mViewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
 
     settingsMenu->addSeparator();
