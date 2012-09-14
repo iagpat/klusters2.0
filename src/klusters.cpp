@@ -1363,7 +1363,10 @@ void KlustersApp::slotFileOpen()
 
 void KlustersApp::slotFileClose(){
     if(doc != 0){
-        while(!saveThread->wait()){};
+        while(!saveThread->wait())
+        {
+        };
+
         if(doc->canCloseView()){
             QApplication::restoreOverrideCursor();
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
@@ -1382,8 +1385,7 @@ void KlustersApp::slotFileClose(){
                         if((current->widget())->isA("KlustersView")){
                             tabsParent->removePage(current);
                             delete current;
-                        }
-                        else{//give the time to the process to finish.
+                        } else {//give the time to the process to finish.
                             if(processWidget->isRunning()){
                                 processWidget->killJob();
                                 processKilled = true;
@@ -1392,8 +1394,7 @@ void KlustersApp::slotFileClose(){
                                 tabsParent->removePage(current);
                                 delete current;
                                 processWidget = 0L;
-                            }
-                            else{
+                            } else{
                                 QTimer::singleShot(2000,this, SLOT(slotFileClose()));
                                 return;
                             }
@@ -2839,18 +2840,11 @@ void KlustersApp::updateDimensionSpinBoxes(int dimensionX, int dimensionY){
 }
 
 void KlustersApp::renameActiveDisplay(){
-    QDockWidget* current;
-
-    //Get the active tab
-
-
-    current = static_cast<QDockWidget*>(tabsParent->currentPage());
-
     bool ok;
-    QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString(), &ok, this, current->windowTitle());
+    const int currentIndex = tabsParent->currentIndex();
+    QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString(), &ok, this, tabsParent->tabText(currentIndex));
     if(!newLabel.isEmpty() && ok){
-        tabsParent->setTabLabel(current,newLabel);
-        current->setWindowTitle(newLabel);
+        tabsParent->setTabText(currentIndex,newLabel);
     }
 }
 
