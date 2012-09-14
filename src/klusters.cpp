@@ -866,9 +866,6 @@ void KlustersApp::initDisplay(){
     clusterPalette->createClusterList(doc);
     clusterPalette->selectItems(*clusterList);
 
-    //Dock the clusterPanel on the left
-    //KDAB_PENDING clusterPanel->setEnableDocking(QDockWidget::DockFullSite);
-    //KDAB_PENDING clusterPanel->manualDock(mainDock,QDockWidget::DockLeft,0);  // relation target/this (in percent)
 
     //forbit docking abilities of clusterPanel itself
     clusterPanel->setAllowedAreas(Qt::NoDockWidgetArea);
@@ -1409,7 +1406,6 @@ void KlustersApp::slotFileClose(){
                 //reset the cluster palette and hide the cluster panel
                 clusterPalette->reset();
                 clusterPanel->hide();
-                //KDAB_PENDING clusterPanel->undock();
                 //The last display is the mainDock
                 if((mainDock)->isA("KlustersView"))
                     delete mainDock;
