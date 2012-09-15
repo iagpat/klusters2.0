@@ -22,7 +22,10 @@
 #include <Q3PtrList>
 #include <QDebug>
 
-ItemColors::ItemColors():itemList(),colorChanged(false){
+ItemColors::ItemColors()
+    :itemList(),
+      colorChanged(false)
+{
     //The list owns the objects, it will delete the items that are removed.
     itemList.setAutoDelete(true);
 }
@@ -71,14 +74,18 @@ QString ItemColors::itemLabel(int index){
 }
 
 QString ItemColors::itemLabelById(int id){
-    if(itemColorIndex(id) == -1) return "";
-    else return (itemList.at(static_cast<uint>(itemColorIndex(id))))->label;
+    if(itemColorIndex(id) == -1)
+        return QString();
+    else
+        return (itemList.at(static_cast<uint>(itemColorIndex(id))))->label;
 }
 
 
 bool ItemColors::contains(int itemId){
-    if(itemColorIndex(itemId) == -1) return false;
-    else return true;
+    if(itemColorIndex(itemId) == -1)
+        return false;
+    else
+        return true;
 }
 
 

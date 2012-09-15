@@ -41,48 +41,6 @@ public:
   virtual ~ItemColors();
   ItemColors(const ItemColors& itemcolors);
 
-private:
-
-  /**Structure representing a color item.*/
-  struct ItemColor{
-    int itemId;
-    QColor color;
-    bool isChanged;
-    QString label;
-
-    ItemColor(int id, const QColor& c,const QString& l = ""){
-      itemId = id;
-      color = c;
-      isChanged = false;
-      if(l == "")
-          label = QString::fromLatin1("%1").arg(id);
-      else
-          label = l;
-    }
-    ItemColor(const ItemColor& origin):itemId(origin.itemId),
-     color(origin.color),isChanged(origin.isChanged),label(origin.label){}
-    ~ItemColor(){}
-  };
-
-  /**list of the ItemColor contained in the class.*/
-  Q3PtrList<ItemColor> itemList;
-
-  /**True if at least one color has changed, false otherwise.*/
-  bool colorChanged;
-
-  /**
-  * Looks up for the item id @p itemId.
-  * @param itemId the item id
-  * @return the itemColor corresponding to the item id or null if not found
-  */
-  virtual ItemColor* itemColor(int itemId) const;
-
-  /**
-  * Looks up for the item index of the item id @p itemId.
-  * @param itemId the item id
-  * @return the index in the list corresponding to the item id or -1 if not found
-  */
-  virtual int itemColorIndex(int itemId) const;
 
 public:
 
@@ -248,7 +206,49 @@ public:
   * @param newItemLabel the new label to assign.
   */
   virtual void changeItemLabel(int index,QString newItemLabel);
-  
+private:
+
+  /**Structure representing a color item.*/
+  struct ItemColor{
+    int itemId;
+    QColor color;
+    bool isChanged;
+    QString label;
+
+    ItemColor(int id, const QColor& c,const QString& l = QString()){
+      itemId = id;
+      color = c;
+      isChanged = false;
+      if(l.isEmpty())
+          label = QString::fromLatin1("%1").arg(id);
+      else
+          label = l;
+    }
+    ItemColor(const ItemColor& origin):itemId(origin.itemId),
+     color(origin.color),isChanged(origin.isChanged),label(origin.label){}
+    ~ItemColor(){}
+  };
+
+  /**list of the ItemColor contained in the class.*/
+  Q3PtrList<ItemColor> itemList;
+
+  /**True if at least one color has changed, false otherwise.*/
+  bool colorChanged;
+
+  /**
+  * Looks up for the item id @p itemId.
+  * @param itemId the item id
+  * @return the itemColor corresponding to the item id or null if not found
+  */
+  ItemColor* itemColor(int itemId) const;
+
+  /**
+  * Looks up for the item index of the item id @p itemId.
+  * @param itemId the item id
+  * @return the index in the list corresponding to the item id or -1 if not found
+  */
+  int itemColorIndex(int itemId) const;
+
 };
 
 #endif
