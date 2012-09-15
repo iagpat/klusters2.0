@@ -18,28 +18,26 @@
 #include "channelcolors.h"
 
 //Added by qt3to4:
-#include <Q3PtrList>
+#include <QList>
 #include <QDebug>
 
 
 
 ChannelColors::ChannelColors():channelList(){
-    //The list owns the objects, it will delete the channels that are removed.
-    channelList.setAutoDelete(true);
 }
 
 ChannelColors::~ChannelColors(){
     qDebug() << "~ChannelColors()";
+    qDeleteAll(channelList);
+    channelList.clear();
 }
 
 
 ChannelColors::ChannelColors(const ChannelColors& origin){
     //Insert into channelList a deep copy of all the elements of origin.channelList
-    ChannelColor* channelColor;
-    Q3PtrList<ChannelColor> originChannelList =  origin.channelList;
-
-    for(channelColor = originChannelList.first(); channelColor; channelColor = originChannelList.next()){
-        channelList.append(new ChannelColor(*channelColor));
+    QList<ChannelColor*> originChannelList =  origin.channelList;
+    for (int i = 0; i < originChannelList.size(); ++i) {
+        channelList.append(new ChannelColor(*originChannelList.at(0)));
     }
 }
 
@@ -73,13 +71,13 @@ QColor ChannelColors::spikeGroupColor(int identifier){
     else return theChannelColor->spikeGroupColor;
 }
 
-void ChannelColors::setColor(int identifier, QColor color){
+void ChannelColors::setColor(int identifier, const QColor& color){
     ChannelColors::ChannelColor* theChannelColor = 0L;
     theChannelColor = channelColor(identifier);
     theChannelColor->color = color;
 }
 
-void ChannelColors::setGroupColor(int identifier,QColor color){
+void ChannelColors::setGroupColor(int identifier, const QColor &color){
     ChannelColors::ChannelColor* theChannelColor = 0L;
     theChannelColor = channelColor(identifier);
     theChannelColor->groupColor = color;
@@ -101,45 +99,41 @@ bool ChannelColors::contains(int channelId){
 }
 
 
-uint ChannelColors::append(int channelId, QColor color,QColor groupColor,QColor spikeGroupColor){
+uint ChannelColors::append(int channelId, const QColor& color,const QColor& groupColor,const QColor& spikeGroupColor){
     channelList.append(new ChannelColor(channelId,color,groupColor,spikeGroupColor));
     return channelList.count();
 }
 
-uint ChannelColors::append(int channelId, QColor color){
+uint ChannelColors::append(int channelId, const QColor& color){
     channelList.append(new ChannelColor(channelId,color,color,color));
     return channelList.count();
 }
 
-void ChannelColors::insert(int channelId,int index,QColor color,QColor groupColor,QColor spikeGroupColor){
+void ChannelColors::insert(int channelId,int index,const QColor& color,const QColor& groupColor,const QColor& spikeGroupColor){
     channelList.insert(index, new ChannelColor(channelId,color,groupColor,spikeGroupColor));
 }
 
 bool ChannelColors::remove(int identifier){
-    return channelList.remove(channelColorIndex(identifier));
+    const int index = channelColorIndex(identifier);
+    if(index == -1)
+        return false;
+    channelList.removeAt(index);
+    return true;
 }
 
 ChannelColors::ChannelColor* ChannelColors::channelColor(int channelId) const{
 
-    //Iterate on the list until the channel is find
-    Q3PtrListIterator<ChannelColors::ChannelColor> iterator(channelList);
-    ChannelColors::ChannelColor* channelColor = 0L;
-    while((channelColor = iterator.current()) != 0) {
-        ++iterator;
-        if (channelColor->channelId == channelId) return channelColor;
+    for (int i = 0; i < channelList.size(); ++i) {
+        if (channelList.at(i)->channelId == channelId)
+            return channelList.at(i);
     }
-    return NULL;//Normally never reached
+    return 0;
 }
 
 int ChannelColors::channelColorIndex(int channelId) const{
-    //Iterate on the list until the channel is find
-    Q3PtrListIterator<ChannelColors::ChannelColor> iterator(channelList);
-    ChannelColors::ChannelColor* channelColor;
-    int index = 0;
-    while((channelColor = iterator.current()) != 0) {
-        if (channelColor->channelId == channelId) return index;
-        ++index;
-        ++iterator;
+    for (int i = 0; i < channelList.size(); ++i) {
+        if (channelList.at(i)->channelId == channelId)
+            return i;
     }
     return -1;//Normally never reach
 }

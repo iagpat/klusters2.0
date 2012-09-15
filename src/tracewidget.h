@@ -112,7 +112,7 @@ public:
         view.installEventFilter(filterObject);
     }
 
-public slots:
+public Q_SLOTS:
 
     /***Changes the color of the background.*/
     void changeBackgroundColor(const QColor &color);
@@ -503,7 +503,7 @@ public slots:
   **/
     inline void updateSkipStatus(const QList<int>& skippedChannels){view.skipStatusChanged(skippedChannels);}
 
-signals:
+Q_SIGNALS:
     void channelsSelected(const QList<int>& selectedIds);
 
     /**Informs that the starting time and/or the timeWindow have changed.
@@ -552,7 +552,7 @@ private:
     /**Initializes the different time selection widgets.*/
     void initSelectionWidgets();
 
-private slots:
+private Q_SLOTS:
     /**Informs the view to present the traces for an updated time frame.*/
     void slotStartMinuteTimeUpdated(int start);
 

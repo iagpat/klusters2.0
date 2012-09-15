@@ -77,7 +77,7 @@ public:
 
     inline BaseFrame::Mode getMode() const {return mode;}
 
-public slots:
+public Q_SLOTS:
 
     /**
   * Takes into  account the update of the dimension used to present the clusters.
@@ -232,7 +232,7 @@ protected:
   */
     virtual void customEvent(QEvent* event);
 
-signals:
+Q_SIGNALS:
     void moveToTime(long startTime);
 
 private:

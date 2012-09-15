@@ -66,7 +66,7 @@ public:
     /**Signals that the widget is about to be deleted.*/
     void willBeKilled();
 
-public slots:
+public Q_SLOTS:
 
     /**Enables the caller to know if there is any thread running launch by the Widget.*/
     bool isThreadsRunning();

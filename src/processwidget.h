@@ -77,7 +77,7 @@ public:
     */
     void print(QPrinter* printer,const QString& filePath);
     
-public slots:
+public Q_SLOTS:
     /**
      * Starts the child process.
      * @return true if the could be started, false otherwise.
@@ -111,7 +111,7 @@ protected:
      */
     virtual void childFinished(bool normal, int status);
 
-signals:
+Q_SIGNALS:
     void processExited(QProcess*);
     void processOutputsFinished();
     void hidden();
@@ -119,7 +119,7 @@ signals:
 protected:
     virtual QSize minimumSizeHint() const;
     
-protected slots:
+protected Q_SLOTS:
     void slotProcessExited( int, QProcess::ExitStatus);
     void slotOutputTreatmentOver();
     

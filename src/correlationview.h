@@ -88,7 +88,7 @@ public:
   */
     inline bool isShoulderLine() const {return shoulderLine;}
 
-public slots:
+public Q_SLOTS:
 
     /**Updates the view only for one cluster for which the color has been changed
   * @param clusterId cluster Id for which the color have changed.

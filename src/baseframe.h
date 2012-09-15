@@ -94,7 +94,7 @@ public:
         Yborder = y;
     }
 
-public slots:
+public Q_SLOTS:
 
     /**Update the information presented in the view if need it.*/
     virtual inline void updateDrawing(){}
@@ -113,7 +113,7 @@ public slots:
   */
     virtual inline void setMode(BaseFrame::Mode selectedMode){mode = selectedMode;}
 
-signals:
+Q_SIGNALS:
     /***Signals that the enclosing dockwidget is being closed
    * @param viewWidget pointer on the the current object.
    */

@@ -49,7 +49,7 @@ public:
   void mouseMoveEvent(QMouseEvent* event);
   void contentsDragMoveEvent(QDragMoveEvent* event);
 
-signals:
+Q_SIGNALS:
   void positionsChanged();
 
 private:

@@ -109,14 +109,14 @@ public:
         update();
     }
 
-public slots:
+public Q_SLOTS:
     virtual void changeColor(Q3IconViewItem* item);
     virtual void moveClustersToNoise();
     virtual void moveClustersToArtefact();
     virtual void groupClusters();
     virtual void updateClusters();
 
-protected slots:
+protected Q_SLOTS:
     /** The right click on a cluster icon bring a dialog allowing the user to enter information on the cluster
     * (structure, type, isolation distance, quality and notes).
     */
@@ -130,7 +130,7 @@ protected slots:
      */
     virtual void slotOnItem(Q3IconViewItem* item);
     
-signals:
+Q_SIGNALS:
     void singleChangeColor(int selectedCluster);
     void updateShownClusters(QList<int> selectedClusters);
     void groupClusters(QList<int> selectedClusters);

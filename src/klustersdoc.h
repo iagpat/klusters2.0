@@ -457,7 +457,7 @@ public:
     /**Sets the modified status of the current opend document to true .*/
     inline void clusterInformationModified(){modified = true;}
 
-signals:
+Q_SIGNALS:
     void updateUndoNb(int undoNb);
     void updateRedoNb(int undoNb);
     void clustersGrouped(QList<int>& groupedClusters, int newClusterId);
@@ -478,7 +478,7 @@ signals:
     void newClustersAdded(QList<int>& clustersToRecluster);
     void spikesDeleted();
     
-public slots:
+public Q_SLOTS:
     /** Calls repaint() on all views connected to the document object and is called by the view by which the document has been changed.
      * As this view normally repaints itself, it is excluded from the paintEvent.
      */

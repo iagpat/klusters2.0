@@ -141,7 +141,7 @@ protected:
     bool eventFilter(QObject* object,QEvent* event);
 
 
-public slots:
+public Q_SLOTS:
     /** queryClose is called by KDocMainWindow call just before being closed.
      */
     bool queryClose();
@@ -160,7 +160,7 @@ public slots:
 
     void slotStateChanged(const QString& state);
 
-private slots:
+private Q_SLOTS:
     /** Open a file and load it into the document.*/
     void slotFileOpen();
     /** Opens a file in the old format and load it into the document.*/

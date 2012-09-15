@@ -52,7 +52,7 @@ public:
         processExited = false;
     }
 
-public slots:
+public Q_SLOTS:
     void slotReceivedStdout();
     void slotReceivedStderr();
     inline void slotWidgetHidden(){isWidgetHidden = true;}
@@ -65,7 +65,7 @@ public slots:
     }
 
 
-signals:
+Q_SIGNALS:
     void receivedStdoutLine( const QString& line );
     void receivedStderrLine( const QString& line );
     void outputTreatmentOver();

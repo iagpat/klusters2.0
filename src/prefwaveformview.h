@@ -73,14 +73,14 @@ public:
   };
 
   
-signals:
+Q_SIGNALS:
   void positionsChanged();
   
 private:
   QList<int> channelPositions;
   int nbChannels;
   
-private slots:
+private Q_SLOTS:
   
   /**Saves the order of the channels to a file.*/
   void saveChannelOrder();

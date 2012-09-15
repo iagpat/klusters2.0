@@ -50,7 +50,7 @@ class PrefDialog : public QPageDialog {
 
     void enableChannelSettings(bool state);
     
-  public slots:
+  public Q_SLOTS:
     /// Will be called when the "Default" button has been clicked.
     void slotDefault();
     /// Will be called when the "Apply" button has been clicked.
@@ -58,7 +58,7 @@ class PrefDialog : public QPageDialog {
     /// Will be called whenever a setting was changed.
     void enableApply();
 
-  signals:
+  Q_SIGNALS:
     /// Will be emitted when the new settings should be applied.
     void settingsChanged();
 

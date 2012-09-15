@@ -646,7 +646,7 @@ public:
     /**Retrieves the previous cluster.*/
     inline void showPreviousCluster(){emit previousCluster();}
 
-public slots:
+public Q_SLOTS:
 
     /**Takes care of the closing of a ClusterView.
   * @param clusterView the ClusterView to be closed.
@@ -681,7 +681,7 @@ public slots:
         this->duration = duration;
     }
 
-signals:
+Q_SIGNALS:
     void updatedDimensions(int dimensionX,int dimensionY);
     void singleColorUpdated(int clusterId,bool active);
     void clusterRemovedFromView(int ClusterId,bool active);

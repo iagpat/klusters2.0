@@ -80,7 +80,7 @@ public:
     bool useWhiteColorDuringPrinting() const;
 
     void setUseWhiteColorDuringPrinting(bool b);
-private slots:
+private Q_SLOTS:
     void updateCrashRecoveryTimeInterval(int state);
 
     void updateReclusteringExecutable();

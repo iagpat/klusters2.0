@@ -84,7 +84,7 @@ public:
   */
     enum {DELETE_NOISE = ZOOM+1,DELETE_ARTEFACT = ZOOM+2,NEW_CLUSTER = ZOOM+3,NEW_CLUSTERS = ZOOM+4,SELECT_TIME = ZOOM+5};
 
-public slots:
+public Q_SLOTS:
 
     /**
   * Takes into  account the update of the dimension used to present the clusters.

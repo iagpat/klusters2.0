@@ -71,7 +71,7 @@ public:
     /**Signals that the widget is about to be deleted.*/
     void willBeKilled();
 
-public slots:
+public Q_SLOTS:
 
     /**Updates the view only for one cluster for which the color has been changed
   * @param clusterId cluster Id for which the color have changed.
