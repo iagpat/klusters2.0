@@ -151,7 +151,6 @@ KlustersApp::~KlustersApp()
 void KlustersApp::initView()
 {
     initClusterPanel();
-    QWidget *w = new QWidget;
     QSplitter *splitter = new QSplitter;
     splitter->addWidget(clusterPanel);
     tabsParent = new QExtendTabWidget(this);
