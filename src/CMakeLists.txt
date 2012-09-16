@@ -1,6 +1,6 @@
 project(klusters-src)
 
-set(klusters_SRCS array.cpp 
+set(klusters_SRCS  
 	autosavethread.cpp 
 	baseframe.cpp 
         channellist.cpp 
