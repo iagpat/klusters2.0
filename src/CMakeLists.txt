@@ -43,7 +43,6 @@ set(klusters_SRCS
 	viewwidget.cpp 
 	waveformthread.cpp 
 	waveformview.cpp
-        zoomwindow.cpp 
 	prefgenerallayout.cpp 
 	prefwaveformviewlayout.cpp 
 	prefclusterviewlayout.cpp)
