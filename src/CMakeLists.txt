@@ -59,4 +59,4 @@ target_link_libraries(klusters ${QT_LIBRARIES} ${LIBXML2_LIBRARIES} ${QT_QT3SUPP
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/klusters DESTINATION bin)
 #verify
 #install(FILES klusters.png DESTINATION ${DATA_INSTALL_DIR}/icons/) 
-
+#install(FILES klusters.desktop DESTINATION data )

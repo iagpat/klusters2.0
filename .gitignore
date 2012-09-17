@@ -1,9 +1,4 @@
 *.moc.*
 *.o
-config.h*
 *.moc
 Makefile
-autom4te.cache
-config.log
-src/.deps/
-src/klusters
