@@ -44,7 +44,7 @@
 const int WaveformView::XMARGIN = 0;
 const int WaveformView::YMARGIN = 0;
 
-WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int acquisitionGain,QList<int> positions,QStatusBar * statusBar,QWidget* parent,
+WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int acquisitionGain,const QList<int>& positions,QStatusBar * statusBar,QWidget* parent,
                            bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
                            bool overLay,bool mean, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
                            int border) :
@@ -78,10 +78,12 @@ WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& bac
     //The first one in the file will be the first one (at the top), second one will be beneath and so on.
     //The channels are counted from 0 to nbchannels - 1.
     if(positions.isEmpty()){
-        for(int i = 0; i < nbchannels; ++i) channelPositions[i] = i;
+        for(int i = 0; i < nbchannels; ++i)
+            channelPositions[i] = i;
     }
     else{
-        for(int i = 0; i < nbchannels; ++i) channelPositions[i] = positions[i];
+        for(int i = 0; i < nbchannels; ++i)
+            channelPositions[i] = positions[i];
     }
 
     ordinateMin = -(2 * heightBorder + nbchannels * YsizeForMaxAmp + (nbchannels - 1) * Yspace);
@@ -137,11 +139,13 @@ void WaveformView::singleColorUpdate(int clusterId,bool active){
             clusterUpdateList.append(clusterId);
             drawContentsMode = UPDATE;
         }
-        else if(drawContentsMode == UPDATE)clusterUpdateList.append(clusterId);
+        else if(drawContentsMode == UPDATE)
+            clusterUpdateList.append(clusterId);
     }
     else{
         //Update drawContentsMode if need it.
-        if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
+        if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)
+            drawContentsMode = REDRAW;
     }
 }
 

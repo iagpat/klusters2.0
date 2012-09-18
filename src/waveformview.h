@@ -57,7 +57,7 @@ public:
 
     friend class WaveformThread;
 
-    WaveformView(KlustersDoc& doc, KlustersView& view, const QColor &backgroundColor, int acquisitionGain, QList<int> positions, QStatusBar * statusBar, QWidget* parent=0,
+    WaveformView(KlustersDoc& doc, KlustersView& view, const QColor &backgroundColor, int acquisitionGain, const QList<int> &positions, QStatusBar * statusBar, QWidget* parent=0,
                  bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay =0, bool overLay = false, bool mean = false,
                  const char* name=0, int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
                  int windowBottomRight = 1001, int border = 0);
@@ -130,7 +130,7 @@ public Q_SLOTS:
     /**Changes the current mode, call by a selection of a tool
   * @param selectedMode new mode of drawing (selection or zoom)
   */
-    inline void setMode(BaseFrame::Mode selectedMode){};
+    inline void setMode(BaseFrame::Mode selectedMode){}
 
     /**
   * Updates the clusters which have been modified by the suppression of spikes
@@ -143,7 +143,7 @@ public Q_SLOTS:
   */
     inline void updateClusters(QList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
         spikesRemovedFromClusters(modifiedClusters,active);
-    };
+    }
 
     /**
   * Updates the clusters which have been modified by the suppression of spikes
@@ -155,7 +155,7 @@ public Q_SLOTS:
   */
     inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){
         spikesRemovedFromClusters(modifiedClusters,active);
-    };
+    }
 
     /** Sets the way of presenting the information concerning the waveforms selected to
   * only show the waveforms of the mean and the standard deviation.
@@ -201,7 +201,7 @@ public Q_SLOTS:
 
         //Everything has to be redraw
         drawContentsMode = REDRAW ;
-    };
+    }
 
     /**Increase of the amplitude of the waveforms.
   */
@@ -233,7 +233,7 @@ public Q_SLOTS:
 
         //Everything has to be redraw
         drawContentsMode = REDRAW;
-    };
+    }
 
     /**
  * Update the information presented in the view after a renumbering if need it.
