@@ -163,7 +163,7 @@ void KlustersApp::createMenus()
     //File Menu
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     mOpenAction = fileMenu->addAction(tr("&Open..."));
-    mOpenAction->setIcon(QPixmap(":/shared-icons/icons/document-open.png"));
+    mOpenAction->setIcon(QPixmap(":/shared-icons/document-open"));
     mOpenAction->setShortcut(QKeySequence::Open);
     connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
@@ -178,10 +178,12 @@ void KlustersApp::createMenus()
     fileMenu->addSeparator();
 
     mSaveAction = fileMenu->addAction(tr("Save..."));
+    mSaveAction->setIcon(QPixmap(":/shared-icons/document-save"));
     mSaveAction->setShortcut(QKeySequence::Save);
     connect(mSaveAction, SIGNAL(triggered()), this, SLOT(slotFileSave()));
 
     mSaveAsAction = fileMenu->addAction(tr("&Save As..."));
+    mSaveAsAction->setIcon(QPixmap(":/shared-icons/document-save-as"));
     mSaveAsAction->setShortcut(QKeySequence::SaveAs);
     connect(mSaveAsAction, SIGNAL(triggered()), this, SLOT(slotFileSaveAs()));
 
@@ -193,6 +195,7 @@ void KlustersApp::createMenus()
     fileMenu->addSeparator();
 
     mPrintAction = fileMenu->addAction(tr("Print"));
+    mPrintAction->setIcon(QPixmap(":/shared-icons/document-print"));
     mPrintAction->setShortcut(QKeySequence::Print);
     connect(mPrintAction, SIGNAL(triggered()), this, SLOT(slotFilePrint()));
 
