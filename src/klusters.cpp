@@ -216,11 +216,13 @@ void KlustersApp::createMenus()
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
 
     mUndo = editMenu->addAction(tr("Undo"));
+    mUndo->setIcon(QPixmap(":/shared-icons/edit-undo"));
     mUndo->setShortcut(QKeySequence::Undo);
     connect(mUndo, SIGNAL(triggered()), this, SLOT(slotUndo()));
 
     mRedo = editMenu->addAction(tr("Redo"));
     mRedo->setShortcut(QKeySequence::Redo);
+    mRedo->setIcon(QPixmap(":/shared-icons/edit-redo"));
     connect(mRedo, SIGNAL(triggered()), this, SLOT(slotRedo()));
 
     editMenu->addSeparator();
