@@ -965,13 +965,13 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
 
         if(!isProcessWidget)
             view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,Qt::WDestructiveClose,statusBar(),
-                                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
-                                                     nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
+                                    displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
+                                    nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
         else
             view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,Qt::WDestructiveClose,statusBar(),
-                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
-                                     nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
+                                    displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
+                                    nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
 
         view->setWindowTitle(displayName);
         tabsParent->addDockArea(view,displayType);
@@ -1480,7 +1480,7 @@ void KlustersApp::slotFileSaveAs()
 {
     slotStatusMsg(tr("Saving file with a new filename..."));
     QString url=QFileDialog::getSaveFileName(this,tr("Save as..."),QDir::currentPath(),
-                                        tr("*|All files") );
+                                             tr("*|All files") );
     if(!url.isEmpty()){
         slotStateChanged("SavingState");
         saveThread->save(url,doc,true);
@@ -2952,7 +2952,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mSplitClusters->setEnabled(false);
 
         mDeleteNoisy->setEnabled(false);
-/*
+        /*
         <Action name="renumber" />
         <Action name="recluster" />
         <Action name="delete_artifact" />
@@ -2997,10 +2997,10 @@ void KlustersApp::slotStateChanged(const QString& state)
         mCloseActiveDisplay->setEnabled(true);
         mNewCluster->setEnabled(true);
         mSplitClusters->setEnabled(true);
-mGroupeClusters->setEnabled(true);
-mDeleteNoisy->setEnabled(true);
-mDeleteArtifact->setEnabled(true);
-newGroupingAssistantDisplay->setEnabled(true);
+        mGroupeClusters->setEnabled(true);
+        mDeleteNoisy->setEnabled(true);
+        mDeleteArtifact->setEnabled(true);
+        newGroupingAssistantDisplay->setEnabled(true);
         /*
    <Action name="new_waveformDisplay" />
    <Action name="new_crosscorrelationDisplay" />
@@ -3018,7 +3018,7 @@ newGroupingAssistantDisplay->setEnabled(true);
    <Action name="scale_by_shouler" />
 
    */
-scaleByMax->setEnabled(true);
+        scaleByMax->setEnabled(true);
         shoulderLine->setEnabled(true);
 
         mIncreaseAmplitude->setEnabled(true);
@@ -3078,10 +3078,10 @@ scaleByMax->setEnabled(true);
     } else if(state == QLatin1String("noClusterViewState")) {
         mZoomAction->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
-mNewCluster->setEnabled(false);
-mSplitClusters->setEnabled(false);
-mDeleteNoisy->setEnabled(false);
-/*
+        mNewCluster->setEnabled(false);
+        mSplitClusters->setEnabled(false);
+        mDeleteNoisy->setEnabled(false);
+        /*
         <Disable>
          <Action name="delete_artifact" />
         </Disable>
@@ -3092,9 +3092,9 @@ mDeleteNoisy->setEnabled(false);
     } else if(state == QLatin1String("clusterViewState")) {
         mZoomAction->setEnabled(true);
         mDeleteNoisy->setEnabled(true);
-mNewCluster->setEnabled(true);
-mSplitClusters->setEnabled(true);
-mDeleteArtifact->setEnabled(false);
+        mNewCluster->setEnabled(true);
+        mSplitClusters->setEnabled(true);
+        mDeleteArtifact->setEnabled(false);
 
         /*
   <Enable>
@@ -3103,7 +3103,7 @@ mDeleteArtifact->setEnabled(false);
    <Action name="renumber" />
   </Enable>
 */
-mGroupeClusters->setEnabled(true);
+        mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noCorrelationViewState")) {
         scaleByMax->setEnabled(false);
         /*
@@ -3136,7 +3136,7 @@ mGroupeClusters->setEnabled(true);
         mUpdateErrorMatrix->setEnabled(false);
     } else if(state == QLatin1String("errorMatrixViewState")) {
         mUpdateErrorMatrix->setEnabled(true);
-newGroupingAssistantDisplay->setEnabled(false);
+        newGroupingAssistantDisplay->setEnabled(false);
         /*
   <Enable>
    <Action name="move_clusters_to_noise" />
@@ -3144,7 +3144,7 @@ newGroupingAssistantDisplay->setEnabled(false);
   </Enable>
 */
         mDeleteArtifact->setEnabled(true);
-mGroupeClusters->setEnabled(true);
+        mGroupeClusters->setEnabled(true);
 
     } else if(state == QLatin1String("groupingAssistantDisplayExists")) {
         mNewTraceDisplay->setEnabled(false);
@@ -3155,8 +3155,8 @@ mGroupeClusters->setEnabled(true);
         mUpdateErrorMatrix->setEnabled(false);
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
-mDeleteNoisy->setEnabled(false);
-mDeleteArtifact->setEnabled(false);
+        mDeleteNoisy->setEnabled(false);
+        mDeleteArtifact->setEnabled(false);
 
         /*
   <Disable>
@@ -3190,7 +3190,7 @@ mDeleteArtifact->setEnabled(false);
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
         mGroupeClusters->setEnabled(false);
-mDeleteArtifact->setEnabled(false);
+        mDeleteArtifact->setEnabled(false);
         /*
   <Disable>
    <Action name="recluster" />

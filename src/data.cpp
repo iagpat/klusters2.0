@@ -3393,21 +3393,21 @@ void Data::renumberCorrelation(QMap<int,int>& clusterIdsOldNew){
             correlationsInProcess.setClusterModified(*iterator,true);
             continue;
         }
-        QList<int>::iterator iterator2;
-#if KDAB_PORT_ITERATOR
-        for(iterator2 = *oldClusterIds.at(i); /*iterator2 != oldClusterIds.end()*/; ++iterator2){
-            //Search pairs as (*iterator,*iterator2) where *iterator > *iterator2
-            //and (*iterator2,*iterator) where *iterator2 > *iterator
-            if(*iterator2 <= *iterator){
-                Q3Dict<Correlation>* dict = correlationDict.take(Pair(static_cast<int>(*iterator2),static_cast<int>(*iterator)).toString());
-                if(dict != 0)  correlationDict.insert(Pair(clusterIdsOldNew[*iterator2],clusterIdsOldNew[*iterator]).toString(),dict);
+        for(int j = i; j<oldClusterIds.count();j++) {
+            int val = oldClusterIds.at(i);
+            int val2 = oldClusterIds.at(j);
+            if(val2 <= val){
+                Q3Dict<Correlation>* dict = correlationDict.take(Pair(val2,val).toString());
+                if(dict != 0)
+                    correlationDict.insert(Pair(clusterIdsOldNew[val2],clusterIdsOldNew[val]).toString(),dict);
             }
             else{
-                Q3Dict<Correlation>* dict = correlationDict.take(Pair(static_cast<int>(*iterator),static_cast<int>(*iterator2)).toString());
-                if(dict != 0) correlationDict.insert(Pair(clusterIdsOldNew[*iterator],clusterIdsOldNew[*iterator2]).toString(),dict);
+                Q3Dict<Correlation>* dict = correlationDict.take(Pair(val,val2).toString());
+                if(dict != 0)
+                    correlationDict.insert(Pair(clusterIdsOldNew[val],clusterIdsOldNew[val2]).toString(),dict);
             }
+
         }
-#endif
         ++i;
     }
     mutex.unlock();
