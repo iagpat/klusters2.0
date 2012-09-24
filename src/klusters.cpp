@@ -2964,9 +2964,9 @@ void KlustersApp::slotStateChanged(const QString& state)
         <Action name="increase" />
         <Action name="decrease" />
         <Action name="raw_data" />
-        <Action name="scale_by_max" />
         <Action name="scale_by_shouler" />
 */
+        scaleByMax->setEnabled(false);
 
         shoulderLine->setEnabled(false);
 
@@ -3017,10 +3017,10 @@ mGroupeClusters->setEnabled(true);
    <Action name="increase" />
    <Action name="decrease" />
    <Action name="raw_data" />
-   <Action name="scale_by_max" />
    <Action name="scale_by_shouler" />
 
    */
+scaleByMax->setEnabled(true);
         shoulderLine->setEnabled(true);
 
         mIncreaseAmplitude->setEnabled(true);
@@ -3108,9 +3108,9 @@ mSplitClusters->setEnabled(true);
 */
 mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noCorrelationViewState")) {
+        scaleByMax->setEnabled(false);
         /*
   <Disable>
-   <Action name="scale_by_max" />
    <Action name="scale_by_shouler" />
    <Action name="raw_data" />
   </Disable>
@@ -3123,10 +3123,10 @@ mGroupeClusters->setEnabled(true);
         mIncreaseAmplitude->setEnabled(true);
         mDecreaseAmplitude->setEnabled(true);
         shoulderLine->setEnabled(true);
+        scaleByMax->setEnabled(true);
 
         /*
   <Enable>
-   <Action name="scale_by_max" />
    <Action name="scale_by_shouler" />
    <Action name="raw_data" />
    <Action name="move_clusters_to_artifact" />
@@ -3171,7 +3171,6 @@ mGroupeClusters->setEnabled(true);
    <Action name="mean" />
    <Action name="increase" />
    <Action name="decrease" />
-   <Action name="scale_by_max" />
    <Action name="scale_by_shouler" />
    <Action name="raw_data" />
    <Action name="move_clusters_to_artifact" />
@@ -3181,6 +3180,7 @@ mGroupeClusters->setEnabled(true);
   </Disable>
 */
 
+        scaleByMax->setEnabled(false);
         mGroupeClusters->setEnabled(false);
         shoulderLine->setEnabled(false);
         mIncreaseAmplitude->setEnabled(false);
