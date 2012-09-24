@@ -1555,7 +1555,6 @@ void KlustersApp::slotDisplayClose()
             //reset the cluster palette and hide the cluster panel
             clusterPalette->reset();
             clusterPanel->hide();
-            //KDAB_PENDING clusterPanel->undock();
             //try to close the document
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
@@ -1594,7 +1593,6 @@ void KlustersApp::slotDisplayClose()
             //reset the cluster palette and hide the cluster panel
             clusterPalette->reset();
             clusterPanel->hide();
-            //KDAB_PENDING clusterPanel->undock();
             //try to close the document
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();

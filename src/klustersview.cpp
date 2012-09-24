@@ -191,10 +191,6 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
     }
         break;
     }
-#if KDAB_PENDING
-
-    mainDock->setEnableDocking(QDockWidget::DockCorner);
-#endif
 }
 
 
@@ -232,11 +228,6 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
     waveformView->installEventFilter(this);//To enable right click popup menu
     waveforms->installEventFilter(this);
     addDockWidget(Qt::BottomDockWidgetArea,waveforms);
-#if KDAB_PENDING
-
-    waveforms->setAllowedAreas(mainDock,QDockWidget::DockRight,50);
-    waveforms->setEnableDocking(QDockWidget::DockCorner);
-#endif
     viewCounter.insert("WaveformView",1);
 
     setConnections(WAVEFORMS,waveformView,waveforms);
@@ -250,11 +241,6 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
     correlationView->installEventFilter(this);//To enable right click popup menu
     correlations->installEventFilter(this);
     addDockWidget(Qt::BottomDockWidgetArea,correlations);
-#if KDAB_PENDING
-
-    correlations->setAllowedAreas(waveforms,QDockWidget::DockBottom,50);
-    correlations->setEnableDocking(QDockWidget::DockCorner);
-#endif
     viewCounter.insert("CorrelationView",1);
 
     setConnections(CORRELATIONS,correlationView,correlations);
@@ -273,11 +259,6 @@ void KlustersView::createGroupingAssistantView(const QColor& backgroundColor,QSt
     errorMatrixView->installEventFilter(this);//To enable right click popup menu
     errorMatrix->installEventFilter(this);
     addDockWidget(Qt::BottomDockWidgetArea,errorMatrix);
-#if KDAB_PENDING
-
-    errorMatrix->setAllowedAreas(mainDock,QDockWidget::DockBottom,50);
-    errorMatrix->setEnableDocking(QDockWidget::DockCorner);
-#endif
     setConnections(ERROR_MATRIX,errorMatrixView,errorMatrix);
 }
 
@@ -361,11 +342,6 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
 }
 
 void  KlustersView::clusterDockClosed(QWidget* clusterView){
-#if KDAB_PENDING
-
-    QDockWidget* dock = dockManager->findWidgetParentDock(clusterView);
-    dock->undock();
-#endif
     viewList.remove(dynamic_cast<ViewWidget*>(clusterView));
     //the clusterView to be removed is the last one
     if(viewCounter["ClusterView"] == 1){
@@ -389,10 +365,6 @@ void  KlustersView::clusterDockClosed(QWidget* clusterView){
             break;
         }
     }
-#if KDAB_PENDING
-
-    delete dock;
-#endif
 }
 
 void KlustersView::waveformDockClosed(QWidget* waveformView){
@@ -407,11 +379,6 @@ void KlustersView::waveformDockClosed(QWidget* waveformView){
     }
 
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
-#if KDAB_PENDING
-
-    QDockWidget* dock = dockManager->findWidgetParentDock(waveformView);
-    dock->undock();
-#endif
     viewList.remove(dynamic_cast<ViewWidget*>(waveformView));
 
     //For the time being only one WaveformView is allowed in a single View, but in the
@@ -421,11 +388,8 @@ void KlustersView::waveformDockClosed(QWidget* waveformView){
         mainWindow.widgetRemovedFromDisplay(WAVEFORMS);
         isThereWaveformView = false;
     }
-    else viewCounter["WaveformView"]--;
-#if KDAB_PENDING
-
-    delete dock;
-#endif
+    else
+        viewCounter["WaveformView"]--;
 }
 
 void KlustersView::correlogramDockClosed(QWidget* correlogramView){
@@ -439,11 +403,6 @@ void KlustersView::correlogramDockClosed(QWidget* correlogramView){
     }
 
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
-#if KDAB_PENDING
-
-    QDockWidget* dock = dockManager->findWidgetParentDock(correlogramView);
-    dock->undock();
-#endif
     viewList.remove(dynamic_cast<ViewWidget*>(correlogramView));
 
     if(viewCounter["CorrelationView"] == 1){
@@ -470,10 +429,6 @@ void KlustersView::correlogramDockClosed(QWidget* correlogramView){
             break;
         }
     }
-#if KDAB_PENDING
-
-    delete dock;
-#endif
 }
 
 void KlustersView::errorMatrixDockClosed(QWidget* errorMatrixView){
@@ -488,18 +443,9 @@ void KlustersView::errorMatrixDockClosed(QWidget* errorMatrixView){
 
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
 
-#if KDAB_PENDING
-
-    QDockWidget* dock = dockManager->findWidgetParentDock(errorMatrixView);
-    dock->undock();
-#endif
     viewList.remove(dynamic_cast<ViewWidget*>(errorMatrixView));
     mainWindow.widgetRemovedFromDisplay(ERROR_MATRIX);
     isThereErrorMatrixView = false;
-#if KDAB_PENDING
-
-    delete dock;
-#endif
 }
 
 void KlustersView::traceDockClosed(QWidget* traceWidget){
@@ -684,10 +630,6 @@ void KlustersView::closeEvent(QCloseEvent* e){
 bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColor, QStatusBar* statusBar, int timeInterval, int maxAmplitude, QList<int> positions){
 
     //Enable docking abilities
-#if KDAB_PENDING
-
-    dockWidget->setDockSite(QDockWidget::DockCorner);
-#endif
     QDockWidget* clusters;
     QDockWidget* waveforms;
     QDockWidget* correlations;
@@ -721,11 +663,6 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         clusterView->installEventFilter(this);//To enable right click popup menu
         clusters->installEventFilter(this);
         addDockWidget(Qt::BottomDockWidgetArea,clusters);
-#if KDAB_PENDING
-
-        clusters->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
-        clusters->setEnableDocking(QDockWidget::DockCorner);
-#endif
         //Make the new ClusterView the only view connected to the signal of update of the spin boxes.
         //To do so disconnect all the other clusterViews connected, the actual connection for the current view is done in setConnections.
         QObject::disconnect(this, SIGNAL(updatedDimensions(int,int)),0,0);
@@ -763,11 +700,6 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         viewList.append(waveformView);
         waveformView->installEventFilter(this);//To enable right click popup menu
         waveforms->installEventFilter(this);
-#if KDAB_PENDING
-
-        waveforms->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
-        waveforms->setEnableDocking(QDockWidget::DockCorner);
-#endif
         addDockWidget(Qt::BottomDockWidgetArea,waveforms);
         setConnections(WAVEFORMS,waveformView,waveforms);
         break;
@@ -790,11 +722,6 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         correlationView->installEventFilter(this);//To enable right click popup menu
         correlations->installEventFilter(this);
         addDockWidget(Qt::BottomDockWidgetArea,correlations);
-#if KDAB_PENDING
-
-        correlations->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
-        correlations->setEnableDocking(QDockWidget::DockCorner);
-#endif
         //Make the new CorrelationView the only view connected to the signals.
         //To do so disconnect all the other CorrelationView connected, the actual connection for the current view is done in setConnections.
         QObject::disconnect(this, SIGNAL(updatedBinSizeAndTimeFrame(int,int)),0,0);
@@ -819,11 +746,6 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         errorMatrixView->installEventFilter(this);//To enable right click popup menu
         errorMatrix->installEventFilter(this);
         addDockWidget(Qt::BottomDockWidgetArea,errorMatrix);
-#if KDAB_PENDING
-
-        errorMatrix->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
-        errorMatrix->setEnableDocking(QDockWidget::DockCorner);
-#endif
         setConnections(ERROR_MATRIX,errorMatrixView,errorMatrix);
         break;
     case TRACES:
@@ -858,10 +780,6 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         traces->installEventFilter(this);//To enable right click popup menu
         traceWidget->installEventFilter(this);
         addDockWidget(Qt::BottomDockWidgetArea,traces);
-#if KDAB_PENDING
-        traces->setAllowedAreas(dockWidget,QDockWidget::DockBottom,50);
-        traces->setEnableDocking(QDockWidget::DockCorner);
-#endif
         setConnections(TRACES,traceWidget,traces);
         break;
     case OVERVIEW:
