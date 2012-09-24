@@ -163,6 +163,7 @@ void KlustersApp::createMenus()
     //File Menu
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
     mOpenAction = fileMenu->addAction(tr("&Open..."));
+    mOpenAction->setIcon(QPixmap(":/shared-icons/icons/document-open.png"));
     mOpenAction->setShortcut(QKeySequence::Open);
     connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
@@ -198,6 +199,7 @@ void KlustersApp::createMenus()
     fileMenu->addSeparator();
 
     mCloseAction = fileMenu->addAction(tr("Close"));
+    mCloseAction->setIcon(QPixmap(":/shared-icons/document-close"));
     mCloseAction->setShortcut(QKeySequence::Close);
     connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
 
