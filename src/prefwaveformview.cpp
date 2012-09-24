@@ -47,7 +47,7 @@ void PrefWaveformView::initializeChannelList(){
     //The first one in the file will be the first one (at the top), second one will be beneath and so on.
     for(int i = 0; i < nbChannels; ++i){
         channelPositions.append(i);
-        channelList->insertItem(QString::fromLatin1("%1").arg(i + 1));
+        channelList->addItem(QString::fromLatin1("%1").arg(i + 1));
     }
 }
 
@@ -60,7 +60,7 @@ void PrefWaveformView::resetChannelList(int nb){
     //The first one in the file will be the first one (at the top), second one will be beneath and so on.
     for(int i = 0; i < nbChannels; ++i){
         channelPositions.append(i);
-        channelList->insertItem(QString::fromLatin1("%1").arg(i + 1));
+        channelList->addItem(QString::fromLatin1("%1").arg(i + 1));
     }
 
     saveButton->setEnabled(true);
@@ -154,7 +154,7 @@ void PrefWaveformView::loadChannelOrder(){
     //Update the list with the positions get from the file.
     channelList->clear();
     for(int i = 0; i< nbChannels; ++i){
-        channelList->insertItem(QString::fromLatin1("%1").arg(i + 1),positions[i]);
+        channelList->insertItem(positions[i],QString::fromLatin1("%1").arg(i + 1));
         channelPositions[i] = positions[i];
     }
 

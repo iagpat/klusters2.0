@@ -21,7 +21,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3listbox.h>
+#include <QListWidget>
 //Added by qt3to4:
 #include <QDragMoveEvent>
 #include <QDropEvent>
@@ -37,23 +37,15 @@ class QDragDropEvent;
   *@author Lynn Hazan
   */
 
-class ChannelList : public Q3ListBox  {
+class ChannelList : public QListWidget  {
    Q_OBJECT
 public: 
-	ChannelList(QWidget *parent=0, const char *name=0, Qt::WFlags f = 0);
+    ChannelList(QWidget *parent=0);
 	~ChannelList();
-
-  void dragEnterEvent(QDragEnterEvent* event);
-  void dropEvent(QDropEvent* event);
-  void mousePressEvent(QMouseEvent* event);
-  void mouseMoveEvent(QMouseEvent* event);
-  void contentsDragMoveEvent(QDragMoveEvent* event);
 
 Q_SIGNALS:
   void positionsChanged();
 
-private:
-    int dragging;
 };
 
 #endif
