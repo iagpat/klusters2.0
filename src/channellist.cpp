@@ -15,14 +15,6 @@
  *                                                                         *
  ***************************************************************************/
 
-// include files for QT
-#include <q3dragobject.h> 
-//Added by qt3to4:
-#include <QMouseEvent>
-#include <QDragMoveEvent>
-#include <QDropEvent>
-#include <QDragEnterEvent>
-
 //include files for the application
 #include "channellist.h"
 

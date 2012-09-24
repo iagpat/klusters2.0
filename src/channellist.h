@@ -20,16 +20,7 @@
 
 
 // include files for QT
-#include <qwidget.h>
 #include <QListWidget>
-//Added by qt3to4:
-#include <QDragMoveEvent>
-#include <QDropEvent>
-#include <QDragEnterEvent>
-#include <QMouseEvent>
-
-class QDragEnterEvent;
-class QDragDropEvent;
 
 /**
   * The ChannelList widget provides a list of selectable, read-only items to be used
