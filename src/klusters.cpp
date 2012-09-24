@@ -2929,20 +2929,20 @@ void KlustersApp::slotStateChanged(const QString& state)
         mSelectAllExceptAction->setEnabled(false);
         mNewCluster->setEnabled(false);
         newClusterDisplay->setEnabled(false);
+        newGroupingAssistantDisplay->setEnabled(false);
         /*
         <Action name="new_waveformDisplay" />
         <Action name="new_crosscorrelationDisplay" />
         <Action name="new_overViewDisplay" />
-        <Action name="new_goupingAssistantDisplay" />
         <Action name="trace_display" />
         */
         mCloseActiveDisplay->setEnabled(false);
         mRenameActiveDisplay->setEnabled(false);
 
         /*
-        <Action name="move_clusters_to_artifact" />
         <Action name="move_clusters_to_noise" />
         */
+        mDeleteArtifact->setEnabled(false);
 
         mGroupeClusters->setEnabled(false);
         mUpdateDisplay->setEnabled(false);
@@ -2951,11 +2951,11 @@ void KlustersApp::slotStateChanged(const QString& state)
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
 
+        mDeleteNoisy->setEnabled(false);
 /*
         <Action name="renumber" />
         <Action name="recluster" />
         <Action name="delete_artifact" />
-        <Action name="delete_noise" />
         <Action name="time_frame" />
         <Action name="overlay" />
         <Action name="mean" />
@@ -2998,17 +2998,17 @@ void KlustersApp::slotStateChanged(const QString& state)
         mNewCluster->setEnabled(true);
         mSplitClusters->setEnabled(true);
 mGroupeClusters->setEnabled(true);
+mDeleteNoisy->setEnabled(true);
+mDeleteArtifact->setEnabled(true);
+newGroupingAssistantDisplay->setEnabled(true);
         /*
    <Action name="new_waveformDisplay" />
    <Action name="new_crosscorrelationDisplay" />
    <Action name="new_overViewDisplay" />
-   <Action name="new_goupingAssistantDisplay" />
-   <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
    <Action name="renumber" />
    <Action name="recluster" />
    <Action name="delete_artifact" />
-   <Action name="delete_noise" />
    <Action name="time_frame" />
    <Action name="overlay" />
    <Action name="mean" />
@@ -3061,6 +3061,7 @@ scaleByMax->setEnabled(true);
 
 
     } else if(state == QLatin1String("waveformsViewState")) {
+        mDeleteArtifact->setEnabled(true);
 
         /*
   <Enable>
@@ -3069,7 +3070,6 @@ scaleByMax->setEnabled(true);
    <Action name="mean" />
    <Action name="increase" />
    <Action name="decrease" />
-   <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
    <Action name="renumber" />
   </Enable>
@@ -3080,11 +3080,10 @@ scaleByMax->setEnabled(true);
         mDeleteNoisy->setEnabled(false);
 mNewCluster->setEnabled(false);
 mSplitClusters->setEnabled(false);
-
+mDeleteNoisy->setEnabled(false);
 /*
         <Disable>
          <Action name="delete_artifact" />
-         <Action name="delete_noise" />
         </Disable>
         */
 
@@ -3095,11 +3094,11 @@ mSplitClusters->setEnabled(false);
         mDeleteNoisy->setEnabled(true);
 mNewCluster->setEnabled(true);
 mSplitClusters->setEnabled(true);
+mDeleteArtifact->setEnabled(false);
 
         /*
   <Enable>
    <Action name="delete_artifact" />
-   <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
    <Action name="renumber" />
   </Enable>
@@ -3121,13 +3120,13 @@ mGroupeClusters->setEnabled(true);
         mIncreaseAmplitude->setEnabled(true);
         mDecreaseAmplitude->setEnabled(true);
         shoulderLine->setEnabled(true);
+        mDeleteArtifact->setEnabled(true);
         scaleByMax->setEnabled(true);
 
         /*
   <Enable>
    <Action name="scale_by_shouler" />
    <Action name="raw_data" />
-   <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
    <Action name="renumber" />
   </Enable>
@@ -3137,17 +3136,14 @@ mGroupeClusters->setEnabled(true);
         mUpdateErrorMatrix->setEnabled(false);
     } else if(state == QLatin1String("errorMatrixViewState")) {
         mUpdateErrorMatrix->setEnabled(true);
-
+newGroupingAssistantDisplay->setEnabled(false);
         /*
-  <Disable>
-   <Action name="new_goupingAssistantDisplay" />
-  </Disable>
   <Enable>
-   <Action name="move_clusters_to_artifact" />
    <Action name="move_clusters_to_noise" />
    <Action name="renumber" />
   </Enable>
 */
+        mDeleteArtifact->setEnabled(true);
 mGroupeClusters->setEnabled(true);
 
     } else if(state == QLatin1String("groupingAssistantDisplayExists")) {
@@ -3159,11 +3155,12 @@ mGroupeClusters->setEnabled(true);
         mUpdateErrorMatrix->setEnabled(false);
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
+mDeleteNoisy->setEnabled(false);
+mDeleteArtifact->setEnabled(false);
 
         /*
   <Disable>
    <Action name="delete_artifact" />
-   <Action name="delete_noise" />
    <Action name="time_frame" />
    <Action name="overlay" />
    <Action name="mean" />
@@ -3171,8 +3168,6 @@ mGroupeClusters->setEnabled(true);
    <Action name="decrease" />
    <Action name="scale_by_shouler" />
    <Action name="raw_data" />
-   <Action name="move_clusters_to_artifact" />
-   <Action name="move_clusters_to_noise" />
    <Action name="renumber" />
    <Action name="recluster" />
   </Disable>
@@ -3195,18 +3190,16 @@ mGroupeClusters->setEnabled(true);
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
         mGroupeClusters->setEnabled(false);
-
+mDeleteArtifact->setEnabled(false);
         /*
   <Disable>
    <Action name="recluster" />
    <Action name="delete_artifact" />
-   <Action name="delete_noise" />
-   <Action name="move_clusters_to_artifact" />
-   <Action name="move_clusters_to_noise" />
    <Action name="renumber" />
   </Disable>
 
   */
+        mDeleteNoisy->setEnabled(false);
         mAbortReclustering->setEnabled(true);
     } else if(state == QLatin1String("noReclusterState")) {
         /*
@@ -3224,7 +3217,6 @@ mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("traceViewState")) {
         mIncreaseChannelAmplitudes->setEnabled(true);
         mDecreaseChannelAmplitudes->setEnabled(true);
-
         showHideLabels->setEnabled(true);
     } else if(state == QLatin1String("noTraceViewState")) {
         mIncreaseChannelAmplitudes->setEnabled(false);
