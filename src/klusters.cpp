@@ -667,8 +667,8 @@ void KlustersApp::initSelectionBoxes(){
     connect(correlogramsHalfDuration, SIGNAL(returnPressed()),this, SLOT(slotUpdateCorrelogramsHalfDuration()));
 
     //Connect the move function of the parameterBar to slotUpdateParameterBar to always correctly show its contents.
-    connect(paramBar, SIGNAL(placeChanged(Q3DockWindow::Place)), this, SLOT(slotUpdateParameterBar()));
-    connect(paramBar, SIGNAL(moved(BarPosition)), this, SLOT(slotUpdateParameterBar()));
+    connect(paramBar, SIGNAL(allowedAreasChanged(Qt::ToolBarAreas)), this, SLOT(slotUpdateParameterBar()));
+    connect(paramBar, SIGNAL(orientationChanged(Qt::Orientation)), this, SLOT(slotUpdateParameterBar()));
 }
 
 void KlustersApp::executePreferencesDlg(){
