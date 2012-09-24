@@ -1268,10 +1268,10 @@ bool KlustersApp::queryClose()
                 doc->closeDocument();
                 QApplication::restoreOverrideCursor();
                 return true;
-            }
-            else return false;
-        }
-        else return false;
+            } else
+                return false;
+        } else
+            return false;
     }
 }
 

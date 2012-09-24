@@ -149,7 +149,7 @@ void CorrelationView::addClusterToView(int clusterId,bool active){
     if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
     //Create a thread to get the correlation data for all the clusters shown.
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -160,14 +160,16 @@ void CorrelationView::removeClusterFromView(int clusterId,bool active){
     isZoomed = false;//Hack because all the tabs share the same data.
 
     //Update drawContentsMode if need it.
-    if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
+    if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)
+        drawContentsMode = REDRAW;
 
     //Create a thread to get the correlation data for all the clusters shown.
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
-    if(view.clusters().size() == 0) pairs.clear();
+    if(view.clusters().isEmpty())
+        pairs.clear();
 }
 
 
@@ -177,7 +179,7 @@ void CorrelationView::addNewClusterToView(QList<int>& fromClusters,int clusterId
     //Update drawContentsMode if need it.
     if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -190,7 +192,7 @@ void CorrelationView::spikesRemovedFromClusters(QList<int>& fromClusters,bool ac
     if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
     //Create a thread to get the correlation data for all the clusters shown.
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -205,7 +207,7 @@ void CorrelationView::spikesAddedToCluster(int clusterId,bool active){
     if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
 
     //Create a thread to get the correlation data for all the clusters shown.
-    if(active && view.clusters().size() > 0){
+    if(active && !view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -357,6 +359,7 @@ void CorrelationView::updateWindow(){
 
 void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
 
+    //qDebug()<<" void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){ "<<pairList.count();
     if(pairList.isEmpty())
         return;
 
@@ -528,7 +531,7 @@ void CorrelationView::setBinSizeAndTimeWindow(int size,int width){
     isZoomed = false;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -631,7 +634,7 @@ void CorrelationView::drawClusterIds(QPainter& painter){
 
 void  CorrelationView::updateDrawing(){
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0 && drawContentsMode == REDRAW){
+    if(!view.clusters().isEmpty() && drawContentsMode == REDRAW){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -643,7 +646,7 @@ void CorrelationView::clustersRenumbered(bool active){
     //when the view willbecome active (updateDrawing will be called).
     drawContentsMode = REDRAW;
 
-    if(view.clusters().size() > 0 && active){
+    if(!view.clusters().isEmpty() && active){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -652,7 +655,7 @@ void CorrelationView::clustersRenumbered(bool active){
 void CorrelationView::mouseDoubleClickEvent (QMouseEvent *e){
     //Trigger parent event
     ViewWidget::mouseDoubleClickEvent(e);
-    if((view.clusters().size() > 0)){
+    if((!view.clusters().isEmpty())){
         Data& clusteringData = doc.data();
         QList<Pair>::iterator pairIterator;
         bool correlogramsNotAvailable = false;
@@ -673,7 +676,7 @@ void CorrelationView::mouseReleaseEvent(QMouseEvent* e){
     //Trigger parent event
     ViewWidget::mouseReleaseEvent(e);
 
-    if((e->button() & Qt::LeftButton) && (view.clusters().size() > 0)){
+    if((e->button() & Qt::LeftButton) && (!view.clusters().isEmpty())){
         Data& clusteringData = doc.data();
         QList<Pair>::iterator pairIterator;
         bool correlogramsNotAvailable = false;
@@ -694,7 +697,7 @@ void CorrelationView::mouseReleaseEvent(QMouseEvent* e){
 void CorrelationView::resizeEvent(QResizeEvent* e){
     drawContentsMode = REDRAW;
 
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         Data& clusteringData = doc.data();
         QList<Pair>::iterator pairIterator;
         bool correlogramsNotAvailable = false;
@@ -789,7 +792,8 @@ void CorrelationView::print(QPainter& printPainter,int width,int height, bool wh
     float heightRatio = (static_cast<float>(back.height())/static_cast<float>(height));
     back.setBottom(r.top() + r.height() - 1 + static_cast<long>(10 * heightRatio));
     float widthRatio = (static_cast<float>(back.width())/static_cast<float>(width));
-    if(r.left() == 0) back.setLeft(r.left() - static_cast<long>(XMARGIN * widthRatio));
+    if(r.left() == 0)
+        back.setLeft(r.left() - static_cast<long>(XMARGIN * widthRatio));
 
     printRegion = QRegion(back);
 
@@ -834,7 +838,7 @@ void  CorrelationView::setNoScale(){
     Yfactor = 1;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -847,7 +851,7 @@ void  CorrelationView::setMaximumScale(){
     Yfactor = YsizeForMaxAmp;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -860,7 +864,7 @@ void  CorrelationView::setShoulderScale(){
     Yfactor = YsizeForMaxAmp;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -872,7 +876,7 @@ void  CorrelationView::increaseAmplitude(){
     Yfactor /= 0.75;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
@@ -884,7 +888,7 @@ void  CorrelationView::decreaseAmplitude(){
     Yfactor *= 0.75;
 
     //The data have to be collected if need it and everything has to be redraw
-    if(view.clusters().size() > 0){
+    if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
