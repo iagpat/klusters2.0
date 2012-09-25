@@ -275,7 +275,7 @@ private:
   * @param pairsToCompute couple of clusters for which a correlogram has to be obtained.
   * @param clusterIds clusters for which the correlograms will be computed.
   */
-    CorrelationThread* getCorrelations(QList<Pair>* pairsToCompute,QList<int> clusterIds);
+    CorrelationThread* getCorrelations(QList<Pair>* pairsToCompute, const QList<int> &clusterIds);
 
     /**
  * Draws the correlograms of the pair of clusters in the list @p pairList on the given painter.

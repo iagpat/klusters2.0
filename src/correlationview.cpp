@@ -249,7 +249,9 @@ void CorrelationView::paintEvent ( QPaintEvent *){
             doublebuffer.fill(backgroundColor());
 
             //Paint all the correlograms in the pairs list (in the double buffer)
+            qDebug()<<" pairs"<<pairs.count();
             drawCorrelograms(painter,pairs);
+
         }
         //The update mode applies only when the color of a cluster has changed.
         else if(drawContentsMode == UPDATE){
@@ -280,7 +282,7 @@ void CorrelationView::paintEvent ( QPaintEvent *){
 }
 
 
-CorrelationThread* CorrelationView::getCorrelations(QList<Pair>* pairsToCompute,QList<int> clusterIds){
+CorrelationThread* CorrelationView::getCorrelations(QList<Pair>* pairsToCompute,const QList<int>& clusterIds){
     //The creation of a thread automatically start it.
     return new CorrelationThread(*this,doc.data(),pairsToCompute,clusterIds);
 }

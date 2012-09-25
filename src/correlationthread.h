@@ -43,11 +43,11 @@ class CorrelationThread : public QThread {
 public:
     //Only the method getCorrelations of CorrelationView has access to the private part of CorrelationThread,
     //the constructor of CorrelationThread being private, only this method con create a new CorrelationThread
-    friend CorrelationThread* CorrelationView::getCorrelations(QList<Pair>* pairsToCompute,QList<int> clusterIds);
+    friend CorrelationThread* CorrelationView::getCorrelations(QList<Pair>* pairsToCompute,const QList<int>& clusterIds);
 
     inline ~CorrelationThread(){}
-    inline QList<Pair>* triggeringPairs(){return clusterPairs;}
-    inline const QList<int>& triggeringClusters(){return clusterIds;}
+    QList<Pair>* triggeringPairs(){return clusterPairs;}
+    QList<int> triggeringClusters() const {return clusterIds;}
 
     /**Asks the thread to stop his work as soon as possible.*/
     inline void stopProcessing(){haveToStopProcessing = true;}
