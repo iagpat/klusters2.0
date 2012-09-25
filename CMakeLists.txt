@@ -145,7 +145,7 @@ if (MSVC)
    set (KDE4_ENABLE_EXCEPTIONS -EHsc)
 endif()   
 
-add_definitions(${KDE4_ENABLE_EXCEPTIONS} -DKLUSTERSSHARED_BUILD_KLUSTERSSHARED_LIB)
+add_definitions(${KDE4_ENABLE_EXCEPTIONS})
 add_definitions(-DQT3_SUPPORT)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/config-klusters.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-klusters.h )
