@@ -1989,7 +1989,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
     int x = (current.x() - static_cast<int>(borderX));
 
     //Compute and write the duration and the voltage in the statusbar.
-    if(mode == MEASURE && (event->state() == Qt::LeftButton)){
+    if(mode == MEASURE && (event->buttons() == Qt::LeftButton)){
         //Compute the duration between the begining of the drag and now
         int duration = abs(x - startingIndex);
         float time = static_cast<float>(duration) / static_cast<float>(Xstep) * timeStep;
@@ -2066,7 +2066,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
     statusBar->showMessage(message);
 
     //Paint the channels selected while dragging
-    if(mode == SELECT && selectedChannels.size() != 0 && (event->state() == Qt::LeftButton)){
+    if(mode == SELECT && selectedChannels.size() != 0 && (event->buttons() == Qt::LeftButton)){
         QPainter painter;
         painter.begin(this);
         //set the window (part of the world I want to show)
@@ -2134,7 +2134,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
     }
 
     //Paint the event selected while dragging
-    if((mode == SELECT_EVENT && selectedEvent.first != "") && (event->state() == Qt::LeftButton)){
+    if((mode == SELECT_EVENT && selectedEvent.first != "") && (event->buttons() == Qt::LeftButton)){
         QPainter painter;
         painter.begin(this);
         //set the window (part of the world I want to show)
@@ -2236,7 +2236,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
     }
 
     //Paint the line while dragging
-    if(mode == DRAW_LINE && (event->state() == Qt::LeftButton)){
+    if(mode == DRAW_LINE && (event->buttons() == Qt::LeftButton)){
         if(!linePositions.isEmpty())
             drawTimeLine(x,false);
     }
