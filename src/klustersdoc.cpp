@@ -38,6 +38,7 @@
 #include "klustersdoc.h"
 #include "klustersview.h"
 #include "klustersdoc.h"
+#include "clusterPalette.h"
 #include "types.h"
 #include "autosavethread.h"
 #include "parameterxmlmodifier.h"

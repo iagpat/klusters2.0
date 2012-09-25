@@ -34,7 +34,7 @@
 
 //include files for the application
 #include "data.h"
-#include "clusterPalette.h"
+//#include "clusterPalette.h"
 #include "tracesprovider.h"
 #include "channelcolors.h"
 #include "clustersprovider.h"
@@ -44,7 +44,7 @@
 class KlustersView;
 class KlustersApp;
 class AutoSaveThread;
-
+class ClusterPalette;
 /**
   * The KlustersDoc class provides a document object that can be used in conjunction with the classes
   * KlustersApp and KlustersView to create a document-view model for MDI (Multiple Document Interface)
