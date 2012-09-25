@@ -41,7 +41,7 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFl
     setButtons(Help | Default | Ok | Apply | Cancel);
     setDefaultButton(Ok);
     setFaceType(List);
-    setCaption(tr("Preferences"));
+    setWindowTitle(tr("Preferences"));
 
     setHelp("settings","klusters");
     

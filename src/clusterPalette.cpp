@@ -445,7 +445,7 @@ void ClusterPalette::changeColor(Q3IconViewItem* item){
  */
 void ClusterPalette::languageChange()
 {
-    setCaption( tr( "Cluster palette" ) );
+    setWindowTitle( tr( "Cluster palette" ) );
 }
 
 void ClusterPalette::selectItems(QList<int> selectedClusters){

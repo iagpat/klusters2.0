@@ -1148,7 +1148,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             return;
         }
 
-        setCaption(doc->documentName());
+        setWindowTitle(doc->documentName());
         initDisplay();
 
         //A traceView is possible only if the variables it needs are available (provided in the new parameter file) and
@@ -1309,7 +1309,7 @@ void KlustersApp::customEvent (QEvent* event){
             }
             if(saveEvent->isItSaveAs()){
                 mFileOpenRecent->addRecentFile(doc->url());
-                setCaption(doc->documentName());
+                setWindowTitle(doc->documentName());
             }
         }
         else
@@ -2338,7 +2338,7 @@ void KlustersApp::resetState(){
     //the .dat file exists. Therefore disable the menu entry by default.
     slotStateChanged("noTraceDisplayState");
 
-    setCaption(QString());
+    setWindowTitle(QString());
 
     //If the a setting dialog exists (has already be open once), disable the settings for the channels.
     if(prefDialog != 0L)
