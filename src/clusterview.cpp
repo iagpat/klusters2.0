@@ -50,7 +50,7 @@ const QColor ClusterView::DELETE_ARTEFACT_COLOR(Qt::red);
 ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int timeInterval,QStatusBar * statusBar,QWidget* parent, const char* name,
                          int minSize, int maxSize, int windowTopLeft ,int windowBottomRight, int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border),
-    selectionPolygon(0), nbSelectionPoints(0),polygonClosed(false),existLastMovingLine(false)
+    selectionPolygon(0), nbSelectionPoints(0),polygonClosed(false)
 {
     //Set the default mode
     mode = ZOOM;
@@ -183,18 +183,7 @@ void ClusterView::paintEvent ( QPaintEvent*){
 
 
 
-void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
-#if KDAB_TEMPORARY_REMOVE
-    //Paint in the buffer to allow the selection to be redrawn after a refresh
-    QPainter painter;
-    painter.begin(&doublebuffer);
-    //set the window (part of the word I want to show)
-    QRect r((QRect)window);
-    painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
-
-    //KDAB_PENDING painter.setRasterOp(XorROP);
-    painter.setPen(polygonColor);
-#endif
+void ClusterView::eraseTheLastDrawnLine(){
     //The user did not move since the last left click (no mouseMoveEvent)
     if(nbSelectionPoints == selectionPolygon.size()){
         //Treat the case when we reach the first point of the selection
@@ -204,10 +193,6 @@ void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
             nbSelectionPoints = 0;
         }
         else{
-#if KDAB_TEMPORARY_REMOVE
-            //Erase the last line drawn
-            painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
-#endif
             //Resize selectionPolygon to remove the last point from selectionPolygon
             selectionPolygon.resize(selectionPolygon.size()-1);
             nbSelectionPoints = selectionPolygon.size();
@@ -215,69 +200,19 @@ void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
     }
     //The user moved since the last left click, a line has been drawn in the mouseMoveEvent
     else{
-#if KDAB_TEMPORARY_REMOVE
-        //Treat the case when we reach the first point of the selection
-        if(nbSelectionPoints == 1){
-            //Erase the last line drawn (in mouseMoveEvent).
-            painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
-        }
-        else{
-            //CAUTION, Do not remove this line otherwise strang dots will appear
-            painter.drawPoint(selectionPolygon.point(selectionPolygon.size()-2));
-            //Erase the last line drawn (in mouseMoveEvent) plus the line between the 2 last selected points
-            //(selected by a left click of the user)
-            painter.drawPolyline(selectionPolygon,selectionPolygon.size()-3);
-        }
-#endif
         //Resize selectionPolygon to remove the 2 last points
         //(the last selected and the one set in mouseMoveEvent) from selectionPolygon
         selectionPolygon.resize(selectionPolygon.size()-2);
 
         nbSelectionPoints = selectionPolygon.size();
     }
-#if KDAB_TEMPORARY_REMOVE
-    painter.end();
-#endif
 }
 
-void ClusterView::eraseTheLastMovingLine(const QColor& polygonColor){
+void ClusterView::eraseTheLastMovingLine(){
     //The user moved since the last left click, a line has been drawn in the mouseMoveEvent
     if(nbSelectionPoints != selectionPolygon.size()){
-        existLastMovingLine = true;
-#if KDAB_TEMPORARY_REMOVE
-        //set existLastMovingLine to true to correctely erase the closed polygon
-        existLastMovingLine = true;
-
-        //Paint in the buffer to allow the selection to be redrawn after a refresh
-        QPainter painter;
-        painter.begin(&doublebuffer);
-        //set the window (part of the word I want to show)
-        QRect r((QRect)window);
-        painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
-
-        //KDAB_PENDING painter.setRasterOp(XorROP);
-        painter.setPen(polygonColor);
-
-        //Treat the case when we reach the first point of the selection
-        if(nbSelectionPoints == 1){
-            //Erase the last line drawn (in mouseMoveEvent).
-            painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
-        }
-        else{
-            //CAUTION, Do not remove this line otherwise strang dots will appear
-            painter.drawPoint(selectionPolygon.point(selectionPolygon.size()-2));
-            //Erase the last line drawn (in mouseMoveEvent)
-            painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
-        }
-        //Resize selectionPolygon to remove the last point
-        //(the one set in mouseMoveEvent) from selectionPolygon
-#endif
         selectionPolygon.resize(selectionPolygon.size()-1);
-
         nbSelectionPoints = selectionPolygon.size();
-#if KDAB_TEMPORARY_REMOVE
-        painter.end();
-#endif
     }
 }
 
@@ -377,16 +312,13 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
 
     //If there is a polygon to draw (one of the selection modes)
     if(mode == DELETE_NOISE || mode == DELETE_ARTEFACT || mode == NEW_CLUSTER || mode == NEW_CLUSTERS){
-        //Select the appropriate color
-        QColor color = selectPolygonColor(mode);
-
         //Erase the last line drawn
         if(e->button() == Qt::RightButton){
             if(!selectionPolygon.isEmpty())
                 return;
 
             //Erase the last drawn line by drawing into the buffer
-            eraseTheLastDrawnLine(color);
+            eraseTheLastDrawnLine();
 
             drawContentsMode = REFRESH;
             update();
@@ -394,25 +326,10 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
 
         //Close the polygon of selection and trigger the right action depending on the mode
         if(e->button() == Qt::MidButton && !selectionPolygon.isEmpty()){
-
-            //Paint into the buffer to allow the selection to be redrawn after a refresh
-            QPainter painter;
-            painter.begin(&doublebuffer);
-            //set the window (part of the word I want to show)
-            QRect r((QRect)window);
-            painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
-            painter.setPen(color);
-
             //If, once the last moving line erase, the polygon exists and has at least 3 points, draw it
             if(selectionPolygon.size()>2){
                 //erase the last line drawn if the user moved since the last click
-                eraseTheLastMovingLine(color);
-
-                //Draw the closing line of the polygon
-                //KDAB_PENDING painter.setRasterOp(XorROP);
-
-                painter.drawLine(selectionPolygon.point(0),selectionPolygon.point(selectionPolygon.size()-1));
-
+                eraseTheLastMovingLine();
                 polygonClosed = true;
 
                 //Send an event to inform that the data have to be recompute accordingly to the selection polygon.
@@ -422,9 +339,6 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
                 QApplication::postEvent(this,event);
 
             }
-
-            painter.end();
-
             drawContentsMode = REFRESH;
             update();
             statusBar->clear();
