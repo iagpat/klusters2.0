@@ -84,7 +84,8 @@ protected:
     void run();
 
 private:
-    inline CorrelationThread(CorrelationView& view,Data& d,QList<Pair>* pairs,QList<int> clusterIds):correlationView(view),data(d),haveToStopProcessing(false){
+    inline CorrelationThread(CorrelationView& view,Data& d,QList<Pair>* pairs,const QList<int>& clusterIds)
+        :correlationView(view),data(d),haveToStopProcessing(false){
         clusterPairs = pairs;
         this->clusterIds = clusterIds;
         start();
