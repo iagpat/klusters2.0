@@ -910,7 +910,7 @@ private:
     * @param clusterIds idc of the clusters to be removed
     * @param active true if the view is the active one, false otherwise.
     */
-    void removeClustersFromView(QVector<int> clusterIds,bool active);
+    void removeClustersFromView(const QVector<int> &clusterIds, bool active);
     
     /**
     * Returns the subset of the clusters contained in @p clusterlist which are in presented in this view.

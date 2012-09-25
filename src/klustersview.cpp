@@ -876,7 +876,7 @@ bool KlustersView::clustersDeletionUpdate(QList<int>& deletedClusters,bool activ
     prepareUndo(inView);
 
     //If deletedClusters in not empty, this view is concerned by the modification
-    if(inView.size() > 0){
+    if(!inView.isEmpty()){
         isAClusterRemoved = true;
 
         //If one of the clusters in deletedClusters is present in clustersShown list, remove it
@@ -899,7 +899,7 @@ void KlustersView::removeClusterFromView(int clusterId,bool active){
     emit clusterRemovedFromView(clusterId,active);
 }
 
-void KlustersView::removeClustersFromView(QVector<int> clusterIds, bool active){
+void KlustersView::removeClustersFromView(const QVector<int>& clusterIds, bool active){
     int size = clusterIds.size();
     for(int i = 0; i<size; ++i){
         shownClusters->remove(clusterIds[i]);
@@ -1139,7 +1139,7 @@ void KlustersView::undoAddedClusters(QList<int>& addedClusters,bool active){
     //List containing the clusters of this view which have to be removed
     QList<int> inView = clustersInView(addedClusters);
 
-    if(inView.size() > 0){
+    if(!inView.isEmpty()){
         QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = inView.begin(); clustersToRemoveIterator != inView.end(); ++clustersToRemoveIterator){
             removeClusterFromView(*clustersToRemoveIterator,active);
@@ -1157,7 +1157,7 @@ void KlustersView::undoModifiedClusters(QList<int>& updatedClusters,bool active)
 
     //List containing the clusters of this view which have to be updated
     QList<int> inView = clustersInView(updatedClusters);
-    if(inView.size() > 0){
+    if(!inView.isEmpty()){
         emit modifiedClustersUndo(inView,active);
     }
     --numberUndo;
@@ -1169,7 +1169,7 @@ void KlustersView::undo(QList<int>& addedClusters,QList<int>& updatedClusters,bo
 
     //List containing the clusters of this view which have to be removed
     QList<int> inView = clustersInView(addedClusters);
-    if(inView.size() > 0){
+    if(!inView.isEmpty()){
         QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = inView.begin(); clustersToRemoveIterator != inView.end(); ++clustersToRemoveIterator){
             removeClusterFromView(*clustersToRemoveIterator,active);
@@ -1182,7 +1182,7 @@ void KlustersView::undo(QList<int>& addedClusters,QList<int>& updatedClusters,bo
     //If any of the clusters in modifiedClusters are present, update them
     //List containing the clusters of this view which have to be updated
     inView = clustersInView(updatedClusters);
-    if(inView.size() > 0) emit modifiedClustersUndo(inView,active);
+    if(!inView.isEmpty()) emit modifiedClustersUndo(inView,active);
 
     --numberUndo;
     qDebug() << "numberUndo in KlustersView::undo added-updated: "<<numberUndo<< endl;
@@ -1202,7 +1202,7 @@ bool KlustersView::removeUndoAddedClusters(bool active){
         //List containing the clusters of this view which have to be removed
         QList<int> clustersToRemoveInView = clustersInView(*removedClusters);
 
-        if(clustersToRemoveInView.size() > 0){
+        if(!clustersToRemoveInView.isEmpty()){
             isClustersRemoved = true;
             QList<int>::iterator deleteClusterIterator;
             for(deleteClusterIterator = clustersToRemoveInView.begin(); deleteClusterIterator != clustersToRemoveInView.end(); ++deleteClusterIterator){
@@ -1218,7 +1218,7 @@ void KlustersView::removeDeletedClusters(bool active,QList<int>& clustersToDelet
     //List containing the clusters of this view which have to be removed
     QList<int> clustersToRemoveInView = clustersInView(clustersToDelete);
 
-    if(clustersToRemoveInView.size() > 0){
+    if(!clustersToRemoveInView.isEmpty()){
         QList<int>::iterator deleteClusterIterator;
         for(deleteClusterIterator = clustersToRemoveInView.begin(); deleteClusterIterator != clustersToRemoveInView.end(); ++deleteClusterIterator){
             removeClusterFromView(*deleteClusterIterator,active);
@@ -1258,7 +1258,7 @@ void KlustersView::redoModifiedClusters(QList<int>& updatedClusters,bool isModif
 
     //List containing the clusters of this view which have to be updated
     QList<int> inView = clustersInView(updatedClusters);
-    if(inView.size() > 0)
+    if(!inView.isEmpty())
         emit modifiedClusters(inView,active,isModifiedByDeletion);
 
     numberUndo++;
@@ -1286,13 +1286,14 @@ void KlustersView::redo(QList<int>& addedClusters,QList<int>& updatedClusters,bo
             ++index;
         }
         //If any of the clusters in modifiedClusters are present, update them
-        if(inView.size() > 0) emit modifiedClusters(inView,active,isModifiedByDeletion);
+        if(!inView.isEmpty())
+            emit modifiedClusters(inView,active,isModifiedByDeletion);
     }
     else{
         //If any of the clusters in modifiedClusters are present, update them
         //List containing the clusters of this view which have to be updated
         QList<int> inView = clustersInView(updatedClusters);
-        if(inView.size() > 0) {
+        if(!inView.isEmpty()) {
             //Add back all the clusters contained in addedClusters
             QList<int>::iterator newClusterIterator;
             for(newClusterIterator = addedClusters.begin(); newClusterIterator != addedClusters.end(); ++newClusterIterator){
