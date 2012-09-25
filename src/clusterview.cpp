@@ -47,7 +47,7 @@ const QColor ClusterView::NEW_CLUSTER_COLOR(Qt::green);
 const QColor ClusterView::DELETE_NOISE_COLOR(220,220,220);
 const QColor ClusterView::DELETE_ARTEFACT_COLOR(Qt::red);
 
-ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,int timeInterval,QStatusBar * statusBar,QWidget* parent, const char* name,
+ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int timeInterval,QStatusBar * statusBar,QWidget* parent, const char* name,
                          int minSize, int maxSize, int windowTopLeft ,int windowBottomRight, int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border),
     selectionPolygon(0), nbSelectionPoints(0),polygonClosed(false)

@@ -726,10 +726,14 @@ void WaveformView::mouseReleaseEvent(QMouseEvent* e){
         QList<int> const clusters = view.clusters();
         for(clusterIterator = clusters.begin(); clusterIterator != clusters.end(); ++clusterIterator){
             Data::WaveformIterator* waveformIterator;
-            if(presentationMode == SAMPLE) waveformIterator = clusteringData.sampleWaveformIterator(static_cast<dataType>(*clusterIterator),nbSpkToDisplay);
-            else waveformIterator = clusteringData.timeFrameWaveformIterator(static_cast<dataType>(*clusterIterator),startTime,endTime);
-            if(meanPresentation && (!waveformIterator->isMeanAvailable())) waveformsNotAvailable = true;
-            else if(!waveformIterator->areSpikesAvailable()) waveformsNotAvailable = true;
+            if(presentationMode == SAMPLE)
+                waveformIterator = clusteringData.sampleWaveformIterator(static_cast<dataType>(*clusterIterator),nbSpkToDisplay);
+            else
+                waveformIterator = clusteringData.timeFrameWaveformIterator(static_cast<dataType>(*clusterIterator),startTime,endTime);
+            if(meanPresentation && (!waveformIterator->isMeanAvailable()))
+                waveformsNotAvailable = true;
+            else if(!waveformIterator->areSpikesAvailable())
+                waveformsNotAvailable = true;
         }
         if(waveformsNotAvailable){
             setCursor(Qt::WaitCursor);

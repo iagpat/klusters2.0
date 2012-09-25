@@ -271,7 +271,8 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator,QString p
 void TraceView::dataAvailable(Array<dataType>& times,Array<int>& ids,QObject* initiator,QString providerName){
 
     //If another widget was the initiator of the request, ignore the data.
-    if(initiator != this) return;
+    if(initiator != this)
+        return;
 
     EventData* eventData = eventsData[providerName];
     eventData->setStatus(true);
@@ -513,10 +514,12 @@ void TraceView::paintEvent ( QPaintEvent*){
             painter.resetMatrix() ;
 
             //Draw channel ids and amplitude on the left side.
-            if(showLabels) drawChannelIdsAndGain(painter);
+            if(showLabels)
+                drawChannelIdsAndGain(painter);
 
             //Draw the calibration scale
-            if(showCalibrationScale) drawCalibrationScale(painter);
+            if(showCalibrationScale)
+                drawCalibrationScale(painter);
 
             //Closes the painter on the double buffer
             painter.end();
