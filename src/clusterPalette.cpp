@@ -71,7 +71,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     int h;
     int s;
     int v;
-    backgroundColor.hsv(&h,&s,&v);
+    backgroundColor.getHsv(&h,&s,&v);
     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
     else iconView->setPaletteForegroundColor(Qt::white);
 
