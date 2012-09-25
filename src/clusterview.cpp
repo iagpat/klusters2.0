@@ -152,7 +152,7 @@ void ClusterView::paintEvent ( QPaintEvent*){
         }
 
         //reset transformation due to setWindow
-        painter.resetXForm() ;
+        painter.resetMatrix() ;
 
 
         //Draw the time axis information if the time is displayed
@@ -670,7 +670,7 @@ void ClusterView::print(QPainter& printPainter,int width,int height, bool whiteB
     drawClusters(printPainter,view.clusters(),true);
 
     //reset transformation due to setWindow and setViewport
-    printPainter.resetXForm();
+    printPainter.resetMatrix();
 
     //Draw the time axis information if the time is displayed
     drawTimeInformation(printPainter);

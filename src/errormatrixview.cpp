@@ -186,7 +186,7 @@ void ErrorMatrixView::paintEvent ( QPaintEvent*){
         }
 
         //reset transformation due to setWindow and setViewport
-        painter.resetXForm() ;
+        painter.resetMatrix() ;
 
         //Draw the cluster Ids along the matrix.
         drawClusterIds(painter);
@@ -850,7 +850,7 @@ void ErrorMatrixView::print(QPainter& printPainter,int width,int height, bool wh
     drawMatrix(printPainter);
 
     //reset transformation due to setWindow and setViewport
-    printPainter.resetXForm();
+    printPainter.resetMatrix();
 
     //Draw the cluster Ids along the matrix.
     drawClusterIds(printPainter);

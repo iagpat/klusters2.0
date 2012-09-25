@@ -261,7 +261,7 @@ void CorrelationView::paintEvent ( QPaintEvent *){
         }
 
         //reset transformation due to setWindow and setViewport
-        painter.resetXForm() ;
+        painter.resetMatrix() ;
 
         //Draw the cluster Ids along the correlograms.
         drawClusterIds(painter);
@@ -811,7 +811,7 @@ void CorrelationView::print(QPainter& printPainter,int width,int height, bool wh
     drawCorrelograms(printPainter,pairs);
 
     //reset transformation due to setWindow and setViewport
-    printPainter.resetXForm();
+    printPainter.resetMatrix();
 
     //Draw the cluster Ids along the correlograms.
     drawClusterIds(printPainter);

@@ -404,7 +404,7 @@ void WaveformView::paintEvent ( QPaintEvent *){
         }
 
         //reset transformation due to setWindow and setViewport
-        painter.resetXForm() ;
+        painter.resetMatrix() ;
 
         //Draw the cluster Ids below the waveforms if they are not in overlay presentation.
         if(!overLayPresentation)
@@ -804,7 +804,7 @@ void WaveformView::print(QPainter& printPainter,int width,int height, bool white
     drawWaveforms(printPainter,view.clusters());
 
     //reset transformation due to setWindow and setViewport
-    printPainter.resetXForm();
+    printPainter.resetMatrix();
 
     //Draw the cluster Ids below the waveforms if they are not in overlay presentation.
     if(!overLayPresentation) drawClusterIds(printPainter);

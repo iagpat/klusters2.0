@@ -230,7 +230,7 @@ void ProcessWidget::print(QPrinter *printer, const QString &filePath){
     }
 
     //Print the name of the file
-    printPainter.resetXForm();
+    printPainter.resetMatrix();
     printPainter.setPen(Qt::black);
     printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
 
