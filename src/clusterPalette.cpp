@@ -51,7 +51,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     //Set the palette color
 
     setAutoFillBackground(true);
-    setPaletteBackgroundColor(backgroundColor);
+    QPalette palette; palette.setColor(backgroundRole(), backgroundColor); setPalette(palette);
     setPaletteForegroundColor(Qt::white);
 
     iconView = new Q3IconView(this, "ClusterPalette");
