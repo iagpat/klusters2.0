@@ -18,7 +18,7 @@
 #ifndef KCLUSTERSVIEW_H
 #define KCLUSTERSVIEW_H
 
-//Include files for KDE
+
 #include <QDockWidget>
 #include <QStatusBar>
 
