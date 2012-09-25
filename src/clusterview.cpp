@@ -108,6 +108,8 @@ void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,
 
 void ClusterView::paintEvent ( QPaintEvent*){
     QPainter p(this);
+    //set the window (part of the word I want to show)
+    QRect r((QRect)window);
     if(drawContentsMode == UPDATE || drawContentsMode == REDRAW){
         viewport = contentsRect();
 
@@ -118,8 +120,6 @@ void ClusterView::paintEvent ( QPaintEvent*){
         QPainter painter;
         painter.begin(&doublebuffer);
 
-        //set the window (part of the word I want to show)
-        QRect r((QRect)window);
 
         painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
 
@@ -142,7 +142,7 @@ void ClusterView::paintEvent ( QPaintEvent*){
         if(drawContentsMode == UPDATE){
 
             //Erase any polygon of selection and reset the associated variables
-            resetSelectionPolygon();
+            //resetSelectionPolygon();
 
             //Paint the the clusters to update contain in clusterUpdateList
             if(!clusterUpdateList.isEmpty())
@@ -169,52 +169,22 @@ void ClusterView::paintEvent ( QPaintEvent*){
 
     //Draw the double buffer (pixmap) by copying it into the paint device.
     p.drawPixmap(0, 0, doublebuffer);
-}
-
-void ClusterView::resetSelectionPolygon(){
-
-    if(!selectionPolygon.isEmpty()){
-        //Erase the existing polygon
-
-        //Select the appropriate color
-        QColor color = selectPolygonColor(mode);
-
-        //if the polygon was closed, erase the closing line
-        if(polygonClosed){
-            QPainter painter;
-            painter.begin(&doublebuffer);
-            //set the window (part of the word I want to show)
-            QRect r((QRect)window);
-            painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
 
 
-            //KDAB_PENDING painter.setRasterOp(XorROP);
-            painter.setPen(color);
 
-            //Erase the closing line
-            painter.drawLine(selectionPolygon.point(0),selectionPolygon.point(selectionPolygon.size()-1));
-
-            if(existLastMovingLine)painter.drawPoint(selectionPolygon.point(selectionPolygon.size()-1));
-            //reset existLastMovingLine
-            existLastMovingLine = false;
-
-            painter.end();
-
-            polygonClosed = false;
-        }
-
-        while(selectionPolygon.size()>0) eraseTheLastDrawnLine(color);
-
-        //Reset the variables associates with the polygon
-
-        //Resize selectionPolygon to remove all the last selected area, reinitialize nbSelectionPoints accordingly
-        selectionPolygon.resize(0);
-        nbSelectionPoints = 0;
+    if(!selectionPolygon.isEmpty()) {
+        const QColor color = selectPolygonColor(mode);
+        p.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
+        p.setPen(color);
+        p.drawPolyline(selectionPolygon);
     }
 }
 
 
+
+
 void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
+#if KDAB_TEMPORARY_REMOVE
     //Paint in the buffer to allow the selection to be redrawn after a refresh
     QPainter painter;
     painter.begin(&doublebuffer);
@@ -224,7 +194,7 @@ void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
 
     //KDAB_PENDING painter.setRasterOp(XorROP);
     painter.setPen(polygonColor);
-
+#endif
     //The user did not move since the last left click (no mouseMoveEvent)
     if(nbSelectionPoints == selectionPolygon.size()){
         //Treat the case when we reach the first point of the selection
@@ -234,8 +204,10 @@ void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
             nbSelectionPoints = 0;
         }
         else{
+#if KDAB_TEMPORARY_REMOVE
             //Erase the last line drawn
             painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
+#endif
             //Resize selectionPolygon to remove the last point from selectionPolygon
             selectionPolygon.resize(selectionPolygon.size()-1);
             nbSelectionPoints = selectionPolygon.size();
@@ -243,6 +215,7 @@ void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
     }
     //The user moved since the last left click, a line has been drawn in the mouseMoveEvent
     else{
+#if KDAB_TEMPORARY_REMOVE
         //Treat the case when we reach the first point of the selection
         if(nbSelectionPoints == 1){
             //Erase the last line drawn (in mouseMoveEvent).
@@ -255,19 +228,23 @@ void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
             //(selected by a left click of the user)
             painter.drawPolyline(selectionPolygon,selectionPolygon.size()-3);
         }
+#endif
         //Resize selectionPolygon to remove the 2 last points
         //(the last selected and the one set in mouseMoveEvent) from selectionPolygon
         selectionPolygon.resize(selectionPolygon.size()-2);
 
         nbSelectionPoints = selectionPolygon.size();
     }
-
+#if KDAB_TEMPORARY_REMOVE
     painter.end();
+#endif
 }
 
 void ClusterView::eraseTheLastMovingLine(const QColor& polygonColor){
     //The user moved since the last left click, a line has been drawn in the mouseMoveEvent
     if(nbSelectionPoints != selectionPolygon.size()){
+        existLastMovingLine = true;
+#if KDAB_TEMPORARY_REMOVE
         //set existLastMovingLine to true to correctely erase the closed polygon
         existLastMovingLine = true;
 
@@ -294,11 +271,13 @@ void ClusterView::eraseTheLastMovingLine(const QColor& polygonColor){
         }
         //Resize selectionPolygon to remove the last point
         //(the one set in mouseMoveEvent) from selectionPolygon
+#endif
         selectionPolygon.resize(selectionPolygon.size()-1);
 
         nbSelectionPoints = selectionPolygon.size();
-
+#if KDAB_TEMPORARY_REMOVE
         painter.end();
+#endif
     }
 }
 
@@ -348,7 +327,8 @@ void ClusterView::updatedDimensions(int dimensionX, int dimensionY){
 
 void ClusterView::setMode(BaseFrame::Mode selectedMode){
     statusBar->clear();
-    resetSelectionPolygon();
+    selectionPolygon.clear();
+    nbSelectionPoints = 0;
     mode = selectedMode;
 
     //set the cursor according to the selected mode.
@@ -402,7 +382,8 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
 
         //Erase the last line drawn
         if(e->button() == Qt::RightButton){
-            if(selectionPolygon.size() == 0) return;
+            if(!selectionPolygon.isEmpty())
+                return;
 
             //Erase the last drawn line by drawing into the buffer
             eraseTheLastDrawnLine(color);
@@ -441,9 +422,6 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
                 QApplication::postEvent(this,event);
 
             }
-            //reset the polygon
-            else
-                resetSelectionPolygon();
 
             painter.end();
 
@@ -455,9 +433,12 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
         if (e->button() == Qt::LeftButton){
             QPoint selectedPoint = viewportToWorld(e->x(),e->y());
 
-            if(nbSelectionPoints == 0) selectionPolygon.putPoints(0, 1, selectedPoint.x(),selectedPoint.y());
+            if(nbSelectionPoints == 0)
+                selectionPolygon.putPoints(0, 1, selectedPoint.x(),selectedPoint.y());
             //If the array is not empty, the last point has been put into the array in mouseMoveEvent
             nbSelectionPoints = selectionPolygon.size();
+            drawContentsMode = REFRESH;
+            update();
         }
     }
 }
@@ -497,6 +478,10 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
             //If there is no selection point, do not draw a tracking line
             if(selectionPolygon.isEmpty())
                 return;
+
+
+
+#if KDAB_TEMPORARY_REMOVE
             //Select the appropriate color
             QColor color = selectPolygonColor(mode);
 
@@ -509,23 +494,30 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
 
             //KDAB_PENDING painter.setRasterOp(XorROP);
             painter.setPen(color);
-
+#endif
             //First mouseMoveEvent after the last mousePressEvent
             if(nbSelectionPoints == selectionPolygon.size()){
                 //Add the current point to the array
                 selectionPolygon.putPoints(selectionPolygon.size(), 1, current.x(),current.y());
+#if KDAB_TEMPORARY_REMOVE
                 painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
+#endif
             }
             else{
+#if KDAB_TEMPORARY_REMOVE
                 //Erase the previous drawn line
                 painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
                 //Replace the last point by the current one
+#endif
                 selectionPolygon.setPoint(selectionPolygon.size()-1,current);
+#if KDAB_TEMPORARY_REMOVE
                 //Draw the new line
                 painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
+#endif
             }
+#if KDAB_TEMPORARY_REMOVE
             painter.end();
-
+#endif
             drawContentsMode = REFRESH;
             update();
         }
