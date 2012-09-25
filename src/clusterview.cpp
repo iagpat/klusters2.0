@@ -392,46 +392,14 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
             //If there is no selection point, do not draw a tracking line
             if(selectionPolygon.isEmpty())
                 return;
-
-
-
-#if KDAB_TEMPORARY_REMOVE
-            //Select the appropriate color
-            QColor color = selectPolygonColor(mode);
-
-            //Paint in the buffer to allow the selection to be redrawn after a refresh
-            QPainter painter;
-            painter.begin(&doublebuffer);
-            //set the window (part of the word I want to show)
-            QRect r((QRect)window);
-            painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
-
-            //KDAB_PENDING painter.setRasterOp(XorROP);
-            painter.setPen(color);
-#endif
             //First mouseMoveEvent after the last mousePressEvent
             if(nbSelectionPoints == selectionPolygon.size()){
                 //Add the current point to the array
                 selectionPolygon.putPoints(selectionPolygon.size(), 1, current.x(),current.y());
-#if KDAB_TEMPORARY_REMOVE
-                painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
-#endif
             }
             else{
-#if KDAB_TEMPORARY_REMOVE
-                //Erase the previous drawn line
-                painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
-                //Replace the last point by the current one
-#endif
                 selectionPolygon.setPoint(selectionPolygon.size()-1,current);
-#if KDAB_TEMPORARY_REMOVE
-                //Draw the new line
-                painter.drawPolyline(selectionPolygon,selectionPolygon.size()-2);
-#endif
             }
-#if KDAB_TEMPORARY_REMOVE
-            painter.end();
-#endif
             drawContentsMode = REFRESH;
             update();
         }
