@@ -306,6 +306,7 @@ void CorrelationView::askForCorrelograms(){
         for(int j = 0; j<clusters.size(); ++j) {
             for(int h = j; h<clusters.size(); ++h) {
                 pairs.append(Pair(clusters.at(j),clusters.at(h)));
+                clusterPairs->append(Pair(clusters.at(j),clusters.at(h)));
             }
         }
 
