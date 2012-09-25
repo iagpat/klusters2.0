@@ -2952,17 +2952,18 @@ void KlustersApp::slotStateChanged(const QString& state)
         mSplitClusters->setEnabled(false);
 
         mDeleteNoisy->setEnabled(false);
+        mDeleteArtifactSpikes->setEnabled(false);
+        mReCluster->setEnabled(false);
+        scaleByShouler->setEnabled(false);
+        timeFrameMode->setEnabled(false);
+        mRenumberClusters->setEnabled(false);
+
         /*
-        <Action name="renumber" />
-        <Action name="recluster" />
-        <Action name="delete_artifact" />
-        <Action name="time_frame" />
         <Action name="overlay" />
         <Action name="mean" />
         <Action name="increase" />
         <Action name="decrease" />
         <Action name="raw_data" />
-        <Action name="scale_by_shouler" />
 */
         scaleByMax->setEnabled(false);
 
@@ -3001,22 +3002,21 @@ void KlustersApp::slotStateChanged(const QString& state)
         mDeleteNoisy->setEnabled(true);
         mDeleteArtifact->setEnabled(true);
         newGroupingAssistantDisplay->setEnabled(true);
+        mDeleteArtifactSpikes->setEnabled(true);
+        mReCluster->setEnabled(true);
+        scaleByShouler->setEnabled(true);
+        timeFrameMode->setEnabled(true);
+        mRenumberClusters->setEnabled(true);
         /*
    <Action name="new_waveformDisplay" />
    <Action name="new_crosscorrelationDisplay" />
    <Action name="new_overViewDisplay" />
    <Action name="move_clusters_to_noise" />
-   <Action name="renumber" />
-   <Action name="recluster" />
-   <Action name="delete_artifact" />
-   <Action name="time_frame" />
    <Action name="overlay" />
    <Action name="mean" />
    <Action name="increase" />
    <Action name="decrease" />
    <Action name="raw_data" />
-   <Action name="scale_by_shouler" />
-
    */
         scaleByMax->setEnabled(true);
         shoulderLine->setEnabled(true);
@@ -3049,9 +3049,9 @@ void KlustersApp::slotStateChanged(const QString& state)
         mUndo->setEnabled(false);
         mRedo->setEnabled(true);
     } else if(state == QLatin1String("noWaveformsViewState")) {
+        timeFrameMode->setEnabled(false);
         /*
   <Disable>
-   <Action name="time_frame" />
    <Action name="overlay" />
    <Action name="mean" />
    <Action name="increase" />
@@ -3062,16 +3062,15 @@ void KlustersApp::slotStateChanged(const QString& state)
 
     } else if(state == QLatin1String("waveformsViewState")) {
         mDeleteArtifact->setEnabled(true);
-
+        timeFrameMode->setEnabled(true);
+        mRenumberClusters->setEnabled(true);
         /*
   <Enable>
-   <Action name="time_frame" />
    <Action name="overlay" />
    <Action name="mean" />
    <Action name="increase" />
    <Action name="decrease" />
    <Action name="move_clusters_to_noise" />
-   <Action name="renumber" />
   </Enable>
 */
         mGroupeClusters->setEnabled(true);
@@ -3081,12 +3080,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
-        /*
-        <Disable>
-         <Action name="delete_artifact" />
-        </Disable>
-        */
-
+        mDeleteArtifactSpikes->setEnabled(false);
         mSelectTime->setEnabled(false);
 
     } else if(state == QLatin1String("clusterViewState")) {
@@ -3095,20 +3089,20 @@ void KlustersApp::slotStateChanged(const QString& state)
         mNewCluster->setEnabled(true);
         mSplitClusters->setEnabled(true);
         mDeleteArtifact->setEnabled(false);
+        mDeleteArtifactSpikes->setEnabled(true);
+        mRenumberClusters->setEnabled(true);
 
         /*
   <Enable>
-   <Action name="delete_artifact" />
    <Action name="move_clusters_to_noise" />
-   <Action name="renumber" />
   </Enable>
 */
         mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noCorrelationViewState")) {
         scaleByMax->setEnabled(false);
+        scaleByShouler->setEnabled(false);
         /*
   <Disable>
-   <Action name="scale_by_shouler" />
    <Action name="raw_data" />
   </Disable>
 */
@@ -3122,15 +3116,16 @@ void KlustersApp::slotStateChanged(const QString& state)
         shoulderLine->setEnabled(true);
         mDeleteArtifact->setEnabled(true);
         scaleByMax->setEnabled(true);
+        scaleByShouler->setEnabled(true);
 
         /*
   <Enable>
-   <Action name="scale_by_shouler" />
    <Action name="raw_data" />
    <Action name="move_clusters_to_noise" />
-   <Action name="renumber" />
   </Enable>
 */
+        mRenumberClusters->setEnabled(true);
+
         mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noErrorMatrixViewState")) {
         mUpdateErrorMatrix->setEnabled(false);
@@ -3140,9 +3135,10 @@ void KlustersApp::slotStateChanged(const QString& state)
         /*
   <Enable>
    <Action name="move_clusters_to_noise" />
-   <Action name="renumber" />
   </Enable>
 */
+        mRenumberClusters->setEnabled(true);
+
         mDeleteArtifact->setEnabled(true);
         mGroupeClusters->setEnabled(true);
 
@@ -3157,21 +3153,20 @@ void KlustersApp::slotStateChanged(const QString& state)
         mSplitClusters->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
         mDeleteArtifact->setEnabled(false);
-
+        mDeleteArtifactSpikes->setEnabled(false);
+        mReCluster->setEnabled(false);
+        scaleByShouler->setEnabled(false);
+        timeFrameMode->setEnabled(false);
         /*
   <Disable>
-   <Action name="delete_artifact" />
-   <Action name="time_frame" />
    <Action name="overlay" />
    <Action name="mean" />
    <Action name="increase" />
    <Action name="decrease" />
-   <Action name="scale_by_shouler" />
    <Action name="raw_data" />
-   <Action name="renumber" />
-   <Action name="recluster" />
   </Disable>
 */
+        mRenumberClusters->setEnabled(false);
 
         scaleByMax->setEnabled(false);
         mGroupeClusters->setEnabled(false);
@@ -3191,22 +3186,13 @@ void KlustersApp::slotStateChanged(const QString& state)
         mSplitClusters->setEnabled(false);
         mGroupeClusters->setEnabled(false);
         mDeleteArtifact->setEnabled(false);
-        /*
-  <Disable>
-   <Action name="recluster" />
-   <Action name="delete_artifact" />
-   <Action name="renumber" />
-  </Disable>
-
-  */
+        mDeleteArtifactSpikes->setEnabled(false);
+        mReCluster->setEnabled(false);
+        mRenumberClusters->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
         mAbortReclustering->setEnabled(true);
     } else if(state == QLatin1String("noReclusterState")) {
-        /*
-  <Enable>
-   <Action name="recluster" />
-  </Enable>
-*/
+        mReCluster->setEnabled(true);
         mAbortReclustering->setEnabled(false);
     } else if(state == QLatin1String("stoppedReclusterState")) {
         mAbortReclustering->setEnabled(false);
