@@ -63,11 +63,11 @@ ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,QColor backgroundCo
     //Update the dimension of the window and the values of dimensionX and dimensionY
     updatedDimensions(view.abscissaDimension(),view.ordinateDimension());
 
-    newClusterCursor = QCursor(QPixmap(":/cursors/new_cluster_cursor"),0,0);
-    newClustersCursor = QCursor(QPixmap(":/cursors/new_clusters_cursor"),0,0);
-    deleteNoiseCursor = QCursor(QPixmap(":/cursors/delete_noise_cursor"),0,0);
-    deleteArtefactCursor = QCursor(QPixmap(":/cursors/delete_artefact_cursor"),0,0);
-    selectTimeCursor = QCursor(QPixmap(":/cursors/select_time_cursor"),0,0);
+    newClusterCursor = QCursor(QPixmap(":/cursors/new_cluster_cursor.png"),0,0);
+    newClustersCursor = QCursor(QPixmap(":/cursors/new_clusters_cursor.png"),0,0);
+    deleteNoiseCursor = QCursor(QPixmap(":/cursors/delete_noise_cursor.png"),0,0);
+    deleteArtefactCursor = QCursor(QPixmap(":/cursors/delete_artefact_cursor.png"),0,0);
+    selectTimeCursor = QCursor(QPixmap(":/cursors/select_time_cursor.png"),0,0);
 
     //The default tool is the zoom.
     setCursor(zoomCursor);
@@ -145,7 +145,8 @@ void ClusterView::paintEvent ( QPaintEvent*){
             resetSelectionPolygon();
 
             //Paint the the clusters to update contain in clusterUpdateList
-            if(clusterUpdateList.size()>0)drawClusters(painter,clusterUpdateList);
+            if(!clusterUpdateList.isEmpty())
+                drawClusters(painter,clusterUpdateList);
 
             //Clear the update list
             clusterUpdateList.clear();
@@ -186,6 +187,7 @@ void ClusterView::resetSelectionPolygon(){
             QRect r((QRect)window);
             painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
 
+
             //KDAB_PENDING painter.setRasterOp(XorROP);
             painter.setPen(color);
 
@@ -219,6 +221,7 @@ void ClusterView::eraseTheLastDrawnLine(const QColor& polygonColor){
     //set the window (part of the word I want to show)
     QRect r((QRect)window);
     painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
+
     //KDAB_PENDING painter.setRasterOp(XorROP);
     painter.setPen(polygonColor);
 
@@ -274,6 +277,7 @@ void ClusterView::eraseTheLastMovingLine(const QColor& polygonColor){
         //set the window (part of the word I want to show)
         QRect r((QRect)window);
         painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
+
         //KDAB_PENDING painter.setRasterOp(XorROP);
         painter.setPen(polygonColor);
 
@@ -408,7 +412,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
         }
 
         //Close the polygon of selection and trigger the right action depending on the mode
-        if(e->button() == Qt::MidButton && selectionPolygon.size()>0){
+        if(e->button() == Qt::MidButton && !selectionPolygon.isEmpty()){
 
             //Paint into the buffer to allow the selection to be redrawn after a refresh
             QPainter painter;
@@ -425,6 +429,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
 
                 //Draw the closing line of the polygon
                 //KDAB_PENDING painter.setRasterOp(XorROP);
+
                 painter.drawLine(selectionPolygon.point(0),selectionPolygon.point(selectionPolygon.size()-1));
 
                 polygonClosed = true;
@@ -475,7 +480,8 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
         int timeInS = static_cast<int>(current.y() * samplingInterval / 1000000.0);
         statusBar->showMessage("Coordinates: (" + QString::fromLatin1("%1").arg(current.x()) + ", " + QString::fromLatin1("%1").arg(-timeInS) + ")");
     }
-    else  statusBar->showMessage("Coordinates: (" + QString::fromLatin1("%1").arg(current.x()) + ", " + QString::fromLatin1("%1").arg(-current.y()) + ")");
+    else
+        statusBar->showMessage("Coordinates: (" + QString::fromLatin1("%1").arg(current.x()) + ", " + QString::fromLatin1("%1").arg(-current.y()) + ")");
 
 
 
@@ -487,11 +493,12 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
         //In one of the selection modes we draw the tracking line
         if(mode == DELETE_NOISE || mode == DELETE_ARTEFACT || mode == NEW_CLUSTER || mode == NEW_CLUSTERS){
 
-            //Select the appropriate color
-            QColor color = selectPolygonColor(mode);
 
             //If there is no selection point, do not draw a tracking line
-            if(selectionPolygon.size() == 0) return;
+            if(selectionPolygon.isEmpty())
+                return;
+            //Select the appropriate color
+            QColor color = selectPolygonColor(mode);
 
             //Paint in the buffer to allow the selection to be redrawn after a refresh
             QPainter painter;
@@ -499,6 +506,7 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
             //set the window (part of the word I want to show)
             QRect r((QRect)window);
             painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
+
             //KDAB_PENDING painter.setRasterOp(XorROP);
             painter.setPen(color);
 

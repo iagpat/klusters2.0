@@ -27,12 +27,10 @@
 ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(Q3IconView* parent, QString label)
     :Q3IconViewItem(parent, label)
 {
-    //KDAB_PENDING toolTip=NULL;
 }
 
 ClusterPaletteIconViewItem::ClusterPaletteIconViewItem(Q3IconView* parent, QString label, const QPixmap & icon ):Q3IconViewItem(parent, label,icon)
 {
-    //KDAB_PENDING toolTip=NULL;
 }
 
 ClusterPaletteIconViewItem::~ClusterPaletteIconViewItem()
