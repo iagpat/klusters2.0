@@ -380,14 +380,14 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
 
     //Retreive the data for the events,only request data from the provider for which events have been selected
     if(!selectedEvents.isEmpty()){
-        QList<QString> toRemove;
+        QStringList toRemove;
         QMap<QString, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedEvents.begin(); providersIterator != selectedEvents.end(); ++providersIterator){
             if(static_cast< QList<int> >(providersIterator.data()).isEmpty())
                 toRemove.append(providersIterator.key());
         }
 
-        QList<QString>::iterator toRemoveIterator;
+        QStringList::iterator toRemoveIterator;
         for(toRemoveIterator = toRemove.begin(); toRemoveIterator != toRemove.end(); ++toRemoveIterator){
             selectedEvents.remove(*toRemoveIterator);
             eventsData.remove(*toRemoveIterator);
@@ -451,7 +451,7 @@ void TraceView::paintEvent ( QPaintEvent*){
         isInit = false;
     }
     else if(!eventProvidersToUpdate.isEmpty()){
-        QList<QString>::iterator providerIterator;
+        QStringList::iterator providerIterator;
         EventData* eventData;
         for(providerIterator = eventProvidersToUpdate.begin(); providerIterator != eventProvidersToUpdate.end(); ++providerIterator){
             eventData = eventsData[*providerIterator];
@@ -3636,7 +3636,7 @@ void TraceView::showNextEvent(){
     //Only request data from the provider for which events have been selected
     if(!selectedEvents.isEmpty()){
 
-        QList<QString> toRemove;
+        QStringList toRemove;
         QMap<QString, QList<int> > idsToBrowse;
         QMap<QString, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedEvents.begin(); providersIterator != selectedEvents.end(); ++providersIterator){
@@ -3656,7 +3656,7 @@ void TraceView::showNextEvent(){
             }
         }
 
-        QList<QString>::iterator toRemoveIterator;
+        QStringList::iterator toRemoveIterator;
         for(toRemoveIterator = toRemove.begin(); toRemoveIterator != toRemove.end(); ++toRemoveIterator){
             selectedEvents.remove(*toRemoveIterator);
             eventsData.remove(*toRemoveIterator);
@@ -3682,7 +3682,7 @@ void TraceView::showPreviousEvent(){
     //Only request data from the provider for which events have been selected
     if(!selectedEvents.isEmpty()){
 
-        QList<QString> toRemove;
+        QStringList toRemove;
         QMap<QString, QList<int> > idsToBrowse;
         QMap<QString, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedEvents.begin(); providersIterator != selectedEvents.end(); ++providersIterator){
@@ -3702,7 +3702,7 @@ void TraceView::showPreviousEvent(){
             }
         }
 
-        QList<QString>::iterator toRemoveIterator;
+        QStringList::iterator toRemoveIterator;
         for(toRemoveIterator = toRemove.begin(); toRemoveIterator != toRemove.end(); ++toRemoveIterator){
             selectedEvents.remove(*toRemoveIterator);
             eventsData.remove(*toRemoveIterator);
