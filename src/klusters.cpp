@@ -2900,6 +2900,8 @@ void KlustersApp::slotStateChanged(const QString& state)
         mNewTraceDisplay->setEnabled(false);
         newCrosscorrelationDisplay->setEnabled(false);
 
+        mIncreaseAmplitudeCorrelation->setEnabled(false);
+        mDecreaseAmplitudeCorrelation->setEnabled(false);
         mCloseActiveDisplay->setEnabled(false);
         mRenameActiveDisplay->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
