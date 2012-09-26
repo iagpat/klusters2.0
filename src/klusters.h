@@ -790,9 +790,6 @@ private:
     /**True if the external process has exited, false otherwise.*/
     bool processFinished;
 
-    /**Widget embeding the output of the external process.*/
-    QDockWidget* processOutputDock;
-
     /**True if all the outputs of the external process have been printed, false otherwise.*/
     bool processOutputsFinished;
 

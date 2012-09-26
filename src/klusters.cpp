@@ -87,7 +87,6 @@ KlustersApp::KlustersApp()
       prefDialog(0L),
       processWidget(0L),
       processFinished(true),
-      processOutputDock(0L),
       processOutputsFinished(true),
       processKilled(false),
       errorMatrixExists(false)
@@ -144,8 +143,6 @@ KlustersApp::~KlustersApp()
     delete saveThread;
     delete processWidget;
     processWidget = 0L;
-    delete processOutputDock;
-    processOutputDock = 0L;
 }
 
 void KlustersApp::initView()
@@ -1490,34 +1487,18 @@ void KlustersApp::slotFileSaveAs()
 
 void KlustersApp::slotDisplayClose()
 {
-#if KDAB_PENDING
+
     DockArea* current;
 
     slotStatusMsg(tr("Closing display..."));
 
     //Get the active tab
-    if(tabsParent){
+    if(tabsParent->count()>1){
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        int nbOfTabs = tabsParent->count();
-        current = static_cast<QDockWidget*>(tabsParent->currentPage());
-        //If the active display is the mainDock, assign the mainDock status to an other display (take the first one available)
-        if(current == mainDock){
-            if(tabsParent->currentPageIndex() == 0){
-                mainDock = static_cast<DockArea*>(tabsParent->page(1));
-                setCentralWidget(mainDock);
-            }
-            else  {
-                setCentralWidget(static_cast<QDockWidget*>(tabsParent->page(0)));
-            }
-        }
+        current = static_cast<DockArea*>(tabsParent->currentPage());
         //Remove the display from the group of tabs
-        tabsParent->removePage(current);
+        tabsParent->removeTab(tabsParent->indexOf(current));
         displayCount --;
-        //If there is only one display left, the group of tabs will be deleted so we set tabsParent to null
-        if(nbOfTabs == 2){
-            slotStateChanged("noTabState");
-            tabsParent = 0L;
-        }
 
         //Remove the view from the document list if need it
         if((current->widget())->isA("KlustersView")){
@@ -1529,30 +1510,26 @@ void KlustersApp::slotDisplayClose()
                 slotStateChanged("groupingAssistantDisplayNotExists");
                 errorMatrixExists = false;
             }
-
             //Delete the view
             delete current;
-        }
-        else{
+        } else {
             if(processFinished && processOutputsFinished){
                 delete current;
                 processWidget = 0L;
-            }
-            else{
-                processOutputDock = current;
+            } else {
                 processWidget->hideWidget();
             }
         }
-
         QApplication::restoreOverrideCursor();
     }
     //or the active window if there is only one display (which can only be the mainDock)
-    else{
+    else {
         //If a save is already in process, wait until it is done
         if(saveThread->running()){
             QApplication::restoreOverrideCursor();
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
             while(!saveThread->wait()){};
+
             //reset the cluster palette and hide the cluster panel
             clusterPalette->reset();
             clusterPanel->hide();
@@ -1561,13 +1538,10 @@ void KlustersApp::slotDisplayClose()
                 doc->closeDocument();
                 //Delete the view
                 if((mainDock->widget())->isA("KlustersView")){
-                    if(processWidget != 0L){
-                        delete processWidget;
-                        processWidget = 0L;
-                    }
+                    delete processWidget;
+                    processWidget = 0L;
                     delete mainDock;
-                }
-                else{
+                } else {
                     if(processWidget->isRunning()){
                         processWidget->killJob();
                         processKilled = true;
@@ -1575,8 +1549,7 @@ void KlustersApp::slotDisplayClose()
                     if(processFinished && processOutputsFinished){
                         delete mainDock;
                         processWidget = 0L;
-                    }
-                    else{
+                    } else {
                         mainDock->hide();
                         processWidget->hideWidget();
                         QTimer::singleShot(2000,this, SLOT(slotDisplayClose()));
@@ -1599,10 +1572,8 @@ void KlustersApp::slotDisplayClose()
                 doc->closeDocument();
                 //Delete the view
                 if((mainDock->widget())->isA("KlustersView")){
-                    if(processWidget != 0L){
-                        delete processWidget;
-                        processWidget = 0L;
-                    }
+                    delete processWidget;
+                    processWidget = 0L;
                     delete mainDock;
                 }
                 else{
@@ -1613,8 +1584,7 @@ void KlustersApp::slotDisplayClose()
                     if(processFinished && processOutputsFinished){
                         delete mainDock;
                         processWidget = 0L;
-                    }
-                    else{
+                    } else {
                         mainDock->hide();
                         processWidget->hideWidget();
                         QTimer::singleShot(2000,this, SLOT(slotDisplayClose()));
@@ -1627,7 +1597,6 @@ void KlustersApp::slotDisplayClose()
             resetState();
         }
     }
-#endif
     slotStatusMsg(tr("Ready."));
 }
 
@@ -2328,7 +2297,6 @@ void KlustersApp::resetState(){
     isInit = false; //now a change in a spine box  or the lineedit
     //will trigger an update of the view contain in the display.
 
-    processOutputDock = 0L;
     displayCount = 0;
     errorMatrixExists = false;
     filePath.clear();
@@ -2443,10 +2411,7 @@ void KlustersApp::slotSelectAllWO01(){
 }
 
 void KlustersApp::slotRecluster(){
-    if(processOutputDock != 0L){
         if(processFinished && processOutputsFinished){
-            delete processOutputDock;
-            processOutputDock = 0L;
             processWidget = 0L;
             processKilled = false;
         }
@@ -2454,11 +2419,10 @@ void KlustersApp::slotRecluster(){
             QTimer::singleShot(2000,this, SLOT(slotRecluster()()));
             return;
         }
-    }
 
     //Get the clusters to recluster (those selected in the active display)
     const QList<int>& currentClusters = activeView()->clusters();
-    if(currentClusters.size() == 0){
+    if(currentClusters.isEmpty()){
         QMessageBox::critical (this,tr("Error !"),tr("No clusters have been selected to be reclustered."));
         return;
     }
@@ -3161,8 +3125,6 @@ void KlustersApp::slotStateChanged(const QString& state)
         mAbortReclustering->setEnabled(false);
     } else if(state == QLatin1String("tabState")) {
         mRenameActiveDisplay->setEnabled(true);
-    } else if(state == QLatin1String("noTabState")) {
-        mRenameActiveDisplay->setEnabled(false);
     } else if(state == QLatin1String("traceViewState")) {
         mIncreaseChannelAmplitudes->setEnabled(true);
         mDecreaseChannelAmplitudes->setEnabled(true);
