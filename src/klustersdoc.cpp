@@ -1757,7 +1757,6 @@ void KlustersDoc::redo(){
             }
 
             //Notify all the views of the undo
-            KlustersView* view;
             if(addedClusters->size() > 0 && modifiedClusters->size() > 0){
                 qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() > 0 && modifiedClusters->size()>0"<< endl;
                 for(int i =0; i<viewList->count();++i) {
