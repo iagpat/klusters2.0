@@ -480,6 +480,7 @@ void KlustersApp::createMenus()
     viewMainToolBar = settingsMenu->addAction(tr("Show Main Toolbar"));
 
     viewMainToolBar->setCheckable(true);
+    viewMainToolBar->setChecked(true);
     connect(viewMainToolBar,SIGNAL(triggered()), this,SLOT(slotViewMainToolBar()));
 
     viewActionBar = settingsMenu->addAction(tr("Show Actions"));
@@ -2930,18 +2931,14 @@ void KlustersApp::slotStateChanged(const QString& state)
         mNewCluster->setEnabled(false);
         newClusterDisplay->setEnabled(false);
         newGroupingAssistantDisplay->setEnabled(false);
-        /*
-        <Action name="new_waveformDisplay" />
-        <Action name="new_crosscorrelationDisplay" />
-        <Action name="new_overViewDisplay" />
-        <Action name="trace_display" />
-        */
+        newWaveformDisplay->setEnabled(false);
+        newOverViewDisplay->setEnabled(false);
+        mNewTraceDisplay->setEnabled(false);
+        newCrosscorrelationDisplay->setEnabled(false);
+
         mCloseActiveDisplay->setEnabled(false);
         mRenameActiveDisplay->setEnabled(false);
-
-        /*
-        <Action name="move_clusters_to_noise" />
-        */
+        mDeleteNoisy->setEnabled(false);
         mDeleteArtifact->setEnabled(false);
 
         mGroupeClusters->setEnabled(false);
@@ -2957,14 +2954,11 @@ void KlustersApp::slotStateChanged(const QString& state)
         scaleByShouler->setEnabled(false);
         timeFrameMode->setEnabled(false);
         mRenumberClusters->setEnabled(false);
+        overlayPresentation->setEnabled(false);
+        meanPresentation->setEnabled(false);
 
-        /*
-        <Action name="overlay" />
-        <Action name="mean" />
-        <Action name="increase" />
-        <Action name="decrease" />
-        <Action name="raw_data" />
-*/
+        noScale->setEnabled(false);
+
         scaleByMax->setEnabled(false);
 
         shoulderLine->setEnabled(false);
@@ -3006,18 +3000,15 @@ void KlustersApp::slotStateChanged(const QString& state)
         mReCluster->setEnabled(true);
         scaleByShouler->setEnabled(true);
         timeFrameMode->setEnabled(true);
+        mDeleteNoisy->setEnabled(true);
         mRenumberClusters->setEnabled(true);
-        /*
-   <Action name="new_waveformDisplay" />
-   <Action name="new_crosscorrelationDisplay" />
-   <Action name="new_overViewDisplay" />
-   <Action name="move_clusters_to_noise" />
-   <Action name="overlay" />
-   <Action name="mean" />
-   <Action name="increase" />
-   <Action name="decrease" />
-   <Action name="raw_data" />
-   */
+        newCrosscorrelationDisplay->setEnabled(true);
+        overlayPresentation->setEnabled(true);
+        newWaveformDisplay->setEnabled(true);
+        noScale->setEnabled(true);
+        newOverViewDisplay->setEnabled(true);
+        meanPresentation->setEnabled(true);
+
         scaleByMax->setEnabled(true);
         shoulderLine->setEnabled(true);
 
@@ -3050,29 +3041,23 @@ void KlustersApp::slotStateChanged(const QString& state)
         mRedo->setEnabled(true);
     } else if(state == QLatin1String("noWaveformsViewState")) {
         timeFrameMode->setEnabled(false);
-        /*
-  <Disable>
-   <Action name="overlay" />
-   <Action name="mean" />
-   <Action name="increase" />
-   <Action name="decrease" />
-  </Disable>
-*/
-
+        overlayPresentation->setEnabled(false);
+        mDecreaseAmplitude->setEnabled(false);
+        mIncreaseAmplitude->setEnabled(false);
+        meanPresentation->setEnabled(false);
 
     } else if(state == QLatin1String("waveformsViewState")) {
         mDeleteArtifact->setEnabled(true);
         timeFrameMode->setEnabled(true);
         mRenumberClusters->setEnabled(true);
-        /*
-  <Enable>
-   <Action name="overlay" />
-   <Action name="mean" />
-   <Action name="increase" />
-   <Action name="decrease" />
-   <Action name="move_clusters_to_noise" />
-  </Enable>
-*/
+        overlayPresentation->setEnabled(true);
+        mIncreaseAmplitude->setEnabled(true);
+        meanPresentation->setEnabled(true);
+
+        mDecreaseAmplitude->setEnabled(true);
+
+        mDeleteNoisy->setEnabled(true);
+
         mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noClusterViewState")) {
         mZoomAction->setEnabled(false);
@@ -3091,21 +3076,12 @@ void KlustersApp::slotStateChanged(const QString& state)
         mDeleteArtifact->setEnabled(false);
         mDeleteArtifactSpikes->setEnabled(true);
         mRenumberClusters->setEnabled(true);
-
-        /*
-  <Enable>
-   <Action name="move_clusters_to_noise" />
-  </Enable>
-*/
+        mDeleteNoisy->setEnabled(true);
         mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noCorrelationViewState")) {
         scaleByMax->setEnabled(false);
         scaleByShouler->setEnabled(false);
-        /*
-  <Disable>
-   <Action name="raw_data" />
-  </Disable>
-*/
+        noScale->setEnabled(false);
         mIncreaseAmplitude->setEnabled(false);
         mDecreaseAmplitude->setEnabled(false);
         shoulderLine->setEnabled(false);
@@ -3117,13 +3093,8 @@ void KlustersApp::slotStateChanged(const QString& state)
         mDeleteArtifact->setEnabled(true);
         scaleByMax->setEnabled(true);
         scaleByShouler->setEnabled(true);
-
-        /*
-  <Enable>
-   <Action name="raw_data" />
-   <Action name="move_clusters_to_noise" />
-  </Enable>
-*/
+        noScale->setEnabled(true);
+        mDeleteNoisy->setEnabled(true);
         mRenumberClusters->setEnabled(true);
 
         mGroupeClusters->setEnabled(true);
@@ -3132,11 +3103,7 @@ void KlustersApp::slotStateChanged(const QString& state)
     } else if(state == QLatin1String("errorMatrixViewState")) {
         mUpdateErrorMatrix->setEnabled(true);
         newGroupingAssistantDisplay->setEnabled(false);
-        /*
-  <Enable>
-   <Action name="move_clusters_to_noise" />
-  </Enable>
-*/
+        mDeleteNoisy->setEnabled(true);
         mRenumberClusters->setEnabled(true);
 
         mDeleteArtifact->setEnabled(true);
@@ -3157,15 +3124,11 @@ void KlustersApp::slotStateChanged(const QString& state)
         mReCluster->setEnabled(false);
         scaleByShouler->setEnabled(false);
         timeFrameMode->setEnabled(false);
-        /*
-  <Disable>
-   <Action name="overlay" />
-   <Action name="mean" />
-   <Action name="increase" />
-   <Action name="decrease" />
-   <Action name="raw_data" />
-  </Disable>
-*/
+        noScale->setEnabled(false);
+        mDecreaseAmplitude->setEnabled(false);
+        mIncreaseAmplitude->setEnabled(false);
+        meanPresentation->setEnabled(false);
+        overlayPresentation->setEnabled(false);
         mRenumberClusters->setEnabled(false);
 
         scaleByMax->setEnabled(false);
