@@ -72,8 +72,10 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     int s;
     int v;
     backgroundColor.getHsv(&h,&s,&v);
-    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
-    else iconView->setPaletteForegroundColor(Qt::white);
+    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
+        iconView->setPaletteForegroundColor(Qt::black);
+    else
+        iconView->setPaletteForegroundColor(Qt::white);
 
     iconView->setSelectionMode(Q3IconView::Extended);
     iconView->setItemsMovable(false);
@@ -85,7 +87,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
 
 
     //Deal with the sizes
-    setSizePolicy(QSizePolicy((QSizePolicy::SizeType)5,(QSizePolicy::SizeType)5));
+    setSizePolicy(QSizePolicy((QSizePolicy::Policy)5,(QSizePolicy::Policy)5));
 
     //Set the legend in the good language
     languageChange();
