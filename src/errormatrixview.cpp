@@ -330,7 +330,7 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
     else pair.setY(-1);
 
     //If the user control click a second time on a cell of the matrix this will deselect the corresponding pair.
-    if((e->state() & Qt::ControlModifier) && selectedPairs.contains(pair)){
+    if((e->modifiers() & Qt::ControlModifier) && selectedPairs.contains(pair)){
         selectedPairs.remove(pair);
         clustersToShow.clear();
         QList<Pair>::iterator iterator;
@@ -350,7 +350,7 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
         doc.shownClustersUpdate(clustersToShow,previousSelectedClusters);
     }
     else{
-        if(e->state() & Qt::ControlModifier){
+        if(e->modifiers() & Qt::ControlModifier){
             //Store the selected pair
             selectedPairs.append(pair);
             doc.addClustersToActiveView(clustersToShow);

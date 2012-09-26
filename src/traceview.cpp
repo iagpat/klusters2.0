@@ -2409,7 +2409,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                         //If there is not modificator key and selectedChannels does not already contain the selectedChannel
                         //deselect all the channels (clear selectedChannels) otherwise remove selectedChannel from the list.
                         //if the channel is skipped,there is a special treatment: deselect all the channels (clear selectedChannels)
-                        if(!(event->state() & Qt::ShiftModifier) && !(event->state() & Qt::ControlModifier)){
+                        if(!(event->modifiers() & Qt::ShiftModifier) && !(event->modifiers() & Qt::ControlModifier)){
                             //if the channel is skipped, deselect all the channels (clear selectedChannels)
                             if(!selectedChannels.contains(selectedChannel) || skippedChannels.contains(selectedChannel)){
                                 alreadySelected = false;
@@ -2424,7 +2424,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                         }
 
                         //Check the modificator keys
-                        if(event->state() & Qt::ControlModifier){
+                        if(event->modifiers() & Qt::ControlModifier){
                             //if the channel is skipped, do not do anything
                             if(!skippedChannels.contains(selectedChannel)){
                                 if(selectedChannels.contains(selectedChannel)){
@@ -2437,7 +2437,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                                 }
                             }
                         }
-                        else if((event->state() & Qt::ShiftModifier) && selectedChannels.size() != 0){
+                        else if((event->modifiers() & Qt::ShiftModifier) && selectedChannels.size() != 0){
                             //take all the channels, not skipped of groupId with a label ordinate in the range defined by the label ordinate of the last
                             //selected channel and the one of the currently selected channel.
                             if(labelSelected){
@@ -2591,7 +2591,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                         //If there is not modificator key and selectedChannels does not already contain the selectedChannel
                         //deselect all the channels (clear selectedChannels) otherwise remove selectedChannel from the list.
                         //if the channel is skipped,there is a special treatment: deselect all the channels (clear selectedChannels)
-                        if(!(event->state() & Qt::ShiftModifier) && !(event->state() & Qt::ControlModifier)){
+                        if(!(event->modifiers() & Qt::ShiftModifier) && !(event->modifiers() & Qt::ControlModifier)){
                             //if the channel is skipped, deselect all the channels (clear selectedChannels)
                             if(!selectedChannels.contains(selectedChannel) || skippedChannels.contains(selectedChannel)){
                                 alreadySelected = false;
@@ -2605,7 +2605,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                             }
                         }
 
-                        if(event->state() & Qt::ControlModifier){
+                        if(event->modifiers() & Qt::ControlModifier){
                             //if the channel is skipped, do not do anything
                             if(!skippedChannels.contains(selectedChannel)){
                                 if(selectedChannels.contains(selectedChannel)){
@@ -2618,7 +2618,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                                 }
                             }
                         }
-                        else if((event->state() & Qt::ShiftModifier) && selectedChannels.size() != 0){
+                        else if((event->modifiers() & Qt::ShiftModifier) && selectedChannels.size() != 0){
                             //take all the channels of groupId with a label ordinate in the range defined by the label ordinate of the last
                             //selected channel and the one of the currently selected channel.
                             if(x < 0){
@@ -2686,7 +2686,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
 
 void TraceView::mouseReleaseEvent(QMouseEvent* event){
     if(mode == SELECT){
-        if(event->button() & Qt::LeftButton && !(event->state() & Qt::ShiftModifier) && !(event->state() & Qt::ControlModifier)){
+        if(event->button() & Qt::LeftButton && !(event->modifiers() & Qt::ShiftModifier) && !(event->modifiers() & Qt::ControlModifier)){
             //There was a drag of channels
             if(previousDragOrdinate != 0){
                 int delta = previousDragOrdinate - lastClickOrdinate;
@@ -2775,7 +2775,7 @@ void TraceView::mouseReleaseEvent(QMouseEvent* event){
 
     if(mode == ZOOM && (event->button() & Qt::LeftButton)){
         //Zoom out
-        if(event->state() & Qt::ShiftModifier){
+        if(event->modifiers() & Qt::ShiftModifier){
             previousWindow = (QRect)window;
             zoomOut = true;
             zoomed = true;
