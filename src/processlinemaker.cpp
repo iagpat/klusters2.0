@@ -54,7 +54,7 @@ void ProcessLineMaker::slotReceivedStdout()
     }
     stdoutbuf += s;
     int pos;
-    while ( (pos = stdoutbuf.find('\n')) != -1) {
+    while ( (pos = stdoutbuf.indexOf('\n')) != -1) {
         lineOut = stdoutbuf.left(pos);
         stdoutbuf.remove(0, pos+1);
         emit receivedStdoutLine(lineOut); 
@@ -87,7 +87,7 @@ void ProcessLineMaker::slotReceivedStderr()
     
     stderrbuf += s;
     int pos;
-    while ( (pos = stderrbuf.find('\n')) != -1) {
+    while ( (pos = stderrbuf.indexOf('\n')) != -1) {
         lineErr = stderrbuf.left(pos);
         stderrbuf.remove(0, pos+1);        
         emit receivedStderrLine(lineErr);

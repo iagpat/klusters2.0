@@ -37,43 +37,44 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
     layout->setMargin(2);
     setLayout(layout);
     //Structure information (label and lineedit)
-    QLabel *label1 = new QLabel(tr("Structure"),page,"structure_label");
+    QLabel *label1 = new QLabel(tr("Structure"),page);
     layout->addWidget(label1);
 
-    structure = new QLineEdit(page,"structure");
+    structure = new QLineEdit(page);
     structure->setMinimumWidth(fontMetrics().maxWidth()*20);
     structure->setFocus();
     layout->addWidget(structure);
 
     //Type information (label and lineedit)
-    QLabel *label2 = new QLabel(tr("Type"),page,"type_label");
+    QLabel *label2 = new QLabel(tr("Type"),page);
     layout->addWidget(label2);
 
-    type = new QLineEdit(page,"type");
+    type = new QLineEdit(page);
     type->setMinimumWidth(fontMetrics().maxWidth()*20);
     layout->addWidget(type);
 
     //Id information (label and lineedit)
-    QLabel *label3 = new QLabel(tr("Isolation distance"),page,"id_label");
+    QLabel *label3 = new QLabel(tr("Isolation distance"),page);
     layout->addWidget(label3);
 
-    id = new QLineEdit(page,"id");
+    id = new QLineEdit(page);
+    id->setObjectName("id");
     id->setMinimumWidth(fontMetrics().maxWidth()*20);
     layout->addWidget(id);
 
     //Quality information (label and lineedit)
-    QLabel *label4 = new QLabel(tr("Quality"),page,"quality_label");
+    QLabel *label4 = new QLabel(tr("Quality"),page);
     layout->addWidget(label4);
 
-    quality = new QLineEdit(page,"quality");
+    quality = new QLineEdit(page);
     quality->setMinimumWidth(fontMetrics().maxWidth()*20);
     layout->addWidget(quality);
 
     //Type information (label and lineedit)
-    QLabel *label5 = new QLabel(tr("Notes"),page,"notes_label");
+    QLabel *label5 = new QLabel(tr("Notes"),page);
     layout->addWidget(label5);
 
-    notes = new QLineEdit(page,"notes");
+    notes = new QLineEdit(page);
     notes->setMinimumWidth(fontMetrics().maxWidth()*20);
     layout->addWidget(notes);
 
