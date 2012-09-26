@@ -2513,7 +2513,7 @@ void KlustersApp::slotRecluster(){
         connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
         DockArea *area = tabsParent->addDockArea(tr("Recluster output"));
-        area->addDockWidget(Qt::NoDockWidgetArea,display);
+        area->addDockWidget(Qt::BottomDockWidgetArea,display);
 
         //Keep track of the number of displays
         displayCount ++;
