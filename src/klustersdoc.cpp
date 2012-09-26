@@ -2004,7 +2004,7 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
         //Notify all the views of the modification
         KlustersView* view;
         for(view = viewList->first(); view!=0; view = viewList->next())
-            if(!view->isA("ProcessWidget")){
+            if(view->metaObject()->className() != ("ProcessWidget")){
                 view->addNewClustersToView(clustersToRecluster,reclusteredClusterList,false);
                 //update the TraceView if any
                 view->updateTraceView(electrodeGroupID,clusterColorList,false);

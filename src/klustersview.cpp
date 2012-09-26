@@ -295,11 +295,11 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
 
         printPainter.setFont(f);
         printPainter.setPen(Qt::black);
-        if(widget->isA("ClusterView")){
+        if(widget->metaObject()->className() == ("ClusterView")){
             ClusterView* clusterView = static_cast<ClusterView*>(widget);
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      Features: %2,%3").arg(filePath).arg(clusterView->getDimensionX()).arg(clusterView->getDimensionY()));
         }
-        else if(widget->isA("WaveformView")){
+        else if(widget->metaObject()->className() == ("WaveformView")){
             if(inTimeFrameMode){
                 printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      Start Time: %2 s, Duration: %3 s").arg(filePath).arg(startTime).arg(timeWindow));
             }
@@ -307,7 +307,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
                 printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      Number of Waveforms: %2").arg(filePath).arg(nbSpkToDisplay));
             }
         }
-        else if(widget->isA("CorrelationView")){
+        else if(widget->metaObject()->className() == ("CorrelationView")){
             QString scaleType;
             switch(correlationScale){
             case Data::RAW :
@@ -322,7 +322,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
             }
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      %2, Duration: %3 ms, Bin Size: %4 ms").arg(filePath).arg(scaleType).arg(correlogramTimeFrame/2).arg(binSize));
         }
-        if(widget->isA("ErrorMatrixView")){
+        if(widget->metaObject()->className() == ("ErrorMatrixView")){
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
         }
 
@@ -356,7 +356,7 @@ void  KlustersView::clusterDockClosed(QWidget* clusterView){
     //Update the spineboxes with the dimensions of the first ClusterView found
     ViewWidget* viewWidget;
     for(viewWidget = viewList.first(); viewWidget != 0L ; viewWidget = viewList.next()){
-        if(viewWidget->isA("ClusterView")){
+        if(viewWidget->metaObject()->className() == ("ClusterView")){
             dimensionX = dynamic_cast<ClusterView*>(viewWidget)->getDimensionX();
             dimensionY = dynamic_cast<ClusterView*>(viewWidget)->getDimensionY();
             mainWindow.updateDimensionSpinBoxes(dimensionX,dimensionY);
@@ -419,7 +419,7 @@ void KlustersView::correlogramDockClosed(QWidget* correlogramView){
     //Update the correlogramView variables with the variables of the first correlogramView found
     ViewWidget* viewWidget;
     for(viewWidget = viewList.first(); viewWidget != 0L ; viewWidget = viewList.next()){
-        if(viewWidget->isA("CorrelationView")){
+        if(viewWidget->metaObject()->className() == ("CorrelationView")){
             binSize = dynamic_cast<CorrelationView*>(viewWidget)->getBinSize();
             correlogramTimeFrame = dynamic_cast<CorrelationView*>(viewWidget)->getTimeWindow();
             correlationScale = dynamic_cast<CorrelationView*>(viewWidget)->getScaleMode();
@@ -466,16 +466,16 @@ void KlustersView::traceDockClosed(QWidget* traceWidget){
 }
 
 bool KlustersView::eventFilter(QObject* object,QEvent* event){     
-    if((event->type() == QEvent::MouseButtonPress) && (!object->isA("KlustersView"))){
+    if((event->type() == QEvent::MouseButtonPress) && (object->metaObject()->className() != ("KlustersView"))){
         //Check if the user has selected a dockWidget containing a ClusterView. If so
         //update the dimension spin boxes to reflect the current ClusterView dimensions
         // and make the ClusterView the only view connected to the signal of update of the spin boxes.
-        if(object->isA("QDockWidget")){
+        if(object->metaObject()->className() == ("QDockWidget")){
             QWidget* widget = dynamic_cast<QDockWidget*>(object)->widget();
-            if(widget->isA("ClusterView")){
+            if(widget->metaObject()->className() == ("ClusterView")){
                 ViewWidget* viewWidget;
                 for(viewWidget = viewList.first(); viewWidget != 0L ; viewWidget = viewList.next()){
-                    if(viewWidget->isA("ClusterView") && (widget == viewWidget)){
+                    if(viewWidget->metaObject()->className() == ("ClusterView") && (widget == viewWidget)){
                         dimensionX = dynamic_cast<ClusterView*>(viewWidget)->getDimensionX();
                         dimensionY = dynamic_cast<ClusterView*>(viewWidget)->getDimensionY();
                         mainWindow.updateDimensionSpinBoxes(dimensionX,dimensionY);
@@ -488,10 +488,10 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
             //Check if the user has selected a dockWidget containing a CorrelationView. If so
             //update the bin size and duration boxes to reflect the current CorrelationView values and make the CorrelationView
             // the only view connected to the signal of update of the boxes.
-            if(widget->isA("CorrelationView")){
+            if(widget->metaObject()->className() == ("CorrelationView")){
                 ViewWidget* viewWidget;
                 for(viewWidget = viewList.first(); viewWidget != 0L ; viewWidget = viewList.next()){
-                    if(viewWidget->isA("CorrelationView") && (widget == viewWidget)){
+                    if(viewWidget->metaObject()->className() == ("CorrelationView") && (widget == viewWidget)){
                         binSize = dynamic_cast<CorrelationView*>(viewWidget)->getBinSize();
                         correlogramTimeFrame = dynamic_cast<CorrelationView*>(viewWidget)->getTimeWindow();
                         correlationScale = dynamic_cast<CorrelationView*>(viewWidget)->getScaleMode();
@@ -509,10 +509,10 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
         //   and make the ClusterView the only view connected to the signal of update of the spin boxes.
         // * if a polygon is been drawn do not interpret the right click as an
         //   inquiery for the add View popupmenu.
-        if(object->isA("ClusterView")){
+        if(object->metaObject()->className() == ("ClusterView")){
             ViewWidget* widget;
             for(widget = viewList.first(); widget != 0L ; widget = viewList.next())
-                if(widget->isA("ClusterView") && (object == widget)){
+                if(widget->metaObject()->className() == ("ClusterView") && (object == widget)){
                     dimensionX = dynamic_cast<ClusterView*>(widget)->getDimensionX();
                     dimensionY = dynamic_cast<ClusterView*>(widget)->getDimensionY();
                     mainWindow.updateDimensionSpinBoxes(dimensionX,dimensionY);
@@ -526,10 +526,10 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
         //Check if the user has selected a dockWidget containing a CorrelationView. If so
         //update the bin size and duration boxes to reflect the current CorrelationView values and make the CorrelationView
         // the only view connected to the signal of update of the boxes.
-        if(object->isA("CorrelationView")){
+        if(object->metaObject()->className() == ("CorrelationView")){
             ViewWidget* viewWidget;
             for(viewWidget = viewList.first(); viewWidget != 0L ; viewWidget = viewList.next()){
-                if(viewWidget->isA("CorrelationView") && (object == viewWidget)){
+                if(viewWidget->metaObject()->className() == ("CorrelationView") && (object == viewWidget)){
                     binSize = dynamic_cast<CorrelationView*>(viewWidget)->getBinSize();
                     correlogramTimeFrame = dynamic_cast<CorrelationView*>(viewWidget)->getTimeWindow();
                     correlationScale = dynamic_cast<CorrelationView*>(viewWidget)->getScaleMode();
@@ -542,13 +542,13 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
 
 
         QWidget* widget;
-        if(object->isA("QDockWidget"))
+        if(object->metaObject()->className() == ("QDockWidget"))
             widget = dynamic_cast<QDockWidget*>(object)->widget();
-        else if(object->isA("ClusterView") || object->isA("WaveformView") || object->isA("CorrelationView") || object->isA("ErrorMatrixView")
-                || object->isA("TraceWidget"))
+        else if(object->metaObject()->className() == ("ClusterView") || object->metaObject()->className() == ("WaveformView") || object->metaObject()->className() == ("CorrelationView") || object->metaObject()->className() == ("ErrorMatrixView")
+                || object->metaObject()->className() == ("TraceWidget"))
             widget = dynamic_cast<QWidget*>(object);
         //if the object is a TraceView take its container the TraceWidget
-        else if(object->isA("TraceView"))
+        else if(object->metaObject()->className() == ("TraceView"))
             widget = traceWidget;
         else
             return QWidget::eventFilter(object,event);    // standard event processing
@@ -673,7 +673,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         if(!newViewType){
             ViewWidget* viewWidget;
             for(viewWidget = viewList.first(); viewWidget != 0L ; viewWidget = viewList.next())
-                if(viewWidget->isA("ClusterView")){
+                if(viewWidget->metaObject()->className() == ("ClusterView")){
                     clusterView->setMode(dynamic_cast<ClusterView*>(viewWidget)->getMode());
 
                     break;
@@ -1517,7 +1517,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         if(isThereClusterView){
             ViewWidget* viewWidget;
             for(viewWidget = viewList.first(); viewWidget != 0L ; viewWidget = viewList.next())
-                if(viewWidget->isA("ClusterView")){
+                if(viewWidget->metaObject()->className() == ("ClusterView")){
                     connect(viewWidget,SIGNAL(moveToTime(long)),view, SLOT(moveToTime(long)));
                 }
         }
