@@ -311,13 +311,13 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
             QString scaleType;
             switch(correlationScale){
             case Data::RAW :
-                scaleType = "Uniform Scale";
+                scaleType = tr("Uniform Scale");
                 break;
             case Data::MAX :
-                scaleType = "Scale by Maximum";
+                scaleType =tr("Scale by Maximum");
                 break;
             case Data::SHOULDER :
-                scaleType = "Scale by Asymptote";
+                scaleType = tr("Scale by Asymptote");
                 break;
             }
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      %2, Duration: %3 ms, Bin Size: %4 ms").arg(filePath).arg(scaleType).arg(correlogramTimeFrame/2).arg(binSize));
