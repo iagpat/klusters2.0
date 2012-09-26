@@ -83,11 +83,11 @@ public:
   * to the part of the drawing which will actually be drawn onto the widget).
   * @param border size of the border between the frame and the contents.
   */
-    TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiColumns,bool verticalLines,
-              bool raster,bool waveforms,bool labelsDisplay,QList<int>& channelsToDisplay,int unitGain,int acquisitionGain,long start,long timeFrameWidth,
-              ChannelColors* channelColors,QMap<int, QList<int> >* groupsChannels,QMap<int,int>* channelsGroups,
-              QList<int>& channelOffsets,QList<int>& gains,const QList<int>& skippedChannels, QWidget* parent=0, const char* name=0,QColor backgroundColor = Qt::black,QStatusBar* statusBar = 0L,
-              int minSize = 500, int maxSize = 4000, int windowTopLeft = -500,int windowBottomRight = 1001, int border = 0);
+    TraceView(TracesProvider& tracesProvider, bool greyScale, bool multiColumns, bool verticalLines,
+              bool raster, bool waveforms, bool labelsDisplay, QList<int>& channelsToDisplay, int unitGain, int acquisitionGain, long start, long timeFrameWidth,
+              ChannelColors* channelColors, QMap<int, QList<int> >* groupsChannels, QMap<int,int>* channelsGroups,
+              QList<int>& channelOffsets, QList<int>& gains, const QList<int>& skippedChannels, QWidget* parent=0, const char* name=0, const QColor &backgroundColor = Qt::black, QStatusBar* statusBar = 0L,
+              int minSize = 500, int maxSize = 4000, int windowTopLeft = -500, int windowBottomRight = 1001, int border = 0);
 
 
 
@@ -178,7 +178,7 @@ public:
         //Everything has to be redraw
         drawContentsMode = REDRAW ;
         if(active) update();
-    };
+    }
 
     /**Update the information presented in the view.*/
     inline void updateDrawing(){
@@ -188,7 +188,7 @@ public:
             drawContentsMode = REDRAW ;
             update();
         }
-    };
+    }
 
     /**Updates of the display due to a change in the display groups if @p active is true,
   * otherwise simply updates the internal variables.
@@ -283,7 +283,7 @@ public:
         drawContentsMode = REDRAW;
         showCalibrationScale = show;
         if(active) update();
-    };
+    }
 
     /**Adds a new provider of cluster data.
   * @param clustersProvider provider of cluster data.
@@ -305,7 +305,7 @@ public:
   * @param name name use to identified the cluster provider.
   * @param active true if the view is the active one, false otherwise.
   */
-    void removeClusterProvider(QString name,bool active);
+    void removeClusterProvider(const QString& name,bool active);
 
     /**
   * Updates the list of clusters shown with @p clustersToShow for the cluster provider identified
@@ -338,7 +338,7 @@ public:
   * @param name name use to identified the event provider.
   * @param active true if the view is the active one, false otherwise.
   */
-    void removeEventProvider(QString name,bool active);
+    void removeEventProvider(const QString &name, bool active);
 
     /**
   * Updates the list of events shown with @p eventsToShow for the event provider identified

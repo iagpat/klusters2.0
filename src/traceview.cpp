@@ -55,7 +55,7 @@ const int TraceView::YMARGIN = 0;
 TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiColumns,bool verticalLines,
                      bool raster,bool waveforms,bool labelsDisplay,QList<int>& channelsToDisplay,int unitGain,int acquisitionGain,long start,long timeFrameWidth,
                      ChannelColors* channelColors,QMap<int, QList<int> >* groupsChannels,QMap<int,int>* channelsGroups,
-                     QList<int>& channelOffsets,QList<int>& gains,const QList<int>& skippedChannels,QWidget* parent, const char* name,QColor backgroundColor,QStatusBar* statusBar,
+                     QList<int>& channelOffsets,QList<int>& gains,const QList<int>& skippedChannels,QWidget* parent, const char* name,const QColor& backgroundColor,QStatusBar* statusBar,
                      int minSize,int maxSize,int windowTopLeft,int windowBottomRight,int border):
     BaseFrame(10,0,parent,name,backgroundColor,minSize,maxSize,windowTopLeft,windowBottomRight,border),
     greyScaleMode(greyScale),statusBar(statusBar),tracesProvider(tracesProvider),
@@ -3372,16 +3372,18 @@ void TraceView::addClusterProvider(ClustersProvider* clustersProvider,QString na
     this->nbSamplesAfter = nbSamplesAfter;
 }
 
-void TraceView::removeClusterProvider(QString name,bool active){
+void TraceView::removeClusterProvider(const QString &name, bool active){
     selectedClusters.remove(name.toInt());
     clustersNotUsedForBrowsing.remove(name);
     clusterProviders.remove(name);
     providerItemColors.remove(name);
     clustersData.remove(name);
 
-    if(raster) updateWindow();
+    if(raster)
+        updateWindow();
     drawContentsMode = REDRAW;
-    if(active) update();
+    if(active)
+        update();
 }
 
 
@@ -3551,7 +3553,7 @@ void TraceView::addEventProvider(EventsProvider* eventsProvider,QString name,Ite
     providerItemColors.insert(name,eventColors);
 }
 
-void TraceView::removeEventProvider(QString name,bool active){
+void TraceView::removeEventProvider(const QString& name,bool active){
     selectedEvents.remove(name);
     eventsNotUsedForBrowsing.remove(name);
     eventProviders.remove(name);

@@ -615,22 +615,22 @@ private:
         inline ClusterInfo(const QString& pStructure = "", const QString& pType = "",const QString& pID = "",const QString& pQuality = "",const QString& pNotes = ""):structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){}
         inline ClusterInfo(dataType position, dataType nb,QString pStructure = "",QString pType = "",QString pID = "",QString pQuality = "",QString pNotes =""):position(position),spikeNb(nb),structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){}
         inline ~ClusterInfo(){}
-        inline dataType firstSpikePosition() const {return position;}
-        inline dataType nbSpikes() const {return spikeNb;}
-        inline void setNbSpikes(dataType nbSpikes){spikeNb = nbSpikes;}
-        inline void setFirstSpikePosition(dataType position){this->position = position;}
+         dataType firstSpikePosition() const {return position;}
+         dataType nbSpikes() const {return spikeNb;}
+         void setNbSpikes(dataType nbSpikes){spikeNb = nbSpikes;}
+         void setFirstSpikePosition(dataType position){this->position = position;}
 
-        inline QString getStructure() const { return structure; }
-        inline QString getType() const { return type; }
-        inline QString getId() const { return ID; }
-        inline QString getQuality() const { return quality; }
-        inline QString getNotes() const { return notes; }
+         QString getStructure() const { return structure; }
+         QString getType() const { return type; }
+         QString getId() const { return ID; }
+         QString getQuality() const { return quality; }
+         QString getNotes() const { return notes; }
 
-        inline void setStructure(const QString& pStructure) { structure = pStructure; }
-        inline void setType(const QString& pType) { type = pType; }
-        inline void setId(const QString& pId) { ID = pId; }
-        inline void setQuality(const QString& pQuality) { quality = pQuality; }
-        inline void setNotes(const QString& pNotes) { notes = pNotes; }
+         void setStructure(const QString& pStructure) { structure = pStructure; }
+         void setType(const QString& pType) { type = pType; }
+         void setId(const QString& pId) { ID = pId; }
+         void setQuality(const QString& pQuality) { quality = pQuality; }
+         void setNotes(const QString& pNotes) { notes = pNotes; }
 
     private:
         dataType position;
@@ -1078,7 +1078,7 @@ private:
     inline double spikeTime(SortableTable& spikesOfCluster,dataType spike){
         dataType currentPositionInFeatures = spikesOfCluster(1,spike);
         return static_cast<double>(features(currentPositionInFeatures,nbDimensions));
-    };
+    }
 
     /**Sorts by time the spikes of a newly created cluster created from other clusters, knowing
   * that the spikes from the other clusters are already sorted.
@@ -1220,31 +1220,31 @@ public:
         friend SampleWaveformIterator* Data::sampleWaveformIterator(dataType clusterId,dataType nbSampleSpikes);
 
     public:
-        inline ~SampleWaveformIterator(){};
+        inline ~SampleWaveformIterator(){}
         inline dataType nextSpike(){
             ++spikesIndex;
             return - static_cast<dataType>(waveforms->getSample(spikesIndex));
-        };
+        }
         inline dataType nextMeanValue(){
             ++meanIndex;
             return - static_cast<dataType>(waveforms->getSampleMean(meanIndex));
-        };
+        }
         inline dataType nextStDeviationValue(){
             ++stDeviationIndex;
             return - static_cast<dataType>(waveforms->getSampleStDeviation(stDeviationIndex));
-        };
+        }
         inline dataType nbOfSpikes() const{
             return waveforms->nbOfSpikes(SAMPLE);
-        };
+        }
     private:
-        inline SampleWaveformIterator(): WaveformIterator(){};
-        inline SampleWaveformIterator(Waveforms* waveformsData): WaveformIterator(waveformsData){};
+        inline SampleWaveformIterator(): WaveformIterator(){}
+        inline SampleWaveformIterator(Waveforms* waveformsData): WaveformIterator(waveformsData){}
         inline void updateStatus(dataType nbSampleSpikes){
             if(waveforms->nbOfSpikesAsked() != nbSampleSpikes){
                 setSpikesAvailable(false);
                 setMeanAvailable(false);
             }
-        };
+        }
 
     };
 
@@ -1352,7 +1352,7 @@ public:
   */
     inline CorrelogramIterator correlogramIterator(Pair pair,ScaleMode scale,int binSize,int timeframe){
         return CorrelogramIterator(*this,pair,scale,binSize,timeframe);
-    };
+    }
 
     /** Specialized iterator on the latest correlation data stored by a request of
    * a correlationTread for a given pair of clusters. The data correspond to the binSize and
