@@ -84,7 +84,7 @@ public:
     void removeView(KlustersView* view);
     
     /** Returns the first view instance. */
-    KlustersView* firstView(){return viewList->first();}
+    KlustersView* firstView(){return viewList->isEmpty() ? 0 : viewList->at(0);}
     
     /**Returns true, if the requested view is the last view of the document. */
     bool isLastView();
@@ -638,7 +638,7 @@ private:
     QString tmpSpikeFile;
     
     /**The list of the views currently connected to the document. */
-    Q3PtrList<KlustersView>* viewList;
+    QList<KlustersView*>* viewList;
 
     /** Class containing all the data for the clusters cuting.*/
     Data* clusteringData;

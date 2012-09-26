@@ -55,8 +55,7 @@ extern int nbUndo;
 
 KlustersDoc::KlustersDoc(QWidget* parent,ClusterPalette& clusterPalette,bool autoSave,int savingInterval): clusterColorListUndoList(),clusterColorListRedoList(),modified(false),docUrl(),baseName(""), xmlParameterFile(""),tmpCluFile(""),tmpSpikeFile(""),parent(parent),clusterPalette(clusterPalette),
     addedClustersUndoList(),addedClustersRedoList(),modifiedClustersUndoList(),modifiedClustersRedoList(),autoSave(autoSave),savingInterval(savingInterval),tracesProvider(0L),clustersProvider(0L),channelColorList(0L){
-    viewList = new Q3PtrList<KlustersView>;
-    viewList->setAutoDelete(false);
+    viewList = new QList<KlustersView*>();
     clusterColorListUndoList.setAutoDelete(true);
     clusterColorListRedoList.setAutoDelete(true);
     addedClustersUndoList.setAutoDelete(true);
@@ -118,9 +117,9 @@ bool KlustersDoc::isLastView() {
 
 
 void KlustersDoc::updateAllViews(KlustersView *sender){
-    KlustersView *view;
-    for(view = viewList->first(); view != 0; view = viewList->next())
+    for(int i =0; i<viewList->count();++i)
     {
+        KlustersView *view = viewList->at(i);
         view->update(sender);
     }
 
@@ -132,8 +131,9 @@ bool KlustersDoc::canCloseDocument(KlustersApp* mainWindow,QString callingMethod
     KlustersView* view;
     bool threadRunning = false;
 
-    for(view = viewList->first(); view!=0; view = viewList->next())
+    for(int i =0; i<viewList->count();++i)
     {
+        KlustersView *view = viewList->at(i);
         threadRunning = view->isThreadsRunning();
         if(threadRunning) break;
     }
@@ -656,9 +656,10 @@ QString KlustersDoc::documentDirectory() const {
 
 void KlustersDoc::setGain(int acquisitionGain){
     //Notify all the views of the modification
-    KlustersView* view;
-    for(view = viewList->first(); view!=0; view = viewList->next())
+    for(int i =0; i<viewList->count();++i) {
+     KlustersView *view = viewList->at(i);
         view->setGain(acquisitionGain);
+    }
 
     //Get the active view.
     KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
@@ -669,9 +670,10 @@ void KlustersDoc::setGain(int acquisitionGain){
 
 void KlustersDoc::setBackgroundColor(QColor backgroundColor){
     //Notify all the views of the modification
-    KlustersView* view;
-    for(view = viewList->first(); view!=0; view = viewList->next())
+    for(int i =0; i<viewList->count();++i) {
+        KlustersView *view = viewList->at(i);
         view->updateBackgroundColor(backgroundColor);
+    }
 
     //Get the active view.
     KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
@@ -685,8 +687,8 @@ void KlustersDoc::setTimeStepInSecond(int step){
     KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
 
     //Notify all the views of the modification
-    KlustersView* view;
-    for(view = viewList->first(); view!=0; view = viewList->next()){
+    for(int i =0; i<viewList->count();++i){
+        KlustersView *view = viewList->at(i);
         if(view != activeView) view->setTimeStepInSecond(step,false);
         else view->setTimeStepInSecond(step,true);
     }
@@ -697,9 +699,11 @@ void KlustersDoc::setTimeStepInSecond(int step){
 
 void KlustersDoc::setChannelPositions(QList<int>& positions){
     //Notify all the views of the modification
-    KlustersView* view;
-    for(view = viewList->first(); view!=0; view = viewList->next())
+
+    for(int i =0; i<viewList->count();++i) {
+        KlustersView *view = viewList->at(i);
         view->setChannelPositions(positions);
+    }
 
     //Get the active view.
     KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
@@ -710,9 +714,10 @@ void KlustersDoc::setChannelPositions(QList<int>& positions){
 
 void KlustersDoc::singleColorUpdate(int clusterId,KlustersView& activeView){
     //Notify all the views of the modification
-    KlustersView* view;
-    for(view = viewList->first(); view!=0; view = viewList->next())
+
+    for(int i =0; i<viewList->count();++i)
     {
+        KlustersView *view = viewList->at(i);
         if(view != &activeView) view->singleColorUpdate(clusterId,false);
         else view->singleColorUpdate(clusterId,true);
     }
@@ -725,9 +730,10 @@ void KlustersDoc::singleColorUpdate(int clusterId,KlustersView& activeView){
 void KlustersDoc::shownClustersUpdate(QList<int> clustersToShow,KlustersView& activeView){
     if(clusterColorList->isColorChanged()){
         //Notify all the views of the modification
-        KlustersView* view;
-        for(view = viewList->first(); view!=0; view = viewList->next())
+
+        for(int i =0; i<viewList->count();++i)
         {
+            KlustersView *view = viewList->at(i);
             if(view != &activeView) view->updateColors(false);
             else view->updateColors(true);
         }
@@ -847,8 +853,9 @@ void KlustersDoc::groupClusters(QList<int> clustersToGroup,KlustersView& activeV
     }
 
     //Notify all the views of the modification
-    KlustersView* view;
-    for(view = viewList->first(); view!=0; view = viewList->next()){
+
+    for(int i =0; i<viewList->count();++i){
+        KlustersView *view = viewList->at(i);
         if(view != &activeView){
             view->groupedClustersUpdate(clustersToGroup,newClusterIdint,false);
             //update the TraceView if any
@@ -942,8 +949,9 @@ void KlustersDoc::deleteClusters(QList<int> clustersToDelete,KlustersView& activ
     }
 
     //Notify all the views of the modification
-    KlustersView* view;
-    for(view = viewList->first(); view!=0; view = viewList->next()){
+
+    for(int i =0; i<viewList->count();++i){
+        KlustersView *view = viewList->at(i);
         if(view != &activeView){
             view->clustersDeletionUpdate(clustersToDelete,clusterId,false);
             //update the TraceView if any
@@ -1042,8 +1050,9 @@ void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,cons
         }
 
         //Notify all the views of the modification
-        KlustersView* view;
-        for(view = viewList->first(); view!=0; view = viewList->next()){
+
+        for(int i =0; i<viewList->count();++i){
+            KlustersView *view = viewList->at(i);
             if(view != activeView){
                 view->removeSpikesFromClustersInView(fromClusters,destination,emptyClusters,false);
                 //update the TraceView if any
@@ -1111,8 +1120,9 @@ void KlustersDoc::createNewCluster(QRegion& region, const QList <int>& clustersO
         }
 
         //Notify all the views of the modification
-        KlustersView* view;
-        for(view = viewList->first(); view!=0; view = viewList->next()){
+
+        for(int i =0; i<viewList->count();++i){
+            KlustersView *view = viewList->at(i);
             if(view != activeView){
                 view->addNewClusterToView(fromClusters,newClusterIdint,emptyClusters,false);
                 //update the TraceView if any
@@ -1181,8 +1191,9 @@ void KlustersDoc::createNewClusters(QRegion& region, const QList <int>& clusters
         }
 
         //Notify all the views of the modification
-        KlustersView* view;
-        for(view = viewList->first(); view!=0; view = viewList->next()){
+
+        for(int i =0; i<viewList->count();++i){
+            KlustersView *view = viewList->at(i);
             if(view != activeView){
                 view->addNewClustersToView(fromToNewClusterIds,emptyClusters,false);
                 //update the TraceView if any
@@ -1382,9 +1393,11 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
         }
 
         //Make the views clean its internal variables
-        KlustersView* view;
-        for(view = viewList->first(); view!=0; view = viewList->next())
+
+        for(int i =0; i<viewList->count();++i) {
+            KlustersView *view = viewList->at(i);
             view->nbUndoChangedCleaning(newNbUndo);
+        }
 
         //Signal to klusters the new number of undo and redo
         emit updateUndoNb(clusterColorListUndoList.count());
@@ -1542,8 +1555,9 @@ void KlustersDoc::undo(){
             renumberingRedoList.append(nbUndo + 1);
 
             //Notify all the views of the undo
-            KlustersView* view;
-            for(view = viewList->first(); view!=0; view = viewList->next())
+
+            for(int i =0; i<viewList->count();++i) {
+                KlustersView *view = viewList->at(i);
                 if(view != activeView){
                     view->undoRenumbering(clusterIdsNewOldMap[nbUndo + 1],false);
                     //update the TraceView if any
@@ -1554,6 +1568,7 @@ void KlustersDoc::undo(){
                     //update the TraceView if any
                     view->updateTraceView(electrodeGroupID,clusterColorList,true);
                 }
+            }
 
             //Notify the errorMatrixView of the modification
             emit undoRenumbering(clusterIdsNewOldMap[nbUndo + 1]);
@@ -1569,7 +1584,8 @@ void KlustersDoc::undo(){
             KlustersView* view;
             if(addedClusters->size() > 0 && modifiedClusters->size() > 0){
                 qDebug() << "addedClusters->size() > 0 && modifiedClusters->size() > 0"<< endl;
-                for(view = viewList->first(); view!=0; view = viewList->next())
+                for(int i =0; i<viewList->count();++i) {
+                    KlustersView *view = viewList->at(i);
                     if(view != activeView){
                         view->undo(*addedClusters,*modifiedClusters,false);
                         //update the TraceView if any
@@ -1580,13 +1596,15 @@ void KlustersDoc::undo(){
                         //update the TraceView if any
                         view->updateTraceView(electrodeGroupID,clusterColorList,true);
                     }
+                }
 
                 //Notify the errorMatrixView of the modification
                 emit undoAdditionModification(*addedClusters,*modifiedClusters);
             }
             else if(addedClusters->size() > 0 && modifiedClusters->size() == 0){
                 qDebug() << "addedClusters->size() > 0 && modifiedClusters->size() == 0"<< endl;
-                for(view = viewList->first(); view!=0; view = viewList->next())
+                for(int i =0; i<viewList->count();++i) {
+                    KlustersView *view = viewList->at(i);
                     if(view != activeView){
                         view->undoAddedClusters(*addedClusters,false);
                         //update the TraceView if any
@@ -1597,13 +1615,15 @@ void KlustersDoc::undo(){
                         //update the TraceView if any
                         view->updateTraceView(electrodeGroupID,clusterColorList,true);
                     }
+                }
 
                 //Notify the errorMatrixView of the modification
                 emit undoAddition(*addedClusters);
             }
             else if(addedClusters->size() == 0 && modifiedClusters->size() > 0){
                 qDebug() << "addedClusters->size() == 0 && modifiedClusters->size() > 0"<< endl;
-                for(view = viewList->first(); view!=0; view = viewList->next())
+                for(int i =0; i<viewList->count();++i) {
+                    KlustersView *view = viewList->at(i);
                     if(view != activeView){
                         view->undoModifiedClusters(*modifiedClusters,false);
                         //update the TraceView if any
@@ -1614,6 +1634,7 @@ void KlustersDoc::undo(){
                         //update the TraceView if any
                         view->updateTraceView(electrodeGroupID,clusterColorList,true);
                     }
+                }
 
                 //Notify the errorMatrixView of the modification
                 emit undoModification(*modifiedClusters);
@@ -1621,7 +1642,8 @@ void KlustersDoc::undo(){
             //////!!!!This last condition should not be reach anymore, to test and remove.!!!!!////
             else if(addedClusters->size() == 0 && modifiedClusters->size() == 0){
                 qDebug() << "addedClusters->size() == 0 && modifiedClusters->size() == 0"<< endl;
-                for(view = viewList->first(); view!=0; view = viewList->next())
+                for(int i =0; i<viewList->count();++i) {
+                    KlustersView *view = viewList->at(i);
                     if(view != activeView){
                         view->undo(false);
                         //update the TraceView if any
@@ -1632,6 +1654,7 @@ void KlustersDoc::undo(){
                         //update the TraceView if any
                         view->updateTraceView(electrodeGroupID,clusterColorList,true);
                     }
+                }
             }
         }
         addedClustersRedoList.prepend(addedClusters);
@@ -1706,7 +1729,8 @@ void KlustersDoc::redo(){
 
             //Notify all the views of the undo
             KlustersView* view;
-            for(view = viewList->first(); view!=0; view = viewList->next())
+            for(int i =0; i<viewList->count();++i) {
+                KlustersView *view = viewList->at(i);
                 if(view != activeView){
                     view->redoRenumbering(clusterIdsOldNewMap[nbUndo],false);
                     //update the TraceView if any
@@ -1717,6 +1741,7 @@ void KlustersDoc::redo(){
                     //update the TraceView if any
                     view->updateTraceView(electrodeGroupID,clusterColorList,true);
                 }
+            }
 
             //Notify the errorMatrixView of the modification
             emit redoRenumbering(clusterIdsOldNewMap[nbUndo]);
@@ -1735,7 +1760,8 @@ void KlustersDoc::redo(){
             KlustersView* view;
             if(addedClusters->size() > 0 && modifiedClusters->size() > 0){
                 qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() > 0 && modifiedClusters->size()>0"<< endl;
-                for(view = viewList->first(); view!=0; view = viewList->next())
+                for(int i =0; i<viewList->count();++i) {
+                    KlustersView *view = viewList->at(i);
                     if(view != activeView){
                         view->redo(*addedClusters,*modifiedClusters,isModifiedByDeletion,false,*deletedClusters);
                         //update the TraceView if any
@@ -1746,13 +1772,15 @@ void KlustersDoc::redo(){
                         //update the TraceView if any
                         view->updateTraceView(electrodeGroupID,clusterColorList,true);
                     }
+                }
 
                 //Notify the errorMatrixView of the modification
                 emit redoAdditionModification(*addedClusters,*modifiedClusters,isModifiedByDeletion,*deletedClusters);
             }
             else if(addedClusters->size() > 0 && modifiedClusters->size() == 0){
                 qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() > 0 && modifiedClusters->size()==0"<< endl;
-                for(view = viewList->first(); view!=0; view = viewList->next())
+                for(int i =0; i<viewList->count();++i) {
+                    KlustersView *view = viewList->at(i);
                     if(view != activeView){
                         view->redoAddedClusters(*addedClusters,false,*deletedClusters);
                         //update the TraceView if any
@@ -1763,13 +1791,15 @@ void KlustersDoc::redo(){
                         //update the TraceView if any
                         view->updateTraceView(electrodeGroupID,clusterColorList,true);
                     }
+                }
 
                 //Notify the errorMatrixView of the modification
                 emit redoAddition(*addedClusters,*deletedClusters);
             }
             else if(addedClusters->size() == 0 && modifiedClusters->size() > 0){
                 qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() == 0 && modifiedClusters->size()>0"<< endl;
-                for(view = viewList->first(); view!=0; view = viewList->next())
+                for(int i =0; i<viewList->count();++i) {
+                    KlustersView *view = viewList->at(i);
                     if(view != activeView){
                         view->redoModifiedClusters(*modifiedClusters,isModifiedByDeletion,false,*deletedClusters);
                         //update the TraceView if any
@@ -1780,13 +1810,15 @@ void KlustersDoc::redo(){
                         //update the TraceView if any
                         view->updateTraceView(electrodeGroupID,clusterColorList,true);
                     }
+                }
 
                 //Notify the errorMatrixView of the modification
                 emit redoModification(*modifiedClusters,isModifiedByDeletion,*deletedClusters);
             }
             else if(addedClusters->size() == 0 && modifiedClusters->size() == 0){
                 qDebug() << "in KlustersDoc::redo, nbUndo  addedClusters->size() == 0 && modifiedClusters->size() ==0"<< endl;
-                for(view = viewList->first(); view!=0; view = viewList->next())
+                for(int i =0; i<viewList->count();++i) {
+                    KlustersView *view = viewList->at(i);
                     if(view != activeView){
                         view->redo(false,*deletedClusters);
                         //update the TraceView if any
@@ -1797,6 +1829,7 @@ void KlustersDoc::redo(){
                         //update the TraceView if any
                         view->updateTraceView(electrodeGroupID,clusterColorList,true);
                     }
+                }
 
                 //Notify the errorMatrixView of the modification
                 emit redoDeletion(*deletedClusters);
@@ -1848,7 +1881,7 @@ void KlustersDoc::renumberClusters(){
 
     //Notify all the views of the modification
     KlustersView* view;
-    for(view = viewList->first(); view!=0; view = viewList->next())
+    for(int i =0; i<viewList->count();++i)
     {
         if(view != activeView){
             view->renumberClusters(clusterIdsOldNew,false);
@@ -1964,7 +1997,7 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
 
         //Notify all the views of the modification
         KlustersView* view;
-        for(view = viewList->first(); view!=0; view = viewList->next()){
+        for(int i =0; i<viewList->count();++i){
             if(view != activeView){
                 view->addNewClustersToView(clustersToRecluster,reclusteredClusterList,false);
                 //update the TraceView if any
@@ -2003,7 +2036,7 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
 
         //Notify all the views of the modification
         KlustersView* view;
-        for(view = viewList->first(); view!=0; view = viewList->next())
+        for(int i =0; i<viewList->count();++i)
             if(view->metaObject()->className() != ("ProcessWidget")){
                 view->addNewClustersToView(clustersToRecluster,reclusteredClusterList,false);
                 //update the TraceView if any
