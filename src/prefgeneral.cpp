@@ -29,7 +29,7 @@ PrefGeneral::PrefGeneral(QWidget *parent ) : PrefGeneralLayout(parent) {
 
     //Set an icon on the reclusteringExecutableButton button
 
-    reclusteringExecutableButton->setIconSet(QIcon(":/icons/fileopen"));
+    reclusteringExecutableButton->setIcon(QIcon(":/icons/fileopen"));
 }
 PrefGeneral::~PrefGeneral(){
 }
@@ -42,7 +42,7 @@ void PrefGeneral::setCrashRecovery(bool use){
         updateCrashRecoveryTimeInterval(QCheckBox::Off);
 }
 
-void PrefGeneral::setCrashRecoveryIndex(int index){crashRecoveryComboBox->setCurrentItem(index);}
+void PrefGeneral::setCrashRecoveryIndex(int index){crashRecoveryComboBox->setCurrentIndex(index);}
 
 void PrefGeneral::setNbUndo(int nb){undoSpinBox->setValue(nb);}
 
@@ -56,7 +56,7 @@ void PrefGeneral::setReclusteringArguments(const QString& arguments) {reclusteri
 
 bool PrefGeneral::isCrashRecovery() const{return crashRecoveryCheckBox->isChecked();}
 
-int PrefGeneral::crashRecoveryIntervalIndex() const{return crashRecoveryComboBox->currentItem();}
+int PrefGeneral::crashRecoveryIntervalIndex() const{return crashRecoveryComboBox->currentIndex();}
 
 int PrefGeneral::getNbUndo() const{return undoSpinBox->value();}
 
