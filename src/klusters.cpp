@@ -2490,8 +2490,7 @@ void KlustersApp::slotRecluster(){
     if(returnStatus == KlustersDoc::OPEN_ERROR){
         QMessageBox::critical (this,tr("Error !"),tr("The reclustering feature file cannot be created (possibly because of insufficient file access permissions).\n Reclustering can not be done."));
         return;
-    }
-    else if(returnStatus == KlustersDoc::CREATION_ERROR){
+    } else if(returnStatus == KlustersDoc::CREATION_ERROR) {
         QMessageBox::critical (this,tr("IO Error !"),tr("An error happened while creating the reclustering feature file.\n Reclustering can not be done."));
         return;
     }
@@ -2502,8 +2501,8 @@ void KlustersApp::slotRecluster(){
         display = new QDockWidget(tr("Recluster output"),0);
 
         processWidget = new ProcessWidget(display);
-        connect(processWidget,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(slotProcessExited(int,QProcess::ExitStatus)));
-        connect(processWidget,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
+        connect(processWidget,SIGNAL(processExited(int,QProcess::ExitStatus)), this, SLOT(slotProcessExited(int,QProcess::ExitStatus)));
+        connect(processWidget,SIGNAL(processExited(int,QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
 
         //install the new view in the display so it can be see in the future tab.
         display->setWidget(processWidget);
@@ -2516,7 +2515,7 @@ void KlustersApp::slotRecluster(){
         area->addDockWidget(Qt::BottomDockWidgetArea,display);
 
         //Keep track of the number of displays
-        displayCount ++;
+        displayCount++;
 
     }
 

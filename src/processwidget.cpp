@@ -116,9 +116,9 @@ bool ProcessWidget::isRunning()
 }
 
 
-void ProcessWidget::slotProcessExited(int , QProcess::ExitStatus)
+void ProcessWidget::slotProcessExited(int value , QProcess::ExitStatus status)
 {
-    emit processExited(childproc);
+    emit processExited(value, status);
 }
 
 

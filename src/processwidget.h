@@ -112,7 +112,7 @@ protected:
     virtual void childFinished(bool normal, int status);
 
 Q_SIGNALS:
-    void processExited(QProcess*);
+    void processExited(int,QProcess::ExitStatus);
     void processOutputsFinished();
     void hidden();
 
