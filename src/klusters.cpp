@@ -232,7 +232,7 @@ void KlustersApp::createMenus()
 
     mSelectAllExceptAction = editMenu->addAction(tr("Select All Except 0 and 1"));
     mSelectAllExceptAction->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_A);
-    connect(mSelectAllAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
+    connect(mSelectAllExceptAction, SIGNAL(triggered()), this, SLOT(slotSelectAllWO01()));
 
 
     //Actions menu

@@ -26,7 +26,6 @@
 //Added by qt3to4:
 #include <QList>
 
-#include <Q3PtrList>
 #include <QEvent>
 #include <QMessageBox>
 #include <QDebug>
