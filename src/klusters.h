@@ -614,11 +614,11 @@ private:
     class Validator: public QIntValidator{
 
     public:
-        inline Validator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
+        inline Validator(QObject* parent):QIntValidator(parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline Validator(int minimum,int maximum,QObject* parent, const char* name = 0):
-            QIntValidator(minimum,maximum,parent,name){
+        inline Validator(int minimum,int maximum,QObject* parent):
+            QIntValidator(minimum,maximum,parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
         inline ~Validator(){}
@@ -690,11 +690,11 @@ private:
     class BinSizeValidator: public QIntValidator{
 
     public:
-        inline BinSizeValidator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
+        inline BinSizeValidator(QObject* parent):QIntValidator(parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline BinSizeValidator(int minimum,int maximum,QObject* parent, const char* name = 0):
-            QIntValidator(minimum,maximum,parent,name){
+        inline BinSizeValidator(int minimum,int maximum,QObject* parent):
+            QIntValidator(minimum,maximum,parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
         inline ~BinSizeValidator(){}
@@ -743,11 +743,11 @@ private:
     class CorrelogramsHalfTimeFrameValidator: public QIntValidator{
 
     public:
-        inline CorrelogramsHalfTimeFrameValidator(QObject* parent, const char* name = 0):QIntValidator(parent,name){
+        inline CorrelogramsHalfTimeFrameValidator(QObject* parent):QIntValidator(parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline CorrelogramsHalfTimeFrameValidator(int minimum,int maximum,QObject* parent, const char* name = 0):
-            QIntValidator(minimum,maximum,parent,name){
+        inline CorrelogramsHalfTimeFrameValidator(int minimum,int maximum,QObject* parent):
+            QIntValidator(minimum,maximum,parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
         inline ~CorrelogramsHalfTimeFrameValidator(){}

@@ -183,7 +183,7 @@ bool ParameterXmlModifier::setClusterUserInformation (int pGroup,QMap<int,Cluste
     for (iterator = clusterUserInformationMap.begin(); iterator != clusterUserInformationMap.end(); ++iterator) {
         //Get the cluster user information (structure, type,isolation distance, quality, notes)
         clusterId = iterator.key();
-        currentClusterUserInformation = iterator.data();
+        currentClusterUserInformation = iterator.value();
 		  group = currentClusterUserInformation.getGroup();
         structure = currentClusterUserInformation.getStructure();
         type = currentClusterUserInformation.getType();

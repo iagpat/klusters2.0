@@ -169,12 +169,12 @@ QSize ProcessWidget::minimumSizeHint() const
 
 void ProcessWidget::maybeScrollToBottom()
 {
-    if ( verticalScrollBar()->value() == verticalScrollBar()->maxValue() ) {
+    if ( verticalScrollBar()->value() == verticalScrollBar()->maximum() ) {
         qApp->processEvents();
-        verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
+        verticalScrollBar()->setValue( verticalScrollBar()->maximum() );
         /// \FIXME dirty hack to _actually_ scroll to the bottom
         qApp->processEvents();
-        verticalScrollBar()->setValue( verticalScrollBar()->maxValue() );
+        verticalScrollBar()->setValue( verticalScrollBar()->maximum() );
     }
 }
 
