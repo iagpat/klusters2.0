@@ -877,7 +877,7 @@ void KlustersApp::initDisplay(){
     //Update the Time frame and sample related widgets
     spikesTodisplay->setValue(DEFAULT_NB_SPIKES_DISPLAYED);
     start->setValue(0);
-    start->setLineStep(timeWindow);
+    start->setSingleStep(timeWindow);
     duration->setText(INITIAL_WAVEFORM_TIME_WINDOW);
     if(timeFrameMode->isChecked()){
         duration->show();
@@ -2080,7 +2080,7 @@ void KlustersApp::slotTabChange(QWidget* widget){
                     timeWindow = activeView->timeFrameWidth();
                     startTime =  activeView->timeFrameStart();
                     start->setValue(startTime);
-                    start->setLineStep(timeWindow);
+                    start->setSingleStep(timeWindow);
                     duration->setText(QString::fromLatin1("%1").arg(timeWindow));
                     duration->show();
                     durationLabel->show();
@@ -2233,7 +2233,7 @@ void KlustersApp::updateDimensions(int dimensionXValue, int dimensionYValue){
 void KlustersApp::slotUpdateDuration(){
     if(!isInit){
         timeWindow =  (duration->displayText()).toLong();
-        start->setLineStep(timeWindow);
+        start->setSingleStep(timeWindow);
         activeView()->updateTimeFrame(startTime,timeWindow);
     }
 }
@@ -2244,7 +2244,7 @@ void KlustersApp::slotTimeFrameMode(){
             timeWindow = activeView()->timeFrameWidth();
             startTime =  activeView()->timeFrameStart();
             start->setValue(startTime);
-            start->setLineStep(timeWindow);
+            start->setSingleStep(timeWindow);
             duration->setText(QString::fromLatin1("%1").arg(timeWindow));
             duration->show();
             durationLabel->show();
