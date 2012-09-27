@@ -1366,9 +1366,9 @@ void KlustersApp::slotFileClose(){
                     //Remove the display from the group of tabs
                     while(true){
                         int nbOfTabs = tabsParent->count();
-                        DockArea* current = static_cast<DockArea*>(tabsParent->page(0));
+                        DockArea* current = static_cast<DockArea*>(tabsParent->widget(0));
                         if(current == mainDock){
-                            current = static_cast<DockArea*>(tabsParent->page(1));
+                            current = static_cast<DockArea*>(tabsParent->widget(1));
                         }
 
                         if((current->widget())->isA("KlustersView")){
@@ -1482,7 +1482,7 @@ void KlustersApp::slotDisplayClose()
     //Get the active tab
     if(tabsParent->count()>1){
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        current = static_cast<DockArea*>(tabsParent->currentPage());
+        current = static_cast<DockArea*>(tabsParent->currentWidget());
         //Remove the display from the group of tabs
         tabsParent->removeTab(tabsParent->indexOf(current));
         displayCount --;
@@ -1604,7 +1604,7 @@ void KlustersApp::slotFilePrint()
                 view->print(printer,filePath,false);
         }
         else{
-            QDockWidget* dock = static_cast<QDockWidget*>(tabsParent->currentPage());
+            QDockWidget* dock = static_cast<QDockWidget*>(tabsParent->currentWidget());
             ProcessWidget* view = static_cast<ProcessWidget*>(dock->widget());
             view->print(printer,filePath);
         }
