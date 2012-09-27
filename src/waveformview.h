@@ -381,12 +381,6 @@ private:
     /**List of pointers on the threads which have to be suppress when this object is destroy.*/
     QList<WaveformThread*> threadsToBeKill;
 
-    /**List of pointers on the threads for which the result should not be taken into account.
- * If a cluster is modified while a thread launch to obtain the cluster's data
- * is running a second thread will be launch. In that case only the result of the last thread shoud be used.
- */
-    Q3PtrList<WaveformThread> threadsToDisregard;
-
     /**True if the waveform information needed to draw the waveforms are available.*/
     bool dataReady;
 

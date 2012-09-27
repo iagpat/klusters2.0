@@ -314,7 +314,6 @@ void WaveformView::customEvent(QEvent *event){
         else{
             //the data have be retrieved and the mean and standard deviation calculated
             if(meanPresentation || (!meanPresentation && meanRequested)){
-                // if(threadsToDisregard.contains(waveformThread)) threadsToDisregard.remove(waveformThread);
                 //Delete the waveformThread, this is done by removing it from threadsToBeKill as auto-deletion is enabled.
                 threadsToBeKill.remove(waveformThread);
                 // setCursor(zoomCursor);
@@ -358,7 +357,6 @@ void WaveformView::customEvent(QEvent *event){
         //return when the event is received here.
         while(!waveformThread->wait()){};
 
-        if(threadsToDisregard.contains(waveformThread))threadsToDisregard.remove(waveformThread);
         //Delete the waveformThread, this is done by removing it from threadsToBeKill as auto-deletion is enabled.
         threadsToBeKill.remove(waveformThread);
         //setCursor(zoomCursor);
