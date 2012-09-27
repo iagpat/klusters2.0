@@ -77,12 +77,12 @@ public:
     /**Opens a file, only one document at the time is allowed.
     * Asking for a new one will open a new instance of the application with it.
     */
-    virtual void openDocumentFile(const QString& url=0);
+    virtual void openDocumentFile(const QString& url=QString());
 
     /** Imports a file using the old format, only one document at the time is allowed.
     * Asking for a new one will open a new instance of the application with it.
     */
-    virtual void importDocumentFile(const QString& url=0);
+    virtual void importDocumentFile(const QString& url=QString());
 
     /**Returns the view contains in the active display.
     * @return active view.
