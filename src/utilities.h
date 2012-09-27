@@ -33,25 +33,26 @@
 @author Lynn Hazan
 */
 class Utilities{
-public:
-    inline Utilities(){}
-    inline ~Utilities(){}
-    
+public:    
     /**
     * Compares the versions
     * @param oldVersion the old version 
     * @param newVersion the new version
     * @return true if @p newVersion is superior to @p oldVersion, false otherwise.
     */
-    inline static bool compareVersion(QString oldVersion, QString newVersion){
+    inline static bool compareVersion(const QString &oldVersion, const QString& newVersion){
      QStringList oldList = QStringList::split(".", oldVersion);
      QStringList newList = QStringList::split(".", newVersion);
      int minLength = qMin(oldList.count(),newList.count());
      for(int i = 0; i< minLength;++i){
-      if(newList[i] > oldList[i]) return true;
+      if(newList[i] > oldList[i]) {
+          return true;
+      }
      }
-     if(newList.count() > oldList.count()) return true;
-     else return false;
+     if(newList.count() > oldList.count())
+         return true;
+     else
+         return false;
     }
 
     /**Counts and returns the number of lines in the file @p path.
