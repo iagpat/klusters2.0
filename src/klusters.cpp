@@ -1361,60 +1361,29 @@ void KlustersApp::slotFileClose(){
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
             //try to close the document
             if(doc->canCloseDocument(this,"fileClose")){
-                //remove all the displays
-                if(tabsParent){
-                    //Remove the display from the group of tabs
-                    while(true){
-                        int nbOfTabs = tabsParent->count();
-                        DockArea* current = static_cast<DockArea*>(tabsParent->widget(0));
-                        if(current == mainDock){
-                            current = static_cast<DockArea*>(tabsParent->widget(1));
-                        }
-
-                        if((current->widget())->isA("KlustersView")){
-                            tabsParent->removePage(current);
-                            delete current;
-                        } else {//give the time to the process to finish.
-                            if(processWidget->isRunning()){
-                                processWidget->killJob();
-                                processKilled = true;
-                            }
-                            if(processFinished && processOutputsFinished){
-                                tabsParent->removePage(current);
-                                delete current;
-                                processWidget = 0L;
-                            } else{
-                                QTimer::singleShot(2000,this, SLOT(slotFileClose()));
-                                return;
-                            }
-                        }
-
-                        if(nbOfTabs == 2) break; //the reminding one is the mainDock
-                    }
-
-                    tabsParent = 0L;
-                }
-                //reset the cluster palette and hide the cluster panel
-                clusterPalette->reset();
-                clusterPanel->hide();
-                //The last display is the mainDock
-                if((mainDock)->isA("KlustersView"))
-                    delete mainDock;
-                else{
+                if(processWidget) {
                     if(processWidget->isRunning()){
                         processWidget->killJob();
                         processKilled = true;
                     }
                     if(processFinished && processOutputsFinished){
-                        delete mainDock;
                         processWidget = 0L;
-                    }
-                    else{
-                        mainDock->hide();
+                    } else{
                         QTimer::singleShot(2000,this, SLOT(slotFileClose()));
                         return;
                     }
                 }
+                while(true){
+                    DockArea* current = static_cast<DockArea*>(tabsParent->widget(0));
+                    tabsParent->removePage(current);
+                    delete current;
+                    if(tabsParent->count()==0)
+                        break;
+
+                }
+                //reset the cluster palette and hide the cluster panel
+                clusterPalette->reset();
+                clusterPanel->hide();
                 mainDock = 0L;
                 doc->closeDocument();
                 resetState();
