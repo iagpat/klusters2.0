@@ -463,7 +463,7 @@ void WaveformView::drawWaveforms(QPainter& painter,const QList<int>& clusterList
 
     for(clusterIterator = clusterListSorted.begin(); clusterIterator != clusterListSorted.end(); ++clusterIterator){
         if(specificPosition){
-            int index = shownClusters.findIndex(*clusterIterator);
+            int index = shownClusters.indexOf(*clusterIterator);
             X = X0 + index * shift;
         }
         //Get the color associated with the cluster and set the color to use to this color

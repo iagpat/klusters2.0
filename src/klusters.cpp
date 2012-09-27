@@ -1148,7 +1148,7 @@ void KlustersApp::openDocumentFile(const QString& url)
     else{
         QString docName = doc->documentName();
         QFileInfo urlFileInfo(url);
-        QStringList fileParts = QStringList::split(".", urlFileInfo.fileName());
+        QStringList fileParts = urlFileInfo.fileName().split(".", QString::SkipEmptyParts);
         QString electrodNb;
         if(fileParts.count() < 3)
             electrodNb.clear();

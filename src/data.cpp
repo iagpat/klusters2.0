@@ -937,7 +937,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& cluste
         QMap<int,int>::Iterator iterator;
         int i = 0;
         for(iterator = fromToNewClusterIds.begin(); iterator != fromToNewClusterIds.end(); ++iterator){
-            sortCluster(clusterInfoMapTemp2,spikesByClusterTemp,iterator.data(),firstPositions[i],nbOfspikes[i],-1);
+            sortCluster(clusterInfoMapTemp2,spikesByClusterTemp,iterator.value(),firstPositions[i],nbOfspikes[i],-1);
             ++i;
         }
 

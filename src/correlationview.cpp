@@ -415,8 +415,8 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
 
         //Find the position of the next correlogram.
         if(specificPosition){
-            int index1 = shownClusters.findIndex(cluster1);
-            int index2 = shownClusters.findIndex(cluster2);
+            int index1 = shownClusters.indexOf(cluster1);
+            int index2 = shownClusters.indexOf(cluster2);
             X = widthBorder + index1 * shift;
             Y = heightBorder + index2 * (YsizeForMaxAmp + Yspace);
         }

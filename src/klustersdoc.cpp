@@ -224,7 +224,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     QFileInfo urlFileInfo(url);
 
     QString fileName = urlFileInfo.fileName();
-    const QStringList fileParts = QStringList::split(".", fileName);
+    const QStringList fileParts = fileName.split(".", QString::SkipEmptyParts);
     if(fileParts.count() < 3)
         return INCORRECT_FILE;
     baseName = fileParts[0];
@@ -545,7 +545,7 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
         docUrl = saveUrl;
         QFileInfo docUrlFileInfo(docUrl);
         QString fileName = docUrlFileInfo.fileName();
-        const QStringList fileParts = QStringList::split(".", fileName);
+        const QStringList fileParts = fileName.split(".", QString::SkipEmptyParts);
         baseName = fileParts[0];
         if(fileParts.count() > 2)  {
             for(uint i = 1;i < fileParts.count()-2; ++i){
