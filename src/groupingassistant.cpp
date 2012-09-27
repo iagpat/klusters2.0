@@ -54,8 +54,8 @@ Array<double>* GroupingAssistant::computeMeanProbabilities(Data& clusteringData,
 
         if(haveToStopComputing) break; //We do not care about what is return as it will not be used.
 
-        dataType firstSpikePosition = iterator.data().firstSpikePosition();
-        dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+        dataType firstSpikePosition = iterator.value().firstSpikePosition();
+        dataType nbSpikesOfCluster = iterator.value().nbSpikes();
         dataType lastPosition =  firstSpikePosition + nbSpikesOfCluster;
 
         //Check if the current cluster has been ignored
@@ -134,7 +134,7 @@ Array<double>* GroupingAssistant::computeProbabilities(Data& clusteringData,QLis
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator){
         if(haveToStopComputing) return probabilities;//We do not care about what is return as it will not be used.
 
-        dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+        dataType nbSpikesOfCluster = iterator.value().nbSpikes();
         dataType clusterId = iterator.key();
 
         //Check if the cluster1 exists
@@ -187,8 +187,8 @@ Array<double>* GroupingAssistant::computeProbabilities(Data& clusteringData,QLis
         for(iterator2 = clusterInfoMap->begin(); iterator2 != clusterInfoMap->end(); ++iterator2){
             if(haveToStopComputing) return probabilities;//We do not care about what is return as it will not be used.
 
-            dataType firstSpikePosition = iterator2.data().firstSpikePosition();
-            dataType lastPosition =  firstSpikePosition + iterator2.data().nbSpikes();
+            dataType firstSpikePosition = iterator2.value().firstSpikePosition();
+            dataType lastPosition =  firstSpikePosition + iterator2.value().nbSpikes();
 
             //Check if the current cluster has been ignore
             if(ignoreClusterIndex.contains(clusterIndex2) != 0){
@@ -246,8 +246,8 @@ Array<double>* GroupingAssistant::computeProbabilities(Data& clusteringData,QLis
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator){
         if(haveToStopComputing) return probabilities;//We do not care about what is return as it will not be used.
 
-        dataType firstSpikePosition = iterator.data().firstSpikePosition();
-        dataType lastPosition =  firstSpikePosition + iterator.data().nbSpikes();
+        dataType firstSpikePosition = iterator.value().firstSpikePosition();
+        dataType lastPosition =  firstSpikePosition + iterator.value().nbSpikes();
 
         //Check if the current cluster has been ignore
         if(ignoreClusterIndex.contains(clusterIndex) != 0){
@@ -317,8 +317,8 @@ void GroupingAssistant::meanCovarianceComputation(int nbClusters,int nbDimension
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator){
         if(haveToStopComputing) return;//We do not care about the result as it will not be used.
 
-        dataType firstSpikePosition = iterator.data().firstSpikePosition();
-        dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+        dataType firstSpikePosition = iterator.value().firstSpikePosition();
+        dataType nbSpikesOfCluster = iterator.value().nbSpikes();
         dataType lastPosition =  firstSpikePosition + nbSpikesOfCluster;
 
         //Check if a cluster as to be ignore <=> not enough spikes.

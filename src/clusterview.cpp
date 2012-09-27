@@ -261,7 +261,7 @@ void ClusterView::updatedDimensions(int dimensionX, int dimensionY){
 }
 
 void ClusterView::setMode(BaseFrame::Mode selectedMode){
-    statusBar->clear();
+    statusBar->clearMessage();
     selectionPolygon.clear();
     nbSelectionPoints = 0;
     mode = selectedMode;
@@ -341,7 +341,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
             }
             drawContentsMode = REFRESH;
             update();
-            statusBar->clear();
+            statusBar->clearMessage();
         }
 
         if (e->button() == Qt::LeftButton){
@@ -360,7 +360,7 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
 void ClusterView::mouseReleaseEvent(QMouseEvent* event){
     //Trigger parent event
     ViewWidget::mouseReleaseEvent(event);
-    statusBar->clear();
+    statusBar->clearMessage();
 }
 
 void ClusterView::mouseMoveEvent(QMouseEvent* e){

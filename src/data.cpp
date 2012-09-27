@@ -392,9 +392,9 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QSt
         positions[clusterId] =  index;
         ClusterUserInformation vClusterUserInformation = clusterUserInformationMap[static_cast<int>(clusterId)];
 
-        clusterInfoMap->insert(clusterId,ClusterInfo(index,iterator.data(),vClusterUserInformation.getStructure(),vClusterUserInformation.getType(),vClusterUserInformation.getId(),vClusterUserInformation.getQuality(),vClusterUserInformation.getNotes()));
+        clusterInfoMap->insert(clusterId,ClusterInfo(index,iterator.value(),vClusterUserInformation.getStructure(),vClusterUserInformation.getType(),vClusterUserInformation.getId(),vClusterUserInformation.getQuality(),vClusterUserInformation.getNotes()));
 
-        index += iterator.data();
+        index += iterator.value();
     }
 
     //Reset the clusterUserInformationMap which only ne used from now on to store the information before writting it to the xml parameter file.
@@ -520,7 +520,7 @@ void Data::minMaxDimensionCalculation(QList<int> modifiedClusters){
     SortableTable spikesByClusterTemp(*spikesByCluster);
 
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator){
-        clusterInfoMapTemp.insert(iterator.key(),iterator.data());
+        clusterInfoMapTemp.insert(iterator.key(),iterator.value());
     }
     mutex.unlock();
 
@@ -560,8 +560,8 @@ void Data::minMaxDimensionCalculation(QList<int> modifiedClusters){
             dataType clusterId = iterator.key();
 
             if(clusterId == 0) continue;
-            dataType firstSpikePosition = iterator.data().firstSpikePosition();
-            dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+            dataType firstSpikePosition = iterator.value().firstSpikePosition();
+            dataType nbSpikesOfCluster = iterator.value().nbSpikes();
             dataType lastPosition =  firstSpikePosition + nbSpikesOfCluster;
 
             for(dataType i = firstSpikePosition; i < (lastPosition);++i){
@@ -631,8 +631,8 @@ dataType Data::createNewCluster(QRegion& region, const QList <int>& clustersOfOr
 
     //NB: the iterator iterates on the items sorted by their key
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator){
-        dataType firstSpikePosition = iterator.data().firstSpikePosition();
-        dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+        dataType firstSpikePosition = iterator.value().firstSpikePosition();
+        dataType nbSpikesOfCluster = iterator.value().nbSpikes();
         dataType clusterId = iterator.key();
 
         //if clustersOfOrigin does not contains the current cluster, this cluster is let unchanged
@@ -646,7 +646,7 @@ dataType Data::createNewCluster(QRegion& region, const QList <int>& clustersOfOr
                    &(*spikesByCluster)(2,firstSpikePosition),
                    nbSpikesOfCluster * sizeof(dataType));
             //Construct the new clusterInfoMap
-            clusterInfoMapTemp->insert(clusterId,ClusterInfo(upperInsertionIndex,nbSpikesOfCluster,iterator.data().getStructure(),iterator.data().getType(),iterator.data().getId(),iterator.data().getQuality(),iterator.data().getNotes()));
+            clusterInfoMapTemp->insert(clusterId,ClusterInfo(upperInsertionIndex,nbSpikesOfCluster,iterator.value().getStructure(),iterator.value().getType(),iterator.value().getId(),iterator.value().getQuality(),iterator.value().getNotes()));
             upperInsertionIndex += nbSpikesOfCluster;
         }
         //Now deal with the clusters which may contain spikes to add to the new cluster
@@ -697,7 +697,7 @@ dataType Data::createNewCluster(QRegion& region, const QList <int>& clustersOfOr
 
                     //Construct the insertion of the current cluster in the new clusterInfoMap if
                     // the number of spikes is more than zero
-                    if(newNbSpikesOfCluster >0)clusterInfoMapTemp->insert(clusterId,ClusterInfo(updatedClusterPosition,newNbSpikesOfCluster,iterator.data().getStructure(),iterator.data().getType(),iterator.data().getId(),iterator.data().getQuality(),iterator.data().getNotes()));
+                    if(newNbSpikesOfCluster >0)clusterInfoMapTemp->insert(clusterId,ClusterInfo(updatedClusterPosition,newNbSpikesOfCluster,iterator.value().getStructure(),iterator.value().getType(),iterator.value().getId(),iterator.value().getQuality(),iterator.value().getNotes()));
                     else emptyClusters.append(static_cast<int>(clusterId));
                 }
             }
@@ -804,8 +804,8 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& cluste
 
     //NB: the iterator iterates on the items sorted by their key
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator){
-        dataType firstSpikePosition = iterator.data().firstSpikePosition();
-        dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+        dataType firstSpikePosition = iterator.value().firstSpikePosition();
+        dataType nbSpikesOfCluster = iterator.value().nbSpikes();
         dataType clusterId = iterator.key();
 
         //if clustersOfOrigin does not contains the current cluster, this cluster is let unchanged
@@ -819,7 +819,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& cluste
                    &(*spikesByCluster)(2,firstSpikePosition),
                    nbSpikesOfCluster * sizeof(dataType));
             //Construct the new clusterInfoMap
-            clusterInfoMapTemp.insert(clusterId,ClusterInfo(upperInsertionIndex,nbSpikesOfCluster,iterator.data().getStructure(),iterator.data().getType(),iterator.data().getId(),iterator.data().getQuality(),iterator.data().getNotes()));
+            clusterInfoMapTemp.insert(clusterId,ClusterInfo(upperInsertionIndex,nbSpikesOfCluster,iterator.value().getStructure(),iterator.value().getType(),iterator.value().getId(),iterator.value().getQuality(),iterator.value().getNotes()));
             upperInsertionIndex += nbSpikesOfCluster;
         }
         //Now deal with the clusters which may contain spikes to add to a new cluster <=> spike in the region.
@@ -869,7 +869,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& cluste
                     // the number of spikes is more than zero.
                     //Copy the spikes back to spikesByCluster.
                     if(newNbSpikesOfCluster > 0){
-                        clusterInfoMapTemp.insert(clusterId,ClusterInfo(updatedClusterPosition,newNbSpikesOfCluster,iterator.data().getStructure(),iterator.data().getType(),iterator.data().getId(),iterator.data().getQuality(),iterator.data().getNotes()));
+                        clusterInfoMapTemp.insert(clusterId,ClusterInfo(updatedClusterPosition,newNbSpikesOfCluster,iterator.value().getStructure(),iterator.value().getType(),iterator.value().getId(),iterator.value().getQuality(),iterator.value().getNotes()));
                     }
                     else emptyClusters.append(static_cast<int>(clusterId));
 
@@ -1654,8 +1654,8 @@ dataType Data::groupClusters(QList<int>& clustersToGroup){
 
     //NB: the iterator iterates on the items sorted by their key
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator) {
-        dataType firstSpikePosition = iterator.data().firstSpikePosition();
-        dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+        dataType firstSpikePosition = iterator.value().firstSpikePosition();
+        dataType nbSpikesOfCluster = iterator.value().nbSpikes();
         dataType clusterId = iterator.key();
 
         //if clustersToGroup does not contains the current cluster, this cluster is let unchanged
@@ -1670,7 +1670,7 @@ dataType Data::groupClusters(QList<int>& clustersToGroup){
                    nbSpikesOfCluster * sizeof(dataType));
 
             //Construct the new clusterInfoMap
-            clusterInfoMapTemp->insert(clusterId,ClusterInfo(upperInsertionIndex,nbSpikesOfCluster,iterator.data().getStructure(),iterator.data().getType(),iterator.data().getId(),iterator.data().getQuality(),iterator.data().getNotes()));
+            clusterInfoMapTemp->insert(clusterId,ClusterInfo(upperInsertionIndex,nbSpikesOfCluster,iterator.value().getStructure(),iterator.value().getType(),iterator.value().getId(),iterator.value().getQuality(),iterator.value().getNotes()));
             upperInsertionIndex += nbSpikesOfCluster;
         }
         //Now deal with the clusters which are to be grouped and need to be added to the new cluster
@@ -1689,20 +1689,20 @@ dataType Data::groupClusters(QList<int>& clustersToGroup){
 
             //Take care of the user information about the current cluster
             if(first){
-                newStructure += iterator.data().getStructure();
-                newType += iterator.data().getType();
-                newID += iterator.data().getId();
-                newQuality += iterator.data().getQuality();
-                newNotes += iterator.data().getNotes();
+                newStructure += iterator.value().getStructure();
+                newType += iterator.value().getType();
+                newID += iterator.value().getId();
+                newQuality += iterator.value().getQuality();
+                newNotes += iterator.value().getNotes();
 
                 first = FALSE;
             }
             else{
-                newStructure += "--" + iterator.data().getStructure();
-                newType += "--" + iterator.data().getType();
-                newID += "--" + iterator.data().getId();
-                newQuality += "--" + iterator.data().getQuality();
-                newNotes += "--" + iterator.data().getNotes();
+                newStructure += "--" + iterator.value().getStructure();
+                newType += "--" + iterator.value().getType();
+                newID += "--" + iterator.value().getId();
+                newQuality += "--" + iterator.value().getQuality();
+                newNotes += "--" + iterator.value().getNotes();
             }
         }
     }
@@ -1860,8 +1860,8 @@ void Data::moveClusters(QList<int>& clustersToDelete,SortableTable* spikesByClus
         dataType clusterId = iterator.key();
         if(clusterId <= destinationId) continue;
         if(!clustersToDelete.contains(static_cast<int>(clusterId))){
-            dataType firstSpikePosition = iterator.data().firstSpikePosition();
-            dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+            dataType firstSpikePosition = iterator.value().firstSpikePosition();
+            dataType nbSpikesOfCluster = iterator.value().nbSpikes();
 
             memcpy(&(*spikesByClusterTemp)(1,upperInsertionIndex),
                    &(*spikesByCluster)(1,firstSpikePosition),
@@ -1871,7 +1871,7 @@ void Data::moveClusters(QList<int>& clustersToDelete,SortableTable* spikesByClus
                    nbSpikesOfCluster * sizeof(dataType));
 
             //Construct the new clusterInfoMap
-            clusterInfoMapTemp->insert(clusterId,ClusterInfo(upperInsertionIndex,nbSpikesOfCluster,iterator.data().getStructure(),iterator.data().getType(),iterator.data().getId(),iterator.data().getQuality(),iterator.data().getNotes()));
+            clusterInfoMapTemp->insert(clusterId,ClusterInfo(upperInsertionIndex,nbSpikesOfCluster,iterator.value().getStructure(),iterator.value().getType(),iterator.value().getId(),iterator.value().getQuality(),iterator.value().getNotes()));
             upperInsertionIndex += nbSpikesOfCluster;
         }
     }
@@ -2222,8 +2222,8 @@ void Data::renumber(QMap<int,int>& clusterIdsOldNew,QMap<int,int>& clusterIdsNew
 
     //NB: the iterator iterates on the items sorted by their key
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator) {
-        dataType firstSpikePosition = iterator.data().firstSpikePosition();
-        dataType nbSpikesOfCluster = iterator.data().nbSpikes();
+        dataType firstSpikePosition = iterator.value().firstSpikePosition();
+        dataType nbSpikesOfCluster = iterator.value().nbSpikes();
         dataType clusterId = iterator.key();
 
         //The clusters 0 and 1 have been processed separately before
@@ -2266,7 +2266,7 @@ void Data::renumber(QMap<int,int>& clusterIdsOldNew,QMap<int,int>& clusterIdsNew
             mutex.unlock();
         }
         //Construct the new clusterInfoMap
-        clusterInfoMapTemp->insert(clusterNumber,ClusterInfo(firstSpikePosition,nbSpikesOfCluster,iterator.data().getStructure(),iterator.data().getType(),iterator.data().getId(),iterator.data().getQuality(),iterator.data().getNotes()));
+        clusterInfoMapTemp->insert(clusterNumber,ClusterInfo(firstSpikePosition,nbSpikesOfCluster,iterator.value().getStructure(),iterator.value().getType(),iterator.value().getId(),iterator.value().getQuality(),iterator.value().getNotes()));
         clusterIdsOldNew.insert(static_cast<int>(clusterId),clusterNumber);
         clusterIdsNewOld.insert(clusterNumber,static_cast<int>(clusterId));
 
@@ -2297,8 +2297,8 @@ bool Data::saveClusters(FILE* clusterFile){
 
     bool overLimit = false;
     for(it = clusterInfoMap->begin(); it != clusterInfoMap->end(); ++it){
-        clusterInfoMapTemp.insert(it.key(),it.data());
-        if(it.data().nbSpikes() > 250000) overLimit = true;
+        clusterInfoMapTemp.insert(it.key(),it.value());
+        if(it.value().nbSpikes() > 250000) overLimit = true;
     }
     mutex.unlock();
 
@@ -3534,8 +3534,8 @@ bool Data::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<in
 
     //NB: the iterator iterates on the items sorted by their key
     for(infoMapIterator = clusterInfoMap->begin(); infoMapIterator != clusterInfoMap->end(); ++infoMapIterator){
-        dataType firstSpikePosition = infoMapIterator.data().firstSpikePosition();
-        dataType nbSpikesOfCluster = infoMapIterator.data().nbSpikes();
+        dataType firstSpikePosition = infoMapIterator.value().firstSpikePosition();
+        dataType nbSpikesOfCluster = infoMapIterator.value().nbSpikes();
         dataType clusterId = infoMapIterator.key();
 
         //if clustersToRecluster does not contains the current cluster, this cluster is let unchanged
@@ -3576,8 +3576,8 @@ bool Data::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<in
         dataType clusterId = clusterIterator.key();
         reclusteredClusterList.append(static_cast<int>(clusterId));
         positions[clusterId] =  index;
-        clusterInfoMapTemp->insert(clusterId,ClusterInfo(index,clusterIterator.data()));
-        index += clusterIterator.data();
+        clusterInfoMapTemp->insert(clusterId,ClusterInfo(index,clusterIterator.value()));
+        index += clusterIterator.value();
     }
 
     //Fill spikesByClusterTemp with the data of the reclustered clusters sorted by cluster and by time (<=> position in the fet file)
@@ -3706,7 +3706,7 @@ void Data::getClusterUserInformation (int pGroup,QMap<int,ClusterUserInformation
 
         if(clusterId == 0 || clusterId == 1) continue;
 
-        ClusterUserInformation currentClusterUserInformation = ClusterUserInformation(pGroup,clusterId,iterator.data().getStructure(),iterator.data().getType(),iterator.data().getId(),iterator.data().getQuality(),iterator.data().getNotes());
+        ClusterUserInformation currentClusterUserInformation = ClusterUserInformation(pGroup,clusterId,iterator.value().getStructure(),iterator.value().getType(),iterator.value().getId(),iterator.value().getQuality(),iterator.value().getNotes());
 
         clusterUserInformationMap.insert(clusterId,currentClusterUserInformation);
     }
