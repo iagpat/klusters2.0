@@ -2374,7 +2374,7 @@ void KlustersApp::slotRecluster(){
             processKilled = false;
         }
         else{
-            QTimer::singleShot(2000,this, SLOT(slotRecluster()()));
+            QTimer::singleShot(2000,this, SLOT(slotRecluster()));
             return;
         }
 
