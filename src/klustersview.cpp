@@ -298,14 +298,14 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
         printPainter.setPen(Qt::black);
         if(widget->metaObject()->className() == ("ClusterView")){
             ClusterView* clusterView = static_cast<ClusterView*>(widget);
-            printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      Features: %2,%3").arg(filePath).arg(clusterView->getDimensionX()).arg(clusterView->getDimensionY()));
+            printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Features: %2,%3").arg(filePath).arg(clusterView->getDimensionX()).arg(clusterView->getDimensionY()));
         }
         else if(widget->metaObject()->className() == ("WaveformView")){
             if(inTimeFrameMode){
-                printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      Start Time: %2 s, Duration: %3 s").arg(filePath).arg(startTime).arg(timeWindow));
+                printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Start Time: %2 s, Duration: %3 s").arg(filePath).arg(startTime).arg(timeWindow));
             }
             else{
-                printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      Number of Waveforms: %2").arg(filePath).arg(nbSpkToDisplay));
+                printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Number of Waveforms: %2").arg(filePath).arg(nbSpkToDisplay));
             }
         }
         else if(widget->metaObject()->className() == ("CorrelationView")){
@@ -321,10 +321,10 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
                 scaleType = tr("Scale by Asymptote");
                 break;
             }
-            printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1      %2, Duration: %3 ms, Bin Size: %4 ms").arg(filePath).arg(scaleType).arg(correlogramTimeFrame/2).arg(binSize));
+            printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      %2, Duration: %3 ms, Bin Size: %4 ms").arg(filePath).arg(scaleType).arg(correlogramTimeFrame/2).arg(binSize));
         }
         if(widget->metaObject()->className() == ("ErrorMatrixView")){
-            printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
+            printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1").arg(filePath));
         }
 
         nbViews --;
@@ -453,10 +453,6 @@ void KlustersView::errorMatrixDockClosed(QWidget* errorMatrixView){
 }
 
 void KlustersView::traceDockClosed(QWidget* traceWidget){
-#if KDAB_PENDING
-
-    QDockWidget* dock = dockManager->findWidgetParentDock(traceWidget);
-    dock->undock();
     if(viewCounter["TraceView"] == 1){
         viewCounter.remove("TraceView");
         mainWindow.widgetRemovedFromDisplay(TRACES);
@@ -464,9 +460,6 @@ void KlustersView::traceDockClosed(QWidget* traceWidget){
         isThereTraceView = false;
     }
     else viewCounter["TraceView"]--;
-
-    delete dock;
-#endif
 }
 
 bool KlustersView::eventFilter(QObject* object,QEvent* event){     
@@ -699,9 +692,9 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         if(!isThereWaveformView){
             newViewType = true;
             viewCounter.insert("WaveformView",1);
-        }
-        else
+        } else {
             viewCounter["WaveformView"]++;
+        }
 
         isThereWaveformView = true;
         count = QString::fromLatin1("%1").arg(viewCounter["WaveformView"]);
