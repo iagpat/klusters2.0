@@ -34,7 +34,7 @@
   *@author Lynn Hazan
 */
 
-PrefDialog::PrefDialog(QWidget *parent,int nbChannels, const char *name, Qt::WFlags f)
+PrefDialog::PrefDialog(QWidget *parent,int nbChannels)
  : QPageDialog(parent)
 {
 

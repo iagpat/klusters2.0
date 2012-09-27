@@ -51,7 +51,6 @@ public:
     * @param parent the parent QWidget.
     * @param statusBar a reference to the application status bar.
     * @param name name of the widget (can be used for introspection).
-    * @param wflags common QWidget flags.
     */
     ClusterPalette(const QColor &backgroundColor, QWidget* parent = 0, QStatusBar * statusBar = 0, const char* name = 0 );
     /*

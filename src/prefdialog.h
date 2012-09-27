@@ -37,7 +37,7 @@ class PrefDialog : public QPageDialog {
     Q_OBJECT
   public:
     /// Constructor
-    PrefDialog(QWidget *parent,int nbChannels = 0,const char *name=0, Qt::WFlags f=0);
+    PrefDialog(QWidget *parent, int nbChannels = 0);
 
     /** Transfers the settings from the configuration object to the dialog.*/
     void updateDialog();
