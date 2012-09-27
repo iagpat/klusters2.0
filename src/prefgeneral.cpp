@@ -37,9 +37,9 @@ PrefGeneral::~PrefGeneral(){
 void PrefGeneral::setCrashRecovery(bool use){
     crashRecoveryCheckBox->setChecked(use);
     if(use)
-        updateCrashRecoveryTimeInterval(QCheckBox::On);
+        updateCrashRecoveryTimeInterval(Qt::Checked);
     else
-        updateCrashRecoveryTimeInterval(QCheckBox::Off);
+        updateCrashRecoveryTimeInterval(Qt::Unchecked);
 }
 
 void PrefGeneral::setCrashRecoveryIndex(int index){crashRecoveryComboBox->setCurrentIndex(index);}
@@ -70,9 +70,9 @@ QString PrefGeneral::getReclusteringExecutable() const{return reclusteringExecut
 QString PrefGeneral::getReclusteringArguments() const{return reclusteringArgsLineEdit->text();}
 
 void PrefGeneral::updateCrashRecoveryTimeInterval(int state){
-    if(state == QCheckBox::On)
+    if(state == Qt::Checked)
         crashRecoveryComboBox->setEnabled(true);
-    else if(state == QCheckBox::Off)
+    else if(state == Qt::Unchecked)
         crashRecoveryComboBox->setEnabled(false);
 }
 
