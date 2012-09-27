@@ -99,9 +99,6 @@ WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& bac
 
     maximumTime = clusteringData.maxTime();
 
-    //The list owns its objects, it will delete the items that are removed.
-    threadsToBeKill.setAutoDelete(true);       //The treads will be delete only from  threadsToBeKill
-
     updateWindow();
 
     //Set the cursor shap to a magnifier as the only action allowed on the widget is to zoom.
@@ -116,8 +113,12 @@ WaveformView::~WaveformView(){
 
     //Wait until all the threads have finish before quiting otherwise
     // it may endup in a crash of the application.
-    for(WaveformThread* waveformThread = threadsToBeKill.first(); waveformThread; waveformThread = threadsToBeKill.next())
+    for(int i = 0; i<threadsToBeKill.count();i++) {
+        WaveformThread* waveformThread = threadsToBeKill.at(i);
         while(!waveformThread->wait()){};
+    }
+    qDeleteAll(threadsToBeKill);
+    threadsToBeKill.clear();
 }
 
 WaveformThread* WaveformView::getWaveforms(){
@@ -771,8 +772,10 @@ void WaveformView::willBeKilled(){
     if(!goingToDie){
         goingToDie = true;
         //inform the running threads to stop processing as soon as possible.
-        for(WaveformThread* waveformThread = threadsToBeKill.first(); waveformThread; waveformThread = threadsToBeKill.next())
+        for(int i = 0; i<threadsToBeKill.count();i++) {
+            WaveformThread* waveformThread = threadsToBeKill.at(i);
             waveformThread->stopProcessing();
+        }
     }
 }
 

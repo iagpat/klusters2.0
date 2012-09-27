@@ -379,7 +379,7 @@ private:
     bool isTwoBytesRecording;
     
     /**List of pointers on the threads which have to be suppress when this object is destroy.*/
-    Q3PtrList<WaveformThread> threadsToBeKill;
+    QList<WaveformThread*> threadsToBeKill;
 
     /**List of pointers on the threads for which the result should not be taken into account.
  * If a cluster is modified while a thread launch to obtain the cluster's data
