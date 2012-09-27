@@ -441,7 +441,7 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
             float firingRate = iterator.getFiringRate();
             firingRate = floor((firingRate * 100) + 0.5) / 100;
             QString firingRateString = QString::fromLatin1("%1").arg(firingRate);
-            QStringList parts = QStringList::split(".", firingRateString);
+            QStringList parts = firingRateString.split(".", QString::SkipEmptyParts);
             if(parts.count() == 1) firingRateString += ".00";
             else{
                 QString precision = parts[1];

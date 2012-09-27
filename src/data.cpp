@@ -154,7 +154,7 @@ bool Data::configure(QFile& parXFile,QFile& parFile,QString& errorInformation){
     int lineCounter = 0;
     QString line;
     for(line = parX.readLine(); !line.isNull();line = parX.readLine()){
-        parXData.append(QStringList::split(" ",line));
+        parXData.append(line.split(" ",QString::SkipEmptyParts));
         lineCounter ++;
     }
     //The parX file has to contain at leat 9 lines, otherwise there is a problem
@@ -185,7 +185,7 @@ bool Data::configure(QFile& parXFile,QFile& parFile,QString& errorInformation){
 
     lineCounter = 0;
     for(line = par.readLine(); !line.isNull();line = par.readLine()){
-        parData.append(QStringList::split(" ",line));
+        parData.append(line.split(" ",QString::SkipEmptyParts));
         lineCounter ++;
     }
 

@@ -41,8 +41,8 @@ public:
     * @return true if @p newVersion is superior to @p oldVersion, false otherwise.
     */
     inline static bool compareVersion(const QString &oldVersion, const QString& newVersion){
-     QStringList oldList = QStringList::split(".", oldVersion);
-     QStringList newList = QStringList::split(".", newVersion);
+     QStringList oldList = oldVersion.split(".", QString::SkipEmptyParts);
+     QStringList newList = newVersion.split(".", QString::SkipEmptyParts);
      int minLength = qMin(oldList.count(),newList.count());
      for(int i = 0; i< minLength;++i){
       if(newList[i] > oldList[i]) {
