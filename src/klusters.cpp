@@ -874,6 +874,8 @@ void KlustersApp::initDisplay(){
     //forbit docking abilities of clusterPanel itself
     clusterPanel->setAllowedAreas(Qt::NoDockWidgetArea);
 
+    clusterPalette->show();
+    clusterPanel->show();
     //Update the Time frame and sample related widgets
     spikesTodisplay->setValue(DEFAULT_NB_SPIKES_DISPLAYED);
     start->setValue(0);
