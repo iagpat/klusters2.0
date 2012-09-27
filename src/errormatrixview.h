@@ -23,7 +23,6 @@
 #include <qmap.h>
 #include <qcolor.h>
 #include <QList>
-#include <q3ptrlist.h>
 //Added by qt3to4:
 #include <QResizeEvent>
 
@@ -253,7 +252,7 @@ private:
     int cellWidth;
 
     /**List of pointers on the threads which have to be suppress when this object is destroy.*/
-    Q3PtrList<ErrorMatrixThread> threadsToBeKill;
+    QList<ErrorMatrixThread*> threadsToBeKill;
 
     /**True if the probabilities are available.*/
     bool dataReady;

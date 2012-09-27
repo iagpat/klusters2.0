@@ -40,8 +40,6 @@ ErrorMatrixView::ErrorMatrixView(KlustersDoc& doc,KlustersView& view,QColor back
     dataReady(false),nbColors(100),cutoffProbability(0.1),init(true),hasBeenRenumbered(false),
     nbActions(0),nbRedo(0),isNotUpToDate(false),nbPreviousUndo(0),nbPreviousRedo(0),goingToDie(false) {
 
-    //The list owns its objects, it will delete the items that are removed.
-    threadsToBeKill.setAutoDelete(true);  //The treads will be delete only from threadsToBeKill
 
     //Set the drawing variables
     abscissaMin = 0;
@@ -60,9 +58,13 @@ ErrorMatrixView::~ErrorMatrixView(){
 
     //Wait until all the threads have finish before quiting otherwise
     // it may endup in a crash of the application.
-    for(ErrorMatrixThread* errorMatrixThread = threadsToBeKill.first(); errorMatrixThread; errorMatrixThread = threadsToBeKill.next())
+    for(int i = 0 ; i <threadsToBeKill.count();++i) {
+        ErrorMatrixThread* errorMatrixThread = threadsToBeKill.at(i);
         while(!errorMatrixThread->wait() && !dataReady){};
+    }
     
+    qDeleteAll(threadsToBeKill);
+    threadsToBeKill.clear();
     delete probabilities;
 }
 
@@ -807,8 +809,10 @@ void ErrorMatrixView::willBeKilled(){
     if(!goingToDie){
         goingToDie = true;
         //inform the running threads to stop processing as soon as possible.
-        for(ErrorMatrixThread* errorMatrixThread = threadsToBeKill.first(); errorMatrixThread; errorMatrixThread = threadsToBeKill.next())
+        for(int i = 0 ; i <threadsToBeKill.count();++i) {
+            ErrorMatrixThread* errorMatrixThread = threadsToBeKill.at(i);
             errorMatrixThread->stopProcessing();
+        }
     }
 }
 
