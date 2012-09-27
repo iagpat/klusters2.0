@@ -832,7 +832,7 @@ private:
     Data::ScaleMode correlationScale;
 
     /**List of the ViewWidgets contained in this view.*/
-    Q3PtrList<ViewWidget> viewList;
+    QList<ViewWidget*> viewList;
 
     /**Boolean indicating if a shoulder line has to be drawn on the correlograms
    * of the Correlation View if any.*/
