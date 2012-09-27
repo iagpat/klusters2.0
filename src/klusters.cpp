@@ -986,8 +986,6 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //the active display change.
         connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
-        slotStateChanged("tabState");
-
         //Keep track of the number of displays
         displayCount ++;
 
@@ -2979,7 +2977,7 @@ void KlustersApp::slotStateChanged(const QString& state)
 
         mIncreaseAmplitude->setEnabled(true);
         mDecreaseAmplitude->setEnabled(true);
-
+        mRenameActiveDisplay->setEnabled(true);
     } else if(state == QLatin1String("traceDisplayState")) {
         mNewTraceDisplay->setEnabled(true);
     } else if(state == QLatin1String("noTraceDisplayState")) {
@@ -3124,8 +3122,6 @@ void KlustersApp::slotStateChanged(const QString& state)
         mAbortReclustering->setEnabled(false);
     } else if(state == QLatin1String("stoppedReclusterState")) {
         mAbortReclustering->setEnabled(false);
-    } else if(state == QLatin1String("tabState")) {
-        mRenameActiveDisplay->setEnabled(true);
     } else if(state == QLatin1String("traceViewState")) {
         mIncreaseChannelAmplitudes->setEnabled(true);
         mDecreaseChannelAmplitudes->setEnabled(true);
