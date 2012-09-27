@@ -1043,8 +1043,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
-        }
-        else if(returnStatus == KlustersDoc::DOWNLOAD_ERROR)
+        } else if(returnStatus == KlustersDoc::DOWNLOAD_ERROR)
         {
             QApplication::restoreOverrideCursor();
             QMessageBox::critical (this,tr("Error!"),tr("Could not get the cluster file (base.clu.n)") );
@@ -1055,9 +1054,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
-        }
-
-        else if(returnStatus == KlustersDoc::SPK_DOWNLOAD_ERROR)
+        } else if(returnStatus == KlustersDoc::SPK_DOWNLOAD_ERROR)
         {
             QApplication::restoreOverrideCursor();
             QMessageBox::critical (this,tr("Error!"),tr("Could not get the spike file (base.spk.n)"));
@@ -1068,8 +1065,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
-        }
-        else if(returnStatus == KlustersDoc::FET_DOWNLOAD_ERROR)
+        } else if(returnStatus == KlustersDoc::FET_DOWNLOAD_ERROR)
         {
             QApplication::restoreOverrideCursor();
             QMessageBox::critical (this,tr("Error!"),tr("Could not get the feature file (base.fet.n)"));
@@ -1080,8 +1076,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
-        }
-        else if(returnStatus == KlustersDoc::PAR_DOWNLOAD_ERROR)
+        } else if(returnStatus == KlustersDoc::PAR_DOWNLOAD_ERROR)
         {
             QApplication::restoreOverrideCursor();
             QMessageBox::critical (this,tr("Error!"),tr("Could not get the general parameter file (base.par)"));
@@ -1092,8 +1087,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
-        }
-        else if(returnStatus == KlustersDoc::PARX_DOWNLOAD_ERROR)
+        } else if(returnStatus == KlustersDoc::PARX_DOWNLOAD_ERROR)
         {
             QApplication::restoreOverrideCursor();
             QMessageBox::critical (this,tr("Error!"), tr("Could not get the specific parameter file (base.par.n)") );
@@ -1104,9 +1098,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
-        }
-
-        else if(returnStatus == KlustersDoc::PARXML_DOWNLOAD_ERROR)
+        } else if(returnStatus == KlustersDoc::PARXML_DOWNLOAD_ERROR)
         {
             QApplication::restoreOverrideCursor();
             QMessageBox::critical (this,tr("Error!"),tr("Could not get the parameter file (base.xml)"));
@@ -1117,9 +1109,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
-        }
-
-        else if(returnStatus == KlustersDoc::OPEN_ERROR)
+        } else if(returnStatus == KlustersDoc::OPEN_ERROR)
         {
             QApplication::restoreOverrideCursor();
             QMessageBox::critical (this,tr("Error!"),tr("Could not open the files") );
@@ -1130,8 +1120,7 @@ void KlustersApp::openDocumentFile(const QString& url)
             QApplication::restoreOverrideCursor();
             slotStatusMsg(tr("Ready."));
             return;
-        }
-        else if(returnStatus == KlustersDoc::INCORRECT_CONTENT)
+        } else if(returnStatus == KlustersDoc::INCORRECT_CONTENT)
         {
             QApplication::restoreOverrideCursor();
             QMessageBox::critical (this,tr("Error!"),errorInformation);

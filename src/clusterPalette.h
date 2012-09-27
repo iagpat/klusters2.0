@@ -53,7 +53,7 @@ public:
     * @param name name of the widget (can be used for introspection).
     * @param wflags common QWidget flags.
     */
-    ClusterPalette(const QColor &backgroundColor, QWidget* parent = 0, QStatusBar * statusBar = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    ClusterPalette(const QColor &backgroundColor, QWidget* parent = 0, QStatusBar * statusBar = 0, const char* name = 0 );
     /*
    *  Destroys the object and frees any allocated resources.
    */
@@ -81,7 +81,7 @@ public:
     void showUserClusterInformation(int electrodeGroupId);
 
     /**updates the background color of the palette.*/
-    void changeBackgroundColor(QColor color){
+    void changeBackgroundColor(const QColor& color){
         backgroundColor = color;
         int h;
         int s;
