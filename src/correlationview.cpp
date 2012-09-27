@@ -47,8 +47,6 @@ CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,QColor back
     scaleMode(scale),dataReady(true),binSize(binSize),timeWindow(correlationTimeFrame),shoulderLine(shoulderLine),
     isZoomed(false),goingToDie(false),printState(false){
 
-    //The list owns its objects, it will delete the items that are removed.
-    threadsToBeKill.setAutoDelete(true);  //The treads will be delete only from threadsToBeKill
 
     //Set the only mode available.
     mode = ZOOM;
@@ -109,13 +107,19 @@ CorrelationView::~CorrelationView(){
 
     //Wait until all the threads have finish before quiting otherwise
     // it may endup in a crash of the application.
-    for(CorrelationThread* correlationThread = threadsToBeKill.first(); correlationThread; correlationThread = threadsToBeKill.next())
+    for(int i = 0; i<threadsToBeKill.count();i++ ) {
+        CorrelationThread* correlationThread = threadsToBeKill.at(i);
         while(!correlationThread->wait()){};
+    }
+    qDeleteAll(threadsToBeKill);
+    threadsToBeKill.clear();
 }
 
 bool CorrelationView::isThreadsRunning(){  
-    if(threadsToBeKill.count() == 0) return false;
-    else return true;
+    if(threadsToBeKill.count() == 0)
+        return false;
+    else
+        return true;
 }
 
 
@@ -720,8 +724,10 @@ void CorrelationView::willBeKilled(){
     if(!goingToDie){
         goingToDie = true;
         //inform the running threads to stop processing as soon as possible.
-        for(CorrelationThread* correlationThread = threadsToBeKill.first(); correlationThread; correlationThread = threadsToBeKill.next())
+        for(int i = 0; i<threadsToBeKill.count();i++ ) {
+            CorrelationThread* correlationThread = threadsToBeKill.at(i);
             correlationThread->stopProcessing();
+        }
     }
 }
 

@@ -30,7 +30,6 @@
 #include <qpixmap.h>
 #include <qtimer.h>
 #include <QList>
-#include <q3ptrlist.h>
 //Added by qt3to4:
 
 #include <QResizeEvent>
@@ -300,7 +299,7 @@ private:
     //Members
 
     /**List of pointers on the threads which have to be suppress when this object is destroy.*/
-    Q3PtrList<CorrelationThread> threadsToBeKill;
+    QList<CorrelationThread*> threadsToBeKill;
 
     /**True if the correlation information needed to draw the correlograms are available.*/
     bool dataReady;

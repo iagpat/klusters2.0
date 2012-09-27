@@ -45,12 +45,16 @@
 
 extern int nbUndo;
 
-Data::Data():nbSpikes(0),traceViewVariablesAvailable(false),undoRedoInProcess(false),clusterZeroJustModified(false){
+Data::Data()
+    :nbSpikes(0),
+      traceViewVariablesAvailable(false),
+      undoRedoInProcess(false),
+      clusterZeroJustModified(false)
+{
 
     minMaxThread = minMaxCalculator();
     spikesByCluster = new SortableTable();
     clusterInfoMap = new ClusterInfoMap();
-    QMap<int,ClusterUserInformation> clusterUserInformationMap = QMap<int,ClusterUserInformation>();
 
     //The lists own the objects, they will delete the items that are removed.
     clusterInfoMapUndoList.setAutoDelete(true);
@@ -97,7 +101,8 @@ bool Data::configure(QFile& parFile,int electrodeGroupID,QString& errorInformati
         voltageRange = reader.getVoltageRange();
         amplification = reader.getAmplification();
         initialOffset = reader.getOffset();
-        if(voltageRange != 0 && amplification != 0 && totalNbChannels != 0) traceViewVariablesAvailable = true;
+        if(voltageRange != 0 && amplification != 0 && totalNbChannels != 0)
+            traceViewVariablesAvailable = true;
 
         //cluster user information
         reader.getClusterUserInformation(electrodeGroupID,clusterUserInformationMap);

@@ -612,8 +612,10 @@ private:
     class ClusterInfo {
 
     public:
-        inline ClusterInfo(const QString& pStructure = "", const QString& pType = "",const QString& pID = "",const QString& pQuality = "",const QString& pNotes = ""):structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){}
-        inline ClusterInfo(dataType position, dataType nb,QString pStructure = "",QString pType = "",QString pID = "",QString pQuality = "",QString pNotes =""):position(position),spikeNb(nb),structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){}
+        inline ClusterInfo(const QString& pStructure = QString(), const QString& pType = QString(),const QString& pID = QString(),const QString& pQuality = QString(),const QString& pNotes = QString())
+            :structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){}
+        inline ClusterInfo(dataType position, dataType nb,QString pStructure = QString(),QString pType = QString(),QString pID = QString(),QString pQuality = QString(),QString pNotes =QString())
+            :position(position),spikeNb(nb),structure(pStructure),type(pType),ID(pID),quality(pQuality),notes(pNotes){}
         inline ~ClusterInfo(){}
          dataType firstSpikePosition() const {return position;}
          dataType nbSpikes() const {return spikeNb;}
