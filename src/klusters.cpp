@@ -2807,7 +2807,7 @@ void KlustersApp::updateDimensionSpinBoxes(int dimensionX, int dimensionY){
 void KlustersApp::renameActiveDisplay(){
     bool ok;
     const int currentIndex = tabsParent->currentIndex();
-    QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, QString(), &ok, this, tabsParent->tabText(currentIndex));
+    QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, tabsParent->tabText(currentIndex), &ok, this);
     if(!newLabel.isEmpty() && ok){
         tabsParent->setTabText(currentIndex,newLabel);
     }
