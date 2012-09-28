@@ -118,7 +118,7 @@ bool ProcessWidget::isRunning()
 
 void ProcessWidget::slotProcessExited(int value , QProcess::ExitStatus status)
 {
-    emit processExited(value, status);
+    emit finished(value, status);
 }
 
 
