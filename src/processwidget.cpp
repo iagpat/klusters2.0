@@ -224,7 +224,7 @@ void ProcessWidget::print(QPrinter *printer, const QString &filePath){
 
         printPainter.drawText(Margin,Margin + yPos,
                               width,fontMetrics.lineSpacing(),
-                              Qt::ExpandTabs | Qt::DontClip, boxItem->text());
+                              Qt::TextExpandTabs | Qt::TextDontClip, boxItem->text());
 
         yPos = yPos + fontMetrics.lineSpacing();
     }

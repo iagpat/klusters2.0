@@ -62,10 +62,15 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     iconView->setFrameStyle(QFrame::NoFrame);
     iconView->setArrangement(Q3IconView::LeftToRight);
     iconView->setResizeMode(Q3IconView::Adjust);
+
+    palette = iconView->palette();
+    palette.setColor(iconView->backgroundRole(), backgroundColor);
+    iconView->setPalette(palette);
+
     iconView->setPaletteBackgroundColor(backgroundColor);
     iconView->setAutoFillBackground(true);
     iconView->viewport()->setAutoFillBackground(true);
-    iconView->viewport()->setPaletteBackgroundColor(backgroundColor);
+    iconView->viewport()->setPalette(palette);
     iconView->setHScrollBarMode(Q3ScrollView::AlwaysOff);
     iconView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
 

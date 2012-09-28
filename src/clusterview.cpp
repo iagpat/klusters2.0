@@ -444,7 +444,7 @@ void ClusterView::customEvent(QEvent* event){
         }
         //Create a QRegion with the new selection area in order to use the research facilities offer by a QRegion.
         selectionArea = QRegion(reviewPolygon);
-        if(!selectionArea.isNull()){
+        if(!selectionArea.isEmpty()){
             //Call any appropriate method
             switch(mode){
             case DELETE_NOISE:

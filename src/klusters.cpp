@@ -1814,7 +1814,7 @@ void KlustersApp::slotStatusMsg(const QString &text)
 {
     ///////////////////////////////////////////////////////////////////
     // change status message permanently
-    statusBar()->clear();
+    statusBar()->clearMessage();
     statusBar()->showMessage(text);
 }
 

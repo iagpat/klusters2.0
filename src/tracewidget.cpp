@@ -102,16 +102,16 @@ void TraceWidget::initSelectionWidgets(){
     int nbSeconds = remainingSeconds / 1000;
     int remainingMiliseconds = static_cast<int>(fmod(static_cast<double>(remainingSeconds),1000));
 
-    startMinute = new QSpinBox(0,minutePart,1,selectionWidgets,"minStart");
+    startMinute = new QSpinBox(0,minutePart,1,selectionWidgets);
     lay->addWidget(startMinute);
     startMinute->setSuffix( " min" );
     startMinute->setWrapping(true);
     startMinute->setValue(nbMinutes);
-    startSecond = new QSpinBox(0,recordingLength/1000,1,selectionWidgets,"sStart");
+    startSecond = new QSpinBox(0,recordingLength/1000,1,selectionWidgets);
     lay->addWidget(startSecond);
     startSecond->setSuffix( " s" );
     startSecond->setValue(nbSeconds);
-    startMilisecond = new QSpinBox(0,recordingLength,1,selectionWidgets,"msStart");
+    startMilisecond = new QSpinBox(0,recordingLength,1,selectionWidgets);
     lay->addWidget(startMilisecond);
     startMilisecond->setSuffix( " ms" );
     startMilisecond->setValue(remainingMiliseconds);
