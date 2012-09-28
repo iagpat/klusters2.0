@@ -39,7 +39,6 @@ set(klusters_SRCS
 	tracesprovider.cpp 
 	traceview.cpp
         tracewidget.cpp 
-	utilities.cpp 
 	viewwidget.cpp 
 	waveformthread.cpp 
 	waveformview.cpp
