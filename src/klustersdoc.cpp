@@ -127,7 +127,6 @@ void KlustersDoc::updateAllViews(KlustersView *sender){
 bool KlustersDoc::canCloseDocument(KlustersApp* mainWindow,QString callingMethod){
     //Before closing, make sure that there is no thread running.
     //Loop on all the views, moving to the next one when the current one has no more thread running.
-    KlustersView* view;
     bool threadRunning = false;
 
     for(int i =0; i<viewList->count();++i)
@@ -656,7 +655,7 @@ QString KlustersDoc::documentDirectory() const {
 void KlustersDoc::setGain(int acquisitionGain){
     //Notify all the views of the modification
     for(int i =0; i<viewList->count();++i) {
-     KlustersView *view = viewList->at(i);
+        KlustersView *view = viewList->at(i);
         view->setGain(acquisitionGain);
     }
 
@@ -1580,7 +1579,6 @@ void KlustersDoc::undo(){
             }
 
             //Notify all the views of the undo
-            KlustersView* view;
             if(addedClusters->size() > 0 && modifiedClusters->size() > 0){
                 qDebug() << "addedClusters->size() > 0 && modifiedClusters->size() > 0"<< endl;
                 for(int i =0; i<viewList->count();++i) {
@@ -1727,7 +1725,6 @@ void KlustersDoc::redo(){
             renumberingRedoList.remove(nbUndo);
 
             //Notify all the views of the undo
-            KlustersView* view;
             for(int i =0; i<viewList->count();++i) {
                 KlustersView *view = viewList->at(i);
                 if(view != activeView){
@@ -1878,9 +1875,9 @@ void KlustersDoc::renumberClusters(){
     }
 
     //Notify all the views of the modification
-    KlustersView* view;
     for(int i =0; i<viewList->count();++i)
     {
+	KlustersView* view = viewList->at(i);
         if(view != activeView){
             view->renumberClusters(clusterIdsOldNew,false);
             //update the TraceView if any
@@ -1994,8 +1991,8 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
         }
 
         //Notify all the views of the modification
-        KlustersView* view;
         for(int i =0; i<viewList->count();++i){
+            KlustersView* view = viewList->at(i);
             if(view != activeView){
                 view->addNewClustersToView(clustersToRecluster,reclusteredClusterList,false);
                 //update the TraceView if any
@@ -2033,13 +2030,14 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
         }
 
         //Notify all the views of the modification
-        KlustersView* view;
-        for(int i =0; i<viewList->count();++i)
+        for(int i =0; i<viewList->count();++i) {
+	    KlustersView* view = viewList->at(i);
             if(view->metaObject()->className() != ("ProcessWidget")){
                 view->addNewClustersToView(clustersToRecluster,reclusteredClusterList,false);
                 //update the TraceView if any
                 view->updateTraceView(electrodeGroupID,clusterColorList,false);
             }
+	}
 
         //Notify the errorMatrixView of the modification
         emit newClustersAdded(clustersToRecluster);
