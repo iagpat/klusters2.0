@@ -1896,7 +1896,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
     //(the data will have to be uploaded again) if there is not a thread working with it,
     //otherwise advice the thread of the change,by updating waveformStatus and correlationsInProcess
     // and the thread will remove it.
-    if(addedClusters.size() > 0){
+    if(!addedClusters.isEmpty() ){
         QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = addedClusters.begin(); clustersToRemoveIterator != addedClusters.end(); ++clustersToRemoveIterator){
 
@@ -1927,7 +1927,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
             }
         }
     }
-    if(updatedClusters.size() > 0){
+    if(!updatedClusters.isEmpty()){
         QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = updatedClusters.begin(); clustersToRemoveIterator != updatedClusters.end(); ++clustersToRemoveIterator){
 
@@ -1996,7 +1996,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
     //If clusterInfoMapUndoList is not empty, make the current clusterInfoMap become the first element
     //of the clusterInfoMapRedoList and the first element of the clusterInfoMapUndoList become the current clusterInfoMap.
     //Do the same with the spikesByCluster
-    if(clusterInfoMapUndoList.count()>0){
+    if(!clusterInfoMapUndoList.isEmpty()){
 
         qDebug()<<"clusterInfoMapUndoList.count()>0";
 
@@ -2019,7 +2019,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
         qDebug()<<"in Data::undo 3, spikesByCluster updated";
 
         //If the last action implied a changed of the dimension, change the dimension again
-        if(dimensionChangedUndo[0] == true){
+        if(!dimensionChangedUndo.isEmpty() && dimensionChangedUndo.at(0) == true){
 
 
             qDebug()<<"in Data::undo dimensionChangedUndo[0] == true";
@@ -2050,7 +2050,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
 
     //If addedClusters or updatedClusters contain any cluster, remove the corresponding entry in waveformDict and correlationDict
     //(the data will have to be uploaded again).
-    if(addedClusters.size() > 0){
+    if(!addedClusters.isEmpty() ){
         QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = addedClusters.begin(); clustersToRemoveIterator != addedClusters.end(); ++clustersToRemoveIterator){
             mutex.lock();
@@ -2102,7 +2102,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
         }
     }
 
-    if(deletedClusters.size() > 0){
+    if(!deletedClusters.isEmpty()){
         QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = deletedClusters.begin(); clustersToRemoveIterator != deletedClusters.end(); ++clustersToRemoveIterator){
             mutex.lock();
@@ -2165,7 +2165,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
     //If clusterInfoMapRedoList is not empty, make the current clusterInfoMap become the first element
     //of the clusterInfoMapUndoList and the first element of the clusterInfoMapRedoList become the current clusterInfoMap.
     //Do the same with the spikesByCluster
-    if(clusterInfoMapRedoList.count()>0){
+    if(!clusterInfoMapRedoList.isEmpty()){
         clusterInfoMapUndoList.prepend(clusterInfoMap);
         ClusterInfoMap* clusterInfoMapTemp = clusterInfoMapRedoList.take(0);
         spikesByClusterUndoList.prepend(spikesByCluster);
@@ -2177,7 +2177,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
         mutex.unlock();
 
         //If the last redo implied a changed of the dimension, change the dimension again
-        if(dimensionChangedRedo[0] == true){
+        if(!dimensionChangedRedo.isEmpty() && dimensionChangedRedo.at(0) == true){
             //If the minMaxThread has not finish, wait until it is done
             while(!minMaxThread->wait()){};
 
