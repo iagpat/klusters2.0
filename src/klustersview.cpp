@@ -17,7 +17,6 @@
 
 //Added by qt3to4:
 #include <QList>
-#include <Q3PtrList>
 #include <QPixmap>
 #include <QMouseEvent>
 #include <QEvent>
