@@ -26,7 +26,6 @@
 #include "clusteruserinformation.h"
 
 //Include files for QT
-#include <q3ptrlist.h>
 #include <QList>
 #include <q3dict.h>
 #include <qregion.h>
@@ -591,12 +590,12 @@ private:
     /**Represents a list of clusterInfoMap
   * use to enable undo action.
   */
-    Q3PtrList<SortableTable> spikesByClusterUndoList;
+    QList<SortableTable*> spikesByClusterUndoList;
 
     /**Represents a list of clusterInfoMap
   * use to enable redo action.
   */
-    Q3PtrList<SortableTable> spikesByClusterRedoList;
+    QList<SortableTable*> spikesByClusterRedoList;
 
     /**
   * Represents information on a cluster:
@@ -658,12 +657,12 @@ private:
     /**Represents a list of clusterInfoMap
   * use to enable undo action.
   */
-    Q3PtrList<ClusterInfoMap> clusterInfoMapUndoList;
+    QList<ClusterInfoMap*> clusterInfoMapUndoList;
 
     /**Represents a list of clusterInfoMap
   * use to enable redo action.
   */
-    Q3PtrList<ClusterInfoMap> clusterInfoMapRedoList;
+    QList<ClusterInfoMap*> clusterInfoMapRedoList;
 
     /**List of the maximum of each dimension*/
     Array<dataType> dimensionMaxima;

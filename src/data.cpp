@@ -57,10 +57,6 @@ Data::Data()
     clusterInfoMap = new ClusterInfoMap();
 
     //The lists own the objects, they will delete the items that are removed.
-    clusterInfoMapUndoList.setAutoDelete(true);
-    clusterInfoMapRedoList.setAutoDelete(true);
-    spikesByClusterUndoList.setAutoDelete(true);
-    spikesByClusterRedoList.setAutoDelete(true);
     waveformDict.setAutoDelete(true);
     correlationDict.setAutoDelete(true);
 }
@@ -73,6 +69,15 @@ Data::~Data(){
     //delete the pointers to the tables and maps
     delete spikesByCluster;
     delete clusterInfoMap;
+
+    qDeleteAll(clusterInfoMapUndoList);
+    clusterInfoMapUndoList.clear();
+    qDeleteAll(clusterInfoMapRedoList);
+    clusterInfoMapRedoList.clear();
+    qDeleteAll(spikesByClusterUndoList);
+    spikesByClusterUndoList.clear();
+    qDeleteAll(spikesByClusterRedoList);
+    spikesByClusterRedoList.clear();
 }
 
 MinMaxThread* Data::minMaxCalculator(){
@@ -1788,11 +1793,13 @@ void Data::prepareUndo(SortableTable* spikesByClusterTemp,ClusterInfoMap* cluste
 
     //if the number of undo has been reach remove the last element in the undo list (first inserted)
     int currentSpikesByClusterNbUndo = spikesByClusterUndoList.count();
-    if(currentSpikesByClusterNbUndo > nbUndo) spikesByClusterUndoList.remove(currentSpikesByClusterNbUndo - 1);
+    if(currentSpikesByClusterNbUndo > nbUndo)
+        spikesByClusterUndoList.removeAt(currentSpikesByClusterNbUndo - 1);
 
     //if the number of undo has been reach remove the last element in the undo list (first inserted)
     int currentClusterInfoNbUndo = clusterInfoMapUndoList.count();
-    if(currentClusterInfoNbUndo > nbUndo) clusterInfoMapUndoList.remove(currentClusterInfoNbUndo - 1);
+    if(currentClusterInfoNbUndo > nbUndo)
+        clusterInfoMapUndoList.removeAt(currentClusterInfoNbUndo - 1);
 
     //Clear the redoLists
     spikesByClusterRedoList.clear();
@@ -1808,8 +1815,8 @@ void Data::nbUndoChangedCleaning(int newNbUndo){
         // remove the last elements in the undo lists (first ones inserted).
         if(currentNbUndo > newNbUndo){
             while(currentNbUndo > newNbUndo){
-                spikesByClusterUndoList.remove(currentNbUndo - 1);
-                clusterInfoMapUndoList.remove(currentNbUndo - 1);
+                spikesByClusterUndoList.removeAt(currentNbUndo - 1);
+                clusterInfoMapUndoList.removeAt(currentNbUndo - 1);
                 currentNbUndo = spikesByClusterUndoList.count();
             }
             //Clear the redoLists
@@ -1822,8 +1829,8 @@ void Data::nbUndoChangedCleaning(int newNbUndo){
             int currentNbRedo = spikesByClusterRedoList.count();
             if((currentNbRedo + currentNbUndo) > newNbUndo){
                 while((currentNbRedo + currentNbUndo) > newNbUndo){
-                    clusterInfoMapRedoList.remove(currentNbRedo - 1);
-                    spikesByClusterRedoList.remove(currentNbRedo - 1);
+                    clusterInfoMapRedoList.removeAt(currentNbRedo - 1);
+                    spikesByClusterRedoList.removeAt(currentNbRedo - 1);
                     currentNbRedo = spikesByClusterRedoList.count();
                 }
             }
@@ -2003,9 +2010,9 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
 
 
         clusterInfoMapRedoList.prepend(clusterInfoMap);
-        ClusterInfoMap* clusterInfoMapTemp = clusterInfoMapUndoList.take(0);
+        ClusterInfoMap* clusterInfoMapTemp = clusterInfoMapUndoList.takeAt(0);
         spikesByClusterRedoList.prepend(spikesByCluster);
-        SortableTable* spikesByClusterTemp = spikesByClusterUndoList.take(0);
+        SortableTable* spikesByClusterTemp = spikesByClusterUndoList.takeAt(0);
 
         mutex.lock();
         clusterInfoMap =  clusterInfoMapTemp;
@@ -2167,9 +2174,9 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
     //Do the same with the spikesByCluster
     if(!clusterInfoMapRedoList.isEmpty()){
         clusterInfoMapUndoList.prepend(clusterInfoMap);
-        ClusterInfoMap* clusterInfoMapTemp = clusterInfoMapRedoList.take(0);
+        ClusterInfoMap* clusterInfoMapTemp = clusterInfoMapRedoList.takeAt(0);
         spikesByClusterUndoList.prepend(spikesByCluster);
-        SortableTable* spikesByClusterTemp = spikesByClusterRedoList.take(0);
+        SortableTable* spikesByClusterTemp = spikesByClusterRedoList.takeAt(0);
 
         mutex.lock();
         clusterInfoMap =  clusterInfoMapTemp;
