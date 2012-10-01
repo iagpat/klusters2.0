@@ -21,7 +21,6 @@
 // include files for QT
 #include <qobject.h>
 #include <qstring.h>
-#include <q3ptrlist.h> 
 #include <qpoint.h>
 #include <qfileinfo.h>
 //Added by qt3to4:
