@@ -83,7 +83,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
 
     //Create the mainDock
     mainDock = new QDockWidget(tr(doc.documentName().toLatin1()));
-    addDockWidget(Qt::RightDockWidgetArea,mainDock);
+    addDockWidget(Qt::TopDockWidgetArea,mainDock);
     //If the type of view is a not base one, call the function to call the complex views.
     //If the type of view is a base on, construct the appropriate Widget and assign it as the mainDock widget
     //To add a new base type just add a new case with the appropriate widget (do not to add the include line)
