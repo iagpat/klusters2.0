@@ -55,8 +55,6 @@ extern int nbUndo;
 KlustersDoc::KlustersDoc(QWidget* parent,ClusterPalette& clusterPalette,bool autoSave,int savingInterval): clusterColorListUndoList(),clusterColorListRedoList(),modified(false),docUrl(),baseName(""), xmlParameterFile(""),tmpCluFile(""),tmpSpikeFile(""),parent(parent),clusterPalette(clusterPalette),
     addedClustersUndoList(),addedClustersRedoList(),modifiedClustersUndoList(),modifiedClustersRedoList(),autoSave(autoSave),savingInterval(savingInterval),tracesProvider(0L),clustersProvider(0L),channelColorList(0L){
     viewList = new QList<KlustersView*>();
-    clusterColorListUndoList.setAutoDelete(true);
-    clusterColorListRedoList.setAutoDelete(true);
     addedClustersUndoList.setAutoDelete(true);
     addedClustersRedoList.setAutoDelete(true);
     modifiedClustersUndoList.setAutoDelete(true);
@@ -152,7 +150,9 @@ void KlustersDoc::closeDocument(){
     docUrl = QString();
     baseName.clear();
     xmlParameterFile.clear();
+    qDeleteAll(clusterColorListUndoList);
     clusterColorListUndoList.clear();
+    qDeleteAll(clusterColorListRedoList);
     clusterColorListRedoList.clear();
     addedClustersUndoList.clear();
     addedClustersRedoList.clear();
@@ -1233,9 +1233,10 @@ void KlustersDoc::prepareClusterColorUndo(){
     //if the number of undo has been reach remove the last element in the undo list (first inserted)
     int currentClusterColorsNbUndo = clusterColorListUndoList.count();
     if(currentClusterColorsNbUndo > nbUndo)
-        clusterColorListUndoList.remove(currentClusterColorsNbUndo - 1);
+        clusterColorListUndoList.removeAt(currentClusterColorsNbUndo - 1);
 
     //Clear the redoList
+    qDeleteAll(clusterColorListRedoList);
     clusterColorListRedoList.clear();
 
     //Signal to klusters the new number of undo and redo
@@ -1339,7 +1340,7 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
                 addedClustersUndoList.remove(currentNbUndo - 1);
                 modifiedClustersUndoList.remove(currentNbUndo - 1);
                 deletedClustersUndoList.remove(currentNbUndo - 1);
-                clusterColorListUndoList.remove(currentNbUndo - 1);
+                clusterColorListUndoList.removeAt(currentNbUndo - 1);
                 modifiedClustersByDeleteUndo.remove(currentNbUndo);
 
                 //The clusterIdsOldNew and clusterIdsNewOld maps are associated with
@@ -1371,6 +1372,7 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
             addedClustersRedoList.clear();
             modifiedClustersRedoList.clear();
             deletedClustersRedoList.clear();
+            qDeleteAll(clusterColorListRedoList);
             clusterColorListRedoList.clear();
         }
         //currentNbUndo < newNbUndo, check the redo list.
@@ -1382,7 +1384,7 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
                     addedClustersRedoList.remove(currentNbRedo - 1);
                     modifiedClustersRedoList.remove(currentNbRedo - 1);
                     deletedClustersRedoList.remove(currentNbRedo - 1);
-                    clusterColorListRedoList.remove(currentNbRedo - 1);
+                    clusterColorListRedoList.removeAt(currentNbRedo - 1);
                     modifiedClustersByDeleteRedo.remove(currentNbRedo);
 
                     currentNbRedo = clusterColorListRedoList.count();
@@ -1539,7 +1541,7 @@ void KlustersDoc::undo(){
     //do the same for the addedClusters and modifiedClusters Lists.
     if(clusterColorListUndoList.count()>0){
         clusterColorListRedoList.prepend(clusterColorList);
-        ItemColors* clusterColorListTemp = clusterColorListUndoList.take(0);
+        ItemColors* clusterColorListTemp = clusterColorListUndoList.takeAt(0);
         clusterColorList =  clusterColorListTemp;
 
         int nbUndo = clusterColorListUndoList.count();
@@ -1697,7 +1699,7 @@ void KlustersDoc::redo(){
     //do the same for the addedClusters and modifiedClusters Lists.
     if(clusterColorListRedoList.count()>0){
         clusterColorListUndoList.prepend(clusterColorList);
-        ItemColors* clusterColorListTemp = clusterColorListRedoList.take(0);
+        ItemColors* clusterColorListTemp = clusterColorListRedoList.takeAt(0);
         clusterColorList =  clusterColorListTemp;
 
         addedClustersUndoList.prepend(addedClusters);

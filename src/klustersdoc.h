@@ -606,12 +606,12 @@ private:
     /**Represents a list of list of clusters with their associated color and status
     * use to enable undo action.
     */
-    Q3PtrList<ItemColors> clusterColorListUndoList;
+    QList<ItemColors*> clusterColorListUndoList;
 
     /**Represents a list of list of clusters with their associated color and status
     * use to enable redo action.
     */
-    Q3PtrList<ItemColors> clusterColorListRedoList;
+    QList<ItemColors*> clusterColorListRedoList;
     
     /**The modified flag of the current document. */
     bool modified;
