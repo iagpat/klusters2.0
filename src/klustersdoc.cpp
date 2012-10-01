@@ -55,12 +55,6 @@ extern int nbUndo;
 KlustersDoc::KlustersDoc(QWidget* parent,ClusterPalette& clusterPalette,bool autoSave,int savingInterval): clusterColorListUndoList(),clusterColorListRedoList(),modified(false),docUrl(),baseName(""), xmlParameterFile(""),tmpCluFile(""),tmpSpikeFile(""),parent(parent),clusterPalette(clusterPalette),
     addedClustersUndoList(),addedClustersRedoList(),modifiedClustersUndoList(),modifiedClustersRedoList(),autoSave(autoSave),savingInterval(savingInterval),tracesProvider(0L),clustersProvider(0L),channelColorList(0L){
     viewList = new QList<KlustersView*>();
-    addedClustersUndoList.setAutoDelete(true);
-    addedClustersRedoList.setAutoDelete(true);
-    modifiedClustersUndoList.setAutoDelete(true);
-    modifiedClustersRedoList.setAutoDelete(true);
-    deletedClustersUndoList.setAutoDelete(true);
-    deletedClustersRedoList.setAutoDelete(true);
     clusterColorList = 0L;
     addedClusters = 0L;
     modifiedClusters = 0L;
@@ -154,9 +148,13 @@ void KlustersDoc::closeDocument(){
     clusterColorListUndoList.clear();
     qDeleteAll(clusterColorListRedoList);
     clusterColorListRedoList.clear();
+    qDeleteAll(addedClustersUndoList);
     addedClustersUndoList.clear();
+    qDeleteAll(addedClustersRedoList);
     addedClustersRedoList.clear();
+    qDeleteAll(modifiedClustersUndoList);
     modifiedClustersUndoList.clear();
+    qDeleteAll(modifiedClustersUndoList);
     modifiedClustersRedoList.clear();
     clusterIdsNewOldMap.clear();
     clusterIdsOldNewMap.clear();
@@ -1271,10 +1269,10 @@ void KlustersDoc::prepareUndo(QList<int>* addedClustersTemp,QList<int>* modified
     //if the number of undo has been reach remove the last element in the undo lists (first inserted)
     int currentNbUndo = addedClustersUndoList.count();
     if(currentNbUndo > nbUndo){
-        addedClustersUndoList.remove(currentNbUndo - 1);
-        modifiedClustersUndoList.remove(currentNbUndo - 1);
-        deletedClustersUndoList.remove(currentNbUndo - 1);
-        modifiedClustersByDeleteUndo.remove(currentNbUndo);
+        addedClustersUndoList.removeAt(currentNbUndo - 1);
+        modifiedClustersUndoList.removeAt(currentNbUndo - 1);
+        deletedClustersUndoList.removeAt(currentNbUndo - 1);
+        modifiedClustersByDeleteUndo.removeAt(currentNbUndo);
         if(isModifiedByDeletion) modifiedClustersByDeleteUndo.append(currentNbUndo - 1);
 
         //The clusterIdsOldNew and clusterIdsNewOld maps are associated with
@@ -1303,8 +1301,11 @@ void KlustersDoc::prepareUndo(QList<int>* addedClustersTemp,QList<int>* modified
     else if(isModifiedByDeletion) modifiedClustersByDeleteUndo.append(currentNbUndo);
 
     //Clear the redoLists
+    qDeleteAll(addedClustersRedoList);
     addedClustersRedoList.clear();
+    qDeleteAll(modifiedClustersRedoList);
     modifiedClustersRedoList.clear();
+    qDeleteAll(deletedClustersRedoList);
     deletedClustersRedoList.clear();
 }
 
@@ -1337,11 +1338,11 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
         // remove the last elements in the undo lists (first ones inserted).
         if(currentNbUndo > newNbUndo){
             while(currentNbUndo > newNbUndo){
-                addedClustersUndoList.remove(currentNbUndo - 1);
-                modifiedClustersUndoList.remove(currentNbUndo - 1);
-                deletedClustersUndoList.remove(currentNbUndo - 1);
+                addedClustersUndoList.removeAt(currentNbUndo - 1);
+                modifiedClustersUndoList.removeAt(currentNbUndo - 1);
+                deletedClustersUndoList.removeAt(currentNbUndo - 1);
                 clusterColorListUndoList.removeAt(currentNbUndo - 1);
-                modifiedClustersByDeleteUndo.remove(currentNbUndo);
+                modifiedClustersByDeleteUndo.removeAt(currentNbUndo);
 
                 //The clusterIdsOldNew and clusterIdsNewOld maps are associated with
                 //undo numbers. As the meaning of the numbers change (first undo will not be accessible anymore,
@@ -1369,8 +1370,11 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
                 currentNbUndo = clusterColorListUndoList.count();
             }
             //clear the redo lists
+            qDeleteAll(addedClustersRedoList);
             addedClustersRedoList.clear();
+            qDeleteAll(modifiedClustersRedoList);
             modifiedClustersRedoList.clear();
+            qDeleteAll(deletedClustersRedoList);
             deletedClustersRedoList.clear();
             qDeleteAll(clusterColorListRedoList);
             clusterColorListRedoList.clear();
@@ -1381,11 +1385,11 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
             int currentNbRedo = clusterColorListRedoList.count();
             if((currentNbRedo + currentNbUndo) > newNbUndo){
                 while((currentNbRedo + currentNbUndo) > newNbUndo){
-                    addedClustersRedoList.remove(currentNbRedo - 1);
-                    modifiedClustersRedoList.remove(currentNbRedo - 1);
-                    deletedClustersRedoList.remove(currentNbRedo - 1);
+                    addedClustersRedoList.removeAt(currentNbRedo - 1);
+                    modifiedClustersRedoList.removeAt(currentNbRedo - 1);
+                    deletedClustersRedoList.removeAt(currentNbRedo - 1);
                     clusterColorListRedoList.removeAt(currentNbRedo - 1);
-                    modifiedClustersByDeleteRedo.remove(currentNbRedo);
+                    modifiedClustersByDeleteRedo.removeAt(currentNbRedo);
 
                     currentNbRedo = clusterColorListRedoList.count();
                 }
@@ -1657,15 +1661,15 @@ void KlustersDoc::undo(){
             }
         }
         addedClustersRedoList.prepend(addedClusters);
-        QList<int>* addedClustersTemp = addedClustersUndoList.take(0);
+        QList<int>* addedClustersTemp = addedClustersUndoList.takeAt(0);
         addedClusters =  addedClustersTemp;
 
         modifiedClustersRedoList.prepend(modifiedClusters);
-        QList<int>* modifiedClustersTemp = modifiedClustersUndoList.take(0);
+        QList<int>* modifiedClustersTemp = modifiedClustersUndoList.takeAt(0);
         modifiedClusters =  modifiedClustersTemp;
 
         deletedClustersRedoList.prepend(deletedClusters);
-        QList<int>* deletedClustersTemp = deletedClustersUndoList.take(0);
+        QList<int>* deletedClustersTemp = deletedClustersUndoList.takeAt(0);
         deletedClusters =  deletedClustersTemp;
 
         QList<int> clustersToShow = activeView->clusters();
@@ -1703,15 +1707,15 @@ void KlustersDoc::redo(){
         clusterColorList =  clusterColorListTemp;
 
         addedClustersUndoList.prepend(addedClusters);
-        QList<int>* addedClustersTemp = addedClustersRedoList.take(0);
+        QList<int>* addedClustersTemp = addedClustersRedoList.takeAt(0);
         addedClusters =  addedClustersTemp;
 
         modifiedClustersUndoList.prepend(modifiedClusters);
-        QList<int>* modifiedClustersTemp = modifiedClustersRedoList.take(0);
+        QList<int>* modifiedClustersTemp = modifiedClustersRedoList.takeAt(0);
         modifiedClusters =  modifiedClustersTemp;
 
         deletedClustersUndoList.prepend(deletedClusters);
-        QList<int>* deletedClustersTemp = deletedClustersRedoList.take(0);
+        QList<int>* deletedClustersTemp = deletedClustersRedoList.takeAt(0);
         deletedClusters =  deletedClustersTemp;
 
         clusteringData->redo(*addedClusters,*modifiedClusters,*deletedClusters);
@@ -1749,7 +1753,7 @@ void KlustersDoc::redo(){
             bool isModifiedByDeletion = false;
             if(modifiedClustersByDeleteRedo.contains(nbRedo + 1) != 0){
                 isModifiedByDeletion = true;
-                modifiedClustersByDeleteRedo.remove(nbRedo + 1);
+                modifiedClustersByDeleteRedo.removeAt(nbRedo + 1);
                 int nbUndo = clusterColorListUndoList.count();
                 modifiedClustersByDeleteUndo.append(nbUndo);
             }

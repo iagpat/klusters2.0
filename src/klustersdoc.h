@@ -658,27 +658,27 @@ private:
     
     /**Represents a list of list of added clusters use to enable undo action.
     */
-    Q3PtrList< QList<int> > addedClustersUndoList;
+    QList< QList<int>* > addedClustersUndoList;
 
     /**Represents a list of list of added  clusters use to enable redo action.
     */
-    Q3PtrList< QList<int> > addedClustersRedoList;
+    QList< QList<int>* > addedClustersRedoList;
 
     /**Represents a list of list of modified clusters use to enable undo action.
     */
-    Q3PtrList< QList<int> > modifiedClustersUndoList;
+    QList< QList<int>* > modifiedClustersUndoList;
 
     /**Represents a list of list of modified clusters use to enable redo action.
     */
-    Q3PtrList< QList<int> > modifiedClustersRedoList;
+    QList< QList<int>* > modifiedClustersRedoList;
 
     /**Represents a list of list of deleted clusters use to enable undo action.
     */
-    Q3PtrList< QList<int> > deletedClustersUndoList;
+    QList< QList<int>* > deletedClustersUndoList;
 
     /**Represents a list of list of deleted clusters use to enable redo action.
     */
-    Q3PtrList< QList<int> > deletedClustersRedoList;
+    QList< QList<int>* > deletedClustersRedoList;
     
     /**List of the undo numbers where the modification of clusters has been due to
     * the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
