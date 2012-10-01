@@ -1252,7 +1252,7 @@ void EventsProvider::removeEventDescription(QString eventDescriptionToRemove){
     QList<EventDescription> descriptions = eventIds.keys();
 
     QList<EventDescription> newDescriptions = eventIds.keys();
-    newDescriptions.remove(EventDescription(eventDescriptionToRemove));
+    newDescriptions.removeAll(EventDescription(eventDescriptionToRemove));
 
     qSort(newDescriptions);
     long maxSize = 0;

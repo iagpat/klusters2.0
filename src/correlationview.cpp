@@ -334,7 +334,7 @@ void CorrelationView::customEvent(QEvent *event){
         while(!correlationThread->wait()){};
 
         //Delete the correlationThread, this is done by removing it from threadsToBeKill as auto-deletion is enabled.
-        threadsToBeKill.remove(correlationThread);
+        threadsToBeKill.removeAll(correlationThread);
 
         if(!goingToDie){
             //Each time a cluster is added to the view or modified, the size of the window is recalculated.

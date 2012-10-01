@@ -91,7 +91,7 @@ void ErrorMatrixView::customEvent(QEvent* event){
         while(!errorMatrixThread->wait()){};
 
         //Delete the errorMatrixThread, this is done by removing it from threadsToBeKill as auto-deletion is enabled.
-        threadsToBeKill.remove(errorMatrixThread);
+        threadsToBeKill.removeAll(errorMatrixThread);
 
         if(!goingToDie){
             //Each time the matrix is modified, the size of the window is recalculated.
@@ -333,7 +333,7 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
 
     //If the user control click a second time on a cell of the matrix this will deselect the corresponding pair.
     if((e->modifiers() & Qt::ControlModifier) && selectedPairs.contains(pair)){
-        selectedPairs.remove(pair);
+        selectedPairs.removeAll(pair);
         clustersToShow.clear();
         QList<Pair>::iterator iterator;
         for(iterator = selectedPairs.begin(); iterator != selectedPairs.end(); ++iterator){
@@ -525,14 +525,14 @@ void ErrorMatrixView::undoAdditionModification(QList<int>& addedClusters,QList<i
         for(iterator = updatedClusters.begin(); iterator != updatedClusters.end(); ++iterator){
 
             if(modifiedClusterList.contains(*iterator)){
-                modifiedClusterList.remove(*iterator);
+                modifiedClusterList.removeAll(*iterator);
             }
 
             if(deletedMap.contains(*iterator)){
                 QList<int> deletedList = deletedMap[*iterator];
                 QList<int>::iterator iterator2;
                 for(iterator2 = deletedList.begin(); iterator2 != deletedList.end(); ++iterator2)
-                    modifiedClusterList.remove(*iterator2);
+                    modifiedClusterList.removeAll(*iterator2);
             }
         }
 
@@ -569,7 +569,7 @@ void ErrorMatrixView::undoAddition(QList<int>& addedClusters){
                 QList<int> deletedList = deletedMap[*iterator];
                 QList<int>::iterator iterator2;
                 for(iterator2 = deletedList.begin(); iterator2 != deletedList.end(); ++iterator2)
-                    modifiedClusterList.remove(*iterator2);
+                    modifiedClusterList.removeAll(*iterator2);
 
                 drawContentsMode = REDRAW;
             }
@@ -603,13 +603,13 @@ void ErrorMatrixView::undoModification(QList<int>& updatedClusters){
         QList<int>::iterator iterator;
         for(iterator = updatedClusters.begin(); iterator != updatedClusters.end(); ++iterator){
             if(modifiedClusterList.contains(*iterator)){
-                modifiedClusterList.remove(*iterator);
+                modifiedClusterList.removeAll(*iterator);
             }
             if(deletedMap.contains(*iterator)){
                 QList<int> deletedList = deletedMap[*iterator];
                 QList<int>::iterator iterator2;
                 for(iterator2 = deletedList.begin(); iterator2 != deletedList.end(); ++iterator2){
-                    modifiedClusterList.remove(*iterator2);
+                    modifiedClusterList.removeAll(*iterator2);
                 }
             }
         }
@@ -753,7 +753,7 @@ void ErrorMatrixView::redoModification(QList<int>& updatedClusters,bool isModifi
 
         QList<int>::iterator iterator;
         for(iterator = updatedClusters.begin(); iterator != updatedClusters.end(); ++iterator)
-            if(modifiedClusterList.contains(*iterator)) modifiedClusterList.remove(*iterator);
+            if(modifiedClusterList.contains(*iterator)) modifiedClusterList.removeAll(*iterator);
             else if(clusterList.contains(*iterator)){
                 modifiedClusterList.append(*iterator);
             }

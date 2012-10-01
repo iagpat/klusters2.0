@@ -631,7 +631,8 @@ void KlustersApp::initSelectionBoxes(){
     connect(duration, SIGNAL(returnPressed()),this, SLOT(slotUpdateDuration()));
 
     //Create and initialize the spin boxe for the waveforms sample mode.
-    spikesTodisplay = new QSpinBox(1,1,spikesTodisplayStep,paramBar,"spikesTodisplay");
+    spikesTodisplay = new QSpinBox(1,1,spikesTodisplayStep,paramBar);
+    spikesTodisplay->setObjectName("spikesTodisplay");
     //Enable to step the value from the highest value to the lowest value and vice versa
     spikesTodisplay->setWrapping(true);
     spikesTodisplayLabel = new QLabel("  Waveforms",paramBar);

@@ -2354,7 +2354,7 @@ bool Data::saveClusters(FILE* clusterFile){
             clusterInfoMapTemp[cluster].setNbSpikes(nbSpikesOfCluster);
             if(nbSpikesOfCluster == 0){
                 nbClusters --;
-                clusterList.remove(cluster);
+                clusterList.removeAll(cluster);
                 clusterInfoMapTemp.remove(cluster);
             }
             if(nbClusters == 0) break;
@@ -2919,8 +2919,8 @@ void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesB
         nbOfspikes[indice] --;
         if(nbOfspikes[indice] == 0){
             nbClusters --;
-            positions.remove(positions.at(indice));
-            nbOfspikes.remove(nbOfspikes.at(indice));
+            positions.removeAll(positions.at(indice));
+            nbOfspikes.removeAll(nbOfspikes.at(indice));
         }
         if(nbClusters == 0) break;
         indice = 0;
@@ -2980,8 +2980,8 @@ void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesB
                 nbOfspikes[indice] --;
                 if(nbOfspikes[indice] == 0){
                     nbClusters --;
-                    lastPositions.remove(lastPositions.at(indice));
-                    nbOfspikes.remove(nbOfspikes.at(indice));
+                    lastPositions.removeAll(lastPositions.at(indice));
+                    nbOfspikes.removeAll(nbOfspikes.at(indice));
                 }
                 //Copy all the reminding original spikes of the new cluster.
                 if(nbClusters == 0){
@@ -3014,8 +3014,8 @@ void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesB
             nbOfspikes[indice] --;
             if(nbOfspikes[indice] == 0){
                 nbClusters --;
-                lastPositions.remove(lastPositions.at(indice));
-                nbOfspikes.remove(nbOfspikes.at(indice));
+                lastPositions.removeAll(lastPositions.at(indice));
+                nbOfspikes.removeAll(nbOfspikes.at(indice));
             }
             if(nbClusters == 0) break;
             indice = 0;
