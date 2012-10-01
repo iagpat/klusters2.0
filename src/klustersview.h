@@ -28,7 +28,6 @@
 #include <qprinter.h>
 //Added by qt3to4:
 #include <QList>
-#include <Q3PtrList>
 #include <QEvent>
 #include <QCloseEvent>
 
@@ -103,7 +102,7 @@ public:
                  QList<int>* initialClusterList, DisplayType type, QWidget* parent, const char *name, Qt::WindowFlags wflags, QStatusBar * statusBar, int timeInterval, int maxAmplitude,
                  QList<int> positions, bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay = 0, bool overLay = false,
                  bool mean = false, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
-                 long startingTime = 0, long duration = 100, bool labelsDisplay = false, Q3PtrList< QList<int> > undoList = Q3PtrList< QList<int> >(), Q3PtrList< QList<int> > redoList = Q3PtrList< QList<int> >());
+                 long startingTime = 0, long duration = 100, bool labelsDisplay = false, QList< QList<int>* > undoList = QList< QList<int>* >(), QList< QList<int>* > redoList = QList< QList<int>* >());
 
     /** Destructor for the main view */
     ~KlustersView();
@@ -551,10 +550,10 @@ public:
 
     /**Returns the list of list of removed clusters used to enable undo action.
   */
-    Q3PtrList< QList<int> > getUndoList();
+    QList< QList<int>* > getUndoList();
 
     /**Returns the list of list of removed clusters used to enable redo action.*/
-    Q3PtrList< QList<int> > getRedoList();
+    QList< QList<int>* > getRedoList();
 
     /**Updates the time interval between time lines drawn in the cluster view for the time dimension.
   * @param step the interval to use in second.
@@ -758,11 +757,11 @@ private:
 
     /**Represents a list of list of removed clusters use to enable undo action.
     */
-    Q3PtrList< QList<int> > removedClustersUndoList;
+    QList< QList<int>* > removedClustersUndoList;
 
     /**Represents a list of list of removed clusters use to enable redo action.
     */
-    Q3PtrList< QList<int> > removedClustersRedoList;
+    QList< QList<int>* > removedClustersRedoList;
     
     /**Dimension shown on the abscissa axis*/
     int dimensionX;

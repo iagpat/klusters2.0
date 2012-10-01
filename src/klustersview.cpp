@@ -51,7 +51,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
                            QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, Qt::WindowFlags wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
                            QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
                            int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay,
-                           Q3PtrList< QList<int> > undoList, Q3PtrList< QList<int> > redoList)
+                           QList< QList<int>* > undoList, QList< QList<int>* > redoList)
     : DockArea(parent),
       doc(pDoc),
       removedClustersUndoList(undoList),
@@ -81,8 +81,6 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
     setAutoFillBackground(true);
     shownClusters = initialClusterList;
     removedClusters = new QList<int>();
-    removedClustersUndoList.setAutoDelete(true);
-    removedClustersRedoList.setAutoDelete(true);
 
     //Create the mainDock
     mainDock = new QDockWidget(tr(doc.documentName().toLatin1()));
@@ -198,6 +196,12 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
 KlustersView::~KlustersView()
 {
     qDebug() << "in ~KlustersView(): ";
+    qDeleteAll(removedClustersUndoList);
+    removedClustersUndoList.clear();
+    qDeleteAll(removedClustersRedoList);
+    removedClustersRedoList.clear();
+
+
     delete shownClusters;
     delete removedClusters;
 }
@@ -1066,7 +1070,7 @@ void KlustersView::prepareUndo(QList<int>* removedClustersTemp){
 
     //if the number of undo has been reach remove the last elements in the undo list (first ones inserted)
     if(numberUndo > nbUndo){
-        removedClustersUndoList.remove(numberUndo - 1);
+        removedClustersUndoList.removeAt(numberUndo - 1);
         --numberUndo;
     }
 
@@ -1092,7 +1096,7 @@ void KlustersView::nbUndoChangedCleaning(int newNbUndo){
         // remove the last elements in the undo lists (first ones inserted).
         if(numberUndo > newNbUndo){
             while(numberUndo > newNbUndo){
-                removedClustersUndoList.remove(numberUndo - 1);
+                removedClustersUndoList.removeAt(numberUndo - 1);
                 --numberUndo;
             }
             //Clear the redoLists
@@ -1104,7 +1108,7 @@ void KlustersView::nbUndoChangedCleaning(int newNbUndo){
             int currentNbRedo = removedClustersRedoList.count();
             if((currentNbRedo + numberUndo) > newNbUndo){
                 while((currentNbRedo + numberUndo) > newNbUndo){
-                    removedClustersRedoList.remove(currentNbRedo - 1);
+                    removedClustersRedoList.removeAt(currentNbRedo - 1);
                     currentNbRedo = removedClustersRedoList.count();
                 }
             }
@@ -1126,7 +1130,7 @@ void KlustersView::addRemovedClusters(bool active){
             }
         }
         removedClustersRedoList.prepend(removedClusters);
-        QList<int>* removedClustersTemp = removedClustersUndoList.take(0);
+        QList<int>* removedClustersTemp = removedClustersUndoList.takeAt(0);
         removedClusters =  removedClustersTemp;
     }
 }
@@ -1203,7 +1207,7 @@ bool KlustersView::removeUndoAddedClusters(bool active){
     //of the removedClustersUndoList and the first element of the removedClustersRedoList become the current removedClusters.
     if(removedClustersRedoList.count()>0){
         removedClustersUndoList.prepend(removedClusters);
-        QList<int>* removedClustersTemp = removedClustersRedoList.take(0);
+        QList<int>* removedClustersTemp = removedClustersRedoList.takeAt(0);
         removedClusters =  removedClustersTemp;
 
         //List containing the clusters of this view which have to be removed
@@ -1385,28 +1389,28 @@ bool KlustersView::isThreadsRunning(){
     else return false;
 }
 
-Q3PtrList< QList<int> > KlustersView::getUndoList(){
-    Q3PtrList< QList<int> > undoList;
-    QList<int>* undo;
-    for(undo = removedClustersUndoList.first(); undo; undo = removedClustersUndoList.next()){
+QList< QList<int>* > KlustersView::getUndoList(){
+    QList< QList<int>* > undoList;
+    for(int i = 0; i<removedClustersUndoList.count();++i) {
         QList<int>* undoCopy = new QList<int>();
-        QList<int>::iterator iterator;
-        for(iterator = undo->begin(); iterator != undo->end(); ++iterator)
-            undoCopy->append(*iterator);
+        const QList<int>* lst = removedClustersUndoList.at(i);
+        for(int j= 0; i<lst->count();++j) {
+            undoCopy->append(lst->at(j));
+        }
         undoList.append(undoCopy);
     }
 
     return  undoList;
 }
 
-Q3PtrList< QList<int> >  KlustersView::getRedoList(){
-    Q3PtrList< QList<int> > redoList;
-    QList<int>* redo;
-    for(redo = removedClustersRedoList.first(); redo; redo = removedClustersRedoList.next()){
+QList< QList<int>* >  KlustersView::getRedoList(){
+    QList< QList<int>* > redoList;
+    for(int i = 0; i<removedClustersRedoList.count();++i) {
         QList<int>* redoCopy = new QList<int>();
-        QList<int>::iterator iterator;
-        for(iterator = redo->begin(); iterator != redo->end(); ++iterator)
-            redoCopy->append(*iterator);
+        const QList<int>* lst = removedClustersRedoList.at(i);
+        for(int j= 0; i<lst->count();++j) {
+            redoCopy->append(lst->at(j));
+        }
         redoList.append(redoCopy);
     }
 
