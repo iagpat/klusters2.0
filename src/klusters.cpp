@@ -152,6 +152,10 @@ void KlustersApp::initView()
     splitter->addWidget(clusterPanel);
     tabsParent = new QExtendTabWidget(this);
     splitter->addWidget(tabsParent);
+    QList<int> size;
+    size <<10<<90;
+    splitter->setSizes(size);
+
     setCentralWidget(splitter);
 }
 
