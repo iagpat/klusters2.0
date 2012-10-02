@@ -93,13 +93,18 @@ void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,
         //Get the iterator on the spikes of the current cluster
         Data::Iterator spikeIterator = clusteringData.iterator(static_cast<dataType>(*clusterIterator));
         //Iterate over the spikes of the cluster and draw them
-        if(drawCircles) for(;spikeIterator.hasNext();spikeIterator.next()){
-            QPoint point = spikeIterator(dimensionX,dimensionY);
-            painter.setBrush(clusterColors.color(*clusterIterator));
-            painter.drawEllipse(point.x() - 1,point.y() - 1,2,2);
+        if(drawCircles)  {
+            for(;spikeIterator.hasNext();spikeIterator.next())
+            {
+                QPoint point = spikeIterator(dimensionX,dimensionY);
+                painter.setBrush(clusterColors.color(*clusterIterator));
+                painter.drawEllipse(point.x() - 1,point.y() - 1,2,2);
+            }
         }
-        else for(;spikeIterator.hasNext();spikeIterator.next()){
-            painter.drawPoint(spikeIterator(dimensionX,dimensionY));
+        else  {
+            for(;spikeIterator.hasNext();spikeIterator.next()){
+                painter.drawPoint(spikeIterator(dimensionX,dimensionY));
+            }
         }
     }
 

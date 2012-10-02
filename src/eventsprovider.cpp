@@ -39,7 +39,8 @@
 #include "timer.h"
 
 
-EventsProvider::EventsProvider(QString fileUrl,double currentSamplingRate,int position): DataProvider(fileUrl),nbEvents(0),
+EventsProvider::EventsProvider(const QString& fileUrl,double currentSamplingRate,int position)
+    : DataProvider(fileUrl),nbEvents(0),
     eventPosition(static_cast<float>(position) / 100.0),modified(false){
 
     this->currentSamplingRate = currentSamplingRate / 1000.0;

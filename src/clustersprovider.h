@@ -48,7 +48,7 @@ public:
   * @param clusteringData object containing all the document data.
   * @param dataFileMaxTime maximum time of the data file in recording units.
   */
-    ClustersProvider(QString fileUrl,double samplingRate,double currentSamplingRate,Data& clusteringData,dataType dataFileMaxTime);
+    explicit ClustersProvider(const QString &fileUrl, double samplingRate, double currentSamplingRate, Data& clusteringData, dataType dataFileMaxTime);
     ~ClustersProvider();
 
     /**Triggers the retrieve of the cluster information included in the time interval given by @p startTime and @p endTime.

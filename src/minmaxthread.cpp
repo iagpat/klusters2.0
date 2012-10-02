@@ -15,12 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 
-#ifndef MINMAXTHREAD_H
-#define MINMAXTHREAD_H
-
 //include files for the application
 #include "minmaxthread.h"
 
 
+void MinMaxThread::run()
+{
+    data.minMaxDimensionCalculation(modifiedClusters);
+}
 
-#endif
+void MinMaxThread::setModifiedClusters(const QList<int>& clusters)
+{
+    modifiedClusters = clusters;
+}
+

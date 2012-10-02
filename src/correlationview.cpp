@@ -41,7 +41,7 @@ const int CorrelationView::XMARGIN = 10;
 const int CorrelationView::YMARGIN = 0;
 
 
-CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar * statusBar,QWidget* parent,Data::ScaleMode scale,int binSize, int correlationTimeFrame,bool shoulderLine, const char* name,
+CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,QStatusBar * statusBar,QWidget* parent,Data::ScaleMode scale,int binSize, int correlationTimeFrame,bool shoulderLine, const char* name,
                                  int minSize, int maxSize, int windowTopLeft ,int windowBottomRight, int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border,XMARGIN,YMARGIN),
     scaleMode(scale),dataReady(true),binSize(binSize),timeWindow(correlationTimeFrame),shoulderLine(shoulderLine),
@@ -66,9 +66,12 @@ CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,QColor back
 
     //Compute variable to draw tick marks
     int n = 0;
-    if((timeWindow - 1)/2 <= 30) n = 5;
-    if((timeWindow - 1)/2 > 30 && (timeWindow - 1)/2 <= 100) n = 10;
-    if((timeWindow - 1)/2 >= 100) n = 20;
+    if((timeWindow - 1)/2 <= 30)
+        n = 5;
+    if((timeWindow - 1)/2 > 30 && (timeWindow - 1)/2 <= 100)
+        n = 10;
+    if((timeWindow - 1)/2 >= 100)
+        n = 20;
     int pixelPerTimeWindow = (timeWindow * binWidth) / binSize;
     tickMarkStep = static_cast<float>(pixelPerTimeWindow * n) / static_cast<float>(timeWindow);
     nbTickMarks = static_cast<int>(floor(0.5 + static_cast<float>((timeWindow/2) / static_cast<float>(n))));

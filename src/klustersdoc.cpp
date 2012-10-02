@@ -52,8 +52,11 @@
 
 extern int nbUndo;
 
-KlustersDoc::KlustersDoc(QWidget* parent,ClusterPalette& clusterPalette,bool autoSave,int savingInterval): clusterColorListUndoList(),clusterColorListRedoList(),modified(false),docUrl(),baseName(""), xmlParameterFile(""),tmpCluFile(""),tmpSpikeFile(""),parent(parent),clusterPalette(clusterPalette),
-    addedClustersUndoList(),addedClustersRedoList(),modifiedClustersUndoList(),modifiedClustersRedoList(),autoSave(autoSave),savingInterval(savingInterval),tracesProvider(0L),clustersProvider(0L),channelColorList(0L){
+KlustersDoc::KlustersDoc(QWidget* parent,ClusterPalette& clusterPalette,bool autoSave,int savingInterval)
+    : clusterColorListUndoList(),clusterColorListRedoList(),modified(false),docUrl(),parent(parent),clusterPalette(clusterPalette),
+    addedClustersUndoList(),addedClustersRedoList(),modifiedClustersUndoList(),modifiedClustersRedoList()
+  ,autoSave(autoSave),savingInterval(savingInterval),tracesProvider(0L),clustersProvider(0L),channelColorList(0L)
+{
     viewList = new QList<KlustersView*>();
     clusterColorList = 0L;
     addedClusters = 0L;

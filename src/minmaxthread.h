@@ -40,8 +40,8 @@ public:
 
     inline ~MinMaxThread(){qDebug()<<"in ~MinMaxThread";}
 
-    inline void run(){data.minMaxDimensionCalculation(modifiedClusters);}
-    inline void setModifiedClusters(QList<int> clusters){modifiedClusters = clusters;}
+    void run();
+    void setModifiedClusters(const QList<int>& clusters);
 
 private:
     Data& data;
