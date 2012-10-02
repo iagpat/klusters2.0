@@ -68,8 +68,8 @@ public:
   * @param Yborder border on the top and bottom sides inside the window (QRect corresponding
   * to the part of the drawing which will actually be drawn onto the widget).
   */
-    ViewWidget(KlustersDoc& doc,KlustersView& view,QColor backgroundColor,QStatusBar* statusBar, QWidget* parent=0, const char* name=0,
-               int minSize = 500, int maxSize = 4000, int windowTopLeft = -500,int windowBottomRight = 1001, int border = 0,int Xborder = 0,int Yborder = 0);
+    explicit ViewWidget(KlustersDoc& doc, KlustersView& view, const QColor &backgroundColor, QStatusBar* statusBar, QWidget* parent=0, const char* name=0,
+               int minSize = 500, int maxSize = 4000, int windowTopLeft = -500, int windowBottomRight = 1001, int border = 0, int Xborder = 0, int Yborder = 0);
 
     ~ViewWidget();
 

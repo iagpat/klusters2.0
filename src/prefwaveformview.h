@@ -39,7 +39,7 @@
 class PrefWaveformView : public PrefWaveformViewLayout  {
    Q_OBJECT
 public: 
-	PrefWaveformView(QWidget* parent=0,int nbChannels = 0,const char *name=0);
+    explicit PrefWaveformView(QWidget* parent=0,int nbChannels = 0,const char *name=0);
 	~PrefWaveformView();
 
   /**Sets the gain used to display the waveforms.*/
@@ -70,7 +70,7 @@ public:
    saveButton->setEnabled(state);
    loadButton->setEnabled(state);
    channelList->setEnabled(state);
-  };
+  }
 
   
 Q_SIGNALS:

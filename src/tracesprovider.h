@@ -42,7 +42,7 @@ public:
   * @param samplingRate sampling rate used to record the data contained in the file identified by fileUrl.
   * @param offset offset to apply to the data contained in the file identified by fileUrl.
   */
-    TracesProvider(QString fileUrl,int nbChannels,int resolution,double samplingRate,int offset);
+    TracesProvider(const QString &fileUrl, int nbChannels, int resolution, double samplingRate, int offset);
     ~TracesProvider();
 
     /**Triggers the retrieve of the traces included in the time rate given by @p startTime and @p endTime.

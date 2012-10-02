@@ -37,14 +37,14 @@ class PrefDialog : public QPageDialog {
     Q_OBJECT
   public:
     /// Constructor
-    PrefDialog(QWidget *parent, int nbChannels = 0);
+    explicit PrefDialog(QWidget *parent, int nbChannels = 0);
 
     /** Transfers the settings from the configuration object to the dialog.*/
     void updateDialog();
     /** Transfers the settings from the dialog to the configuration object.*/
     void updateConfiguration();
     /** */
-    inline bool isApplyEnable(){return applyEnable;}
+    inline bool isApplyEnable() const {return applyEnable;}
 
     void resetChannelList(int nbChannels);
 
