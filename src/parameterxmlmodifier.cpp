@@ -87,7 +87,7 @@ bool ParameterXmlModifier::writeTofile(const QString& url) {
     return true;
 }
 
-QDomNode ParameterXmlModifier::findDirectChild(QString childName) {
+QDomNode ParameterXmlModifier::findDirectChild(const QString& childName) {
     QDomNode child = root.firstChild();
 	 
     while (!child.isNull()) {		 
@@ -100,7 +100,7 @@ QDomNode ParameterXmlModifier::findDirectChild(QString childName) {
     return QDomNode();
 }
 
-QDomNode ParameterXmlModifier::findDirectChild(QString childName,QDomNode ancestor) {
+QDomNode ParameterXmlModifier::findDirectChild(const QString& childName,const QDomNode& ancestor) {
     if (ancestor.isNull()) return QDomNode();
     QDomNode child = ancestor.firstChild();
     while (!child.isNull()) {
@@ -113,7 +113,7 @@ QDomNode ParameterXmlModifier::findDirectChild(QString childName,QDomNode ancest
     return QDomNode();
 }
 
-QDomNode ParameterXmlModifier::findDirectChild(QString childName,QString grandChildName,QString value,QDomNode ancestor) {
+QDomNode ParameterXmlModifier::findDirectChild(const QString& childName, const QString& grandChildName,const QString& value,const QDomNode& ancestor) {
     if (ancestor.isNull()) return QDomNode();
     QDomNode child = ancestor.firstChild();
     while (!child.isNull()) {

@@ -59,7 +59,7 @@ public:
   * @param childName name of the child node tag to look up.
   * @return the first node starting from root having @p tagName as tag name.
   */
-    QDomNode findDirectChild(QString childName);
+    QDomNode findDirectChild(const QString &childName);
 
     /**
   * Finds the first child node with the tag name @p childName direct child of the @p ancestor node.
@@ -67,7 +67,7 @@ public:
   * @param ancestor starting node from which to look up for the node.
   * @return the first node starting from @p ancestor having @p tagName as tag name.
   */
-    QDomNode findDirectChild(QString childName,QDomNode ancestor);
+    QDomNode findDirectChild(const QString &childName, const QDomNode &ancestor);
 
     /**
   * Finds the first child node with the tag name @p childName direct child of the @p ancestor node.
@@ -79,7 +79,7 @@ public:
   * @param ancestor starting node from which to look up for the child node.
   * @return the first child node corresponding to the criteria.
   */
-    QDomNode findDirectChild(QString childName,QString grandChildName,QString value,QDomNode ancestor);
+    QDomNode findDirectChild(const QString &childName, const QString &grandChildName, const QString &value, const QDomNode &ancestor);
 
     /** Sets the map of cluster user information.
     * @param pGroup the electrod group id for which the cluster user information have to be retrieved (corresponds to the 	currently opened cluster file).
