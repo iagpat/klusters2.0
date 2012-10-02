@@ -820,6 +820,21 @@ private:
     bool useWhiteColorDuringPrinting;
 
 
+    QAction *featureXLabelAction;
+    QAction *dimensionXAction;
+    QAction *dimensionYAction;
+    QAction *startLabelAction;
+    QAction *startAction;
+    QAction *durationLabelAction;
+    QAction *durationAction;
+    QAction *spikesTodisplayLabelAction;
+    QAction *spikesTodisplayAction;
+    QAction *binSizeLabelAction;
+    QAction *binSizeBoxAction;
+    QAction *correlogramsHalfDurationLabelAction;
+    QAction *correlogramsHalfDurationAction;
+
+
 };
 
 #endif // KCLUSTERS_H

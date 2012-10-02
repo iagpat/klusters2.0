@@ -598,9 +598,9 @@ void KlustersApp::initSelectionBoxes(){
     featureXLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     featureXLabel->setFont(font);
     //Insert the spine boxes in the main tool bar and make the connections
-    paramBar->addWidget(featureXLabel);
-    paramBar->addWidget(dimensionX);
-    paramBar->addWidget(dimensionY);
+    featureXLabelAction = paramBar->addWidget(featureXLabel);
+    dimensionXAction = paramBar->addWidget(dimensionX);
+    dimensionYAction = paramBar->addWidget(dimensionY);
     connect(dimensionX, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateDimensionX(int)));
     connect(dimensionY, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateDimensionY(int)));
 
@@ -619,14 +619,14 @@ void KlustersApp::initSelectionBoxes(){
     startLabel = new QLabel("  Start time (s)",paramBar);
     startLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     startLabel->setFont(font);
-    paramBar->addWidget(startLabel);
+    startLabelAction = paramBar->addWidget(startLabel);
     start->setMinimumSize(70,start->minimumHeight());
     start->setMaximumSize(70,start->maximumHeight());
-    paramBar->addWidget(start);
-    paramBar->addWidget(durationLabel);
+    startAction = paramBar->addWidget(start);
+    durationLabelAction = paramBar->addWidget(durationLabel);
     duration->setMinimumSize(70,duration->minimumHeight());
     duration->setMaximumSize(70,duration->maximumHeight());
-    paramBar->addWidget(duration);
+    durationAction = paramBar->addWidget(duration);
     connect(start, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateStartTime(int)));
     connect(duration, SIGNAL(returnPressed()),this, SLOT(slotUpdateDuration()));
 
@@ -638,10 +638,10 @@ void KlustersApp::initSelectionBoxes(){
     spikesTodisplayLabel = new QLabel("  Waveforms",paramBar);
     spikesTodisplayLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     spikesTodisplayLabel->setFont(font);
-    paramBar->addWidget(spikesTodisplayLabel);
+    spikesTodisplayLabelAction = paramBar->addWidget(spikesTodisplayLabel);
     spikesTodisplay->setMinimumSize(70,spikesTodisplay->minimumHeight());
     spikesTodisplay->setMaximumSize(70,spikesTodisplay->maximumHeight());
-    paramBar->addWidget(spikesTodisplay);
+    spikesTodisplayAction = paramBar->addWidget(spikesTodisplay);
     connect(spikesTodisplay, SIGNAL(valueChanged(int)),this, SLOT(slotSpikesTodisplay(int)));
 
     //Create and initialize the lineEdit for the correlations.
@@ -653,10 +653,10 @@ void KlustersApp::initSelectionBoxes(){
     binSizeLabel = new QLabel("  Bin size (ms)",paramBar);
     binSizeLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     binSizeLabel->setFont(font);
-    paramBar->addWidget(binSizeLabel);
+    binSizeLabelAction = paramBar->addWidget(binSizeLabel);
     binSizeBox->setMinimumSize(30,binSizeBox->minimumHeight());
     binSizeBox->setMaximumSize(30,binSizeBox->maximumHeight());
-    paramBar->addWidget(binSizeBox);
+    binSizeBoxAction = paramBar->addWidget(binSizeBox);
     connect(binSizeBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateBinSize()));
 
     correlogramsHalfDuration = new QLineEdit(paramBar,"INITIAL_CORRELOGRAMS_HALF_TIME_FRAME");
@@ -667,10 +667,10 @@ void KlustersApp::initSelectionBoxes(){
     correlogramsHalfDurationLabel = new QLabel("  Duration (ms)",paramBar);
     correlogramsHalfDurationLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     correlogramsHalfDurationLabel->setFont(font);
-    paramBar->addWidget(correlogramsHalfDurationLabel);
+    correlogramsHalfDurationLabelAction = paramBar->addWidget(correlogramsHalfDurationLabel);
     correlogramsHalfDuration->setMinimumSize(70,correlogramsHalfDuration->minimumHeight());
     correlogramsHalfDuration->setMaximumSize(70,correlogramsHalfDuration->maximumHeight());
-    paramBar->addWidget(correlogramsHalfDuration);
+    correlogramsHalfDurationAction = paramBar->addWidget(correlogramsHalfDuration);
     connect(correlogramsHalfDuration, SIGNAL(returnPressed()),this, SLOT(slotUpdateCorrelogramsHalfDuration()));
 
     //Connect the move function of the parameterBar to slotUpdateParameterBar to always correctly show its contents.
@@ -805,17 +805,17 @@ void KlustersApp::initDisplay(){
     overlayPresentation->setChecked(false);
     meanPresentation->setChecked(false);
     scaleByMax->setChecked(true);
-    dimensionX->show();
-    dimensionY->show();
-    featureXLabel->show();
-    spikesTodisplay->show();
-    spikesTodisplayLabel->show();
+    dimensionXAction->setVisible(true);
+    dimensionYAction->setVisible(true);
+    featureXLabelAction->setVisible(true);
+    spikesTodisplayAction->setVisible(true);
+    spikesTodisplayLabelAction->setVisible(true);
     correlogramsHalfDuration->setText(INITIAL_CORRELOGRAMS_HALF_TIME_FRAME);
-    correlogramsHalfDuration->show();
-    correlogramsHalfDurationLabel->show();
+    correlogramsHalfDurationAction->setVisible(true);
+    correlogramsHalfDurationLabelAction->setVisible(true);
     binSizeBox->setText(DEFAULT_BIN_SIZE);
-    binSizeBox->show();
-    binSizeLabel->show();
+    binSizeBoxAction->setVisible(true);
+    binSizeLabelAction->setVisible(true);
     shoulderLine->setChecked(true);
 
     //Set the range value of the spine boxes
@@ -884,20 +884,20 @@ void KlustersApp::initDisplay(){
     start->setSingleStep(timeWindow);
     duration->setText(INITIAL_WAVEFORM_TIME_WINDOW);
     if(timeFrameMode->isChecked()){
-        duration->show();
-        durationLabel->show();
-        start->show();
-        startLabel->show();
-        spikesTodisplay->hide();
-        spikesTodisplayLabel->hide();
+        durationAction->setVisible(true);
+        durationLabelAction->setVisible(true);
+        startAction->setVisible(true);
+        startLabelAction->setVisible(true);
+        spikesTodisplayAction->setVisible(false);
+        spikesTodisplayLabelAction->setVisible(false);
     }
     else{
-        duration->hide();
-        durationLabel->hide();
-        start->hide();
-        startLabel->hide();
-        spikesTodisplay->show();
-        spikesTodisplayLabel->show();
+        durationAction->setVisible(false);
+        durationLabelAction->setVisible(false);
+        startAction->setVisible(false);
+        startLabelAction->setVisible(false);
+        spikesTodisplayAction->setVisible(true);
+        spikesTodisplayLabelAction->setVisible(true);
     }
 
     //Enable some actions now that a document is open (see the klustersui.rc file)
@@ -2017,15 +2017,15 @@ void KlustersApp::slotTabChange(QWidget* widget){
                 dimensionX->setValue(x);
                 dimensionY->setValue(y);
                 slotStateChanged("clusterViewState");
-                dimensionX->show();
-                dimensionY->show();
-                featureXLabel->show();
+                dimensionXAction->setVisible(true);
+                dimensionYAction->setVisible(true);
+                featureXLabelAction->setVisible(true);
             }
             else{
                 slotStateChanged("noClusterViewState");
-                dimensionX->hide();
-                dimensionY->hide();
-                featureXLabel->hide();
+                dimensionXAction->setVisible(false);
+                dimensionYAction->setVisible(false);
+                featureXLabelAction->setVisible(false);
             }
 
             if(activeView->containsWaveformView()){
@@ -2042,22 +2042,22 @@ void KlustersApp::slotTabChange(QWidget* widget){
                     start->setValue(startTime);
                     start->setSingleStep(timeWindow);
                     duration->setText(QString::fromLatin1("%1").arg(timeWindow));
-                    duration->show();
-                    durationLabel->show();
-                    start->show();
-                    startLabel->show();
-                    spikesTodisplay->hide();
-                    spikesTodisplayLabel->hide();
+                    durationAction->setVisible(true);
+                    durationLabelAction->setVisible(true);
+                    startAction->setVisible(true);
+                    startLabelAction->setVisible(true);
+                    spikesTodisplayAction->setVisible(false);
+                    spikesTodisplayLabelAction->setVisible(false);
                 }
                 else{
                     timeFrameMode->setChecked(false);
-                    duration->hide();
-                    durationLabel->hide();
-                    start->hide();
-                    startLabel->hide();
+                    durationAction->setVisible(false);
+                    durationLabelAction->setVisible(false);
+                    startAction->setVisible(false);
+                    startLabelAction->setVisible(false);
                     spikesTodisplay->setValue(activeView->displayedNbSpikes());
-                    spikesTodisplay->show();
-                    spikesTodisplayLabel->show();
+                    spikesTodisplayAction->setVisible(true);
+                    spikesTodisplayLabelAction->setVisible(true);
                 }
             }
             else{
@@ -2065,12 +2065,12 @@ void KlustersApp::slotTabChange(QWidget* widget){
                 overlayPresentation->setChecked(false);
                 meanPresentation->setChecked(false);
                 slotStateChanged("noWaveformsViewState");
-                duration->hide();
-                durationLabel->hide();
-                start->hide();
-                startLabel->hide();
-                spikesTodisplay->hide();
-                spikesTodisplayLabel->hide();
+                durationAction->setVisible(false);
+                durationLabelAction->setVisible(false);
+                startAction->setVisible(false);
+                startLabelAction->setVisible(false);
+                spikesTodisplayAction->setVisible(false);
+                spikesTodisplayLabelAction->setVisible(false);
             }
 
             if(activeView->containsCorrelationView()){
@@ -2093,19 +2093,19 @@ void KlustersApp::slotTabChange(QWidget* widget){
                 binSize = activeView->sizeOfBin();
                 correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
                 binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
-                correlogramsHalfDuration->show();
-                correlogramsHalfDurationLabel->show();
-                binSizeBox->show();
-                binSizeLabel->show();
+                correlogramsHalfDurationAction->setVisible(true);
+                correlogramsHalfDurationLabelAction->setVisible(true);
+                binSizeBoxAction->setVisible(true);
+                binSizeLabelAction->setVisible(true);
                 //Update the shoulder line menu entry
                 shoulderLine->setChecked(activeView->isShoulderLine());
             }
             else{
                 slotStateChanged("noCorrelationViewState");
-                correlogramsHalfDuration->hide();
-                correlogramsHalfDurationLabel->hide();
-                binSizeBox->hide();
-                binSizeLabel->hide();
+                correlogramsHalfDurationAction->setVisible(false);
+                correlogramsHalfDurationLabelAction->setVisible(false);
+                binSizeBoxAction->setVisible(false);
+                binSizeLabelAction->setVisible(false);
             }
 
             if(activeView->containsErrorMatrixView()){
@@ -2149,22 +2149,22 @@ void KlustersApp::slotTabChange(QWidget* widget){
                 slotStateChanged("reclusterState");
             }
         } else {// a ProcessWidget
-            dimensionX->hide();
-            dimensionY->hide();
-            featureXLabel->hide();
+            dimensionXAction->setVisible(false);
+            dimensionYAction->setVisible(false);
+            featureXLabelAction->setVisible(false);
             timeFrameMode->setChecked(false);
             overlayPresentation->setChecked(false);
             meanPresentation->setChecked(false);
-            duration->hide();
-            durationLabel->hide();
-            start->hide();
-            startLabel->hide();
-            spikesTodisplay->hide();
-            spikesTodisplayLabel->hide();
-            correlogramsHalfDuration->hide();
-            correlogramsHalfDurationLabel->hide();
-            binSizeBox->hide();
-            binSizeLabel->hide();
+            durationAction->setVisible(false);
+            durationLabelAction->setVisible(false);
+            startAction->setVisible(false);
+            startLabelAction->setVisible(false);
+            spikesTodisplayAction->setVisible(false);
+            spikesTodisplayLabelAction->setVisible(false);
+            correlogramsHalfDurationAction->setVisible(false);
+            correlogramsHalfDurationLabelAction->setVisible(false);
+            binSizeBoxAction->setVisible(false);
+            binSizeLabelAction->setVisible(false);
 
             //Update the palette of clusters
             if(!processFinished) clusterPalette->selectItems(clustersToRecluster);
@@ -2206,22 +2206,22 @@ void KlustersApp::slotTimeFrameMode(){
             start->setValue(startTime);
             start->setSingleStep(timeWindow);
             duration->setText(QString::fromLatin1("%1").arg(timeWindow));
-            duration->show();
-            durationLabel->show();
-            start->show();
-            startLabel->show();
-            spikesTodisplay->hide();
-            spikesTodisplayLabel->hide();
+            durationAction->setVisible(true);
+            durationLabelAction->setVisible(true);
+            startAction->setVisible(true);
+            startLabelAction->setVisible(true);
+            spikesTodisplayAction->setVisible(false);
+            spikesTodisplayLabelAction->setVisible(false);
             activeView()->setTimeFrameMode();
         }
         else{
             spikesTodisplay->setValue(activeView()->displayedNbSpikes());
-            spikesTodisplay->show();
-            spikesTodisplayLabel->show();
-            duration->hide();
-            durationLabel->hide();
-            start->hide();
-            startLabel->hide();
+            spikesTodisplayAction->setVisible(true);
+            spikesTodisplayLabelAction->setVisible(true);
+            durationAction->setVisible(false);
+            durationLabelAction->setVisible(false);
+            startAction->setVisible(false);
+            startLabelAction->setVisible(false);
             activeView()->setSampleMode();
         }
     }
@@ -2234,19 +2234,19 @@ void KlustersApp::slotClusterInformationModified(){
 void KlustersApp::resetState(){
     isInit = true; //prevent the spine boxes or the lineedit and the editline to trigger during initialisation
     timeFrameMode->setChecked(false);
-    duration->hide();
-    durationLabel->hide();
-    start->hide();
-    startLabel->hide();
-    dimensionX->hide();
-    dimensionY->hide();
-    featureXLabel->hide();
-    spikesTodisplay->hide();
-    spikesTodisplayLabel->hide();
-    correlogramsHalfDuration->hide();
-    correlogramsHalfDurationLabel->hide();
-    binSizeBox->hide();
-    binSizeLabel->hide();
+    durationAction->setVisible(false);
+    durationLabelAction->setVisible(false);
+    startAction->setVisible(false);
+    startLabelAction->setVisible(false);
+    dimensionXAction->setVisible(false);
+    dimensionYAction->setVisible(false);
+    featureXLabelAction->setVisible(false);
+    spikesTodisplayAction->setVisible(false);
+    spikesTodisplayLabelAction->setVisible(false);
+    correlogramsHalfDurationAction->setVisible(false);
+    correlogramsHalfDurationLabelAction->setVisible(false);
+    binSizeBoxAction->setVisible(false);
+    binSizeLabelAction->setVisible(false);
     shoulderLine->setChecked(true);
     binSize = DEFAULT_BIN_SIZE.toInt();
     correlogramTimeFrame = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
@@ -2302,47 +2302,47 @@ void KlustersApp::slotUpdateBinSize(){
 }
 
 void KlustersApp::slotUpdateParameterBar(){  
-    duration->hide();
-    durationLabel->hide();
-    start->hide();
-    startLabel->hide();
-    dimensionX->hide();
-    dimensionY->hide();
-    featureXLabel->hide();
-    spikesTodisplay->hide();
-    spikesTodisplayLabel->hide();
-    correlogramsHalfDuration->hide();
-    correlogramsHalfDurationLabel->hide();
-    binSizeBox->hide();
-    binSizeLabel->hide();
+    durationAction->setVisible(false);
+    durationLabelAction->setVisible(false);
+    startAction->setVisible(false);
+    startLabelAction->setVisible(false);
+    dimensionXAction->setVisible(false);
+    dimensionYAction->setVisible(false);
+    featureXLabelAction->setVisible(false);
+    spikesTodisplayAction->setVisible(false);
+    spikesTodisplayLabelAction->setVisible(false);
+    correlogramsHalfDurationAction->setVisible(false);
+    correlogramsHalfDurationLabelAction->setVisible(false);
+    binSizeBoxAction->setVisible(false);
+    binSizeLabelAction->setVisible(false);
 
     if(mainDock != 0L){
         KlustersView* currentView = activeView();
 
         if(currentView->containsClusterView()){
-            dimensionX->show();
-            dimensionY->show();
-            featureXLabel->show();
+            dimensionXAction->setVisible(true);
+            dimensionYAction->setVisible(true);
+            featureXLabelAction->setVisible(true);
         }
 
         if(currentView->containsWaveformView()){
             if(currentView->isInTimeFrameMode()){
-                duration->show();
-                durationLabel->show();
-                start->show();
-                startLabel->show();
+                durationAction->setVisible(true);
+                durationLabelAction->setVisible(true);
+                startAction->setVisible(true);
+                startLabelAction->setVisible(true);
             }
             else{
-                spikesTodisplay->show();
-                spikesTodisplayLabel->show();
+                spikesTodisplayAction->setVisible(true);
+                spikesTodisplayLabelAction->setVisible(true);
             }
         }
 
         if(currentView->containsCorrelationView()){
-            correlogramsHalfDuration->show();
-            correlogramsHalfDurationLabel->show();
-            binSizeBox->show();
-            binSizeLabel->show();
+            correlogramsHalfDurationAction->setVisible(true);
+            correlogramsHalfDurationLabelAction->setVisible(true);
+            binSizeBoxAction->setVisible(true);
+            binSizeLabelAction->setVisible(true);
         }
     }
 }
@@ -2649,22 +2649,22 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType){
             dimensionX->setValue(1);
             dimensionY->setValue(2);
             slotStateChanged("clusterViewState");
-            dimensionX->show();
-            dimensionY->show();
-            featureXLabel->show();
+            dimensionXAction->setVisible(true);
+            dimensionYAction->setVisible(true);
+            featureXLabelAction->setVisible(true);
             break;
         case KlustersView::WAVEFORMS:
             slotStateChanged("waveformsViewState");
             overlayPresentation->setChecked(false);
             meanPresentation->setChecked(false);
             timeFrameMode->setChecked(false);
-            duration->hide();
-            durationLabel->hide();
-            start->hide();
-            startLabel->hide();
+            durationAction->setVisible(false);
+            durationLabelAction->setVisible(false);
+            startAction->setVisible(false);
+            startLabelAction->setVisible(false);
             spikesTodisplay->setValue(DEFAULT_NB_SPIKES_DISPLAYED);
-            spikesTodisplay->show();
-            spikesTodisplayLabel->show();
+            spikesTodisplayAction->setVisible(true);
+            spikesTodisplayLabelAction->setVisible(true);
             break;
         case KlustersView::CORRELATIONS:
             slotStateChanged("correlationViewState");
@@ -2674,10 +2674,10 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType){
             binSize = DEFAULT_BIN_SIZE.toInt();
             correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
             binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
-            correlogramsHalfDuration->show();
-            correlogramsHalfDurationLabel->show();
-            binSizeBox->show();
-            binSizeLabel->show();
+            correlogramsHalfDurationAction->setVisible(true);
+            correlogramsHalfDurationLabelAction->setVisible(true);
+            binSizeBoxAction->setVisible(true);
+            binSizeLabelAction->setVisible(true);
             //Update the shoulder line menu entry
             shoulderLine->setChecked(true);
             break;
@@ -2713,28 +2713,28 @@ void KlustersApp::widgetRemovedFromDisplay(KlustersView::DisplayType displayType
     switch(displayType){
     case KlustersView::CLUSTERS:
         slotStateChanged("noClusterViewState");
-        dimensionX->hide();
-        dimensionY->hide();
-        featureXLabel->hide();
+        dimensionXAction->setVisible(false);
+        dimensionYAction->setVisible(false);
+        featureXLabelAction->setVisible(false);
         break;
     case KlustersView::WAVEFORMS:
         timeFrameMode->setChecked(false);
         overlayPresentation->setChecked(false);
         meanPresentation->setChecked(false);
         slotStateChanged("noWaveformsViewState");
-        duration->hide();
-        durationLabel->hide();
-        start->hide();
-        startLabel->hide();
-        spikesTodisplay->hide();
-        spikesTodisplayLabel->hide();
+        durationAction->setVisible(false);
+        durationLabelAction->setVisible(false);
+        startAction->setVisible(false);
+        startLabelAction->setVisible(false);
+        spikesTodisplayAction->setVisible(false);
+        spikesTodisplayLabelAction->setVisible(false);
         break;
     case KlustersView::CORRELATIONS:
         slotStateChanged("noCorrelationViewState");
-        correlogramsHalfDuration->hide();
-        correlogramsHalfDurationLabel->hide();
-        binSizeBox->hide();
-        binSizeLabel->hide();
+        correlogramsHalfDurationAction->setVisible(false);
+        correlogramsHalfDurationLabelAction->setVisible(false);
+        binSizeBoxAction->setVisible(false);
+        binSizeLabelAction->setVisible(false);
         break;
     case KlustersView::ERROR_MATRIX :
         slotStateChanged("noErrorMatrixViewState");
@@ -2757,8 +2757,8 @@ void KlustersApp::updateDimensionSpinBoxes(int dimensionX, int dimensionY){
     //Update the dimension spine boxes
     this->dimensionX->setValue(dimensionX);
     this->dimensionY->setValue(dimensionY);
-    this->dimensionX->show();
-    this->dimensionY->show();
+    this->dimensionXAction->setVisible(true);
+    this->dimensionYAction->setVisible(true);
 
     isInit = false; //now a change in a spine box  or the lineedit
     //will trigger an update of the view contains in the active display.
