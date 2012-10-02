@@ -121,7 +121,10 @@ void ClusterPalette::createClusterList(KlustersDoc* document){
 }
 
 void ClusterPalette::updateClusterList(){
+    if(!doc)
+        return;
     iconView->clear();
+
 
     //Get the list of clusters with their color
     ItemColors& clusterColors = doc->clusterColors();
@@ -345,6 +348,9 @@ void ClusterPalette::slotMousePressed(int button,Q3IconViewItem* item){
 
 QList<int> ClusterPalette::selectedClusters(){
     //Get the list of clusters with their color
+    if(!doc) {
+        return QList<int>();
+    }
     ItemColors& clusterColors = doc->clusterColors();
 
     QList<int> selectedClusters;
