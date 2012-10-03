@@ -46,23 +46,23 @@ public:
     friend ErrorMatrixThread* ErrorMatrixView::computeMatrix();
 
     inline ~ErrorMatrixThread(){}
-    inline Array<double>* getProbabilities(){return probabilities;}
-    inline QList<int> getClusterList(){return clusterList;}
-    inline QList<int> getComputedClusterList(){return computedClusterList;}
-    inline QList<int> getIgnoreClusterIndex(){return ignoreClusterIndex;}
+    inline Array<double>* getProbabilities() const {return probabilities;}
+    inline QList<int> getClusterList() const {return clusterList;}
+    inline QList<int> getComputedClusterList() const {return computedClusterList;}
+    inline QList<int> getIgnoreClusterIndex() const {return ignoreClusterIndex;}
 
     /**Asks the thread to stop his work as soon as possible.*/
     inline void stopProcessing(){
         haveToStopProcessing = true;
         assistant.stopComputing();
-    };
+    }
 
     class ErrorMatrixEvent;
     friend class ErrorMatrixEvent;
 
     inline ErrorMatrixEvent* getErrorMatrixEvent(){
         return new ErrorMatrixEvent(*this);
-    };
+    }
 
     /**
   * Internal class use to send information to the ErrorMatrixView to inform it that

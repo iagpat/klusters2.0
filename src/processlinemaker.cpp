@@ -76,7 +76,7 @@ void ProcessLineMaker::slotReceivedStdout()
 
 void ProcessLineMaker::slotReceivedStderr()
 {
-    QString s = QString::fromLocal8Bit(mProc->readAllStandardError());
+    const QString s = QString::fromLocal8Bit(mProc->readAllStandardError());
     counterErr++;
   
     // Flush stdout buffer
