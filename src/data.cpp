@@ -123,7 +123,7 @@ bool Data::configure(QFile& parFile,int electrodeGroupID,QString& errorInformati
             errorInformation = QObject::tr("In the parameter file (base.xml), the sampling rate is missing.");
             return false;
         }
-        if(channels.size() == 0){
+        if(channels.isEmpty()){
             errorInformation = QObject::tr("There is no channels defined for this electrode group.");
             return false;
         }
@@ -374,8 +374,10 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
 
 
 bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString& errorInformation){
-    if(!loadClusters(clusterFile,spkFileLength,errorInformation)) return false;
-    if(!loadFeatures(featureFile,errorInformation)) return false;
+    if(!loadClusters(clusterFile,spkFileLength,errorInformation))
+        return false;
+    if(!loadFeatures(featureFile,errorInformation))
+        return false;
 
     //Fill the first row of spikesByCluster with the row index of the spike,
     //knowing that for the moment the elements of the table are sorted by spike order.
@@ -437,9 +439,11 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QSt
 
 bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
     this->spkFileName = spkFileName;
-    if(!configure(parXFile, parFile,errorInformation)) return false;
+    if(!configure(parXFile, parFile,errorInformation))
+        return false;
 
-    if(!initialize(featureFile,clusterFile,spkFileLength,errorInformation)) return false;
+    if(!initialize(featureFile,clusterFile,spkFileLength,errorInformation))
+        return false;
 
     return true;
 }
@@ -447,8 +451,10 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QSt
 bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
     this->spkFileName = spkFileName;
 
-    if(!configure(parFile,electrodeGroupID,errorInformation)) return false;
-    if(!initialize(featureFile,clusterFile,spkFileLength,errorInformation)) return false;
+    if(!configure(parFile,electrodeGroupID,errorInformation))
+        return false;
+    if(!initialize(featureFile,clusterFile,spkFileLength,errorInformation))
+        return false;
 
     return true;
 }
@@ -539,7 +545,7 @@ void Data::minMaxDimensionCalculation(QList<int> modifiedClusters){
     dataType max,min;
 
     bool init = false;
-    if(clustersGivingMinimum.size() == 0){
+    if(clustersGivingMinimum.isEmpty()){
         init = true;
         for(int i = 0; i<nbDimensions; ++i){
             clustersGivingMinimum.append(0);
@@ -1965,7 +1971,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
 
     //if addedClusters and updatedClusters are both empty, the undo concern the renumbering
     //Can not do much, all the data will have to be reloaded (it shoud not happen very often)
-    if(addedClusters.size() == 0 && updatedClusters.size() == 0){
+    if(addedClusters.isEmpty() && updatedClusters.isEmpty()){
         //Gets all the clustersId currently available
         QList<dataType> clusters = clusterIds();
 
@@ -1974,7 +1980,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
         QList<dataType>::iterator iterator;
         for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator){
 
-            qDebug()<<"in Data::undo addedClusters.size() == 0 && updatedClusters.size() == 0, *iterator: "<<*iterator;
+            qDebug()<<"in Data::undo addedClusters.isEmpty() && updatedClusters.isEmpty(), *iterator: "<<*iterator;
 
 
             mutex.lock();
@@ -2138,7 +2144,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
 
     //if addedClusters and updatedClusters are both empty, the undo concern the renumbering
     //Can do much, all the data will have to be reloaded (it shoud not happen very often)
-    if(addedClusters.size() == 0 && updatedClusters.size() == 0){
+    if(addedClusters.isEmpty() && updatedClusters.isEmpty()){
         //Gets all the clustersId currently available
         QList<dataType> clusters = clusterIds();
 
