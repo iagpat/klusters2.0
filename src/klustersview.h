@@ -579,7 +579,7 @@ public:
     inline bool containsErrorMatrixView() const {return isThereErrorMatrixView;}
 
     /***Update the background color of the views.*/
-    inline void updateBackgroundColor(QColor color){emit changeBackgroundColor(color);}
+    inline void updateBackgroundColor(const QColor& color){emit changeBackgroundColor(color);}
 
     /**
   * Adds the clusters created by the automatic reclustering program to those already shown and remove
