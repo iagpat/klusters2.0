@@ -56,9 +56,6 @@ Data::Data()
     spikesByCluster = new SortableTable();
     clusterInfoMap = new ClusterInfoMap();
 
-    //The lists own the objects, they will delete the items that are removed.
-    waveformDict.setAutoDelete(true);
-    correlationDict.setAutoDelete(true);
 }
 
 Data::~Data(){
@@ -78,6 +75,12 @@ Data::~Data(){
     spikesByClusterUndoList.clear();
     qDeleteAll(spikesByClusterRedoList);
     spikesByClusterRedoList.clear();
+
+    qDeleteAll(waveformDict);
+    waveformDict.clear();
+    qDeleteAll(correlationDict);
+    correlationDict.clear();
+
 }
 
 MinMaxThread* Data::minMaxCalculator(){
@@ -3039,7 +3042,7 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
     int cluster1 = pair.getX();
     int cluster2 = pair.getY();
     Pair parameters = Pair(binSize,timeWindow);
-    Q3Dict<Correlation>* dict = 0L;
+    QHash<QString, Correlation*>* dict = 0L;
 
     //Test first if the clusters still exist
     bool cluster1Removed = false;
@@ -3089,8 +3092,9 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
         mutex.lock();
         dict = correlationDict[pair.toString()];
         if(dict == 0){
-            dict = new Q3Dict<Correlation>();
-            dict->setAutoDelete(true);
+            dict = new QHash<QString, Correlation*>();
+            //KDAB Look at it
+            //dict->setAutoDelete(true);
             correlation = new Correlation(*this,binSize,timeWindow);
             correlation->setStatus(IN_PROCESS);
             dict->insert(parameters.toString(),correlation);
@@ -3415,12 +3419,12 @@ void Data::renumberCorrelation(QMap<int,int>& clusterIdsOldNew){
             int val = oldClusterIds.at(i);
             int val2 = oldClusterIds.at(j);
             if(val2 <= val){
-                Q3Dict<Correlation>* dict = correlationDict.take(Pair(val2,val).toString());
+                QHash<QString, Correlation*>* dict = correlationDict.take(Pair(val2,val).toString());
                 if(dict != 0)
                     correlationDict.insert(Pair(clusterIdsOldNew[val2],clusterIdsOldNew[val]).toString(),dict);
             }
             else{
-                Q3Dict<Correlation>* dict = correlationDict.take(Pair(val,val2).toString());
+                QHash<QString, Correlation*>* dict = correlationDict.take(Pair(val,val2).toString());
                 if(dict != 0)
                     correlationDict.insert(Pair(clusterIdsOldNew[val],clusterIdsOldNew[val2]).toString(),dict);
             }

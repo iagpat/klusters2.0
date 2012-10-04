@@ -78,11 +78,9 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
     screenResolution = static_cast<int>(0.5 + printer.resolution() / 2.54);
 
     //Cluster related variables
-    clustersData.setAutoDelete(true);
     nbClusters = 0;
 
     //Event related variables
-    eventsData.setAutoDelete(true);
     selectedEvent.first.clear();
     selectedEvent.second = 0;
 
@@ -171,7 +169,14 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
 
 
 
-TraceView::~TraceView(){}
+TraceView::~TraceView()
+{
+    qDeleteAll(clustersData);
+    clustersData.clear();
+    qDeleteAll(eventsData);
+    eventsData.clear();
+
+}
 
 void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
     //If another widget was the initiator of the request, ignore the data.
@@ -201,14 +206,16 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
     //Check if the cluster and event data are available
     else{
         bool ready = false;
-        Q3DictIterator<ClusterData> iterator(clustersData);
-        for(;iterator.current();++iterator){
-            ready = iterator.current()->status();
+        QHashIterator<QString, ClusterData*> iterator(clustersData);
+        while (iterator.hasNext()) {
+            iterator.next();
+            ready = iterator.value()->status();
             if(!ready) break;
         }
-        Q3DictIterator<EventData> iterator2(eventsData);
-        for(;iterator2.current();++iterator2){
-            ready = iterator2.current()->status();
+        QHashIterator<QString, EventData*> iterator2(eventsData);
+        while (iterator2.hasNext()) {
+            iterator2.next();
+            ready = iterator2.value()->status();
             if(!ready) break;
         }
         if(ready){
@@ -249,14 +256,16 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator,QString p
 
     //The following code was done in case of threads, without thread the trace data arrive always last
     bool ready = false;
-    Q3DictIterator<ClusterData> iterator(clustersData);
-    for(;iterator.current();++iterator){
-        ready = iterator.current()->status();
+    QHashIterator<QString, ClusterData*> iterator(clustersData);
+    while (iterator.hasNext()) {
+        iterator.next();
+        ready = iterator.value()->status();
         if(!ready) break;
     }
-    Q3DictIterator<EventData> iterator2(eventsData);
-    for(;iterator2.current();++iterator2){
-        ready = iterator2.current()->status();
+    QHashIterator<QString, EventData*> iterator2(eventsData);
+    while (iterator2.hasNext()) {
+        iterator2.next();
+        ready = iterator2.value()->status();
         if(!ready) break;
     }
     if(dataReady && ready){
@@ -280,14 +289,17 @@ void TraceView::dataAvailable(Array<dataType>& times,Array<int>& ids,QObject* in
 
     //The following code was done in case of threads, without thread the trace data arrive always last
     bool ready = false;
-    Q3DictIterator<EventData> iterator(eventsData);
-    for(;iterator.current();++iterator){
-        ready = iterator.current()->status();
+
+    QHashIterator<QString, EventData*> iterator(eventsData);
+    while (iterator.hasNext()) {
+        iterator.next();
+        ready = iterator.value()->status();
         if(!ready) break;
     }
-    Q3DictIterator<ClusterData> iterator2(clustersData);
-    for(;iterator2.current();++iterator2){
-        ready = iterator2.current()->status();
+    QHashIterator<QString, ClusterData*> iterator2(clustersData);
+    while (iterator2.hasNext()) {
+        iterator2.next();
+        ready = iterator2.value()->status();
         if(!ready) break;
     }
     if(dataReady && ready){
@@ -326,11 +338,12 @@ void TraceView::updateClusterData(bool active){
         }
 
         if(clustersData.count() != 0) setCursor(Qt::WaitCursor);
-        Q3DictIterator<ClusterData> iterator(clustersData);
-        for(;iterator.current();++iterator){
-            if(iterator.currentKey() != clusterProviderToSkip){
-                iterator.current()->setStatus(false);
-                static_cast<ClustersProvider*>(clusterProviders[iterator.currentKey()])->requestData(startTime,endTime,this,startTimeInRecordingUnits);
+        QHashIterator<QString, ClusterData*> iterator(clustersData);
+        while (iterator.hasNext()) {
+            iterator.next();
+            if(iterator.key() != clusterProviderToSkip){
+                iterator.value()->setStatus(false);
+                static_cast<ClustersProvider*>(clusterProviders[iterator.key()])->requestData(startTime,endTime,this,startTimeInRecordingUnits);
             }
             else clusterProviderToSkip.clear();
         }
@@ -368,11 +381,13 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
             clustersData.remove(QString::fromLatin1("%1").arg(*toRemoveIterator));
         }
 
-        Q3DictIterator<ClusterData> iterator(clustersData);
-        for(;iterator.current();++iterator){
-            if(iterator.currentKey() != clusterProviderToSkip){
-                iterator.current()->setStatus(false);
-                static_cast<ClustersProvider*>(clusterProviders[iterator.currentKey()])->requestData(startTime,endTime,this,startTimeInRecordingUnits);
+        QHashIterator<QString, ClusterData*> iterator(clustersData);
+        while (iterator.hasNext()) {
+            iterator.next();
+
+            if(iterator.key() != clusterProviderToSkip){
+                iterator.value()->setStatus(false);
+                static_cast<ClustersProvider*>(clusterProviders[iterator.key()])->requestData(startTime,endTime,this,startTimeInRecordingUnits);
             }
             else clusterProviderToSkip.clear();
         }
@@ -393,11 +408,13 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
             eventsData.remove(*toRemoveIterator);
         }
 
-        Q3DictIterator<EventData> iterator(eventsData);
-        for(;iterator.current();++iterator){
-            if(iterator.currentKey() != eventProviderToSkip){
-                iterator.current()->setStatus(false);
-                static_cast<EventsProvider*>(eventProviders[iterator.currentKey()])->requestData(startTime,endTime,this);
+
+        QHashIterator<QString, EventData*> iterator(eventsData);
+        while (iterator.hasNext()) {
+            iterator.next();
+            if(iterator.key() != eventProviderToSkip){
+                iterator.value()->setStatus(false);
+                static_cast<EventsProvider*>(eventProviders[iterator.key()])->requestData(startTime,endTime,this);
             }
             else eventProviderToSkip.clear();
         }
@@ -462,11 +479,13 @@ void TraceView::paintEvent ( QPaintEvent*){
             else eventsData[*providerIterator]->setStatus(false);
         }
 
-        Q3DictIterator<EventData> iterator(eventsData);
-        for(;iterator.current();++iterator){
-            if(eventProvidersToUpdate.contains(iterator.currentKey())){
-                static_cast<EventsProvider*>(eventProviders[iterator.currentKey()])->requestData(startTime,endTime,this);
-                eventProvidersToUpdate.remove(iterator.currentKey());
+
+        QHashIterator<QString, EventData*> iterator(eventsData);
+        while (iterator.hasNext()) {
+            iterator.next();
+            if(eventProvidersToUpdate.contains(iterator.key())){
+                static_cast<EventsProvider*>(eventProviders[iterator.key()])->requestData(startTime,endTime,this);
+                eventProvidersToUpdate.remove(iterator.key());
             }
         }
         return;
@@ -946,7 +965,8 @@ void TraceView::drawTrace(QPainter& painter,int limit,int basePosition,int X,int
     if(!clusterProviders.isEmpty()){
         clusterFileId = (*channelClusterFiles)[channelId];
         providerName = QString::fromLatin1("%1").arg(clusterFileId);
-        if(clustersData.find(providerName) != 0) areClustersToDraw = true;
+        if(clustersData.contains(providerName))
+            areClustersToDraw = true;
     }
 
     if(!waveforms || (waveforms && !areClustersToDraw) || (waveforms && areClustersToDraw && mouseMoveEvent) || (waveforms && areClustersToDraw && !selectedClusters.contains(clusterFileId))){
@@ -1177,7 +1197,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
                 areClustersToDraw = true;
                 clusterFileId = (*channelClusterFiles)[*iterator];
                 providerName = QString::fromLatin1("%1").arg(clusterFileId);
-                if(clustersData.find(providerName) != 0) areClustersToDraw = true;
+                if(clustersData.contains(providerName)) areClustersToDraw = true;
             }
 
             if(!waveforms || (waveforms && !areClustersToDraw) || (waveforms && areClustersToDraw && !selectedClusters.contains(clusterFileId))){
@@ -1448,7 +1468,7 @@ void TraceView::drawTraces(QPainter& painter){
                         areClustersToDraw = true;
                         clusterFileId = (*channelClusterFiles)[channelId];
                         providerName = QString::fromLatin1("%1").arg(clusterFileId);
-                        if(clustersData.find(providerName) != 0)
+                        if(clustersData.contains(providerName))
                             areClustersToDraw = true;
                     }
 
@@ -1592,11 +1612,12 @@ void TraceView::drawTraces(QPainter& painter){
             QRect windowRectangle((QRect)window);
             int top = windowRectangle.top();
             int bottom = windowRectangle.bottom();
-            Q3DictIterator<ClusterData> iterator(clustersData);
-            for(;iterator.current();++iterator){
-                ItemColors* colors = providerItemColors[iterator.currentKey()];
-                QList<int> clusterList = selectedClusters[iterator.currentKey().toInt()];
-                Array<dataType>& currentData = iterator.current()->getData();
+            QHashIterator<QString, ClusterData*> iterator(clustersData);
+            while (iterator.hasNext()) {
+                iterator.next();
+                ItemColors* colors = providerItemColors[iterator.key()];
+                QList<int> clusterList = selectedClusters[iterator.key().toInt()];
+                Array<dataType>& currentData = iterator.value()->getData();
                 int nbSpikes = currentData.nbOfColumns();
 
                 for(int i = 1; i < nbSpikes + 1;++i){
@@ -1667,7 +1688,8 @@ void TraceView::drawTraces(QPainter& painter){
                         areClustersToDraw = true;
                         clusterFileId = (*channelClusterFiles)[channelId];
                         providerName = QString::fromLatin1("%1").arg(clusterFileId);
-                        if(clustersData.find(providerName) != 0) areClustersToDraw = true;
+                        if(clustersData.contains(providerName))
+                            areClustersToDraw = true;
                     }
 
                     if(!waveforms || (waveforms && !areClustersToDraw) || (waveforms && areClustersToDraw && !selectedClusters.contains(clusterFileId))){
@@ -3667,10 +3689,12 @@ void TraceView::showNextEvent(){
             long timeFrameWidth = endTime - startTime;
             nextEventProvider.first.clear();
             nextEventProvider.second = 0;
-            Q3DictIterator<EventData> iterator(eventsData);
-            for(;iterator.current();++iterator){
-                QList<int> ids = idsToBrowse[iterator.currentKey()];
-                if(!static_cast<EventData*>(iterator.current())->status() && ids.size() != 0) static_cast<EventsProvider*>(eventProviders[iterator.currentKey()])->requestNextEventData(startTime,timeFrameWidth,ids,this);
+            QHashIterator<QString, EventData*> iterator(eventsData);
+            while (iterator.hasNext()) {
+                iterator.next();
+                QList<int> ids = idsToBrowse[iterator.key()];
+                if(!static_cast<EventData*>(iterator.value())->status() && ids.size() != 0)
+                    static_cast<EventsProvider*>(eventProviders[iterator.key()])->requestNextEventData(startTime,timeFrameWidth,ids,this);
             }
         }
     }
@@ -3713,10 +3737,12 @@ void TraceView::showPreviousEvent(){
             long timeFrameWidth = endTime - startTime;
             previousEventProvider.first.clear();
             previousEventProvider.second = 0;
-            Q3DictIterator<EventData> iterator(eventsData);
-            for(;iterator.current();++iterator){
-                QList<int> ids = idsToBrowse[iterator.currentKey()];
-                if(!static_cast<EventData*>(iterator.current())->status() && ids.size() != 0) static_cast<EventsProvider*>(eventProviders[iterator.currentKey()])->requestPreviousEventData(startTime,timeFrameWidth,ids,this);
+            QHashIterator<QString, EventData*> iterator(eventsData);
+            while (iterator.hasNext()) {
+                iterator.next();
+                QList<int> ids = idsToBrowse[iterator.key()];
+                if(!static_cast<EventData*>(iterator.value())->status() && ids.size() != 0)
+                    static_cast<EventsProvider*>(eventProviders[iterator.key()])->requestPreviousEventData(startTime,timeFrameWidth,ids,this);
             }
         }
     }
@@ -3740,9 +3766,10 @@ void TraceView::nextEventDataAvailable(Array<dataType>& times,Array<int>& ids,QO
     }
 
     bool ready = false;
-    Q3DictIterator<EventData> iterator(eventsData);
-    for(;iterator.current();++iterator){
-        ready = iterator.current()->status();
+    QHashIterator<QString, EventData*> iterator(eventsData);
+    while (iterator.hasNext()) {
+        iterator.next();
+        ready = iterator.value()->status();
         if(!ready) break;
     }
 
@@ -3790,9 +3817,10 @@ void TraceView::previousEventDataAvailable(Array<dataType>& times,Array<int>& id
     }
 
     bool ready = false;
-    Q3DictIterator<EventData> iterator(eventsData);
-    for(;iterator.current();++iterator){
-        ready = iterator.current()->status();
+    QHashIterator<QString, EventData*> iterator(eventsData);
+    while (iterator.hasNext()) {
+        iterator.next();
+        ready = iterator.value()->status();
         if(!ready) break;
     }
 
@@ -3817,10 +3845,11 @@ void TraceView::previousEventDataAvailable(Array<dataType>& times,Array<int>& id
         long timeFrameWidth = endTime - startTime;
         previousEventProvider.first.clear();
         previousEventProvider.second = 0;
-        Q3DictIterator<EventData> iterator(eventsData);
-        for(;iterator.current();++iterator){
-            QList<int> selectedIds = selectedEvents[iterator.currentKey()];
-            static_cast<EventsProvider*>(eventProviders[iterator.currentKey()])->requestPreviousEventData(startTime,timeFrameWidth,selectedIds,this);
+        QHashIterator<QString, EventData*> iterator(eventsData);
+        while (iterator.hasNext()) {
+            iterator.next();
+            QList<int> selectedIds = selectedEvents[iterator.key()];
+            static_cast<EventsProvider*>(eventProviders[iterator.key()])->requestPreviousEventData(startTime,timeFrameWidth,selectedIds,this);
         }
     }
 }
@@ -4017,10 +4046,12 @@ void TraceView::showNextCluster(){
             nextClusterProvider.first.clear();
             nextClusterProvider.second = 0;
             previousStartTimeInRecordingUnits = startTimeInRecordingUnits;
-            Q3DictIterator<ClusterData> iterator(clustersData);
-            for(;iterator.current();++iterator){
-                QList<int> ids = idsToBrowse[iterator.currentKey().toInt()];
-                if(!static_cast<ClusterData*>(iterator.current())->status() && ids.size() != 0) static_cast<ClustersProvider*>(clusterProviders[iterator.currentKey()])->requestNextClusterData(startTime,timeFrameWidth,ids,this,startTimeInRecordingUnits);
+            QHashIterator<QString, ClusterData*> iterator(clustersData);
+            while (iterator.hasNext()) {
+                iterator.next();
+                QList<int> ids = idsToBrowse[iterator.key().toInt()];
+                if(!static_cast<ClusterData*>(iterator.value())->status() && ids.size() != 0)
+                    static_cast<ClustersProvider*>(clusterProviders[iterator.key()])->requestNextClusterData(startTime,timeFrameWidth,ids,this,startTimeInRecordingUnits);
             }
         }
     }
@@ -4064,10 +4095,12 @@ void TraceView::showPreviousCluster(){
             previousClusterProvider.first.clear();
             previousClusterProvider.second = 0;
             previousStartTimeInRecordingUnits = startTimeInRecordingUnits;
-            Q3DictIterator<ClusterData> iterator(clustersData);
-            for(;iterator.current();++iterator){
-                QList<int> ids = idsToBrowse[iterator.currentKey().toInt()];
-                if(!static_cast<ClusterData*>(iterator.current())->status() && ids.size() != 0) static_cast<ClustersProvider*>(clusterProviders[iterator.currentKey()])->requestPreviousClusterData(startTime,timeFrameWidth,ids,this,startTimeInRecordingUnits);
+            QHashIterator<QString, ClusterData*> iterator(clustersData);
+            while (iterator.hasNext()) {
+                iterator.next();
+                QList<int> ids = idsToBrowse[iterator.key().toInt()];
+                if(!static_cast<ClusterData*>(iterator.value())->status() && ids.size() != 0)
+                    static_cast<ClustersProvider*>(clusterProviders[iterator.key()])->requestPreviousClusterData(startTime,timeFrameWidth,ids,this,startTimeInRecordingUnits);
             }
         }
     }
@@ -4093,9 +4126,10 @@ void TraceView::nextClusterDataAvailable(Array<dataType>& data,QObject* initiato
     }
 
     bool ready = false;
-    Q3DictIterator<ClusterData> iterator(clustersData);
-    for(;iterator.current();++iterator){
-        ready = iterator.current()->status();
+    QHashIterator<QString, ClusterData*> iterator(clustersData);
+    while (iterator.hasNext()) {
+        iterator.next();
+        ready = iterator.value()->status();
         if(!ready) break;
     }
 
@@ -4145,9 +4179,10 @@ void TraceView::previousClusterDataAvailable(Array<dataType>& data,QObject* init
     }
 
     bool ready = false;
-    Q3DictIterator<ClusterData> iterator(clustersData);
-    for(;iterator.current();++iterator){
-        ready = iterator.current()->status();
+    QHashIterator<QString, ClusterData*> iterator(clustersData);
+    while (iterator.hasNext()) {
+        iterator.next();
+        ready = iterator.value()->status();
         if(!ready) break;
     }
 
@@ -4174,10 +4209,11 @@ void TraceView::previousClusterDataAvailable(Array<dataType>& data,QObject* init
         long timeFrameWidth = endTime - startTime;
         previousClusterProvider.first.clear();
         previousClusterProvider.second = 0;
-        Q3DictIterator<ClusterData> iterator(clustersData);
-        for(;iterator.current();++iterator){
-            QList<int> selectedIds = selectedClusters[iterator.currentKey().toInt()];
-            static_cast<ClustersProvider*>(clusterProviders[iterator.currentKey()])->requestPreviousClusterData(startTime,timeFrameWidth,selectedIds,this,previousStartTimeInRecordingUnits);
+        QHashIterator<QString, ClusterData*> iterator(clustersData);
+        while (iterator.hasNext()) {
+            iterator.next();
+            QList<int> selectedIds = selectedClusters[iterator.key().toInt()];
+            static_cast<ClustersProvider*>(clusterProviders[iterator.key()])->requestPreviousClusterData(startTime,timeFrameWidth,selectedIds,this,previousStartTimeInRecordingUnits);
         }
     }
 }

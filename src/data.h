@@ -27,7 +27,7 @@
 
 //Include files for QT
 #include <QList>
-#include <q3dict.h>
+#include <QHash>
 #include <qregion.h>
 #include <qmap.h>
 #include <qfile.h>
@@ -856,7 +856,7 @@ private:
   * Dictionary containing the waveform data by cluster. Only the clusters
   * for which data have been asked are present in this dictionary.
   */
-    Q3Dict<Waveforms> waveformDict;
+    QHash<QString, Waveforms*> waveformDict;
 
     /**Boolean use to inform the MinMaxThread that an undo or a redo is in process and that it has to stop.*/
     bool undoRedoInProcess;
@@ -976,7 +976,7 @@ private:
   * are calculated stored only for (A,B) with A > B and not for (B,A).
   * value: a qdict containing a pair as a key and a Correlation object as a value. The pair represent the the bin size and the time window of the Correlation object.
   */
-    Q3Dict< Q3Dict<Correlation> > correlationDict;
+    QHash< QString, QHash<QString, Correlation*>* > correlationDict;
 
     /**Excerpt of spikesByCluster for the clusters selected to be recluster.*/
     SortableTable reclusteringSpikesByCluster;
@@ -1192,7 +1192,8 @@ public:
         if(waveformStatusMap.contains(clusterIdInt)){
             Waveforms* waveforms = waveformDict[clusterIdString];
             waveformIterator = new SampleWaveformIterator(waveforms);
-            if(waveformStatusMap[clusterIdInt].sampleMeanStatus() == READY) waveformIterator->setMeanAvailable(true);
+            if(waveformStatusMap[clusterIdInt].sampleMeanStatus() == READY)
+                waveformIterator->setMeanAvailable(true);
             if(waveformStatusMap[clusterIdInt].sampleStatus() == READY){
                 waveformIterator->setSpikesAvailable(true);
                 waveformIterator->updateStatus(nbSampleSpikes);
@@ -1393,7 +1394,7 @@ public:
         inline CorrelogramIterator(const Data& d,Pair pair,ScaleMode scaleMode,int binSize,int timeframe):data(d){
             index = 0;
             lastIndex = -1;
-            Q3Dict<Correlation>* dict = data.correlationDict[pair.toString()];
+            QHash<QString, Correlation*>* dict = data.correlationDict[pair.toString()];
             if(dict == 0) dataAvailable = false;
             else{
                 Pair parameters = Pair(binSize,timeframe);
