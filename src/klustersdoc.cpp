@@ -128,7 +128,8 @@ bool KlustersDoc::canCloseDocument(KlustersApp* mainWindow,QString callingMethod
     {
         KlustersView *view = viewList->at(i);
         threadRunning = view->isThreadsRunning();
-        if(threadRunning) break;
+        if(threadRunning)
+            break;
     }
 
     if(threadRunning || !stopAutoSaving(true)){
@@ -138,7 +139,8 @@ bool KlustersDoc::canCloseDocument(KlustersApp* mainWindow,QString callingMethod
         QApplication::postEvent(mainWindow,event);
         return false;
     }
-    else return true;
+    else
+        return true;
 }
 
 void KlustersDoc::closeDocument(){
@@ -439,8 +441,10 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     QList<dataType>::iterator it;
     for(it = clusterList.begin(); it != clusterList.end(); ++it){
         QColor color;
-        if(*it == 1) color.setHsv(0,0,220);//Cluster 1 is always gray
-        else color.setHsv(static_cast<int>(fmod(static_cast<double>(*it)*7,36))*10,255,255);
+        if(*it == 1)
+            color.setHsv(0,0,220);//Cluster 1 is always gray
+        else
+            color.setHsv(static_cast<int>(fmod(static_cast<double>(*it)*7,36))*10,255,255);
         clusterColorList->append(static_cast<int>(*it),color);
     }
 
@@ -567,21 +571,24 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
         QFileInfo parFileInfo = QFileInfo(xmlParameterFile);
 
         //Check that the file is writable
-        if(!parFileInfo.isWritable()) return NOT_WRITABLE;
-        bool status;
+        if(!parFileInfo.isWritable())
+            return NOT_WRITABLE;
 
         QMap<int,ClusterUserInformation> clusterUserInformationMap = QMap<int,ClusterUserInformation>();
         clusteringData->getClusterUserInformation(electrodeGroupID.toInt(),clusterUserInformationMap);
 
         ParameterXmlModifier parameterModifier = ParameterXmlModifier();
-        status = parameterModifier.parseFile(xmlParameterFile);
-        if(!status) return PARSE_ERROR;
+        bool status = parameterModifier.parseFile(xmlParameterFile);
+        if(!status)
+            return PARSE_ERROR;
 
         status = parameterModifier.setClusterUserInformation(electrodeGroupID.toInt(),clusterUserInformationMap);
-        if(!status) return CREATION_ERROR;
+        if(!status)
+            return CREATION_ERROR;
 
         status = parameterModifier.writeTofile(xmlParameterFile);
-        if(!status) return CREATION_ERROR;
+        if(!status)
+            return CREATION_ERROR;
     }
 
     modified=false;
@@ -661,7 +668,7 @@ void KlustersDoc::setGain(int acquisitionGain){
     }
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //Ask the active view to take the modification into account immediately
     activeView->showAllWidgets();
@@ -675,7 +682,7 @@ void KlustersDoc::setBackgroundColor(QColor backgroundColor){
     }
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //Ask the active view to take the modification into account immediately
     activeView->showAllWidgets();
@@ -683,7 +690,7 @@ void KlustersDoc::setBackgroundColor(QColor backgroundColor){
 
 void KlustersDoc::setTimeStepInSecond(int step){
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //Notify all the views of the modification
     for(int i =0; i<viewList->count();++i){
@@ -705,7 +712,7 @@ void KlustersDoc::setChannelPositions(QList<int>& positions){
     }
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //Ask the active view to take the modification into account immediately
     activeView->showAllWidgets();
@@ -757,7 +764,7 @@ void KlustersDoc::shownClustersUpdate(QList<int> clustersToShow){
     clusterPalette.selectItems(clustersToShow);
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //The new selection of clusters only means for the active view
     activeView->shownClustersUpdate(clustersToShow);
@@ -779,7 +786,7 @@ void KlustersDoc::shownClustersUpdate(QList<int> clustersToShow,QList<int> previ
     clusterPalette.selectItems(clustersToShow);
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //The new selection of clusters only means for the active view
     activeView->shownClustersUpdate(clustersToShow);
@@ -802,7 +809,7 @@ void KlustersDoc::showAllClustersExcept(QList<int> clustersToHide){
     clusterPalette.selectItems(clustersToShow);
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //The new selection of clusters only means for the active view
     activeView->shownClustersUpdate(clustersToShow);
@@ -823,7 +830,7 @@ void KlustersDoc::addClustersToActiveView(QList<int> clustersToShow){
     clusterPalette.selectItems(clustersToShow);
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //The new selection of clusters only means for the active view
     activeView->shownClustersUpdate(clustersToShow);
@@ -1008,10 +1015,10 @@ void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,cons
     clusteringData->deleteSpikesFromClusters(region,clustersOfOrigin,destination,dimensionX,dimensionY,fromClusters,emptyClusters);
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //check if any spikes have been selected
-    if(fromClusters.size() == 0){
+    if(fromClusters.isEmpty()){
         activeView->selectionIsEmpty();
         activeView->showAllWidgets();
     }
@@ -1089,7 +1096,7 @@ void KlustersDoc::createNewCluster(QRegion& region, const QList <int>& clustersO
     QList <int> emptyClusters;
     QList<int> clustersToShow(clustersOfOrigin);
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     float newClusterId = clusteringData->createNewCluster(region,clustersOfOrigin,dimensionX,dimensionY,fromClusters,emptyClusters);
 
@@ -1155,7 +1162,7 @@ void KlustersDoc::createNewClusters(QRegion& region, const QList <int>& clusters
     QList <int> emptyClusters;
     QList<int> clustersToShow(clustersOfOrigin);
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     QList <int> newClusters;
     QMap<int,int> fromToNewClusterIds = clusteringData->createNewClusters(region,clustersOfOrigin,dimensionX,dimensionY,emptyClusters);
@@ -1539,7 +1546,7 @@ void KlustersDoc::undo(){
     modified = true;
 
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     clusteringData->undo(*addedClusters,*modifiedClusters);
 
@@ -1695,7 +1702,7 @@ void KlustersDoc::undo(){
 
 void KlustersDoc::redo(){
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     //Update the boolean modified here as every redo action implies a call to the function.
     //The user can save and make an redo just behind, in that case the document is modified.
@@ -1865,7 +1872,7 @@ void KlustersDoc::redo(){
 
 void KlustersDoc::renumberClusters(){
     //Get the active view.
-    KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+    KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
     QMap<int,int> clusterIdsOldNew;
     QMap<int,int> clusterIdsNewOld;
@@ -1975,7 +1982,7 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
 
     if(!isProcessWidget){
         //Get the active view.
-        KlustersView* activeView = dynamic_cast<KlustersApp*>(parent)->activeView();
+        KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
         QList<int> clustersToShow;
         QList<int>::const_iterator iterator;
