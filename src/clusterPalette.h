@@ -105,8 +105,8 @@ protected Q_SLOTS:
     /** The right click on a cluster icon bring a dialog allowing the user to enter information on the cluster
     * (structure, type, isolation distance, quality and notes).
     */
-    virtual void slotClickRedraw();
-    virtual void languageChange();
+    void slotClickRedraw();
+    void languageChange();
     /**
      * When moving the mouse over an cluster icon, the statusBar is updated with the information the user might could provided
       * (structure, type, isolation distance, quality and notes).
