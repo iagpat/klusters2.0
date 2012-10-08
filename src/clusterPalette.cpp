@@ -305,50 +305,50 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
 
             if(clusterInformation[0] != ""){
                 first = false;
-                clusterText.append("Structure: ").append(clusterInformation[0]);
+                clusterText.append(tr("Structure: ")).append(clusterInformation[0]);
             }
             if(clusterInformation[1] != ""){
                 if(first){
-                    clusterText.append("Type: ").append(clusterInformation[1]);
+                    clusterText.append(tr("Type: ")).append(clusterInformation[1]);
                 }
                 else{
                     first = false;
-                    clusterText.append(", Type: ").append(clusterInformation[1]);
+                    clusterText.append(tr(", Type: ")).append(clusterInformation[1]);
                 }
 
             }
             if(clusterInformation[2] != ""){
                 if(first){
-                    clusterText.append("ID: ").append(clusterInformation[2]);
+                    clusterText.append(tr("ID: ")).append(clusterInformation[2]);
                 }
                 else{
                     first = false;
-                    clusterText.append(", ID: ").append(clusterInformation[2]);
+                    clusterText.append(tr(", ID: ")).append(clusterInformation[2]);
                 }
 
             }
             if(clusterInformation[3] != ""){
                 if(first){
-                    clusterText.append("Quality: ").append(clusterInformation[3]);
+                    clusterText.append(tr("Quality: ")).append(clusterInformation[3]);
                 }
                 else{
                     first = false;
-                    clusterText.append(", Quality: ").append(clusterInformation[3]);
+                    clusterText.append(tr(", Quality: ")).append(clusterInformation[3]);
                 }
             }
             if(clusterInformation[4] != ""){
                 if(first){
-                    clusterText.append("Notes: ").append(clusterInformation[4]);
+                    clusterText.append(tr("Notes: ")).append(clusterInformation[4]);
                 }
                 else{
                     first = false;
-                    clusterText.append(", Notes: ").append(clusterInformation[4]);
+                    clusterText.append(tr(", Notes: ")).append(clusterInformation[4]);
                 }
             }
 
             statusBar->showMessage(clusterText);
 
-            item->setToolTip("Structure: " + clusterInformation[0] + ", Type: " + clusterInformation[1] + ", ID: " + clusterInformation[2] + ", Quality: " + clusterInformation[3] + ", notes: " + clusterInformation[4]);
+            item->setToolTip(tr("Structure: %1, Type: %2 , ID: %3, Quality: %4, notes: %5").arg(clusterInformation[0]).arg(clusterInformation[1]).arg(clusterInformation[2]).arg(clusterInformation[3]).arg(clusterInformation[4]));
         }
         else{
             statusBar->clearMessage();
