@@ -22,7 +22,6 @@
 #include "clusterPalette.h"
 #include "itemcolors.h"
 #include "clusterinformationdialog.h"
-#include "clusterpaletteiconviewitem.h"
 
 // include files for Qt
 #include <qvariant.h>
