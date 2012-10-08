@@ -598,7 +598,7 @@ void ClusterPalette::hideUserClusterInformation(){
     //update the flag
     isInUserClusterInfoMode = false;
 
-   // iconView->setItemTextPos(Q3IconView::Bottom);
+    iconView->setViewMode(QListView::IconMode);
     //Let's go back to normal
     QFontInfo fontInfo = QFontInfo(QFont());
     iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15));
