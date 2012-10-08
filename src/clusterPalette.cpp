@@ -73,7 +73,6 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
 
     iconView->setFont(font);
     iconView->setFrameStyle(QFrame::NoFrame);
-    //iconView->setArrangement(Q3IconView::LeftToRight);
     iconView->setResizeMode(QListWidget::Adjust);
 
     palette = iconView->palette();
@@ -165,22 +164,22 @@ void ClusterPalette::updateClusterList(){
                 clusterText.append(" - ").append("noise");
             }
             else{
-                vector<QString> clusterInformation = vector<QString>();
+                QList<QString> clusterInformation;
                 doc->data().getUserClusterInformation(clusterColors.itemId(i),clusterInformation);
 
-                if(clusterInformation[0] != ""){
-                    clusterText.append(" - ").append(clusterInformation[0]);
+                if(!clusterInformation.at(0).isEmpty()){
+                    clusterText.append(" - ").append(clusterInformation.at(0));
                 }
-                if(clusterInformation[1] != ""){
+                if(!clusterInformation.at(1).isEmpty()){
                     clusterText.append(", ").append(clusterInformation[1]);
                 }
-                if(clusterInformation[2] != ""){
+                if(!clusterInformation.at(2).isEmpty()){
                     clusterText.append(", ").append(clusterInformation[2]);
                 }
-                if(clusterInformation[3] != ""){
+                if(!clusterInformation.at(3).isEmpty()){
                     clusterText.append(", ").append(clusterInformation[3]);
                 }
-                if(clusterInformation[4] != ""){
+                if(!clusterInformation.at(4).isEmpty()){
                     clusterText.append(", ").append(clusterInformation[4]);
                 }
             }
@@ -218,13 +217,13 @@ void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
         if(clusterNumber != 0 && clusterNumber != 1){
             ClusterInformationDialog *clusterInformationDialog = new ClusterInformationDialog();
             //initizialize the dialog with the previous information
-            vector<QString> clusterInformation = vector<QString>();
+            QList<QString> clusterInformation;
             doc->data().getUserClusterInformation(clusterNumber,clusterInformation);
-            clusterInformationDialog->setStructure(clusterInformation[0]);
-            clusterInformationDialog->setType(clusterInformation[1]);
-            clusterInformationDialog->setId(clusterInformation[2]);
-            clusterInformationDialog->setQuality(clusterInformation[3]);
-            clusterInformationDialog->setNotes(clusterInformation[4]);
+            clusterInformationDialog->setStructure(clusterInformation.at(0));
+            clusterInformationDialog->setType(clusterInformation.at(1));
+            clusterInformationDialog->setId(clusterInformation.at(2));
+            clusterInformationDialog->setQuality(clusterInformation.at(3));
+            clusterInformationDialog->setNotes(clusterInformation.at(4));
 
             if(clusterInformationDialog->exec() == QDialog::Accepted)
             {
@@ -297,52 +296,52 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
         //The information are not shown in the statusBar for the Noise and arterfact clusters (1 and 0).
         if(clusterNumber != 0 && clusterNumber != 1){
             //Update the statusbar with the cluster information
-            vector<QString> clusterInformation = vector<QString>();
+            QList<QString> clusterInformation;
             doc->data().getUserClusterInformation(clusterNumber,clusterInformation);
 
             QString clusterText;
             bool first = true;
 
-            if(clusterInformation[0] != ""){
+            if(!clusterInformation.at(0).isEmpty()){
                 first = false;
-                clusterText.append(tr("Structure: ")).append(clusterInformation[0]);
+                clusterText.append(tr("Structure: ")).append(clusterInformation.at(0));
             }
-            if(clusterInformation[1] != ""){
+            if(!clusterInformation.at(1).isEmpty()){
                 if(first){
-                    clusterText.append(tr("Type: ")).append(clusterInformation[1]);
+                    clusterText.append(tr("Type: ")).append(clusterInformation.at(1));
                 }
                 else{
                     first = false;
-                    clusterText.append(tr(", Type: ")).append(clusterInformation[1]);
+                    clusterText.append(tr(", Type: ")).append(clusterInformation.at(1));
                 }
 
             }
-            if(clusterInformation[2] != ""){
+            if(!clusterInformation.at(2).isEmpty()){
                 if(first){
-                    clusterText.append(tr("ID: ")).append(clusterInformation[2]);
+                    clusterText.append(tr("ID: ")).append(clusterInformation.at(2));
                 }
                 else{
                     first = false;
-                    clusterText.append(tr(", ID: ")).append(clusterInformation[2]);
+                    clusterText.append(tr(", ID: ")).append(clusterInformation.at(2));
                 }
 
             }
-            if(clusterInformation[3] != ""){
+            if(!clusterInformation.at(3).isEmpty()){
                 if(first){
-                    clusterText.append(tr("Quality: ")).append(clusterInformation[3]);
+                    clusterText.append(tr("Quality: ")).append(clusterInformation.at(3));
                 }
                 else{
                     first = false;
-                    clusterText.append(tr(", Quality: ")).append(clusterInformation[3]);
+                    clusterText.append(tr(", Quality: ")).append(clusterInformation.at(3));
                 }
             }
-            if(clusterInformation[4] != ""){
+            if(!clusterInformation.at(4).isEmpty()){
                 if(first){
-                    clusterText.append(tr("Notes: ")).append(clusterInformation[4]);
+                    clusterText.append(tr("Notes: ")).append(clusterInformation.at(4));
                 }
                 else{
                     first = false;
-                    clusterText.append(tr(", Notes: ")).append(clusterInformation[4]);
+                    clusterText.append(tr(", Notes: ")).append(clusterInformation.at(4));
                 }
             }
 

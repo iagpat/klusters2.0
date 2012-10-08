@@ -456,16 +456,16 @@ public:
     * quality of the cluster.
     * notes of any type on the cluster.
     */
-    inline void getUserClusterInformation(int clusterId,vector<QString>& clusterInformation){
+    inline void getUserClusterInformation(int clusterId,QList<QString>& clusterInformation){
 
         if((*clusterInfoMap).contains(static_cast<dataType>(clusterId))){
             ClusterInfo currentClusterInfo = (*clusterInfoMap)[static_cast<dataType>(clusterId)];
 
-            clusterInformation.push_back(currentClusterInfo.getStructure());
-            clusterInformation.push_back(currentClusterInfo.getType());
-            clusterInformation.push_back(currentClusterInfo.getId());
-            clusterInformation.push_back(currentClusterInfo.getQuality());
-            clusterInformation.push_back(currentClusterInfo.getNotes());
+            clusterInformation.append(currentClusterInfo.getStructure());
+            clusterInformation.append(currentClusterInfo.getType());
+            clusterInformation.append(currentClusterInfo.getId());
+            clusterInformation.append(currentClusterInfo.getQuality());
+            clusterInformation.append(currentClusterInfo.getNotes());
         }
     }
 
