@@ -28,9 +28,6 @@
 class QStatusBar;
 
 
-class Q3IconView;
-class Q3IconViewItem;
-
 // forward declaration of the KlustersDoc class
 class KlustersDoc;
 

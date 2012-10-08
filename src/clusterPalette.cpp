@@ -522,9 +522,8 @@ void ClusterPalette::showUserClusterInformation(int electrodeGroupId){
     //update the flag
     isInUserClusterInfoMode = true;
 
-    //iconView->setItemTextPos(Q3IconView::Right);
+    iconView->setViewMode(QListView::ListMode);
     iconView->setGridSize(QSize(2500,iconView->gridSize().height()));
-    //iconView->arrangeItemsInGrid();
 
     QMap<int,ClusterUserInformation> clusterUserInformationMap = QMap<int,ClusterUserInformation>();
     doc->data().getClusterUserInformation(electrodeGroupId,clusterUserInformationMap);
