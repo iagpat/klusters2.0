@@ -104,6 +104,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15));
     //iconView->arrangeItemsInGrid();
 
+    iconView->setContextMenuPolicy(Qt::CustomContextMenu);
 
     //Deal with the sizes
     setSizePolicy(QSizePolicy((QSizePolicy::Policy)5,(QSizePolicy::Policy)5));
@@ -286,13 +287,13 @@ void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
     }
 }
 
-void ClusterPalette::slotOnItem(Q3IconViewItem* item){
+void ClusterPalette::slotOnItem(QListWidgetItem* item){
 
+    //KDAB_PORTING
     if ( !item ) return; // right pressed on viewport
     else{
-        ClusterPaletteIconViewItem* clusterItem = static_cast<ClusterPaletteIconViewItem*>(item);
 
-        int clusterNumber = doc->clusterColors().itemId(item->index());
+        int clusterNumber = doc->clusterColors().itemId(item->data(INDEX).toInt());
 
         //The information are not shown in the statusBar for the Noise and arterfact clusters (1 and 0).
         if(clusterNumber != 0 && clusterNumber != 1){
@@ -348,8 +349,7 @@ void ClusterPalette::slotOnItem(Q3IconViewItem* item){
 
             statusBar->showMessage(clusterText);
 
-            //Ajout de l'information en tooltip
-            //clusterItem->setToolTipText("Structure: " + clusterInformation[0] + ", Type: " + clusterInformation[1] + ", ID: " + clusterInformation[2] + ", Quality: " + clusterInformation[3] + ", notes: " + clusterInformation[4]);
+            item->setToolTip("Structure: " + clusterInformation[0] + ", Type: " + clusterInformation[1] + ", ID: " + clusterInformation[2] + ", Quality: " + clusterInformation[3] + ", notes: " + clusterInformation[4]);
         }
         else{
             statusBar->clearMessage();

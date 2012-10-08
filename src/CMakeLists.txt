@@ -6,7 +6,6 @@ set(klusters_SRCS
         channellist.cpp 
 	clusterPalette.cpp 
 	clusterinformationdialog.cpp
-	clusterpaletteiconviewitem.cpp 
 	clustersprovider.cpp 
 	clusterview.cpp
         configuration.cpp 
