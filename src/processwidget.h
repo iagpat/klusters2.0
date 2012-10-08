@@ -19,7 +19,7 @@
 #ifndef _PROCESSWIDGET_H_
 #define _PROCESSWIDGET_H_
 
-// include files for KDE
+
 #include <QListWidget>
 #include <QListWidgetItem>
 

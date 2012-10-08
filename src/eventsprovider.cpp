@@ -27,7 +27,7 @@
 #include <iomanip> // Required for formated I/O.
 
 
-// include files for KDE
+
 
 #include <QTemporaryFile>
 

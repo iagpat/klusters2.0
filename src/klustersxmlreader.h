@@ -18,7 +18,7 @@
 #ifndef KLUSTERSXMLREADER_H
 #define KLUSTERSXMLREADER_H
 
-// include files for KDE
+
 
 //Libxml2 include files.
 #include <stdlib.h>

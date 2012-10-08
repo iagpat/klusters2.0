@@ -28,7 +28,7 @@
 
 #include <QMouseEvent>
 
-// include files for KDE
+
 
 // application specific includes
 #include <viewwidget.h>

@@ -34,7 +34,7 @@
 #include <QPolygon>
 #include <QDebug>
 
-// include files for kde
+
 
 //
 

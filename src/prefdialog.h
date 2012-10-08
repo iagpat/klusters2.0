@@ -21,7 +21,7 @@
 // include files for QT
 #include <qwidget.h>
 
-// include files for KDE
+
 #include <qpagedialog.h>
 
 class PrefGeneral;

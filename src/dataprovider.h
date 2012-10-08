@@ -21,7 +21,7 @@
 // include files for QT
 #include <qobject.h> 
 
-// include files for KDE
+
 
 
 /**

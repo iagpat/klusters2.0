@@ -28,7 +28,7 @@
 //Added by qt3to4:
 #include <QEvent>
 #include <QDebug>
-// include files for KDE
+
 
 
 /**Thread used to save automatically the document on a defined schedule.

@@ -27,7 +27,7 @@
 #include <fstream>
 
 
-// include files for KDE
+
 
 
 //include files for c/c++ libraries
