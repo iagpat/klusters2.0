@@ -29,6 +29,7 @@
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <QMouseEvent>
+#include <QDebug>
 
 #include <qpixmap.h>
 #include <qbitmap.h>
@@ -43,6 +44,31 @@
 
 //General C++ include files
 #include <vector>
+
+ClusterPaletteWidget::ClusterPaletteWidget(QWidget *parent)
+    : QListWidget(parent)
+{
+
+}
+
+void ClusterPaletteWidget::mousePressEvent ( QMouseEvent * event )
+{
+    if(event->button() == Qt::MiddleButton) {
+        QListWidgetItem *item = itemAt(event->pos());
+        if(item)
+            Q_EMIT changeColor(item);
+    }
+    QListWidget::mousePressEvent(event);
+}
+
+void ClusterPaletteWidget::mouseMoveEvent ( QMouseEvent * event )
+{
+    QListWidgetItem *item = itemAt(event->pos());
+    if(item)
+        Q_EMIT onItem(item);
+    QListWidget::mouseMoveEvent(event);
+}
+
 
 ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QStatusBar * statusBar, const char* name )
     : QWidget( parent ),
@@ -64,7 +90,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     setPalette(palette);
     setPaletteForegroundColor(Qt::white);
 
-    iconView = new QListWidget(this);
+    iconView = new ClusterPaletteWidget(this);
     iconView->setObjectName("ClusterPalette");
     layout->addWidget(iconView);
     QFont font( "Helvetica",10);
@@ -85,7 +111,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     iconView->viewport()->setPalette(palette);
     iconView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     iconView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
+    iconView->setMouseTracking(true);
     int h;
     int s;
     int v;
@@ -112,13 +138,8 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
 
     connect(iconView,SIGNAL(itemSelectionChanged()),this, SLOT(slotClickRedraw()));
     connect(iconView,SIGNAL(customContextMenuRequested(QPoint)),this, SLOT(slotCustomContextMenuRequested(QPoint)));
-
-    /*
-     KDAB_PORTING
-    //Signal and slot connection
-
-    connect(iconView,SIGNAL(onItem(Q3IconViewItem*)),this, SLOT(slotOnItem(Q3IconViewItem*)));
-    */
+    connect(iconView,SIGNAL(changeColor(QListWidgetItem*)),SLOT(changeColor(QListWidgetItem*)));
+    connect(iconView,SIGNAL(onItem(QListWidgetItem*)),this, SLOT(slotOnItem(QListWidgetItem*)));
     setLayout(layout);
 }
 
@@ -288,8 +309,9 @@ void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
 void ClusterPalette::slotOnItem(QListWidgetItem* item){
 
     //KDAB_PORTING
-    if ( !item ) return; // right pressed on viewport
-    else{
+    if ( !item ) {
+        return; // right pressed on viewport
+    } else {
 
         int clusterNumber = doc->clusterColors().itemId(item->data(INDEX).toInt());
 
@@ -351,16 +373,6 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
         }
         else{
             statusBar->clearMessage();
-        }
-    }
-}
-
-void ClusterPalette::mousePressEvent ( QMouseEvent * event )
-{
-    if(event->button() == Qt::RightButton) {
-        QListWidgetItem *item = iconView->itemAt(event->pos());
-        if(item) {
-            changeColor(item);
         }
     }
 }

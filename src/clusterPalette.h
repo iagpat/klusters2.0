@@ -38,6 +38,19 @@ class KlustersDoc;
   */
 
 
+class ClusterPaletteWidget : public QListWidget
+{
+    Q_OBJECT
+public:
+    explicit ClusterPaletteWidget(QWidget *parent);
+protected:
+    void mousePressEvent ( QMouseEvent * event );
+    void mouseMoveEvent ( QMouseEvent * event );
+Q_SIGNALS:
+    void changeColor(QListWidgetItem* item);
+    void onItem(QListWidgetItem* item);
+};
+
 class ClusterPalette : public QWidget
 {
     Q_OBJECT
@@ -81,9 +94,6 @@ public:
     /**updates the background color of the palette.*/
     void changeBackgroundColor(const QColor& color);
 
-protected:
-    void mousePressEvent ( QMouseEvent * event );
-
 public Q_SLOTS:
     virtual void changeColor(QListWidgetItem *item);
     virtual void moveClustersToNoise();
@@ -101,7 +111,7 @@ protected Q_SLOTS:
      * When moving the mouse over an cluster icon, the statusBar is updated with the information the user might could provided
       * (structure, type, isolation distance, quality and notes).
      */
-    virtual void slotOnItem(QListWidgetItem *item);
+    void slotOnItem(QListWidgetItem *item);
     
     void slotCustomContextMenuRequested(const QPoint&);
 
@@ -114,7 +124,7 @@ Q_SIGNALS:
     void clusterInformationModified();
 
 private:
-    QListWidget* iconView;
+    ClusterPaletteWidget* iconView;
     KlustersDoc* doc;
 
     Mode mode;//default IMMEDIATE
