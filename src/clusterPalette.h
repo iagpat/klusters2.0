@@ -20,7 +20,7 @@
 //QT include files
 #include <qvariant.h>
 #include <qwidget.h>
-#include <q3iconview.h>
+#include <QListWidget>
 #include <qtooltip.h>
 //Added by qt3to4:
 #include <QList>
@@ -62,6 +62,8 @@ public:
     //and the selection of cluster is immediately trigger
     enum Mode {IMMEDIATE = 1, DELAY = 2};
     
+    enum DataStored { INDEX = Qt::UserRole+1 };
+
     virtual void createClusterList(KlustersDoc* doc);
     virtual void updateClusterList();
     void selectItems(QList<int> selectedClusters);
@@ -80,36 +82,13 @@ public:
     void showUserClusterInformation(int electrodeGroupId);
 
     /**updates the background color of the palette.*/
-    void changeBackgroundColor(const QColor& color){
-        backgroundColor = color;
-        int h;
-        int s;
-        int v;
-        color.getHsv(&h,&s,&v);
-        if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
-        else iconView->setPaletteForegroundColor(Qt::white);
-        iconView->setPaletteBackgroundColor(color);
+    void changeBackgroundColor(const QColor& color);
 
-        //get the list of selected clusters
-        QList<int> selected = selectedClusters();
-
-        //Set isInSelectItems to true to prevent the emission of signals due to selectionChange
-        isInSelectItems = true;
-
-        //Redraw the icons
-        updateClusterList();
-
-        //reselect the clusters
-        selectItems(selected);
-
-        //reset isInSelectItems to false to enable again the the emission of signals due to selectionChange
-        isInSelectItems = false;
-
-        update();
-    }
+protected:
+    void mousePressEvent ( QMouseEvent * event );
 
 public Q_SLOTS:
-    virtual void changeColor(Q3IconViewItem* item);
+    virtual void changeColor(QListWidgetItem *item);
     virtual void moveClustersToNoise();
     virtual void moveClustersToArtefact();
     virtual void groupClusters();
@@ -119,8 +98,6 @@ protected Q_SLOTS:
     /** The right click on a cluster icon bring a dialog allowing the user to enter information on the cluster
     * (structure, type, isolation distance, quality and notes).
     */
-    virtual void slotRightPressed(Q3IconViewItem* item);
-    virtual void slotMousePressed(int button,Q3IconViewItem* item);
     virtual void slotClickRedraw();
     virtual void languageChange();
     /**
@@ -129,6 +106,8 @@ protected Q_SLOTS:
      */
     virtual void slotOnItem(Q3IconViewItem* item);
     
+    void slotCustomContextMenuRequested(const QPoint&);
+
 Q_SIGNALS:
     void singleChangeColor(int selectedCluster);
     void updateShownClusters(QList<int> selectedClusters);
@@ -138,7 +117,7 @@ Q_SIGNALS:
     void clusterInformationModified();
 
 private:
-    Q3IconView* iconView;
+    QListWidget* iconView;
     KlustersDoc* doc;
 
     Mode mode;//default IMMEDIATE

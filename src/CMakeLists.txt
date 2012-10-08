@@ -7,7 +7,6 @@ set(klusters_SRCS
 	clusterPalette.cpp 
 	clusterinformationdialog.cpp
 	clusterpaletteiconviewitem.cpp 
-	#clusterpalettetooltip.cpp 
 	clustersprovider.cpp 
 	clusterview.cpp
         configuration.cpp 

@@ -29,6 +29,7 @@
 #include <qpainter.h>
 #include <qlayout.h>
 #include <qtooltip.h>
+#include <QMouseEvent>
 
 #include <qpixmap.h>
 #include <qbitmap.h>
@@ -45,23 +46,36 @@
 #include <vector>
 
 ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QStatusBar * statusBar, const char* name )
-    : QWidget( parent ),doc(0L),mode(IMMEDIATE),isInSelectItems(false),isUpToDate(true),backgroundColor(backgroundColor),statusBar(statusBar),isInUserClusterInfoMode(false)
+    : QWidget( parent ),
+      doc(0L),
+      mode(IMMEDIATE),
+      isInSelectItems(false),
+      isUpToDate(true),
+      backgroundColor(backgroundColor),
+      statusBar(statusBar),
+      isInUserClusterInfoMode(false)
 {
     setObjectName(name);
     QVBoxLayout *layout = new QVBoxLayout;
     //Set the palette color
 
     setAutoFillBackground(true);
-    QPalette palette; palette.setColor(backgroundRole(), backgroundColor); setPalette(palette);
+    QPalette palette;
+    palette.setColor(backgroundRole(), backgroundColor);
+    setPalette(palette);
     setPaletteForegroundColor(Qt::white);
 
-    iconView = new Q3IconView(this, "ClusterPalette");
+    iconView = new QListWidget(this);
+    iconView->setObjectName("ClusterPalette");
     layout->addWidget(iconView);
     QFont font( "Helvetica",10);
+
+    iconView->setViewMode(QListView::IconMode);
+
     iconView->setFont(font);
     iconView->setFrameStyle(QFrame::NoFrame);
-    iconView->setArrangement(Q3IconView::LeftToRight);
-    iconView->setResizeMode(Q3IconView::Adjust);
+    //iconView->setArrangement(Q3IconView::LeftToRight);
+    iconView->setResizeMode(QListWidget::Adjust);
 
     palette = iconView->palette();
     palette.setColor(iconView->backgroundRole(), backgroundColor);
@@ -71,8 +85,8 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     iconView->setAutoFillBackground(true);
     iconView->viewport()->setAutoFillBackground(true);
     iconView->viewport()->setPalette(palette);
-    iconView->setHScrollBarMode(Q3ScrollView::AlwaysOff);
-    iconView->setVScrollBarMode(Q3ScrollView::AlwaysOff);
+    iconView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    iconView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
     int h;
     int s;
@@ -83,13 +97,12 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     else
         iconView->setPaletteForegroundColor(Qt::white);
 
-    iconView->setSelectionMode(Q3IconView::Extended);
-    iconView->setItemsMovable(false);
+    iconView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    //iconView->setItemsMovable(false);
     iconView->setSpacing(4);
     QFontInfo fontInfo = QFontInfo(QFont());
-    iconView->setGridX(fontInfo.pixelSize() * 2);
-    iconView->setGridY(15);
-    iconView->arrangeItemsInGrid();
+    iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15));
+    //iconView->arrangeItemsInGrid();
 
 
     //Deal with the sizes
@@ -98,12 +111,15 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     //Set the legend in the good language
     languageChange();
 
+    connect(iconView,SIGNAL(itemSelectionChanged()),this, SLOT(slotClickRedraw()));
+    connect(iconView,SIGNAL(customContextMenuRequested(QPoint)),this, SLOT(slotCustomContextMenuRequested(QPoint)));
+
+    /*
+     KDAB_PORTING
     //Signal and slot connection
-    connect(iconView,SIGNAL(contextMenuRequested(Q3IconViewItem*,QPoint)),this, SLOT(slotRightPressed(Q3IconViewItem*)));
-    connect(iconView,SIGNAL(selectionChanged()),this, SLOT(slotClickRedraw()));
-    connect(iconView,SIGNAL(mouseButtonPressed(int,Q3IconViewItem*,QPoint)),this, SLOT(slotMousePressed(int,Q3IconViewItem*)));
 
     connect(iconView,SIGNAL(onItem(Q3IconViewItem*)),this, SLOT(slotOnItem(Q3IconViewItem*)));
+    */
     setLayout(layout);
 }
 
@@ -168,15 +184,18 @@ void ClusterPalette::updateClusterList(){
                     clusterText.append(", ").append(clusterInformation[4]);
                 }
             }
-            (void)new ClusterPaletteIconViewItem(iconView,clusterText,pix);
+            QListWidgetItem * item  = new QListWidgetItem(pix, clusterText, iconView);
+            item->setData(INDEX,i);
         }
         else{
-            (void)new ClusterPaletteIconViewItem(iconView,clusterText,pix);
+            QListWidgetItem * item  = new QListWidgetItem(pix, clusterText, iconView);
+            item->setData(INDEX,i);
         }
     }
 }
 
-void ClusterPalette::slotRightPressed(Q3IconViewItem* item){
+void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
+    QListWidgetItem *item = iconView->itemAt(pos);
 
     if ( !item ) return; // right pressed on viewport,pix
     else{
@@ -193,7 +212,7 @@ void ClusterPalette::slotRightPressed(Q3IconViewItem* item){
       changeColor(item);
     }*/
 
-        int clusterNumber = doc->clusterColors().itemId(item->index());
+        int clusterNumber = doc->clusterColors().itemId(item->data(INDEX).toInt());
 
         //The dialog is not shown for the Noise and arterfact clusters (1 and 0).
         if(clusterNumber != 0 && clusterNumber != 1){
@@ -210,7 +229,7 @@ void ClusterPalette::slotRightPressed(Q3IconViewItem* item){
             if(clusterInformationDialog->exec() == QDialog::Accepted)
             {
                 //Update the cluster user information.
-                doc->data().setUserClusterInformation(doc->clusterColors().itemId(item->index()),clusterInformationDialog->getStructure(),clusterInformationDialog->getType(),clusterInformationDialog->getId(),clusterInformationDialog->getQuality(),clusterInformationDialog->getNotes());
+                doc->data().setUserClusterInformation(doc->clusterColors().itemId(item->data(INDEX).toInt()),clusterInformationDialog->getStructure(),clusterInformationDialog->getType(),clusterInformationDialog->getId(),clusterInformationDialog->getQuality(),clusterInformationDialog->getNotes());
 
                 //update the text of the item
                 if(isInUserClusterInfoMode){
@@ -338,11 +357,13 @@ void ClusterPalette::slotOnItem(Q3IconViewItem* item){
     }
 }
 
-void ClusterPalette::slotMousePressed(int button,Q3IconViewItem* item){
-    if ( !item ) return; //pressed on viewport
-    else{
-        // middle pressed on item
-        if(button == Qt::MidButton) changeColor(item);
+void ClusterPalette::mousePressEvent ( QMouseEvent * event )
+{
+    if(event->button() == Qt::RightButton) {
+        QListWidgetItem *item = iconView->itemAt(event->pos());
+        if(item) {
+            changeColor(item);
+        }
     }
 }
 
@@ -355,12 +376,9 @@ QList<int> ClusterPalette::selectedClusters(){
 
     QList<int> selectedClusters;
 
-    ClusterPaletteIconViewItem* clusterPaletteItem;
-
-    for(Q3IconViewItem* item = iconView->firstItem(); item; item = item->nextItem()){
-        clusterPaletteItem  = static_cast<ClusterPaletteIconViewItem*>(item);
-        if(item->isSelected()){
-            selectedClusters.append(clusterColors.itemId(item->index()));
+    for(int i = 0; i < iconView->count(); ++i) {
+        if(iconView->item(i)->isSelected()){
+            selectedClusters.append(clusterColors.itemId(i));
         }
     }
 
@@ -416,11 +434,14 @@ void ClusterPalette::updateClusters(){
 }
 
 
-void ClusterPalette::changeColor(Q3IconViewItem* item){
+void ClusterPalette::changeColor(QListWidgetItem* item) {
+    if(!item) {
+        return;
+    }
     //Get the list of clusters with their color
     ItemColors& clusterColors = doc->clusterColors();
 
-    int index = item->index();
+    const int index = item->data(INDEX).toInt();
 
     //Get the clusterColor associated with the item
     QColor color = clusterColors.color(index,ItemColors::BY_INDEX);
@@ -432,11 +453,12 @@ void ClusterPalette::changeColor(Q3IconViewItem* item){
 
         if(mode == IMMEDIATE){
             //Update the icon
-            QPixmap* pixmap = item->pixmap();
+            QPixmap pixmap;
             QPainter painter;
-            painter.begin(pixmap);
+            painter.begin(&pixmap);
             painter.fillRect(0,0,12,12,result);
             painter.end();
+            item->setIcon(QIcon(pixmap));
 
             //As soon a color changes a signal is emitted
             emit singleChangeColor(clusterColors.itemId(index));
@@ -467,17 +489,21 @@ void ClusterPalette::selectItems(QList<int> selectedClusters){
     isInSelectItems = true;
 
     //unselect all the items first
-    iconView->selectAll(false);
+    iconView->clearSelection();
 
     //Loop on the clusters to be selected
+    QListWidgetItem *item = 0;
     QList<int>::iterator clusterIterator;
-    ClusterPaletteIconViewItem* currentIcon = 0L;
     for(clusterIterator = selectedClusters.begin(); clusterIterator != selectedClusters.end(); ++clusterIterator){
-        currentIcon =  static_cast<ClusterPaletteIconViewItem*>(iconView->findItem(QString::fromLatin1("%1").arg(*clusterIterator),Q3IconView::BeginsWith));
-        currentIcon->setSelected(true,true);
+        QList<QListWidgetItem *> lst = iconView->findItems(QString::number(*clusterIterator),Qt::MatchStartsWith);
+        if(!lst.isEmpty()) {
+            item = lst.at(0);
+            item->setSelected(true);
+        }
     }
     //Last item in selection gets focus if it exists
-    if(selectedClusters.size() != 0) iconView->setCurrentItem(currentIcon);
+    if(!selectedClusters.isEmpty())
+        iconView->setCurrentItem(item);
 
     //reset isInSelectItems to false to enable again the the emission of signals due to selectionChange
     isInSelectItems = false;
@@ -497,9 +523,9 @@ void ClusterPalette::showUserClusterInformation(int electrodeGroupId){
     //update the flag
     isInUserClusterInfoMode = true;
 
-    iconView->setItemTextPos(Q3IconView::Right);
-    iconView->setGridX(2500);
-    iconView->arrangeItemsInGrid();
+    //iconView->setItemTextPos(Q3IconView::Right);
+    iconView->setGridSize(QSize(2500,iconView->gridSize().height()));
+    //iconView->arrangeItemsInGrid();
 
     QMap<int,ClusterUserInformation> clusterUserInformationMap = QMap<int,ClusterUserInformation>();
     doc->data().getClusterUserInformation(electrodeGroupId,clusterUserInformationMap);
@@ -508,10 +534,10 @@ void ClusterPalette::showUserClusterInformation(int electrodeGroupId){
     int clusterId;
     ClusterUserInformation currentClusterInformation;
 
-    for(Q3IconViewItem* item = iconView->firstItem(); item; item = item->nextItem()){
-        clusterId = clusterColors.itemId(item->index());
+    for(int i =0; i< iconView->count() ; ++i) {
+        clusterId = clusterColors.itemId(i);
 
-        QString clusterText = item->text();
+        QString clusterText = iconView->item(i)->text();
 
         if(clusterId == 0){
             clusterText.append(" - ").append("artefact");
@@ -564,9 +590,9 @@ void ClusterPalette::showUserClusterInformation(int electrodeGroupId){
                 }
             }
         }
-        item->setText(clusterText);
+        iconView->item(i)->setText(clusterText);
     }
-    iconView->setWordWrapIconText(false);
+    iconView->setWordWrap(false);
     iconView->adjustSize();
 }
 
@@ -574,25 +600,52 @@ void ClusterPalette::hideUserClusterInformation(){
     //update the flag
     isInUserClusterInfoMode = false;
 
-    iconView->setItemTextPos(Q3IconView::Bottom);
+   // iconView->setItemTextPos(Q3IconView::Bottom);
     //Let's go back to normal
     QFontInfo fontInfo = QFontInfo(QFont());
-    iconView->setGridX(fontInfo.pixelSize() * 2);
-    iconView->setGridY(15);
-    iconView->arrangeItemsInGrid();
+    iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15));
+    //iconView->arrangeItemsInGrid();
 
     ItemColors& clusterColors = doc->clusterColors();
     int clusterId;
 
-    for(Q3IconViewItem* item = iconView->firstItem(); item; item = item->nextItem()){
-        clusterId = clusterColors.itemId(item->index());
-        item->setText(QString::fromLatin1("%1").arg(clusterId));
+    for(int i = 0; i < iconView->count(); ++i) {
+        clusterId = clusterColors.itemId(i);
+        iconView->item(i)->setText(QString::number(clusterId));
     }
 
-    iconView->setWordWrapIconText(true);
+    iconView->setWordWrap(true);
     iconView->resize(this->width(),this->height());
 }
 
+
+void ClusterPalette::changeBackgroundColor(const QColor& color){
+    backgroundColor = color;
+    int h;
+    int s;
+    int v;
+    color.getHsv(&h,&s,&v);
+    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
+    else iconView->setPaletteForegroundColor(Qt::white);
+    iconView->setPaletteBackgroundColor(color);
+
+    //get the list of selected clusters
+    QList<int> selected = selectedClusters();
+
+    //Set isInSelectItems to true to prevent the emission of signals due to selectionChange
+    isInSelectItems = true;
+
+    //Redraw the icons
+    updateClusterList();
+
+    //reselect the clusters
+    selectItems(selected);
+
+    //reset isInSelectItems to false to enable again the the emission of signals due to selectionChange
+    isInSelectItems = false;
+
+    update();
+}
 
 
 #include "clusterPalette.moc"
