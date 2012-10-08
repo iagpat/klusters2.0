@@ -32,7 +32,7 @@
 #include <qrecentfileaction.h>
 #include <qextendtabwidget.h>
 #include <dockarea.h>
-
+#include <QPrintDialog>
 //Added by qt3to4:
 #include <QLabel>
 #include <QPixmap>
@@ -1571,7 +1571,8 @@ void KlustersApp::slotFilePrint()
     printer->setOrientation(QPrinter::Landscape);
     printer->setColorMode(QPrinter::Color);
 
-    if (printer->setup(this))
+    QPrintDialog dialog(printer, this);
+    if (dialog.exec())
     {
         if(!doesActiveDisplayContainProcessWidget()){
             KlustersView* view = activeView();

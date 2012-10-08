@@ -327,7 +327,7 @@ void TraceView::updateClusterData(bool active){
         QList<int> toRemove;
         QMap<int, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedClusters.begin(); providersIterator != selectedClusters.end(); ++providersIterator){
-            if(static_cast< QList<int> >(providersIterator.data()).isEmpty())
+            if(static_cast< QList<int> >(providersIterator.value()).isEmpty())
                 toRemove.append(providersIterator.key());
         }
 
@@ -371,7 +371,7 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
         QList<int> toRemove;
         QMap<int, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedClusters.begin(); providersIterator != selectedClusters.end(); ++providersIterator){
-            if(static_cast< QList<int> >(providersIterator.data()).isEmpty())
+            if(static_cast< QList<int> >(providersIterator.value()).isEmpty())
                 toRemove.append(providersIterator.key());
         }
 
@@ -398,7 +398,7 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
         QStringList toRemove;
         QMap<QString, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedEvents.begin(); providersIterator != selectedEvents.end(); ++providersIterator){
-            if(static_cast< QList<int> >(providersIterator.data()).isEmpty())
+            if(static_cast< QList<int> >(providersIterator.value()).isEmpty())
                 toRemove.append(providersIterator.key());
         }
 
@@ -603,7 +603,7 @@ void TraceView::setGreyScale(bool grey){
 void TraceView::resetOffsets(const QMap<int,int>& selectedChannelDefaultOffsets){
     QMap<int,int>::const_iterator iterator;
     for(iterator = selectedChannelDefaultOffsets.begin(); iterator != selectedChannelDefaultOffsets.end(); ++iterator)
-        channelOffsets[iterator.key()] = iterator.data();
+        channelOffsets[iterator.key()] = iterator.value();
 
     //Everything has to be redraw
     drawContentsMode = REDRAW;
@@ -658,7 +658,7 @@ void TraceView::updateShownGroupsChannels(const QList<int>& channelsToShow){
     int nbGps = groupsChannels->count();
     QMap<int, QList<int> >::Iterator iterator;
     for(iterator = groupsChannels->begin(); iterator != groupsChannels->end(); ++iterator){
-        shownGroupsChannels.insert(iterator.key(),iterator.data());
+        shownGroupsChannels.insert(iterator.key(),iterator.value());
     }
 
     for(int i = 0; i < nbChannels; ++i){
@@ -835,14 +835,14 @@ void TraceView::updateWindow(){
         int nbYspaces = 0;
         QMap<int, QList<int> >::Iterator iterator;
         for(iterator = shownGroupsChannels.begin(); iterator != shownGroupsChannels.end(); ++iterator){
-            int currentNbChannels = static_cast<QList<int> >(iterator.data()).size();
+            int currentNbChannels = static_cast<QList<int> >(iterator.value()).size();
             nbYspaces += (currentNbChannels - 1);
         }
 
         nbClusters = 0;
         QMap<int, QList<int> >::Iterator clustersIterator;
         for(clustersIterator = selectedClusters.begin(); clustersIterator != selectedClusters.end(); ++clustersIterator){
-            int currentNbClusters = static_cast<QList<int> >(clustersIterator.data()).size();
+            int currentNbClusters = static_cast<QList<int> >(clustersIterator.value()).size();
             nbClusters += currentNbClusters;
         }
 
@@ -891,14 +891,14 @@ void TraceView::updateWindow(){
         int maxNbChannels = 0;
         QMap<int, QList<int> >::Iterator iterator;
         for(iterator = shownGroupsChannels.begin(); iterator != shownGroupsChannels.end(); ++iterator){
-            int currentNbChannels = static_cast<QList<int> >(iterator.data()).size();
+            int currentNbChannels = static_cast<QList<int> >(iterator.value()).size();
             if(currentNbChannels > maxNbChannels) maxNbChannels = currentNbChannels;
         }
 
         nbClusters = 0;
         QMap<int, QList<int> >::Iterator clustersIterator;
         for(clustersIterator = selectedClusters.begin(); clustersIterator != selectedClusters.end(); ++clustersIterator){
-            int currentNbClusters = static_cast<QList<int> >(clustersIterator.data()).size();
+            int currentNbClusters = static_cast<QList<int> >(clustersIterator.value()).size();
             nbClusters += currentNbClusters;
         }
 
@@ -1372,7 +1372,7 @@ void TraceView::drawTraces(QPainter& painter){
 
                 QMap<QString, QList<int> >::Iterator iterator;
                 for(iterator = selectedEvents.begin(); iterator != selectedEvents.end(); ++iterator){
-                    QList<int> eventList = iterator.data();
+                    QList<int> eventList = iterator.value();
                     QString providerName = iterator.key();
                     if(eventList.size() == 0 || eventsData[providerName] == 0) continue;
                     ItemColors* colors = providerItemColors[providerName];
@@ -1408,7 +1408,7 @@ void TraceView::drawTraces(QPainter& painter){
                     ItemColors* colors = providerItemColors[providerName];
                     Array<dataType>& currentData = static_cast<ClusterData*>(clustersData[providerName])->getData();
                     int nbSpikes = currentData.nbOfColumns();
-                    QList<int> clusterList = selectedIterator.data();
+                    QList<int> clusterList = selectedIterator.value();
                     QList<int>::iterator clusterIterator;
                     for(clusterIterator = clusterList.begin(); clusterIterator != clusterList.end(); ++clusterIterator){
                         QColor color = colors->color(*clusterIterator);
@@ -1545,8 +1545,9 @@ void TraceView::drawTraces(QPainter& painter){
                 for(selectedIterator = selectedClusters.begin(); selectedIterator != selectedClusters.end(); ++selectedIterator){
                     //Only draw rasters for clusters contained in a cluster file containing data for channels of the current group
                     if(!clusterFileList.contains(selectedIterator.key())) continue;
-                    QList<int> clusterList = selectedIterator.data();
-                    if(clusterList.size() == 0) continue;
+                    QList<int> clusterList = selectedIterator.value();
+                    if(clusterList.isEmpty()) 
+			    continue;
                     QString providerName = QString::fromLatin1("%1").arg(selectedIterator.key());
                     ItemColors* colors = providerItemColors[providerName];
                     Array<dataType>& currentData = static_cast<ClusterData*>(clustersData[providerName])->getData();
@@ -1585,7 +1586,7 @@ void TraceView::drawTraces(QPainter& painter){
             QPen pen(Qt::DotLine);
             QMap<QString, QList<int> >::Iterator iterator;
             for(iterator = selectedEvents.begin(); iterator != selectedEvents.end(); ++iterator){
-                QList<int> eventList = iterator.data();
+                QList<int> eventList = iterator.value();
                 QString providerName = iterator.key();
 
                 if(eventList.size() == 0 || eventsData[providerName] == 0) continue;
@@ -1771,7 +1772,7 @@ void TraceView::drawTraces(QPainter& painter){
 
             QMap<int,QList<int> >::Iterator iterator;
             for(iterator = selectedClusters.begin(); iterator != selectedClusters.end(); ++iterator){
-                QList<int> clusterList = iterator.data();
+                QList<int> clusterList = iterator.value();
                 if(clusterList.size() == 0) continue;
                 QString providerName = QString::fromLatin1("%1").arg(iterator.key());
                 ItemColors* colors = providerItemColors[providerName];
@@ -2367,7 +2368,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                     int difference = tracesProvider.getNbSamples(startTime,endTime,startTimeInRecordingUnits); //nbSamples as a starting point
                     QMap<QString, QList<int> >::Iterator iterator;
                     for(iterator = selectedEvents.begin(); iterator != selectedEvents.end(); ++iterator){
-                        QList<int> eventList = iterator.data();
+                        QList<int> eventList = iterator.value();
                         QString providerName = iterator.key();
 
                         if(eventList.size() == 0 || eventsData[providerName] == 0) continue;
@@ -2537,7 +2538,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                     int difference = tracesProvider.getNbSamples(startTime,endTime,startTimeInRecordingUnits); //nbSamples as a starting point
                     QMap<QString, QList<int> >::Iterator iterator;
                     for(iterator = selectedEvents.begin(); iterator != selectedEvents.end(); ++iterator){
-                        QList<int> eventList = iterator.data();
+                        QList<int> eventList = iterator.value();
                         QString providerName = iterator.key();
 
                         if(eventList.size() == 0 || eventsData[providerName] == 0) continue;
@@ -3662,7 +3663,7 @@ void TraceView::showNextEvent(){
         QMap<QString, QList<int> > idsToBrowse;
         QMap<QString, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedEvents.begin(); providersIterator != selectedEvents.end(); ++providersIterator){
-            if(static_cast< QList<int> >(providersIterator.data()).isEmpty()) toRemove.append(providersIterator.key());
+            if(static_cast< QList<int> >(providersIterator.value()).isEmpty()) toRemove.append(providersIterator.key());
             //check if there are events to browse through taking the skip list into account
             else{
                 QList<int> selectedIds = selectedEvents[providersIterator.key()];
@@ -3710,7 +3711,7 @@ void TraceView::showPreviousEvent(){
         QMap<QString, QList<int> > idsToBrowse;
         QMap<QString, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedEvents.begin(); providersIterator != selectedEvents.end(); ++providersIterator){
-            if(static_cast< QList<int> >(providersIterator.data()).isEmpty()) toRemove.append(providersIterator.key());
+            if(static_cast< QList<int> >(providersIterator.value()).isEmpty()) toRemove.append(providersIterator.key());
             //check if there are events to browse through taking the skip list into account
             else{
                 QList<int> selectedIds = selectedEvents[providersIterator.key()];
@@ -4018,7 +4019,7 @@ void TraceView::showNextCluster(){
         QMap<int, QList<int> > idsToBrowse;
         QMap<int, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedClusters.begin(); providersIterator != selectedClusters.end(); ++providersIterator){
-            if(static_cast< QList<int> >(providersIterator.data()).isEmpty()) toRemove.append(providersIterator.key());
+            if(static_cast< QList<int> >(providersIterator.value()).isEmpty()) toRemove.append(providersIterator.key());
             //check if there are clusters to browse through taking the skip list
             else{
                 QList<int> selectedIds = selectedClusters[providersIterator.key()];
@@ -4066,7 +4067,7 @@ void TraceView::showPreviousCluster(){
         QMap<int, QList<int> > idsToBrowse;
         QMap<int, QList<int> >::Iterator providersIterator;
         for(providersIterator = selectedClusters.begin(); providersIterator != selectedClusters.end(); ++providersIterator){
-            if(static_cast< QList<int> >(providersIterator.data()).isEmpty()) toRemove.append(providersIterator.key());
+            if(static_cast< QList<int> >(providersIterator.value()).isEmpty()) toRemove.append(providersIterator.key());
             //check if there are clusters to browse through taking the skip list
             else{
                 QList<int> selectedIds = selectedClusters[providersIterator.key()];

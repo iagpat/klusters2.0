@@ -305,7 +305,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
             QMessageBox::information(0, tr("Warning!"), tr("Two parameter files were found, %1 and %2. The parameter file %3 will be used.").arg(xmlParFileUrl).arg(parFileUrl).arg(xmlParFileUrl));
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         }
-        xmlParFile.setName(tmpXmlParFile);
+        xmlParFile.setFileName(tmpXmlParFile);
         if(!xmlParFile.open(QIODevice::ReadOnly)){
             fclose(fetFile);
             return OPEN_ERROR;
@@ -315,7 +315,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
         if(!QFile(parXFileUrl).exists())
             return PARX_DOWNLOAD_ERROR;
         tmpParXFile = parXFileUrl;
-        parXFile.setName(tmpParXFile);
+        parXFile.setFileName(tmpParXFile);
         if(!parXFile.open(QIODevice::ReadOnly)){
             fclose(fetFile);
             return OPEN_ERROR;
@@ -323,7 +323,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
         if(!QFile(parFileUrl).exists())
             return PAR_DOWNLOAD_ERROR;
         tmpParFile = parFileUrl;
-        parFile.setName(tmpParFile);
+        parFile.setFileName(tmpParFile);
         if(!parFile.open(QIODevice::ReadOnly)){
             fclose(fetFile);
             parXFile.close();

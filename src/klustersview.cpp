@@ -347,7 +347,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
 }
 
 void  KlustersView::clusterDockClosed(QWidget* clusterView){
-    viewList.remove(dynamic_cast<ViewWidget*>(clusterView));
+    viewList.removeAll(dynamic_cast<ViewWidget*>(clusterView));
     //the clusterView to be removed is the last one
     if(viewCounter["ClusterView"] == 1){
         viewCounter.remove("ClusterView");
@@ -386,7 +386,7 @@ void KlustersView::waveformDockClosed(QWidget* waveformView){
     }
 
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
-    viewList.remove(dynamic_cast<ViewWidget*>(waveformView));
+    viewList.removeAll(dynamic_cast<ViewWidget*>(waveformView));
 
     //For the time being only one WaveformView is allowed in a single View, but in the
     //future who knows ;0). This counter will make it easier to allow multiple WaveformView.
@@ -410,7 +410,7 @@ void KlustersView::correlogramDockClosed(QWidget* correlogramView){
     }
 
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
-    viewList.remove(dynamic_cast<ViewWidget*>(correlogramView));
+    viewList.removeAll(dynamic_cast<ViewWidget*>(correlogramView));
 
     if(viewCounter["CorrelationView"] == 1){
         viewCounter.remove("CorrelationView");
@@ -451,7 +451,7 @@ void KlustersView::errorMatrixDockClosed(QWidget* errorMatrixView){
 
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
 
-    viewList.remove(dynamic_cast<ViewWidget*>(errorMatrixView));
+    viewList.removeAll(dynamic_cast<ViewWidget*>(errorMatrixView));
     mainWindow.widgetRemovedFromDisplay(ERROR_MATRIX);
     isThereErrorMatrixView = false;
 }
@@ -906,14 +906,14 @@ bool KlustersView::clustersDeletionUpdate(QList<int>& deletedClusters,bool activ
 }
 
 void KlustersView::removeClusterFromView(int clusterId,bool active){
-    shownClusters->remove(clusterId);
+    shownClusters->removeAll(clusterId);
     emit clusterRemovedFromView(clusterId,active);
 }
 
 void KlustersView::removeClustersFromView(const QVector<int>& clusterIds, bool active){
     int size = clusterIds.size();
     for(int i = 0; i<size; ++i){
-        shownClusters->remove(clusterIds[i]);
+        shownClusters->removeAll(clusterIds[i]);
         emit clusterRemovedFromView(clusterIds[i],active);
     }
 }
