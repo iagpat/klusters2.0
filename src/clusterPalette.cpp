@@ -463,7 +463,7 @@ void ClusterPalette::changeColor(QListWidgetItem* item) {
 
         if(mode == IMMEDIATE){
             //Update the icon
-            QPixmap pixmap;
+            QPixmap pixmap(14,14);
             QPainter painter;
             painter.begin(&pixmap);
             painter.fillRect(0,0,12,12,result);
