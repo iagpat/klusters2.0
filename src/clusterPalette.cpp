@@ -48,7 +48,7 @@
 ClusterPaletteWidget::ClusterPaletteWidget(QWidget *parent)
     : QListWidget(parent)
 {
-
+    setViewMode(QListView::IconMode);
 }
 
 void ClusterPaletteWidget::mousePressEvent ( QMouseEvent * event )
@@ -95,7 +95,6 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     layout->addWidget(iconView);
     QFont font( "Helvetica",10);
 
-    iconView->setViewMode(QListView::IconMode);
 
     iconView->setFont(font);
     iconView->setFrameStyle(QFrame::NoFrame);
@@ -125,7 +124,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     //iconView->setItemsMovable(false);
     iconView->setSpacing(4);
     QFontInfo fontInfo = QFontInfo(QFont());
-    iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15));
+    iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15*2));
     //iconView->arrangeItemsInGrid();
 
     iconView->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -180,11 +179,9 @@ void ClusterPalette::updateClusterList(){
         if(isInUserClusterInfoMode){
             if(clusterColors.itemId(i) == 0){
                 clusterText.append(" - ").append("artefact");
-            }
-            else if(clusterColors.itemId(i) == 1){
+            } else if(clusterColors.itemId(i) == 1){
                 clusterText.append(" - ").append("noise");
-            }
-            else{
+            } else{
                 QList<QString> clusterInformation;
                 doc->data().getUserClusterInformation(clusterColors.itemId(i),clusterInformation);
 
@@ -192,16 +189,16 @@ void ClusterPalette::updateClusterList(){
                     clusterText.append(" - ").append(clusterInformation.at(0));
                 }
                 if(!clusterInformation.at(1).isEmpty()){
-                    clusterText.append(", ").append(clusterInformation[1]);
+                    clusterText.append(", ").append(clusterInformation.at(1));
                 }
                 if(!clusterInformation.at(2).isEmpty()){
-                    clusterText.append(", ").append(clusterInformation[2]);
+                    clusterText.append(", ").append(clusterInformation.at(2));
                 }
                 if(!clusterInformation.at(3).isEmpty()){
-                    clusterText.append(", ").append(clusterInformation[3]);
+                    clusterText.append(", ").append(clusterInformation.at(3));
                 }
                 if(!clusterInformation.at(4).isEmpty()){
-                    clusterText.append(", ").append(clusterInformation[4]);
+                    clusterText.append(", ").append(clusterInformation.at(4));
                 }
             }
             QListWidgetItem * item  = new QListWidgetItem(pix, clusterText, iconView);
