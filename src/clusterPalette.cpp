@@ -609,7 +609,7 @@ void ClusterPalette::hideUserClusterInformation(){
     iconView->setViewMode(QListView::IconMode);
     //Let's go back to normal
     QFontInfo fontInfo = QFontInfo(QFont());
-    iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15));
+    iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15*2));
     //iconView->arrangeItemsInGrid();
 
     ItemColors& clusterColors = doc->clusterColors();
