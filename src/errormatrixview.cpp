@@ -158,7 +158,7 @@ void ErrorMatrixView::paintEvent ( QPaintEvent*){
         viewport = QRect(contentsRec.left() + 15,contentsRec.top(),contentsRec.width() - 15,contentsRec.height() - 15);
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
-        doublebuffer = doublebuffer.copy(0,0,contentsRec.width(),contentsRec.height());
+        doublebuffer.resize(contentsRec.width(),contentsRec.height());
 
         //Create a painter to paint on the double buffer
         QPainter painter;

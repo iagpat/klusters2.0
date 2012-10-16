@@ -1188,7 +1188,7 @@ void KlustersDoc::createNewClusters(QRegion& region, const QList <int>& clusters
             clustersToShow.append(*clustersToCreate);
         }
         //Remove all the empty clusters
-        if(!emptyClusters.isEmpty()){
+        if(emptyClusters.size()>0){
             QList<int>::iterator clustersToRemove;
             for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
                 clusterColorList->remove(*clustersToRemove);
@@ -1217,8 +1217,7 @@ void KlustersDoc::createNewClusters(QRegion& region, const QList <int>& clusters
 
 
         //Reset the color status in clusterColors if need it
-        if(clusterColorList->isColorChanged())
-            clusterColorList->resetAllColorStatus();
+        if(clusterColorList->isColorChanged()) clusterColorList->resetAllColorStatus();
 
         activeView->showAllWidgets();
 

@@ -66,7 +66,7 @@ const QString KlustersApp::DEFAULT_BIN_SIZE = "1";
 
 
 KlustersApp::KlustersApp()
-    : QMainWindow(0),
+    : QMainWindow(0,"Klusters"),
       displayCount(0),
       mainDock(0),
       clusterPanel(0),
@@ -91,7 +91,6 @@ KlustersApp::KlustersApp()
       processKilled(false),
       errorMatrixExists(false)
 {
-    setObjectName("Klusters");
     initView();
 
     mMainToolBar = new QToolBar();
@@ -1233,7 +1232,7 @@ void KlustersApp::importDocumentFile(const QString& url)
 bool KlustersApp::doesActiveDisplayContainProcessWidget(){
     DockArea* area = tabsParent->currentDockArea();
     KlustersView *view = static_cast<KlustersView*>(area);
-    return qobject_cast<KlustersView*>(view);
+    return view->isA("ProcessWidget");
 }
 
 KlustersView* KlustersApp::activeView(){
@@ -1466,7 +1465,7 @@ void KlustersApp::slotDisplayClose()
         displayCount --;
 
         //Remove the view from the document list if need it
-        if(qobject_cast<KlustersView*>(current->widget())){
+        if((current->widget())->isA("KlustersView")){
             KlustersView* view = dynamic_cast<KlustersView*>(current->widget());
             doc->removeView(view);
 
@@ -1502,7 +1501,7 @@ void KlustersApp::slotDisplayClose()
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
                 //Delete the view
-                if(qobject_cast<KlustersView*>(mainDock->widget())){
+                if((mainDock->widget())->isA("KlustersView")){
                     delete processWidget;
                     processWidget = 0L;
                     delete mainDock;
@@ -1536,7 +1535,7 @@ void KlustersApp::slotDisplayClose()
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
                 //Delete the view
-                if(qobject_cast<KlustersView*>(mainDock->widget())){
+                if((mainDock->widget())->isA("KlustersView")){
                     delete processWidget;
                     processWidget = 0L;
                     delete mainDock;

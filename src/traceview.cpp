@@ -3504,8 +3504,7 @@ void TraceView::print(QPainter& printPainter,int width,int height, bool whiteBac
     //Fill the background with the background color and ensure we draw the same portion of the world than on the screen
     QRect back = QRect(r.left(),r.top(),r.width(),r.height());
     float widthRatio = (static_cast<float>(back.width())/static_cast<float>(width));
-    if(r.left() == 0)
-        back.setLeft(r.left() - static_cast<long>(xMargin * widthRatio));
+    if(r.left() == 0) back.setLeft(r.left() - static_cast<long>(xMargin * widthRatio));
 
     QColor colorLegendTmp = colorLegend;
     QColor background= backgroundColor();
@@ -3555,7 +3554,7 @@ void TraceView::addEventProvider(EventsProvider* eventsProvider,QString name,Ite
 
     updateNoneBrowsingEventList(name,eventsToSkip);
 
-    if(!eventsToShow.isEmpty()){
+    if(eventsToShow.size() != 0){
         QList<int> events;
         QList<int>::iterator shownEventsIterator;
         for(shownEventsIterator = eventsToShow.begin(); shownEventsIterator != eventsToShow.end(); ++shownEventsIterator){
