@@ -119,7 +119,7 @@ void ClusterView::paintEvent ( QPaintEvent*){
         viewport = contentsRect();
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
-        doublebuffer.resize(viewport.width(),viewport.height());
+        doublebuffer = doublebuffer.copy(0,0,viewport.width(),viewport.height());
 
         //Create a painter to paint on the double buffer
         QPainter painter;

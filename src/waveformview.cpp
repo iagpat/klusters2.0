@@ -370,7 +370,7 @@ void WaveformView::paintEvent ( QPaintEvent *){
         viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height() - 10);
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
-        doublebuffer.resize(contentsRec.width(),contentsRec.height());
+        doublebuffer = doublebuffer.copy(0,0,contentsRec.width(),contentsRec.height());
 
         //Create a painter to paint on the double buffer
         QPainter painter;
