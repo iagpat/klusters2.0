@@ -49,6 +49,7 @@ ClusterPaletteWidget::ClusterPaletteWidget(QWidget *parent)
     : QListWidget(parent)
 {
     setViewMode(QListView::IconMode);
+    setDragDropMode(QAbstractItemView::NoDragDrop);
 }
 
 void ClusterPaletteWidget::mousePressEvent ( QMouseEvent * event )
