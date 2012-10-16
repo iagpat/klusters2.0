@@ -83,6 +83,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
 
     //Create the mainDock
     mainDock = new QDockWidget(tr(doc.documentName().toLatin1()));
+    mainDock->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
     //If the type of view is a not base one, call the function to call the complex views.
     //If the type of view is a base on, construct the appropriate Widget and assign it as the mainDock widget
     //To add a new base type just add a new case with the appropriate widget (do not to add the include line)
@@ -225,6 +226,7 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
 
     //Create and add the waveforms view
     QDockWidget* waveforms = new QDockWidget(tr(doc.documentName().toLatin1()));
+    waveforms->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
     //createDockWidget( "WaveForm", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
     waveforms->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms,
                                           inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
@@ -239,6 +241,7 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
 
     //Create and add the correlations view
     QDockWidget* correlations = new QDockWidget(tr(doc.documentName().toLatin1()));
+    correlations->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
             //createDockWidget( "Correlation", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
     correlations->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,correlations,correlationScale,binSize,correlogramTimeFrame,shoulderLine));//assign the widget
     ViewWidget* correlationView = dynamic_cast<ViewWidget*>(correlations->widget());
@@ -257,6 +260,7 @@ void KlustersView::createGroupingAssistantView(const QColor& backgroundColor,QSt
 
     //Create and add the errorMatrixView beneath the clusterView (mainDock)
     QDockWidget* errorMatrix = new QDockWidget(tr(doc.documentName().toLatin1()));
+    errorMatrix->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
     //createDockWidget("ErrorMatrix", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
     errorMatrix->setWidget(new ErrorMatrixView(doc,*this,backgroundColor,statusBar,errorMatrix));//assign the widget
     ViewWidget* errorMatrixView = dynamic_cast<ViewWidget*>(errorMatrix->widget());
@@ -665,6 +669,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         count = QString::fromLatin1("%1").arg(viewCounter["ClusterView"]);
 
         clusters = new QDockWidget(tr(doc.documentName().toLatin1()));
+        clusters->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
                 //createDockWidget(count.prepend("ClusterView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
         clusters->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,clusters));
         clusterView = static_cast<ViewWidget*>(clusters->widget());
@@ -704,6 +709,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         count = QString::fromLatin1("%1").arg(viewCounter["WaveformView"]);
 
         waveforms = new QDockWidget(tr(doc.documentName().toLatin1()));
+        waveforms->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
                 //createDockWidget(count.prepend("WaveformView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
         waveforms->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms,
                                               inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
@@ -725,6 +731,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         count = QString::fromLatin1("%1").arg(viewCounter["CorrelationView"]);
 
         correlations = new QDockWidget(tr(doc.documentName().toLatin1()));
+        correlations->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
 
                 //createDockWidget(count.prepend("CorrelationView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
         correlations->setWidget(new CorrelationView(doc,*this,backgroundColor,statusBar,correlations,correlationScale,binSize,correlogramTimeFrame,shoulderLine));//assign the widget
@@ -750,6 +757,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         isThereErrorMatrixView = true;
 
         errorMatrix = new QDockWidget(tr(doc.documentName().toLatin1()));
+        errorMatrix->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
         //createDockWidget("ErrorMatrix", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
         errorMatrix->setWidget(new ErrorMatrixView(doc,*this,backgroundColor,statusBar,errorMatrix));//assign the widget
         errorMatrixView = dynamic_cast<ViewWidget*>(errorMatrix->widget());
@@ -771,6 +779,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         count = QString::fromLatin1("%1").arg(viewCounter["TraceView"]);
 
         traces = new QDockWidget(tr(doc.documentName().toLatin1()));
+        traces->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
                 //createDockWidget(count.prepend("TraceView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
         //the settings are : greyScale, no vertical lines nor rasters and waveforms, no labels displayed, no channel skipped.
         traces->setWidget(new TraceWidget(startingTime,duration,true,*doc.getTraceProvider(),false,false,false,
