@@ -66,7 +66,7 @@ const QString KlustersApp::DEFAULT_BIN_SIZE = "1";
 
 
 KlustersApp::KlustersApp()
-    : QMainWindow(0,"Klusters"),
+    : QMainWindow(0),
       displayCount(0),
       mainDock(0),
       clusterPanel(0),
@@ -91,6 +91,8 @@ KlustersApp::KlustersApp()
       processKilled(false),
       errorMatrixExists(false)
 {
+    setObjectName("Klusters");
+
     initView();
 
     mMainToolBar = new QToolBar();
