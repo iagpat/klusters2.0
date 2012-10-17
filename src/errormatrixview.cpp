@@ -297,13 +297,15 @@ void ErrorMatrixView::mouseMoveEvent(QMouseEvent* e){
     int indexMax = clusterList.size() - 1;
     if((cluster1Index > -1) && (cluster1Index <= indexMax) &&
             (cluster2Index > -1) && (cluster2Index <= indexMax)){
-        statusBar->showMessage("Clusters (" + QString::fromLatin1("%1").arg(clusterList[cluster2Index]) + "," +
-                               QString::fromLatin1("%1").arg(clusterList[cluster1Index]) + "): p = " +
+        statusBar->showMessage("Clusters (" + QString::number(clusterList[cluster2Index]) + "," +
+                               QString::number(clusterList[cluster1Index]) + "): p = " +
                                QString::fromLatin1("%1").arg((*probabilities)(cluster2Index + 1,cluster1Index + 1)));
     }
 }
 
 void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
+    if(clusterList.isEmpty())
+        return;
     //Select the clusters corresponding to the current cell of the matrix (if they still exist)
     QPoint current = viewportToWorld(e->x() -15,e->y());
 
@@ -324,12 +326,15 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
         clustersToShow.append(cluster1);
         previousSelectedClusters.append(cluster1);
     }
-    else pair.setX(-1);
+    else
+        pair.setX(-1);
+
     if(existingClusters.contains(static_cast<dataType>(cluster2))){
         clustersToShow.append(cluster2);
         previousSelectedClusters.append(cluster2);
     }
-    else pair.setY(-1);
+    else
+        pair.setY(-1);
 
     //If the user control click a second time on a cell of the matrix this will deselect the corresponding pair.
     if((e->modifiers() & Qt::ControlModifier) && selectedPairs.contains(pair)){
