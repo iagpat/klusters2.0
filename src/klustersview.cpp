@@ -1403,7 +1403,7 @@ QList< QList<int>* > KlustersView::getUndoList(){
     for(int i = 0; i<removedClustersUndoList.count();++i) {
         QList<int>* undoCopy = new QList<int>();
         const QList<int>* lst = removedClustersUndoList.at(i);
-        for(int j= 0; i<lst->count();++j) {
+        for(int j= 0; j<lst->count();++j) {
             undoCopy->append(lst->at(j));
         }
         undoList.append(undoCopy);
@@ -1417,7 +1417,7 @@ QList< QList<int>* >  KlustersView::getRedoList(){
     for(int i = 0; i<removedClustersRedoList.count();++i) {
         QList<int>* redoCopy = new QList<int>();
         const QList<int>* lst = removedClustersRedoList.at(i);
-        for(int j= 0; i<lst->count();++j) {
+        for(int j= 0; j<lst->count();++j) {
             redoCopy->append(lst->at(j));
         }
         redoList.append(redoCopy);
