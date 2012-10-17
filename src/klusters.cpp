@@ -2350,8 +2350,7 @@ void KlustersApp::slotUpdateErrorMatrix(){
 void KlustersApp::slotSelectAll(){
     //Trigger the action only if the active display does not contain a ProcessWidget
     if(!doesActiveDisplayContainProcessWidget()){
-        QList<int> clustersToHide;
-        doc->showAllClustersExcept(clustersToHide);
+        doc->showAllClustersExcept(QList<int>());
     }
 }
 
@@ -2489,22 +2488,23 @@ void KlustersApp::slotRecluster(){
     }
 }
 
-void KlustersApp::slotProcessExited(int, QProcess::ExitStatus status){
-#if KDAB_PENDING
+void KlustersApp::slotProcessExited(int exitCode, QProcess::ExitStatus status){
     //Check if the process has exited "voluntarily" and if so if it was successful
-    if(!(status == QProcess::NormalExit) || (process->normalExit() && process->exitStatus())){
-        if(process->normalExit() || (!process->normalExit() && !processKilled))
+    if(!(status == QProcess::NormalExit) || (status == QProcess::NormalExit && exitCode)){
+        if(status == QProcess::NormalExit || (status != QProcess::NormalExit  && !processKilled))
             QMessageBox::critical (this,tr("Error !"),tr("The reclustering program did not finished normaly.\n"
                                                          "Check the output log for more information."));
 
         if(!QFile::remove(reclusteringFetFileName))
             QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary feature file used by the reclustering program."));
+
         processFinished = true;
         processOutputsFinished = true;
         processKilled = false;
         slotStateChanged("noReclusterState");
-        if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
-        else{
+        if(!doesActiveDisplayContainProcessWidget())  {
+            updateUndoRedoDisplay();
+        }else {
 
             slotStateChanged("reclusterViewState");
         }
@@ -2593,7 +2593,6 @@ void KlustersApp::slotProcessExited(int, QProcess::ExitStatus status){
         slotStateChanged("reclusterViewState");
     }
     QApplication::restoreOverrideCursor();
-#endif
 }
 
 void KlustersApp::slotStopRecluster(){
