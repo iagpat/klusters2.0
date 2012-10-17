@@ -1242,8 +1242,9 @@ void KlustersApp::importDocumentFile(const QString& url)
 
 bool KlustersApp::doesActiveDisplayContainProcessWidget(){
     DockArea* area = tabsParent->currentDockArea();
+    qDebug()<<" area "<<area;
     KlustersView *view = static_cast<KlustersView*>(area);
-    return view->isA("ProcessWidget");
+    return qobject_cast<ProcessWidget*>(view);
 }
 
 KlustersView* KlustersApp::activeView(){
@@ -1913,12 +1914,12 @@ void KlustersApp::slotSingleColorUpdate(int clusterId){
     }
 }
 
-void KlustersApp::slotUpdateShownClusters(QList<int> selectedClusters){
+void KlustersApp::slotUpdateShownClusters(const QList<int>& selectedClusters){
     //Trigger ths action only if the active display does not contain a ProcessWidget
     if(!doesActiveDisplayContainProcessWidget()){
 
         //Update the browsing possibility of the traceView
-        if(activeView()->containsTraceView() && selectedClusters.size() != 0) {
+        if(activeView()->containsTraceView() && !selectedClusters.isEmpty()) {
             slotStateChanged("traceViewBrowsingState");
         }
         else{

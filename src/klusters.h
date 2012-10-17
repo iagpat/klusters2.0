@@ -257,7 +257,7 @@ private Q_SLOTS:
     /**Draws the clusters contain in @p selectedClusters list.
     * @param selectedClusters list of clusters which have been selected to be shown.
     */
-    void slotUpdateShownClusters(QList<int> selectedClusters);
+    void slotUpdateShownClusters(const QList<int> &selectedClusters);
     /**Groups the clusters contain in @p selectedClusters list and trigger the update of the displays.
     * @param selectedClusters list of clusters which have been selected to be grouped.
     */

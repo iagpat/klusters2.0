@@ -117,7 +117,7 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
     void singleChangeColor(int selectedCluster);
-    void updateShownClusters(QList<int> selectedClusters);
+    void updateShownClusters(const QList<int>& selectedClusters);
     void groupClusters(QList<int> selectedClusters);
     void moveClustersToNoise(QList<int> selectedClusters);
     void moveClustersToArtefact(QList<int> selectedClusters);
