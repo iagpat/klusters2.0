@@ -312,8 +312,8 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
     int x = abscissaMin + widthBorder;
     int y = ordinateMin + heightBorder;
 
-    int cluster1Index = qMax(0,static_cast<int>((current.x() - x) / cellWidth));
-    int cluster2Index = qMax(0,static_cast<int>((current.y() - y) / cellWidth));
+    int cluster1Index = qMin(qMax(0,static_cast<int>((current.x() - x) / cellWidth)),clusterList.count()-1);
+    int cluster2Index = qMin(qMax(0,static_cast<int>((current.y() - y) / cellWidth)),clusterList.count()-1);
 
     int cluster1 = clusterList[cluster1Index];
     int cluster2 = clusterList[cluster2Index];
