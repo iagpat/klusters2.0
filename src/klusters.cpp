@@ -272,6 +272,7 @@ void KlustersApp::createMenus()
     actionMenu->addSeparator();
 
     mUpdateErrorMatrix = actionMenu->addAction(tr("&Update Error Matrix"));
+    mUpdateErrorMatrix->setIcon(QIcon(":/icons/grouping_assistant_update"));
     mUpdateErrorMatrix->setShortcut(Qt::Key_U);
     connect(mUpdateErrorMatrix,SIGNAL(triggered()), this,SLOT(slotUpdateErrorMatrix()));
 
