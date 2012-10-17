@@ -1241,10 +1241,8 @@ void KlustersApp::importDocumentFile(const QString& url)
 }
 
 bool KlustersApp::doesActiveDisplayContainProcessWidget(){
-    DockArea* area = tabsParent->currentDockArea();
-    qDebug()<<" area "<<area;
-    KlustersView *view = static_cast<KlustersView*>(area);
-    return qobject_cast<ProcessWidget*>(view);
+    QWidget *widget = tabsParent->currentWidget();
+    return qobject_cast<ProcessWidget*>(widget);
 }
 
 KlustersView* KlustersApp::activeView(){
@@ -1916,6 +1914,8 @@ void KlustersApp::slotSingleColorUpdate(int clusterId){
 
 void KlustersApp::slotUpdateShownClusters(const QList<int>& selectedClusters){
     //Trigger ths action only if the active display does not contain a ProcessWidget
+    if(!activeView())
+        return;
     if(!doesActiveDisplayContainProcessWidget()){
 
         //Update the browsing possibility of the traceView
@@ -1923,7 +1923,6 @@ void KlustersApp::slotUpdateShownClusters(const QList<int>& selectedClusters){
             slotStateChanged("traceViewBrowsingState");
         }
         else{
-
             slotStateChanged("noTraceViewBrowsingState");
         }
 
@@ -2453,22 +2452,16 @@ void KlustersApp::slotRecluster(){
 
 
     if(processWidget == 0L){
-        QDockWidget* display;
-        display = new QDockWidget(tr("Recluster output"),0);
 
-        processWidget = new ProcessWidget(display);
+        processWidget = new ProcessWidget(this);
         connect(processWidget,SIGNAL(processExited(int,QProcess::ExitStatus)), this, SLOT(slotProcessExited(int,QProcess::ExitStatus)));
         connect(processWidget,SIGNAL(processExited(int,QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
-
-        //install the new view in the display so it can be see in the future tab.
-        display->setWidget(processWidget);
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display changes.
         connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
 
-        DockArea *area = tabsParent->addDockArea(tr("Recluster output"));
-        area->addDockWidget(Qt::BottomDockWidgetArea,display);
+        tabsParent->addTab(processWidget,tr("Recluster output"));
 
         //Keep track of the number of displays
         displayCount++;
