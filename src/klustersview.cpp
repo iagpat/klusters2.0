@@ -1444,7 +1444,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
     //Enable the View to be inform that the dockWidget is being closed.
     //To do so, connect the dockwidget close button to the dockBeingClosed slot of is contained widget
     //and connect this widget parentDockBeingClosed signal to the view {cluster,waveform,correlogram,errorMatrix}DockClosed slot.
-    connect(dockWidget, SIGNAL(headerCloseButtonClicked()), view, SLOT(dockBeingClosed()));
+    connect(dockWidget, SIGNAL(destroyed()), view, SLOT(dockBeingClosed()));
     
     //Connections common to ClusterView, WaveformView and CorrelationView
     if((displayType == CLUSTERS) || (displayType == WAVEFORMS) || (displayType == CORRELATIONS)){
