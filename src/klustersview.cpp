@@ -673,7 +673,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         else viewCounter["ClusterView"]++;
 
         isThereClusterView = true;
-        count = QString::fromLatin1("%1").arg(viewCounter["ClusterView"]);
+        count = QString::number(viewCounter["ClusterView"]);
 
         clusters = new QDockWidget(tr(doc.documentName().toLatin1()));
         clusters->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -714,7 +714,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         }
 
         isThereWaveformView = true;
-        count = QString::fromLatin1("%1").arg(viewCounter["WaveformView"]);
+        count = QString::number(viewCounter["WaveformView"]);
 
         waveforms = new QDockWidget(tr(doc.documentName().toLatin1()));
         waveforms->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
@@ -737,7 +737,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         else  viewCounter["CorrelationView"]++;
 
         isThereCorrelationView = true;
-        count = QString::fromLatin1("%1").arg(viewCounter["CorrelationView"]);
+        count = QString::number(viewCounter["CorrelationView"]);
 
         correlations = new QDockWidget(tr(doc.documentName().toLatin1()));
         correlations->setAttribute(Qt::WA_DeleteOnClose, true);
@@ -787,7 +787,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         else viewCounter["TraceView"]++;
 
         isThereTraceView = true;
-        count = QString::fromLatin1("%1").arg(viewCounter["TraceView"]);
+        count = QString::number(viewCounter["TraceView"]);
 
         traces = new QDockWidget(tr(doc.documentName().toLatin1()));
         traces->setAttribute(Qt::WA_DeleteOnClose, true);
