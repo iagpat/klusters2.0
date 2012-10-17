@@ -2453,8 +2453,8 @@ void KlustersApp::slotRecluster(){
     if(processWidget == 0L){
 
         processWidget = new ProcessWidget(this);
-        connect(processWidget,SIGNAL(processExited(int,QProcess::ExitStatus)), this, SLOT(slotProcessExited(int,QProcess::ExitStatus)));
-        connect(processWidget,SIGNAL(processExited(int,QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
+        connect(processWidget,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(slotProcessExited(int,QProcess::ExitStatus)));
+        connect(processWidget,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display changes.
