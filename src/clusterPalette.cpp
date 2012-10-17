@@ -35,15 +35,10 @@
 #include <qbitmap.h>
 #include <qcolordialog.h>
 #include <qcolor.h>
-//Added by qt3to4:
 #include <QFrame>
 #include <QList>
-//KDE includes
-
 #include <QStatusBar>
 
-//General C++ include files
-#include <vector>
 
 ClusterPaletteWidget::ClusterPaletteWidget(QWidget *parent)
     : QListWidget(parent)
@@ -122,11 +117,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
         iconView->setPaletteForegroundColor(Qt::white);
 
     iconView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    //iconView->setItemsMovable(false);
     iconView->setSpacing(4);
-    QFontInfo fontInfo = QFontInfo(QFont());
-    iconView->setGridSize(QSize(fontInfo.pixelSize() * 2,15*2));
-    //iconView->arrangeItemsInGrid();
 
     iconView->setContextMenuPolicy(Qt::CustomContextMenu);
 
@@ -253,14 +244,14 @@ void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
                 if(isInUserClusterInfoMode){
                     item->setText(QString::fromLatin1("%1").arg(clusterNumber) + ": " + clusterInformationDialog->getStructure()+ ",  " + clusterInformationDialog->getType() + ", " + clusterInformationDialog->getId() + ", " + clusterInformationDialog->getQuality() + ", " + clusterInformationDialog->getNotes());
 
-                    QString clusterText = QString::fromLatin1("%1").arg(clusterNumber);
+                    QString clusterText = QString::number(clusterNumber);
                     bool first = true;
 
-                    if( clusterInformationDialog->getStructure() != ""){
+                    if( !clusterInformationDialog->getStructure().isEmpty()){
                         clusterText.append(" - ").append( clusterInformationDialog->getStructure());
                         first = false;
                     }
-                    if(clusterInformationDialog->getType() != ""){
+                    if(!clusterInformationDialog->getType().isEmpty()){
                         if(!first){
                             clusterText.append(", ").append(clusterInformationDialog->getType());
                         }
@@ -269,7 +260,7 @@ void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
                             first = false;
                         }
                     }
-                    if(clusterInformationDialog->getId() != ""){
+                    if(!clusterInformationDialog->getId().isEmpty()){
                         if(!first){
                             clusterText.append(", ").append(clusterInformationDialog->getId());
                         }
@@ -306,7 +297,6 @@ void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
 
 void ClusterPalette::slotOnItem(QListWidgetItem* item){
 
-    //KDAB_PORTING
     if ( !item ) {
         return; // right pressed on viewport
     } else {
@@ -367,7 +357,7 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
 
             statusBar->showMessage(clusterText);
 
-            item->setToolTip(tr("Structure: %1, Type: %2 , ID: %3, Quality: %4, notes: %5").arg(clusterInformation[0]).arg(clusterInformation[1]).arg(clusterInformation[2]).arg(clusterInformation[3]).arg(clusterInformation[4]));
+            //item->setToolTip(tr("Structure: %1, Type: %2 , ID: %3, Quality: %4, notes: %5").arg(clusterInformation[0]).arg(clusterInformation[1]).arg(clusterInformation[2]).arg(clusterInformation[3]).arg(clusterInformation[4]));
         }
         else{
             statusBar->clearMessage();
@@ -632,8 +622,10 @@ void ClusterPalette::changeBackgroundColor(const QColor& color){
     int s;
     int v;
     color.getHsv(&h,&s,&v);
-    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220)) iconView->setPaletteForegroundColor(Qt::black);
-    else iconView->setPaletteForegroundColor(Qt::white);
+    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
+        iconView->setPaletteForegroundColor(Qt::black);
+    else
+        iconView->setPaletteForegroundColor(Qt::white);
     iconView->setPaletteBackgroundColor(color);
 
     //get the list of selected clusters

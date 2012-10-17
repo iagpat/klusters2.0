@@ -152,10 +152,11 @@ void KlustersApp::initView()
     initClusterPanel();
     QSplitter *splitter = new QSplitter;
     splitter->addWidget(clusterPanel);
+    splitter->setChildrenCollapsible(false);
     tabsParent = new QExtendTabWidget(this);
     splitter->addWidget(tabsParent);
     QList<int> size;
-    size <<10<<90;
+    size <<0.1<<0.9;
     splitter->setSizes(size);
 
     setCentralWidget(splitter);
