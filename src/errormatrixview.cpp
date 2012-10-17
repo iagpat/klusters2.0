@@ -32,7 +32,7 @@
 
 #include <QMouseEvent>
 #include <QEvent>
-
+#include <QDebug>
 
 ErrorMatrixView::ErrorMatrixView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,QStatusBar* statusBar,QWidget *parent,const char* name,int minSize, int
                                  maxSize, int windowTopLeft ,int windowBottomRight,int border) :
@@ -312,8 +312,9 @@ void ErrorMatrixView::mouseReleaseEvent(QMouseEvent* e){
     int x = abscissaMin + widthBorder;
     int y = ordinateMin + heightBorder;
 
-    int cluster1Index = static_cast<int>((current.x() - x) / cellWidth);
-    int cluster2Index = static_cast<int>((current.y() - y) / cellWidth);
+    int cluster1Index = qMax(0,static_cast<int>((current.x() - x) / cellWidth));
+    int cluster2Index = qMax(0,static_cast<int>((current.y() - y) / cellWidth));
+
     int cluster1 = clusterList[cluster1Index];
     int cluster2 = clusterList[cluster2Index];
     Pair pair(cluster1,cluster2);
