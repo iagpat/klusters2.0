@@ -256,7 +256,6 @@ void CorrelationView::paintEvent ( QPaintEvent *){
             doublebuffer.fill(backgroundColor());
 
             //Paint all the correlograms in the pairs list (in the double buffer)
-            qDebug()<<" pairs"<<pairs.count();
             drawCorrelograms(painter,pairs);
 
         }
