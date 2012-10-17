@@ -551,18 +551,21 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
             }
         }
 
-
-        QWidget* widget;
-        if(object->metaObject()->className() == ("QDockWidget"))
-            widget = dynamic_cast<QDockWidget*>(object)->widget();
-        else if(object->metaObject()->className() == ("ClusterView") || object->metaObject()->className() == ("WaveformView") || object->metaObject()->className() == ("CorrelationView") || object->metaObject()->className() == ("ErrorMatrixView")
-                || object->metaObject()->className() == ("TraceWidget"))
-            widget = dynamic_cast<QWidget*>(object);
+        //QWidget* widget;
+        if(!qobject_cast<QDockWidget*>(object)) {
+            //widget = dynamic_cast<QDockWidget*>(object)->widget();
+        } else if(qobject_cast<ClusterView*>(object) ||
+                  qobject_cast<WaveformView*>(object) ||
+                  qobject_cast<CorrelationView*>(object) ||
+                  qobject_cast<ErrorMatrixView*>(object) ||
+                  qobject_cast<TraceWidget*>(object)) {
+            //widget = dynamic_cast<QWidget*>(object);
         //if the object is a TraceView take its container the TraceWidget
-        else if(object->metaObject()->className() == ("TraceView"))
-            widget = traceWidget;
-        else
+        } else if(qobject_cast<TraceView*>(object)) {
+            //widget = traceWidget;
+        } else {
             return QWidget::eventFilter(object,event);    // standard event processing
+        }
 
         QMouseEvent* mouseEvent = dynamic_cast<QMouseEvent*>(event);
         if(mouseEvent->button() == Qt::RightButton){
