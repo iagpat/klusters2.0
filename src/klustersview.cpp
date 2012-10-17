@@ -308,11 +308,11 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
 
         printPainter.setFont(f);
         printPainter.setPen(Qt::black);
-        if(widget->metaObject()->className() == ("ClusterView")){
+        if(qobject_cast<ClusterView*>(widget)){
             ClusterView* clusterView = static_cast<ClusterView*>(widget);
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Features: %2,%3").arg(filePath).arg(clusterView->getDimensionX()).arg(clusterView->getDimensionY()));
         }
-        else if(widget->metaObject()->className() == ("WaveformView")){
+        else if(qobject_cast<WaveformView*>(widget)){
             if(inTimeFrameMode){
                 printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Start Time: %2 s, Duration: %3 s").arg(filePath).arg(startTime).arg(timeWindow));
             }
@@ -320,7 +320,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
                 printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Number of Waveforms: %2").arg(filePath).arg(nbSpkToDisplay));
             }
         }
-        else if(widget->metaObject()->className() == ("CorrelationView")){
+        else if(qobject_cast<CorrelationView*>(widget)){
             QString scaleType;
             switch(correlationScale){
             case Data::RAW :
@@ -335,7 +335,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
             }
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      %2, Duration: %3 ms, Bin Size: %4 ms").arg(filePath).arg(scaleType).arg(correlogramTimeFrame/2).arg(binSize));
         }
-        if(widget->metaObject()->className() == ("ErrorMatrixView")){
+        if(qobject_cast<ErrorMatrixView*>(widget)){
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1").arg(filePath));
         }
 
@@ -371,7 +371,7 @@ void  KlustersView::clusterDockClosed(QWidget* clusterView){
     for(int i = 0; i< nbViews; i++) {
         ViewWidget* viewWidget = viewList.at(i);
 
-        if(viewWidget->metaObject()->className() == ("ClusterView")){
+        if(qobject_cast<ClusterView*>(viewWidget)){
             dimensionX = dynamic_cast<ClusterView*>(viewWidget)->getDimensionX();
             dimensionY = dynamic_cast<ClusterView*>(viewWidget)->getDimensionY();
             mainWindow.updateDimensionSpinBoxes(dimensionX,dimensionY);
@@ -435,7 +435,7 @@ void KlustersView::correlogramDockClosed(QWidget* correlogramView){
     int nbViews = viewList.count();
     for(int i = 0; i< nbViews; i++) {
         ViewWidget* viewWidget = viewList.at(i);
-        if(viewWidget->metaObject()->className() == ("CorrelationView")){
+        if(qobject_cast<CorrelationView*>(viewWidget)){
             binSize = dynamic_cast<CorrelationView*>(viewWidget)->getBinSize();
             correlogramTimeFrame = dynamic_cast<CorrelationView*>(viewWidget)->getTimeWindow();
             correlationScale = dynamic_cast<CorrelationView*>(viewWidget)->getScaleMode();
@@ -696,7 +696,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
             int nbViews = viewList.count();
             for(int i = 0; i< nbViews; i++) {
                 ViewWidget* viewWidget = viewList.at(i);
-                if(viewWidget->metaObject()->className() == ("ClusterView")){
+                if(qobject_cast<ClusterView*>(viewWidget)){
                     clusterView->setMode(dynamic_cast<ClusterView*>(viewWidget)->getMode());
 
                     break;
@@ -1551,7 +1551,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
             int nbViews = viewList.count();
             for(int i = 0; i< nbViews; i++) {
                 ViewWidget* viewWidget = viewList.at(i);
-                if(viewWidget->metaObject()->className() == ("ClusterView")){
+                if(qobject_cast<ClusterView*>(viewWidget)){
                     connect(viewWidget,SIGNAL(moveToTime(long)),view, SLOT(moveToTime(long)));
                 }
             }
@@ -1561,7 +1561,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
 
 void KlustersView::updateTraceView(QString name,ItemColors* clusterColors,bool active){     
     //Set the list of the current clusters as the list of clusters to look up in the ClusterProvider.
-    if(doc.getClustersProvider() != 0L )
+    if(doc.getClustersProvider()  )
         doc.getClustersProvider()->setClusterIdList(shownClusters);
 
     emit updateClusters(name,*shownClusters,clusterColors,active);
@@ -1569,7 +1569,8 @@ void KlustersView::updateTraceView(QString name,ItemColors* clusterColors,bool a
 
 void KlustersView::updateClustersProvider(){     
     //Set the list of the current view as the list of clusters to look up in the ClusterProvider.
-    if(doc.getClustersProvider() != 0L ) doc.getClustersProvider()->setClusterIdList(shownClusters);
+    if(doc.getClustersProvider()  )
+        doc.getClustersProvider()->setClusterIdList(shownClusters);
 }
 
 void KlustersView::updateCorrelogramConnections(ViewWidget* viewWidget){     
