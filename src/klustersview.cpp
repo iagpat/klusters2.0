@@ -697,7 +697,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
             for(int i = 0; i< nbViews; i++) {
                 ViewWidget* viewWidget = viewList.at(i);
                 if(qobject_cast<ClusterView*>(viewWidget)){
-                    clusterView->setMode(dynamic_cast<ClusterView*>(viewWidget)->getMode());
+                    clusterView->setMode(static_cast<ClusterView*>(viewWidget)->getMode());
 
                     break;
                 }
