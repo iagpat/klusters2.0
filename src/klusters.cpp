@@ -95,7 +95,7 @@ KlustersApp::KlustersApp()
 
     initView();
 
-    mMainToolBar = new QToolBar();
+    mMainToolBar = new QToolBar(tr("Main Actions"));
 
     mActionBar = new QToolBar(tr("Actions"));
 
