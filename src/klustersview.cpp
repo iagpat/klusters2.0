@@ -470,18 +470,19 @@ void KlustersView::traceDockClosed(QWidget* traceWidget){
     else viewCounter["TraceView"]--;
 }
 
-bool KlustersView::eventFilter(QObject* object,QEvent* event){     
-    if((event->type() == QEvent::MouseButtonPress) && (object->metaObject()->className() != ("KlustersView"))){
+bool KlustersView::eventFilter(QObject* object,QEvent* event){
+
+    if((event->type() == QEvent::MouseButtonPress) && (!qobject_cast<KlustersView*>(object))){
         //Check if the user has selected a dockWidget containing a ClusterView. If so
         //update the dimension spin boxes to reflect the current ClusterView dimensions
         // and make the ClusterView the only view connected to the signal of update of the spin boxes.
-        if(object->metaObject()->className() == ("QDockWidget")){
+        if(qobject_cast<QDockWidget*>(object)){
             QWidget* widget = dynamic_cast<QDockWidget*>(object)->widget();
-            if(widget->metaObject()->className() == ("ClusterView")){
+            if(qobject_cast<ClusterView*>(widget)){
                 int nbViews = viewList.count();
                 for(int i = 0; i< nbViews; i++) {
                     ViewWidget* viewWidget = viewList.at(i);
-                    if(viewWidget->metaObject()->className() == ("ClusterView") && (widget == viewWidget)){
+                    if(qobject_cast<ClusterView*>(viewWidget) && (widget == viewWidget)){
                         dimensionX = dynamic_cast<ClusterView*>(viewWidget)->getDimensionX();
                         dimensionY = dynamic_cast<ClusterView*>(viewWidget)->getDimensionY();
                         mainWindow.updateDimensionSpinBoxes(dimensionX,dimensionY);
@@ -494,11 +495,11 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
             //Check if the user has selected a dockWidget containing a CorrelationView. If so
             //update the bin size and duration boxes to reflect the current CorrelationView values and make the CorrelationView
             // the only view connected to the signal of update of the boxes.
-            if(widget->metaObject()->className() == ("CorrelationView")){
+            if(qobject_cast<CorrelationView*>(widget)){
                 int nbViews = viewList.count();
                 for(int i = 0; i< nbViews; i++) {
                     ViewWidget* viewWidget = viewList.at(i);
-                    if(viewWidget->metaObject()->className() == ("CorrelationView") && (widget == viewWidget)){
+                    if(qobject_cast<CorrelationView*>(viewWidget) && (widget == viewWidget)){
                         binSize = dynamic_cast<CorrelationView*>(viewWidget)->getBinSize();
                         correlogramTimeFrame = dynamic_cast<CorrelationView*>(viewWidget)->getTimeWindow();
                         correlationScale = dynamic_cast<CorrelationView*>(viewWidget)->getScaleMode();
@@ -516,12 +517,12 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
         //   and make the ClusterView the only view connected to the signal of update of the spin boxes.
         // * if a polygon is been drawn do not interpret the right click as an
         //   inquiery for the add View popupmenu.
-        if(object->metaObject()->className() == ("ClusterView")){
+        if(qobject_cast<ClusterView*>(object)){
             int nbViews = viewList.count();
             for(int i = 0; i< nbViews; i++) {
                 ViewWidget* widget = viewList.at(i);
 
-                if(widget->metaObject()->className() == ("ClusterView") && (object == widget)){
+                if(qobject_cast<ClusterView*>(widget) && (object == widget)){
                     dimensionX = dynamic_cast<ClusterView*>(widget)->getDimensionX();
                     dimensionY = dynamic_cast<ClusterView*>(widget)->getDimensionY();
                     mainWindow.updateDimensionSpinBoxes(dimensionX,dimensionY);
@@ -536,11 +537,11 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
         //Check if the user has selected a dockWidget containing a CorrelationView. If so
         //update the bin size and duration boxes to reflect the current CorrelationView values and make the CorrelationView
         // the only view connected to the signal of update of the boxes.
-        if(object->metaObject()->className() == ("CorrelationView")){
+        if(qobject_cast<CorrelationView*>(object)){
             int nbViews = viewList.count();
             for(int i = 0; i< nbViews; i++) {
                 ViewWidget* viewWidget = viewList.at(i);
-                if(viewWidget->metaObject()->className() == ("CorrelationView") && (object == viewWidget)){
+                if(qobject_cast<CorrelationView*>(viewWidget) && (object == viewWidget)){
                     binSize = dynamic_cast<CorrelationView*>(viewWidget)->getBinSize();
                     correlogramTimeFrame = dynamic_cast<CorrelationView*>(viewWidget)->getTimeWindow();
                     correlationScale = dynamic_cast<CorrelationView*>(viewWidget)->getScaleMode();
@@ -550,7 +551,6 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
                 }
             }
         }
-
         //QWidget* widget;
         if(!qobject_cast<QDockWidget*>(object)) {
             //widget = dynamic_cast<QDockWidget*>(object)->widget();
