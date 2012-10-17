@@ -569,6 +569,13 @@ void KlustersApp::createToolBar()
 
     addToolBar(mMainToolBar);
 
+    mActionBar->addAction(mDeleteArtifact);
+    mActionBar->addAction(mDeleteNoisy);
+    mActionBar->addAction(mUpdateDisplay);
+    mActionBar->addAction(mUpdateErrorMatrix);
+    mActionBar->addAction(mGroupeClusters);
+
+
     addToolBar(mActionBar);
 
     mToolBar->addAction(mZoomAction);
@@ -576,7 +583,7 @@ void KlustersApp::createToolBar()
     mToolBar->addAction(mNewCluster);
     mToolBar->addAction(mSplitClusters);
     mToolBar->addSeparator();
-    mToolBar->addAction(mDeleteArtifact);
+    mToolBar->addAction(mDeleteArtifactSpikes);
     mToolBar->addAction(mDeleteNoisySpikes);
     mToolBar->addSeparator();
     mToolBar->addAction(mSelectTime);
@@ -1687,20 +1694,13 @@ void KlustersApp::slotViewActionBar(){
     slotStatusMsg(tr("Toggle the action..."));
 
     // turn Toolbar on or off
-    if(!viewActionBar->isChecked())
-    {
-        mActionBar->hide();
-    }
-    else
-    {
-        mActionBar->show();
-    }
+
+    mActionBar->setVisible(viewActionBar->isChecked());
     slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotViewParameterBar(){
     slotStatusMsg(tr("Toggle the parameters..."));
-
     // turn Toolbar on or off
     if(!viewParameterBar->isChecked())
     {
@@ -1719,14 +1719,7 @@ void KlustersApp::slotViewToolBar()
     slotStatusMsg(tr("Toggle the tools..."));
 
     // turn Toolbar on or off
-    if(!viewToolBar->isChecked())
-    {
-        mToolBar->hide();
-    }
-    else
-    {
-        mToolBar->show();
-    }
+    mToolBar->setVisible(viewToolBar->isChecked());
 
     slotStatusMsg(tr("Ready."));
 }
@@ -1736,14 +1729,7 @@ void KlustersApp::slotViewStatusBar()
     slotStatusMsg(tr("Toggle the statusbar..."));
     ///////////////////////////////////////////////////////////////////
     //turn Statusbar on or off
-    if(!mViewStatusBar->isChecked())
-    {
-        statusBar()->hide();
-    }
-    else
-    {
-        statusBar()->show();
-    }
+    statusBar()->setVisible(mViewStatusBar->isChecked());
 
     slotStatusMsg(tr("Ready."));
 }
@@ -2846,6 +2832,7 @@ void KlustersApp::slotSpikesDeleted(){
 void KlustersApp::slotStateChanged(const QString& state)
 {
     if(state == QLatin1String("initState")) {
+        mDeleteNoisySpikes->setEnabled(false);
         mOpenAction->setEnabled(true);
         mFileOpenRecent->setEnabled(false);
         mSaveAction->setEnabled(false);
