@@ -33,6 +33,7 @@
 #include <QUrl>
 
 // application specific includes
+#include "processwidget.h"
 #include "klusters.h"
 #include "klustersdoc.h"
 #include "klustersview.h"
@@ -2048,7 +2049,7 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
         //Notify all the views of the modification
         for(int i =0; i<viewList->count();++i) {
 	    KlustersView* view = viewList->at(i);
-            if(view->metaObject()->className() != ("ProcessWidget")){
+            if(!qobject_cast<ProcessWidget*>(view)){
                 view->addNewClustersToView(clustersToRecluster,reclusteredClusterList,false);
                 //update the TraceView if any
                 view->updateTraceView(electrodeGroupID,clusterColorList,false);

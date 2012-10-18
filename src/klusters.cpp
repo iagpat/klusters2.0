@@ -1475,7 +1475,7 @@ void KlustersApp::slotDisplayClose()
         displayCount --;
 
         //Remove the view from the document list if need it
-        if((current->widget())->isA("KlustersView")){
+        if(qobject_cast<KlustersView*>(current->widget())){
             KlustersView* view = dynamic_cast<KlustersView*>(current->widget());
             doc->removeView(view);
 
@@ -1511,7 +1511,7 @@ void KlustersApp::slotDisplayClose()
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
                 //Delete the view
-                if((mainDock->widget())->isA("KlustersView")){
+                if(qobject_cast<KlustersView*>(mainDock->widget())){
                     delete processWidget;
                     processWidget = 0L;
                     delete mainDock;
@@ -1545,7 +1545,7 @@ void KlustersApp::slotDisplayClose()
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
                 //Delete the view
-                if((mainDock->widget())->isA("KlustersView")){
+                if(qobject_cast<KlustersView*>(mainDock->widget())){
                     delete processWidget;
                     processWidget = 0L;
                     delete mainDock;
