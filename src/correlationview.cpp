@@ -767,8 +767,8 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
                 for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
                     shownClusters.append(*iterator);
                 qSort(shownClusters);
-                xCluster = qMin(qMax(0,xCluster),shownClusters.count());
-                yCluster = qMin(qMax(0,yCluster),shownClusters.count());
+                xCluster = qMin(qMax(0,xCluster),shownClusters.count()-1);
+                yCluster = qMin(qMax(0,yCluster),shownClusters.count()-1);
 
                 statusBar->showMessage("Time (ms): "+ QString("%1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]));
             } else {
