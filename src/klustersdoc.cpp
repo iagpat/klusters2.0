@@ -1302,11 +1302,13 @@ void KlustersDoc::prepareUndo(QList<int>* addedClustersTemp,QList<int>* modified
                 clusterIdsNewOldMap.insert(i-1,clusterIdsNewOld);
             }
             //remove the map entries with the bigger key (has not be taken into account by the previous loop)
-            QList<int> undoNbs = clusterIdsOldNewMap.keys();
-            qSort(undoNbs);
-            int biggerUndo = undoNbs.last();
-            clusterIdsOldNewMap.remove(biggerUndo);
-            clusterIdsNewOldMap.remove(biggerUndo);
+            if(!clusterIdsOldNewMap.isEmpty()) {
+                QList<int> undoNbs = clusterIdsOldNewMap.keys();
+                qSort(undoNbs);
+                int biggerUndo = undoNbs.last();
+                clusterIdsOldNewMap.remove(biggerUndo);
+                clusterIdsNewOldMap.remove(biggerUndo);
+            }
         }
     }
     else if(isModifiedByDeletion) modifiedClustersByDeleteUndo.append(currentNbUndo);
