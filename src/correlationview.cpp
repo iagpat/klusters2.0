@@ -753,9 +753,9 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
         int nbOfClusters = view.clusters().size();
         float rightmostValue = widthBorder + (nbBins * binWidth + Xspace) * nbOfClusters;
 
-        if((time < static_cast<float>(-timeWindow) / 2.0) || (time > static_cast<float>(timeWindow) / 2.0) || (current.x() > rightmostValue))
+        if((time < static_cast<float>(-timeWindow) / 2.0) || (time > static_cast<float>(timeWindow) / 2.0) || (current.x() > rightmostValue)) {
             statusBar->clearMessage();
-        else{
+        } else {
             //Compute the cluster ids corresponding to the correlogram under the mouse
             int xCluster = static_cast<int>(static_cast<float>(x)/static_cast<float>(nbBins * binWidth + Xspace));
             int y = (current.y() - static_cast<int>(heightBorder));
@@ -767,10 +767,13 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
                 for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
                     shownClusters.append(*iterator);
                 qSort(shownClusters);
+                xCluster = qMin(qMax(0,xCluster),shownClusters.count());
+                yCluster = qMin(qMax(0,yCluster),shownClusters.count());
 
                 statusBar->showMessage("Time (ms): "+ QString("%1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]));
+            } else {
+                statusBar->showMessage("Time (ms): "+ QString::fromLatin1("%1").arg(time));
             }
-            else statusBar->showMessage("Time (ms): "+ QString::fromLatin1("%1").arg(time));
         }
     }
 
