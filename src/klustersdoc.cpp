@@ -102,7 +102,7 @@ void KlustersDoc::addView(KlustersView *view)
 }
 
 void KlustersDoc::removeView(KlustersView *view){
-    viewList->remove(view);
+    viewList->removeAll(view);
 }
 
 
@@ -1052,7 +1052,7 @@ void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,cons
             QList<int>::iterator clustersToRemove;
             for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
                 clusterColorList->remove(*clustersToRemove);
-                clustersToShow.remove(*clustersToRemove);
+                clustersToShow.removeAll(*clustersToRemove);
             }
         }
 
@@ -1122,7 +1122,7 @@ void KlustersDoc::createNewCluster(QRegion& region, const QList <int>& clustersO
             QList<int>::iterator clustersToRemove;
             for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
                 clusterColorList->remove(*clustersToRemove);
-                clustersToShow.remove(*clustersToRemove);
+                clustersToShow.removeAll(*clustersToRemove);
             }
         }
 
@@ -1193,7 +1193,7 @@ void KlustersDoc::createNewClusters(QRegion& region, const QList <int>& clusters
             QList<int>::iterator clustersToRemove;
             for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
                 clusterColorList->remove(*clustersToRemove);
-                clustersToShow.remove(*clustersToRemove);
+                clustersToShow.removeAll(*clustersToRemove);
             }
         }
 
@@ -1343,7 +1343,7 @@ void KlustersDoc::nbUndoChangedCleaning(int newNbUndo){
             }
         }
         for(iterator = suppressIndices.begin(); iterator != suppressIndices.end(); ++iterator)
-            renumberingRedoList.remove(*iterator);
+            renumberingRedoList.removeAll(*iterator);
 
         int currentNbUndo = clusterColorListUndoList.count();
 
@@ -1592,7 +1592,7 @@ void KlustersDoc::undo(){
         }
         else{
             if(modifiedClustersByDeleteUndo.contains(nbUndo + 1) != 0){
-                modifiedClustersByDeleteUndo.remove(nbUndo + 1);
+                modifiedClustersByDeleteUndo.removeAll(nbUndo + 1);
                 int nbRedo = clusterColorListRedoList.count();
                 modifiedClustersByDeleteRedo.append(nbRedo);
             }
@@ -1741,7 +1741,7 @@ void KlustersDoc::redo(){
         if(clusterIdsOldNewMap.contains(nbUndo)){
             qDebug() << "renumber in KlustersDoc::redo, nbUndo  : "<<nbUndo<< endl;
             //remove the current undo indice from the renumberingRedoList
-            renumberingRedoList.remove(nbUndo);
+            renumberingRedoList.removeAll(nbUndo);
 
             //Notify all the views of the undo
             for(int i =0; i<viewList->count();++i) {
@@ -2006,7 +2006,7 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
         QList<int>::iterator clustersToRemove;
         for (clustersToRemove = clustersToRecluster.begin(); clustersToRemove != clustersToRecluster.end(); ++clustersToRemove ){
             clusterColorList->remove(*clustersToRemove);
-            clustersToShow.remove(*clustersToRemove);
+            clustersToShow.removeAll(*clustersToRemove);
         }
 
         //Notify all the views of the modification
