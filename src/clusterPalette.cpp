@@ -288,6 +288,7 @@ void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
 
                     item->setText(clusterText);
                 }
+                delete clusterInformationDialog;
                 emit clusterInformationModified();
             }
         }
