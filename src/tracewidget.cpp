@@ -102,18 +102,27 @@ void TraceWidget::initSelectionWidgets(){
     int nbSeconds = remainingSeconds / 1000;
     int remainingMiliseconds = static_cast<int>(fmod(static_cast<double>(remainingSeconds),1000));
 
-    startMinute = new QSpinBox(0,minutePart,1,selectionWidgets);
+    startMinute = new QSpinBox(selectionWidgets);
+    startMinute->setMinimum(0);
+    startMinute->setMaximum(minutePart);
+    startMinute->setSingleStep(1);
     lay->addWidget(startMinute);
-    startMinute->setSuffix( " min" );
+    startMinute->setSuffix( tr(" min") );
     startMinute->setWrapping(true);
     startMinute->setValue(nbMinutes);
-    startSecond = new QSpinBox(0,recordingLength/1000,1,selectionWidgets);
+    startSecond = new QSpinBox(selectionWidgets);
+    startSecond->setMinimum(0);
+    startSecond->setMaximum(recordingLength/1000);
+    startSecond->setSingleStep(1);
     lay->addWidget(startSecond);
-    startSecond->setSuffix( " s" );
+    startSecond->setSuffix( tr(" s") );
     startSecond->setValue(nbSeconds);
-    startMilisecond = new QSpinBox(0,recordingLength,1,selectionWidgets);
+    startMilisecond = new QSpinBox(selectionWidgets);
+    startMilisecond->setMinimum(0);
+    startMilisecond->setMaximum(recordingLength);
+    startMilisecond->setSingleStep(1);
     lay->addWidget(startMilisecond);
-    startMilisecond->setSuffix( " ms" );
+    startMilisecond->setSuffix( tr(" ms") );
     startMilisecond->setValue(remainingMiliseconds);
 
 
@@ -121,7 +130,7 @@ void TraceWidget::initSelectionWidgets(){
     lay->addWidget(durationLabel);
     durationLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     durationLabel->setFont(font);
-    duration = new QLineEdit(QString::fromLatin1("%1").arg(timeWindow),selectionWidgets);
+    duration = new QLineEdit(QString::number(timeWindow),selectionWidgets);
     lay->addWidget(duration);
     duration->setMinimumSize(50,duration->minimumHeight());
     duration->setMaximumSize(50,duration->maximumHeight());

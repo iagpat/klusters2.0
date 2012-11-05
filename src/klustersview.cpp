@@ -76,7 +76,6 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
       labelsDisplay(labelsDisplay)
 {
     setObjectName(name);
-    setWindowFlags(wflags);
     setAutoFillBackground(true);
     shownClusters = initialClusterList;
     removedClusters = new QList<int>();
