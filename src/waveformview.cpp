@@ -276,7 +276,7 @@ void WaveformView::customEvent(QEvent *event){
             //the data have be retrieved and the mean and standard deviation calculated
             if(meanPresentation || (!meanPresentation && meanRequested)){
                 //Delete the waveformThread, this is done by removing it from threadsToBeKill as auto-deletion is enabled.
-                threadsToBeKill.remove(waveformThread);
+                threadsToBeKill.removeAll(waveformThread);
             }
             if(meanPresentation && !goingToDie){
                 //Each time a cluster is added to the view or modified, the size of the window is recalculated.
@@ -306,7 +306,7 @@ void WaveformView::customEvent(QEvent *event){
                 }
                 else{
                     //Delete the waveformThread, this is done by removing it from threadsToBeKill as auto-deletion is enabled.
-                    threadsToBeKill.remove(waveformThread);
+                    threadsToBeKill.removeAll(waveformThread);
                 }
             }
         }
@@ -315,7 +315,7 @@ void WaveformView::customEvent(QEvent *event){
             //the data have be retrieved and the mean and standard deviation calculated
             if(meanPresentation || (!meanPresentation && meanRequested)){
                 //Delete the waveformThread, this is done by removing it from threadsToBeKill as auto-deletion is enabled.
-                threadsToBeKill.remove(waveformThread);
+                threadsToBeKill.removeAll(waveformThread);
                 // setCursor(zoomCursor);
             }
             if(meanPresentation && !goingToDie){
@@ -341,7 +341,7 @@ void WaveformView::customEvent(QEvent *event){
                     //Update the widget
                     update();
                 }
-                else threadsToBeKill.remove(waveformThread);
+                else threadsToBeKill.removeAll(waveformThread);
             }
         }
     }
@@ -358,7 +358,7 @@ void WaveformView::customEvent(QEvent *event){
         while(!waveformThread->wait()){};
 
         //Delete the waveformThread, this is done by removing it from threadsToBeKill as auto-deletion is enabled.
-        threadsToBeKill.remove(waveformThread);
+        threadsToBeKill.removeAll(waveformThread);
         //setCursor(zoomCursor);
     }
 }
