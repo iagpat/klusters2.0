@@ -33,20 +33,20 @@ class ClusterInformationDialog : public QDialog
 {
     Q_OBJECT
 public:
-    ClusterInformationDialog(QWidget *parent = 0,const QString& caption = tr("Cluster information"));
-    virtual ~ClusterInformationDialog();
+    explicit ClusterInformationDialog(QWidget *parent = 0,const QString& caption = tr("Cluster information"));
+    ~ClusterInformationDialog();
 
-    inline const QString getStructure() const { return structure->text(); }
-    inline const QString getType()  const { return type->text(); }
-    inline const QString getId() const { return id->text(); }
-    inline const QString getQuality()  const { return quality->text(); }
-    inline const QString getNotes() const { return notes->text(); }
+     const QString getStructure() const { return structure->text(); }
+     const QString getType()  const { return type->text(); }
+     const QString getId() const { return id->text(); }
+     const QString getQuality()  const { return quality->text(); }
+     const QString getNotes() const { return notes->text(); }
 
-    inline void setStructure(const QString& pStructure) { structure->setText(pStructure); }
-    inline void setType(const QString& pType) { type->setText(pType); }
-    inline void setId(const QString& pID) { id->setText(pID); }
-    inline void setQuality(const QString& pQuality) { quality->setText(pQuality); }
-    inline void setNotes(const QString& pNotes) { notes->setText(pNotes); }
+     void setStructure(const QString& pStructure) { structure->setText(pStructure); }
+     void setType(const QString& pType) { type->setText(pType); }
+     void setId(const QString& pID) { id->setText(pID); }
+     void setQuality(const QString& pQuality) { quality->setText(pQuality); }
+     void setNotes(const QString& pNotes) { notes->setText(pNotes); }
 
 private:
     QWidget			*page;
