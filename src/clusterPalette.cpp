@@ -83,8 +83,8 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     setAutoFillBackground(true);
     QPalette palette;
     palette.setColor(backgroundRole(), backgroundColor);
+    palette.setColor(foregroundRole(), Qt::white);
     setPalette(palette);
-    setPaletteForegroundColor(Qt::white);
 
     iconView = new ClusterPaletteWidget(this);
     iconView->setObjectName("ClusterPalette");
@@ -98,9 +98,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
 
     palette = iconView->palette();
     palette.setColor(iconView->backgroundRole(), backgroundColor);
-    iconView->setPalette(palette);
 
-    iconView->setPaletteBackgroundColor(backgroundColor);
     iconView->setAutoFillBackground(true);
     iconView->viewport()->setAutoFillBackground(true);
     iconView->viewport()->setPalette(palette);
@@ -112,9 +110,9 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     int v;
     backgroundColor.getHsv(&h,&s,&v);
     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
-        iconView->setPaletteForegroundColor(Qt::black);
+	palette.setColor(iconView->foregroundRole(), Qt::black);
     else
-        iconView->setPaletteForegroundColor(Qt::white);
+	palette.setColor(iconView->foregroundRole(), Qt::white);
 
     iconView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     iconView->setSpacing(4);
@@ -124,6 +122,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     //Deal with the sizes
     setSizePolicy(QSizePolicy((QSizePolicy::Policy)5,(QSizePolicy::Policy)5));
 
+    iconView->setPalette(palette);
     //Set the legend in the good language
     languageChange();
 
@@ -622,11 +621,14 @@ void ClusterPalette::changeBackgroundColor(const QColor& color){
     int s;
     int v;
     color.getHsv(&h,&s,&v);
+    QPalette palette;
     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
-        iconView->setPaletteForegroundColor(Qt::black);
+	palette.setColor(iconView->foregroundRole(), Qt::black);
     else
-        iconView->setPaletteForegroundColor(Qt::white);
-    iconView->setPaletteBackgroundColor(color);
+	palette.setColor(iconView->foregroundRole(), Qt::white);
+    palette.setColor(iconView->backgroundRole(), color);
+
+    iconView->setPalette(palette);
 
     //get the list of selected clusters
     QList<int> selected = selectedClusters();
