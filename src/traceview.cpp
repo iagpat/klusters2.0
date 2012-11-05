@@ -2699,7 +2699,7 @@ void TraceView::mousePressEvent(QMouseEvent* event){
                     drawEvent(selectedEvent.first,selectedEvent.second,selectedEventPosition[0],true);
             }
             if(mode == DRAW_LINE){
-                if(linePositions.size() != 0)
+                if(!linePositions.isEmpty())
                     drawTimeLine(lastClickAbscissa,true);
             }
             previousDragOrdinate = 0;

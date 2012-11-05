@@ -187,10 +187,8 @@ void ProcessWidget::hideWidget(){
 
 
 void ProcessWidget::slotOutputTreatmentOver(){
-#if KDAB_PENDING
-    childFinished(childproc->normalExit(), childproc->exitStatus());
+    childFinished((childproc->exitStatus() == QProcess::NormalExit), childproc->exitStatus());
     emit processOutputsFinished();
-#endif
 }
 
 void ProcessWidget::print(QPrinter *printer, const QString &filePath){
