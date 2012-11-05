@@ -604,12 +604,22 @@ void KlustersApp::initSelectionBoxes(){
     paramBar = addToolBar(tr("Parameters"));
 
     //Create and initialize the spin boxes for the dimensions
-    dimensionX = new QSpinBox(1,1,1,paramBar,"dimensionX");
-    dimensionY = new QSpinBox(1,1,1,paramBar,"dimensionY");
+    dimensionX = new QSpinBox(paramBar);
+    dimensionX->setObjectName("dimensionX");
+    dimensionX->setMinimum(1);
+    dimensionX->setMaximum(1);
+    dimensionX->setSingleStep(1);
+
+    dimensionY = new QSpinBox(paramBar);
+    dimensionY->setObjectName("dimensionY");
+    dimensionY->setMinimum(1);
+    dimensionY->setMaximum(1);
+    dimensionY->setSingleStep(1);
+
     //Enable to step the value from the highest value to the lowest value and vice versa
     dimensionX->setWrapping(true);
     dimensionY->setWrapping(true);
-    featureXLabel = new QLabel("Features (x,y) ",paramBar);
+    featureXLabel = new QLabel(tr("Features (x,y) "),paramBar);
     featureXLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     featureXLabel->setFont(font);
     //Insert the spine boxes in the main tool bar and make the connections
@@ -620,10 +630,16 @@ void KlustersApp::initSelectionBoxes(){
     connect(dimensionY, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateDimensionY(int)));
 
     //Create and initialize the spin boxe and lineEdit for the waveforms time frame mode.
-    start = new QSpinBox(1,1,timeWindow,paramBar,"start");
+    start = new QSpinBox(paramBar);
+    start->setObjectName("start");
+    dimensionX->setMinimum(1);
+    dimensionX->setMaximum(1);
+    dimensionX->setSingleStep(timeWindow);
+
     //Enable to step the value from the highest value to the lowest value and vice versa
     start->setWrapping(true);
-    duration = new QLineEdit(paramBar,"INITIAL_WAVEFORM_TIME_WINDOW");
+    duration = new QLineEdit(paramBar);
+    duration->setObjectName("INITIAL_WAVEFORM_TIME_WINDOW");
     duration->setMaxLength(5);
     //duration will only accept integers between 0 and a max equal
     //to maximum of time for the current document (set when the document will be opened)
@@ -646,7 +662,11 @@ void KlustersApp::initSelectionBoxes(){
     connect(duration, SIGNAL(returnPressed()),this, SLOT(slotUpdateDuration()));
 
     //Create and initialize the spin boxe for the waveforms sample mode.
-    spikesTodisplay = new QSpinBox(1,1,spikesTodisplayStep,paramBar);
+    spikesTodisplay = new QSpinBox(paramBar);
+    spikesTodisplay->setMinimum(1);
+    spikesTodisplay->setMaximum(1);
+    spikesTodisplay->setSingleStep(spikesTodisplayStep);
+
     spikesTodisplay->setObjectName("spikesTodisplay");
     //Enable to step the value from the highest value to the lowest value and vice versa
     spikesTodisplay->setWrapping(true);
@@ -660,7 +680,8 @@ void KlustersApp::initSelectionBoxes(){
     connect(spikesTodisplay, SIGNAL(valueChanged(int)),this, SLOT(slotSpikesTodisplay(int)));
 
     //Create and initialize the lineEdit for the correlations.
-    binSizeBox = new QLineEdit(paramBar,"DEFAULT_BIN_SIZE");
+    binSizeBox = new QLineEdit(paramBar);
+    binSizeBox->setObjectName("DEFAULT_BIN_SIZE");
     binSizeBox->setMaxLength(10);
     //binSizeBox will only accept integers between 1 and a max equal
     //to maximum of time for the current document in miliseconds (set when the document will be opened)
@@ -674,7 +695,8 @@ void KlustersApp::initSelectionBoxes(){
     binSizeBoxAction = paramBar->addWidget(binSizeBox);
     connect(binSizeBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateBinSize()));
 
-    correlogramsHalfDuration = new QLineEdit(paramBar,"INITIAL_CORRELOGRAMS_HALF_TIME_FRAME");
+    correlogramsHalfDuration = new QLineEdit(paramBar);
+    correlogramsHalfDuration->setObjectName("INITIAL_CORRELOGRAMS_HALF_TIME_FRAME");
     correlogramsHalfDuration->setMaxLength(12);
     //correlogramsHalfDuration will only accept integers between 1 and a max equal
     //to half the maximum of time for the current document in miliseconds (set when the document will be opened)
@@ -864,7 +886,7 @@ void KlustersApp::initDisplay(){
     if(configuration().getNbChannels() != 0 && configuration().getNbChannels() != doc->nbOfchannels())
         channelPositions.clear();
 
-    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,Qt::WDestructiveClose,statusBar(),
+    KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
                                           false,false,DEFAULT_BIN_SIZE.toInt(),INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
@@ -981,12 +1003,12 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         KlustersView* view;
 
         if(!isProcessWidget)
-            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,Qt::WDestructiveClose,statusBar(),
+            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,statusBar(),
                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                     nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
         else
-            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,Qt::WDestructiveClose,statusBar(),
+            view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,statusBar(),
                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
                                     nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
 
@@ -1393,7 +1415,7 @@ void KlustersApp::slotFileClose(){
                 }
                 while(true){
                     DockArea* current = static_cast<DockArea*>(tabsParent->widget(0));
-                    tabsParent->removePage(current);
+                    tabsParent->removeTab(tabsParent->indexOf(current));
                     delete current;
                     if(tabsParent->count()==0)
                         break;

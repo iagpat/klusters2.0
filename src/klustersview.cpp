@@ -47,7 +47,7 @@ const QString KlustersView::DisplayTypeNames[]={"Cluster Display","Waveform Disp
 
 
 KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColor& backgroundColor,int initialDimensionX,int initialDimensionY,
-                           QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name, Qt::WindowFlags wflags,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
+                           QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
                            QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
                            int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay,
                            QList< QList<int>* > undoList, QList< QList<int>* > redoList)
@@ -81,6 +81,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
     shownClusters = initialClusterList;
     removedClusters = new QList<int>();
 
+    setAttribute(Qt::WA_DeleteOnClose, true);
     //Create the mainDock
     mainDock = new QDockWidget(tr(doc.documentName().toLatin1()));
     mainDock->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable);
