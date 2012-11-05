@@ -1875,7 +1875,6 @@ void TraceView::drawTimeLine(int x,bool initialLine,bool eraseLine){
     painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
     painter.setViewport(viewport);
 
-    //KDAB_PENDING painter.setRasterOp(NotROP);
     painter.setPen(QPen(Qt::color0,1));
     painter.setBrush(Qt::NoBrush);
     int top = r.top();
@@ -2101,7 +2100,6 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
         painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
         painter.setViewport(viewport);
 
-        //KDAB_PENDING painter.setRasterOp(NotROP);
         painter.setPen(QPen(Qt::color0,1));
         painter.setBrush(Qt::NoBrush);
 
@@ -2169,7 +2167,6 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
         painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
         painter.setViewport(viewport);
 
-        //KDAB_PENDING painter.setRasterOp(NotROP);
         painter.setPen(QPen(Qt::color0,1));
         painter.setBrush(Qt::NoBrush);
         int top = r.top();
@@ -3040,7 +3037,7 @@ void TraceView::drawCalibrationScale(QPainter& painter){
     QPoint p2(viewport.right() - labelSize,viewport.bottom() - 30 - worldToViewportHeight(nbRU));
     painter.drawLine(p1,p2);
     QPoint pTextVoltage(viewport.right() - fontInfo.pixelSize() * 11,viewport.bottom() - 30);
-    painter.drawText(pTextVoltage,QString("%1 mV (x%2)").arg(screenGain,0,'f',1).arg(gain,0,'f',2));
+    painter.drawText(pTextVoltage,QString::fromLatin1("%1 mV (x%2)").arg(screenGain,0,'f',1).arg(gain,0,'f',2));
 
     //draw the time calibration bar (a 20iest of the timeframe)
     long timeFrameWidth = endTime - startTime;
