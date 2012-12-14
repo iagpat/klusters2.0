@@ -428,14 +428,8 @@ private:
   * Asks the waveform information for the clusters listed in @p clusterIds by launching a WaveformThread.
   * @param clusterIds ids of the clusters to ask waveform information for.
   */
-    void askForWaveformInformation(QList<int> clusterIds);
+    void askForWaveformInformation(const QList<int>& clusterIds);
 
-    /**
-  * Adds the clusters to the list of those to be updated
-  * and get the updated waveform information for it.
-  * @param clustersToUpdate list of clusters to update
-  */
-    void updateClusters(QList<int>& clustersToUpdate);
 
     /**Draws the clusters identifiers.
   * @param painter painter on which to draw the information

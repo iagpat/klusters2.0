@@ -163,7 +163,7 @@ void WaveformView::askForWaveformInformation(int clusterId){
     }
 }
 
-void WaveformView::askForWaveformInformation(QList<int> clusterIds){
+void WaveformView::askForWaveformInformation(const QList<int> &clusterIds){
     //If the widget is not about to be deleted, request the data.
     if(!goingToDie){
         dataReady = false;
