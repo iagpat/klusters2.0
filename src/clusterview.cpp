@@ -573,10 +573,3 @@ void ClusterView::print(QPainter& printPainter,int width,int height, bool whiteB
     //Restore the previous state
     viewport = QRect(viewportOld.left(),viewportOld.top(),viewportOld.width(),viewportOld.height());
 }
-
-
-
-
-
-
-#include "clusterview.moc"

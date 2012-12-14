@@ -877,5 +877,3 @@ void ErrorMatrixView::print(QPainter& printPainter,int width,int height, bool wh
     viewport = QRect(viewportOld.left(),viewportOld.top(),viewportOld.width(),viewportOld.height());
 }
 
-
-#include "errormatrixview.moc"

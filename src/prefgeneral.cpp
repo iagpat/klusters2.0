@@ -94,4 +94,3 @@ void PrefGeneral::setUseWhiteColorDuringPrinting(bool b)
     useWhiteColorPrinting->setChecked(b);
 }
 
-#include "prefgeneral.moc"

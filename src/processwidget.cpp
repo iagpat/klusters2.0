@@ -234,6 +234,3 @@ void ProcessWidget::print(QPrinter *printer, const QString &filePath){
 
     printPainter.end();
 }
-
-
-#include "processwidget.moc"

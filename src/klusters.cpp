@@ -3123,5 +3123,3 @@ void KlustersApp::slotAbout()
 {
     QMessageBox::about(this,tr("Klusters"),tr("Manual clustering of neuronal action potentia"));
 }
-
-#include "klusters.moc"

@@ -106,5 +106,3 @@ void ProcessLineMaker::slotReceivedStderr()
         emit outputTreatmentOver();
 }
 
-
-#include "processlinemaker.moc"

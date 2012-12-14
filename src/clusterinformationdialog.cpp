@@ -92,5 +92,3 @@ ClusterInformationDialog::~ClusterInformationDialog()
 {
 }
 
-
-#include "clusterinformationdialog.moc"

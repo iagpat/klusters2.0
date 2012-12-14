@@ -174,6 +174,3 @@ void PrefWaveformView::updateChannelPositions(){
 }
 
 
-
-
-#include "prefwaveformview.moc"

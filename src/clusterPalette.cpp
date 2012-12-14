@@ -650,4 +650,4 @@ void ClusterPalette::changeBackgroundColor(const QColor& color){
 }
 
 
-#include "clusterPalette.moc"
+

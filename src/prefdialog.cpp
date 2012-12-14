@@ -171,5 +171,3 @@ void PrefDialog::enableChannelSettings(bool state){
 }
     
 
-
-#include "prefdialog.moc"

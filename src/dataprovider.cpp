@@ -23,5 +23,3 @@ DataProvider::DataProvider(const QString& fileUrl):QObject(){
 }
 DataProvider::~DataProvider(){
 }
-
-#include "dataprovider.moc"

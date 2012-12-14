@@ -5,4 +5,3 @@ PrefWaveformViewLayout::PrefWaveformViewLayout( QWidget* parent )
     setupUi( this );
 
 }
-#include "prefwaveformviewlayout.moc"

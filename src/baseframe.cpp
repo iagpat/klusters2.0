@@ -348,4 +348,3 @@ long BaseFrame::worldToViewportOrdinate(long wy){
 }
 
 
-#include "baseframe.moc"

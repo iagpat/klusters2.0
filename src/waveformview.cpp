@@ -884,6 +884,3 @@ void WaveformView::setSideBySidePresentation(){
     }
 
 }
-
-
-#include "waveformview.moc"

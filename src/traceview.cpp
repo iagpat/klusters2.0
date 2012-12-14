@@ -4224,7 +4224,3 @@ void TraceView::updateClusters(QString name,QList<int>& clustersToShow,ItemColor
     updateClusterData(active);
 }
 
-
-
-
-#include "traceview.moc"

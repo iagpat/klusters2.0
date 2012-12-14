@@ -35,4 +35,3 @@ ChannelList::~ChannelList(){
 }
 
 
-#include "channellist.moc"

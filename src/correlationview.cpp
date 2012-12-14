@@ -917,5 +917,3 @@ void  CorrelationView::setShoulderLine(bool b){
         askForCorrelograms();
     }
 }
-
-#include "correlationview.moc"

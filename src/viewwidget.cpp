@@ -31,9 +31,3 @@ ViewWidget::~ViewWidget(){
     qDebug() << "in ~ViewWidget(): ";
 }
 
-
-
-
-
-
-#include "viewwidget.moc"

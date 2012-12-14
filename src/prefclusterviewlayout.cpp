@@ -5,4 +5,3 @@ PrefClusterViewLayout::PrefClusterViewLayout( QWidget* parent )
     setupUi( this );
 
 }
-#include "prefclusterviewlayout.moc"
