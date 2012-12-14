@@ -37,7 +37,6 @@ ENDMACRO(_DETERMINE_GCC_SYSTEM_INCLUDE_DIRS _lang)
 
 
 add_definitions(${QT_DEFINITIONS} )
-SET( QT_USE_QT3SUPPORT TRUE )
 set( QT_USE_XML TRUE)
 
 # tell cmake where to search for Qt headers:
