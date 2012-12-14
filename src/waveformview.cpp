@@ -54,8 +54,10 @@ WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& bac
 
     //Set the default modes
     mode = ZOOM;
-    if(isTimeFrameMode)presentationMode = TIME_FRAME;
-    else presentationMode = SAMPLE;
+    if(isTimeFrameMode)
+        presentationMode = TIME_FRAME;
+    else
+        presentationMode = SAMPLE;
 
     //Set the drawing variables
     Data& clusteringData = doc.data();

@@ -140,7 +140,7 @@ void PrefWaveformView::loadChannelOrder(){
         channelFile.close();
 
     } else {
-      return;
+        return;
     }
 
     if(nbChannels != static_cast<int>(positions.count())){
@@ -154,7 +154,7 @@ void PrefWaveformView::loadChannelOrder(){
     //Update the list with the positions get from the file.
     channelList->clear();
     for(int i = 0; i< nbChannels; ++i){
-        channelList->insertItem(positions[i],QString::fromLatin1("%1").arg(i + 1));
+        channelList->insertItem(positions[i],QString::number(i + 1));
         channelPositions[i] = positions[i];
     }
 

@@ -21,21 +21,6 @@
 
 #include <QList>
 
-//General C++ include files
-
-#include <iomanip>
-#include <fstream>
-
-
-
-
-
-//include files for c/c++ libraries
-#include <math.h>
-
-//Unix include file
-#include <unistd.h>
-
 //include files for the application
 #include "clustersprovider.h"
 #include "timer.h"
@@ -357,8 +342,7 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
 
 
     //check that a spike has been found, if that is not the case return startTime as the startingTime => no change will be done in the view, and startTimeInRecordingUnits
-    if(firstSpikes.size() == 0){
-        SortableTable finalData;
+    if(firstSpikes.isEmpty()){
         emit previousClusterDataReady(data,initiator,name,startTime,startTimeInRecordingUnits);
         return;
     }

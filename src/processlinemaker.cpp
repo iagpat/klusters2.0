@@ -57,7 +57,7 @@ void ProcessLineMaker::slotReceivedStdout()
     while ( (pos = stdoutbuf.indexOf('\n')) != -1) {
         lineOut = stdoutbuf.left(pos);
         stdoutbuf.remove(0, pos+1);
-        emit receivedStdoutLine(lineOut); 
+        emit receivedStdoutLine(lineOut);
     }
 
     // Do not remove this line! It makes the method thread safe.
@@ -78,7 +78,7 @@ void ProcessLineMaker::slotReceivedStderr()
 {
     const QString s = QString::fromLocal8Bit(mProc->readAllStandardError());
     counterErr++;
-  
+
     // Flush stdout buffer
     if (!stdoutbuf.isEmpty()) {
         emit receivedStdoutLine(stdoutbuf);
@@ -89,7 +89,7 @@ void ProcessLineMaker::slotReceivedStderr()
     int pos;
     while ( (pos = stderrbuf.indexOf('\n')) != -1) {
         lineErr = stderrbuf.left(pos);
-        stderrbuf.remove(0, pos+1);        
+        stderrbuf.remove(0, pos+1);
         emit receivedStderrLine(lineErr);
     }
     

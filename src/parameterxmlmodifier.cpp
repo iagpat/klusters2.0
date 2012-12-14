@@ -38,7 +38,7 @@ bool ParameterXmlModifier::parseFile(const QString& url) {
 
     QFile file(url);
     if (!file.open(QIODevice::ReadWrite)) return false;
-	//actually load the file in a tree in  memory
+    //actually load the file in a tree in  memory
     if (!doc.setContent(&file)) {
         file.close();
         return false;
@@ -46,14 +46,14 @@ bool ParameterXmlModifier::parseFile(const QString& url) {
 
     file.close();
 
-	//Find the root element
+    //Find the root element
     root = doc.firstChild();
     if (root.isNull()) return false;
-	//if the first element is an Processing Instruction takes the sibiling child as the root.
+    //if the first element is an Processing Instruction takes the sibiling child as the root.
     if (root.isProcessingInstruction()) root = root.nextSibling();
     if (root.isNull()) return false;
 
-	//Keep a copy of the original document
+    //Keep a copy of the original document
     initialXmlDocument = doc.toString();
 
     return true;
@@ -64,12 +64,12 @@ bool ParameterXmlModifier::writeTofile(const QString& url) {
     bool status = parameterFile.open(QIODevice::WriteOnly);
     if (!status) return status;
 
-	//insert a unit node after the spikeDetection node
-	 spikeDetection = findDirectChild(SPIKE);	
-	 
+    //insert a unit node after the spikeDetection node
+    spikeDetection = findDirectChild(SPIKE);
+
     QDomNode newChild;
     newChild = root.insertAfter(units,spikeDetection);
-	 
+
     if (newChild.isNull()) {
         QTextStream stream(&parameterFile);
         stream<< initialXmlDocument;
@@ -89,14 +89,14 @@ bool ParameterXmlModifier::writeTofile(const QString& url) {
 
 QDomNode ParameterXmlModifier::findDirectChild(const QString& childName) {
     QDomNode child = root.firstChild();
-	 
-    while (!child.isNull()) {		 
+
+    while (!child.isNull()) {
         // the node really is an element and has the right tag.
         if (child.isElement() && child.nodeName() == childName) return child;
         child = child.nextSibling();
     }
 
-	//No node has been found, return an empty node
+    //No node has been found, return an empty node
     return QDomNode();
 }
 
@@ -109,7 +109,7 @@ QDomNode ParameterXmlModifier::findDirectChild(const QString& childName,const QD
         child = child.nextSibling();
     }
 
-//No node has been found, return an empty node
+    //No node has been found, return an empty node
     return QDomNode();
 }
 
@@ -132,47 +132,47 @@ QDomNode ParameterXmlModifier::findDirectChild(const QString& childName, const Q
         child = child.nextSibling();
     }
 
-//No node has been found, return an empty node
+    //No node has been found, return an empty node
     return QDomNode();
 }
 
 bool ParameterXmlModifier::setClusterUserInformation (int pGroup,QMap<int,ClusterUserInformation>& clusterUserInformationMap) {
 
-	QString vGroupId = QString::fromLatin1("%1").arg(pGroup);
-	
- //attention il faut garder les informtion des autres groupes.
-	
-	QDomNode existingUnits = findDirectChild(UNITS);
-	units = doc.createElement(UNITS);
-	 
+    QString vGroupId = QString::number(pGroup);
+
+    //attention il faut garder les informtion des autres groupes.
+
+    QDomNode existingUnits = findDirectChild(UNITS);
+    units = doc.createElement(UNITS);
+
     //If the units element exist, remove the elements concerning the current group
-	if (!existingUnits.isNull()) {
-		
-		//QDomNode child = existingUnits.firstChild();
-		QDomNodeList children = existingUnits.childNodes();
-		
-		for(uint i =0; i< children.length();i++){
-			QDomNode child = children.item(i);
-			if (child.isElement() && child.nodeName() == UNIT){
-				QDomNode groupNode = findDirectChild(GROUP,child);				
-				QDomNode textNode = groupNode.firstChild();				 
-				if (textNode.isText() && textNode.nodeValue() != vGroupId){
-					units.appendChild(child.cloneNode());
-				}
-			}
-			
-		}
-		 
-		 QDomNode oldChild;
-		 oldChild = root.removeChild(existingUnits);		  
-		 if (oldChild.isNull()) {
-			 return false;
-		 }
+    if (!existingUnits.isNull()) {
+
+        //QDomNode child = existingUnits.firstChild();
+        QDomNodeList children = existingUnits.childNodes();
+
+        for(uint i =0; i< children.length();i++){
+            QDomNode child = children.item(i);
+            if (child.isElement() && child.nodeName() == UNIT){
+                QDomNode groupNode = findDirectChild(GROUP,child);
+                QDomNode textNode = groupNode.firstChild();
+                if (textNode.isText() && textNode.nodeValue() != vGroupId){
+                    units.appendChild(child.cloneNode());
+                }
+            }
+
+        }
+
+        QDomNode oldChild;
+        oldChild = root.removeChild(existingUnits);
+        if (oldChild.isNull()) {
+            return false;
+        }
     }
 
     QMap<int,ClusterUserInformation>::Iterator iterator;
     int clusterId = 0;
-	 int group = 0;
+    int group = 0;
     QString structure;
     QString type;
     QString ID;
@@ -184,21 +184,21 @@ bool ParameterXmlModifier::setClusterUserInformation (int pGroup,QMap<int,Cluste
         //Get the cluster user information (structure, type,isolation distance, quality, notes)
         clusterId = iterator.key();
         currentClusterUserInformation = iterator.value();
-		  group = currentClusterUserInformation.getGroup();
+        group = currentClusterUserInformation.getGroup();
         structure = currentClusterUserInformation.getStructure();
         type = currentClusterUserInformation.getType();
         ID = currentClusterUserInformation.getId();
         quality = currentClusterUserInformation.getQuality();
         notes = currentClusterUserInformation.getNotes();
 
-		  QDomElement groupElement = doc.createElement(GROUP);
-		  QDomText groupValue = doc.createTextNode(QString::fromLatin1("%1").arg(group));
-		  groupElement.appendChild(groupValue);
-		  
-		  QDomElement clusterElement = doc.createElement(CLUSTER);
-		  QDomText clusterValue = doc.createTextNode(QString::fromLatin1("%1").arg(clusterId));
-		  clusterElement.appendChild(clusterValue);
-		  
+        QDomElement groupElement = doc.createElement(GROUP);
+        QDomText groupValue = doc.createTextNode(QString::fromLatin1("%1").arg(group));
+        groupElement.appendChild(groupValue);
+
+        QDomElement clusterElement = doc.createElement(CLUSTER);
+        QDomText clusterValue = doc.createTextNode(QString::fromLatin1("%1").arg(clusterId));
+        clusterElement.appendChild(clusterValue);
+
         QDomElement structureElement = doc.createElement(STRUCTURE);
         QDomText structureValue = doc.createTextNode(structure);
         structureElement.appendChild(structureValue);
@@ -220,8 +220,8 @@ bool ParameterXmlModifier::setClusterUserInformation (int pGroup,QMap<int,Cluste
         notesElement.appendChild(notesValue);
 
         QDomElement unitElement = doc.createElement(UNIT);
-		  unitElement.appendChild(groupElement);
-		  unitElement.appendChild(clusterElement);
+        unitElement.appendChild(groupElement);
+        unitElement.appendChild(clusterElement);
         unitElement.appendChild(structureElement);
         unitElement.appendChild(typeElement);
         unitElement.appendChild(idElement);
@@ -232,6 +232,6 @@ bool ParameterXmlModifier::setClusterUserInformation (int pGroup,QMap<int,Cluste
         units.appendChild(unitElement);
     }
 
-	return true;
-	 
+    return true;
+
 }
