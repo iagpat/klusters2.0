@@ -27,7 +27,7 @@
 #include <qscrollbar.h>
 #include <qpainter.h>
 #include <qstyle.h> 
-//Added by qt3to4:
+
 #include <QList>
 #include <QKeyEvent>
 

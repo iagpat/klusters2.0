@@ -33,7 +33,7 @@
 #include <qextendtabwidget.h>
 #include <dockarea.h>
 #include <QPrintDialog>
-//Added by qt3to4:
+
 #include <QLabel>
 #include <QPixmap>
 #include <QList>

@@ -18,7 +18,7 @@
 #include <qstringlist.h>
 #include <qfileinfo.h>
 #include <qregexp.h>
-//Added by qt3to4:
+
 #include <QTextStream>
 #include <QList>
 #include <QDebug>

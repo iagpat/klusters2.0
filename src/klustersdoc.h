@@ -23,7 +23,7 @@
 #include <qstring.h>
 #include <qpoint.h>
 #include <qfileinfo.h>
-//Added by qt3to4:
+
 
 #include <QList>
 #include <QEvent>

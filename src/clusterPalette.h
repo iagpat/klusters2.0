@@ -22,7 +22,7 @@
 #include <qwidget.h>
 #include <QListWidget>
 #include <qtooltip.h>
-//Added by qt3to4:
+
 #include <QList>
 
 class QStatusBar;

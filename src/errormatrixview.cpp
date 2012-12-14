@@ -27,7 +27,7 @@
 
 // include files for Qt
 
-//Added by qt3to4:
+
 #include <QList>
 
 #include <QMouseEvent>

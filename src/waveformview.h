@@ -23,7 +23,7 @@
 #include <qstyle.h>
 #include <qpixmap.h>
 #include <QList>
-//Added by qt3to4:
+
 
 #include <QResizeEvent>
 #include <QMouseEvent>

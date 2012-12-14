@@ -19,7 +19,7 @@
 
 // include files for QT
 #include <qstring.h>
-//Added by qt3to4:
+
 #include <QList>
 #include <QLabel>
 #include <QKeyEvent>

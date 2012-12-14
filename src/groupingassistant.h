@@ -22,7 +22,7 @@
 #include "data.h"
 #include "array.h"
 #include "types.h"
-//Added by qt3to4:
+
 #include <QList>
 
 

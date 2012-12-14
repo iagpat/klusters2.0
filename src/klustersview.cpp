@@ -15,7 +15,7 @@
  *                                                                         *
  ***************************************************************************/
 
-//Added by qt3to4:
+
 #include <QList>
 #include <QPixmap>
 #include <QMouseEvent>

@@ -19,7 +19,7 @@
 
 //QT include files
 #include <qapplication.h>
-//Added by qt3to4:
+
 #include <QList>
 
 #include <math.h>

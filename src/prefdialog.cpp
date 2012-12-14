@@ -17,7 +17,7 @@
 // include files for QT
 #include <qlayout.h>        // for QVBoxLayout
 #include <qlabel.h>         // for QLabel
-//Added by qt3to4:
+
 #include <QMessageBox>
 
 //include files for the application
