@@ -675,7 +675,7 @@ void KlustersDoc::setGain(int acquisitionGain){
     activeView->showAllWidgets();
 }
 
-void KlustersDoc::setBackgroundColor(QColor backgroundColor){
+void KlustersDoc::setBackgroundColor(const QColor &backgroundColor){
     //Notify all the views of the modification
     for(int i =0; i<viewList->count();++i) {
         KlustersView *view = viewList->at(i);

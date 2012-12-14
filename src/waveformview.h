@@ -108,7 +108,7 @@ public Q_SLOTS:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void addNewClusterToView(int clusterId,bool active){addClusterToView(clusterId,active);};
+    inline void addNewClusterToView(int clusterId,bool active){addClusterToView(clusterId,active);}
 
     /**
   * Updates the content of the widget due to the removal of spikes in a cluster.

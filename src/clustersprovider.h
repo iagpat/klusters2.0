@@ -85,7 +85,7 @@ public:
 
 
     /**Sets the list of cluster Ids to be used when providing data.*/
-    inline void setClusterIdList(QList<int>* list){clusterIds = list;};
+    inline void setClusterIdList(QList<int>* list){clusterIds = list;}
 
 
     /**Returns the name of the provider which is the cluster file number.

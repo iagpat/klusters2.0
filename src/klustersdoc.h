@@ -121,9 +121,9 @@ public:
     */
     int saveDocument(const QString &url, const char* format=0);
     /**Returns the QString of the document. */
-    inline const QString& url() const{return docUrl;}
+    const QString& url() const{return docUrl;}
     /**Sets the URL of the document. */
-    inline void setURL(const QString& url){docUrl=url;}
+    void setURL(const QString& url){docUrl=url;}
     /**Sends back the full name of the document with the electrode group Id append.*/
     QString documentName();
 
@@ -136,12 +136,12 @@ public:
     /**Returns the reference on the list of ClusterColor objects.
     * @return ItemColors containing the information on the clusters and their associated color.
     */
-    inline ItemColors& clusterColors() const {return *clusterColorList;}
+    ItemColors& clusterColors() const {return *clusterColorList;}
 
     /**Returns a reference on data (object containing all the information).
     * @return data object.
     */
-    inline Data& data() const {return *clusteringData;}
+    Data& data() const {return *clusteringData;}
 
     /**Manages the color change of a single cluster.
     * Method call when the palette is in immediat mode (no need to press the update buton to trigger the change)
@@ -239,7 +239,7 @@ public:
     void createNewClusters(QRegion& region, const QList <int>& clustersOfOrigin, int dimensionX, int dimensionY);
 
     /**Returns the number of dimensions of the data.*/
-    inline int nbDimensions(){return clusteringData->nbOfDimensions();}
+    int nbDimensions(){return clusteringData->nbOfDimensions();}
 
     /** Reverts the last user action.*/
     void undo();
@@ -248,23 +248,23 @@ public:
     void redo();
 
     /**Returns the temporary file corresponding to the cluster file.*/
-    inline QString temporaryFile(){return tmpCluFile;}
+    QString temporaryFile() const {return tmpCluFile;}
 
     /**Returns the temporary file corresponding to the spike file.*/
-    inline QString getSpikeFileName(){return tmpSpikeFile;}
+    QString getSpikeFileName() const {return tmpSpikeFile;}
 
     /**Returns the maximum value for the time dimension in second.*/
-    inline long maxTime() const{return clusteringData->maxTime();}
+    long maxTime() const{return clusteringData->maxTime();}
 
     /**Returns the total number of spikes of the current document.
     * @return the total number of spikes.
     */
-    inline long totalNbOfSpikes(){ return clusteringData->totalNbOfSpikes();}
+    long totalNbOfSpikes() const { return clusteringData->totalNbOfSpikes();}
 
     class CloseDocumentEvent;
     friend class CloseDocumentEvent;
 
-    inline CloseDocumentEvent* getCloseDocumentEvent(QString origin){
+    CloseDocumentEvent* getCloseDocumentEvent(const QString& origin){
         return new CloseDocumentEvent(origin);
     }
 
@@ -275,14 +275,13 @@ public:
     class CloseDocumentEvent : public QEvent{
         //Only the method getCloseDocumentEvent of KlustersDoc has access to the private part of CloseDocumentEvent,
         //the constructor of CloseDocumentEvent being private, only this method con create a new CloseDocumentEvent
-        friend CloseDocumentEvent* KlustersDoc::getCloseDocumentEvent(QString origin);
+        friend CloseDocumentEvent* KlustersDoc::getCloseDocumentEvent(const QString& origin);
 
     public:
-        inline QString methodOfOrigin(){return origin;}
-        inline ~CloseDocumentEvent(){}
+        QString methodOfOrigin(){return origin;}
+        ~CloseDocumentEvent(){}
 
-    private:
-        CloseDocumentEvent(QString origin):QEvent(QEvent::Type(QEvent::User + 400)),origin(origin){}
+        CloseDocumentEvent(const QString &origin):QEvent(QEvent::Type(QEvent::User + 400)),origin(origin){}
 
         QString origin;
     };
@@ -290,7 +289,7 @@ public:
     /**Sets the auto saving on for the future documents to be opened.
     * @param interval saving interval.
     */
-    inline void setAutoSaving(int interval){
+    void setAutoSaving(int interval){
         savingInterval = interval;
         endAutoSaving = false;
         autoSave = true;
@@ -326,11 +325,11 @@ public:
     void setChannelPositions(QList<int>& positions);
 
     /**Returns the number of channels used.*/
-    inline int nbOfchannels() const{return clusteringData->nbOfchannels();}
+    int nbOfchannels() const{return clusteringData->nbOfchannels();}
 
     /**Returns the total number of PCAs used
   * (number of channels times number of PCA by channel).*/
-    inline int totalNbOfPCAs() const{return clusteringData->totalNbOfPCAs();}
+    int totalNbOfPCAs() const{return clusteringData->totalNbOfPCAs();}
     
     /**Makes all the internal changes due to a modification of the number of undo.
   * @param newNbUndo the futur new number of undo.
@@ -340,7 +339,7 @@ public:
     /**Updates the background color used in the views.
   * @param backgroundColor color of the new background.
  */
-    void setBackgroundColor(QColor backgroundColor);
+    void setBackgroundColor(const QColor& backgroundColor);
 
     /**Creates the feature file to automatically recluster the clusters contained in @p clustersToRecluster.
   * @param clustersToRecluster list of clusters to recluster.
@@ -362,7 +361,7 @@ public:
     /** Returns the id of the electrode group correponding to the current document.
   * @return the id of the electrode group.
   */
-    inline QString currentElectrodeGroupID() const {return electrodeGroupID;}
+    QString currentElectrodeGroupID() const {return electrodeGroupID;}
 
     /**Updates the views to take into account the clusters obtained by automatic reclustering.
   * Suppress the reclustered ones and add the newly created ones.
@@ -375,12 +374,12 @@ public:
   * Informs if the variables need it by the traceView are available. Those variables are retrieve only from
   * the parameter file in xml format (the new format).
   * @return true if the variables are available, false otherwise.*/
-    inline bool isTraceViewVariablesAvailable()const {return clusteringData->isTraceViewVariablesAvailable();}
+    bool isTraceViewVariablesAvailable()const {return clusteringData->isTraceViewVariablesAvailable();}
 
     /**
   * Informs if the data need it by the traceView are available.
   * @return true if the data are available, false otherwise.*/
-    inline bool areTraceDataAvailable()const {
+    bool areTraceDataAvailable()const {
         QString datUrl(docUrl);
         datUrl.append("/"+baseName +".dat");
 
@@ -392,7 +391,7 @@ public:
     /**
   * Informs if a TracesProvider exits.
   * @return true if the provider exists, false otherwise.*/
-    inline bool isTracesProvider() const{
+    bool isTracesProvider() const{
         if(tracesProvider == 0L) return false;
         else return true;
     }
@@ -404,57 +403,57 @@ public:
     /**Gets the acquisition system gain.
   * @return current acquisition gain.
   */
-    inline int getAcquisitionGain()const{return acquisitionGain;}
+    int getAcquisitionGain()const{return acquisitionGain;}
 
     /**Gets the current gain based on the screen gain and the acquisition system gain.
   * @return current gain.
   */
-    inline int getGain()const{return gain;}
+    int getGain()const{return gain;}
 
     /**Returns a pointer on the list of ChannelColors objects used to represent the channel colors used in TraceView.
   * @return ChannelColors containing the information on the channels and their associated color.
   */
-    inline ChannelColors* channelColors() const {return channelColorList;}
+    ChannelColors* channelColors() const {return channelColorList;}
 
     /**Returns a reference on the Map given the correspondance between the channel ids and the display group ids.*/
-    inline QMap<int,int>* getDisplayChannelsGroups() {return &displayChannelsGroups;}
+    QMap<int,int>* getDisplayChannelsGroups() {return &displayChannelsGroups;}
 
     /**Returns a reference on the map given th correspondance between the display group ids and the channel ids.
   */
-    inline QMap<int, QList<int> >* getDisplayGroupsChannels() {return &displayGroupsChannels;}
+    QMap<int, QList<int> >* getDisplayGroupsChannels() {return &displayGroupsChannels;}
 
     /**Returns a reference on the Map given the correspondance between the channel ids and the spike group ids.
   */
-    inline QMap<int,int>* getChannelsSpikeGroups() {return &channelsSpikeGroups;}
+    QMap<int,int>* getChannelsSpikeGroups() {return &channelsSpikeGroups;}
 
     /**Returns a reference on the map given th correspondance between the spike group ids and the channel ids.
   */
-    inline QMap<int, QList<int> >* getSpikeGroupsChannels() {return &spikeGroupsChannels;}
+    QMap<int, QList<int> >* getSpikeGroupsChannels() {return &spikeGroupsChannels;}
 
     /**Returns the list of channels of the current electrode.*/
-    inline QList<int>& getCurrentChannels() {return clusteringData->getCurrentChannels();}
+    QList<int>& getCurrentChannels() {return clusteringData->getCurrentChannels();}
 
     /**Returns a map given the list of cluster file containing data for a given display group.
   * This is used in the TraceView.*/
-    inline QMap<int, QList<int> >* getDisplayGroupsClusterFile() {return &displayGroupsClusterFile;}
+    QMap<int, QList<int> >* getDisplayGroupsClusterFile() {return &displayGroupsClusterFile;}
 
     /**Returns a pointer to the TraceProvider.*/
-    inline  TracesProvider* getTraceProvider()const{return tracesProvider;}
+     TracesProvider* getTraceProvider()const{return tracesProvider;}
 
     /**Returns a pointer to the ClustersProvider.*/
-    inline ClustersProvider* getClustersProvider()const{return clustersProvider;}
+    ClustersProvider* getClustersProvider()const{return clustersProvider;}
 
     /**Returns the number of samples in a waveform before the peak.*/
-    inline int getNbSamplesBeforePeak()const{return (clusteringData->getPeakPositionInWaveform() - 1);}
+    int getNbSamplesBeforePeak()const{return (clusteringData->getPeakPositionInWaveform() - 1);}
 
     /**Returns the number of samples in a waveform after the peak.*/
-    inline int getNbSamplesAfterPeak()const{return (clusteringData->getNbSamplesInWaveform() - clusteringData->getPeakPositionInWaveform());}
+    int getNbSamplesAfterPeak()const{return (clusteringData->getNbSamplesInWaveform() - clusteringData->getPeakPositionInWaveform());}
 
     /** Shows in the cluster palette the user cluster information, that is show a modified cluster palette presenting the cluster ids and the user cluster information.*/
     void showUserClusterInformation();
 
     /**Sets the modified status of the current opend document to true .*/
-    inline void clusterInformationModified(){modified = true;}
+    void clusterInformationModified(){modified = true;}
 
 Q_SIGNALS:
     void updateUndoNb(int undoNb);

@@ -109,7 +109,7 @@ public:
 
     /** Returns a pointer to the document presented in the view.
     */
-    inline KlustersDoc& getDocument() const{return doc;}
+    KlustersDoc& getDocument() const{return doc;}
     
     /**Updates the view.*/
     void update(KlustersView* pSender);
@@ -146,17 +146,17 @@ public:
     /**Returns the dimension used for the abscissa axis in the Cluster View.
     * @return abscissa dimension.
     */
-    inline int abscissaDimension() const {return dimensionX;}
+    int abscissaDimension() const {return dimensionX;}
 
     /**Returns the dimension used for the ordinate axis in the Cluster View.
     * @return ordinate dimension.
     */
-    inline int ordinateDimension() const {return dimensionY;}
+    int ordinateDimension() const {return dimensionY;}
 
     /**Returns the list of the clusters presented in the view.
     * @return list of cluster ids.
     */
-    inline const QList<int>& clusters() const {return *shownClusters;}
+    const QList<int>& clusters() const {return *shownClusters;}
 
     /**Checks if some clusters have had their color changed.
     * If so, update clusterUpdateList if needed.
@@ -165,12 +165,12 @@ public:
     void updateColors(bool active);
 
     /**Show all the encapsulated widgets contain in the view. The widgets know how to draw themselves.*/
-    inline void showAllWidgets(){
+    void showAllWidgets(){
         emit updateContents();
     }
 
     /**Update all the encapsulated widgets contain in the view. The widgets know how to draw themselves.*/
-    inline void updateViewContents(){
+    void updateViewContents(){
         emit updateDrawing();
     }
 
@@ -178,7 +178,7 @@ public:
     * @param clusterId the cluster id for which the color has been changed.
     * @param active true if the view is the active one, false otherwise.
     */
-    inline void singleColorUpdate(int clusterId,bool active){
+    void singleColorUpdate(int clusterId,bool active){
         emit singleColorUpdated(clusterId,active);
     }
 
@@ -246,16 +246,16 @@ public:
     /**Updates the mode, methode call from the application on the active view after the user selected a tool.
    * @param selectedMode the new mode.
    */
-    inline void setMode(BaseFrame::Mode selectedMode){
+    void setMode(BaseFrame::Mode selectedMode){
         emit modeToSet(selectedMode);
     }
 
     /**Sets the currentViewWidget (not currently used).*/
-    inline void setCurrentViewWidget(ViewWidget* current){currentViewWidget = current;}
+    void setCurrentViewWidget(ViewWidget* current){currentViewWidget = current;}
 
     /**Method called when no spikes have been found in a polygon of selection.
    */
-    inline void selectionIsEmpty(){emit emptySelection();}
+    void selectionIsEmpty(){emit emptySelection();}
 
     /** Reverts the last user action. If any clusters have been removed they will be added back
     * @param active true if the view is the active one, false otherwise.*/
@@ -352,7 +352,7 @@ public:
    * @param start the start time of the time frame.
    * @param timeFrameWidth the time amount, in second, to use to show the waveforms.
    */
-    inline void updateTimeFrame(long start,long timeFrameWidth){
+    void updateTimeFrame(long start,long timeFrameWidth){
         startTime = start;
         timeWindow = timeFrameWidth;
         emit updatedTimeFrame(start,timeFrameWidth);
@@ -361,7 +361,7 @@ public:
     /**Sets the presentation mode of the waveform view to sample mode, meaning that, for each shown cluster,
   * only one out of the number of spikes to be displayed will be shown.
   */
-    inline void setSampleMode(){
+    void setSampleMode(){
         inTimeFrameMode = false;
         emit sampleMode();
     }
@@ -369,7 +369,7 @@ public:
     /**Set the presentation mode of the waveform view to time frame mode, meaning that, for each shown cluster,
   * only the spikes within the current time frame will be shown.
   */
-    inline void setTimeFrameMode(){
+    void setTimeFrameMode(){
         inTimeFrameMode = true;
         emit timeFrameMode();
     }
@@ -377,7 +377,7 @@ public:
     /**Sets the way of presenting the information concerning the waveforms selected to
   * only show the waveforms of the mean and the standard deviation.
   */
-    inline void setMeanPresentation(){
+    void setMeanPresentation(){
         meanDisplay = true;
         emit meanPresentation();
     }
@@ -385,62 +385,62 @@ public:
     /**Sets the way of presenting the information concerning the waveforms selected to
   * show all the waveforms corresponding to the mode of presentation.
   */
-    inline void setAllWaveformsPresentation(){
+    void setAllWaveformsPresentation(){
         meanDisplay = false;
         emit allWaveformsPresentation();
     }
 
     /**Sets the waveforms of each cluster to overlap.
   */
-    inline void setOverLayPresentation(){
+    void setOverLayPresentation(){
         overLayDisplay = true;
         emit overLayPresentation();
     }
 
     /** Sets the waveforms of each cluster to be presented side by side.
   */
-    inline void setSideBySidePresentation(){
+    void setSideBySidePresentation(){
         overLayDisplay = false;
         emit sideBySidePresentation();
     }
 
     /**Triggers the increase of the amplitude of the waveforms in the Waveform view.
   */
-    inline void increaseWaveformsAmplitude(){emit increaseAmplitude();}
+    void increaseWaveformsAmplitude(){emit increaseAmplitude();}
 
     /**Triggers the decrease of the amplitude of the waveforms in the Waveform view.
   */
-    inline void decreaseWaveformsAmplitude(){emit decreaseAmplitude();}
+    void decreaseWaveformsAmplitude(){emit decreaseAmplitude();}
 
     /**Returns a boolean indicating if the view contains a WaveformView.
   * @return true if the view contains a WaveformView, false otherwise.*/
-    inline bool containsWaveformView() const {return isThereWaveformView;}
+    bool containsWaveformView() const {return isThereWaveformView;}
 
     /**Returns true if the view contains a WavefromView in time frame mode,
   * false otherwise.*/
-    inline bool isInTimeFrameMode() const {return inTimeFrameMode;}
+    bool isInTimeFrameMode() const {return inTimeFrameMode;}
 
     /**Returns the time amount, in second, of the time frame used by the WaveformView.
   */
-    inline long timeFrameWidth() const {
+    long timeFrameWidth() const {
         return timeWindow;
     }
 
     /**Returns the start time of the time frame used by the WaveformView.
   */
-    inline long timeFrameStart() const {
+    long timeFrameStart() const {
         return startTime;
     }
 
     /**Returns a boolean indicating if the view contains a ClusterView.
   * @return true if the view contains a ClusterView, false otherwise.*/
-    inline bool containsClusterView() const {return isThereClusterView;}
+    bool containsClusterView() const {return isThereClusterView;}
 
     /**Updates the number of spikes to display for each cluster when the waveform presentation
   * mode is sample.
   * @param nbSpikes number of spikes to display.
   */
-    inline void setDisplayNbSpikes(int nbSpikes){
+    void setDisplayNbSpikes(int nbSpikes){
         nbSpkToDisplay = nbSpikes;
         emit updateDisplayNbSpikes(nbSpikes);
     }
@@ -448,70 +448,70 @@ public:
     /**Returns the number of spikes displayed in the Waveform View, if any, when the presentation mode is sample.
   * @return number of spikes displayed.
   */
-    inline long displayedNbSpikes() const {return nbSpkToDisplay;}
+    long displayedNbSpikes() const {return nbSpkToDisplay;}
 
     /**Returns a boolean indicating if the means and standard deviation are displayed.
   * @return true if the Waveform View, if any, is presenting only the means and standard deviation,
   * false otherwise.
   */
-    inline bool isMeanPresentation() const {return meanDisplay;}
+    bool isMeanPresentation() const {return meanDisplay;}
 
     /**Returns a boolean indicating if the waveforms are overlaping each other.
   * @return true if the Waveform View, if any, is presenting the waveforms overlaping each other,
   * false otherwise.
   */
-    inline bool isOverLayPresentation() const {return overLayDisplay;}
+    bool isOverLayPresentation() const {return overLayDisplay;}
 
     /**Returns the time amount, in second, of the time frame used by the Correlation View.
   * @return time amount in second.
   */
-    inline long correlationTimeFrameWidth() const {
+    long correlationTimeFrameWidth() const {
         return correlogramTimeFrame;
     }
 
     /**Returns the bin size used by the Correlation View.
   * @return bin size.
   */
-    inline long sizeOfBin() const {
+    long sizeOfBin() const {
         return binSize;
     }
 
     /**Returns a boolean indicating if the view contains a CorrelationView.
   * @return true if the view contains a CorrelationView, false otherwise.*/
-    inline bool containsCorrelationView() const {return isThereCorrelationView;}
+    bool containsCorrelationView() const {return isThereCorrelationView;}
 
     /**Returns the type of scale used to present the correlation data.
   * @return type of scale.
   */
-    inline Data::ScaleMode scaleMode() const {return correlationScale;}
+    Data::ScaleMode scaleMode() const {return correlationScale;}
 
     /**Sets the acquisition system gain.
   * @param acquisitionGain acquisition system gain.
   */
-    inline void setGain(int acquisitionGain){emit changeGain(acquisitionGain);}
+    void setGain(int acquisitionGain){emit changeGain(acquisitionGain);}
 
     /**Triggers the increase of the amplitude of the correlograms in the Correlation View.
   */
-    inline void increaseCorrelogramsAmplitude(){emit increaseAmplitudeofCorrelograms();}
+    void increaseCorrelogramsAmplitude(){emit increaseAmplitudeofCorrelograms();}
 
     /**Triggers the decrease of the amplitude of the correlograms in the Correlation View.
   */
-    inline void decreaseCorrelogramsAmplitude(){emit decreaseAmplitudeofCorrelograms();}
+    void decreaseCorrelogramsAmplitude(){emit decreaseAmplitudeofCorrelograms();}
 
     /**Removes any scale applied to the correlation data.*/
-    inline void setNoScale(){
+    void setNoScale(){
         correlationScale = Data::RAW;
         emit noScale();
     }
 
     /**Sets the scale of the correlation data to the maximum value.*/
-    inline void setScaleByMax(){
+    void setScaleByMax(){
         correlationScale = Data::MAX;
         emit maxScale();
     }
 
     /**Sets the scale of the correlation data to the shoulder value.*/
-    inline void setScaleByShouler(){
+    void setScaleByShouler(){
         correlationScale = Data::SHOULDER;
         emit shoulderScale();
     }
@@ -520,7 +520,7 @@ public:
   * @param size the size of the bin, in second, to use to compute the correlograms.
   * @param timeFrame time frame used to compute the correlograms.
   */
-    inline void updateBinSizeAndTimeFrame(int size,int timeFrame){
+    void updateBinSizeAndTimeFrame(int size,int timeFrame){
         binSize = size;
         correlogramTimeFrame = timeFrame;
         emit updatedBinSizeAndTimeFrame(size,timeFrame);
@@ -537,7 +537,7 @@ public:
   * If @p b is true a line will be drawn, none will be drawn otherwise.
   * @param b boolean indicating if a shoulder line has to be drawn.
   */
-    inline void updateShoulderLine(bool b){
+    void updateShoulderLine(bool b){
         shoulderLine = b;
         emit setShoulderLine(b);
     }
@@ -546,7 +546,7 @@ public:
   * of the correlograms of the Correlation View if any.
   * @return true if a line is drawn, false otherwise.
   */
-    inline bool isShoulderLine() const {return shoulderLine;}
+    bool isShoulderLine() const {return shoulderLine;}
 
     /**Returns the list of list of removed clusters used to enable undo action.
   */
@@ -559,12 +559,12 @@ public:
   * @param step the interval to use in second.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void setTimeStepInSecond(int step,bool active){emit changeTimeInterval(step,active);}
+    void setTimeStepInSecond(int step,bool active){emit changeTimeInterval(step,active);}
 
     /**Initialize the position of the channels in the waveform view.
   * @param positions positions of the channels to use in the view set by the user in the settings dialog.
   */
-    inline void setChannelPositions(QList<int>& positions){emit changeChannelPositions(positions);}
+    void setChannelPositions(QList<int>& positions){emit changeChannelPositions(positions);}
 
     /**Makes all the internal changes due to a modification of the number of undo.
   * @param newNbUndo the futur new number of undo.
@@ -572,14 +572,14 @@ public:
     void nbUndoChangedCleaning(int newNbUndo);
 
     /**Updates the probabilitites in the errorMatrix view.*/
-    inline void updateErrorMatrix(){emit computeProbabilities();}
+    void updateErrorMatrix(){emit computeProbabilities();}
 
     /**Returns a boolean indicating if the view contains a Grouping Assistant View.
   * @return true if the view contains a Grouping Assistant View, false otherwise.*/
-    inline bool containsErrorMatrixView() const {return isThereErrorMatrixView;}
+    bool containsErrorMatrixView() const {return isThereErrorMatrixView;}
 
     /***Update the background color of the views.*/
-    inline void updateBackgroundColor(const QColor& color){emit changeBackgroundColor(color);}
+    void updateBackgroundColor(const QColor& color){emit changeBackgroundColor(color);}
 
     /**
   * Adds the clusters created by the automatic reclustering program to those already shown and remove
@@ -607,43 +607,43 @@ public:
 
     /**Returns a boolean indicating if the view contains a TraceView.
   * @return true if the view contains a TraceView, false otherwise.*/
-    inline bool containsTraceView() const {return isThereTraceView;}
+    bool containsTraceView() const {return isThereTraceView;}
 
     /**Triggers the increase of the amplitude of all the channels.
  */
-    inline void increaseAllChannelsAmplitude(){emit increaseAllAmplitude();}
+    void increaseAllChannelsAmplitude(){emit increaseAllAmplitude();}
 
     /**Triggers the decrease of the amplitude of all the channels.
  */
-    inline void decreaseAllChannelsAmplitude(){emit decreaseAllAmplitude();}
+    void decreaseAllChannelsAmplitude(){emit decreaseAllAmplitude();}
 
     /**Gets the starting time in miliseconds used in the TraceView.
   * @return starting time.
   */
-    inline long getStartingTime(){return startingTime;}
+    long getStartingTime(){return startingTime;}
 
     /**Gets the time window in miliseconds used in the TraceView.
   * @return duration time window.
   */
-    inline long getDuration(){return duration;}
+    long getDuration(){return duration;}
 
     /**Displays or hides the labels next to the traces in the TraceView.
   * @param status true if the labels have to be drawn, false otherwise.
   */
-    inline void showLabelsUpdate(bool status){
+    void showLabelsUpdate(bool status){
         labelsDisplay = status;
         emit showLabels(status);
     }
 
     /**Returns true if labels are drawn next to the traces in the TraceView, false otherwise.
   */
-    inline bool getLabelStatus() const{return labelsDisplay;}
+    bool getLabelStatus() const{return labelsDisplay;}
 
     /**Retrieves the next cluster.*/
-    inline void showNextCluster(){emit nextCluster();}
+    void showNextCluster(){emit nextCluster();}
 
     /**Retrieves the previous cluster.*/
-    inline void showPreviousCluster(){emit previousCluster();}
+    void showPreviousCluster(){emit previousCluster();}
 
 public Q_SLOTS:
 
@@ -675,7 +675,7 @@ public Q_SLOTS:
   * @param start starting time.
   * @param duration time window.
   */
-    inline void setStartAndDuration(long start,long duration){
+    void setStartAndDuration(long start,long duration){
         startingTime = start;
         this->duration = duration;
     }

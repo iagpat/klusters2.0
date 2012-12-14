@@ -44,7 +44,7 @@ class PrefDialog : public QPageDialog {
     /** Transfers the settings from the dialog to the configuration object.*/
     void updateConfiguration();
     /** */
-    inline bool isApplyEnable() const {return applyEnable;}
+    bool isApplyEnable() const {return applyEnable;}
 
     void resetChannelList(int nbChannels);
 

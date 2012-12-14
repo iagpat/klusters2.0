@@ -40,8 +40,8 @@
 /**Class used to compare strings in case-insensitive maner.*/
 class EventDescription : public QString{
 public:
-    inline EventDescription():QString(){}
-    inline EventDescription(const QString& s):QString(s){}
+    EventDescription():QString(){}
+    EventDescription(const QString& s):QString(s){}
 };
 
 bool operator<(const EventDescription& s1,const EventDescription& s2);
@@ -100,30 +100,30 @@ public:
     /**Returns the number of events in the event file the provider provides the data for.
   * @return number of events.
   */
-    inline int getNbEvents() const {return nbEvents;}
+    int getNbEvents() const {return nbEvents;}
 
     /**Returns map between the description of the events and an numeric identifier.
   * @return map for the event descriptions.*/
-    inline QMap<EventDescription,int> eventDescriptionIdMap() const{return eventIds;}
+    QMap<EventDescription,int> eventDescriptionIdMap() const{return eventIds;}
 
     /**Returns map between the a numeric identifier and the description of the events.
   * @return map for the event ids.*/
-    inline QMap<int,EventDescription> eventIdDescriptionMap() const{return idsDescriptions;}
+    QMap<int,EventDescription> eventIdDescriptionMap() const{return idsDescriptions;}
 
     /**Returns the name of the provider which is the event file number.
   * @return provider'name.
   */
-    inline QString getName() const {return name;}
+    QString getName() const {return name;}
 
     /**Returns the value to use as the length for the event descriptions in the event palette.
   * @return length.
   */
-    inline int getDescriptionLength() const {return descriptionLength;}
+    int getDescriptionLength() const {return descriptionLength;}
 
     /** Sets the position where the events are display when browsing.
   * @param position percentage from the begining of the window.
   */
-    inline void setEventPosition(int position){eventPosition = static_cast<float>(position) / 100.0;}
+    void setEventPosition(int position){eventPosition = static_cast<float>(position) / 100.0;}
 
     /** Updates the provider data to take into account the modification of an event.
   * @param selectedEventId id of the modified event.
@@ -170,7 +170,7 @@ public:
     /**Updates the sampling rate for the current document.
   * @param rate sampling rate.
   */
-    inline void updateSamplingRate(double rate){
+    void updateSamplingRate(double rate){
         currentSamplingRate = rate / 1000.0;
 
         //Initialize the variables

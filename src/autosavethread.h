@@ -41,7 +41,7 @@ public:
 
     inline ~AutoSaveThread(){qDebug()<<"in ~AutoSaveThread";}
     //The default saving interval is 5 minutes.
-    inline AutoSaveThread(Data& d, KlustersDoc* doc,QString saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
+    inline AutoSaveThread(Data& d, KlustersDoc* doc,const QString &saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
         qDebug()<<"in constructor AutoSaveThread";
     }
 

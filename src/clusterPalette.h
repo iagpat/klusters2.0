@@ -62,7 +62,7 @@ public:
     * @param statusBar a reference to the application status bar.
     * @param name name of the widget (can be used for introspection).
     */
-    ClusterPalette(const QColor &backgroundColor, QWidget* parent = 0, QStatusBar * statusBar = 0, const char* name = 0 );
+    explicit ClusterPalette(const QColor &backgroundColor, QWidget* parent = 0, QStatusBar * statusBar = 0, const char* name = 0 );
     /*
    *  Destroys the object and frees any allocated resources.
    */

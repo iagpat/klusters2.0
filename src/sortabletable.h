@@ -29,15 +29,15 @@
 class SortableTable : public Array<dataType>{
 
 public: 
-    inline SortableTable(){}
-    inline ~SortableTable(){}
+    SortableTable(){}
+    ~SortableTable(){}
 
     /**Sets the dimensions of the table, by default it will be a two row table.
   * @param nbOfColumns numbero f column for the table.
   * @param twoRows true if the table has to be a two row table, false
   * if it has to be a one row table, the default is true.
   */
-    inline void setSize(dataType nbOfColumns,bool twoRows = true){
+    void setSize(dataType nbOfColumns,bool twoRows = true){
         if(twoRows)Array<dataType>::setSize(2,nbOfColumns);
         else Array<dataType>::setSize(1,nbOfColumns);
     }
@@ -48,15 +48,17 @@ public:
     /**
   * Sorts the two row table using @p rowToSort as the row to sort (row numbering start at 1).
   */
-    inline void sort(dataType rowToSort){
-        if(rowToSort == 1) Quicksort(1, 2, 1, nbColumns);
-        if(rowToSort == 2) Quicksort(2, 1, 1, nbColumns);
+    void sort(dataType rowToSort){
+        if(rowToSort == 1)
+            Quicksort(1, 2, 1, nbColumns);
+        else if(rowToSort == 2)
+            Quicksort(2, 1, 1, nbColumns);
     }
 
     /**
   * Sorts the one row table.
   */
-    inline void sort(){Quicksort(1,nbColumns);}
+    void sort(){Quicksort(1,nbColumns);}
 
 
     /**Returns a subset of the table, the data from one row (@p row) contained
@@ -72,7 +74,7 @@ public:
     
 private:
 
-    inline void setSize(dataType nbOfRows, dataType nbOfColumns){}
+    void setSize(dataType nbOfRows, dataType nbOfColumns){}
 
     /*QuickSort algorithm.
   * To speed the sort, two sort algorithms are combined.

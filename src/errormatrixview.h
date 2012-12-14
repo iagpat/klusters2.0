@@ -206,7 +206,7 @@ protected:
     inline void resizeEvent(QResizeEvent* event){
         //Trigger parent event
         ViewWidget::resizeEvent(event);
-    };
+    }
 
     inline void mousePressEvent(QMouseEvent* event){}
     void mouseReleaseEvent(QMouseEvent* event);

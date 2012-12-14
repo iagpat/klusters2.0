@@ -59,10 +59,11 @@ public:
     inline void setNbUndo(int nb){nbUndo = nb;}
 
     /**Sets the positions of the channels.*/
-    inline void setChannelPositions(QList<int> positions){
+    inline void setChannelPositions(const QList<int>& positions){
         channelPositions.clear();
-        QList<int>::iterator iterator;
-        for(iterator = positions.begin(); iterator != positions.end(); ++iterator)
+        QList<int>::const_iterator iterator;
+        QList<int>::const_iterator end(positions.constEnd());
+        for(iterator = positions.constBegin(); iterator != end; ++iterator)
             channelPositions.append(*iterator);
     }
 

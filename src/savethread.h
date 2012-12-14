@@ -39,8 +39,8 @@ class SaveThread : public QThread{
 
 public: 
 
-    inline SaveThread(KlustersApp* parent):doc(0L),parent(parent),isSaveAs(false){}
-    inline ~SaveThread(){qDebug()<<"in ~SaveThread";}
+    explicit SaveThread(KlustersApp* parent):doc(0L),parent(parent),isSaveAs(false){}
+    ~SaveThread(){qDebug()<<"in ~SaveThread";}
 
 
     virtual void run();
@@ -57,7 +57,7 @@ public:
     class SaveDoneEvent;
     friend class SaveDoneEvent;
 
-    inline SaveDoneEvent* saveDoneEvent(bool status){
+    SaveDoneEvent* saveDoneEvent(bool status){
         return new SaveDoneEvent(*this,status);
     }
 
@@ -72,11 +72,11 @@ public:
         friend SaveDoneEvent* SaveThread::saveDoneEvent(bool status);
 
     public:
-        inline bool isItSaveAs()const {return saveThread.isSaveAs;}
-        inline void setTemporaryFile(const QString& tmpFile){tempCluFile = tmpFile;}
-        inline QString temporaryFile() const {return tempCluFile;}
-        inline bool isSaveOk() const {return saveOk;}
-        inline ~SaveDoneEvent(){}
+        bool isItSaveAs()const {return saveThread.isSaveAs;}
+        void setTemporaryFile(const QString& tmpFile){tempCluFile = tmpFile;}
+        QString temporaryFile() const {return tempCluFile;}
+        bool isSaveOk() const {return saveOk;}
+        ~SaveDoneEvent(){}
 
     private:
         SaveDoneEvent(const SaveThread& thread,bool status):QEvent(QEvent::Type(QEvent::User + 100)),saveThread(thread),saveOk(status){}

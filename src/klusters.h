@@ -106,7 +106,7 @@ public:
     /**Informs of the existance of an Error Matrix View in the application.
     * @return true if an Error Matrix View exists in the application, false otherwise.
     */
-    inline bool isExistAnErrorMatrix() const {return errorMatrixExists;}
+    bool isExistAnErrorMatrix() const {return errorMatrixExists;}
 
     /**Updates the dimension spin boxes.
     * @param dimensionX absciss dimension.
@@ -132,7 +132,7 @@ protected:
     
     void customEvent (QEvent *event);
     
-    inline void showEvent(QShowEvent* event){slotUpdateParameterBar();}
+    void showEvent(QShowEvent* event){slotUpdateParameterBar();}
 
     /** Event filter to catch right click for contextual menu.
     * @param object target object for the event.
@@ -290,7 +290,7 @@ private Q_SLOTS:
     void slotUpdateRedoNb(int redoNb);
 
     /**Informs the active display to present the waveforms for an updated time frame.*/
-    inline void slotUpdateStartTime(int start){
+    void slotUpdateStartTime(int start){
         if(!isInit){
             startTime = start;
             activeView()->updateTimeFrame(static_cast<long>(start),timeWindow);
@@ -309,7 +309,7 @@ private Q_SLOTS:
 
     /**Sets the waveforms of each cluster in the active display to overlay or be side by side.
    */
-    inline void setOverLayPresentation(){
+    void setOverLayPresentation(){
         if(overlayPresentation->isChecked())activeView()->setOverLayPresentation();
         else activeView()->setSideBySidePresentation();
     }
@@ -319,24 +319,24 @@ private Q_SLOTS:
    * there is only the waveforms of the mean and the standard deviation. In the normal presentation all the
    * waveforms for the selected (depending on the sample/time frame mode) spikes are shown.
    */
-    inline void slotMeanPresentation(){
+    void slotMeanPresentation(){
         if(meanPresentation->isChecked())activeView()->setMeanPresentation();
         else activeView()->setAllWaveformsPresentation();
     }
 
     /**Triggers the increase of the amplitude of the waveforms in the waveform view.
    */
-    inline void slotIncreaseAmplitude(){activeView()->increaseWaveformsAmplitude();}
+    void slotIncreaseAmplitude(){activeView()->increaseWaveformsAmplitude();}
 
     /**Triggers the decrease of the amplitude of the waveforms in the waveform view.
    */
-    inline void slotDecreaseAmplitude(){activeView()->decreaseWaveformsAmplitude();}
+    void slotDecreaseAmplitude(){activeView()->decreaseWaveformsAmplitude();}
 
 
     /**Informs the active display to present an updated number of waveforms when the
    * waveformView is in sample mode.
    */
-    inline void slotSpikesTodisplay(int nbSpikes){
+    void slotSpikesTodisplay(int nbSpikes){
         if(!isInit){
             activeView()->setDisplayNbSpikes(static_cast<long>(nbSpikes));
         }
@@ -350,27 +350,27 @@ private Q_SLOTS:
 
     /**Triggers the increase of the amplitude of the correlograms in the correlation view.
    */
-    inline void slotIncreaseCorrelogramsAmplitude(){activeView()->increaseCorrelogramsAmplitude();}
+    void slotIncreaseCorrelogramsAmplitude(){activeView()->increaseCorrelogramsAmplitude();}
 
     /**Triggers the decrease of the amplitude of the correlograms in the correlation view.
    */
-    inline void slotDecreaseCorrelogramsAmplitude(){activeView()->decreaseCorrelogramsAmplitude();}
+    void slotDecreaseCorrelogramsAmplitude(){activeView()->decreaseCorrelogramsAmplitude();}
 
     /**Present the correlograms with the raw data without appling any scale.
    */
-    inline void slotNoScale(){activeView()->setNoScale();}
+    void slotNoScale(){activeView()->setNoScale();}
 
     /**Presents the correlograms scaling the data by the maximum value.
    */
-    inline void slotScaleByMax(){activeView()->setScaleByMax();}
+    void slotScaleByMax(){activeView()->setScaleByMax();}
 
     /**Present the correlograms scaling the data by the shoulder value.
    */
-    inline void slotScaleByShouler(){activeView()->setScaleByShouler();}
+    void slotScaleByShouler(){activeView()->setScaleByShouler();}
 
     /**Informs the active display to update the drawing of a doted line
    * at the shoulder level on the correlograms.*/
-    inline void slotShoulderLine(){
+    void slotShoulderLine(){
         activeView()->updateShoulderLine(shoulderLine->isChecked());
     }
 
@@ -405,11 +405,11 @@ private Q_SLOTS:
 
     /**Triggers the increase of the amplitude of all the channels.
    */
-    inline void slotIncreaseAllChannelsAmplitude(){activeView()->increaseAllChannelsAmplitude();}
+    void slotIncreaseAllChannelsAmplitude(){activeView()->increaseAllChannelsAmplitude();}
 
     /**Triggers the decrease of the amplitude of all the channels.
    */
-    inline void slotDecreaseAllChannelsAmplitude(){activeView()->decreaseAllChannelsAmplitude();}
+    void slotDecreaseAllChannelsAmplitude(){activeView()->decreaseAllChannelsAmplitude();}
 
     /**Enables or disables the display of labels next to the traces.*/
     void slotShowLabels();
@@ -614,15 +614,15 @@ private:
     class Validator: public QIntValidator{
 
     public:
-        inline Validator(QObject* parent):QIntValidator(parent){
+        Validator(QObject* parent):QIntValidator(parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline Validator(int minimum,int maximum,QObject* parent):
+        Validator(int minimum,int maximum,QObject* parent):
             QIntValidator(minimum,maximum,parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline ~Validator(){}
-        inline void fixup (QString& input) const{
+        ~Validator(){}
+        void fixup (QString& input) const{
             input = QString::fromLatin1("%1").arg(klusters->timeWindow);
         }
     private:
@@ -690,19 +690,19 @@ private:
     class BinSizeValidator: public QIntValidator{
 
     public:
-        inline BinSizeValidator(QObject* parent):QIntValidator(parent){
+        BinSizeValidator(QObject* parent):QIntValidator(parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline BinSizeValidator(int minimum,int maximum,QObject* parent):
+        BinSizeValidator(int minimum,int maximum,QObject* parent):
             QIntValidator(minimum,maximum,parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline ~BinSizeValidator(){}
-        inline void fixup (QString& input) const{
+        ~BinSizeValidator(){}
+        void fixup (QString& input) const{
             //If the state determine in validate was invalid, fix by setting back the last correct value.
             input = QString::fromLatin1("%1").arg(klusters->binSize);
         }
-        inline QValidator::State validate(QString &input,int& pos) const{
+        QValidator::State validate(QString &input,int& pos) const{
             QValidator::State state = QIntValidator::validate(input,pos);
             //Let the QIntValidator validates the value as to know if it is a correct integer (within the range).
             if(state != QValidator::Acceptable) return state;
@@ -743,15 +743,15 @@ private:
     class CorrelogramsHalfTimeFrameValidator: public QIntValidator{
 
     public:
-        inline CorrelogramsHalfTimeFrameValidator(QObject* parent):QIntValidator(parent){
+        CorrelogramsHalfTimeFrameValidator(QObject* parent):QIntValidator(parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline CorrelogramsHalfTimeFrameValidator(int minimum,int maximum,QObject* parent):
+        CorrelogramsHalfTimeFrameValidator(int minimum,int maximum,QObject* parent):
             QIntValidator(minimum,maximum,parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        inline ~CorrelogramsHalfTimeFrameValidator(){}
-        inline void fixup (QString& input) const{
+        ~CorrelogramsHalfTimeFrameValidator(){}
+        void fixup (QString& input) const{
             int halfTimeFrame = input.toInt();
 
             //The value entered was not an integer

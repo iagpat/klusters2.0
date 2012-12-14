@@ -63,7 +63,8 @@ public:
   * @return true if a selection is in process, false othewise.
   */
     inline bool isASelectionInProcess() const{
-        if(selectionPolygon.size() == 0) return false;
+        if(selectionPolygon.isEmpty())
+            return false;
         else return true;
     }
 

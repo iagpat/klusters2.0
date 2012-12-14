@@ -31,7 +31,7 @@
 class ChannelList : public QListWidget  {
    Q_OBJECT
 public: 
-    ChannelList(QWidget *parent=0);
+    explicit ChannelList(QWidget *parent=0);
 	~ChannelList();
 
 Q_SIGNALS:

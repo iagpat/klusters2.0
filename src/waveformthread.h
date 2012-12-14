@@ -43,7 +43,7 @@ public:
     //the constructor of WaveformThread being private, only this method con create a new WaveformThread
     friend WaveformThread* WaveformView::getWaveforms();
 
-    inline ~WaveformThread(){}
+    ~WaveformThread(){}
 
     void getWaveformInformation(int clusterId,WaveformView::PresentationMode mode);
     void getWaveformInformation(const QList<int> &clusterIds, WaveformView::PresentationMode mode);
@@ -53,18 +53,18 @@ public:
   */
     void getMean(WaveformView::PresentationMode mode);
 
-    inline bool isSingleTriggeringCluster(){return treatSingleCluster;}
-    inline int triggeringCluster(){return clusterId;}
-    inline QList<int> triggeringClusters(){return clusterIds;}
-    inline bool isMeanRequested(){return  meanRequested;}
+    bool isSingleTriggeringCluster(){return treatSingleCluster;}
+    int triggeringCluster(){return clusterId;}
+    QList<int> triggeringClusters(){return clusterIds;}
+    bool isMeanRequested(){return  meanRequested;}
 
     /**Asks the thread to stop his work as soon as possible.*/
-    inline void stopProcessing(){haveToStopProcessing = true;}
+    void stopProcessing(){haveToStopProcessing = true;}
 
     class GetWaveformsEvent;
     friend class GetWaveformsEvent;
 
-    inline GetWaveformsEvent* getWaveformsEvent(){
+    GetWaveformsEvent* getWaveformsEvent(){
         return new GetWaveformsEvent(*this);
     }
 
@@ -78,8 +78,8 @@ public:
         friend GetWaveformsEvent* WaveformThread::getWaveformsEvent();
 
     public:
-        inline WaveformThread* parentThread(){return &waveformThread;}
-        inline ~GetWaveformsEvent(){}
+        WaveformThread* parentThread(){return &waveformThread;}
+        ~GetWaveformsEvent(){}
 
     private:
         GetWaveformsEvent(WaveformThread& thread):QEvent(QEvent::Type(QEvent::User + 200)),waveformThread(thread){}
@@ -90,7 +90,7 @@ public:
     class NoWaveformDataEvent;
     friend class NoWaveformDataEvent;
 
-    inline NoWaveformDataEvent* noWaveformDataEvent(){
+    NoWaveformDataEvent* noWaveformDataEvent(){
         return new NoWaveformDataEvent(*this);
     }
 
@@ -105,8 +105,8 @@ public:
         friend NoWaveformDataEvent* WaveformThread::noWaveformDataEvent();
 
     public:
-        inline WaveformThread* parentThread(){return &waveformThread;}
-        inline ~NoWaveformDataEvent(){}
+        WaveformThread* parentThread(){return &waveformThread;}
+        ~NoWaveformDataEvent(){}
 
     private:
         NoWaveformDataEvent(WaveformThread& thread):QEvent(QEvent::Type(QEvent::User + 250)),waveformThread(thread){}
@@ -118,7 +118,7 @@ protected:
     void run();
 
 private:
-    inline WaveformThread(WaveformView& view,Data& d):waveformView(view),meanRequested(false),data(d),haveToStopProcessing(false){}
+    WaveformThread(WaveformView& view,Data& d):waveformView(view),meanRequested(false),data(d),haveToStopProcessing(false){}
 
     WaveformView& waveformView;
     int clusterId;

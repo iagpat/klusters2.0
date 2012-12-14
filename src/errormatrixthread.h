@@ -45,14 +45,14 @@ public:
     //the constructor of ErrorMatrixThread being private, only this method con create a new ErrorMatrixThread
     friend ErrorMatrixThread* ErrorMatrixView::computeMatrix();
 
-    inline ~ErrorMatrixThread(){}
-    inline Array<double>* getProbabilities() const {return probabilities;}
-    inline QList<int> getClusterList() const {return clusterList;}
-    inline QList<int> getComputedClusterList() const {return computedClusterList;}
-    inline QList<int> getIgnoreClusterIndex() const {return ignoreClusterIndex;}
+    ~ErrorMatrixThread(){}
+    Array<double>* getProbabilities() const {return probabilities;}
+    QList<int> getClusterList() const {return clusterList;}
+    QList<int> getComputedClusterList() const {return computedClusterList;}
+    QList<int> getIgnoreClusterIndex() const {return ignoreClusterIndex;}
 
     /**Asks the thread to stop his work as soon as possible.*/
-    inline void stopProcessing(){
+    void stopProcessing(){
         haveToStopProcessing = true;
         assistant.stopComputing();
     }
@@ -60,7 +60,7 @@ public:
     class ErrorMatrixEvent;
     friend class ErrorMatrixEvent;
 
-    inline ErrorMatrixEvent* getErrorMatrixEvent(){
+    ErrorMatrixEvent* getErrorMatrixEvent(){
         return new ErrorMatrixEvent(*this);
     }
 
@@ -75,8 +75,8 @@ public:
         friend ErrorMatrixEvent* ErrorMatrixThread::getErrorMatrixEvent();
 
     public:
-        inline ErrorMatrixThread* parentThread(){return &errorMatrixThread;}
-        inline ~ErrorMatrixEvent(){}
+        ErrorMatrixThread* parentThread(){return &errorMatrixThread;}
+        ~ErrorMatrixEvent(){}
 
     private:
         ErrorMatrixEvent(ErrorMatrixThread& thread):QEvent(QEvent::Type(QEvent::User + 600)),errorMatrixThread(thread){}
@@ -89,7 +89,7 @@ protected:
 
 private:
 
-    inline ErrorMatrixThread(ErrorMatrixView& view,Data& d):errorMatrixView(view),data(d),haveToStopProcessing(false){
+    ErrorMatrixThread(ErrorMatrixView& view,Data& d):errorMatrixView(view),data(d),haveToStopProcessing(false){
         start();
     }
 
