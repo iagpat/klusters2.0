@@ -526,7 +526,7 @@ void TraceView::paintEvent ( QPaintEvent*){
             painter.setViewport(viewport);
 
             //Fill the double buffer with the background
-            doublebuffer.fill(backgroundColor());
+            doublebuffer.fill(palette().color(backgroundRole()));
 
             //Paint all the traces in the shownChannels list (in the double buffer)
             drawTraces(painter);
@@ -668,8 +668,12 @@ void TraceView::updateShownGroupsChannels(const QList<int>& channelsToShow){
             int groupId = (*channelsGroups)[i];
             QList<int> channelIds = shownGroupsChannels[groupId];
             channelIds.removeAll(i);
-            if(channelIds.isEmpty()) shownGroupsChannels.remove(groupId);
-            else shownGroupsChannels.replace(groupId,channelIds);
+            if(channelIds.isEmpty()) {
+                shownGroupsChannels.remove(groupId);
+            } else {
+                shownGroupsChannels.remove(groupId);
+                shownGroupsChannels.insert(groupId,channelIds);
+            }
         }
     }
 
@@ -1178,7 +1182,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
             }//highlight
             else{
                 //erase the previous trace
-                QPen pen(backgroundColor(),2);
+                QPen pen(palette().color(backgroundRole()),2);
                 painter.setPen(pen);
                 drawTrace(painter,limit,basePosition,X,*iterator,nbSamplesToDraw);
 
@@ -1215,7 +1219,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
                     painter.drawPolyline(trace);
                 }
                 else{
-                    QPen pen(backgroundColor(),2);
+                    QPen pen(palette().color(backgroundRole()),2);
                     painter.setPen(pen);
                     painter.drawPolyline(trace);
                     pen.setColor(color);
@@ -1242,7 +1246,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
                     painter.drawPolyline(trace);
                 }
                 else{
-                    QPen pen(backgroundColor(),2);
+                    QPen pen(palette().color(backgroundRole()),2);
                     painter.setPen(pen);
                     painter.drawPolyline(trace);
                     pen.setColor(color);
@@ -1282,7 +1286,7 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
                                     painter.drawPolyline(trace);
                                 }
                                 else{
-                                    QPen pen(backgroundColor(),2);
+                                    QPen pen(palette().color(backgroundRole()),2);
                                     painter.setPen(pen);
                                     painter.drawPolyline(trace);
                                     pen.setColor(color);
@@ -1328,8 +1332,8 @@ void TraceView::drawTraces(QList<int> channels,bool highlight){
                 rHighlight = QRect(worldToViewport(abscissa,position).x() + 4,worldToViewport(abscissa,position).y(),xMargin - 4,12);
             }
             float gain = channelDisplayGains[*iterator];
-            if(highlight) painter.fillRect(rHighlight,colorGroup().highlight());
-            else painter.fillRect(rHighlight,backgroundColor());
+            if(highlight) painter.fillRect(rHighlight,palette().highlight());
+            else painter.fillRect(rHighlight,palette().color(backgroundRole()));
             painter.drawText(r,Qt::AlignHCenter | Qt::AlignTop,QString("%1 x%2").arg(*iterator).arg(gain,0,'f',2));
         }
     }
@@ -1837,8 +1841,8 @@ void TraceView::drawChannelIdsAndGain(QPainter& painter){
                     rHighlight = QRect(worldToViewport(abscissa,position).x() + 4,worldToViewport(abscissa,position).y(),xMargin - 4,12);
                 }
                 float gain = channelDisplayGains[*channelIterator];
-                if(selectedChannels.contains(*channelIterator)) painter.fillRect(rHighlight,colorGroup().highlight());
-                else painter.fillRect(rHighlight,backgroundColor());
+                if(selectedChannels.contains(*channelIterator)) painter.fillRect(rHighlight,palette().highlight());
+                else painter.fillRect(rHighlight,palette().color(backgroundRole()));
                 painter.drawText(r,Qt::AlignHCenter | Qt::AlignTop,QString("%1 x%2").arg(*channelIterator).arg(gain,0,'f',2));
             }
         }
@@ -1860,7 +1864,7 @@ void TraceView::drawChannelIdsAndGain(QPainter& painter){
                     rHighlight = QRect(worldToViewport(abscissa,position).x() + 4,worldToViewport(abscissa,position).y(),xMargin - 4,12);
                 }
 
-                painter.fillRect(rHighlight,backgroundColor());
+                painter.fillRect(rHighlight,palette().color(backgroundRole()));
                 painter.drawText(r,Qt::AlignHCenter | Qt::AlignTop,clusterIdentifier);
             }
         }
@@ -3507,13 +3511,15 @@ void TraceView::print(QPainter& printPainter,int width,int height, bool whiteBac
     if(r.left() == 0) back.setLeft(r.left() - static_cast<long>(xMargin * widthRatio));
 
     QColor colorLegendTmp = colorLegend;
-    QColor background= backgroundColor();
+    QColor background= palette().color(backgroundRole());
     if(whiteBackground){
         colorLegend = Qt::black;
-        setPaletteBackgroundColor(Qt::white);
+        QPalette palette;
+        palette.setColor(backgroundRole(), Qt::white);
+        setPalette(palette);
     }
 
-    printPainter.fillRect(back,backgroundColor());
+    printPainter.fillRect(back,palette().color(backgroundRole()));
     printPainter.setClipRect(back);
 
     //Paint all the traces in the shownChannels list (in the double buffer)
@@ -3533,7 +3539,10 @@ void TraceView::print(QPainter& printPainter,int width,int height, bool whiteBac
     //Restore the colors.
     if(whiteBackground){
         colorLegend = colorLegendTmp;
-        setPaletteBackgroundColor(background);
+        QPalette palette;
+        palette.setColor(backgroundRole(), background);
+        setPalette(palette);
+
     }
 
     //Restore the previous state
@@ -3887,7 +3896,7 @@ void TraceView::drawEvent(QString providerName,int selectedEventId,dataType sele
                     int abscissa = X + static_cast<int>(0.5 + (static_cast<float>(index) / downSampling));
                     if(highlight){
                         //erase the previous line
-                        QPen pen(backgroundColor(),1,Qt::DotLine);
+                        QPen pen(palette().color(backgroundRole()),1,Qt::DotLine);
                         painter.setPen(pen);
                         painter.drawLine(abscissa,top,abscissa,bottom);
 
@@ -3899,7 +3908,7 @@ void TraceView::drawEvent(QString providerName,int selectedEventId,dataType sele
                     }
                     else{
                         //erase the previous line
-                        QPen pen(backgroundColor(),2,Qt::DotLine);
+                        QPen pen(palette().color(backgroundRole()),2,Qt::DotLine);
                         painter.setPen(pen);
                         painter.drawLine(abscissa,top,abscissa,bottom);
 
@@ -3916,7 +3925,7 @@ void TraceView::drawEvent(QString providerName,int selectedEventId,dataType sele
                 int abscissa = static_cast<int>(0.5 + (static_cast<float>(index) / downSampling));
                 if(highlight){
                     //erase the previous line
-                    QPen pen(backgroundColor(),1,Qt::DotLine);
+                    QPen pen(palette().color(backgroundRole()),1,Qt::DotLine);
                     painter.setPen(pen);
                     painter.drawLine(abscissa,top,abscissa,bottom);
 
@@ -3928,7 +3937,7 @@ void TraceView::drawEvent(QString providerName,int selectedEventId,dataType sele
                 }
                 else{
                     //erase the previous line
-                    QPen pen(backgroundColor(),2,Qt::DotLine);
+                    QPen pen(palette().color(backgroundRole()),2,Qt::DotLine);
                     painter.setPen(pen);
                     painter.drawLine(abscissa,top,abscissa,bottom);
 

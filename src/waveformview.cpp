@@ -391,7 +391,7 @@ void WaveformView::paintEvent ( QPaintEvent *){
 
         if(drawContentsMode == REDRAW){
             //Fill the double buffer with the background
-            doublebuffer.fill(backgroundColor());
+            doublebuffer.fill(palette().color(backgroundRole()));
 
             //Paint all the waveforms in the shownclusters list (in the double buffer)
             drawWaveforms(painter,view.clusters());
@@ -502,12 +502,18 @@ void WaveformView::drawWaveforms(QPainter& painter,const QList<int>& clusterList
                 //Draw the mean with a solid line
                 pen.setStyle(Qt::SolidLine);
                 painter.setPen(pen);
-                painter.drawPolyline(mean,k * nbSamplesInWaveform,nbSamplesInWaveform);
+
+                int pointCount = (nbSamplesInWaveform == -1) ?  mean.size() - k * nbSamplesInWaveform : nbSamplesInWaveform;
+                painter.drawPolyline(mean.constData() + k * nbSamplesInWaveform, pointCount);
+
                 //Draw the 2 standard deviations with a dash line
                 pen.setStyle(Qt::DotLine);
                 painter.setPen(pen);
-                painter.drawPolyline(min,k * nbSamplesInWaveform,nbSamplesInWaveform);
-                painter.drawPolyline(max,k * nbSamplesInWaveform,nbSamplesInWaveform);
+                int pointCountMin = (nbSamplesInWaveform == -1) ?  min.size() - k * nbSamplesInWaveform : nbSamplesInWaveform;
+                painter.drawPolyline(min.constData() + k * nbSamplesInWaveform, pointCountMin);
+
+                int pointCountMax = (nbSamplesInWaveform == -1) ?  max.size() - k * nbSamplesInWaveform : nbSamplesInWaveform;
+                painter.drawPolyline(max.constData() + k * nbSamplesInWaveform, pointCountMax);
             }
         }
         //Draw all the selected waveforms
@@ -530,7 +536,9 @@ void WaveformView::drawWaveforms(QPainter& painter,const QList<int>& clusterList
                     x += Xstep;
                 }
                 for(int k = 0;k < nbchannels;++k){
-                    painter.drawPolyline(spike,k * nbSamplesInWaveform,nbSamplesInWaveform);
+
+                    int pointCount = (nbSamplesInWaveform == -1) ?  spike.size() - k * nbSamplesInWaveform : nbSamplesInWaveform;
+                    painter.drawPolyline(spike.constData() + k * nbSamplesInWaveform, pointCount);
                 }
             }
         }
@@ -800,13 +808,15 @@ void WaveformView::print(QPainter& printPainter,int width,int height, bool white
     QRect back = QRect(r.left(),r.top(),r.width(),r.height()+10);
 
     QColor colorLegendTmp = colorLegend;
-    QColor background= backgroundColor();
+    QColor background= palette().color(backgroundRole());
     if(whiteBackground){
         colorLegend = Qt::black;
-        setPaletteBackgroundColor(Qt::white);
+        QPalette palette;
+        palette.setColor(backgroundRole(), Qt::white);
+        setPalette(palette);
     }
 
-    printPainter.fillRect(back,backgroundColor());
+    printPainter.fillRect(back,palette().color(backgroundRole()));
     printPainter.setClipRect(back);
 
     //Paint all the waveforms in the shownclusters list (in the double buffer)
@@ -823,7 +833,10 @@ void WaveformView::print(QPainter& printPainter,int width,int height, bool white
     //Restore the colors.
     if(whiteBackground){
         colorLegend = colorLegendTmp;
-        setPaletteBackgroundColor(background);
+        QPalette palette;
+        palette.setColor(backgroundRole(), background);
+        setPalette(palette);
+
     }
 
     //Restore the previous state
