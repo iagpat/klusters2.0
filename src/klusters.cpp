@@ -1521,7 +1521,7 @@ void KlustersApp::slotDisplayClose()
     //or the active window if there is only one display (which can only be the mainDock)
     else {
         //If a save is already in process, wait until it is done
-        if(saveThread->running()){
+        if(saveThread->isRunning()){
             QApplication::restoreOverrideCursor();
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
             while(!saveThread->wait()){};
@@ -2777,7 +2777,7 @@ void KlustersApp::updateDimensionSpinBoxes(int dimensionX, int dimensionY){
 void KlustersApp::renameActiveDisplay(){
     bool ok;
     const int currentIndex = tabsParent->currentIndex();
-    QString newLabel = QInputDialog::getText(tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, tabsParent->tabText(currentIndex), &ok, this);
+    QString newLabel = QInputDialog::getText(this,tr("New Display label"),tr("Type in the new display label"),QLineEdit::Normal, tabsParent->tabText(currentIndex), &ok);
     if(!newLabel.isEmpty() && ok){
         tabsParent->setTabText(currentIndex,newLabel);
     }

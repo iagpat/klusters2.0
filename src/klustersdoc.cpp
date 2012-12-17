@@ -82,7 +82,7 @@ KlustersDoc::~KlustersDoc(){
 
     //If an autoSaveThread exists and has not finish, wait until it is done
     if(autoSave && autoSaveThread != 0L){
-        if(!autoSaveThread->running()){
+        if(!autoSaveThread->isRunning()){
             autoSaveThread->removeTmpFile();
             delete autoSaveThread;
             autoSaveThread = 0L;
@@ -348,9 +348,10 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
                 QUrl cluName = cluFileInfo.fileName();
                 bool renameStatus;
                 if(cluFileInfo.exists()){
-                    renameStatus = dir.rename(cluName,cluFileInfo.fileName()+ "." + cluFileInfo.lastModified().toString("MM.dd.yyyy.hh.mm"));
+                    const QString newName = cluFileInfo.fileName()+ QLatin1String(".") + cluFileInfo.lastModified().toString("MM.dd.yyyy.hh.mm");
+                    renameStatus = dir.rename(cluName.toString(),newName);
                 }
-                renameStatus = dir.rename(crashFileInfo.fileName(),cluName);
+                renameStatus = dir.rename(crashFileInfo.fileName(),cluName.toString());
                 if(!renameStatus)
                     QMessageBox::critical(0, tr("I/O Error !"),tr(
                                               "It appears that the rescue file cannot be renamed (possibly because of insufficient file access permissions).\n"
@@ -473,7 +474,7 @@ void KlustersDoc::updateAutoSavingInterval(int interval){
 
 bool KlustersDoc::stopAutoSaving(bool currentDocument){
     if(autoSave && autoSaveThread != 0L){
-        if(!autoSaveThread->running()){
+        if(!autoSaveThread->isRunning()){
             autoSaveThread->removeTmpFile();
             delete autoSaveThread;
             autoSaveThread = 0L;
@@ -1929,9 +1930,13 @@ int KlustersDoc::createFeatureFile(QList<int>& clustersToRecluster,QString reclu
     //Create the file
     clusteringData->createFeatureFile(clustersToRecluster,fetFile);
     fetFile.close();
+#if KDAB_VERIFY
     int status = fetFile.status();
     if(status == IO_Ok) return OK;
     else return CREATION_ERROR;
+#else
+    return OK;
+#endif
 }
 
 int KlustersDoc::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,QString reclusteringFetFileName){
@@ -2070,7 +2075,7 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
 
 void KlustersDoc::createProviders(){
     QUrl datUrl(docUrl);
-    datUrl.setFileName(baseName +".dat");
+    datUrl.setPath(baseName +".dat");
 
     int resolution = clusteringData->getResolution();
     int voltageRange = clusteringData->getVoltageRange();
@@ -2078,7 +2083,7 @@ void KlustersDoc::createProviders(){
     int channelNb = clusteringData->getTotalNbChannels();
 
     //Create the tracesProviders
-    tracesProvider = new TracesProvider(datUrl,channelNb,
+    tracesProvider = new TracesProvider(datUrl.toString(),channelNb,
                                         resolution,samplingRate,clusteringData->getOffset());
 
 

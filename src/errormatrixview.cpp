@@ -158,7 +158,10 @@ void ErrorMatrixView::paintEvent ( QPaintEvent*){
         viewport = QRect(contentsRec.left() + 15,contentsRec.top(),contentsRec.width() - 15,contentsRec.height() - 15);
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
-        doublebuffer.resize(contentsRec.width(),contentsRec.height());
+        //doublebuffer.resize(contentsRec.width(),contentsRec.height());
+        //KDAB_VERIFY
+        doublebuffer = doublebuffer.copy(0,0,contentsRec.width(),contentsRec.height());
+
 
         //Create a painter to paint on the double buffer
         QPainter painter;
@@ -174,7 +177,7 @@ void ErrorMatrixView::paintEvent ( QPaintEvent*){
         painter.setViewport(viewport);
 
         //Fill the double buffer with the background
-        doublebuffer.fill(backgroundColor());
+        doublebuffer.fill(palette().color(backgroundRole()));
 
         //Paint the matrix
         if(dataReady)
@@ -847,13 +850,15 @@ void ErrorMatrixView::print(QPainter& printPainter,int width,int height, bool wh
     if(r.left() == 0) back.setLeft(r.left() - static_cast<long>(15 * widthRatio));
 
     QColor colorLegendTmp = colorLegend;
-    QColor background= backgroundColor();
+    QColor background= palette().color(backgroundRole());
     if(whiteBackground){
         colorLegend = Qt::black;
-        setPaletteBackgroundColor(Qt::white);
+        QPalette palette;
+        palette.setColor(backgroundRole(), Qt::white);
+        setPalette(palette);
     }
 
-    printPainter.fillRect(back,backgroundColor());
+    printPainter.fillRect(back,palette().color(backgroundRole()));
     printPainter.setClipRect(back);
 
     //Paint the matrix
@@ -870,7 +875,9 @@ void ErrorMatrixView::print(QPainter& printPainter,int width,int height, bool wh
     //Restore the colors.
     if(whiteBackground){
         colorLegend = colorLegendTmp;
-        setPaletteBackgroundColor(background);
+        QPalette palette;
+        palette.setColor(backgroundRole(), background);
+        setPalette(palette);
     }
 
     //Restore the previous state

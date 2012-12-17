@@ -148,7 +148,10 @@ void TraceWidget::initSelectionWidgets(){
     pageStep = timeWindow;
     lineStep = static_cast<long>(floor(0.5 + static_cast<float>(static_cast<float>(timeWindow) / static_cast<float>(20))));
 
-    scrollBar = new QScrollBar(0,recordingLength - timeWindow,lineStep,pageStep,pageStep,Qt::Horizontal,selectionWidgets);
+    scrollBar = new QScrollBar(Qt::Horizontal,selectionWidgets);
+    scrollBar->setMinimum(0);
+    scrollBar->setMaximum(recordingLength - timeWindow);
+    scrollBar->setPageStep(pageStep);
     lay->addWidget(scrollBar);
     scrollBar->setValue(startTime);
     connect(scrollBar,SIGNAL(sliderReleased()),this, SLOT(slotScrollBarUpdated()));

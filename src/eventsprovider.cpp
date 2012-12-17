@@ -1064,10 +1064,13 @@ int EventsProvider::save(QFile* eventFile){
     fileStream.setRealNumberPrecision(12);
 
     for(int i = 1;i<=nbEvents;++i) fileStream<<timeStamps(1,i)<<"\t"<<events(1,i)<< "\n";
-
+#if KDAB_PORTING
     int status = eventFile->status();
     if(status == IO_Ok) modified = false;
     return status;
+#else
+    return 0;
+#endif
 }
 
 

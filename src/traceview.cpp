@@ -201,7 +201,7 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
     if(clustersData.count() == 0 && eventsData.count() == 0){
         updateCursor();
         //Everything has to be redraw
-        repaint(false);
+        repaint();
     }
     //Check if the cluster and event data are available
     else{
@@ -221,7 +221,7 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
         if(ready){
             updateCursor();
             //Everything has to be redraw
-            repaint(false);
+            repaint();
         }
     }
 
@@ -506,7 +506,9 @@ void TraceView::paintEvent ( QPaintEvent*){
 
         if(!isInitAndResized){
             //Resize the double buffer with the width and the height of the widget(QFrame)
-            doublebuffer.resize(contentsRec.width(),contentsRec.height());
+            //doublebuffer.resize(contentsRec.width(),contentsRec.height());
+            //KDAB_VERIFY
+            doublebuffer = doublebuffer.copy(0,0,contentsRec.width(),contentsRec.height());
 
             //Create a painter to paint on the double buffer
             QPainter painter;

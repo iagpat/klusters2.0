@@ -119,7 +119,9 @@ void ClusterView::paintEvent ( QPaintEvent*){
         viewport = contentsRect();
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
-        doublebuffer.resize(viewport.width(),viewport.height());
+        //doublebuffer.resize(viewport.width(),viewport.height());
+        //KDAB_VERIFY
+        doublebuffer = doublebuffer.copy(0,0,viewport.width(),viewport.height());
 
         //Create a painter to paint on the double buffer
         QPainter painter;
@@ -136,7 +138,8 @@ void ClusterView::paintEvent ( QPaintEvent*){
             nbSelectionPoints = 0;
 
             //Fill the double buffer with the background
-            doublebuffer.fill(backgroundColor());
+
+            doublebuffer.fill(palette().color(backgroundRole()));
 
             //Draw the axes
             drawAxes(painter);
@@ -541,13 +544,15 @@ void ClusterView::print(QPainter& printPainter,int width,int height, bool whiteB
     QRect back = QRect(r.left(),r.top(),r.width(),r.height());
 
     QColor colorLegendTmp = colorLegend;
-    QColor background= backgroundColor();
+    QColor background= palette().color(backgroundRole());
     if(whiteBackground){
         colorLegend = Qt::black;
-        setPaletteBackgroundColor(Qt::white);
+        QPalette palette;
+        palette.setColor(backgroundRole(), Qt::white);
+        setPalette(palette);
     }
 
-    printPainter.fillRect(back,backgroundColor());
+    printPainter.fillRect(back,palette().color(backgroundRole()));
     printPainter.setClipRect(back);
 
     //Draw the axes
@@ -567,7 +572,9 @@ void ClusterView::print(QPainter& printPainter,int width,int height, bool whiteB
     //Restore the colors.
     if(whiteBackground){
         colorLegend = colorLegendTmp;
-        setPaletteBackgroundColor(background);
+        QPalette palette;
+        palette.setColor(backgroundRole(), background);
+        setPalette(palette);
     }
 
     //Restore the previous state

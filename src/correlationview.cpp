@@ -237,7 +237,9 @@ void CorrelationView::paintEvent ( QPaintEvent *){
             viewport = QRect(contentsRec.left() + XMARGIN,contentsRec.top(),contentsRec.width() - XMARGIN,contentsRec.height() -10);
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
-        doublebuffer.resize(contentsRec.width(),contentsRec.height());
+        //doublebuffer.resize(contentsRec.width(),contentsRec.height());
+        //KDAB_VERIFY
+        doublebuffer = doublebuffer.copy(0,0,contentsRec.width(),contentsRec.height());
 
         //Create a painter to paint on the double buffer
         QPainter painter;
@@ -253,7 +255,7 @@ void CorrelationView::paintEvent ( QPaintEvent *){
 
         if(drawContentsMode == REDRAW){
             //Fill the double buffer with the background
-            doublebuffer.fill(backgroundColor());
+            doublebuffer.fill(palette().color(backgroundRole()));
 
             //Paint all the correlograms in the pairs list (in the double buffer)
             drawCorrelograms(painter,pairs);
@@ -812,13 +814,15 @@ void CorrelationView::print(QPainter& printPainter,int width,int height, bool wh
     printRegion = QRegion(back);
 
     QColor colorLegendTmp = colorLegend;
-    QColor background= backgroundColor();
+    QColor background= palette().color(backgroundRole());
     if(whiteBackground){
         colorLegend = Qt::black;
-        setPaletteBackgroundColor(Qt::white);
+        QPalette palette;
+        palette.setColor(backgroundRole(), Qt::white);
+        setPalette(palette);
     }
 
-    printPainter.fillRect(back,backgroundColor());
+    printPainter.fillRect(back,palette().color(backgroundRole()));
     printPainter.setClipRegion(printRegion);
 
     //Paint all the correlograms in the pairs list (in the double buffer)
@@ -835,7 +839,9 @@ void CorrelationView::print(QPainter& printPainter,int width,int height, bool wh
     //Restore the colors.
     if(whiteBackground){
         colorLegend = colorLegendTmp;
-        setPaletteBackgroundColor(background);
+        QPalette palette;
+        palette.setColor(backgroundRole(), background);
+        setPalette(palette);
     }
 
     //Restore the previous state
