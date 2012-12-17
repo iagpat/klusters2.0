@@ -117,16 +117,23 @@ void ClusterView::paintEvent ( QPaintEvent*){
     QRect r((QRect)window);
     if(drawContentsMode == UPDATE || drawContentsMode == REDRAW){
         viewport = contentsRect();
-
         //Resize the double buffer with the width and the height of the widget(QFrame)
-        //doublebuffer.resize(viewport.width(),viewport.height());
-        //KDAB_VERIFY
-        doublebuffer = doublebuffer.copy(0,0,viewport.width(),viewport.height());
+        if (viewport.size() != doublebuffer.size()) {
+            if(doublebuffer.isNull()) {
+                QPixmap tmp = QPixmap( viewport.width(),viewport.height() );
+                tmp.fill( Qt::white );
+                QPainter painter2( &tmp );
+                painter2.drawPixmap( 0,0, doublebuffer );
+                painter2.end();
+                doublebuffer = tmp;
+            } else {
+                doublebuffer = QPixmap(viewport.width(),viewport.height());
+            }
+        }
 
         //Create a painter to paint on the double buffer
         QPainter painter;
         painter.begin(&doublebuffer);
-
 
         painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
 
@@ -146,8 +153,7 @@ void ClusterView::paintEvent ( QPaintEvent*){
 
             //Paint all the clusters in the shownClusters list (in the double buffer)
             drawClusters(painter,view.clusters());
-        }
-        if(drawContentsMode == UPDATE){
+        } else if(drawContentsMode == UPDATE){
 
             //Erase any polygon of selection and reset the associated variables
             //resetSelectionPolygon();
