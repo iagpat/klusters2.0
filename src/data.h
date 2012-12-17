@@ -43,7 +43,6 @@ using namespace std;
 // forward declaration
 class MinMaxThread;
 class WaveformThread;
-class WaveformView;
 class CorrelationThread;
 
 

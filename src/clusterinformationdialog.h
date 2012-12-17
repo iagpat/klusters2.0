@@ -23,7 +23,6 @@
 #include <QDialog>
 
 #include <QLineEdit>
-class QLabel;
 
 /**
     @author Lynn Hazan <lynn.hazan@myrealbox.com>
