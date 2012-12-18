@@ -48,7 +48,7 @@ public:
     virtual void requestData(long startTime,long endTime,QObject* initiator,long startTimeInRecordingUnits=0){}
 
     /**Enables the caller to know if there is any thread running launch by the provider.*/
-    virtual inline bool isThreadsRunning(){return false;}
+    virtual bool isThreadsRunning(){return false;}
 
 protected:
     /**The name of the file containing the data provided by this class.*/

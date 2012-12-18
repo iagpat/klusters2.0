@@ -69,23 +69,23 @@ public:
     /** Returns the size of the bins to use in the correlograms, given in miliseconds.
   *@return size of the bins.
   */
-    inline int getBinSize()const{return binSize;}
+    int getBinSize()const{return binSize;}
     
     /** Returns the time frame use to compute the correlograms, given in miliseconds.
   *@return  time frame.
   */
-    inline int getTimeWindow()const{return timeWindow;}
+    int getTimeWindow()const{return timeWindow;}
 
     /**Returns the type of scale used to present the correlation data.
   * @return type of scale.
   */
-    inline Data::ScaleMode getScaleMode() const {return scaleMode;}
+    Data::ScaleMode getScaleMode() const {return scaleMode;}
 
     /**Returns a boolean indicating if a doted line is drawn at the shoulder level
   * of the correlograms.
   * @return true if a line is drawn, false otherwise.
   */
-    inline bool isShoulderLine() const {return shoulderLine;}
+    bool isShoulderLine() const {return shoulderLine;}
 
 public Q_SLOTS:
 
@@ -125,7 +125,7 @@ public Q_SLOTS:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void addNewClusterToView(int clusterId,bool active){addClusterToView(clusterId,active);}
+    void addNewClusterToView(int clusterId,bool active){addClusterToView(clusterId,active);}
 
     /**
   * Updates the content of the widget due to the removal of spikes in a cluster.
@@ -146,7 +146,7 @@ public Q_SLOTS:
     /**Changes the current mode, call by a selection of a tool
   * @param selectedMode new mode of drawing (selection or zoom)
   */
-    inline void setMode(BaseFrame::Mode selectedMode){}
+    void setMode(BaseFrame::Mode selectedMode){}
 
     /**Sets the mode of presentation to raw mode, meaning that the value of each bin in a
   * correlogram will be the computed value.
@@ -185,7 +185,7 @@ public Q_SLOTS:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){
+    void undoUpdateClusters(QList<int>& modifiedClusters,bool active){
         spikesRemovedFromClusters(modifiedClusters,active);
     }
 
@@ -198,7 +198,7 @@ public Q_SLOTS:
   * @param isModifiedByDeletion true if the clusters of @p modifiedClusters have been modified
   * by the deletion of spikes (moved to cluster 0 or 1, cluster of artefact and cluster of noise respectively).
   */
-    inline void updateClusters(QList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
+    void updateClusters(QList<int>& modifiedClusters,bool active,bool isModifiedByDeletion){
         spikesRemovedFromClusters(modifiedClusters,active);
     }
 

@@ -62,7 +62,7 @@ public:
     /**Informs if the user is currently making a selection.
   * @return true if a selection is in process, false othewise.
   */
-    inline bool isASelectionInProcess() const{
+    bool isASelectionInProcess() const{
         if(selectionPolygon.isEmpty())
             return false;
         else return true;
@@ -70,13 +70,13 @@ public:
 
     /**Returns the current abscissa dimension.
   */
-    inline int getDimensionX() const{return dimensionX;}
+    int getDimensionX() const{return dimensionX;}
 
     /**Returns the current ordinate dimension.
   */
-    inline int getDimensionY() const{return dimensionY;}
+    int getDimensionY() const{return dimensionY;}
 
-    inline BaseFrame::Mode getMode() const {return mode;}
+    BaseFrame::Mode getMode() const {return mode;}
 
 public Q_SLOTS:
 
@@ -91,7 +91,7 @@ public Q_SLOTS:
   * @param clusterId cluster Id for which the color have changed.
   * @param active true if the view is the active one, false otherwise.
   */
-    virtual inline void singleColorUpdate(int clusterId,bool active){
+    virtual void singleColorUpdate(int clusterId,bool active){
         addClusterToUpdate(clusterId);
     }
 
@@ -101,7 +101,7 @@ public Q_SLOTS:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void addClusterToView(int clusterId,bool active){
+    void addClusterToView(int clusterId,bool active){
         addClusterToUpdate(clusterId);
     }
 
@@ -110,7 +110,7 @@ public Q_SLOTS:
   * @param clusterId cluster Id to remove.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void removeClusterFromView(int clusterId,bool active){redraw();}
+    void removeClusterFromView(int clusterId,bool active){redraw();}
 
     /**
   * Adds a newly created cluster to those already shown.
@@ -119,7 +119,7 @@ public Q_SLOTS:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active){
+    void addNewClusterToView(QList<int>& fromClusters,int clusterId,bool active){
         addClusterToUpdate(clusterId);
     }
 
@@ -129,7 +129,7 @@ public Q_SLOTS:
   * @param clusterId cluster Id to add to the clusters already drawn
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void addNewClusterToView(int clusterId,bool active){
+    void addNewClusterToView(int clusterId,bool active){
         addClusterToUpdate(clusterId);
     }
 
@@ -139,7 +139,7 @@ public Q_SLOTS:
   * @param fromClusters list of clusters from which the spikes have been taken.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void spikesRemovedFromClusters(QList<int>& fromClusters,bool active){redraw();}
+    void spikesRemovedFromClusters(QList<int>& fromClusters,bool active){redraw();}
 
     /**
   * Update the content of the widget due to the addition of spikes in a cluster.
@@ -153,7 +153,7 @@ public Q_SLOTS:
 
     /**Method call when no spikes have been found in a polygon of selection
   */
-    inline void emptySelection(){drawContentsMode = UPDATE;}
+    void emptySelection(){drawContentsMode = UPDATE;}
 
     /**Change the current mode, call by a selection of a tool
   * @param selectedMode new mode of drawing (selection or zoom)
@@ -182,12 +182,12 @@ public Q_SLOTS:
   * @param modifiedClusters list of clusters from which spikes were taken from.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void undoUpdateClusters(QList<int>& modifiedClusters,bool active){redraw();}
+    void undoUpdateClusters(QList<int>& modifiedClusters,bool active){redraw();}
 
     /**Updates the time interval in second and in recording unit using @p step given in second.
   * @param step the interval to use in second.
   */
-    inline void setTimeStepInSecond(int step){
+    void setTimeStepInSecond(int step){
         timeStepInSecond = step;
         timeStepInRecordingUnit =  static_cast<long>((static_cast<double>(timeStepInSecond) * 1000000.0) / samplingInterval);
     }
@@ -197,7 +197,7 @@ public Q_SLOTS:
   * @param step the interval to use in second.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void setTimeStepInSecond(int step,bool active){
+    void setTimeStepInSecond(int step,bool active){
         timeStepInSecond = step;
         timeStepInRecordingUnit =  static_cast<long>((static_cast<double>(timeStepInSecond) * 1000000.0) / samplingInterval);
         if(active)redraw();
@@ -217,14 +217,14 @@ protected:
   */
     void paintEvent ( QPaintEvent*);
 
-    virtual inline void resizeEvent(QResizeEvent* event){
+    virtual void resizeEvent(QResizeEvent* event){
         //Trigger parent event
         ViewWidget::resizeEvent(event);
     }
     void mouseReleaseEvent(QMouseEvent* event);
     void mousePressEvent(QMouseEvent* event);
     void mouseMoveEvent(QMouseEvent* event);
-    virtual inline  void mouseDoubleClickEvent(QMouseEvent* event){
+    virtual  void mouseDoubleClickEvent(QMouseEvent* event){
         //Trigger parent event
         ViewWidget::mouseDoubleClickEvent(event);
     }
@@ -255,7 +255,7 @@ private:
   * be use to draw the polygon of selection.
   * @return color to be used
   */
-    inline QColor selectPolygonColor(Mode mode){
+    QColor selectPolygonColor(Mode mode){
         switch(mode){
         case DELETE_NOISE:
             return DELETE_NOISE_COLOR;
@@ -300,7 +300,7 @@ private:
 
     /**Set of instructions need it in order to enable a correct redraw when the drawContents
   is called*/
-    inline void redraw(){
+    void redraw(){
         drawContentsMode = REDRAW;
 
         //Clear the update list
@@ -374,7 +374,7 @@ private:
     friend class ComputeEvent;
 
     /**Returns a new ComputeEvent.*/
-    inline ComputeEvent* getComputeEvent(QPolygon polygon){
+    ComputeEvent* getComputeEvent(QPolygon polygon){
         return new ComputeEvent(polygon);
     }
 
@@ -390,8 +390,8 @@ private:
         friend ComputeEvent* ClusterView::getComputeEvent(QPolygon selectionPolygon);
 
     public:
-        inline ~ComputeEvent(){}
-        inline QPolygon polygon(){return selectionPolygon;}
+        ~ComputeEvent(){}
+        QPolygon polygon(){return selectionPolygon;}
 
     private:
         ComputeEvent(QPolygon polygon):QEvent(QEvent::Type(QEvent::User + 700)),selectionPolygon(polygon){}

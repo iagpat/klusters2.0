@@ -45,17 +45,17 @@ public:
     //the constructor of CorrelationThread being private, only this method con create a new CorrelationThread
     friend CorrelationThread* CorrelationView::getCorrelations(QList<Pair>* pairsToCompute,const QList<int>& clusterIds);
 
-    inline ~CorrelationThread(){}
+    ~CorrelationThread(){}
     QList<Pair>* triggeringPairs(){return clusterPairs;}
     QList<int> triggeringClusters() const {return clusterIds;}
 
     /**Asks the thread to stop his work as soon as possible.*/
-    inline void stopProcessing(){haveToStopProcessing = true;}
+    void stopProcessing(){haveToStopProcessing = true;}
 
     class CorrelationsEvent;
     friend class CorrelationsEvent;
 
-    inline CorrelationsEvent* getCorrelationsEvent(){
+    CorrelationsEvent* getCorrelationsEvent(){
         return new CorrelationsEvent(*this);
     }
 
@@ -70,8 +70,8 @@ public:
         friend CorrelationsEvent* CorrelationThread::getCorrelationsEvent();
 
     public:
-        inline CorrelationThread* parentThread(){return &correlationThread;}
-        inline ~CorrelationsEvent(){}
+        CorrelationThread* parentThread(){return &correlationThread;}
+        ~CorrelationsEvent(){}
 
     private:
         CorrelationsEvent(CorrelationThread& thread)
@@ -84,7 +84,7 @@ protected:
     void run();
 
 private:
-    inline CorrelationThread(CorrelationView& view,Data& d,QList<Pair>* pairs,const QList<int>& clusterIds)
+    CorrelationThread(CorrelationView& view,Data& d,QList<Pair>* pairs,const QList<int>& clusterIds)
         :correlationView(view),data(d),haveToStopProcessing(false){
         clusterPairs = pairs;
         this->clusterIds = clusterIds;

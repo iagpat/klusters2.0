@@ -43,23 +43,23 @@ public:
     void write() const;
 
     /**Sets the use of a crash and recovery autosave.*/
-    inline void setCrashRecovery(bool use){crashRecovery = use;}
+    void setCrashRecovery(bool use){crashRecovery = use;}
 
     /**Sets the time interval between 2 crash and recovery autosave.*/
-    inline void setCrashRecoveryIndex(int index){crashRecoveryIndex = index;}
+    void setCrashRecoveryIndex(int index){crashRecoveryIndex = index;}
 
     /**Sets the gain used to display the waveforms.*/
-    inline void setGain(int gain){this->gain = gain;}
+    void setGain(int gain){this->gain = gain;}
 
     /**Sets the time interval between 2 lines drawn in the cluster views
     * when the time dimension in selected. The time @p time is in second.*/
-    inline void setTimeInterval(int time){timeInterval = time;}
+    void setTimeInterval(int time){timeInterval = time;}
 
     /**Sets the number of step in the undo/redo mechanism.*/
-    inline void setNbUndo(int nb){nbUndo = nb;}
+    void setNbUndo(int nb){nbUndo = nb;}
 
     /**Sets the positions of the channels.*/
-    inline void setChannelPositions(const QList<int>& positions){
+    void setChannelPositions(const QList<int>& positions){
         channelPositions.clear();
         QList<int>::const_iterator iterator;
         QList<int>::const_iterator end(positions.constEnd());
@@ -68,22 +68,22 @@ public:
     }
 
     /**Sets the number of channels.*/
-    inline void setNbChannels(int nb){nbChannels = nb;}
+    void setNbChannels(int nb){nbChannels = nb;}
 
     /**Sets the background color.*/
-    inline void setBackgroundColor(const QColor& color) {backgroundColor = color;}
+    void setBackgroundColor(const QColor& color) {backgroundColor = color;}
 
     /**Sets the reclustering executable.*/
-    inline void setReclusteringExecutable(const QString& executable) {reclusteringExecutable = executable;}
+    void setReclusteringExecutable(const QString& executable) {reclusteringExecutable = executable;}
 
     /**Sets the arguments for the reclustering.*/
-    inline void setReclusteringArguments(const QString& arguments) {reclusteringArgs = arguments;}
+    void setReclusteringArguments(const QString& arguments) {reclusteringArgs = arguments;}
     
     /**Returns true if a crash and recovery autosave is performed, false othewise.*/
-    inline bool isCrashRecovery() const{return crashRecovery;}
+    bool isCrashRecovery() const{return crashRecovery;}
 
     /**Returns the time interval between 2 crash and recovery autosave in minutes.*/
-    inline int crashRecoveryInterval() const{
+    int crashRecoveryInterval() const{
         switch(crashRecoveryIndex){
         case 0:
             return 1;
@@ -102,58 +102,58 @@ public:
 
     /**Returns the index corresponding to the time interval between
     * 2 crash and recovery autosave in minutes.*/
-    inline int crashRecoveryIntervalIndex() const{return crashRecoveryIndex;}
+    int crashRecoveryIntervalIndex() const{return crashRecoveryIndex;}
 
     /**Returns the gain used to display the waveforms.*/
-    inline int getGain() const{return gain;}
+    int getGain() const{return gain;}
 
     /**Returns the time interval between 2 lines drawn in the cluster views
     * when the time dimension in selected. The time is in second.*/
-    inline int getTimeInterval() const{return timeInterval;}
+    int getTimeInterval() const{return timeInterval;}
 
     /**Returns the number of step in the undo/redo mechanism.*/
-    inline int getNbUndo() const{return nbUndo;}
+    int getNbUndo() const{return nbUndo;}
 
     /**Returns the positions of the channels.*/
-    inline QList<int>* getChannelPositions() {return &channelPositions;}
+    QList<int>* getChannelPositions() {return &channelPositions;}
 
     /**Returns the number of channels.*/
-    inline int getNbChannels() const{return nbChannels;}
+    int getNbChannels() const{return nbChannels;}
 
     /**Returns the background color.*/
-    inline QColor getBackgroundColor() const{return backgroundColor;}
+    QColor getBackgroundColor() const{return backgroundColor;}
     
     /**Returns the reclustering executable.*/
-    inline QString getReclusteringExecutable() const{return reclusteringExecutable;}
+    QString getReclusteringExecutable() const{return reclusteringExecutable;}
 
     /**Returns the arguments for the reclustering.*/
-    inline QString getReclusteringArguments() const{return reclusteringArgs;}
+    QString getReclusteringArguments() const{return reclusteringArgs;}
 
     /**Returns the default value for the crash and recovery mechanism.
     * True if a crash and recovery autosave is performed, false othewise.*/
-    inline bool isCrashRecoveryDefault() const{return crashRecoveryDefault;}
+    bool isCrashRecoveryDefault() const{return crashRecoveryDefault;}
 
     /**Returns the index corresponding to the default time interval between
     * 2 crash and recovery autosave in minutes.*/
-    inline int crashRecoveryIntervalIndexDefault() const{return crashRecoveryIndexDefault;}
+    int crashRecoveryIntervalIndexDefault() const{return crashRecoveryIndexDefault;}
 
     /**Returns the default gain used to display the waveforms.*/
-    inline int getGainDefault() const{return gainDefault;}
+    int getGainDefault() const{return gainDefault;}
     /**Returns the default time interval between 2 lines drawn in the cluster views
     * when the time dimension in selected. The time is in second.*/
-    inline int getTimeIntervalDefault() const{return timeIntervalDefault;}
+    int getTimeIntervalDefault() const{return timeIntervalDefault;}
 
     /**Returns the default number of step in the undo/redo mechanism.*/
-    inline int getNbUndoDefault() const{return nbUndoDefault;}
+    int getNbUndoDefault() const{return nbUndoDefault;}
 
     /**Returns the the default background color.*/
-    inline QColor getBackgroundColorDefault() const{return backgroundColorDefault;}
+    QColor getBackgroundColorDefault() const{return backgroundColorDefault;}
 
     /**Returns the default reclustering executable.*/
-    inline QString getReclusteringExecutableDefault() const{return reclusteringExecutableDefault;}
+    QString getReclusteringExecutableDefault() const{return reclusteringExecutableDefault;}
 
     /**Returns the default arguments for the reclustering.*/
-    inline QString getReclusteringArgumentsDefault() const{return reclusteringArgsDefault;}
+    QString getReclusteringArgumentsDefault() const{return reclusteringArgsDefault;}
 
     bool getUseWhiteColorDuringPrinting() const { return useWhiteColorDuringPrinting; }
 
