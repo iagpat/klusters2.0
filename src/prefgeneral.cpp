@@ -29,7 +29,7 @@ PrefGeneral::PrefGeneral(QWidget *parent ) : PrefGeneralLayout(parent) {
 
     //Set an icon on the reclusteringExecutableButton button
 
-    reclusteringExecutableButton->setIcon(QIcon(":/icons/fileopen"));
+    reclusteringExecutableButton->setIcon(QIcon(":/shared-icons/folder-open"));
 }
 PrefGeneral::~PrefGeneral(){
 }
