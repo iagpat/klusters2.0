@@ -95,12 +95,13 @@ void PrefWaveformView::saveChannelOrder(){
 }
 
 void PrefWaveformView::loadChannelOrder(){
-    QString url = QFileDialog::getOpenFileName(this, tr("Load File..."),QString(),
+    const QString url = QFileDialog::getOpenFileName(this, tr("Load File..."),QString(),
                                                tr("*|All files") );
 
+    if(url.isEmpty())
+      return;
     QMap<int,int> positions;
 
-    if(!url.isEmpty()){
         QString tmpChannelFile = url;
         if(!QFile(tmpChannelFile).exists()){
             QMessageBox::critical (this,tr("Error !"),
@@ -138,10 +139,6 @@ void PrefWaveformView::loadChannelOrder(){
         }
 
         channelFile.close();
-
-    } else {
-        return;
-    }
 
     if(nbChannels != static_cast<int>(positions.count())){
         QMessageBox::critical (this,tr("Error !"),
