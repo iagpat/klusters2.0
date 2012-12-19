@@ -179,10 +179,8 @@ void ProcessWidget::maybeScrollToBottom()
 }
 
 void ProcessWidget::hideWidget(){
-#if KDAB_PENDING
-    if(childproc->state() == QProcess::Running) childproc->suspend();
+    if(childproc->state() == QProcess::Running) childproc->terminate();
     emit hidden();
-#endif
 }
 
 
