@@ -203,7 +203,8 @@ void CorrelationView::spikesRemovedFromClusters(QList<int>& fromClusters,bool ac
         setCursor(Qt::WaitCursor);
         askForCorrelograms();
     }
-    if(view.clusters().size() == 0) pairs.clear();
+    if(view.clusters().isEmpty())
+        pairs.clear();
 }
 
 

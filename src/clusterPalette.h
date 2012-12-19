@@ -76,7 +76,7 @@ public:
 
     virtual void createClusterList(KlustersDoc* doc);
     virtual void updateClusterList();
-    void selectItems(QList<int> selectedClusters);
+    void selectItems(const QList<int> &selectedClusters);
     virtual inline void setImmediateMode(){mode = IMMEDIATE;}
     virtual inline void setDelayMode(){mode = DELAY;}
     virtual void reset();

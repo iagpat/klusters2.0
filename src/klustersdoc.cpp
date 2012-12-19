@@ -1931,13 +1931,10 @@ int KlustersDoc::createFeatureFile(QList<int>& clustersToRecluster,const QString
     //Create the file
     clusteringData->createFeatureFile(clustersToRecluster,fetFile);
     fetFile.close();
-#if KDAB_VERIFY
-    int status = fetFile.status();
-    if(status == IO_Ok) return OK;
-    else return CREATION_ERROR;
-#else
-    return OK;
-#endif
+    if(fetFile.error() == QFile::NoError)
+        return OK;
+    else
+        return CREATION_ERROR;
 }
 
 int KlustersDoc::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,QString reclusteringFetFileName){

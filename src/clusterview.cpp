@@ -387,10 +387,10 @@ void ClusterView::mouseMoveEvent(QMouseEvent* e){
     }
     else if(dimensionY == timeDimension){
         int timeInS = static_cast<int>(current.y() * samplingInterval / 1000000.0);
-        statusBar->showMessage("Coordinates: (" + QString::fromLatin1("%1").arg(current.x()) + ", " + QString::fromLatin1("%1").arg(-timeInS) + ")");
+        statusBar->showMessage("Coordinates: (" + QString::number(current.x()) + ", " + QString::fromLatin1("%1").arg(-timeInS) + ")");
     }
     else
-        statusBar->showMessage("Coordinates: (" + QString::fromLatin1("%1").arg(current.x()) + ", " + QString::fromLatin1("%1").arg(-current.y()) + ")");
+        statusBar->showMessage("Coordinates: (" + QString::number(current.x()) + ", " + QString::fromLatin1("%1").arg(-current.y()) + ")");
 
 
 

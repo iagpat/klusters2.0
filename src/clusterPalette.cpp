@@ -483,7 +483,7 @@ void ClusterPalette::languageChange()
     setWindowTitle( tr( "Cluster palette" ) );
 }
 
-void ClusterPalette::selectItems(QList<int> selectedClusters){
+void ClusterPalette::selectItems(const QList<int>& selectedClusters){
     //Set isInSelectItems to true to prevent the emission of signals due to selectionChange
     isInSelectItems = true;
 
@@ -492,8 +492,8 @@ void ClusterPalette::selectItems(QList<int> selectedClusters){
 
     //Loop on the clusters to be selected
     QListWidgetItem *item = 0;
-    QList<int>::iterator clusterIterator;
-    for(clusterIterator = selectedClusters.begin(); clusterIterator != selectedClusters.end(); ++clusterIterator){
+    QList<int>::const_iterator clusterIterator;
+    for(clusterIterator = selectedClusters.constBegin(); clusterIterator != selectedClusters.constEnd(); ++clusterIterator){
         QList<QListWidgetItem *> lst = iconView->findItems(QString::number(*clusterIterator),Qt::MatchStartsWith);
         if(!lst.isEmpty()) {
             item = lst.at(0);
