@@ -1923,9 +1923,10 @@ void KlustersDoc::renumberClusters(){
     clusterPalette.selectItems(activeView->clusters());
 }
 
-int KlustersDoc::createFeatureFile(QList<int>& clustersToRecluster,QString reclusteringFetFileName){
+int KlustersDoc::createFeatureFile(QList<int>& clustersToRecluster,const QString& reclusteringFetFileName){
     QFile fetFile(reclusteringFetFileName);
-    if(!fetFile.open(QIODevice::WriteOnly)) return OPEN_ERROR;
+    if(!fetFile.open(QIODevice::WriteOnly))
+        return OPEN_ERROR;
 
     //Create the file
     clusteringData->createFeatureFile(clustersToRecluster,fetFile);

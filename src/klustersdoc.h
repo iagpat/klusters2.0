@@ -346,7 +346,7 @@ public:
   * @param reclusteringFetFileName name for the reclustering fet file.
   * @return the creation status as a OpenSaveCreateReturnMessage enum.
   */
-    int createFeatureFile(QList<int>& clustersToRecluster,QString reclusteringFetFileName);
+    int createFeatureFile(QList<int>& clustersToRecluster, const QString &reclusteringFetFileName);
 
     /**Integrates in the data the clusters obtained by automatic reclustering.
   * Suppress the reclustered ones and add the newly created ones.
