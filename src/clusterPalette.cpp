@@ -79,7 +79,6 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     setObjectName(name);
     QVBoxLayout *layout = new QVBoxLayout;
     //Set the palette color
-
     setAutoFillBackground(true);
     QPalette palette;
     palette.setColor(backgroundRole(), backgroundColor);
@@ -88,6 +87,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
 
     iconView = new ClusterPaletteWidget(this);
     iconView->setObjectName("ClusterPalette");
+    iconView->setPalette(palette);
     layout->addWidget(iconView);
     QFont font( "Helvetica",10);
 
@@ -288,9 +288,10 @@ void ClusterPalette::slotCustomContextMenuRequested(const QPoint& pos) {
 
                     item->setText(clusterText);
                 }
-                delete clusterInformationDialog;
+
                 emit clusterInformationModified();
             }
+            delete clusterInformationDialog;
         }
     }
 }
