@@ -4236,7 +4236,7 @@ void TraceView::previousClusterDataAvailable(Array<dataType>& data,QObject* init
     }
 }
 
-void TraceView::updateClusters(QString name,QList<int>& clustersToShow,ItemColors* clusterColors,bool active){
+void TraceView::updateClusters(const QString &name, QList<int>& clustersToShow, ItemColors* clusterColors, bool active){
     providerItemColors.remove(name);
     providerItemColors.insert(name,clusterColors);
     showClusters(name,clustersToShow);

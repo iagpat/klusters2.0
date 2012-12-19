@@ -85,13 +85,13 @@ public:
 
 
     /**Sets the list of cluster Ids to be used when providing data.*/
-    inline void setClusterIdList(QList<int>* list){clusterIds = list;}
+    void setClusterIdList(QList<int>* list){clusterIds = list;}
 
 
     /**Returns the name of the provider which is the cluster file number.
   * @return provider'name.
   */
-    inline QString getName() const {return name;}
+    QString getName() const {return name;}
 
 
 Q_SIGNALS:

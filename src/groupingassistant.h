@@ -38,7 +38,7 @@
 
 class GroupingAssistant {
 public:
-    GroupingAssistant();
+    explicit GroupingAssistant();
     ~GroupingAssistant();
 
     /**

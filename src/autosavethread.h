@@ -39,13 +39,13 @@
 class AutoSaveThread : public QThread {
 public:
 
-    inline ~AutoSaveThread(){qDebug()<<"in ~AutoSaveThread";}
+    ~AutoSaveThread(){qDebug()<<"in ~AutoSaveThread";}
     //The default saving interval is 5 minutes.
-    inline AutoSaveThread(Data& d, KlustersDoc* doc,const QString &saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
+    AutoSaveThread(Data& d, KlustersDoc* doc,const QString &saveTmpUrl):data(d),doc(doc),autoSaveUrl(saveTmpUrl){
         qDebug()<<"in constructor AutoSaveThread";
     }
 
-    inline void removeTmpFile(){
+    void removeTmpFile(){
         //delete the temporary files
         QFile::remove(autoSaveUrl);
     }
@@ -54,7 +54,7 @@ public:
     class AutoSaveEvent;
     friend class AutoSaveEvent;
 
-    inline AutoSaveEvent* autoSaveEvent(){
+    AutoSaveEvent* autoSaveEvent(){
         return new AutoSaveEvent();
     }
 
@@ -68,9 +68,9 @@ public:
         friend AutoSaveEvent* AutoSaveThread::autoSaveEvent();
 
     public:
-        inline ~AutoSaveEvent(){}
-        inline bool isIOerror(){return IOerror;}
-        inline void setIOerror(bool status){IOerror = status;}
+        ~AutoSaveEvent(){}
+        bool isIOerror(){return IOerror;}
+        void setIOerror(bool status){IOerror = status;}
 
     private:
         AutoSaveEvent():QEvent(QEvent::Type(QEvent::User + 500)){IOerror = false;}

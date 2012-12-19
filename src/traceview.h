@@ -174,16 +174,17 @@ public:
   * @param groupId id of the group for which the color have been changed.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void groupColorUpdate(int groupId,bool active){
+    void groupColorUpdate(int groupId,bool active){
         //Everything has to be redraw
         drawContentsMode = REDRAW ;
         if(active) update();
     }
 
     /**Update the information presented in the view.*/
-    inline void updateDrawing(){
-        if(retrieveClusterData) updateClusterData(true);
-        else{
+    void updateDrawing(){
+        if(retrieveClusterData)  {
+            updateClusterData(true);
+        } else{
             //Everything has to be redraw
             drawContentsMode = REDRAW ;
             update();
@@ -200,7 +201,7 @@ public:
   * @param selectedMode new mode of drawing.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void setMode(BaseFrame::Mode selectedMode,bool active){
+    void setMode(BaseFrame::Mode selectedMode,bool active){
         Mode previousMode = mode;
         mode = selectedMode;
         if(selectedMode == SELECT){
@@ -279,7 +280,7 @@ public:
   * @param show true if the scale has to be shown, false otherwise.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void showCalibration(bool show,bool active){
+    void showCalibration(bool show,bool active){
         drawContentsMode = REDRAW;
         showCalibrationScale = show;
         if(active) update();
@@ -373,10 +374,10 @@ public:
   * @param providerName name use to identified the event provider containing the modified event.
   * @param active true if the view is the active one, false otherwise.
   */
-    inline void updateEvents(QString providerName,bool active){
+    void updateEvents(const QString& providerName,bool active){
         if(!eventProvidersToUpdate.contains(providerName)) eventProvidersToUpdate.append(providerName);
         if(active) update();
-    };
+    }
 
     /**Updates the event data provided by @p providerName due to the addition of an event.
   * @param providerName name use to identified the event provider containing the modified event.
@@ -418,11 +419,11 @@ public:
   * Updates the length of the document due to a modification of the sampling rate.
   * @param length the newly computed length of the document.
   */
-    inline void samplingRateModified(long long length){
+    void samplingRateModified(long long length){
         recordingLength = length;
         double samplingRate = tracesProvider.getSamplingRate();
         timeStepUnit = timeStep = 1000/samplingRate;
-    };
+    }
 
     /**Updates the cluster information presented on the display.
   * @param active true if the view is the active one, false otherwise.
@@ -436,7 +437,7 @@ public:
   * @param clusterColors list of colors for the clusters.
   * @param active true if the view is the active one, false otherwise.
   */
-    void updateClusters(QString name,QList<int>& clustersToShow,ItemColors* clusterColors,bool active);
+    void updateClusters(const QString& name,QList<int>& clustersToShow,ItemColors* clusterColors,bool active);
 
 public Q_SLOTS:
     /**Displays the data that has been retrieved.
@@ -503,7 +504,7 @@ public Q_SLOTS:
   * @param providerName name use to identified the event provider which will contain the added event.
   * @param eventDescription description of the next event to be created.
   */
-    inline void eventToAddProperties(QString providerName,QString eventDescription){
+    void eventToAddProperties(QString providerName,QString eventDescription){
         //If an event is being modified, this function can be called with eventDescription set to empty,
         //this should not be taken into account.
         if(!eventBeingModified){
@@ -541,10 +542,10 @@ protected:
   * The window is recomputed.
   * @param event resize event.
   */
-    inline void resizeEvent(QResizeEvent* event){
+    void resizeEvent(QResizeEvent* event){
         drawContentsMode = REDRAW;
         resized = true;
-    };
+    }
 
     /**The view responds to a mouse click.
   * @param event mouse release event.

@@ -65,7 +65,8 @@ public:
     bool isASelectionInProcess() const{
         if(selectionPolygon.isEmpty())
             return false;
-        else return true;
+        else
+            return true;
     }
 
     /**Returns the current abscissa dimension.

@@ -179,7 +179,7 @@ public:
         previousEndIndex = nbEvents;
         previousEndTime = static_cast<long>(floor(0.5 + timeStamps(1,nbEvents)));
         fileMaxTime = previousEndTime;
-    };
+    }
 
     /** Updates the provider data to take into account the renaming of an event.
   * @param selectedEventId id of the event to rename.
