@@ -590,7 +590,6 @@ void ClusterPalette::showUserClusterInformation(int electrodeGroupId){
         iconView->item(i)->setText(clusterText);
     }
     iconView->setWordWrap(false);
-    iconView->adjustSize();
 }
 
 void ClusterPalette::hideUserClusterInformation(){
