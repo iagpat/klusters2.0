@@ -1037,9 +1037,9 @@ void KlustersView::removeSpikesFromClustersInView(QList<int>& fromClusters, int 
     prepareUndo(emptiedClustersInView);
 
     //If fromClustersInView in not empty, this view is concerned by the modification
-    if(fromClustersInView.size() > 0){
+    if(!fromClustersInView.isEmpty()){
 
-        if(emptiedClusters.size()>0){
+        if(!emptiedClusters.isEmpty()){
             QList<int>::iterator clustersToRemoveIterator;
             for(clustersToRemoveIterator = emptiedClusters.begin(); clustersToRemoveIterator != emptiedClusters.end(); ++clustersToRemoveIterator ){
                 removeClusterFromView(*clustersToRemoveIterator,active);
@@ -1047,7 +1047,8 @@ void KlustersView::removeSpikesFromClustersInView(QList<int>& fromClusters, int 
         }
 
         emit spikesRemovedFromClusters(fromClustersInView,active);
-        if(shownClusters->contains(destinationClusterId) != 0) emit spikesAddedToCluster(destinationClusterId,active);
+        if(shownClusters->contains(destinationClusterId) != 0)
+            emit spikesAddedToCluster(destinationClusterId,active);
     }
 
     //If the view contains the destinationCluster emit a notice of modification
@@ -1129,9 +1130,9 @@ void KlustersView::nbUndoChangedCleaning(int newNbUndo){
 void KlustersView::addRemovedClusters(bool active){
     //If removedClustersUndoList is not empty, make the current removedClusters become the first element
     //of the removedClustersRedoList and the first element of the removedClustersUndoList become the current removedClusters.
-    if(removedClustersUndoList.count()>0){
+    if(!removedClustersUndoList.isEmpty()){
         qDebug() << "in addRemovedClusters removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
-        if(removedClusters->size() > 0){
+        if(!removedClusters->isEmpty()){
             QList<int>::iterator newClusterIterator;
             for(newClusterIterator = removedClusters->begin(); newClusterIterator != removedClusters->end(); ++newClusterIterator){
                 shownClusters->append(*newClusterIterator);
@@ -1215,7 +1216,7 @@ bool KlustersView::removeUndoAddedClusters(bool active){
 
     //If removedClustersRedoList is not empty, make the current removedClusters become the first element
     //of the removedClustersUndoList and the first element of the removedClustersRedoList become the current removedClusters.
-    if(removedClustersRedoList.count()>0){
+    if(!removedClustersRedoList.isEmpty()){
         removedClustersUndoList.prepend(removedClusters);
         QList<int>* removedClustersTemp = removedClustersRedoList.takeAt(0);
         removedClusters =  removedClustersTemp;
