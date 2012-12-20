@@ -295,11 +295,6 @@ void KlustersView::print(QPrinter *pPrinter, const QString& filePath, bool white
     int nbViews = viewList.count();
     for(int i = 0; i< nbViews; i++) {
         ViewWidget* widget = viewList.at(i);
-        qDebug()<<" widget"<<widget<< " i"<<i;
-        //qDebug()<<" widget->geomerty().width() "<<widget->geometry().width()<<" widget->geomerty().height() "<<widget->geometry().height();
-        //QWidget* parent = static_cast<QWidget*>(widget->parent());
-        // qDebug()<<"parent->geometry().x() "<<parent->geometry().x()<<" parent->geomerty().y() "<<parent->geometry().y();
-
         //Modify the viewport so the view will not draw on the legend
         QRect newViewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height());
         newViewport.setBottom(printPainter.viewport().bottom() - 20);
@@ -337,7 +332,6 @@ void KlustersView::print(QPrinter *pPrinter, const QString& filePath, bool white
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1").arg(filePath));
         }
 
-        nbViews --;
         if(nbViews > 0)
             pPrinter->newPage();
     }
@@ -996,7 +990,6 @@ void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,QList
         QList<int>::iterator fromClusterIterator;
         for (fromClusterIterator = fromClustersInView.begin(); fromClusterIterator != fromClustersInView.end(); ++fromClusterIterator){
             int newClusterId = fromToNewClusterIds[*fromClusterIterator];
-            qDebug() << "in KlustersView::addNewClustersToView newClusterId "<<newClusterId;
             shownClusters->append(newClusterId);
             emit newClusterAddedToView(newClusterId,active);
         }
@@ -1024,14 +1017,12 @@ void KlustersView::addNewClustersToView(QList<int>& clustersToRecluster,QList<in
 
         QList<int>::iterator clustersToRemoveIterator;
         for(clustersToRemoveIterator = clustersToRecluster.begin(); clustersToRemoveIterator != clustersToRecluster.end(); ++clustersToRemoveIterator ){
-            qDebug() << "*clustersToRemoveIterator: "<<*clustersToRemoveIterator;
             removeClusterFromView(*clustersToRemoveIterator,active);
         }
 
         QList<int>::iterator iterator;
         for (iterator = reclusteredClusterList.begin(); iterator != reclusteredClusterList.end(); ++iterator){
             shownClusters->append(*iterator);
-            qDebug() << "*iterator to add: "<<*iterator;
             emit newClusterAddedToView(*iterator,active);
         }
     }
