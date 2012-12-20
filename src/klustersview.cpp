@@ -280,7 +280,7 @@ void KlustersView::update(KlustersView* pSender){
         repaint();
 }
 
-void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackground)
+void KlustersView::print(QPrinter *pPrinter, const QString& filePath, bool whiteBackground)
 {
     QPainter printPainter;
 
@@ -295,6 +295,7 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
     int nbViews = viewList.count();
     for(int i = 0; i< nbViews; i++) {
         ViewWidget* widget = viewList.at(i);
+        qDebug()<<" widget"<<widget<< " i"<<i;
         //qDebug()<<" widget->geomerty().width() "<<widget->geometry().width()<<" widget->geomerty().height() "<<widget->geometry().height();
         //QWidget* parent = static_cast<QWidget*>(widget->parent());
         // qDebug()<<"parent->geometry().x() "<<parent->geometry().x()<<" parent->geomerty().y() "<<parent->geometry().y();
@@ -311,16 +312,14 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
         if(qobject_cast<ClusterView*>(widget)){
             ClusterView* clusterView = static_cast<ClusterView*>(widget);
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Features: %2,%3").arg(filePath).arg(clusterView->getDimensionX()).arg(clusterView->getDimensionY()));
-        }
-        else if(qobject_cast<WaveformView*>(widget)){
+        } else if(qobject_cast<WaveformView*>(widget)) {
             if(inTimeFrameMode){
                 printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Start Time: %2 s, Duration: %3 s").arg(filePath).arg(startTime).arg(timeWindow));
             }
             else{
                 printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Number of Waveforms: %2").arg(filePath).arg(nbSpkToDisplay));
             }
-        }
-        else if(qobject_cast<CorrelationView*>(widget)){
+        } else if(qobject_cast<CorrelationView*>(widget)) {
             QString scaleType;
             switch(correlationScale){
             case Data::RAW :
@@ -334,13 +333,13 @@ void KlustersView::print(QPrinter *pPrinter, QString filePath, bool whiteBackgro
                 break;
             }
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      %2, Duration: %3 ms, Bin Size: %4 ms").arg(filePath).arg(scaleType).arg(correlogramTimeFrame/2).arg(binSize));
-        }
-        if(qobject_cast<ErrorMatrixView*>(widget)){
+        } else if(qobject_cast<ErrorMatrixView*>(widget)){
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1").arg(filePath));
         }
 
         nbViews --;
-        if(nbViews > 0) pPrinter->newPage();
+        if(nbViews > 0)
+            pPrinter->newPage();
     }
 
     //Print the trace view if exists

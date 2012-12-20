@@ -796,6 +796,7 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
 }
 
 void CorrelationView::print(QPainter& printPainter,int width,int height, bool whiteBackground){
+    qDebug()<<"void CorrelationView::print(QPainter& printPainter,int width,int height, bool whiteBackground){ **********************************";
     printState = true;
 
     //Draw the double buffer (pixmap) by copying it into the printer device throught the painter.
@@ -804,8 +805,10 @@ void CorrelationView::print(QPainter& printPainter,int width,int height, bool wh
     //If the left margin is not visible (the user zoomed without taking it in his selection), the viewport and the printer
     //have the same size.
     QRect r((QRect)window);
-    if(r.left() != 0) viewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height()-10);
-    else viewport = QRect(printPainter.viewport().left() + XMARGIN,printPainter.viewport().top(),printPainter.viewport().width() - XMARGIN,printPainter.viewport().height()-10);
+    if(r.left() != 0)
+        viewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height()-10);
+    else
+        viewport = QRect(printPainter.viewport().left() + XMARGIN,printPainter.viewport().top(),printPainter.viewport().width() - XMARGIN,printPainter.viewport().height()-10);
 
     //Set the window (part of the world I want to show)
     printPainter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function

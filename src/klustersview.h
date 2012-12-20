@@ -120,7 +120,7 @@ public:
     * @param filePath path of the opened document.
     * @param whiteBackground true if the printed background has to be white, false otherwise.
     */
-    void print(QPrinter* printer,QString filePath,bool whiteBackground);
+    void print(QPrinter* printer, const QString &filePath, bool whiteBackground);
     
     /**Adds a new view (ClusterView,WaveformView or CorrelationView).
     * @param docWidget QDockWidget to which the new view will be docked.
