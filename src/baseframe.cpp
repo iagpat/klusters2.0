@@ -42,7 +42,9 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,c
     setAutoFillBackground(true);
     //Setting of the frame
     setLineWidth (BORDER);
-    QPalette palette; palette.setColor(backgroundRole(), backgroundColor); setPalette(palette);
+    QPalette palette;
+    palette.setColor(backgroundRole(), backgroundColor);
+    setPalette(palette);
     setFrameStyle(QFrame::Box|QFrame::Plain);
 
     int h;
@@ -127,10 +129,8 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
             }
 
             //Test if a selected rectangle exist, if so draw it and delete it.
-            if(rubber){
-                delete rubber;
-                rubber = 0;
-            }
+            delete rubber;
+            rubber = 0;
             if(mRubberBand) {
                 mRubberBand->hide();
             }

@@ -320,9 +320,9 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
             if(!clusterInformation.at(1).isEmpty()){
                 if(first){
                     clusterText.append(tr("Type: ")).append(clusterInformation.at(1));
+		    first = false;
                 }
                 else{
-                    first = false;
                     clusterText.append(tr(", Type: ")).append(clusterInformation.at(1));
                 }
 
@@ -330,9 +330,9 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
             if(!clusterInformation.at(2).isEmpty()){
                 if(first){
                     clusterText.append(tr("ID: ")).append(clusterInformation.at(2));
+		    first = false;
                 }
                 else{
-                    first = false;
                     clusterText.append(tr(", ID: ")).append(clusterInformation.at(2));
                 }
 
@@ -340,18 +340,18 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
             if(!clusterInformation.at(3).isEmpty()){
                 if(first){
                     clusterText.append(tr("Quality: ")).append(clusterInformation.at(3));
+		    first = false;
                 }
                 else{
-                    first = false;
                     clusterText.append(tr(", Quality: ")).append(clusterInformation.at(3));
                 }
             }
             if(!clusterInformation.at(4).isEmpty()){
                 if(first){
+                    first = false;
                     clusterText.append(tr("Notes: ")).append(clusterInformation.at(4));
                 }
                 else{
-                    first = false;
                     clusterText.append(tr(", Notes: ")).append(clusterInformation.at(4));
                 }
             }
