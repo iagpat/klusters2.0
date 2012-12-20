@@ -81,7 +81,7 @@ public:
     ~BaseFrame();
 
     /**Signals that the widget is about to be deleted.*/
-    virtual inline void willBeKilled(){}
+    virtual void willBeKilled(){}
 
     /**Sets the borders of the frame.
    * @param x border on the left and right sides inside the window (QRect corresponding
@@ -89,7 +89,7 @@ public:
    * @param y border on the top and bottom sides inside the window (QRect corresponding
    * to the part of the drawing which will actually be drawn onto the widget).
   */
-    inline void setBorders(int x,int y){
+    void setBorders(int x,int y){
         Xborder = x;
         Yborder = y;
     }
@@ -97,13 +97,13 @@ public:
 public Q_SLOTS:
 
     /**Update the information presented in the view if need it.*/
-    virtual inline void updateDrawing(){}
+    virtual void updateDrawing(){}
 
     /***If the frame is contained in a dockWidget, this slot can be used
   * when the enclosing dockwidget is being closed.
   * Emits the parentDockBeingClosed signal.
   */
-    virtual inline void dockBeingClosed(){emit parentDockBeingClosed(this);}
+    virtual void dockBeingClosed(){emit parentDockBeingClosed(this);}
 
     /***Changes the color of the background.*/
     virtual void changeBackgroundColor(QColor color);
@@ -111,7 +111,7 @@ public Q_SLOTS:
     /**Change the current mode, call by a selection of a tool.
   * @param selectedMode new mode of drawing.
   */
-    virtual inline void setMode(BaseFrame::Mode selectedMode){mode = selectedMode;}
+    virtual void setMode(BaseFrame::Mode selectedMode){mode = selectedMode;}
 
 Q_SIGNALS:
     /***Signals that the enclosing dockwidget is being closed
@@ -160,7 +160,7 @@ protected:
   * @param point point with coordinates relative to the widget (viewport).
   * @return the point on the viewport translated to a point in the world.
   */
-    inline QPoint viewportToWorld(const QPoint& point){
+    QPoint viewportToWorld(const QPoint& point){
         return viewportToWorld(point.x(), point.y());
     }
 
@@ -178,7 +178,7 @@ protected:
   * @param point point with coordinates in the world.
   * @return the point on the world translated to a point in the viewport.
   */
-    inline QPoint worldToViewport(const QPoint& point){
+    QPoint worldToViewport(const QPoint& point){
         return worldToViewport(point.x(), point.y());
     }
 
@@ -201,7 +201,7 @@ protected:
   * @param width width in the world's coordinates system.
   * @return width in the viewport's coordinates system.
   */
-    inline long worldToViewportWidth(long width){
+    long worldToViewportWidth(long width){
         float widthRatio = (static_cast<float>(viewport.width())/static_cast<float>(((QRect)window).width()));
         return static_cast<long>(width * widthRatio);
     }
@@ -211,7 +211,7 @@ protected:
   * @param height height in the world's coordinates system.
   * @return height in the viewport's coordinates system.
   */
-    inline long worldToViewportHeight(long height){
+    long worldToViewportHeight(long height){
         float heightRatio = (static_cast<float>(viewport.height())/static_cast<float>(((QRect)window).height()));
         return static_cast<long>(height * heightRatio);
     }
@@ -221,7 +221,7 @@ protected:
   * @param width width in the world's coordinates system.
   * @return width in the viewport's coordinates system.
   */
-    inline long viewportToWorldWidth(long width){
+    long viewportToWorldWidth(long width){
         float widthRatio = (static_cast<float>(((QRect)window).width())/static_cast<float>(viewport.width()));
         return static_cast<long>(width * widthRatio);
     }
@@ -231,7 +231,7 @@ protected:
   * @param height height in the world's coordinates system.
   * @return height in the viewport's coordinates system.
   */
-    inline long viewportToWorldHeight(long height){
+    long viewportToWorldHeight(long height){
         float heightRatio = (static_cast<float>(((QRect)window).height())/static_cast<float>(viewport.height()));
         return static_cast<long>(height * heightRatio);
     }
@@ -240,7 +240,7 @@ protected:
   * @param draw true if a rubber band has to be drawn, false otherwise.
   * @param vertical true if the rubber band has to be drawn on whole the height of the window, false otherwise.
   */
-    inline void drawRubberBand(bool draw,bool vertical = false){
+    void drawRubberBand(bool draw,bool vertical = false){
         isRubberBandToBeDrawn = draw;
         wholeHeightRectangle = vertical;
     }
