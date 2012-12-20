@@ -428,6 +428,7 @@ private Q_SLOTS:
 
     void slotAbout();
 
+    void slotHanbook();
 private:
     void initView();
     void createMenus();

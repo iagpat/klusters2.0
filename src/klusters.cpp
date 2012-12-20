@@ -14,6 +14,7 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+#include "config-klusters.h"
 
 // include files for QT
 #include <qdir.h>
@@ -56,6 +57,7 @@
 #include "prefdialog.h"
 #include "configuration.h"  // class Configuration
 #include "processwidget.h"
+#include "qhelpviewer.h"
 
 extern int nbUndo;
 
@@ -541,6 +543,11 @@ void KlustersApp::createMenus()
     settingsMenu->addSeparator();
 
     QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
+
+    QAction *handbook = helpMenu->addAction(tr("Handbook"));
+    handbook->setShortcut(Qt::Key_F1);
+    connect(handbook,SIGNAL(triggered()), this,SLOT(slotHanbook()));
+
     QAction *about = helpMenu->addAction(tr("About"));
     connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
 
@@ -3122,4 +3129,12 @@ void KlustersApp::slotStateChanged(const QString& state)
 void KlustersApp::slotAbout()
 {
     QMessageBox::about(this,tr("Klusters"),tr("Manual clustering of neuronal action potentia"));
+}
+
+void KlustersApp::slotHanbook()
+{
+    QHelpViewer *helpDialog = new QHelpViewer(this);
+    helpDialog->setHtml(KLUSTER_DOC_PATH + QLatin1String("index.html"));
+    helpDialog->setAttribute( Qt::WA_DeleteOnClose );
+    helpDialog->show();
 }
