@@ -292,8 +292,10 @@ void KlustersView::print(QPrinter *pPrinter, const QString& filePath, bool white
     QRect textRec = QRect(printPainter.viewport().left() + 5 ,printPainter.viewport().height() - 20,printPainter.viewport().width() - 5,20);
     QFont f("Helvetica",8);
 
-    int nbViews = viewList.count();
-    for(int i = 0; i< nbViews; i++) {
+    const int nbViews = viewList.count();
+    for(int i = 0; i< nbViews; ++i) {
+        if(i > 0)
+            pPrinter->newPage();
         ViewWidget* widget = viewList.at(i);
         //Modify the viewport so the view will not draw on the legend
         QRect newViewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height());
@@ -310,8 +312,7 @@ void KlustersView::print(QPrinter *pPrinter, const QString& filePath, bool white
         } else if(qobject_cast<WaveformView*>(widget)) {
             if(inTimeFrameMode){
                 printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Start Time: %2 s, Duration: %3 s").arg(filePath).arg(startTime).arg(timeWindow));
-            }
-            else{
+            } else {
                 printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1      Number of Waveforms: %2").arg(filePath).arg(nbSpkToDisplay));
             }
         } else if(qobject_cast<CorrelationView*>(widget)) {
@@ -332,8 +333,6 @@ void KlustersView::print(QPrinter *pPrinter, const QString& filePath, bool white
             printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1").arg(filePath));
         }
 
-        if(nbViews > 0)
-            pPrinter->newPage();
     }
 
     //Print the trace view if exists
