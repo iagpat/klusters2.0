@@ -26,9 +26,6 @@
 #include <fstream>
 #include <iomanip> // Required for formated I/O.
 
-
-
-
 #include <QTemporaryFile>
 
 //Unix include file
