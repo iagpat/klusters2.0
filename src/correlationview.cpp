@@ -140,11 +140,13 @@ void CorrelationView::singleColorUpdate(int clusterId,bool active){
             else pairUpdateList.append(Pair(clusterId,*iterator));
         }
 
-        if(drawContentsMode == REFRESH)drawContentsMode = UPDATE;
+        if(drawContentsMode == REFRESH)
+            drawContentsMode = UPDATE;
     }
     else{
         //Update drawContentsMode if need it.
-        if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
+        if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)
+            drawContentsMode = REDRAW;
     }
 }
 

@@ -393,11 +393,12 @@ void ErrorMatrixView::clustersGrouped(QList<int>& groupedClusters, int newCluste
     //in the modifiedClusterList and ask to redraw the error matrix
     //in order to signal to the user that the error matrix in no more up to date.
     QList<int>::iterator iterator;
-    for(iterator = groupedClusters.begin(); iterator != groupedClusters.end(); ++iterator)
+    for(iterator = groupedClusters.begin(); iterator != groupedClusters.end(); ++iterator) {
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
             deletedList.append(*iterator);
         }
+    }
 
     deletedMap.insert(newClusterId,deletedList);
 
@@ -413,11 +414,12 @@ void ErrorMatrixView::clustersDeleted(QList<int>& deletedClusters,int destinatio
     //in the modifiedClusterList and ask to redraw the error matrix
     //in order to signal to the user that the error matrix in no more up to date.
     QList<int>::iterator iterator;
-    for(iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator)
+    for(iterator = deletedClusters.begin(); iterator != deletedClusters.end(); ++iterator) {
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
             deletedList.append(*iterator);
         }
+    }
 
     deletedMap.insert(destinationCluster,deletedList);
 
@@ -428,17 +430,19 @@ void ErrorMatrixView::clustersDeleted(QList<int>& deletedClusters,int destinatio
 
 void ErrorMatrixView::removeSpikesFromClusters(QList<int>& fromClusters, int destinationClusterId,QList<int>& emptiedClusters){
     QList<int>::iterator iterator;
-    for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator)
+    for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator) {
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
         }
+    }
 
     QList<int> deletedList;
-    for(iterator = emptiedClusters.begin(); iterator != emptiedClusters.end(); ++iterator)
+    for(iterator = emptiedClusters.begin(); iterator != emptiedClusters.end(); ++iterator) {
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
             deletedList.append(*iterator);
         }
+    }
 
     deletedMap.insert(destinationClusterId,deletedList);
 
@@ -454,11 +458,12 @@ void ErrorMatrixView::newClusterAdded(QList<int>& fromClusters,int clusterId,QLi
         }
 
     QList<int> deletedList;
-    for(iterator = emptiedClusters.begin(); iterator != emptiedClusters.end(); ++iterator)
+    for(iterator = emptiedClusters.begin(); iterator != emptiedClusters.end(); ++iterator) {
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
             deletedList.append(*iterator);
         }
+    }
 
     deletedMap.insert(clusterId,deletedList);
 
@@ -473,10 +478,11 @@ void ErrorMatrixView::newClustersAdded(QMap<int,int>& fromToNewClusterIds,QList<
     //in the modifiedClusterList and ask to redraw the error matrix
     //in order to signal to the user that the error matrix in no more up to date.
     QList<int>::iterator iterator;
-    for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator)
+    for(iterator = fromClusters.begin(); iterator != fromClusters.end(); ++iterator) {
         if(clusterList.contains(*iterator)){
             modifiedClusterList.append(*iterator);
         }
+    }
 
     nbActions++;
     drawContentsMode = REDRAW;
