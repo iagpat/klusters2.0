@@ -10,7 +10,7 @@ add_definitions(${QT_DEFINITIONS} )
 
 include(MacroEnsureVersion)
 find_package(LibXml2 REQUIRED)
-find_package(LibKlustersShared REQUIRED)
+find_package(LibKlustersShared 1.0.0 REQUIRED)
 include(CheckCXXCompilerFlag)
 
 
