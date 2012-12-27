@@ -54,6 +54,5 @@ add_executable(klusters ${klusters_SRCS} )
 target_link_libraries(klusters ${QT_LIBRARIES} ${LIBXML2_LIBRARIES} ${QT_QTXML_LIBRARY} ${LIBKLUSTERSSHARED_LIBRARY})
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/klusters DESTINATION bin)
-#verify
 #install(FILES klusters.png DESTINATION ${DATA_INSTALL_DIR}/icons/) 
-#install(FILES klusters.desktop DESTINATION data )
+install(FILES klusters.desktop DESTINATION share/applications/ )
