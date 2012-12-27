@@ -58,6 +58,7 @@
 #include "configuration.h"  // class Configuration
 #include "processwidget.h"
 #include "qhelpviewer.h"
+#include <QSettings>
 
 extern int nbUndo;
 
@@ -173,9 +174,13 @@ void KlustersApp::createMenus()
     mOpenAction->setShortcut(QKeySequence::Open);
     connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
+    QSettings settings;
     mFileOpenRecent = new QRecentFileAction(this);
+    mFileOpenRecent->setListOfRecentFile(settings.value(QLatin1String("Recent Files"),QStringList()).toStringList());
     fileMenu->addAction(mFileOpenRecent);
     connect(mFileOpenRecent, SIGNAL(recentFileSelected(QString)), this, SLOT(slotFileOpenRecent(QString)));
+    connect(mFileOpenRecent, SIGNAL(recentFileListChanged()), this, SLOT(slotSaveRecentFiles()));
+
 
     mImportFile = fileMenu->addAction(tr("&Import File"));
     mImportFile->setShortcut(Qt::CTRL + Qt::Key_I);
@@ -3137,4 +3142,10 @@ void KlustersApp::slotHanbook()
     helpDialog->setHtml(KLUSTER_DOC_PATH + QLatin1String("index.html"));
     helpDialog->setAttribute( Qt::WA_DeleteOnClose );
     helpDialog->show();
+}
+
+void KlustersApp::slotSaveRecentFiles()
+{
+    QSettings settings;
+    settings.setValue(QLatin1String("Recent Files"),mFileOpenRecent->listOfRecentFile());
 }
