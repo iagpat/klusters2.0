@@ -904,7 +904,7 @@ void KlustersApp::initDisplay(){
 
     mainDock = view;
     tabsParent->addDockArea(view,tr("Overview Display"));
-
+    tabsParent->show();
 
     view->installEventFilter(this);
 
@@ -1496,14 +1496,13 @@ void KlustersApp::slotFileSaveAs()
 void KlustersApp::slotDisplayClose()
 {
 
-    DockArea* current;
+    DockArea* current = static_cast<DockArea*>(tabsParent->currentWidget());
 
     slotStatusMsg(tr("Closing display..."));
 
     //Get the active tab
     if(tabsParent->count()>1){
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        current = static_cast<DockArea*>(tabsParent->currentWidget());
         //Remove the display from the group of tabs
         tabsParent->removeTab(tabsParent->indexOf(current));
         displayCount --;
@@ -1601,6 +1600,8 @@ void KlustersApp::slotDisplayClose()
                         }
                     }
                 }
+                tabsParent->removeTab(0);
+                tabsParent->hide();
                 mainDock = 0L;
                 QApplication::restoreOverrideCursor();
             }
