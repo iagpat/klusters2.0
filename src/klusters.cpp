@@ -1350,7 +1350,7 @@ void KlustersApp::customEvent (QEvent* event){
             }
         }
         else
-            QMessageBox::critical (0,tr("Could not save the current document !"), tr("I/O Error !"));
+            QMessageBox::critical (this,tr("I/O Error !"), tr("Could not save the current document !"));
 
         slotStatusMsg(tr("Ready."));
         slotStateChanged("SavingDoneState");
