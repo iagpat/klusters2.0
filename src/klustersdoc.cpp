@@ -215,7 +215,6 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     //3 - load the spikes, clusters, time and PCA information (loadDataFromNewFormat())
 
     //Initialize the members specific to a document
-    qDebug()<<" int KlustersDoc::openDocument(const QString &url,QString& errorInformation, const char *format /*=0*/){"<<url;
     clusteringData = new Data();
     clusterColorList = new ItemColors();
     addedClusters = new QList<int>();
@@ -1552,6 +1551,8 @@ void KlustersDoc::undo(){
     //Get the active view.
     KlustersView* activeView = static_cast<KlustersApp*>(parent)->activeView();
 
+    if(!activeView)
+        return;
     clusteringData->undo(*addedClusters,*modifiedClusters);
 
     //If clusterColorListUndoList is not empty, make the current clusterColorList become the first element
@@ -1618,7 +1619,7 @@ void KlustersDoc::undo(){
                 //Notify the errorMatrixView of the modification
                 emit undoAdditionModification(*addedClusters,*modifiedClusters);
             }
-            else if(addedClusters->size() > 0 && modifiedClusters->size() == 0){
+            else if(!addedClusters->isEmpty() && modifiedClusters->isEmpty()){
                 qDebug() << "addedClusters->size() > 0 && modifiedClusters->size() == 0"<< endl;
                 for(int i =0; i<viewList->count();++i) {
                     KlustersView *view = viewList->at(i);
@@ -1637,7 +1638,7 @@ void KlustersDoc::undo(){
                 //Notify the errorMatrixView of the modification
                 emit undoAddition(*addedClusters);
             }
-            else if(addedClusters->size() == 0 && modifiedClusters->size() > 0){
+            else if(addedClusters->isEmpty() && !modifiedClusters->isEmpty()){
                 qDebug() << "addedClusters->size() == 0 && modifiedClusters->size() > 0"<< endl;
                 for(int i =0; i<viewList->count();++i) {
                     KlustersView *view = viewList->at(i);
