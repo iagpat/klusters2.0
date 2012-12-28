@@ -1585,18 +1585,20 @@ void KlustersApp::slotDisplayClose()
                     delete mainDock;
                 }
                 else{
-                    if(processWidget->isRunning()){
-                        processWidget->killJob();
-                        processKilled = true;
-                    }
-                    if(processFinished && processOutputsFinished){
-                        delete mainDock;
-                        processWidget = 0L;
-                    } else {
-                        mainDock->hide();
-                        processWidget->hideWidget();
-                        QTimer::singleShot(2000,this, SLOT(slotDisplayClose()));
-                        return;
+                    if(processWidget) {
+                        if(processWidget->isRunning()){
+                            processWidget->killJob();
+                            processKilled = true;
+                        }
+                        if(processFinished && processOutputsFinished){
+                            delete mainDock;
+                            processWidget = 0L;
+                        } else {
+                            mainDock->hide();
+                            processWidget->hideWidget();
+                            QTimer::singleShot(2000,this, SLOT(slotDisplayClose()));
+                            return;
+                        }
                     }
                 }
                 mainDock = 0L;
