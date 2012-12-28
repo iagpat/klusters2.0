@@ -962,7 +962,7 @@ The Postscript format is ideal to import a figure into a drawing program for add
 <chapter id="settings">
 <title>Settings</title>
 <para>
-Selecting <menuchoice> <guimenu>Settings</guimenu> <guimenuitem>Configure &klusters;</guimenuitem></menuchoice> will open the <guilabel>Settings Dialog</guilabel>. This lets you configure several default behaviors of &klusters;.
+Selecting <menuchoice> <guimenu>Settings</guimenu> <guimenuitem>Configure klusters</guimenuitem></menuchoice> will open the <guilabel>Settings Dialog</guilabel>. This lets you configure several default behaviors of &klusters;.
 </para>
 
 <variablelist>
@@ -1968,7 +1968,7 @@ All 9 lines are expected in this file, but only lines 1, 4, 5, and 8 are actuall
 <varlistentry>
 <term><menuchoice>
 <guimenu>Settings</guimenu>
-<guimenuitem>Configure &klusters;</guimenuitem>
+<guimenuitem>Configure klusters</guimenuitem>
 </menuchoice></term>
 <listitem><para>Lets you configure a number of default behaviors</para></listitem>
 </varlistentry>
@@ -1983,7 +1983,7 @@ All 9 lines are expected in this file, but only lines 1, 4, 5, and 8 are actuall
 <varlistentry>
 <term><menuchoice>
 <guimenu>Help</guimenu>
-<guimenuitem>&klusters; Handbook</guimenuitem>
+<guimenuitem>klusters Handbook</guimenuitem>
 </menuchoice></term>
 <listitem><para>Opens this user manual in the <guilabel>Help Center</guilabel></para></listitem>
 </varlistentry>
@@ -2004,7 +2004,7 @@ All 9 lines are expected in this file, but only lines 1, 4, 5, and 8 are actuall
 <varlistentry>
 <term><menuchoice>
 <guimenu>Help</guimenu>
-<guimenuitem>About &klusters;</guimenuitem>
+<guimenuitem>About klusters</guimenuitem>
 </menuchoice></term>
 <listitem><para>Shows information about the authors of and contributors to &klusters;</para></listitem>
 </varlistentry>
