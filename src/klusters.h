@@ -277,7 +277,7 @@ private Q_SLOTS:
     /**Set the selection mode to delay, enabling the update action.*/
     void slotDelaySelection();
     /**Updates the palette and the spine boxes when the active display changes.*/
-    void slotTabChange(QWidget* widget);
+    void slotTabChange(int index);
     /**Triggers an update of the dimensions due to a change of the absciss dimension.*/
     void slotUpdateDimensionX(int dimensionX);
     /**Triggers an update of the dimensions due to a change of the ordinate dimension.*/

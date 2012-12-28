@@ -1037,7 +1037,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display change.
-        connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
+        connect(tabsParent, SIGNAL(currentChanged(int)), this, SLOT(slotTabChange(int)));
 
         //Keep track of the number of displays
         displayCount ++;
@@ -2024,7 +2024,8 @@ void KlustersApp::slotDelaySelection(){
     clusterPalette->setDelayMode();
 }
 
-void KlustersApp::slotTabChange(QWidget* widget){
+void KlustersApp::slotTabChange(int index){
+    QWidget *widget = tabsParent->widget(index);
     DockArea *area = dynamic_cast<DockArea*>(widget);
     if(area) {
         KlustersView* activeView = qobject_cast<KlustersView *>(area);
@@ -2492,7 +2493,7 @@ void KlustersApp::slotRecluster(){
 
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display changes.
-        connect(tabsParent, SIGNAL(currentChanged(QWidget*)), this, SLOT(slotTabChange(QWidget*)));
+        connect(tabsParent, SIGNAL(currentChanged(int)), this, SLOT(slotTabChange(int)));
 
         tabsParent->addTab(processWidget,tr("Recluster output"));
 
