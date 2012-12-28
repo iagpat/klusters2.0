@@ -2106,7 +2106,7 @@ Documentation copyright 2004 - 2007 Michaël B. Zugaro <email>michael.zugaro@col
 <sect1 id="requirements">
 <title>Requirements</title>
 <para>
-&klusters; requires KDE >= 3.1, QT >= 3.1 and <ulink url="http://www.xmlsoft.org/downloads.html">libxml2</ulink> >= 2.5.4
+&klusters; requires QT >= 4.8 and <ulink url="http://www.xmlsoft.org/downloads.html">libxml2</ulink> >= 2.5.4
 </para>
 <para>
 To build &klusters; from source, you will also need the corresponding devel packages and an ANSI C++ Standard compliant compiler (gcc version 3.2.2 is known to work).
@@ -2115,7 +2115,7 @@ To build &klusters; from source, you will also need the corresponding devel pack
 In order to enable <link linkend="reclustering">automatic reclustering</link>, you will need an automatic cluster cutting program such as Kenneth D. Harris' <ulink url="http://klustakwik.sourceforge.net">&klustakwik;</ulink>.
 </para>
 <para>
-In order to successfully use &klusters;, you need KDE 3.1. To run, &klusters; uses about 15MB of
+In order to successfully use &klusters;, you need Qt 4.8. To run, &klusters; uses about 15MB of
 memory, plus enough space to load the feature and cluster files, plus roughly the size of the cluster file for each operation that can be undone.
 </para>
 </sect1>
@@ -2125,7 +2125,7 @@ memory, plus enough space to load the feature and cluster files, plus roughly th
 <para>
 In order to compile and install &klusters; on your system, download and extract the source archive, then type the following in the base directory:
 <screen width="40">
-<prompt>%</prompt> <userinput>./configure --prefix=`kde-config --prefix`</userinput>
+<prompt>%</prompt> <userinput>cmake -DCMAKE_INSTALL_PREFIX=... .</userinput>
 <prompt>%</prompt> <userinput>make</userinput>
 <prompt>%</prompt> <userinput>make install</userinput>
 </screen>
