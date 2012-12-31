@@ -86,6 +86,7 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels)
     connect(prefGeneral->reclusteringExecutableLineEdit,SIGNAL(textChanged(QString)),this,SLOT(enableApply()));
     //connect(prefGeneral,SIGNAL(reclusteringArgsUpdate()),this,SLOT(enableApply()));
     connect(prefGeneral->reclusteringArgsLineEdit,SIGNAL(textChanged(QString)),this,SLOT(enableApply()));
+    connect(prefGeneral->useWhiteColorPrinting,SIGNAL(clicked()),this,SLOT(enableApply()));
     
     connect(prefclusterView->intervalSpinBox,SIGNAL(valueChanged(int)),this,SLOT(enableApply()));
     connect(prefWaveformView->gainSpinBox,SIGNAL(valueChanged(int)),this,SLOT(enableApply()));
@@ -150,6 +151,8 @@ void PrefDialog::slotDefault() {
    prefGeneral->setBackgroundColor(configuration().getBackgroundColorDefault());
    prefGeneral->setReclusteringExecutable(configuration().getReclusteringExecutableDefault());
    prefGeneral->setReclusteringArguments(configuration().getReclusteringArgumentsDefault()); 
+   prefGeneral->setUseWhiteColorDuringPrinting(configuration().getUseWhiteColorDuringPrinting());
+
    prefclusterView->setTimeInterval(configuration().getTimeIntervalDefault());
    prefWaveformView->setGain(configuration().getGainDefault());
    prefWaveformView->resetChannelList(configuration().getNbChannels());
