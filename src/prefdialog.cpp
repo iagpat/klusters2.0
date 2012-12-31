@@ -50,7 +50,7 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels)
     prefGeneral = new PrefGeneral(w);
     QPageWidgetItem *item = new QPageWidgetItem(prefGeneral,tr("General"));
     item->setHeader(tr("Klusters General Configuration"));
-    item->setIcon(QIcon(":/icons/kfm"));
+    item->setIcon(QIcon(":/shared-icons/folder-open"));
 
 
     addPage(item);
