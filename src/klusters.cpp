@@ -540,6 +540,7 @@ void KlustersApp::createMenus()
 
     settingsMenu->addSeparator();
     mPreferenceAction = settingsMenu->addAction(tr("Preferences"));
+    mPreferenceAction->setIcon(QIcon(":/shared-icons/configure"));
     connect(mPreferenceAction,SIGNAL(triggered()), this,SLOT(executePreferencesDlg()));
 
 
