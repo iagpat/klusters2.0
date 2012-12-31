@@ -140,9 +140,9 @@ void PrefDialog::updateConfiguration(){
 
 
 void PrefDialog::slotDefault() {
-  if (QMessageBox::warning(this, tr("Set default options?"), tr("This will set the default options "
-      "in ALL pages of the preferences dialog! Do you wish to continue?"),
-      tr("Set defaults"))==QMessageBox::Ok){
+  if (QMessageBox::question(this, tr("Set default options?"), tr("This will set the default options "
+      "in ALL pages of the preferences dialog! Do you wish to continue?"), QMessageBox::Ok|QMessageBox::Cancel
+      )==QMessageBox::Ok){
         
    prefGeneral->setCrashRecovery(configuration().isCrashRecoveryDefault());
    prefGeneral->setCrashRecoveryIndex(configuration().crashRecoveryIntervalIndexDefault());
