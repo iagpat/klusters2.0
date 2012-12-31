@@ -28,7 +28,8 @@
 #include "prefwaveformview.h" // class PrefWaveformView
 #include "prefclusterview.h"        // class PrefClusterView
 #include "channellist.h"
-
+#include "config-klusters.h"
+#include <qhelpviewer.h>
 
 /**
   *@author Lynn Hazan
@@ -93,9 +94,17 @@ PrefDialog::PrefDialog(QWidget *parent,int nbChannels)
 
     connect(this, SIGNAL(applyClicked()), SLOT(slotApply()));
     connect(this, SIGNAL(defaultClicked()), SLOT(slotDefault()));
-
+    connect(this,SIGNAL(helpClicked()),SLOT(slotHelp()));
 
     applyEnable = false;
+}
+
+void PrefDialog::slotHelp()
+{
+    QHelpViewer *helpDialog = new QHelpViewer(this);
+    helpDialog->setHtml(KLUSTER_DOC_PATH + QLatin1String("index.html"));
+    helpDialog->setAttribute( Qt::WA_DeleteOnClose );
+    helpDialog->show();
 }
 
 void PrefDialog::updateDialog() {  
