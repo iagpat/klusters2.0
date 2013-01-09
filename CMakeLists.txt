@@ -61,14 +61,30 @@ macro(_DETERMINE_GCC_SYSTEM_INCLUDE_DIRS _lang _result)
   ENDIF( "${_gccOutput}" MATCHES "> search starts here[^\n]+\n *(.+) *\n *End of (search) list" )
 ENDMACRO(_DETERMINE_GCC_SYSTEM_INCLUDE_DIRS _lang)
 
+if (CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME STREQUAL GNU)
+   if (CMAKE_COMPILER_IS_GNUCXX)
+      set ( _KDE4_PLATFORM_DEFINITIONS -D_XOPEN_SOURCE=500 -D_BSD_SOURCE -D_GNU_SOURCE)
+      set ( CMAKE_SHARED_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
+      set ( CMAKE_MODULE_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_MODULE_LINKER_FLAGS}")
 
-#laurent check from kde
+      set ( CMAKE_SHARED_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_SHARED_LINKER_FLAGS}")
+      set ( CMAKE_MODULE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_MODULE_LINKER_FLAGS}")
+      set ( CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-new-dtags ${CMAKE_EXE_LINKER_FLAGS}")
+
+      # we profile...
+      if(CMAKE_BUILD_TYPE_TOLOWER MATCHES profile)
+        set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
+        set (CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -fprofile-arcs -ftest-coverage")
+      endif(CMAKE_BUILD_TYPE_TOLOWER MATCHES profile)
+   endif (CMAKE_COMPILER_IS_GNUCXX)
+   if (CMAKE_C_COMPILER MATCHES "icc")
+      set ( _KDE4_PLATFORM_DEFINITIONS -D_XOPEN_SOURCE=500 -D_BSD_SOURCE -D_GNU_SOURCE)
+      set ( CMAKE_SHARED_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
+      set ( CMAKE_MODULE_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_MODULE_LINKER_FLAGS}")
+   endif (CMAKE_C_COMPILER MATCHES "icc")
+endif (CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME STREQUAL GNU)
+
 if (CMAKE_COMPILER_IS_GNUCXX)
-  if (NOT APPLE)
-    set ( CMAKE_SHARED_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_SHARED_LINKER_FLAGS}")
-    set ( CMAKE_MODULE_LINKER_FLAGS "-Wl,--fatal-warnings -Wl,--no-undefined -lc ${CMAKE_MODULE_LINKER_FLAGS}")
-  endif ()
-   
    _DETERMINE_GCC_SYSTEM_INCLUDE_DIRS(c++ _dirs)
    set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES
        ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES} ${_dirs})
@@ -86,8 +102,47 @@ if (CMAKE_COMPILER_IS_GNUCXX)
    set(CMAKE_C_FLAGS_DEBUGFULL        "-g3 -fno-inline")
    set(CMAKE_C_FLAGS_PROFILE          "-g3 -fno-inline -ftest-coverage -fprofile-arcs")
 
-  check_cxx_compiler_flag(-fvisibility=hidden __KDE_HAVE_GCC_VISIBILITY)
-  set( __KDE_HAVE_GCC_VISIBILITY ${__KDE_HAVE_GCC_VISIBILITY} CACHE BOOL "GCC support for hidden visibility")
+   set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -Wno-long-long -std=iso9899:1990 -Wundef -Wcast-align -Werror-implicit-function-declaration -Wchar-subscripts -Wall -W -Wpointer-arith -Wwrite-strings -Wformat-security -Wmissing-format-attribute -fno-common")
+   # As of Qt 4.6.x we need to override the new exception macros if we want compile with -fno-exceptions
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common")
+
+   if (CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME STREQUAL GNU)
+     # This should not be needed, as it is also part of _KDE4_PLATFORM_DEFINITIONS below.
+     # It is kept here nonetheless both for backwards compatibility in case one does not use add_definitions(${KDE4_DEFINITIONS})
+     # and also because it is/was needed by glibc for snprintf to be available when building C files.
+     # See commit 4a44862b2d178c1d2e1eb4da90010d19a1e4a42c.
+     add_definitions (-D_BSD_SOURCE)
+   endif (CMAKE_SYSTEM_NAME MATCHES Linux OR CMAKE_SYSTEM_NAME STREQUAL GNU)
+
+   if (CMAKE_SYSTEM_NAME STREQUAL GNU)
+      set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pthread")
+      set (CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -pthread")
+   endif (CMAKE_SYSTEM_NAME STREQUAL GNU)
+
+   # gcc under Windows
+   if (MINGW)
+      set (CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--export-all-symbols -Wl,--disable-auto-import")
+      set (CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--export-all-symbols -Wl,--disable-auto-import")
+   endif (MINGW)
+
+   check_cxx_compiler_flag(-fPIE HAVE_FPIE_SUPPORT)
+   if(KDE4_ENABLE_FPIE)
+       if(HAVE_FPIE_SUPPORT)
+        set (KDE4_CXX_FPIE_FLAGS "-fPIE")
+        set (KDE4_PIE_LDFLAGS "-pie")
+       else(HAVE_FPIE_SUPPORT)
+        message(STATUS "Your compiler doesn't support the PIE flag")
+       endif(HAVE_FPIE_SUPPORT)
+   endif(KDE4_ENABLE_FPIE)
+
+   check_cxx_compiler_flag(-Woverloaded-virtual __KDE_HAVE_W_OVERLOADED_VIRTUAL)
+   if(__KDE_HAVE_W_OVERLOADED_VIRTUAL)
+       set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Woverloaded-virtual")
+   endif(__KDE_HAVE_W_OVERLOADED_VIRTUAL)
+
+   # visibility support
+   check_cxx_compiler_flag(-fvisibility=hidden __KDE_HAVE_GCC_VISIBILITY)
+   set( __KDE_HAVE_GCC_VISIBILITY ${__KDE_HAVE_GCC_VISIBILITY} CACHE BOOL "GCC support for hidden visibility")
 
    # get the gcc version
    exec_program(${CMAKE_C_COMPILER} ARGS ${CMAKE_C_COMPILER_ARG1} --version OUTPUT_VARIABLE _gcc_version_info)
@@ -107,6 +162,13 @@ if (CMAKE_COMPILER_IS_GNUCXX)
       macro_ensure_version("4.3.0" "${_gcc_version}" GCC_IS_NEWER_THAN_4_3)
    endif (_gcc_version)
 
+   # save a little by making local statics not threadsafe
+   # ### do not enable it for older compilers, see
+   # ### http://gcc.gnu.org/bugzilla/show_bug.cgi?id=31806
+   if (GCC_IS_NEWER_THAN_4_3)
+       set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-threadsafe-statics")
+   endif (GCC_IS_NEWER_THAN_4_3)
+
    set(_GCC_COMPILED_WITH_BAD_ALLOCATOR FALSE)
    if (GCC_IS_NEWER_THAN_4_1)
       exec_program(${CMAKE_C_COMPILER} ARGS ${CMAKE_C_COMPILER_ARG1} -v OUTPUT_VARIABLE _gcc_alloc_info)
@@ -123,23 +185,48 @@ if (CMAKE_COMPILER_IS_GNUCXX)
       file(WRITE "${_source_file}" "${_source}")
       set(_include_dirs "-DINCLUDE_DIRECTORIES:STRING=${QT_INCLUDES}")
 
-      try_compile(_compile_result ${CMAKE_BINARY_DIR} ${_source_file} CMAKE_FLAGS "${_include_dirs}" COMPILE_OUTPUT_VARIABLE _compile_output_var)
+      try_compile(_compile_result ${CMAKE_BINARY_DIR} ${_source_file} CMAKE_FLAGS "${_include_dirs}" OUTPUT_VARIABLE _compile_output_var)
 
       if(NOT _compile_result)
-         message(FATAL_ERROR "Qt compiled without support for -fvisibility=hidden. This will break plugins and linking of some applications. Please fix your Qt installation.")
+         message("${_compile_output_var}")
+         message(FATAL_ERROR "Qt compiled without support for -fvisibility=hidden. This will break plugins and linking of some applications. Please fix your Qt installation (try passing --reduce-exports to configure).")
       endif(NOT _compile_result)
 
       if (GCC_IS_NEWER_THAN_4_2)
-          set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility-inlines-hidden")
-          MESSAGE(STATUS "compile with visibility hidden")
+         set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror=return-type -fvisibility-inlines-hidden")
       endif (GCC_IS_NEWER_THAN_4_2)
    else (__KDE_HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_1 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR AND NOT WIN32)
       set (__KDE_HAVE_GCC_VISIBILITY 0)
    endif (__KDE_HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_1 AND NOT _GCC_COMPILED_WITH_BAD_ALLOCATOR AND NOT WIN32)
 
-endif()
+endif (CMAKE_COMPILER_IS_GNUCXX)
 
 
+if (CMAKE_C_COMPILER MATCHES "icc")
+
+   set (KDE4_ENABLE_EXCEPTIONS -fexceptions)
+   # Select flags.
+   set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+   set(CMAKE_CXX_FLAGS_RELEASE        "-O2 -DNDEBUG -DQT_NO_DEBUG")
+   set(CMAKE_CXX_FLAGS_DEBUG          "-O2 -g -fno-inline -noalign")
+   set(CMAKE_CXX_FLAGS_DEBUGFULL      "-g -fno-inline -noalign")
+   set(CMAKE_C_FLAGS_RELWITHDEBINFO   "-O2 -g")
+   set(CMAKE_C_FLAGS_RELEASE          "-O2 -DNDEBUG -DQT_NO_DEBUG")
+   set(CMAKE_C_FLAGS_DEBUG            "-O2 -g -fno-inline -noalign")
+   set(CMAKE_C_FLAGS_DEBUGFULL        "-g -fno-inline -noalign")
+
+   set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -ansi -Wall -w1 -Wpointer-arith -fno-common")
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ansi -Wall -w1 -Wpointer-arith -fno-exceptions -fno-common")
+
+   # visibility support
+   set(__KDE_HAVE_ICC_VISIBILITY)
+#   check_cxx_compiler_flag(-fvisibility=hidden __KDE_HAVE_ICC_VISIBILITY)
+#   if (__KDE_HAVE_ICC_VISIBILITY)
+#      set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+#   endif (__KDE_HAVE_ICC_VISIBILITY)
+
+endif (CMAKE_C_COMPILER MATCHES "icc")
+ 
 if (MSVC)
    set (KDE4_ENABLE_EXCEPTIONS -EHsc)
 endif()   
