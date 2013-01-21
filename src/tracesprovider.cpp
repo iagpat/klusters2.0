@@ -124,7 +124,7 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
         //go to the startInRecordingUnits position
         off_t position = static_cast<off_t>(static_cast<off_t>(startInRecordingUnits)* static_cast<off_t>(nbChannels));
         //C++ code:  dataFile.seekg(static_cast<off_t>(position * sizeof(short)),ios::beg);
-        fseeko(dataFile,static_cast<off_t>(position * sizeof(short)),SEEK_SET);
+        fseeko64(dataFile,static_cast<off_t>(position * sizeof(short)),SEEK_SET);
         // copy the data into retrieveData.
         off_t nbValues = nbSamples * nbChannels;
         //C++ code: dataFile.read((char*)(&(retrieveData[0])),sizeof(short) * nbValues);
@@ -155,7 +155,7 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
         //go to the startInRecordingUnits position
         off_t position = static_cast<off_t>(static_cast<off_t>(startInRecordingUnits)* static_cast<off_t>(nbChannels));
         //C++ code: dataFile.seekg(static_cast<off_t>(position * sizeof(dataType)),ios::beg);
-        fseeko(dataFile,static_cast<off_t>(position * sizeof(dataType)),SEEK_SET);
+        fseeko64(dataFile,static_cast<off_t>(position * sizeof(dataType)),SEEK_SET);
         // copy the data into retrieveData.
         off_t nbValues = nbSamples * nbChannels;
         //C++ code: dataFile.read((char*)&(retrieveData[0]),sizeof(dataType) * nbValues);
@@ -215,8 +215,8 @@ void TracesProvider::computeRecordingLength(){
         return;
     }
     // obtain file size.
-    fseeko(file,0,SEEK_END);
-    off_t fileLength = ftello(file);
+    fseeko64(file,0,SEEK_END);
+    off_t fileLength = ftello64(file);
     fclose(file);
 
     int dataSize = 0;

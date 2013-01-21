@@ -222,8 +222,8 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     char* buffer;
 
     // obtain file size.
-    fseeko(clusterFile , 0 , SEEK_END);
-    lSize = ftello(clusterFile);
+    fseeko64(clusterFile , 0 , SEEK_END);
+    lSize = ftello64(clusterFile);
     rewind(clusterFile);
 
     //The first line contains the number of clusters, skip it.
@@ -233,7 +233,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     fgets(firstLineBuffer,firstLineBufferSize,clusterFile);
 
     delete []firstLineBuffer;
-    long long start = ftello(clusterFile);
+    long long start = ftello64(clusterFile);
 
     // allocate memory to contain the whole file minus the first line.
     buffer = new char[lSize-start];
@@ -314,8 +314,8 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
     char* buffer;
 
     // obtain file size
-    fseeko(featureFile , 0 , SEEK_END);
-    lSize = ftello(featureFile);
+    fseeko64(featureFile , 0 , SEEK_END);
+    lSize = ftello64(featureFile);
     rewind(featureFile);
 
 
@@ -2665,7 +2665,7 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
         for(dataType i = 1; i < max; ++i){
             //go to the spike position
             dataType currentSpikePosition = (positionOfSpikes(1,i) - 1) * nbPtsBySpike ;
-            fseeko(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
+            fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
             // copy the spikes into spikePoints.
             fread(&(sampleSpikesTable[position]),sizeof(T),nbPtsBySpike,spikeFile);
             position += nbPtsBySpike;
@@ -2676,7 +2676,7 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
     else if(nbSpkToDisplay == 1){
         //go to the spike position
         dataType currentSpikePosition = (positionOfSpikes(1,1) - 1) * nbPtsBySpike ;
-        fseeko(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
+        fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
         // copy the spikes into spikePoints.
         fread(&(sampleSpikesTable[0]),sizeof(T),nbPtsBySpike,spikeFile);
         nbSampleSpikes = 1;
@@ -2691,7 +2691,7 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
             spkIndice = static_cast<dataType>(floatSpkIndice + 0.5);
             //go to the spike position
             dataType currentSpikePosition = (positionOfSpikes(1,spkIndice) - 1) * nbPtsBySpike ;
-            fseeko(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
+            fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
             // copy the spikes into spikePoints.
             fread(&(sampleSpikesTable[position]),sizeof(T),nbPtsBySpike,spikeFile);
             position += nbPtsBySpike;
@@ -2716,7 +2716,7 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
         //is already correct regarding the presence of an additional first line (nb of features) in the fet file.
         startPositionInSpk = (currentPositionInFeatures - 1) * nbPtsBySpike * sizeof(T);
         //go to the spike position
-        fseeko(spikeFile,startPositionInSpk,SEEK_SET);
+        fseeko64(spikeFile,startPositionInSpk,SEEK_SET);
         // copy the spikes into timeFrameSpikesTable.
         fread(&(timeFrameSpikesTable[position]),sizeof(T),nbPtsBySpike,spikeFile);
         position += nbPtsBySpike;
@@ -3673,8 +3673,8 @@ bool Data::loadReclusteredClusters(FILE* clusterFile){
     char* buffer;
 
     // obtain file size.
-    fseeko(clusterFile , 0 , SEEK_END);
-    lSize = ftello(clusterFile);
+    fseeko64(clusterFile , 0 , SEEK_END);
+    lSize = ftello64(clusterFile);
     rewind(clusterFile);
 
     //The first line contains the number of clusters, skip it.
@@ -3684,7 +3684,7 @@ bool Data::loadReclusteredClusters(FILE* clusterFile){
     fgets(firstLineBuffer,firstLineBufferSize,clusterFile);
 
     delete []firstLineBuffer;
-    long long start = ftello(clusterFile);
+    long long start = ftello64(clusterFile);
 
     // allocate memory to contain the whole file minus the first line.
     buffer = new char[lSize-start];

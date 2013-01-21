@@ -283,7 +283,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
         fclose(fetFile);
         return OPEN_ERROR;
     }
-    fseeko(spikeFile,0,SEEK_END);
+    fseeko64(spikeFile,0,SEEK_END);
     long spkFileLength = ftell(spikeFile);
     fclose(spikeFile);
 
