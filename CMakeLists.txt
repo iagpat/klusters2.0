@@ -9,7 +9,6 @@ include(${QT_USE_FILE})
 add_definitions(${QT_DEFINITIONS} )
 
 include(MacroEnsureVersion)
-find_package(LibXml2 REQUIRED)
 find_package(LibKlustersShared 1.0.0 REQUIRED)
 include(CheckCXXCompilerFlag)
 
@@ -40,7 +39,7 @@ add_definitions(${QT_DEFINITIONS} )
 set( QT_USE_XML TRUE)
 
 # tell cmake where to search for Qt headers:
-include_directories(${LIBXML2_INCLUDE_DIR} ${QT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${QT_QTXML_INCLUDE_DIR} ${LIBKLUSTERSSHARED_INCLUDE_DIR})
+include_directories(${QT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${QT_QTXML_INCLUDE_DIR} ${LIBKLUSTERSSHARED_INCLUDE_DIR})
 
 # This macro is for internal use only
 # Return the directories present in gcc's include path.

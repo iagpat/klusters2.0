@@ -64,43 +64,11 @@ bool KlustersXmlReader::parseFile(const QFile& file,fileType type){
     }
     documentNode = element;
 
-
-    // Init libxml
-    xmlInitParser();
-
-    // Load XML document
-    doc = xmlParseFile(input.fileName().toLatin1());
-    if(doc == NULL) return false;
-
-    // Create xpath evaluation context
-    xpathContex = xmlXPathNewContext(doc);
-    if(xpathContex== NULL){
-        xmlFreeDoc(doc);
-        return false;
-    }
-
-    //Read the document version
-    xmlNodePtr rootElement = xmlDocGetRootElement(doc);
-    xmlChar* versionTag = xmlCharStrdup(VERSION.toLatin1());
-    if(rootElement != NULL){
-        xmlChar* sVersion = xmlGetProp(rootElement,versionTag);
-        if(sVersion != NULL)
-            readVersion = QString((char*)sVersion);
-        xmlFree(sVersion);
-    }
-    xmlFree(versionTag);
-
     return true;
 }
 
 
 void KlustersXmlReader::closeFile(){
-    //Cleanup
-    xmlXPathFreeContext(xpathContex);
-    xmlFreeDoc(doc);
-
-    //Shutdown libxml
-    xmlCleanupParser();
 }
 
 
@@ -169,45 +137,73 @@ int KlustersXmlReader::getNbChannels()const{
 
 QList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
     QList<int> channels;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).toLatin1());
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //loop on all the GROUP until reaching the electrodeGroupID one.
-            int nbGroups = nodeset->nodeNr;
-            for(int i = 0; i < nbGroups; ++i){
-                if((i + 1) != electrodeGroupID) continue;
-                xmlNodePtr child;
-                for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
-                    //skip the carriage return (text node named text and containing /n)
-                    if(child->type == XML_TEXT_NODE) continue;
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == SPIKE) {
+                    QDomNode anatomy = e.firstChild(); // try to convert the node to an element.
+                    while(!anatomy.isNull()) {
+                        QDomElement u = anatomy.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == CHANNEL_GROUPS) {
+                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                               int i = 0;
+                               while(!channelGroup.isNull()) {
+                                   QDomElement val = channelGroup.toElement();
+                                   if (!val.isNull()) {
+                                       tag = val.tagName();
+                                       if (tag == GROUP) {
+                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
 
-                    if(QString((char*)child->name) == CHANNELS){
-                        //Should be only one CHANNELS element
-                        xmlNodePtr channel;
-                        for(channel = child->children;channel != NULL;channel = channel->next){
-                            //skip the carriage return (text node named text and containing /n)
-                            if(channel->type == XML_TEXT_NODE) continue;
-                            if(QString((char*)channel->name) == CHANNEL){
-                                xmlChar* sId = xmlNodeListGetString(doc,channel->children, 1);
-                                int channelId = QString((char*)sId).toInt();
-                                xmlFree(sId);
-                                channels.append(channelId);
+                                           while(!group.isNull()) {
+                                               QDomElement valGroup = group.toElement();
+
+                                               if (!valGroup.isNull()) {
+                                                   tag = valGroup.tagName();
+                                                   if( tag == CHANNELS) {
+                                                       if((i + 1) != electrodeGroupID) {
+                                                           ++i;
+                                                           continue;
+                                                       }
+                                                       QDomNode channelsNode = valGroup.firstChild(); // try to convert the node to an element.
+                                                       while(!channelsNode.isNull()) {
+                                                           QDomElement channelsElement = channelsNode.toElement();
+                                                           if (!channelsElement.isNull()) {
+                                                               tag = channelsElement.tagName();
+                                                               if (tag == CHANNEL) {
+                                                                   int channelId = valGroup.text().toInt();
+                                                                   channels.append(channelId);
+                                                               }
+                                                           }
+                                                           channelsNode = channelsNode.nextSibling();
+                                                       }
+                                                   }
+                                               }
+                                               group = group.nextSibling();
+                                           }
+                                           if((i + 1) == electrodeGroupID)
+                                               break;
+                                           ++i;
+
+                                       }
+                                   }
+                                   channelGroup = channelGroup.nextSibling();
+                               }
                             }
                         }
+                        anatomy = anatomy.nextSibling();
                     }
+                    break;
                 }
-                if((i + 1) == electrodeGroupID) break;
             }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return channels;
 }
 
