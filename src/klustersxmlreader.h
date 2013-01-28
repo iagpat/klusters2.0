@@ -32,6 +32,7 @@
 #include <QList>
 #include <qfile.h>
 #include <qmap.h>
+#include <QDomNode>
 
 class ClusterUserInformation;
 
@@ -133,6 +134,8 @@ private:
     fileType type;
     xmlXPathContextPtr xpathContex;
     QString readVersion;
+    QDomNode documentNode;
+
 };
 
 #endif

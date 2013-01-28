@@ -21,10 +21,12 @@
 #include "clusteruserinformation.h"
 
 #include <QList>
+#include <QDomDocument>
 
 //include files for QT
 #include <qfileinfo.h>
 #include <qstring.h>
+#include <QDebug>
 
 using namespace klusters;
 
@@ -40,11 +42,34 @@ KlustersXmlReader::~KlustersXmlReader()
 bool KlustersXmlReader::parseFile(const QFile& file,fileType type){
     this->type = type;
 
+    QFile input(file.fileName());
+    qDebug()<<" URL:"<<input.fileName();
+
+    QDomDocument docElement;
+    QString errorMsg;
+    int errorRow;
+    int errorCol;
+    if ( !docElement.setContent( &input, &errorMsg, &errorRow, &errorCol ) ) {
+        qWarning() << "Unable to load document.Parse error in " <<  input.fileName() << ", line " << errorRow << ", col " << errorCol << ": " << errorMsg << endl;
+        return false;
+    }
+
+    QDomElement element = docElement.documentElement();
+
+    if (element.tagName() == QLatin1String("parameters")) {
+        if( element.hasAttribute(VERSION)) {
+            readVersion = element.attribute(VERSION);
+            qDebug()<<" readVersion "<<readVersion;
+        }
+    }
+    documentNode = element;
+
+
     // Init libxml
     xmlInitParser();
 
     // Load XML document
-    doc = xmlParseFile(file.fileName().toLatin1());
+    doc = xmlParseFile(input.fileName().toLatin1());
     if(doc == NULL) return false;
 
     // Create xpath evaluation context
@@ -81,45 +106,63 @@ void KlustersXmlReader::closeFile(){
 
 int KlustersXmlReader::getResolution()const{
     int resolution = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + BITS).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one resolution element, so take the first one.
-            xmlChar* sResolution = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            resolution = QString((char*)sResolution).toInt();
-            xmlFree(sResolution);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == ACQUISITION) {
+                    QDomNode acquisition = e.firstChild(); // try to convert the node to an element.
+                    while(!acquisition.isNull()) {
+                        QDomElement u = acquisition.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == BITS) {
+                                resolution = u.text().toInt();
+                                return resolution;
+                                break;
+                            }
+                        }
+                        acquisition = acquisition.nextSibling();
+                    }
+                    break;
+                }
+            }
+            n = n.nextSibling();
         }
     }
 
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return resolution;
 }
 
 int KlustersXmlReader::getNbChannels()const{
     int nbChannels = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + NB_CHANNELS).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one nbChannels element, so take the first one.
-            xmlChar* sNbChannels = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            nbChannels = QString((char*)sNbChannels).toInt();
-            xmlFree(sNbChannels);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == ACQUISITION) {
+                    QDomNode acquisition = e.firstChild(); // try to convert the node to an element.
+                    while(!acquisition.isNull()) {
+                        QDomElement u = acquisition.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == NB_CHANNELS) {
+                                nbChannels = u.text().toInt();
+                                return nbChannels;
+                            }
+                        }
+                        acquisition = acquisition.nextSibling();
+                    }
+                    break;
+                }
+            }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return nbChannels;
 }
 
@@ -172,23 +215,32 @@ QList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
 
 double KlustersXmlReader::getSamplingRate()const{
     double samplingRate = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + SAMPLING_RATE).toLatin1());
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one sampling rate element at that level, so take the first one.
-            xmlChar* sSamplingRate = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            samplingRate = QString((char*)sSamplingRate).toDouble();
-            xmlFree(sSamplingRate);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == ACQUISITION) {
+                    QDomNode acquisition = e.firstChild(); // try to convert the node to an element.
+                    while(!acquisition.isNull()) {
+                        QDomElement u = acquisition.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == SAMPLING_RATE) {
+                                samplingRate = u.text().toDouble();
+                                return samplingRate;
+                            }
+                        }
+                        acquisition = acquisition.nextSibling();
+                    }
+                    break;
+                }
+            }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return samplingRate;
 }
 
@@ -301,70 +353,96 @@ int KlustersXmlReader::getNbFeatures(int electrodeGroupID)const{
 
 int KlustersXmlReader::getVoltageRange() const{
     int range = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + VOLTAGE_RANGE).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one range element, so take the first one.
-            xmlChar* sRange = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            range = QString((char*)sRange).toInt();
-            xmlFree(sRange);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == ACQUISITION) {
+                    QDomNode acquisition = e.firstChild(); // try to convert the node to an element.
+                    while(!acquisition.isNull()) {
+                        QDomElement u = acquisition.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == VOLTAGE_RANGE) {
+                                range = u.text().toInt();
+                                return range;
+                                break;
+                            }
+                        }
+                        acquisition = acquisition.nextSibling();
+                    }
+                    break;
+                }
+            }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return range;
 }
 
 
 int KlustersXmlReader::getAmplification() const{
     int amplification = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + AMPLIFICATION).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one amplification element, so take the first one.
-            xmlChar* sAmplification = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            amplification = QString((char*)sAmplification).toInt();
-            xmlFree(sAmplification);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == ACQUISITION) {
+                    QDomNode acquisition = e.firstChild(); // try to convert the node to an element.
+                    while(!acquisition.isNull()) {
+                        QDomElement u = acquisition.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == AMPLIFICATION) {
+                                amplification = u.text().toInt();
+                                return amplification;
+                                break;
+                            }
+                        }
+                        acquisition = acquisition.nextSibling();
+                    }
+                    break;
+                }
+            }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return amplification;
 }
 
 
 int KlustersXmlReader::getOffset()const{
     int offset = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION + "/" + OFFSET).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one offset element, so take the first one.
-            xmlChar* sOffset = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            offset = QString((char*)sOffset).toInt();
-            xmlFree(sOffset);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == ACQUISITION) {
+                    QDomNode acquisition = e.firstChild(); // try to convert the node to an element.
+                    while(!acquisition.isNull()) {
+                        QDomElement u = acquisition.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == OFFSET) {
+                                offset = u.text().toInt();
+                                return offset;
+                                break;
+                            }
+                        }
+                        acquisition = acquisition.nextSibling();
+                    }
+                    break;
+                }
+            }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
-
     return offset;
 }
 
