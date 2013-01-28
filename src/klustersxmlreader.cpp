@@ -447,93 +447,76 @@ int KlustersXmlReader::getOffset()const{
 }
 
 void KlustersXmlReader::getClusterUserInformation (int pGroup, QMap<int,ClusterUserInformation>& clusterUserInformationMap)const{
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + UNITS + "/" + UNIT).toLatin1());
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //loop on all the UNIT.
-            int nbUnits = nodeset->nodeNr;
-            for(int i = 0; i < nbUnits; ++i){
-                int groupId = 0;
-                int clusterId = 0;
-                QString structure;
-                QString type;
-                QString ID;
-                QString quality;
-                QString notes;
-                ClusterUserInformation currentClusterUserInformation = ClusterUserInformation();
-                xmlNodePtr child;
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == UNITS) {
+                    QDomNode unit = e.firstChild(); // try to convert the node to an element.
+                    int groupId = 0;
+                    int clusterId = 0;
+                    QString structure;
+                    QString type;
+                    QString ID;
+                    QString quality;
+                    QString notes;
+                    ClusterUserInformation currentClusterUserInformation = ClusterUserInformation();
 
-                for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
-                    //skip the carriage return (text node named text and containing /n)
-                    if(child->type == XML_TEXT_NODE) continue;
+                    while(!unit.isNull()) {
+                        QDomElement u = unit.toElement();
+                        if (!u.isNull()) {
 
-                    if(QString((char*)child->name) == GROUP){
-                        xmlChar* sId = xmlNodeListGetString(doc,child->children, 1);
-                        groupId = QString((char*)sId).toInt();
-                        xmlFree(sId);
-
-                        //Group is the first tag and we are looking only for the units having a groupId equals to pGroup.
-                        if(groupId != pGroup){
-                            break;
+                            tag = u.tagName();
+                            QDomNode val = u.firstChild();
+                            while(!val.isNull()) {
+                                QDomElement valElement = val.toElement();
+                                if (!valElement.isNull()) {
+                                    tag = valElement.tagName();
+                                    if (tag == GROUP) {
+                                        groupId = valElement.text().toInt();
+                                        if(groupId != pGroup){
+                                            break;
+                                        }
+                                        else{
+                                            currentClusterUserInformation.setGroup(groupId);
+                                        }
+                                    } else if (tag == CLUSTER) {
+                                        clusterId = valElement.text().toInt();
+                                        currentClusterUserInformation.setCluster(clusterId);
+                                    } else if (tag ==STRUCTURE ) {
+                                        structure = valElement.text();
+                                        currentClusterUserInformation.setStructure(structure);
+                                    } else if (tag ==TYPE ) {
+                                        type = valElement.text();
+                                        currentClusterUserInformation.setType(type);
+                                    } else if (tag == ISOLATION_DISTANCE) {
+                                        ID = valElement.text();
+                                        currentClusterUserInformation.setId(ID);
+                                    } else if (tag == QUALITY) {
+                                        quality = valElement.text();
+                                        currentClusterUserInformation.setQuality(quality);
+                                    } else if (tag == NOTES) {
+                                        notes = valElement.text();
+                                        currentClusterUserInformation.setNotes(notes);
+                                    }
+                                }
+                                val = val.nextSibling();
+                            }
                         }
-                        else{
-                            currentClusterUserInformation.setGroup(groupId);
+                        if(groupId == pGroup){
+                            clusterUserInformationMap.insert(clusterId,currentClusterUserInformation);
                         }
+                        unit = unit.nextSibling();
                     }
-                    if(QString((char*)child->name) == CLUSTER){
-                        xmlChar* sClusterId = xmlNodeListGetString(doc,child->children, 1);
-                        clusterId =  QString((char*)sClusterId).toInt();
-                        xmlFree(sClusterId);
-
-                        currentClusterUserInformation.setCluster(clusterId);
-                    }
-                    if(QString((char*)child->name) == STRUCTURE){
-                        xmlChar* sStructure = xmlNodeListGetString(doc,child->children, 1);
-                        QString structure = QString((char*)sStructure);
-                        xmlFree(sStructure);
-
-                        currentClusterUserInformation.setStructure(structure);
-                    }
-                    if(QString((char*)child->name) == TYPE){
-                        xmlChar* sType = xmlNodeListGetString(doc,child->children, 1);
-                        QString type = QString((char*)sType);
-                        xmlFree(sType);
-
-                        currentClusterUserInformation.setType(type);
-                    }
-                    if(QString((char*)child->name) == ID){
-                        xmlChar* sID = xmlNodeListGetString(doc,child->children, 1);
-                        QString ID = QString((char*)sID);
-                        xmlFree(sID);
-
-                        currentClusterUserInformation.setId(ID);
-                    }
-                    if(QString((char*)child->name) == QUALITY){
-                        xmlChar* sQuality = xmlNodeListGetString(doc,child->children, 1);
-                        QString quality = QString((char*)sQuality);
-                        xmlFree(sQuality);
-
-                        currentClusterUserInformation.setQuality(quality);
-                    }
-                    if(QString((char*)child->name) == NOTES){
-                        xmlChar* sNotes = xmlNodeListGetString(doc,child->children, 1);
-                        QString notes = QString((char*)sNotes);
-                        xmlFree(sNotes);
-
-                        currentClusterUserInformation.setNotes(notes);
-                    }
-                }
-                if(groupId == pGroup){
-                    clusterUserInformationMap.insert(clusterId,currentClusterUserInformation);
                 }
             }
+            n = n.nextSibling();
         }
     }
+
 }
 
 
