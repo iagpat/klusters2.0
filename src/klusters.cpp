@@ -176,7 +176,7 @@ void KlustersApp::createMenus()
 
     QSettings settings;
     mFileOpenRecent = new QRecentFileAction(this);
-    mFileOpenRecent->setListOfRecentFile(settings.value(QLatin1String("Recent Files"),QStringList()).toStringList());
+    mFileOpenRecent->setRecentFiles(settings.value(QLatin1String("Recent Files"),QStringList()).toStringList());
     fileMenu->addAction(mFileOpenRecent);
     connect(mFileOpenRecent, SIGNAL(recentFileSelected(QString)), this, SLOT(slotFileOpenRecent(QString)));
     connect(mFileOpenRecent, SIGNAL(recentFileListChanged()), this, SLOT(slotSaveRecentFiles()));
@@ -3152,5 +3152,5 @@ void KlustersApp::slotHanbook()
 void KlustersApp::slotSaveRecentFiles()
 {
     QSettings settings;
-    settings.setValue(QLatin1String("Recent Files"),mFileOpenRecent->listOfRecentFile());
+    settings.setValue(QLatin1String("Recent Files"),mFileOpenRecent->recentFiles());
 }
