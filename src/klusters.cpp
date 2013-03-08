@@ -1450,7 +1450,7 @@ void KlustersApp::slotFileImport(){
     slotStatusMsg(tr("Importing file..."));
 
     const QString url=QFileDialog::getOpenFileName(this, tr("Import File..."),QString(),
-                                             tr("*|All files"));
+                                             tr("All files (*.*)"));
     if(!url.isEmpty())
     {
         importDocumentFile(url);
@@ -1487,7 +1487,7 @@ void KlustersApp::slotFileSaveAs()
 {
     slotStatusMsg(tr("Saving file with a new filename..."));
     QString url=QFileDialog::getSaveFileName(this,tr("Save as..."),QDir::currentPath(),
-                                             tr("*|All files") );
+                                             tr("All files (*.*)") );
     if(!url.isEmpty()){
         slotStateChanged("SavingState");
         saveThread->save(url,doc,true);
