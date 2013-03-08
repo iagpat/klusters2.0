@@ -1394,7 +1394,7 @@ void KlustersApp::slotFileOpen()
     slotStatusMsg(tr("Opening file..."));
 
     const QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
-                                             tr("Feature File (*.fet.*);;Cluster File (*.clu.*);;Spike File (*.spk.*);;Specific Parameter File (*.par.*);;All files"));
+                                             tr("Feature File (*.fet.*);;Cluster File (*.clu.*);;Spike File (*.spk.*);;Specific Parameter File (*.par.*);;All files (*.*)"));
     if(!url.isEmpty())
     {
         openDocumentFile(url);
