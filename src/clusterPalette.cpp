@@ -100,7 +100,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     palette.setColor(iconView->backgroundRole(), backgroundColor);
 
     iconView->setAutoFillBackground(true);
-    iconView->viewport()->setAutoFillBackground(true);
+    iconView->viewport()->setAutoFillBackground(false);
     iconView->viewport()->setPalette(palette);
     iconView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     iconView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
