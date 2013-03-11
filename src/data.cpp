@@ -281,20 +281,21 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     char clusterID[255];
     long long end =  lSize-start;
     try{
+        qDebug()<<" end :"<<end;
         for (long long i = 0 ; i < end ; ++i ){
             if (buffer[i] >= '0' && buffer[i] <= '9') {
                 clusterID[l++] = buffer[i];
-                qDebug()<<" clusterID[l++]"<<clusterID[l++];
+                //qDebug()<<" clusterID[l++]"<<clusterID[l++];
            } else if(l) {
                 clusterID[l] = '\0';
                 (*spikesByCluster)(2,k++) = atol(clusterID);//Warning if the typedef dataType changes, change will have to be make here.
-                qDebug()<<" clusterID"<<clusterID;
+                //qDebug()<<" clusterID"<<clusterID;
                 l = 0;
                 if(k > upperLimit)
                     break;
             }
         }
-
+        qDebug()<<" end"<<end;
         qDebug() << "in loadClusters,  nbSpikes: "<<nbSpikes <<", k: "<<k<<", spkFileLength "<<spkFileLength<<", nbChannels "<<nbChannels<<", nbSamplesInWaveform "<<nbSamplesInWaveform<<", sampleSize "<<sampleSize<< endl;
     }
     catch(...){
@@ -304,6 +305,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     }
 
     delete []buffer;
+    qDebug()<<" upperLimit"<<upperLimit<< " k "<<k;
     //if the number of clusters read did not correspond to nbSpikes, there is a problem.
     if(k != upperLimit){
         errorInformation = QObject::tr("The number of spikes read in the cluster file does not correspond to number of spikes computed.(computed : %1, upperlimit %2)").arg(k).arg(upperLimit);
