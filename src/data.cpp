@@ -224,6 +224,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     // obtain file size.
     fseeko64(clusterFile , 0 , SEEK_END);
     lSize = ftello64(clusterFile);
+    qDebug()<<" lSize"<<lSize;
     rewind(clusterFile);
 
     //The first line contains the number of clusters, skip it.
