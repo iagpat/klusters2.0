@@ -233,6 +233,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     char* firstLineBuffer = new char[firstLineBufferSize];
     fgets(firstLineBuffer,firstLineBufferSize,clusterFile);
 
+    qDebug()<<" firstLineBuffer"<<firstLineBuffer;
     delete []firstLineBuffer;
     long long start = ftello64(clusterFile);
     qDebug()<<" start "<<start;
