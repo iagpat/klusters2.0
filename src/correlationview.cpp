@@ -392,7 +392,8 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
     firingRates.clear();
 
     //Sort the pair so the drawing will be simplified.
-    //KDAB_PORTING qSort(pairList);
+    //KDAB_PORTING
+    //qSort(pairList);
 
     //Loop on the pairs to be drawn.
     QList<Pair>::iterator pairIterator;

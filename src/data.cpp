@@ -298,10 +298,10 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     }
 
     delete []buffer;
-
+qDebug()<<" SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS KLUSTER :"<<k<< "upperLimit :"<<upperLimit;
     //if the number of clusters read did not correspond to nbSpikes, there is a problem.
     if(k != upperLimit){
-        errorInformation = QObject::tr("The number of spikes read in the cluster file does not correspond to number of spikes computed.");
+        errorInformation = QObject::tr("The number of spikes read in the cluster file does not correspond to number of spikes computed.(computed : %1, upperlimit %2").arg(k).arg(upperLimit);
         return false;
     }
     else return true;
