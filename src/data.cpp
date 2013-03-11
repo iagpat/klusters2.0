@@ -235,6 +235,7 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
 
     delete []firstLineBuffer;
     long long start = ftello64(clusterFile);
+    qDebug()<<" start "<<start;
 
     // allocate memory to contain the whole file minus the first line.
     buffer = new char[lSize-start];
