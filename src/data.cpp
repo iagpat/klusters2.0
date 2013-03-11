@@ -269,23 +269,29 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     //Effectively create the table containing the data
     spikesByCluster->setSize(nbSpikes);
 
+    qDebug()<<" nbSpikes"<<nbSpikes;
     //The buffer is read and each dataType is build char by char into a string. When the char read
     //is not [1-9] (<=> blank space or a new line), the string is converted into a dataType and store
     //into the second row of spikesByCluster.
     //string of character which will contains the current seek dataType
     dataType upperLimit = nbSpikes + 1;
+    qDebug()<<" upperLimit"<<upperLimit;
     dataType k = 1;
     int l = 0;
     char clusterID[255];
     long long end =  lSize-start;
     try{
         for (long long i = 0 ; i < end ; ++i ){
-            if (buffer[i] >= '0' && buffer[i] <= '9') clusterID[l++] = buffer[i];
-            else if(l) {
+            if (buffer[i] >= '0' && buffer[i] <= '9') {
+                clusterID[l++] = buffer[i];
+                qDebug()<<" clusterID[l++]"<<clusterID[l++];
+           } else if(l) {
                 clusterID[l] = '\0';
                 (*spikesByCluster)(2,k++) = atol(clusterID);//Warning if the typedef dataType changes, change will have to be make here.
+                qDebug()<<" clusterID"<<clusterID;
                 l = 0;
-                if(k > upperLimit) break;
+                if(k > upperLimit)
+                    break;
             }
         }
 
