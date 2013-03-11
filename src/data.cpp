@@ -3093,8 +3093,6 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
         dict = correlationDict[pair.toString()];
         if(dict == 0){
             dict = new QHash<QString, Correlation*>();
-            //KDAB Look at it
-            //dict->setAutoDelete(true);
             correlation = new Correlation(*this,binSize,timeWindow);
             correlation->setStatus(IN_PROCESS);
             dict->insert(parameters.toString(),correlation);
