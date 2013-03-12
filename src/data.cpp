@@ -313,8 +313,9 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     if(k != upperLimit){
         errorInformation = QObject::tr("The number of spikes read in the cluster file does not correspond to number of spikes computed.(computed : %1, upperlimit %2)").arg(k).arg(upperLimit);
         return false;
+    } else {
+        return true;
     }
-    else return true;
 }
 
 bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
@@ -359,8 +360,9 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
     dataType k = 0;
     try{
         for (long long i = start ; i < lSize ; ++i ){
-            if ( buffer[i] == '-' || ('0' <= buffer[i] && buffer[i] <= '9') ) feature[l++] = buffer[i];
-            else if ( l ) {
+            if ( buffer[i] == '-' || ('0' <= buffer[i] && buffer[i] <= '9') ) {
+                feature[l++] = buffer[i];
+            } else if ( l ) {
                 feature[l] = '\0';
                 features[k++] = atol(feature);//Warning if the typedef dataType changes, change will have to be make here.
                 l = 0;
@@ -401,7 +403,7 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QSt
     QMap<dataType,dataType> clusters;
     dataType max = nbSpikes + 1;
     //Count the number of spikes for each cluster.
-    for(dataType i = 1; i < max; ++i){
+    for(dataType i = 1; i < max; ++i) {
         dataType clusterId = (*spikesByCluster)(2,i);
         clusters[clusterId]++;
     }
@@ -450,7 +452,7 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QSt
 
 
 
-bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
+bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,const QString& spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
     this->spkFileName = spkFileName;
     if(!configure(parXFile, parFile,errorInformation))
         return false;
@@ -461,7 +463,7 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QSt
     return true;
 }
 
-bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
+bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
     this->spkFileName = spkFileName;
 
     if(!configure(parFile,electrodeGroupID,errorInformation))
@@ -501,9 +503,11 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,QString& errorInforma
     spikesByCluster->setSize(nbSpikes);
 
     //As the cluster file does not exist assign all the spikes to cluster 1.
-    for(dataType i = 1; i <= nbSpikes; ++ i) (*spikesByCluster)(2,i) = 1;
+    for(dataType i = 1; i <= nbSpikes; ++ i)
+        (*spikesByCluster)(2,i) = 1;
 
-    if(!loadFeatures(featureFile,errorInformation)) return false;
+    if(!loadFeatures(featureFile,errorInformation))
+        return false;
 
     //Fill the first row of spikesByCluster with the row index of the spike,
     //knowing that for the moment the elements of the table are sorted by spike order.
@@ -518,9 +522,10 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,QString& errorInforma
     return true;
 }
 
-bool Data::initialize(FILE* featureFile,long spkFileLength,QString spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
+bool Data::initialize(FILE* featureFile,long spkFileLength,const QString &spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
     this->spkFileName = spkFileName;
-    if(!configure(parXFile, parFile,errorInformation)) return false;
+    if(!configure(parXFile, parFile,errorInformation))
+        return false;
     if(!initialize(featureFile,spkFileLength,errorInformation)){
         return false;
     }
@@ -528,11 +533,13 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,QString spkFileName,Q
     return true;
 }
 
-bool Data::initialize(FILE* featureFile,long spkFileLength,QString spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
+bool Data::initialize(FILE* featureFile,long spkFileLength,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
     this->spkFileName = spkFileName;
 
-    if(!configure(parFile,electrodeGroupID,errorInformation)) return false;
-    if(!initialize(featureFile,spkFileLength,errorInformation)) return false;
+    if(!configure(parFile,electrodeGroupID,errorInformation))
+        return false;
+    if(!initialize(featureFile,spkFileLength,errorInformation))
+        return false;
 
     return true;
 }

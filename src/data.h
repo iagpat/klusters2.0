@@ -113,7 +113,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile,long spkFileLength,QString spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation);
+    bool initialize(FILE* featureFile, long spkFileLength, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data.
@@ -127,7 +127,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation);
+    bool initialize(FILE* featureFile, FILE* clusterFile, long spkFileLength, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data when the cluster file does not exist.
@@ -140,7 +140,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile,long spkFileLength,QString spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation);
+    bool initialize(FILE* featureFile, long spkFileLength, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data.
@@ -154,7 +154,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation);
+    bool initialize(FILE* featureFile, FILE* clusterFile, long spkFileLength, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
 
     /**Calculate the minimum and maximum for each dimension and store them in
   *dimensionMinima and dimensionMaxima respectively.
