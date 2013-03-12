@@ -215,34 +215,7 @@ bool Data::configure(QFile& parXFile,QFile& parFile,QString& errorInformation){
     return true;
 }
 
-bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInformation){
-
-    //Load all the file in a buffer then read dataType by dataType
-    long long lSize = 0;
-    char* buffer;
-
-    // obtain file size.
-    fseeko64(clusterFile , 0 , SEEK_END);
-    lSize = ftello64(clusterFile);
-    qDebug()<<" lSize"<<lSize;
-    rewind(clusterFile);
-
-    //The first line contains the number of clusters, skip it.
-    //Set the pointer to the following line ('start' will point to the second line) to start reading the cluster ids.
-    int firstLineBufferSize = 255;
-    char* firstLineBuffer = new char[firstLineBufferSize];
-    fgets(firstLineBuffer,firstLineBufferSize,clusterFile);
-
-    qDebug()<<" firstLineBuffer"<<firstLineBuffer;
-    delete []firstLineBuffer;
-    long long start = ftello64(clusterFile);
-    qDebug()<<" start "<<start;
-
-    // allocate memory to contain the whole file minus the first line.
-    buffer = new char[lSize-start];
-    // copy the file into the buffer.
-    fread(buffer,1,lSize-start,clusterFile);
-
+bool Data::loadClusters(QFile &clusterFile, long spkFileLength, QString& errorInformation){
     //Determine the number of spikes using the length of the binary spike file
     int sampleSize;
     switch(nbBits){
@@ -268,46 +241,31 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     }
 
     nbSpikes =  spkFileLength / static_cast<long>(static_cast<long>(nbChannels) * static_cast<long>(nbSamplesInWaveform) * static_cast<long>(sampleSize));
-
+    dataType upperLimit = nbSpikes + 1;
     //Effectively create the table containing the data
     spikesByCluster->setSize(nbSpikes);
 
-    qDebug()<<" nbSpikes"<<nbSpikes;
-    //The buffer is read and each dataType is build char by char into a string. When the char read
-    //is not [1-9] (<=> blank space or a new line), the string is converted into a dataType and store
-    //into the second row of spikesByCluster.
-    //string of character which will contains the current seek dataType
-    dataType upperLimit = nbSpikes + 1;
-    qDebug()<<" upperLimit"<<upperLimit;
+    bool firstLine = true;
     dataType k = 1;
-    int l = 0;
-    char clusterID[255];
-    long long end =  lSize-start;
-    try{
-        qDebug()<<" end :"<<end;
-        for (long long i = 0 ; i < end ; ++i ){
-            if (buffer[i] >= '0' && buffer[i] <= '9') {
-                clusterID[l++] = buffer[i];
-                //qDebug()<<" clusterID[l++]"<<clusterID[l++];
-           } else if(l) {
-                clusterID[l] = '\0';
-                (*spikesByCluster)(2,k++) = atol(clusterID);//Warning if the typedef dataType changes, change will have to be make here.
-                //qDebug()<<" clusterID"<<clusterID;
-                l = 0;
-                if(k > upperLimit)
-                    break;
+    while (!clusterFile.atEnd()) {
+        QByteArray line = clusterFile.readLine();
+        if (firstLine) {
+            firstLine = false;
+        } else {
+            QByteArray feature;
+            for (int i = 0; i <line.count();++i) {
+                if ( (line.at(i) >= '0' && line.at(i) <='9')) {
+                    feature.append(line.at(i));
+                } else if( !feature.isEmpty()){
+                    (*spikesByCluster)(2,k++) = feature.toLongLong();//Warning if the typedef dataType changes, change will have to be make here.
+                    feature = "";
+                    if(k > upperLimit)
+                        break;
+                }
             }
         }
-        qDebug()<<" end"<<end;
-        qDebug() << "in loadClusters,  nbSpikes: "<<nbSpikes <<", k: "<<k<<", spkFileLength "<<spkFileLength<<", nbChannels "<<nbChannels<<", nbSamplesInWaveform "<<nbSamplesInWaveform<<", sampleSize "<<sampleSize<< endl;
-    }
-    catch(...){
-        delete []buffer;
-        errorInformation = QObject::tr("An error happened while loading the clusters into memory.");
-        return false;
     }
 
-    delete []buffer;
     qDebug()<<" upperLimit"<<upperLimit<< " k "<<k;
     //if the number of clusters read did not correspond to nbSpikes, there is a problem.
     if(k != upperLimit){
@@ -318,65 +276,37 @@ bool Data::loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInfor
     }
 }
 
-bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
+bool Data::loadFeatures(QFile& featureFile,QString& errorInformation){
 
-    //Load all the file in a buffer then read dataType by dataType
-    long long lSize;
-    char* buffer;
-
-    // obtain file size
-    fseeko64(featureFile , 0 , SEEK_END);
-    lSize = ftello64(featureFile);
-    rewind(featureFile);
-
-
-    // allocate memory to contain the whole file .
-    buffer = new char[lSize];
-    // copy the file into the buffer.
-    fread(buffer,1,lSize,featureFile);
-    //Read the number of dimensions from the first line.
-    int firstLineBufferSize = 255;
-    int j = 0;
-    char string[255];
-    long long start = 0;
-    for (; start < firstLineBufferSize ; ++start){
-        if (buffer[start] >= '0' && buffer[start] <= '9')
-            string[j++] = buffer[start];
-        else if(j) {
-            string[j] = '\0';
-            nbDimensions = atoi(string);
-            break;
-        }
-    }
-
-    //Effectively create the tables containing the data
-    features.setSize(nbSpikes,nbDimensions);
-
-    //The buffer is read and each dataType is build char by char into a string. When the char read
-    //is not -/[1-9] (<=> blank space or a new line), the string is converted into a dataType and store
-    //into features.
-    //The string of character,feature, will contains the current seek dataType
-    char feature[255];
-    int l = 0;
+    bool firstLine = true;
     dataType k = 0;
-    try{
-        for (long long i = start ; i < lSize ; ++i ){
-            if ( buffer[i] == '-' || ('0' <= buffer[i] && buffer[i] <= '9') ) {
-                feature[l++] = buffer[i];
-            } else if ( l ) {
-                feature[l] = '\0';
-                features[k++] = atol(feature);//Warning if the typedef dataType changes, change will have to be make here.
-                l = 0;
+    while (!featureFile.atEnd()) {
+        QByteArray line = featureFile.readLine();
+        //qDebug()<<" line "<<line;
+        if (firstLine) {
+            firstLine = false;
+            int j = 0;
+            for (int i = 0; i <line.count();++i) {
+                if (line.at(i) >= '0' && line.at(i) <='9') {
+                    j++;
+                } else if(j) {
+                    nbDimensions = line.left(j).toInt();
+                    break;
+                }
+            }
+            features.setSize(nbSpikes,nbDimensions);
+        } else {
+            QByteArray feature;
+            for (int i = 0; i <line.count();++i) {
+                if (line.at(i) == '-' || (line.at(i) >= '0' && line.at(i) <='9')) {
+                    feature.append(line.at(i));
+                } else if (!feature.isEmpty()){
+                    features[k++] = feature.toLongLong();//Warning if the typedef dataType changes, change will have to be make here.
+                    feature = "";
+                }
             }
         }
     }
-    catch(...){
-        delete []buffer;
-        errorInformation = QObject::tr("An error happened while loading the features into memory.");
-        return false;
-    }
-
-    delete []buffer;
 
     qDebug() << "in loadFeatures,  k: "<<k<< " nbSpikes "<<nbSpikes<< " nbDimensions "<<nbDimensions<< endl;
 
@@ -390,7 +320,7 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
 }
 
 
-bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength,QString& errorInformation){
     if(!loadClusters(clusterFile,spkFileLength,errorInformation))
         return false;
     if(!loadFeatures(featureFile,errorInformation))
@@ -454,7 +384,7 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QSt
 
 
 
-bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,const QString& spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength,const QString& spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
     this->spkFileName = spkFileName;
     if(!configure(parXFile, parFile,errorInformation))
         return false;
@@ -465,7 +395,7 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,con
     return true;
 }
 
-bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
     this->spkFileName = spkFileName;
 
     if(!configure(parFile,electrodeGroupID,errorInformation))
@@ -476,7 +406,7 @@ bool Data::initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,con
     return true;
 }
 
-bool Data::initialize(FILE* featureFile,long spkFileLength,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,long spkFileLength,QString& errorInformation){
 
     //Determine the number of spikes using the length of the binary spike file
     int sampleSize;
@@ -513,7 +443,8 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,QString& errorInforma
 
     //Fill the first row of spikesByCluster with the row index of the spike,
     //knowing that for the moment the elements of the table are sorted by spike order.
-    for(dataType i = 1; i <= nbSpikes; ++ i) (*spikesByCluster)(1,i) = i;
+    for(dataType i = 1; i <= nbSpikes; ++ i)
+        (*spikesByCluster)(1,i) = i;
 
     clusterInfoMap->insert(1, ClusterInfo(1,nbSpikes));
 
@@ -524,7 +455,7 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,QString& errorInforma
     return true;
 }
 
-bool Data::initialize(FILE* featureFile,long spkFileLength,const QString &spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,long spkFileLength,const QString &spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
     this->spkFileName = spkFileName;
     if(!configure(parXFile, parFile,errorInformation))
         return false;
@@ -535,7 +466,7 @@ bool Data::initialize(FILE* featureFile,long spkFileLength,const QString &spkFil
     return true;
 }
 
-bool Data::initialize(FILE* featureFile,long spkFileLength,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,long spkFileLength,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
     this->spkFileName = spkFileName;
 
     if(!configure(parFile,electrodeGroupID,errorInformation))
@@ -3556,7 +3487,7 @@ void Data::createFeatureFile(QList<int>& clustersToRecluster,QFile& fetFile){
     }
 }
 
-bool Data::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,FILE* clusterFile){
+bool Data::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList, QFile& clusterFile){
     //Replace the cluster ids in reclusteringSpikesByCluster by the new ones.
     if(!loadReclusteredClusters(clusterFile)) return 0;
 
@@ -3684,55 +3615,34 @@ bool Data::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<in
 }
 
 
-bool Data::loadReclusteredClusters(FILE* clusterFile){
-    //Load all the file in a buffer then read dataType by dataType
-    long long lSize = 0;
-    char* buffer;
+bool Data::loadReclusteredClusters(QFile &clusterFile){
+    bool firstLine = true;
 
-    // obtain file size.
-    fseeko64(clusterFile , 0 , SEEK_END);
-    lSize = ftello64(clusterFile);
-    rewind(clusterFile);
-
-    //The first line contains the number of clusters, skip it.
-    //Set the pointer to the following line ('start' will point to the second line) to start reading the cluster ids.
-    int firstLineBufferSize = 255;
-    char* firstLineBuffer = new char[firstLineBufferSize];
-    fgets(firstLineBuffer,firstLineBufferSize,clusterFile);
-
-    delete []firstLineBuffer;
-    long long start = ftello64(clusterFile);
-
-    // allocate memory to contain the whole file minus the first line.
-    buffer = new char[lSize-start];
-    // copy the file into the buffer.
-    fread(buffer,1,lSize-start,clusterFile);
-
-    //Replace the cluster ids in reclusteringSpikesByCluster by new ones
-    //(the created ones incremented by the current maxId).
-    //The buffer is read and each dataType is build char by char into a string. When the char read
-    //is not [1-9] (<=> blank space or a new line), the string is converted into a dataType and store
-    //into the second row of spikesByClusterTemp.
-    //string of character which will contains the current seek dataType
     dataType highestClusterId = (*spikesByCluster)(2,nbSpikes);
     dataType k = 1;
-    int l = 0;
-    char clusterID[255];
-    long long end =  lSize-start;
-    for (long long i = 0 ; i < end ; ++i ){
-        if (buffer[i] >= '0' && buffer[i] <= '9') clusterID[l++] = buffer[i];
-        else if ( l ) {
-            clusterID[l] = '\0';
-            reclusteringSpikesByCluster(2,k++) = atol(clusterID) + highestClusterId;//Warning if the typedef dataType changes, change will have to be make here.
-            l = 0;
+    while (!clusterFile.atEnd()) {
+        QByteArray line = clusterFile.readLine();
+        //qDebug()<<" line "<<line;
+        if (firstLine) {
+            firstLine = false;
+        } else {
+            QByteArray feature;
+            for (int i = 0; i <line.count();++i) {
+                if ((line.at(i) >= '0' && line.at(i) <='9')) {
+                    feature.append(line.at(i));
+                } else if (!feature.isEmpty()){
+                    reclusteringSpikesByCluster(2,k++) = feature.toLongLong() + highestClusterId;//Warning if the typedef dataType changes, change will have to be make here.
+                    feature = "";
+                }
+            }
         }
     }
 
-    delete []buffer;
-
     //if the number of clusters read did not correspond to the number of spikes reclustered, there is a problem.
-    if(k != (reclusteringSpikesByCluster.nbOfColumns() + 1)) return 0;
-    else return 1;
+    if(k != (reclusteringSpikesByCluster.nbOfColumns() + 1))
+        return 0;
+    else
+        return 1;
 }
 
 void Data::getClusterUserInformation (int pGroup,QMap<int,ClusterUserInformation>& clusterUserInformationMap)const{

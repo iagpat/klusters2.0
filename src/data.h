@@ -73,7 +73,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the loading succed false otherwise
   */
-    bool loadFeatures(FILE* featureFile,QString& errorInformation);
+    bool loadFeatures(QFile &featureFile, QString& errorInformation);
 
     /**
   * Loads the clusters in spikesByCluster.
@@ -82,7 +82,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the loading succed false otherwise.
   */
-    bool loadClusters(FILE* clusterFile,long spkFileLength,QString& errorInformation);
+    bool loadClusters(QFile &clusterFile, long spkFileLength, QString& errorInformation);
 
     /**
   * Loads the configuration parameters.
@@ -113,7 +113,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile, long spkFileLength, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
+    bool initialize(QFile& featureFile, long spkFileLength, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data.
@@ -127,7 +127,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile, FILE* clusterFile, long spkFileLength, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
+    bool initialize(QFile& featureFile, QFile& clusterFile, long spkFileLength, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data when the cluster file does not exist.
@@ -140,7 +140,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile, long spkFileLength, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
+    bool initialize(QFile& featureFile, long spkFileLength, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data.
@@ -154,7 +154,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile, FILE* clusterFile, long spkFileLength, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
+    bool initialize(QFile& featureFile,QFile& clusterFile, long spkFileLength, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
 
     /**Calculate the minimum and maximum for each dimension and store them in
   *dimensionMinima and dimensionMaxima respectively.
@@ -326,7 +326,7 @@ public:
     /** Returns the list of cluster Ids.*/
     QList<dataType> clusterIds(){
         return clusterInfoMap->keys();
-    };
+    }
 
     /**Returns the maximum for the dimension
   * @param dimension for which the maximum is requested. Numbering starts at 1
@@ -488,7 +488,7 @@ public:
   * @param clusterFile cluster file created by the automatic reclustering program.
   * @return true if the integration is successful, false otherwise.
   */
-    bool integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList, FILE* clusterFile);
+    bool integrateReclusteredClusters(QList<int>& clustersToRecluster, QList<int>& reclusteredClusterList, QFile &clusterFile);
 
     /**
   * Informs if the the variables need it by the traceView are available. Those variables are retrieve only from
@@ -1435,7 +1435,7 @@ public:
   * @param clusterFile the cluster file created by the automatic reclustering program.
   * @return true if the loading succed false otherwise
   */
-    bool loadReclusteredClusters(FILE* clusterFile);
+    bool loadReclusteredClusters(QFile &clusterFile);
 
     /**
   * Load the features data and configuration data when the cluster file does not exist.
@@ -1445,7 +1445,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile,long spkFileLength,QString& errorInformation);
+    bool initialize(QFile &featureFile, long spkFileLength, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data.
@@ -1456,7 +1456,7 @@ public:
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(FILE* featureFile,FILE* clusterFile,long spkFileLength,QString& errorInformation);
+    bool initialize(QFile &featureFile, QFile &clusterFile, long spkFileLength, QString& errorInformation);
 
 };
 
