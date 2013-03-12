@@ -312,16 +312,21 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
         }
     }
     else{
-        if(!QFile(parXFileUrl).exists())
+        if(!QFile(parXFileUrl).exists()) {
+            fclose(fetFile);
             return PARX_DOWNLOAD_ERROR;
+        }
         tmpParXFile = parXFileUrl;
         parXFile.setFileName(tmpParXFile);
         if(!parXFile.open(QIODevice::ReadOnly)){
             fclose(fetFile);
             return OPEN_ERROR;
         }
-        if(!QFile(parFileUrl).exists())
+        if(!QFile(parFileUrl).exists()) {
+            fclose(fetFile);
+            parXFile.close();
             return PAR_DOWNLOAD_ERROR;
+        }
         tmpParFile = parFileUrl;
         parFile.setFileName(tmpParFile);
         if(!parFile.open(QIODevice::ReadOnly)){
