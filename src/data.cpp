@@ -340,7 +340,8 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
     char string[255];
     long long start = 0;
     for (; start < firstLineBufferSize ; ++start){
-        if (buffer[start] >= '0' && buffer[start] <= '9') string[j++] = buffer[start];
+        if (buffer[start] >= '0' && buffer[start] <= '9')
+            string[j++] = buffer[start];
         else if(j) {
             string[j] = '\0';
             nbDimensions = atoi(string);
@@ -384,7 +385,8 @@ bool Data::loadFeatures(FILE* featureFile,QString& errorInformation){
         errorInformation = QObject::tr("The number of features read in the feature file does not correspond to number of spikes times the number of dimensions.");
         return false;
     }
-    else return true;
+    else
+        return true;
 }
 
 
