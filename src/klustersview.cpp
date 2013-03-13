@@ -43,7 +43,13 @@
 
 extern int nbUndo;
 
-const QString KlustersView::DisplayTypeNames[]={"Cluster Display","Waveform Display","Correlation Display","Overview Display","Grouping Assistant Display","Error Matrix Display","Trace Display"};
+const QString KlustersView::DisplayTypeNames[]={QObject::tr("Cluster Display"),
+                                                QObject::tr("Waveform Display"),
+                                                QObject::tr("Correlation Display"),
+                                                QObject::tr("Overview Display"),
+                                                QObject::tr("Grouping Assistant Display"),
+                                                QObject::tr("Error Matrix Display"),
+                                                QObject::tr("Trace Display")};
 
 
 KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColor& backgroundColor,int initialDimensionX,int initialDimensionY,

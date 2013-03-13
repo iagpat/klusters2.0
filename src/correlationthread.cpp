@@ -43,10 +43,14 @@ void CorrelationThread::run(){
         for(pairIterator = clusterPairs->begin(); pairIterator != clusterPairs->end(); ++pairIterator){
             if(!haveToStopProcessing){
                 Data::Status status = data.getCorrelograms(*pairIterator,correlationView.binSize,correlationView.timeWindow,binSizeInRU,timeWindowInRU,halfBins);
-                if(status == Data::NOT_AVAILABLE) continue;
-                else if(status == Data::IN_PROCESS)
+                if(status == Data::NOT_AVAILABLE)
+                    continue;
+                else if(status == Data::IN_PROCESS) {
                     while(!haveToStopProcessing && (data.getCorrelograms(*pairIterator,correlationView.binSize,correlationView.timeWindow,binSizeInRU,timeWindowInRU,halfBins) == Data::IN_PROCESS))
-                    {sleep(1);}
+                    {
+                        sleep(1);
+                    }
+                }
             }
         }
     }
