@@ -55,7 +55,8 @@ const int TraceView::YMARGIN = 0;
 TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiColumns,bool verticalLines,
                      bool raster,bool waveforms,bool labelsDisplay,QList<int>& channelsToDisplay,int unitGain,int acquisitionGain,long start,long timeFrameWidth,
                      ChannelColors* channelColors,QMap<int, QList<int> >* groupsChannels,QMap<int,int>* channelsGroups,
-                     QList<int>& channelOffsets,QList<int>& gains,const QList<int>& skippedChannels,QWidget* parent, const char* name,const QColor& backgroundColor,QStatusBar* statusBar,
+                     QList<int>& channelOffsets,QList<int>& gains,const QList<int>& skippedChannels,QWidget* parent, const char* name,const QColor& backgroundColor,
+                     QStatusBar* statusBar,
                      int minSize,int maxSize,int windowTopLeft,int windowBottomRight,int border):
     BaseFrame(10,0,parent,name,backgroundColor,minSize,maxSize,windowTopLeft,windowBottomRight,border),
     greyScaleMode(greyScale),statusBar(statusBar),tracesProvider(tracesProvider),
@@ -114,8 +115,6 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
     abscissaMin = 0;
     X0 = borderX;
 
-    qDebug()<<"nbChannels: "<<nbChannels<<" samplingRate: "<<samplingRate<<" timeStep: "<<timeStep<<" channelOffsets.size() "<<channelOffsets.size()<<" multiColumns "<<multiColumns;
-
     //The initial offset for each channel is set to zero.
     if(channelOffsets.size() == 0)
         for(int i = 0; i < nbChannels; ++i) channelOffsets.append(0);
@@ -146,7 +145,8 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
 
     //compute the size of the window if the display is not on multicolumns,
     //in that case the viewport needs to be compute before.
-    if(!multiColumns) updateWindow();
+    if(!multiColumns)
+        updateWindow();
 
     //Create the cursors
 

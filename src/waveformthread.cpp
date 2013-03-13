@@ -84,8 +84,13 @@ void WaveformThread::run(){
                         if(!haveToStopProcessing){
                             Data::Status status = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay);
                             //If the data for one cluster is not available, skip it (do not send an event to the waveformView)
-                            if(status == Data::NOT_AVAILABLE) continue;
-                            else if(status == Data::IN_PROCESS) while(!haveToStopProcessing && (data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay) == Data::IN_PROCESS)){sleep(sleepingAmount);};
+                            if(status == Data::NOT_AVAILABLE)
+                                continue;
+                            else if(status == Data::IN_PROCESS)
+                                while(!haveToStopProcessing && (data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay) == Data::IN_PROCESS))
+                                {
+                                    sleep(sleepingAmount);
+                                }
                         }
                         else break;
                     }
@@ -127,7 +132,11 @@ void WaveformThread::run(){
                             Data::Status status = data.getTimeFrameWaveformPoints(*iterator,waveformView.startTime,waveformView.endTime);
                             //If the data for one cluster is not available, skip it (do not send an event to the waveformView)
                             if(status == Data::NOT_AVAILABLE) continue;
-                            else if(status == Data::IN_PROCESS) while(!haveToStopProcessing && (data.getTimeFrameWaveformPoints(*iterator,waveformView.startTime,waveformView.endTime) == Data::IN_PROCESS)){ sleep(sleepingAmount);};
+                            else if(status == Data::IN_PROCESS)
+                                while(!haveToStopProcessing && (data.getTimeFrameWaveformPoints(*iterator,waveformView.startTime,waveformView.endTime) == Data::IN_PROCESS))
+                                {
+                                    sleep(sleepingAmount);
+                                }
                         }
                         else break;
                     }
