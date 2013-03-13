@@ -54,5 +54,11 @@ add_executable(klusters ${klusters_SRCS} )
 target_link_libraries(klusters ${QT_LIBRARIES} ${QT_QTXML_LIBRARY} ${LIBKLUSTERSSHARED_LIBRARY})
 
 install(TARGETS klusters DESTINATION bin)
-install(FILES klusters.png DESTINATION share/icons/) 
+install(FILES klusters.png DESTINATION share/icons/)
+install(FILES hi16-app-klusters.png DESTINATION share/icons/hicolor/16x16/apps/ RENAME klusters.png)
+install(FILES hi22-app-klusters.png DESTINATION share/icons/hicolor/22x22/apps/ RENAME klusters.png)
+install(FILES hi32-app-klusters.png DESTINATION share/icons/hicolor/32x32/apps/ RENAME klusters.png)
+install(FILES hi48-app-klusters.png DESTINATION share/icons/hicolor/48x48/apps/ RENAME klusters.png)
+install(FILES hi64-app-klusters.png DESTINATION share/icons/hicolor/64x64/apps/ RENAME klusters.png)
+ 
 install(FILES klusters.desktop DESTINATION share/applications/ )
