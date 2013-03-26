@@ -645,9 +645,9 @@ void KlustersApp::initSelectionBoxes(){
     //Create and initialize the spin boxe and lineEdit for the waveforms time frame mode.
     start = new QSpinBox(paramBar);
     start->setObjectName("start");
-    dimensionX->setMinimum(1);
-    dimensionX->setMaximum(1);
-    dimensionX->setSingleStep(timeWindow);
+    start->setMinimum(1);
+    start->setMaximum(1);
+    start->setSingleStep(timeWindow);
 
     //Enable to step the value from the highest value to the lowest value and vice versa
     start->setWrapping(true);
