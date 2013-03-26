@@ -110,9 +110,9 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     int v;
     backgroundColor.getHsv(&h,&s,&v);
     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
-	palette.setColor(iconView->foregroundRole(), Qt::black);
+        palette.setColor(QPalette::Text, Qt::black);
     else
-	palette.setColor(iconView->foregroundRole(), Qt::white);
+        palette.setColor(QPalette::Text, Qt::white);
 
     iconView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     iconView->setSpacing(4);
@@ -320,7 +320,7 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
             if(!clusterInformation.at(1).isEmpty()){
                 if(first){
                     clusterText.append(tr("Type: ")).append(clusterInformation.at(1));
-		    first = false;
+                    first = false;
                 }
                 else{
                     clusterText.append(tr(", Type: ")).append(clusterInformation.at(1));
@@ -330,7 +330,7 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
             if(!clusterInformation.at(2).isEmpty()){
                 if(first){
                     clusterText.append(tr("ID: ")).append(clusterInformation.at(2));
-		    first = false;
+                    first = false;
                 }
                 else{
                     clusterText.append(tr(", ID: ")).append(clusterInformation.at(2));
@@ -340,7 +340,7 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
             if(!clusterInformation.at(3).isEmpty()){
                 if(first){
                     clusterText.append(tr("Quality: ")).append(clusterInformation.at(3));
-		    first = false;
+                    first = false;
                 }
                 else{
                     clusterText.append(tr(", Quality: ")).append(clusterInformation.at(3));
@@ -624,9 +624,9 @@ void ClusterPalette::changeBackgroundColor(const QColor& color){
     color.getHsv(&h,&s,&v);
     QPalette palette;
     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
-	palette.setColor(iconView->foregroundRole(), Qt::black);
+        palette.setColor(QPalette::Text, Qt::black);
     else
-	palette.setColor(iconView->foregroundRole(), Qt::white);
+        palette.setColor(QPalette::Text, Qt::white);
     palette.setColor(iconView->backgroundRole(), color);
 
     iconView->setPalette(palette);
