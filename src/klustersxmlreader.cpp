@@ -151,49 +151,54 @@ QList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
                         if (!u.isNull()) {
                             tag = u.tagName();
                             if (tag == CHANNEL_GROUPS) {
-                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
-                               int i = 0;
-                               while(!channelGroup.isNull()) {
-                                   QDomElement val = channelGroup.toElement();
-                                   if (!val.isNull()) {
-                                       tag = val.tagName();
-                                       if (tag == GROUP) {
-                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
+                                QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                                int i = 0;
+                                while(!channelGroup.isNull()) {
+                                    QDomElement val = channelGroup.toElement();
+                                    if (!val.isNull()) {
+                                        tag = val.tagName();
+                                        if (tag == GROUP) {
+                                            if((i + 1) != electrodeGroupID) {
+                                                ++i;
+                                            } else {
+                                                QDomNode group = val.firstChild(); // try to convert the node to an element.
 
-                                           while(!group.isNull()) {
-                                               QDomElement valGroup = group.toElement();
+                                                while(!group.isNull()) {
+                                                    QDomElement valGroup = group.toElement();
 
-                                               if (!valGroup.isNull()) {
-                                                   tag = valGroup.tagName();
-                                                   if( tag == CHANNELS) {
-                                                       if((i + 1) != electrodeGroupID) {
-                                                           ++i;
-                                                           continue;
-                                                       }
-                                                       QDomNode channelsNode = valGroup.firstChild(); // try to convert the node to an element.
-                                                       while(!channelsNode.isNull()) {
-                                                           QDomElement channelsElement = channelsNode.toElement();
-                                                           if (!channelsElement.isNull()) {
-                                                               tag = channelsElement.tagName();
-                                                               if (tag == CHANNEL) {
-                                                                   int channelId = valGroup.text().toInt();
-                                                                   channels.append(channelId);
-                                                               }
-                                                           }
-                                                           channelsNode = channelsNode.nextSibling();
-                                                       }
-                                                   }
-                                               }
-                                               group = group.nextSibling();
-                                           }
-                                           if((i + 1) == electrodeGroupID)
-                                               break;
-                                           ++i;
+                                                    if (!valGroup.isNull()) {
+                                                        tag = valGroup.tagName();
+                                                        if( tag == CHANNELS) {
 
-                                       }
-                                   }
-                                   channelGroup = channelGroup.nextSibling();
-                               }
+                                                            if((i + 1) != electrodeGroupID) {
+                                                                ++i;
+                                                                continue;
+                                                            }
+                                                            QDomNode channelsNode = valGroup.firstChild(); // try to convert the node to an element.
+                                                            while(!channelsNode.isNull()) {
+                                                                QDomElement channelsElement = channelsNode.toElement();
+                                                                if (!channelsElement.isNull()) {
+                                                                    tag = channelsElement.tagName();
+                                                                    if (tag == CHANNEL) {
+                                                                        int channelId = valGroup.text().toInt();
+                                                                        channels.append(channelId);
+                                                                    }
+                                                                }
+                                                                channelsNode = channelsNode.nextSibling();
+                                                            }
+                                                        }
+                                                    }
+                                                    group = group.nextSibling();
+                                                }
+                                                if((i + 1) == electrodeGroupID)
+                                                    break;
+                                                ++i;
+
+                                            }
+                                        }
+                                    }
+                                    channelGroup = channelGroup.nextSibling();
+                                }
                             }
                         }
                         anatomy = anatomy.nextSibling();
@@ -255,38 +260,38 @@ int KlustersXmlReader::getNbSamples(int electrodeGroupID)const{
                         if (!u.isNull()) {
                             tag = u.tagName();
                             if (tag == CHANNEL_GROUPS) {
-                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
-                               int i = 0;
-                               while(!channelGroup.isNull()) {
-                                   QDomElement val = channelGroup.toElement();
-                                   if (!val.isNull()) {
-                                       tag = val.tagName();
-                                       if (tag == GROUP) {
-                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
+                                QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                                int i = 0;
+                                while(!channelGroup.isNull()) {
+                                    QDomElement val = channelGroup.toElement();
+                                    if (!val.isNull()) {
+                                        tag = val.tagName();
+                                        if (tag == GROUP) {
+                                            QDomNode group = val.firstChild(); // try to convert the node to an element.
 
-                                           while(!group.isNull()) {
-                                               QDomElement valGroup = group.toElement();
+                                            while(!group.isNull()) {
+                                                QDomElement valGroup = group.toElement();
 
-                                               if (!valGroup.isNull()) {
-                                                   tag = valGroup.tagName();
-                                                   if( tag == NB_SAMPLES) {
-                                                       if((i + 1) != electrodeGroupID) {
-                                                           ++i;
-                                                           continue;
-                                                       }
-                                                       nbSamples = valGroup.text().toInt();
-                                                   }
-                                               }
-                                               group = group.nextSibling();
-                                           }
-                                           if((i + 1) == electrodeGroupID)
-                                               break;
-                                           ++i;
+                                                if (!valGroup.isNull()) {
+                                                    tag = valGroup.tagName();
+                                                    if( tag == NB_SAMPLES) {
+                                                        if((i + 1) != electrodeGroupID) {
+                                                            ++i;
+                                                            continue;
+                                                        }
+                                                        nbSamples = valGroup.text().toInt();
+                                                    }
+                                                }
+                                                group = group.nextSibling();
+                                            }
+                                            if((i + 1) == electrodeGroupID)
+                                                break;
+                                            ++i;
 
-                                       }
-                                   }
-                                   channelGroup = channelGroup.nextSibling();
-                               }
+                                        }
+                                    }
+                                    channelGroup = channelGroup.nextSibling();
+                                }
                             }
                         }
                         anatomy = anatomy.nextSibling();
@@ -315,38 +320,38 @@ int KlustersXmlReader::getPeakSampleIndex(int electrodeGroupID)const{
                         if (!u.isNull()) {
                             tag = u.tagName();
                             if (tag == CHANNEL_GROUPS) {
-                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
-                               int i = 0;
-                               while(!channelGroup.isNull()) {
-                                   QDomElement val = channelGroup.toElement();
-                                   if (!val.isNull()) {
-                                       tag = val.tagName();
-                                       if (tag == GROUP) {
-                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
+                                QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                                int i = 0;
+                                while(!channelGroup.isNull()) {
+                                    QDomElement val = channelGroup.toElement();
+                                    if (!val.isNull()) {
+                                        tag = val.tagName();
+                                        if (tag == GROUP) {
+                                            QDomNode group = val.firstChild(); // try to convert the node to an element.
 
-                                           while(!group.isNull()) {
-                                               QDomElement valGroup = group.toElement();
+                                            while(!group.isNull()) {
+                                                QDomElement valGroup = group.toElement();
 
-                                               if (!valGroup.isNull()) {
-                                                   tag = valGroup.tagName();
-                                                   if( tag == PEAK_SAMPLE_INDEX) {
-                                                       if((i + 1) != electrodeGroupID) {
-                                                           ++i;
-                                                           continue;
-                                                       }
-                                                       index = valGroup.text().toInt();
-                                                   }
-                                               }
-                                               group = group.nextSibling();
-                                           }
-                                           if((i + 1) == electrodeGroupID)
-                                               break;
-                                           ++i;
+                                                if (!valGroup.isNull()) {
+                                                    tag = valGroup.tagName();
+                                                    if( tag == PEAK_SAMPLE_INDEX) {
+                                                        if((i + 1) != electrodeGroupID) {
+                                                            ++i;
+                                                            continue;
+                                                        }
+                                                        index = valGroup.text().toInt();
+                                                    }
+                                                }
+                                                group = group.nextSibling();
+                                            }
+                                            if((i + 1) == electrodeGroupID)
+                                                break;
+                                            ++i;
 
-                                       }
-                                   }
-                                   channelGroup = channelGroup.nextSibling();
-                               }
+                                        }
+                                    }
+                                    channelGroup = channelGroup.nextSibling();
+                                }
                             }
                         }
                         anatomy = anatomy.nextSibling();
@@ -376,38 +381,38 @@ int KlustersXmlReader::getNbFeatures(int electrodeGroupID)const{
                         if (!u.isNull()) {
                             tag = u.tagName();
                             if (tag == CHANNEL_GROUPS) {
-                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
-                               int i = 0;
-                               while(!channelGroup.isNull()) {
-                                   QDomElement val = channelGroup.toElement();
-                                   if (!val.isNull()) {
-                                       tag = val.tagName();
-                                       if (tag == GROUP) {
-                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
+                                QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                                int i = 0;
+                                while(!channelGroup.isNull()) {
+                                    QDomElement val = channelGroup.toElement();
+                                    if (!val.isNull()) {
+                                        tag = val.tagName();
+                                        if (tag == GROUP) {
+                                            QDomNode group = val.firstChild(); // try to convert the node to an element.
 
-                                           while(!group.isNull()) {
-                                               QDomElement valGroup = group.toElement();
+                                            while(!group.isNull()) {
+                                                QDomElement valGroup = group.toElement();
 
-                                               if (!valGroup.isNull()) {
-                                                   tag = valGroup.tagName();
-                                                   if( tag == NB_FEATURES) {
-                                                       if((i + 1) != electrodeGroupID) {
-                                                           ++i;
-                                                           continue;
-                                                       }
-                                                       nbFeatures = valGroup.text().toInt();
-                                                   }
-                                               }
-                                               group = group.nextSibling();
-                                           }
-                                           if((i + 1) == electrodeGroupID)
-                                               break;
-                                           ++i;
+                                                if (!valGroup.isNull()) {
+                                                    tag = valGroup.tagName();
+                                                    if( tag == NB_FEATURES) {
+                                                        if((i + 1) != electrodeGroupID) {
+                                                            ++i;
+                                                            continue;
+                                                        }
+                                                        nbFeatures = valGroup.text().toInt();
+                                                    }
+                                                }
+                                                group = group.nextSibling();
+                                            }
+                                            if((i + 1) == electrodeGroupID)
+                                                break;
+                                            ++i;
 
-                                       }
-                                   }
-                                   channelGroup = channelGroup.nextSibling();
-                               }
+                                        }
+                                    }
+                                    channelGroup = channelGroup.nextSibling();
+                                }
                             }
                         }
                         anatomy = anatomy.nextSibling();
