@@ -259,10 +259,10 @@ bool Data::loadClusters(QFile &clusterFile, long spkFileLength, QString& errorIn
                 } else if( !feature.isEmpty()){
                     (*spikesByCluster)(2,k++) = feature.toLongLong();//Warning if the typedef dataType changes, change will have to be make here.
                     feature = "";
-                    if(k > upperLimit)
-                        break;
                 }
             }
+            if(k > upperLimit)
+                break;
         }
     }
 
