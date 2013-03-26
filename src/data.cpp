@@ -244,7 +244,6 @@ bool Data::loadClusters(QFile &clusterFile, long spkFileLength, QString& errorIn
     dataType upperLimit = nbSpikes + 1;
     //Effectively create the table containing the data
     spikesByCluster->setSize(nbSpikes);
-
     bool firstLine = true;
     dataType k = 1;
     while (!clusterFile.atEnd()) {
@@ -265,6 +264,8 @@ bool Data::loadClusters(QFile &clusterFile, long spkFileLength, QString& errorIn
                 break;
         }
     }
+
+    qDebug()<<" nbSpikes:"<< nbSpikes<< "k:"<<k<<" spkFileLength:"<<spkFileLength<< "nbChannels : "<< nbChannels<<" nbSamplesInWaveform "<<nbSamplesInWaveform<< " sampleSize:"<<sampleSize;
 
     qDebug()<<" upperLimit"<<upperLimit<< " k "<<k;
     //if the number of clusters read did not correspond to nbSpikes, there is a problem.
