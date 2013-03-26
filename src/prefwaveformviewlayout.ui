@@ -326,7 +326,7 @@
 &lt;p&gt;&lt;b&gt;Note: &lt;/b&gt; a document must be opened in order to use this feature.&lt;/p&gt;</string>
             </property>
             <property name="wordWrap">
-             <bool>false</bool>
+             <bool>true</bool>
             </property>
            </widget>
           </item>
