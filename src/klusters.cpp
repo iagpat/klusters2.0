@@ -847,6 +847,7 @@ void KlustersApp::initClusterPanel()
     //Place the clusterPalette frame in the clusterPanel (the view)
     clusterPanel->setWidget(clusterPalette);
     clusterPanel->setFeatures(QDockWidget::NoDockWidgetFeatures);
+    clusterPanel->hide();
 }
 
 void KlustersApp::initDisplay(){
