@@ -226,8 +226,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QLis
         }
 
         //check that a spike has been found, if that is not the case return startTime as the startingTime => no change will be done in the view, and startTimeInRecordingUnits
-        if(firstSpikes.size() == 0){
-            SortableTable finalData;
+        if(firstSpikes.isEmpty()){
             emit nextClusterDataReady(data,initiator,name,startTime,startTimeInRecordingUnits);
             return;
         }
