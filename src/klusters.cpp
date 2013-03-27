@@ -819,6 +819,7 @@ void KlustersApp::initializePreferences(){
     reclusteringExecutable =  configuration().getReclusteringExecutable();
     reclusteringArgs = configuration().getReclusteringArguments();
     useWhiteColorDuringPrinting = configuration().getUseWhiteColorDuringPrinting();
+    clusterPalette->changeBackgroundColor(backgroundColor);
 }
 
 void KlustersApp::initStatusBar()
