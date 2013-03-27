@@ -78,8 +78,10 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
 {
     setObjectName(name);
     QVBoxLayout *layout = new QVBoxLayout;
+    layout->setMargin(0);
     //Set the palette color
     setAutoFillBackground(true);
+
     QPalette palette;
     palette.setColor(backgroundRole(), backgroundColor);
     palette.setColor(foregroundRole(), Qt::white);
