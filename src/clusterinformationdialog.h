@@ -48,7 +48,6 @@ public:
      void setNotes(const QString& pNotes) { notes->setText(pNotes); }
 
 private:
-    QWidget			*page;
     QLineEdit		*structure;
     QLineEdit		*type;
     /**Isolation Distance*/

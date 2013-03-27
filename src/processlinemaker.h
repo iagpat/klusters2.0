@@ -43,8 +43,8 @@ class ProcessLineMaker : public QObject
 public:
     ProcessLineMaker();
     ProcessLineMaker(QProcess*);
-    inline void processKilled(){isProcessKilled = true;}
-    inline void reset(){
+    void processKilled(){isProcessKilled = true;}
+    void reset(){
         counterOut = 0;
         counterErr = 0;
         isProcessKilled = false;
@@ -55,9 +55,9 @@ public:
 public Q_SLOTS:
     void slotReceivedStdout();
     void slotReceivedStderr();
-    inline void slotWidgetHidden(){isWidgetHidden = true;}
+    void slotWidgetHidden(){isWidgetHidden = true;}
 
-    inline void slotProcessExited(){
+    void slotProcessExited(){
         processExited = true;
         //In case the outputs from the process are already finished.
         if(counterOut == 0 && counterErr == 0)

@@ -31,7 +31,7 @@ ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString
 {
     setWindowTitle(caption);
     setModal(true);
-    page = new QWidget(this);
+    QWidget *page = new QWidget(this);
 
     QVBoxLayout*  layout = new QVBoxLayout(page);
     layout->setMargin(2);

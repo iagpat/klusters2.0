@@ -29,13 +29,13 @@
   */
 
 class ChannelList : public QListWidget  {
-   Q_OBJECT
+    Q_OBJECT
 public: 
     explicit ChannelList(QWidget *parent=0);
-	~ChannelList();
+    ~ChannelList();
 
 Q_SIGNALS:
-  void positionsChanged();
+    void positionsChanged();
 
 };
 
