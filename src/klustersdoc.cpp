@@ -120,7 +120,7 @@ void KlustersDoc::updateAllViews(KlustersView *sender){
 
 }
 
-bool KlustersDoc::canCloseDocument(KlustersApp* mainWindow,QString callingMethod){
+bool KlustersDoc::canCloseDocument(KlustersApp* mainWindow,const QString& callingMethod){
     //Before closing, make sure that there is no thread running.
     //Loop on all the views, moving to the next one when the current one has no more thread running.
     bool threadRunning = false;

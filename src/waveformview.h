@@ -215,7 +215,7 @@ public Q_SLOTS:
     void setDisplayNbSpikes(long nbSpikes);
 
     /**Enables the caller to know if there is any thread running launch by the view.*/
-    bool isThreadsRunning();
+    bool isThreadsRunning() const;
 
     /**Update the information presented in the view if need it.*/
     void updateDrawing();

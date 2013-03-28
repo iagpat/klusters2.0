@@ -118,7 +118,7 @@ CorrelationView::~CorrelationView(){
     threadsToBeKill.clear();
 }
 
-bool CorrelationView::isThreadsRunning(){  
+bool CorrelationView::isThreadsRunning() const{  
     if(threadsToBeKill.count() == 0)
         return false;
     else

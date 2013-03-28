@@ -1367,7 +1367,7 @@ void KlustersView::redoRenumbering(QMap<int,int>& clusterIdsOldNew,bool active){
     emit clustersRenumbered(active);
 }
 
-bool KlustersView::isThreadsRunning(){
+bool KlustersView::isThreadsRunning() const{
     bool threadsRunning = false;
     int nbViews = viewList.count();
     for(int i = 0; i< nbViews; i++) {

@@ -68,7 +68,7 @@ public:
 public Q_SLOTS:
 
     /**Enables the caller to know if there is any thread running launch by the Widget.*/
-    bool isThreadsRunning();
+    bool isThreadsRunning() const;
 
     /**Update the error matrix.*/
     void updateMatrixContents();

@@ -530,7 +530,7 @@ public:
   * meaning launch by any of the view's viewWidget.
   * If at least one is running the method returns true, if none are running the method return false.
   */
-    bool isThreadsRunning();
+    bool isThreadsRunning() const;
 
     /**
   * Update the presentation of a doted line at the shoulder level on the correlograms of the Correlation View if any.

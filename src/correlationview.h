@@ -175,7 +175,7 @@ public Q_SLOTS:
     void decreaseAmplitude();
 
     /**Enables the caller to know if there is any thread running launch by the view.*/
-    bool isThreadsRunning();
+    bool isThreadsRunning() const;
 
     /**
   * Update the clusters which have been modified by the suppression of spikes

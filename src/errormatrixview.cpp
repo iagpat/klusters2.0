@@ -68,9 +68,11 @@ ErrorMatrixView::~ErrorMatrixView(){
     delete probabilities;
 }
 
-bool ErrorMatrixView::isThreadsRunning(){
-    if(threadsToBeKill.count() == 0) return false;
-    else return true;
+bool ErrorMatrixView::isThreadsRunning() const {
+    if(threadsToBeKill.isEmpty())
+        return false;
+    else
+        return true;
 }
 
 void ErrorMatrixView::customEvent(QEvent* event){

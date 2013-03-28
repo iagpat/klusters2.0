@@ -172,7 +172,7 @@ public Q_SLOTS:
   */
     virtual void undoUpdateClusters(QList<int>& modifiedClusters,bool active){}
     /**Enables the caller to know if there is any thread running launch by the viewWidget.*/
-    virtual bool isThreadsRunning(){return false;}
+    virtual bool isThreadsRunning() const{return false;}
     /**Prints the currently display information on a printer via the painter @p printPainter.
   * @param printPainter painter on a printer.
   * @param metrics object providing information about the printer.

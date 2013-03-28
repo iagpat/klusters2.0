@@ -127,7 +127,7 @@ WaveformThread* WaveformView::getWaveforms(){
     return new WaveformThread(*this,doc.data());
 }
 
-bool WaveformView::isThreadsRunning(){
+bool WaveformView::isThreadsRunning() const{
     if(threadsToBeKill.count() == 0)
         return false;
     else

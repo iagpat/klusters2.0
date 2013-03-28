@@ -114,7 +114,7 @@ public:
     * @return true if the document can be close, false if there still thread running and
     * the document could not be close.
     */
-    bool canCloseDocument(KlustersApp* mainWindow,QString callingMethod);
+    bool canCloseDocument(KlustersApp* mainWindow, const QString &callingMethod);
     
     /** Saves the document under the file name containes in @p url.
     * @return an OpenRetunMessage enum giving the open status

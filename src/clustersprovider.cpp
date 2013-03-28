@@ -26,8 +26,10 @@
 #include "timer.h"
 
 
-ClustersProvider::ClustersProvider(const QString& fileUrl,double samplingRate,double currentSamplingRate,Data& clusteringData,dataType dataFileMaxTime): DataProvider(fileUrl),
-    samplingRate(samplingRate),clusteringData(clusteringData),dataFileMaxTime(dataFileMaxTime){
+ClustersProvider::ClustersProvider(const QString& fileUrl,double samplingRate,double currentSamplingRate,Data& clusteringData,dataType dataFileMaxTime)
+    : DataProvider(fileUrl),
+      samplingRate(samplingRate),clusteringData(clusteringData),dataFileMaxTime(dataFileMaxTime)
+{
 
     clusterPosition = 0.25;
 
@@ -35,12 +37,11 @@ ClustersProvider::ClustersProvider(const QString& fileUrl,double samplingRate,do
     //the file name can be X.clu.n or X.n.clu
     QString fileName = fileUrl;
     int startingIndex = fileName.lastIndexOf("clu");
-    if(startingIndex == static_cast<int>(fileName.length()) - 3){//X.n.clu
+    if (startingIndex == static_cast<int>(fileName.length()) - 3) {//X.n.clu
         int nBStartingIndex = fileName.lastIndexOf(".",startingIndex - 2);
         name = fileName.mid(nBStartingIndex + 1,(startingIndex - 1) - (nBStartingIndex + 1));
-    }
-    else{//X.clu.n
-        int nBStartingIndex = fileName.lastIndexOf(".");
+    } else {//X.clu.n
+        const int nBStartingIndex = fileName.lastIndexOf(".");
         name = fileName.right(static_cast<int>(fileName.length()) - (nBStartingIndex + 1));
     }
 
