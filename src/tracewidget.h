@@ -469,7 +469,7 @@ public Q_SLOTS:
   * @param providerName name use to identified the event provider containing the modified event.
   * @param eventsToNotBrowse new list of events to not use while browsing.
   */
-    void updateNoneBrowsingEventList(QString providerName,const QList<int>& eventsToNotBrowse){
+    void updateNoneBrowsingEventList(const QString& providerName,const QList<int>& eventsToNotBrowse){
         view.updateNoneBrowsingEventList(providerName,eventsToNotBrowse);
     }
 
@@ -477,15 +477,9 @@ public Q_SLOTS:
   * @param providerName name use to identified the event provider containing the modified event.
   * @param clustersToNotBrowse new list of clusters to not use while browsing.
   */
-    void updateNoneBrowsingClusterList(QString providerName,const QList<int>& clustersToNotBrowse){
+    void updateNoneBrowsingClusterList(const QString& providerName,const QList<int>& clustersToNotBrowse){
         view.updateNoneBrowsingClusterList(providerName,clustersToNotBrowse);
     }
-
-    /***If the frame is contained in a dockWidget, this slot can be used
-  * when the enclosing dockwidget is being closed.
-  * Emits the parentDockBeingClosed signal.
-  */
-    virtual void dockBeingClosed(){emit parentDockBeingClosed(this);}
 
     /**Updates the display due to modification of clusters provided by the cluster provider identified
   * by @p name.
@@ -494,7 +488,7 @@ public Q_SLOTS:
   * @param clusterColors list of colors for the clusters.
   * @param active true if the view is the active one, false otherwise.
   */
-    void updateClusters(QString name,QList<int>& clustersToShow,ItemColors* clusterColors,bool active){
+    void updateClusters(const QString& name,QList<int>& clustersToShow,ItemColors* clusterColors,bool active){
         view.updateClusters(name,clustersToShow,clusterColors,active);
     }
 
@@ -533,11 +527,6 @@ Q_SIGNALS:
   * @param time time of the added event.
   */
     void eventAdded(QString providerName,QString addedEventDescription,double time);
-
-    /***Signals that the enclosing dockwidget is being closed
-   * @param viewWidget pointer on the the current object.
-   */
-    void parentDockBeingClosed(QWidget* viewWidget);
 
 protected:
 

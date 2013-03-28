@@ -99,12 +99,6 @@ public Q_SLOTS:
     /**Update the information presented in the view if need it.*/
     virtual void updateDrawing(){}
 
-    /***If the frame is contained in a dockWidget, this slot can be used
-  * when the enclosing dockwidget is being closed.
-  * Emits the parentDockBeingClosed signal.
-  */
-    virtual void dockBeingClosed(){emit parentDockBeingClosed(this);}
-
     /***Changes the color of the background.*/
     virtual void changeBackgroundColor(QColor color);
 
@@ -112,12 +106,6 @@ public Q_SLOTS:
   * @param selectedMode new mode of drawing.
   */
     virtual void setMode(BaseFrame::Mode selectedMode){mode = selectedMode;}
-
-Q_SIGNALS:
-    /***Signals that the enclosing dockwidget is being closed
-   * @param viewWidget pointer on the the current object.
-   */
-    void parentDockBeingClosed(QWidget* viewWidget);
 
 protected:
 
