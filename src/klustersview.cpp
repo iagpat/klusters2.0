@@ -381,18 +381,8 @@ void  KlustersView::clusterDockClosed(QObject *clusterView){
 }
 
 void KlustersView::waveformDockClosed(QObject* waveformView){
-    //Be sure that all the threads are finished before procceding.
-    if(static_cast<ViewWidget*>(waveformView)->isThreadsRunning()){
-        QApplication::restoreOverrideCursor();//Clear any previous override comin gfrom this function.
-        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        dynamic_cast<WaveformView*>(waveformView)->willBeKilled();
-
-        QTimer::singleShot(1000,dynamic_cast<WaveformView*>(waveformView), SLOT(dockBeingClosed()));
-        return;
-    }
-
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
-    viewList.removeAll(dynamic_cast<ViewWidget*>(waveformView));
+    viewList.removeAll(static_cast<ViewWidget*>(waveformView));
 
     //For the time being only one WaveformView is allowed in a single View, but in the
     //future who knows ;0). This counter will make it easier to allow multiple WaveformView.
@@ -406,17 +396,9 @@ void KlustersView::waveformDockClosed(QObject* waveformView){
 }
 
 void KlustersView::correlogramDockClosed(QObject* correlogramView){
-    //Be sure that all the threads are finished before procceding.
-    if(static_cast<ViewWidget*>(correlogramView)->isThreadsRunning()){
-        QApplication::restoreOverrideCursor();//Clear any previous override comin from this function.
-        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        static_cast<CorrelationView*>(correlogramView)->willBeKilled();
-        QTimer::singleShot(1000,dynamic_cast<CorrelationView*>(correlogramView), SLOT(dockBeingClosed()));
-        return;
-    }
 
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
-    viewList.removeAll(dynamic_cast<ViewWidget*>(correlogramView));
+    viewList.removeAll(static_cast<ViewWidget*>(correlogramView));
 
     if(viewCounter["CorrelationView"] == 1){
         viewCounter.remove("CorrelationView");
@@ -446,15 +428,6 @@ void KlustersView::correlogramDockClosed(QObject* correlogramView){
 }
 
 void KlustersView::errorMatrixDockClosed(QObject* errorMatrixView){
-    //Be sure that all the threads are finished before procceding.
-    if(static_cast<ViewWidget*>(errorMatrixView)->isThreadsRunning()){
-        QApplication::restoreOverrideCursor();//Clear any previous override comin gfrom this function.
-        QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        dynamic_cast<ErrorMatrixView*>(errorMatrixView)->willBeKilled();
-        QTimer::singleShot(1000,dynamic_cast<ErrorMatrixView*>(errorMatrixView), SLOT(dockBeingClosed()));
-        return;
-    }
-
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
 
     viewList.removeAll(static_cast<ViewWidget*>(errorMatrixView));
