@@ -650,26 +650,26 @@ public Q_SLOTS:
     /**Takes care of the closing of a ClusterView.
   * @param clusterView the ClusterView to be closed.
   */
-    void clusterDockClosed(QWidget* clusterView);
+    void clusterDockClosed(QObject *obj);
 
     /**Takes care of the closing of a WaveformView.
   * @param waveformView the WaveformView to be closed.
   */
-    void waveformDockClosed(QWidget* waveformView);
+    void waveformDockClosed(QObject *waveformView);
 
     /**Takes care of the closing of a CorrelogramView.
   * @param correlogramView the CorrelogramView to be closed.
   */
-    void correlogramDockClosed(QWidget* correlogramView);
+    void correlogramDockClosed(QObject *correlogramView);
 
     /**Takes care of the closing of an ErrorMatrixView.
   * @param errorMatrixView the ErrorMatrixView to be closed.
   */
-    void errorMatrixDockClosed(QWidget* errorMatrixView);
+    void errorMatrixDockClosed(QObject* errorMatrixView);
 
     /**Takes care of the closing of a TraceView.
   * @param traceWidget the traceView to be closed.*/
-    void traceDockClosed(QWidget* traceWidget);
+    void traceDockClosed(QObject* traceWidget);
 
     /**Sets the starting time and the time window in miliseconds used in the TraceView.
   * @param start starting time.

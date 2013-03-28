@@ -352,8 +352,8 @@ void KlustersView::print(QPrinter *pPrinter, const QString& filePath, bool white
     printPainter.end();
 }
 
-void  KlustersView::clusterDockClosed(QWidget* clusterView){
-    viewList.removeAll(dynamic_cast<ViewWidget*>(clusterView));
+void  KlustersView::clusterDockClosed(QObject *clusterView){
+    viewList.removeAll(static_cast<ViewWidget*>(clusterView));
     //the clusterView to be removed is the last one
     if(viewCounter["ClusterView"] == 1){
         viewCounter.remove("ClusterView");
@@ -380,9 +380,9 @@ void  KlustersView::clusterDockClosed(QWidget* clusterView){
     }
 }
 
-void KlustersView::waveformDockClosed(QWidget* waveformView){
+void KlustersView::waveformDockClosed(QObject* waveformView){
     //Be sure that all the threads are finished before procceding.
-    if(dynamic_cast<ViewWidget*>(waveformView)->isThreadsRunning()){
+    if(static_cast<ViewWidget*>(waveformView)->isThreadsRunning()){
         QApplication::restoreOverrideCursor();//Clear any previous override comin gfrom this function.
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         dynamic_cast<WaveformView*>(waveformView)->willBeKilled();
@@ -405,12 +405,12 @@ void KlustersView::waveformDockClosed(QWidget* waveformView){
         viewCounter["WaveformView"]--;
 }
 
-void KlustersView::correlogramDockClosed(QWidget* correlogramView){
+void KlustersView::correlogramDockClosed(QObject* correlogramView){
     //Be sure that all the threads are finished before procceding.
-    if(dynamic_cast<ViewWidget*>(correlogramView)->isThreadsRunning()){
+    if(static_cast<ViewWidget*>(correlogramView)->isThreadsRunning()){
         QApplication::restoreOverrideCursor();//Clear any previous override comin from this function.
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        dynamic_cast<CorrelationView*>(correlogramView)->willBeKilled();
+        static_cast<CorrelationView*>(correlogramView)->willBeKilled();
         QTimer::singleShot(1000,dynamic_cast<CorrelationView*>(correlogramView), SLOT(dockBeingClosed()));
         return;
     }
@@ -434,7 +434,7 @@ void KlustersView::correlogramDockClosed(QWidget* correlogramView){
     for(int i = 0; i< nbViews; i++) {
         ViewWidget* viewWidget = viewList.at(i);
         if(qobject_cast<CorrelationView*>(viewWidget)){
-            binSize = dynamic_cast<CorrelationView*>(viewWidget)->getBinSize();
+            binSize = static_cast<CorrelationView*>(viewWidget)->getBinSize();
             correlogramTimeFrame = dynamic_cast<CorrelationView*>(viewWidget)->getTimeWindow();
             correlationScale = dynamic_cast<CorrelationView*>(viewWidget)->getScaleMode();
             shoulderLine = dynamic_cast<CorrelationView*>(viewWidget)->isShoulderLine();
@@ -445,9 +445,9 @@ void KlustersView::correlogramDockClosed(QWidget* correlogramView){
     }
 }
 
-void KlustersView::errorMatrixDockClosed(QWidget* errorMatrixView){
+void KlustersView::errorMatrixDockClosed(QObject* errorMatrixView){
     //Be sure that all the threads are finished before procceding.
-    if(dynamic_cast<ViewWidget*>(errorMatrixView)->isThreadsRunning()){
+    if(static_cast<ViewWidget*>(errorMatrixView)->isThreadsRunning()){
         QApplication::restoreOverrideCursor();//Clear any previous override comin gfrom this function.
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         dynamic_cast<ErrorMatrixView*>(errorMatrixView)->willBeKilled();
@@ -457,12 +457,12 @@ void KlustersView::errorMatrixDockClosed(QWidget* errorMatrixView){
 
     QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
 
-    viewList.removeAll(dynamic_cast<ViewWidget*>(errorMatrixView));
+    viewList.removeAll(static_cast<ViewWidget*>(errorMatrixView));
     mainWindow.widgetRemovedFromDisplay(ERROR_MATRIX);
     isThereErrorMatrixView = false;
 }
 
-void KlustersView::traceDockClosed(QWidget* traceWidget){
+void KlustersView::traceDockClosed(QObject *traceWidget){
     if(viewCounter["TraceView"] == 1){
         viewCounter.remove("TraceView");
         mainWindow.widgetRemovedFromDisplay(TRACES);
@@ -692,8 +692,11 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         //Give to the new view the same mode than the other clusterviews
         if(!newViewType){
             int nbViews = viewList.count();
+            qDebug()<<" nbViews"<<nbViews;
             for(int i = 0; i< nbViews; i++) {
                 ViewWidget* viewWidget = viewList.at(i);
+                qDebug()<<" sssssssssssssss";
+                qDebug()<<" viewWidget"<<viewWidget;
                 if(qobject_cast<ClusterView*>(viewWidget)){
                     clusterView->setMode(static_cast<ClusterView*>(viewWidget)->getMode());
 
@@ -1437,10 +1440,6 @@ QList< QList<int>* >  KlustersView::getRedoList(){
 void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWidget* dockWidget){
     //Connection(s) common to all widgets.
     connect(this,SIGNAL(updateContents()),view, SLOT(update()));
-    //Enable the View to be inform that the dockWidget is being closed.
-    //To do so, connect the dockwidget close button to the dockBeingClosed slot of is contained widget
-    //and connect this widget parentDockBeingClosed signal to the view {cluster,waveform,correlogram,errorMatrix}DockClosed slot.
-    connect(dockWidget, SIGNAL(destroyed()), view, SLOT(dockBeingClosed()));
     
     //Connections common to ClusterView, WaveformView and CorrelationView
     if((displayType == CLUSTERS) || (displayType == WAVEFORMS) || (displayType == CORRELATIONS)){
@@ -1463,7 +1462,8 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(changeTimeInterval(int,bool)),view, SLOT(setTimeStepInSecond(int,bool)));
         connect(this,SIGNAL(updatedDimensions(int,int)),view, SLOT(updatedDimensions(int,int)));
         connect(this,SIGNAL(emptySelection()),view, SLOT(emptySelection()));
-        connect(view, SIGNAL(parentDockBeingClosed(QWidget*)), this, SLOT(clusterDockClosed(QWidget*)));
+        qDebug()<<" XXXXXXXXXXXXXXXXXXXXXXXXXXxx"<<dockWidget<<" vuew "<<view;
+        connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(clusterDockClosed(QObject*)));
 
         //Connect the clusterView to a possible TraceView
         if(isThereTraceView){
@@ -1486,7 +1486,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(changeGain(int)),view, SLOT(setGain(int)));
         connect(this,SIGNAL(changeChannelPositions(QList<int>&)),view, SLOT(setChannelPositions(QList<int>&)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));
-        connect(view, SIGNAL(parentDockBeingClosed(QWidget*)), this, SLOT(waveformDockClosed(QWidget*)));
+        connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(waveformDockClosed(QObject*)));
     }
 
     //Connections for CorrelationViews
@@ -1499,13 +1499,13 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(decreaseAmplitudeofCorrelograms()),view, SLOT(decreaseAmplitude()));
         connect(this,SIGNAL(setShoulderLine(bool)),view, SLOT(setShoulderLine(bool)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));
-        connect(view, SIGNAL(parentDockBeingClosed(QWidget*)), this, SLOT(correlogramDockClosed(QWidget*)));
+        connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(correlogramDockClosed(QObject*)));
     }
 
     //Connections for ErrorMatrixViews
     if(displayType == ERROR_MATRIX){
         connect(this,SIGNAL(computeProbabilities()),view, SLOT(updateMatrixContents()));
-        connect(view, SIGNAL(parentDockBeingClosed(QWidget*)), this, SLOT(errorMatrixDockClosed(QWidget*)));
+        connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(errorMatrixDockClosed(QObject*)));
         //connection with the document
         connect(&doc,SIGNAL(clustersGrouped(QList<int>&,int)),view, SLOT(clustersGrouped(QList<int>&,int)));
         connect(&doc,SIGNAL(clustersDeleted(QList<int>&,int)),view, SLOT(clustersDeleted(QList<int>&,int)));
@@ -1534,7 +1534,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
 
         connect(this,SIGNAL(updateDrawing()),view, SLOT(updateDrawing()));
         connect(this,SIGNAL(changeBackgroundColor(QColor)),view, SLOT(changeBackgroundColor(QColor)));
-        connect(view, SIGNAL(parentDockBeingClosed(QWidget*)), this, SLOT(traceDockClosed(QWidget*)));
+        connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(traceDockClosed(QObject*)));
         connect(this,SIGNAL(increaseAllAmplitude()),view,SLOT(increaseAllChannelsAmplitude()));
         connect(this,SIGNAL(decreaseAllAmplitude()),view,SLOT(decreaseAllChannelsAmplitude()));
         connect(view,SIGNAL(updateStartAndDuration(long,long)),this, SLOT(setStartAndDuration(long,long)));
