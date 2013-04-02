@@ -250,7 +250,7 @@ if(UNIX)
     set( CMAKE_INSTALL_PREFIX "/Applications" )
     set( CPACK_GENERATOR "DragNDrop" )
     set( CPACK_DMG_FORMAT "UDBZ" )
-    set( CPACK_DMG_VOLUME_NAME "libklustersshared" )
+    set( CPACK_DMG_VOLUME_NAME "klusters" )
     set( CPACK_SYSTEM_NAME "OSX" )
   else()
     set(CPACK_GENERATOR "TGZ") # for testing mostly, we probably want STGZ or RPM/DEB
