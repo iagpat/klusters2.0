@@ -720,7 +720,7 @@ dataType Data::createNewCluster(QRegion& region, const QList <int>& clustersOfOr
             mutex.lock();
             if(waveformStatusMap.contains(*iterator)){
                 if(!waveformStatusMap[*iterator].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*iterator));
                     waveformStatusMap.remove(*iterator);
                 }
                 else{
@@ -941,7 +941,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& cluste
             mutex.lock();
             if(waveformStatusMap.contains(clusterId)){
                 if(!waveformStatusMap[clusterId].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(clusterId));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(clusterId));
                     waveformStatusMap.remove(clusterId);
                 }
                 else{
@@ -1263,7 +1263,7 @@ void Data::deleteSpikesFromClusters(QRegion& region, const QList <int>& clusters
             mutex.lock();
             if(waveformStatusMap.contains(*iterator)){
                 if(!waveformStatusMap[*iterator].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*iterator));
                     waveformStatusMap.remove(*iterator);
                 }
                 else{
@@ -1377,7 +1377,7 @@ void Data::moveClustersToArtefact(QList <int>& clustersToDelete){
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){
             if(!waveformStatusMap[*iterator].isInProcess()){
-                waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
+                delete waveformDict.take(QString::fromLatin1("%1").arg(*iterator));
                 waveformStatusMap.remove(*iterator);
             }
             else{
@@ -1402,7 +1402,7 @@ void Data::moveClustersToArtefact(QList <int>& clustersToDelete){
     if(!clustersToDelete.empty()){
         mutex.lock();
         if(!waveformStatusMap[0].isInProcess()){
-            waveformDict.remove("0");
+            delete waveformDict.take("0");
             waveformStatusMap.remove(0);
         }
         else{
@@ -1540,7 +1540,7 @@ void Data::moveClustersToNoise(QList<int>& clustersToDelete){
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){
             if(!waveformStatusMap[*iterator].isInProcess()){
-                waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
+                delete waveformDict.take(QString::fromLatin1("%1").arg(*iterator));
                 waveformStatusMap.remove(*iterator);
             }
             else{
@@ -1565,7 +1565,7 @@ void Data::moveClustersToNoise(QList<int>& clustersToDelete){
     if(!clustersToDelete.empty()){
         mutex.lock();
         if(!waveformStatusMap[1].isInProcess()){
-            waveformDict.remove("1");
+            delete waveformDict.take("1");
             waveformStatusMap.remove(1);
         }
         else{
@@ -1716,7 +1716,7 @@ dataType Data::groupClusters(QList<int>& clustersToGroup){
         mutex.lock();
         if(waveformStatusMap.contains(*clustersToGroupIterator)){
             if(!waveformStatusMap[*clustersToGroupIterator].isInProcess()){
-                waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToGroupIterator));
+                delete waveformDict.take(QString::fromLatin1("%1").arg(*clustersToGroupIterator));
                 waveformStatusMap.remove(*clustersToGroupIterator);
             }
             else{
@@ -1754,15 +1754,17 @@ void Data::prepareUndo(SortableTable* spikesByClusterTemp,ClusterInfoMap* cluste
     //if the number of undo has been reach remove the last element in the undo list (first inserted)
     int currentSpikesByClusterNbUndo = spikesByClusterUndoList.count();
     if(currentSpikesByClusterNbUndo > nbUndo)
-        spikesByClusterUndoList.removeAt(currentSpikesByClusterNbUndo - 1);
+        delete spikesByClusterUndoList.takeAt(currentSpikesByClusterNbUndo - 1);
 
     //if the number of undo has been reach remove the last element in the undo list (first inserted)
     int currentClusterInfoNbUndo = clusterInfoMapUndoList.count();
     if(currentClusterInfoNbUndo > nbUndo)
-        clusterInfoMapUndoList.removeAt(currentClusterInfoNbUndo - 1);
+        delete clusterInfoMapUndoList.takeAt(currentClusterInfoNbUndo - 1);
 
     //Clear the redoLists
+    qDeleteAll(spikesByClusterRedoList);
     spikesByClusterRedoList.clear();
+    qDeleteAll(clusterInfoMapRedoList);
     clusterInfoMapRedoList.clear();
 }
 
@@ -1775,12 +1777,14 @@ void Data::nbUndoChangedCleaning(int newNbUndo){
         // remove the last elements in the undo lists (first ones inserted).
         if(currentNbUndo > newNbUndo){
             while(currentNbUndo > newNbUndo){
-                spikesByClusterUndoList.removeAt(currentNbUndo - 1);
-                clusterInfoMapUndoList.removeAt(currentNbUndo - 1);
+                delete spikesByClusterUndoList.takeAt(currentNbUndo - 1);
+                delete clusterInfoMapUndoList.takeAt(currentNbUndo - 1);
                 currentNbUndo = spikesByClusterUndoList.count();
             }
             //Clear the redoLists
+            qDeleteAll(spikesByClusterRedoList);
             spikesByClusterRedoList.clear();
+            qDeleteAll(clusterInfoMapRedoList);
             clusterInfoMapRedoList.clear();
         }
         //currentNbUndo < newNbUndo, check the redo list.
@@ -1789,8 +1793,8 @@ void Data::nbUndoChangedCleaning(int newNbUndo){
             int currentNbRedo = spikesByClusterRedoList.count();
             if((currentNbRedo + currentNbUndo) > newNbUndo){
                 while((currentNbRedo + currentNbUndo) > newNbUndo){
-                    clusterInfoMapRedoList.removeAt(currentNbRedo - 1);
-                    spikesByClusterRedoList.removeAt(currentNbRedo - 1);
+                    delete clusterInfoMapRedoList.takeAt(currentNbRedo - 1);
+                    delete spikesByClusterRedoList.takeAt(currentNbRedo - 1);
                     currentNbRedo = spikesByClusterRedoList.count();
                 }
             }
@@ -1871,7 +1875,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -1903,7 +1907,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -1940,7 +1944,7 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
             mutex.lock();
             if(waveformStatusMap.contains(static_cast<int>(*iterator))){
                 if(!waveformStatusMap[static_cast<int>(*iterator)].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*iterator));
                     waveformStatusMap.remove(static_cast<int>(*iterator));
                 }
                 else{
@@ -2023,7 +2027,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -2049,7 +2053,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -2075,7 +2079,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
             mutex.lock();
             if(waveformStatusMap.contains(*clustersToRemoveIterator)){
                 if(!waveformStatusMap[*clustersToRemoveIterator].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*clustersToRemoveIterator));
                     waveformStatusMap.remove(*clustersToRemoveIterator);
                 }
                 else{
@@ -2109,7 +2113,7 @@ void Data::redo(QList<int>& addedClusters,QList<int>& updatedClusters,QList<int>
             mutex.lock();
             if(waveformStatusMap.contains(static_cast<int>(*iterator))){
                 if(!waveformStatusMap[static_cast<int>(*iterator)].isInProcess()){
-                    waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
+                    delete waveformDict.take(QString::fromLatin1("%1").arg(*iterator));
                     waveformStatusMap.remove(static_cast<int>(*iterator));
                 }
                 else{
@@ -2392,7 +2396,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
         if(!spikePositions(clusterId,positionOfSpikes) || waveformStatusMap[clusterId].isClusterModified()){
             mutex.lock();
             waveformStatusMap[clusterId].setClusterModified(false);
-            waveformDict.remove(clusterIdString); //not already done by the function which modified the data as the thread is running.
+            delete waveformDict.take(clusterIdString); //not already done by the function which modified the data as the thread is running.
             waveformStatusMap.remove(clusterId);
             mutex.unlock();
             return NOT_AVAILABLE;
@@ -2413,7 +2417,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
         if(!spikePositions(clusterId,positionOfSpikes) || waveformStatusMap[clusterId].isClusterModified()){
             mutex.lock();
             waveformStatusMap[clusterId].setClusterModified(false);
-            waveformDict.remove(clusterIdString); //not already done by the function which modified the data as the thread is running.
+            delete waveformDict.take(clusterIdString); //not already done by the function which modified the data as the thread is running.
             waveformStatusMap.remove(clusterId);
             mutex.unlock();
             return NOT_AVAILABLE;
@@ -2441,7 +2445,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)) || waveformStatusMap[clusterId].isClusterModified()){
         mutex.lock();
         waveformStatusMap[clusterId].setClusterModified(false);
-        waveformDict.remove(clusterIdString);  //not already done by the function which modified the data as the thread is running.
+        delete waveformDict.take(clusterIdString);  //not already done by the function which modified the data as the thread is running.
         waveformStatusMap.remove(clusterId);
         mutex.unlock();
         return NOT_AVAILABLE;
@@ -2496,7 +2500,7 @@ Data::Status Data::getTimeFrameWaveformPoints(int clusterId,dataType start,dataT
         if(!spikePositions(clusterId,positionOfSpikes) || waveformStatusMap[clusterId].isClusterModified()){
             mutex.lock();
             waveformStatusMap[clusterId].setClusterModified(false);
-            waveformDict.remove(clusterIdString); //not already done by the function which modified the data as the thread is running.
+            delete waveformDict.take(clusterIdString); //not already done by the function which modified the data as the thread is running.
             waveformStatusMap.remove(clusterId);
             mutex.unlock();
             return NOT_AVAILABLE;
@@ -2521,7 +2525,7 @@ Data::Status Data::getTimeFrameWaveformPoints(int clusterId,dataType start,dataT
         if(!spikePositions(clusterId,positionOfSpikes) || waveformStatusMap[clusterId].isClusterModified()){
             mutex.lock();
             waveformStatusMap[clusterId].setClusterModified(false);
-            waveformDict.remove(clusterIdString); //not already done by the function which modified the data as the thread is running.
+            delete waveformDict.take(clusterIdString); //not already done by the function which modified the data as the thread is running.
             waveformStatusMap.remove(clusterId);
             mutex.unlock();
             return NOT_AVAILABLE;
@@ -2560,7 +2564,7 @@ Data::Status Data::getTimeFrameWaveformPoints(int clusterId,dataType start,dataT
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)) || waveformStatusMap[clusterId].isClusterModified()){
         mutex.lock();
         waveformStatusMap[clusterId].setClusterModified(false);
-        waveformDict.remove(clusterIdString); //if not already done by the function which modified the data
+        delete waveformDict.take(clusterIdString); //if not already done by the function which modified the data
         waveformStatusMap.remove(clusterId);
         mutex.unlock();
         return NOT_AVAILABLE;
@@ -2763,7 +2767,7 @@ Data::Status Data::calculateSampleMean(int clusterId,dataType nbSpkToDisplay){
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)) || waveformStatusMap[clusterId].isClusterModified()){
         mutex.lock();
         waveformStatusMap[clusterId].setClusterModified(false);
-        waveformDict.remove(clusterIdString);  //if not already done by the function which modified the data
+        delete waveformDict.take(clusterIdString);  //if not already done by the function which modified the data
         waveformStatusMap.remove(clusterId);;
         mutex.unlock();
         return NOT_AVAILABLE;
@@ -2820,7 +2824,7 @@ Data::Status Data::calculateTimeFrameMean(int clusterId,dataType start,dataType 
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)) || waveformStatusMap[clusterId].isClusterModified()){
         mutex.lock();
         waveformStatusMap[clusterId].setClusterModified(false);
-        waveformDict.remove(clusterIdString);  //if not already done by the function which modified the data
+        delete waveformDict.take(clusterIdString);  //if not already done by the function which modified the data
         waveformStatusMap.remove(clusterId);
         mutex.unlock();
         return NOT_AVAILABLE;
@@ -3095,7 +3099,7 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
             mutex.lock();
             correlationsInProcess.removeProcess(static_cast<dataType>(cluster1));
             correlationsInProcess.removeProcess(static_cast<dataType>(cluster2));
-            correlationDict.remove(pair.toString()); //if the clusters do not exist anymore they would not have been
+            delete correlationDict.take(pair.toString()); //if the clusters do not exist anymore they would not have been
             //removed in cleanCorrelation
             mutex.unlock();
             return NOT_AVAILABLE;
@@ -3105,7 +3109,7 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
         if(correlationsInProcess.isClusterModified(static_cast<dataType>(cluster1))){
             mutex.lock();
             correlationsInProcess.removeProcess(static_cast<dataType>(cluster1));
-            correlationDict.remove(pair.toString());
+            delete correlationDict.take(pair.toString());
             mutex.unlock();
 
             clusterNotAvailable = true;
@@ -3113,7 +3117,7 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
         if(correlationsInProcess.isClusterModified(static_cast<dataType>(cluster2))){
             mutex.lock();
             correlationsInProcess.removeProcess(static_cast<dataType>(cluster2));
-            correlationDict.remove(pair.toString());
+            delete correlationDict.take(pair.toString());
             mutex.unlock();
 
             clusterNotAvailable = true;
@@ -3139,7 +3143,7 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
             mutex.lock();
             correlationsInProcess.removeProcess(static_cast<dataType>(cluster1));
             correlationsInProcess.removeProcess(static_cast<dataType>(cluster2));
-            correlationDict.remove(pair.toString()); //if the clusters do not exist anymore they would not have been
+            delete correlationDict.take(pair.toString()); //if the clusters do not exist anymore they would not have been
             //removed in cleanCorrelation
             mutex.unlock();
             return NOT_AVAILABLE;
@@ -3148,14 +3152,14 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
         if(correlationsInProcess.isClusterModified(static_cast<dataType>(cluster1))){
             mutex.lock();
             correlationsInProcess.removeProcess(static_cast<dataType>(cluster1));
-            correlationDict.remove(pair.toString());
+            delete correlationDict.take(pair.toString());
             mutex.unlock();
             clusterNotAvailable = true;
         }
         if(correlationsInProcess.isClusterModified(static_cast<dataType>(cluster2))){
             mutex.lock();
             correlationsInProcess.removeProcess(static_cast<dataType>(cluster2));
-            correlationDict.remove(pair.toString());
+            delete correlationDict.take(pair.toString());
             mutex.unlock();
             clusterNotAvailable = true;
         }
@@ -3337,7 +3341,7 @@ void Data::cleanCorrelation(dataType clusterId,QList<dataType> currentClusterLis
 
     //Remove the autocorrelogram separatly as the clusterID has already been removed from
     //the list of clusters.
-    correlationDict.remove(Pair(static_cast<int>(clusterId),static_cast<int>(clusterId)).toString());
+    delete correlationDict.take(Pair(static_cast<int>(clusterId),static_cast<int>(clusterId)).toString());
 
     //Gets all the clustersId currently available
 
@@ -3346,8 +3350,8 @@ void Data::cleanCorrelation(dataType clusterId,QList<dataType> currentClusterLis
     for(iterator = currentClusterList.begin(); iterator != currentClusterList.end(); ++iterator){
         //Search pairs as (clusterId,*iterator) where clusterId > *iterator
         //and (*iterator,clusterId) where *iterator > clusterId
-        if(*iterator <= clusterId) correlationDict.remove(Pair(static_cast<int>(*iterator),static_cast<int>(clusterId)).toString());
-        else correlationDict.remove(Pair(static_cast<int>(clusterId),static_cast<int>(*iterator)).toString());
+        if(*iterator <= clusterId) delete correlationDict.take(Pair(static_cast<int>(*iterator),static_cast<int>(clusterId)).toString());
+        else delete correlationDict.take(Pair(static_cast<int>(clusterId),static_cast<int>(*iterator)).toString());
     }
     mutex.unlock();
 }
@@ -3593,7 +3597,7 @@ bool Data::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<in
         mutex.lock();
         if(waveformStatusMap.contains(*iterator)){
             if(!waveformStatusMap[*iterator].isInProcess()){
-                waveformDict.remove(QString::fromLatin1("%1").arg(*iterator));
+                delete waveformDict.take(QString::fromLatin1("%1").arg(*iterator));
                 waveformStatusMap.remove(*iterator);
             }
             else{
