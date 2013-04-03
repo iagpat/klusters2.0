@@ -2935,6 +2935,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mAbortReclustering->setEnabled(false);
 
     } else if(state == QLatin1String("documentState")) {
+        mDeleteNoisySpikes->setEnabled(true);
         mSaveAction->setEnabled(true);
         mSaveAsAction->setEnabled(true);
         mPrintAction->setEnabled(true);
