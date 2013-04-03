@@ -79,13 +79,14 @@ WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& bac
     ///Initialize the position of the channels (the positions will be configurable in the settings).
     //The first one in the file will be the first one (at the top), second one will be beneath and so on.
     //The channels are counted from 0 to nbchannels - 1.
-    if(positions.isEmpty()){
-        for(int i = 0; i < nbchannels; ++i)
+    if(positions.isEmpty()) {
+        for(int i = 0; i < nbchannels; ++i) {
             channelPositions[i] = i;
-    }
-    else{
-        for(int i = 0; i < nbchannels; ++i)
+        }
+    } else {
+        for(int i = 0; i < nbchannels; ++i) {
             channelPositions[i] = positions[i];
+        }
     }
 
     ordinateMin = -(2 * heightBorder + nbchannels * YsizeForMaxAmp + (nbchannels - 1) * Yspace);
@@ -687,7 +688,7 @@ void WaveformView::drawClusterIds(QPainter& painter){
 
     for(iterator = shownClusters.begin(); iterator != shownClusters.end(); ++iterator){
         //the abscissa is increase by the font size to adjust for conversion from world coordinates to viewport coordinates.
-        painter.drawText(worldToViewport(X,-Y).x() + 8,worldToViewport(X,-Y).y() + 8,QString::fromLatin1("%1").arg(*iterator));
+        painter.drawText(worldToViewport(X,-Y).x() + 8,worldToViewport(X,-Y).y() /*+8*/,QString::fromLatin1("%1").arg(*iterator));
         X += shift;
     }
 }
