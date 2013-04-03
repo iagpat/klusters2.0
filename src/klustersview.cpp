@@ -1063,11 +1063,12 @@ void KlustersView::prepareUndo(QList<int>* removedClustersTemp){
 
     //if the number of undo has been reach remove the last elements in the undo list (first ones inserted)
     if(numberUndo > nbUndo){
-        removedClustersUndoList.removeAt(numberUndo - 1);
+        delete removedClustersUndoList.takeAt(numberUndo - 1);
         --numberUndo;
     }
 
     //Clear the redoList
+    qDeleteAll(removedClustersRedoList);
     removedClustersRedoList.clear();
 }
 
@@ -1089,10 +1090,11 @@ void KlustersView::nbUndoChangedCleaning(int newNbUndo){
         // remove the last elements in the undo lists (first ones inserted).
         if(numberUndo > newNbUndo){
             while(numberUndo > newNbUndo){
-                removedClustersUndoList.removeAt(numberUndo - 1);
+                delete removedClustersUndoList.takeAt(numberUndo - 1);
                 --numberUndo;
             }
             //Clear the redoLists
+            qDeleteAll(removedClustersUndoList);
             removedClustersUndoList.clear();
         }
         //currentNbUndo < newNbUndo, check the redo list.
@@ -1101,7 +1103,7 @@ void KlustersView::nbUndoChangedCleaning(int newNbUndo){
             int currentNbRedo = removedClustersRedoList.count();
             if((currentNbRedo + numberUndo) > newNbUndo){
                 while((currentNbRedo + numberUndo) > newNbUndo){
-                    removedClustersRedoList.removeAt(currentNbRedo - 1);
+                    delete removedClustersRedoList.takeAt(currentNbRedo - 1);
                     currentNbRedo = removedClustersRedoList.count();
                 }
             }
