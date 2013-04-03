@@ -2935,6 +2935,9 @@ void KlustersApp::slotStateChanged(const QString& state)
         mAbortReclustering->setEnabled(false);
 
     } else if(state == QLatin1String("documentState")) {
+        mIncreaseAmplitudeCorrelation->setEnabled(true);
+        mDecreaseAmplitudeCorrelation->setEnabled(true);
+
         mDeleteNoisySpikes->setEnabled(true);
         mSaveAction->setEnabled(true);
         mSaveAsAction->setEnabled(true);
@@ -3038,13 +3041,12 @@ void KlustersApp::slotStateChanged(const QString& state)
         scaleByMax->setEnabled(false);
         scaleByShouler->setEnabled(false);
         noScale->setEnabled(false);
-        mIncreaseAmplitude->setEnabled(false);
-        mDecreaseAmplitude->setEnabled(false);
+        mIncreaseAmplitudeCorrelation->setEnabled(false);
+        mDecreaseAmplitudeCorrelation->setEnabled(false);
         shoulderLine->setEnabled(false);
-
     } else if(state == QLatin1String("correlationViewState")) {
-        mIncreaseAmplitude->setEnabled(true);
-        mDecreaseAmplitude->setEnabled(true);
+        mIncreaseAmplitudeCorrelation->setEnabled(true);
+        mDecreaseAmplitudeCorrelation->setEnabled(true);
         shoulderLine->setEnabled(true);
         mDeleteArtifact->setEnabled(true);
         scaleByMax->setEnabled(true);
@@ -3052,7 +3054,6 @@ void KlustersApp::slotStateChanged(const QString& state)
         noScale->setEnabled(true);
         mDeleteNoisy->setEnabled(true);
         mRenumberClusters->setEnabled(true);
-
         mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noErrorMatrixViewState")) {
         mUpdateErrorMatrix->setEnabled(false);
@@ -3081,8 +3082,6 @@ void KlustersApp::slotStateChanged(const QString& state)
         scaleByShouler->setEnabled(false);
         timeFrameMode->setEnabled(false);
         noScale->setEnabled(false);
-        mDecreaseAmplitude->setEnabled(false);
-        mIncreaseAmplitude->setEnabled(false);
         meanPresentation->setEnabled(false);
         overlayPresentation->setEnabled(false);
         mRenumberClusters->setEnabled(false);
@@ -3110,6 +3109,8 @@ void KlustersApp::slotStateChanged(const QString& state)
         mRenumberClusters->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
         mAbortReclustering->setEnabled(true);
+        mIncreaseAmplitudeCorrelation->setEnabled(false);
+        mDecreaseAmplitudeCorrelation->setEnabled(false);
     } else if(state == QLatin1String("noReclusterState")) {
         mReCluster->setEnabled(true);
         mAbortReclustering->setEnabled(false);
