@@ -43,7 +43,7 @@ bool KlustersXmlReader::parseFile(const QFile& file,fileType type){
     this->type = type;
 
     QFile input(file.fileName());
-    qDebug()<<" URL:"<<input.fileName();
+    qDebug()<<" file.fileName"<<file.fileName();
 
     QDomDocument docElement;
     QString errorMsg;
@@ -180,7 +180,7 @@ QList<int> KlustersXmlReader::getNbChannelsByGroup(int electrodeGroupID)const{
                                                                 if (!channelsElement.isNull()) {
                                                                     tag = channelsElement.tagName();
                                                                     if (tag == CHANNEL) {
-                                                                        int channelId = valGroup.text().toInt();
+                                                                        int channelId = channelsElement.text().toInt();
                                                                         channels.append(channelId);
                                                                     }
                                                                 }
