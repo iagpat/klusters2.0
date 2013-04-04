@@ -163,14 +163,14 @@ void ErrorMatrixView::paintEvent ( QPaintEvent*){
 
         if (viewport.size() != doublebuffer.size()) {
             if(!doublebuffer.isNull()) {
-                QPixmap tmp = QPixmap( viewport.width(),viewport.height() );
+                QPixmap tmp = QPixmap( viewport.width() +15 ,viewport.height() +15 );
                 tmp.fill( Qt::white );
                 QPainter painter2( &tmp );
                 painter2.drawPixmap( 0,0, doublebuffer );
                 painter2.end();
                 doublebuffer = tmp;
             } else {
-                doublebuffer = QPixmap(viewport.width(),viewport.height());
+                doublebuffer = QPixmap(viewport.width() +15 ,viewport.height() + 15);
             }
         }
 

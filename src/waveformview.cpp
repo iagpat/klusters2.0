@@ -375,14 +375,14 @@ void WaveformView::paintEvent ( QPaintEvent *){
         //Resize the double buffer with the width and the height of the widget(QFrame)
         if (viewport.size() != doublebuffer.size()) {
             if(!doublebuffer.isNull()) {
-                QPixmap tmp = QPixmap( viewport.width(),viewport.height() );
+                QPixmap tmp = QPixmap( viewport.width() +10 ,viewport.height() +10 );
                 tmp.fill( Qt::white );
                 QPainter painter2( &tmp );
                 painter2.drawPixmap( 0,0, doublebuffer );
                 painter2.end();
                 doublebuffer = tmp;
             } else {
-                doublebuffer = QPixmap(viewport.width(),viewport.height());
+                doublebuffer = QPixmap(viewport.width() + 10 ,viewport.height() +10);
             }
         }
 
