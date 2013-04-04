@@ -235,22 +235,23 @@ void CorrelationView::paintEvent ( QPaintEvent *){
         //If the border is not visible (the user zoomed without taking it in his selection), the viewport and the contentsRec
         //have the same size.
         if(r.left() != 0)
-            viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height() -10);
+            viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width()-10,contentsRec.height());
         else
             viewport = QRect(contentsRec.left() + XMARGIN,contentsRec.top(),contentsRec.width() - XMARGIN,contentsRec.height() - 10);
+
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
 
         if (viewport.size() != doublebuffer.size()) {
             if(!doublebuffer.isNull()) {
-                QPixmap tmp = QPixmap( viewport.width(),viewport.height() );
+                QPixmap tmp = QPixmap( viewport.width() + 10,viewport.height() +10 );
                 tmp.fill( Qt::white );
                 QPainter painter2( &tmp );
                 painter2.drawPixmap( 0,0, doublebuffer );
                 painter2.end();
                 doublebuffer = tmp;
             } else {
-                doublebuffer = QPixmap(viewport.width(),viewport.height());
+                doublebuffer = QPixmap(viewport.width() + 10,viewport.height() + 10);
             }
         }
 
@@ -597,9 +598,9 @@ void CorrelationView::drawClusterIds(QPainter& painter){
         //the abscissa is increase by the font size to adjust for conversion from world coordinates to viewport coordinates.
         QRect r;
         if(isMargin)
-            r = QRect(worldToViewport(X,-Y).x() + 10,worldToViewport(X,-Y).y() -8 ,worldToViewportWidth(width),10);
+            r = QRect(worldToViewport(X,-Y).x() + 10,worldToViewport(X,-Y).y() -4 ,worldToViewportWidth(width),10);
         else
-            r = QRect(worldToViewport(X,-Y).x() + 10  - XMARGIN,worldToViewport(X,-Y).y() -8 ,worldToViewportWidth(width),10);
+            r = QRect(worldToViewport(X,-Y).x() + 10  - XMARGIN,worldToViewport(X,-Y).y() -4 ,worldToViewportWidth(width),10);
         painter.drawText(r,Qt::AlignHCenter,QString::fromLatin1("%1").arg(*iterator));
 
         if(shoulderLine){
@@ -609,8 +610,10 @@ void CorrelationView::drawClusterIds(QPainter& painter){
                 firingX = X;
                 firingY = heightBorder + YsizeForMaxAmp;
                 QRect rf;
-                if(isMargin) rf = QRect(worldToViewport(firingX,-firingY).x() + 10,worldToViewport(firingX,-firingY).y() - 17,worldToViewportWidth(width + 20),15);
-                else rf = QRect(worldToViewport(firingX,-firingY).x() + 10 - XMARGIN,worldToViewport(firingX,-firingY).y() - 17,worldToViewportWidth(width + 20),15);
+                if(isMargin)
+                    rf = QRect(worldToViewport(firingX,-firingY).x() + 10,worldToViewport(firingX,-firingY).y() - 17,worldToViewportWidth(width + 20),15);
+                else
+                    rf = QRect(worldToViewport(firingX,-firingY).x() + 10 - XMARGIN,worldToViewport(firingX,-firingY).y() - 17,worldToViewportWidth(width + 20),15);
                 painter.setPen(clusterColors.color(*iterator));
                 painter.setBrush(Qt::NoBrush);
                 painter.drawRect(rf);
