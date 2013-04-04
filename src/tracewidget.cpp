@@ -50,8 +50,9 @@ TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvi
     selectionWidgets = new QWidget(this);
     layout->setMargin(0);
     layout->setSpacing(0);
-    layout->addWidget(selectionWidgets);
+
     layout->addWidget(&view);
+    layout->addWidget(selectionWidgets);
     layout->setStretchFactor(selectionWidgets,0);
     layout->setStretchFactor(&view,200);
 
@@ -172,6 +173,7 @@ void TraceWidget::initSelectionWidgets(){
     lay->setStretchFactor(durationLabel,0);
     lay->setStretchFactor(duration,0);
     lay->setStretchFactor(scrollBar,200);
+    selectionWidgets->setLayout(lay);
 }
 
 void TraceWidget::samplingRateModified(long long length){
