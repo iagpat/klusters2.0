@@ -26,7 +26,9 @@
 
 
 #include <QList>
+#include <QFile>
 #include <QEvent>
+#include <QDebug>
 
 
 #include "itemcolors.h"
@@ -380,9 +382,8 @@ public:
   * Informs if the data need it by the traceView are available.
   * @return true if the data are available, false otherwise.*/
     bool areTraceDataAvailable()const {
-        QString datUrl(docUrl);
-        datUrl.append("/"+baseName +".dat");
-
+        QFileInfo docInfo(docUrl);
+        const QString datUrl = docInfo.absolutePath() + "/" + docInfo.baseName() +".dat";
         QFileInfo datFileInfo = QFileInfo(datUrl);
         if(!datFileInfo.exists()) return false;
         else return true;
