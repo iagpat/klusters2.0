@@ -799,7 +799,6 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
 }
 
 void CorrelationView::print(QPainter& printPainter,int width,int height, bool whiteBackground){
-    qDebug()<<"void CorrelationView::print(QPainter& printPainter,int width,int height, bool whiteBackground){ **********************************";
     printState = true;
 
     //Draw the double buffer (pixmap) by copying it into the printer device throught the painter.
