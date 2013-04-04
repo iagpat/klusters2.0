@@ -237,7 +237,7 @@ void CorrelationView::paintEvent ( QPaintEvent *){
         if(r.left() != 0)
             viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height() -10);
         else
-            viewport = QRect(contentsRec.left() + XMARGIN,contentsRec.top(),contentsRec.width() - XMARGIN,contentsRec.height() -10);
+            viewport = QRect(contentsRec.left() + XMARGIN,contentsRec.top(),contentsRec.width() - XMARGIN,contentsRec.height() - 10);
 
         //Resize the double buffer with the width and the height of the widget(QFrame)
 
@@ -596,8 +596,10 @@ void CorrelationView::drawClusterIds(QPainter& painter){
     for(iterator = shownClusters.begin(); iterator != shownClusters.end(); ++iterator){
         //the abscissa is increase by the font size to adjust for conversion from world coordinates to viewport coordinates.
         QRect r;
-        if(isMargin) r = QRect(worldToViewport(X,-Y).x() + 10,worldToViewport(X,-Y).y() - 2,worldToViewportWidth(width),10);
-        else r = QRect(worldToViewport(X,-Y).x() + 10  - XMARGIN,worldToViewport(X,-Y).y() - 2,worldToViewportWidth(width),10);
+        if(isMargin)
+            r = QRect(worldToViewport(X,-Y).x() + 10,worldToViewport(X,-Y).y() -8 ,worldToViewportWidth(width),10);
+        else
+            r = QRect(worldToViewport(X,-Y).x() + 10  - XMARGIN,worldToViewport(X,-Y).y() -8 ,worldToViewportWidth(width),10);
         painter.drawText(r,Qt::AlignHCenter,QString::fromLatin1("%1").arg(*iterator));
 
         if(shoulderLine){
@@ -808,9 +810,9 @@ void CorrelationView::print(QPainter& printPainter,int width,int height, bool wh
     //have the same size.
     QRect r((QRect)window);
     if(r.left() != 0)
-        viewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height()-10);
+        viewport = QRect(printPainter.viewport().left(),printPainter.viewport().top(),printPainter.viewport().width(),printPainter.viewport().height() -10 );
     else
-        viewport = QRect(printPainter.viewport().left() + XMARGIN,printPainter.viewport().top(),printPainter.viewport().width() - XMARGIN,printPainter.viewport().height()-10);
+        viewport = QRect(printPainter.viewport().left() + XMARGIN,printPainter.viewport().top(),printPainter.viewport().width() - XMARGIN,printPainter.viewport().height() -10);
 
     //Set the window (part of the world I want to show)
     printPainter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
