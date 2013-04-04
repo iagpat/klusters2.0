@@ -2723,7 +2723,7 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType){
             slotStateChanged("traceViewState");
             showHideLabels->setChecked(view->getLabelStatus());
             //Update the browsing possibility of the traceView
-            if(view->clusters().size() != 0) {
+            if(!view->clusters().isEmpty()) {
                 slotStateChanged("traceViewBrowsingState");
             }
             break;

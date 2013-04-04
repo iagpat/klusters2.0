@@ -2078,8 +2078,8 @@ void KlustersDoc::reclusteringUpdate(QList<int>& clustersToRecluster,QList<int>&
 }
 
 void KlustersDoc::createProviders(){
-    QUrl datUrl(docUrl);
-    datUrl.setPath(baseName +".dat");
+    QFileInfo docInfo(docUrl);
+    const QString datUrl = docInfo.absolutePath() + "/" + docInfo.baseName() +".dat";
 
     int resolution = clusteringData->getResolution();
     int voltageRange = clusteringData->getVoltageRange();
@@ -2087,7 +2087,7 @@ void KlustersDoc::createProviders(){
     int channelNb = clusteringData->getTotalNbChannels();
 
     //Create the tracesProviders
-    tracesProvider = new TracesProvider(datUrl.toString(),channelNb,
+    tracesProvider = new TracesProvider(datUrl,channelNb,
                                         resolution,samplingRate,clusteringData->getOffset());
 
 
