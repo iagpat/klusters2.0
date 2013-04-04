@@ -27,8 +27,9 @@
 
 PrefWaveformView::PrefWaveformView(QWidget *parent,int nbChannels,const char *name):
     PrefWaveformViewLayout(parent),nbChannels(nbChannels){
-    if(nbChannels > 0) initializeChannelList();
-    else{
+    if(nbChannels > 0) {
+        initializeChannelList();
+    } else {
         saveButton->setEnabled(false);
         loadButton->setEnabled(false);
         channelList->setEnabled(false);
@@ -47,7 +48,7 @@ void PrefWaveformView::initializeChannelList(){
     //The first one in the file will be the first one (at the top), second one will be beneath and so on.
     for(int i = 0; i < nbChannels; ++i){
         channelPositions.append(i);
-        channelList->addItem(QString::fromLatin1("%1").arg(i + 1));
+        channelList->addItem(QString::number(i + 1));
     }
 }
 
@@ -60,7 +61,7 @@ void PrefWaveformView::resetChannelList(int nb){
     //The first one in the file will be the first one (at the top), second one will be beneath and so on.
     for(int i = 0; i < nbChannels; ++i){
         channelPositions.append(i);
-        channelList->addItem(QString::fromLatin1("%1").arg(i + 1));
+        channelList->addItem(QString::number(i + 1));
     }
 
     saveButton->setEnabled(true);

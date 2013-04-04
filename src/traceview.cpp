@@ -116,12 +116,16 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
     X0 = borderX;
 
     //The initial offset for each channel is set to zero.
-    if(channelOffsets.size() == 0)
-        for(int i = 0; i < nbChannels; ++i) channelOffsets.append(0);
+    if(channelOffsets.isEmpty()) {
+        for(int i = 0; i < nbChannels; ++i) {
+            channelOffsets.append(0);
+        }
+    }
 
     //The initial amplitude and factor for each channel.
-    if(gains.size() == 0) setGains(unitGain,acquisitionGain);
-    else{
+    if(gains.isEmpty()) {
+        setGains(unitGain,acquisitionGain);
+    }else{
         //Compute alpha: (3.traceVspace) / (Utheta . acquisitionGain)
         //Utheta: amplitude maximal of theta in milivolts, 0.4 mv
         alpha =  static_cast<float>(static_cast<float>(3 * traceVspace) /
@@ -198,7 +202,7 @@ void TraceView::dataAvailable(Array<dataType>& data,QObject* initiator){
 
     //The following code was done in case of threads, without thread the trace data arrive always last
     //No clusters or events selected
-    if(clustersData.count() == 0 && eventsData.count() == 0){
+    if(clustersData.isEmpty() && eventsData.isEmpty()){
         updateCursor();
         //Everything has to be redraw
         repaint();
