@@ -861,8 +861,7 @@ void KlustersView::groupedClustersUpdate(QList<int>& groupedClusters, int newClu
 
 
 bool KlustersView::clustersDeletionUpdate(QList<int>& deletedClusters,int destinationCluster,bool active){
-    bool isAClusterRemoved = false;
-    isAClusterRemoved = clustersDeletionUpdate(deletedClusters,active);
+    bool isAClusterRemoved = clustersDeletionUpdate(deletedClusters,active);
 
     //If the view contains the destinationCluster emit a notice of modification
     if(shownClusters->contains(destinationCluster) != 0){
