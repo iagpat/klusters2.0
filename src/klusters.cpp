@@ -138,10 +138,12 @@ KlustersApp::KlustersApp()
 
     //Disable some actions at startup (see the klustersui.rc file)
     slotStateChanged("initState");
+qDebug()<<"KlustersApp::KlustersApp()  "<<this;
 }
 
 KlustersApp::~KlustersApp()
 {
+qDebug()<<" KlustersApp::~KlustersApp(******************************************"<<this;
     //Clear the memory by deleting all the pointers
     delete printer;
     delete doc;

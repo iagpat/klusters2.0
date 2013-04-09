@@ -89,7 +89,6 @@ int KlustersXmlReader::getResolution()const{
                             if (tag == BITS) {
                                 resolution = u.text().toInt();
                                 return resolution;
-                                break;
                             }
                         }
                         acquisition = acquisition.nextSibling();
@@ -445,7 +444,6 @@ int KlustersXmlReader::getVoltageRange() const{
                             if (tag == VOLTAGE_RANGE) {
                                 range = u.text().toInt();
                                 return range;
-                                break;
                             }
                         }
                         acquisition = acquisition.nextSibling();
@@ -477,7 +475,6 @@ int KlustersXmlReader::getAmplification() const{
                             if (tag == AMPLIFICATION) {
                                 amplification = u.text().toInt();
                                 return amplification;
-                                break;
                             }
                         }
                         acquisition = acquisition.nextSibling();
@@ -509,7 +506,6 @@ int KlustersXmlReader::getOffset()const{
                             if (tag == OFFSET) {
                                 offset = u.text().toInt();
                                 return offset;
-                                break;
                             }
                         }
                         acquisition = acquisition.nextSibling();

@@ -50,7 +50,7 @@ public:
 
     /**Sets the number of channels contained in the document. This will be used to
   * fill the channelView.*/
-    inline void setNbChannels(int nb){nbChannels = nb;}
+    void setNbChannels(int nb){nbChannels = nb;}
 
     /**Returns the number of channels contained in the document.*/
     inline int getNbChannels() const {return nbChannels;}
