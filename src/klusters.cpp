@@ -2870,6 +2870,7 @@ void KlustersApp::slotSpikesDeleted(){
 void KlustersApp::slotStateChanged(const QString& state)
 {
     if(state == QLatin1String("initState")) {
+        viewClusterInfo->setEnabled(false);
         mDeleteNoisySpikes->setEnabled(false);
         mOpenAction->setEnabled(true);
         mFileOpenRecent->setEnabled(false);
@@ -2937,6 +2938,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mAbortReclustering->setEnabled(false);
 
     } else if(state == QLatin1String("documentState")) {
+        viewClusterInfo->setEnabled(true);
         mIncreaseAmplitudeCorrelation->setEnabled(true);
         mDecreaseAmplitudeCorrelation->setEnabled(true);
 

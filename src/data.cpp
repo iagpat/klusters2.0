@@ -3000,11 +3000,9 @@ Data::Status Data::getCorrelograms(Pair& pair,int binSize,int timeWindow,double 
     QHash<QString, Correlation*>* dict = 0L;
 
     //Test first if the clusters still exist
-    bool cluster1Removed = false;
-    bool cluster2Removed = false;
     mutex.lock();
-    cluster1Removed = !clusterInfoMap->contains(static_cast<dataType>(cluster1));
-    cluster2Removed = !clusterInfoMap->contains(static_cast<dataType>(cluster2));
+    bool cluster1Removed = !clusterInfoMap->contains(static_cast<dataType>(cluster1));
+    bool cluster2Removed = !clusterInfoMap->contains(static_cast<dataType>(cluster2));
     mutex.unlock();
 
     if(cluster1Removed || cluster2Removed)return NOT_AVAILABLE;
