@@ -1002,10 +1002,9 @@ void TraceView::drawTrace(QPainter& painter,int limit,int basePosition,int X,int
         }
         int yMin = basePosition - static_cast<long>(min * channelFactors[channelId]);
         int yMax = basePosition - static_cast<long>(max * channelFactors[channelId]);
-        if((yMax - yMin) <= limit){
+        if((yMax - yMin) <= limit) {
             painter.drawPoint(X,yMin);
-        }
-        else{
+        } else {
             painter.drawLine(X,yMin,X,yMax);
         }
         X += Xstep;
