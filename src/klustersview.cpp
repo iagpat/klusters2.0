@@ -1431,22 +1431,17 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(changeBackgroundColor(QColor)),view, SLOT(changeBackgroundColor(QColor)));
     }
 
-    //Connections for ClusterViews
-    if(displayType == CLUSTERS){
+    if(displayType == CLUSTERS){ //Connections for ClusterViews
         connect(this,SIGNAL(changeTimeInterval(int,bool)),view, SLOT(setTimeStepInSecond(int,bool)));
         connect(this,SIGNAL(updatedDimensions(int,int)),view, SLOT(updatedDimensions(int,int)));
         connect(this,SIGNAL(emptySelection()),view, SLOT(emptySelection()));
-        qDebug()<<" XXXXXXXXXXXXXXXXXXXXXXXXXXxx"<<dockWidget<<" vuew "<<view;
         connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(clusterDockClosed(QObject*)));
 
         //Connect the clusterView to a possible TraceView
         if(isThereTraceView){
             connect(view,SIGNAL(moveToTime(long)),traceWidget, SLOT(moveToTime(long)));
         }
-    }
-
-    //Connections for WaveformViews
-    if(displayType == WAVEFORMS){
+    } else if(displayType == WAVEFORMS) { //Connections for WaveformViews
         connect(this,SIGNAL(updatedTimeFrame(long,long)),view, SLOT(setTimeFrame(long,long)));
         connect(this,SIGNAL(sampleMode()),view, SLOT(setSampleMode()));
         connect(this,SIGNAL(timeFrameMode()),view, SLOT(setTimeFrameMode()));
@@ -1461,10 +1456,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(changeChannelPositions(QList<int>&)),view, SLOT(setChannelPositions(QList<int>&)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));
         connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(waveformDockClosed(QObject*)));
-    }
-
-    //Connections for CorrelationViews
-    if(displayType == CORRELATIONS){
+    } else if(displayType == CORRELATIONS){ //Connections for CorrelationViews
         connect(this,SIGNAL(updatedBinSizeAndTimeFrame(int,int)),view, SLOT(setBinSizeAndTimeWindow(int,int)));
         connect(this,SIGNAL(noScale()),view, SLOT(setNoScale()));
         connect(this,SIGNAL(maxScale()),view, SLOT(setMaximumScale()));
@@ -1474,10 +1466,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(setShoulderLine(bool)),view, SLOT(setShoulderLine(bool)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));
         connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(correlogramDockClosed(QObject*)));
-    }
-
-    //Connections for ErrorMatrixViews
-    if(displayType == ERROR_MATRIX){
+    } else if(displayType == ERROR_MATRIX){ //Connections for ErrorMatrixViews
         connect(this,SIGNAL(computeProbabilities()),view, SLOT(updateMatrixContents()));
         connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(errorMatrixDockClosed(QObject*)));
         //connection with the document
@@ -1498,10 +1487,8 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(&doc,SIGNAL(redoDeletion(QList<int>&)),view, SLOT(redoDeletion(QList<int>&)));
         connect(&doc,SIGNAL(newClustersAdded(QList<int>&)),view, SLOT(newClustersAdded(QList<int>&)));
         connect(this,SIGNAL(changeBackgroundColor(QColor)),view, SLOT(changeBackgroundColor(QColor)));
-    }
-
-    //Connections for TraceViews
-    if(displayType == TRACES){
+    } else if(displayType == TRACES){ //Connections for TraceViews
+    
         connect(this,SIGNAL(updateContents()),view, SLOT(updateContents()));
         connect(this,SIGNAL(singleColorUpdated(int,bool)),view, SLOT(updateDrawing()));
         connect(this,SIGNAL(updateClusters(QString,QList<int>&,ItemColors*,bool)),view,SLOT(updateClusters(QString,QList<int>&,ItemColors*,bool)));
