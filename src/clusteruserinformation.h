@@ -27,25 +27,31 @@
 */
 class ClusterUserInformation{
 public:
-	inline ClusterUserInformation(int pGroup = 0, int pCluster = 0, QString pStructure = "",QString pType = "",QString pID = "",QString pQuality = "",QString pNotes = ""):group(pGroup), cluster(pCluster), structure(pStructure), type(pType), ID(pID), quality(pQuality), notes(pNotes){};
+	ClusterUserInformation(int pGroup = 0, int pCluster = 0, const QString& pStructure = QString(),const  QString& pType = QString(),const QString &pID = QString(),const QString &pQuality = QString(), const QString &pNotes = QString())
+    :group(pGroup), 
+     cluster(pCluster), 
+     structure(pStructure), 
+     type(pType), 
+     ID(pID), 
+     quality(pQuality), 
+     notes(pNotes){};
 
-    inline ~ClusterUserInformation(){};
+    ~ClusterUserInformation(){};
 
-		inline int getGroup() const {return group;};
-		inline int getCluster() const {return cluster;};
-		inline QString getStructure() const { return structure; };
-		inline QString getType() const { return type; };
-		inline QString getId() const { return ID; };
-		inline QString getQuality() const { return quality; };
-		inline QString getNotes() const { return notes; };
-
-		inline void setGroup(int pGroup) { group = pGroup; };
-		inline void setCluster(int pCluster) { cluster = pCluster; };
-		inline void setStructure(QString pStructure) { structure = pStructure; };
-		inline void setType(QString pType) { type = pType; };
-		inline void setId(QString pId) { ID = pId; };
-		inline void setQuality(QString pQuality) { quality = pQuality; };
-		inline void setNotes(QString pNotes) { notes = pNotes; };
+		int getGroup() const {return group;};
+		int getCluster() const {return cluster;};
+		QString getStructure() const { return structure; };
+		QString getType() const { return type; };
+		QString getId() const { return ID; };
+		QString getQuality() const { return quality; };
+		QString getNotes() const { return notes; };
+                void setGroup(int pGroup) { group = pGroup; };
+		void setCluster(int pCluster) { cluster = pCluster; };
+		void setStructure(const QString &pStructure) { structure = pStructure; };
+		void setType(const QString &pType) { type = pType; };
+		void setId(const QString &pId) { ID = pId; };
+		void setQuality(const QString &pQuality) { quality = pQuality; };
+		void setNotes(const QString &pNotes) { notes = pNotes; };
 		
 	private:
 		
