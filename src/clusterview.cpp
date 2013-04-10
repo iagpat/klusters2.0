@@ -536,7 +536,6 @@ void ClusterView::drawTimeInformation(QPainter& painter){
 
 
 void ClusterView::print(QPainter& printPainter,int width,int height, bool whiteBackground){
-    qDebug()<<" void ClusterView::print(QPainter& printPainter,int width,int height, bool whiteBackground){*****************";
     //Draw the double buffer (pixmap) by copying it into the printer device throught the painter.
     QRect viewportOld = QRect(viewport.left(),viewport.top(),viewport.width(),viewport.height());
 
