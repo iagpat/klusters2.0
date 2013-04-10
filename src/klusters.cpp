@@ -3146,7 +3146,7 @@ void KlustersApp::slotStateChanged(const QString& state)
 
 void KlustersApp::slotAbout()
 {
-    QMessageBox::about(this,tr("Klusters"),tr("Manual clustering of neuronal action potentia"));
+    QMessageBox::about(this,tr("About - Klusters"),tr("Manual clustering of neuronal action potential\n(c) 2003-2004-2005-2007 Lynn Hazan"));
 }
 
 void KlustersApp::slotHanbook()
