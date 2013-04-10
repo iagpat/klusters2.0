@@ -665,11 +665,8 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         //Give to the new view the same mode than the other clusterviews
         if(!newViewType){
             int nbViews = viewList.count();
-            qDebug()<<" nbViews"<<nbViews;
             for(int i = 0; i< nbViews; i++) {
                 ViewWidget* viewWidget = viewList.at(i);
-                qDebug()<<" sssssssssssssss";
-                qDebug()<<" viewWidget"<<viewWidget;
                 if(qobject_cast<ClusterView*>(viewWidget)){
                     clusterView->setMode(static_cast<ClusterView*>(viewWidget)->getMode());
 
@@ -928,8 +925,8 @@ void KlustersView::addNewClusterToView(QList<int>& fromClusters,int clusterId,QL
 
 
     //If fromClustersInView in not empty, this view is concerned by the modification
-    if(fromClustersInView.size() > 0){
-        if(emptiedClusters.size()>0){
+    if(!fromClustersInView.isEmpty()){
+        if(!emptiedClusters.isEmpty()){
             QList<int>::iterator clustersToRemoveIterator;
             for(clustersToRemoveIterator = emptiedClusters.begin(); clustersToRemoveIterator != emptiedClusters.end(); ++clustersToRemoveIterator ){
                 removeClusterFromView(*clustersToRemoveIterator,active);
@@ -983,7 +980,6 @@ void KlustersView::addNewClustersToView(QMap<int,int>& fromToNewClusterIds,QList
 
 
 void KlustersView::addNewClustersToView(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,bool active){
-    qDebug() << "in KlustersView::addNewClustersToView: ";
 
     //List containing the clusters of this view which contained recluster clusters
     QList<int> inView = clustersInView(clustersToRecluster);
@@ -1048,7 +1044,8 @@ QList<int> KlustersView::clustersInView(QList<int>& clusterlist){
 
     QList<int>::iterator iterator;
     for (iterator = clusterlist.begin(); iterator != clusterlist.end(); ++iterator){
-        if(shownClusters->contains(*iterator) != 0) clustersInViewList.append(*iterator);
+        if(shownClusters->contains(*iterator) != 0) 
+            clustersInViewList.append(*iterator);
     }
     return clustersInViewList;
 }
@@ -1305,7 +1302,8 @@ void KlustersView::redo(QList<int>& addedClusters,QList<int>& updatedClusters,bo
                 //If the clusters have been modified by deletion, that means that the clusters to add
                 //can only be cluster 0 or cluster 1 which were added because they did not exit already.
                 //In that case we do not want to add them back to the view.
-                if(isModifiedByDeletion) continue;
+                if(isModifiedByDeletion) 
+                   continue;
                 shownClusters->append(*newClusterIterator);
                 emit newClusterAddedToView(*newClusterIterator,active);
             }
