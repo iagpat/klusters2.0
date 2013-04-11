@@ -103,6 +103,7 @@ bool ProcessWidget::startJob(const QString &dir, const QString &command)
     bool childProcStarted = childproc->waitForStarted();
     if (!childProcStarted) {
         insertStderrLine(childproc->errorString());
+        slotOutputTreatmentOver();
     }
     return childProcStarted;
 }
