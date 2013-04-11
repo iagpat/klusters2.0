@@ -115,6 +115,7 @@ Q_SIGNALS:
     void finished(int,QProcess::ExitStatus);
     void processOutputsFinished();
     void hidden();
+    void processNotStarted();
 
 protected:
     virtual QSize minimumSizeHint() const;

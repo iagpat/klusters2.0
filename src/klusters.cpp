@@ -2408,14 +2408,13 @@ void KlustersApp::slotSelectAllWO01(){
 }
 
 void KlustersApp::slotRecluster(){
-        if(processFinished && processOutputsFinished){
-            processWidget = 0L;
-            processKilled = false;
-        }
-        else{
-            QTimer::singleShot(2000,this, SLOT(slotRecluster()));
-            return;
-        }
+    if(processFinished && processOutputsFinished) {
+        processWidget = 0L;
+        processKilled = false;
+    } else {
+        QTimer::singleShot(2000,this, SLOT(slotRecluster()));
+        return;
+    }
 
     //Get the clusters to recluster (those selected in the active display)
     const QList<int>& currentClusters = activeView()->clusters();
@@ -2492,13 +2491,12 @@ void KlustersApp::slotRecluster(){
         return;
     }
 
-
     if(processWidget == 0L){
 
         processWidget = new ProcessWidget(this);
         connect(processWidget,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(slotProcessExited(int,QProcess::ExitStatus)));
         connect(processWidget,SIGNAL(finished(int,QProcess::ExitStatus)), this, SLOT(slotOutputTreatmentOver()));
-
+        connect(processWidget,SIGNAL(processNotStarted()), this, SLOT(slotOutputTreatmentOver()));
         //Connect the change tab signal to slotTabChange(QWidget* widget) to trigger updates when
         //the active display changes.
         connect(tabsParent, SIGNAL(currentChanged(int)), this, SLOT(slotTabChange(int)));
@@ -2647,7 +2645,8 @@ void KlustersApp::slotStopRecluster(){
 void KlustersApp::slotOutputTreatmentOver(){
     processOutputsFinished = true;
     slotStateChanged("noRclusterState");
-    if(!doesActiveDisplayContainProcessWidget()) updateUndoRedoDisplay();
+    if(!doesActiveDisplayContainProcessWidget())
+        updateUndoRedoDisplay();
     else{
 
         slotStateChanged("reclusterViewState");
