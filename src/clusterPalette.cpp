@@ -162,7 +162,7 @@ void ClusterPalette::updateClusterList(){
     QPainter painter;
 
     for(int i = 0; i<nbClusters; ++i){
-        QPixmap pix(14,14);
+        QPixmap pix(12,12);
         pix.fill(backgroundColor);
         painter.begin(&pix);
         painter.fillRect(0,0,12,12,clusterColors.color(i,ItemColors::BY_INDEX));
@@ -454,7 +454,7 @@ void ClusterPalette::changeColor(QListWidgetItem* item) {
 
         if(mode == IMMEDIATE){
             //Update the icon
-            QPixmap pixmap(14,14);
+            QPixmap pixmap(12,12);
             QPainter painter;
             painter.begin(&pixmap);
             painter.fillRect(0,0,12,12,result);
