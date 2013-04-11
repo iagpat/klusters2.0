@@ -23,6 +23,7 @@
 #include <qcursor.h>
 #include <QPrinter>
 #include <QScrollBar>
+#include <QDebug>
 
 #include <QProcess>
 
@@ -95,11 +96,15 @@ bool ProcessWidget::startJob(const QString &dir, const QString &command)
     procLineMaker->reset();
     clear();
     addItem(new ProcessListBoxItem(command, ProcessListBoxItem::Diagnostic));
-    if(!dir.isNull()) {
+    if(!dir.isEmpty()) {
         childproc->setWorkingDirectory(dir);
     }
     childproc->start(command);
-    return childproc->waitForStarted();
+    bool childProcStarted = childproc->waitForStarted();
+    if (!childProcStarted) {
+        insertStderrLine(childproc->errorString());
+    }
+    return childProcStarted;
 }
 
 
