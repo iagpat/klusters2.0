@@ -38,8 +38,7 @@ void AutoSaveThread::run(){
         //Send an event to the document to warn it that the thread has finish.
         AutoSaveEvent* event = autoSaveEvent();
         QApplication::postEvent(doc,event);
-    }
-    else{
+    } else {
         //Send an event to the document to warn it that the thread could not save the file.
         AutoSaveEvent* event = autoSaveEvent();
         event->setIOerror(true);

@@ -26,7 +26,8 @@
 #include <stdio.h>
 
 
-GroupingAssistant::GroupingAssistant():existCluster1(false),initIndex(1),haveToStopComputing(false)
+GroupingAssistant::GroupingAssistant()
+    :existCluster1(false),initIndex(1),haveToStopComputing(false)
 {
 }
 
@@ -66,8 +67,10 @@ Array<double>* GroupingAssistant::computeMeanProbabilities(Data& clusteringData,
 
         for(int clusterIndex2 = initIndex; clusterIndex2 <= nbClusters; ++clusterIndex2){
             //Check if the current cluster has been ignore
-            if(ignoreClusterIndex.contains(clusterIndex2) != 0) continue;
-            if(haveToStopComputing) break;
+            if(ignoreClusterIndex.contains(clusterIndex2) != 0)
+                continue;
+            if(haveToStopComputing)
+                break;
 
             //Accumulate sums for mean calculation
             double sum = 0;

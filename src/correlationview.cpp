@@ -110,7 +110,7 @@ CorrelationView::~CorrelationView(){
 
     //Wait until all the threads have finish before quiting otherwise
     // it may endup in a crash of the application.
-    for(int i = 0; i<threadsToBeKill.count();i++ ) {
+    for(int i = 0; i<threadsToBeKill.count();++i ) {
         CorrelationThread* correlationThread = threadsToBeKill.at(i);
         while(!correlationThread->wait()){};
     }
@@ -198,7 +198,8 @@ void CorrelationView::spikesRemovedFromClusters(QList<int>& fromClusters,bool ac
     isZoomed = false;//Hack because all the tabs share the same data.
 
     //Update drawContentsMode if need it.
-    if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)drawContentsMode = REDRAW;
+    if(drawContentsMode == REFRESH || drawContentsMode == UPDATE)
+        drawContentsMode = REDRAW;
 
     //Create a thread to get the correlation data for all the clusters shown.
     if(active && !view.clusters().isEmpty()){
@@ -435,7 +436,8 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
         //Get the iterator on the values of the current correlogram.
         Data::CorrelogramIterator iterator = clusteringData.correlogramIterator(*pairIterator,scaleMode,binSize,timeWindow);
 
-        if(!iterator.isDataAvailable()) continue;
+        if(!iterator.isDataAvailable())
+            continue;
 
         //Find the position of the next correlogram.
         if(specificPosition){
@@ -792,9 +794,9 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
                 xCluster = qMin(qMax(0,xCluster),shownClusters.count()-1);
                 yCluster = qMin(qMax(0,yCluster),shownClusters.count()-1);
 
-                statusBar->showMessage("Time (ms): "+ QString("%1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]));
+                statusBar->showMessage(tr("Time (ms): %1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]));
             } else {
-                statusBar->showMessage("Time (ms): "+ QString::fromLatin1("%1").arg(time));
+                statusBar->showMessage(tr("Time (ms): %1").arg(time));
             }
         }
     }

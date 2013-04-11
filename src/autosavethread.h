@@ -24,7 +24,6 @@
 
 //include files for QT
 #include <qthread.h>
-#include <qstring.h>
 
 #include <QEvent>
 #include <QDebug>
