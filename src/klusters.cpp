@@ -2036,6 +2036,7 @@ void KlustersApp::slotTabChange(int index){
     QWidget *widget = tabsParent->widget(index);
     DockArea *area = dynamic_cast<DockArea*>(widget);
     if(area) {
+
         KlustersView* activeView = qobject_cast<KlustersView *>(area);
         if(activeView) {
             //Update the content of the view contains in active display.
@@ -2146,11 +2147,9 @@ void KlustersApp::slotTabChange(int index){
                 binSizeLabelAction->setVisible(false);
             }
 
-            if(activeView->containsErrorMatrixView()){
+            if(activeView->containsErrorMatrixView()) {
                 slotStateChanged("errorMatrixViewState");
-            }
-            else{
-
+            } else {
                 slotStateChanged("noErrorMatrixViewState");
             }
 
@@ -2182,36 +2181,35 @@ void KlustersApp::slotTabChange(int index){
             if(processFinished){
                 slotStateChanged("noReclusterState");
                 updateUndoRedoDisplay();
-            }
-            else{
+            } else {
                 slotStateChanged("reclusterState");
             }
-        } else {// a ProcessWidget
-            dimensionXAction->setVisible(false);
-            dimensionYAction->setVisible(false);
-            featureXLabelAction->setVisible(false);
-            timeFrameMode->setChecked(false);
-            overlayPresentation->setChecked(false);
-            meanPresentation->setChecked(false);
-            durationAction->setVisible(false);
-            durationLabelAction->setVisible(false);
-            startAction->setVisible(false);
-            startLabelAction->setVisible(false);
-            spikesTodisplayAction->setVisible(false);
-            spikesTodisplayLabelAction->setVisible(false);
-            correlogramsHalfDurationAction->setVisible(false);
-            correlogramsHalfDurationLabelAction->setVisible(false);
-            binSizeBoxAction->setVisible(false);
-            binSizeLabelAction->setVisible(false);
-
-            //Update the palette of clusters
-            if(!processFinished) clusterPalette->selectItems(clustersToRecluster);
-            else{
-                QList<int> emptyList;
-                clusterPalette->selectItems(emptyList);
-            }
-            slotStateChanged("reclusterViewState");
         }
+    } else {// a ProcessWidget
+        dimensionXAction->setVisible(false);
+        dimensionYAction->setVisible(false);
+        featureXLabelAction->setVisible(false);
+        timeFrameMode->setChecked(false);
+        overlayPresentation->setChecked(false);
+        meanPresentation->setChecked(false);
+        durationAction->setVisible(false);
+        durationLabelAction->setVisible(false);
+        startAction->setVisible(false);
+        startLabelAction->setVisible(false);
+        spikesTodisplayAction->setVisible(false);
+        spikesTodisplayLabelAction->setVisible(false);
+        correlogramsHalfDurationAction->setVisible(false);
+        correlogramsHalfDurationLabelAction->setVisible(false);
+        binSizeBoxAction->setVisible(false);
+        binSizeLabelAction->setVisible(false);
+        //Update the palette of clusters
+        if(!processFinished) {
+            clusterPalette->selectItems(clustersToRecluster);
+        } else {
+            QList<int> emptyList;
+            clusterPalette->selectItems(emptyList);
+        }
+        slotStateChanged("reclusterViewState");
     }
 }
 
