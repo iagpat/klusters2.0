@@ -309,7 +309,7 @@ bool Data::loadFeatures(QFile& featureFile,QString& errorInformation){
         }
     }
 
-    qDebug() << "in loadFeatures,  k: "<<k<< " nbSpikes "<<nbSpikes<< " nbDimensions "<<nbDimensions<< endl;
+    //qDebug() << "in loadFeatures,  k: "<<k<< " nbSpikes "<<nbSpikes<< " nbDimensions "<<nbDimensions<< endl;
 
     //if the number of features read did not correspond to nbSpikes*nbDimensions, there is a problem.
     if(k != (nbSpikes * nbDimensions)){
@@ -529,7 +529,8 @@ void Data::minMaxDimensionCalculation(QList<int> modifiedClusters){
         for(iterator = clusterInfoMapTemp.begin(); iterator != clusterInfoMapTemp.end(); ++iterator){
             dataType clusterId = iterator.key();
 
-            if(clusterId == 0) continue;
+            if(clusterId == 0)
+                continue;
             dataType firstSpikePosition = iterator.value().firstSpikePosition();
             dataType nbSpikesOfCluster = iterator.value().nbSpikes();
             dataType lastPosition =  firstSpikePosition + nbSpikesOfCluster;
@@ -1968,10 +1969,6 @@ void Data::undo(QList<int>& addedClusters,QList<int>& updatedClusters){
     //of the clusterInfoMapRedoList and the first element of the clusterInfoMapUndoList become the current clusterInfoMap.
     //Do the same with the spikesByCluster
     if(!clusterInfoMapUndoList.isEmpty()){
-
-        qDebug()<<"clusterInfoMapUndoList.count()>0";
-
-
 
         clusterInfoMapRedoList.prepend(clusterInfoMap);
         ClusterInfoMap* clusterInfoMapTemp = clusterInfoMapUndoList.takeAt(0);
