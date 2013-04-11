@@ -3078,6 +3078,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
+        mDeleteNoisySpikes->setEnabled(false);
         mDeleteArtifact->setEnabled(false);
         mDeleteArtifactSpikes->setEnabled(false);
         mReCluster->setEnabled(false);
