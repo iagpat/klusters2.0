@@ -12,7 +12,8 @@ if(Qt5Core_FOUND)
   find_package(Qt5Widgets REQUIRED)
 
   find_package(Qt5WebKitWidgets 5.0.2 QUIET)
-  find_package(Qt5Designer QUIET)
+  find_package(Qt5Xml REQUIRED)
+
 
   include(ECMQt4To5Porting)
   include_directories(${QT_INCLUDES}) # TODO: Port away from this.
