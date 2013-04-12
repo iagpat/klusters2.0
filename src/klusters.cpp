@@ -2407,6 +2407,7 @@ void KlustersApp::slotSelectAllWO01(){
 
 void KlustersApp::slotRecluster(){
     if(processFinished && processOutputsFinished) {
+        delete processWidget;
         processWidget = 0L;
         processKilled = false;
     } else {
@@ -2415,7 +2416,6 @@ void KlustersApp::slotRecluster(){
     }
 
     //Get the clusters to recluster (those selected in the active display)
-    qDebug()<<" activeView()"<<activeView();
     const QList<int>& currentClusters = activeView()->clusters();
     if(currentClusters.isEmpty()){
         QMessageBox::critical (this,tr("Error !"),tr("No clusters have been selected to be reclustered."));
