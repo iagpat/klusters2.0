@@ -51,7 +51,13 @@ qt4_wrap_ui(klusters_SRCS ${klusters_UI})
 
 add_executable(klusters ${klusters_SRCS} )
 
-target_link_libraries(klusters ${QT_LIBRARIES} ${QT_QTXML_LIBRARY} ${LIBKLUSTERSSHARED_LIBRARY})
+if(Qt5Core_FOUND)
+  target_link_libraries( klustersshared ${LIBKLUSTERSSHARED_LIBRARY} Qt5::Widgets ${Qt5WebKitWidgets_LIBRARIES})
+else(Qt5Core_FOUND)
+  target_link_libraries( klustersshared ${LIBKLUSTERSSHARED_LIBRARY} ${QT_LIBRARIES} ${QT_QTXML_LIBRARY})
+endif()
+
+
 
 install(TARGETS klusters DESTINATION bin)
 install(FILES klusters.png DESTINATION share/icons/)

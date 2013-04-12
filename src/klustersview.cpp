@@ -577,7 +577,7 @@ bool KlustersView::eventFilter(QObject* object,QEvent* event){
             if(mainWindow.isExistAnErrorMatrix())
                 errorMatrixView->setEnabled(false);
 
-            menu.setMouseTracking(TRUE);
+            menu.setMouseTracking(true);
             QAction* id = menu.exec(QCursor::pos());
 
             if(id == clusterView){

@@ -496,7 +496,7 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
         //If the view is been printed, a clip region has been created, take it into account
         if(printState){
             QRegion region = QRegion (X,-(Y+YsizeForMaxAmp),binWidth * nbBins + 1,YsizeForMaxAmp + 1);
-            QRegion intersection = printRegion.intersect(region);
+            QRegion intersection = printRegion.intersected(region);
             painter.setClipRegion(intersection);
         }
         else  {

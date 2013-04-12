@@ -40,7 +40,7 @@ ProcessListBoxItem::ProcessListBoxItem(const QString &s, Type type)
 QVariant ProcessListBoxItem::data ( int role ) const
 {
     if(role == Qt::TextColorRole ){
-        return ((t==Error)? Qt::darkRed : (t==Diagnostic)? Qt::black : Qt::darkBlue);
+        return ((t==Error)? QColor(Qt::darkRed) : (t==Diagnostic)? QColor(Qt::black) : QColor(Qt::darkBlue));
     }
     return QListWidgetItem::data(role);
 }

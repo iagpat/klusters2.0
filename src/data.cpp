@@ -1621,7 +1621,7 @@ dataType Data::groupClusters(QList<int>& clustersToGroup){
     ClusterInfoMap::Iterator iterator;
 
     //Variable used to determined
-    bool first = TRUE;
+    bool first = true;
 
     //NB: the iterator iterates on the items sorted by their key
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator) {
@@ -1666,7 +1666,7 @@ dataType Data::groupClusters(QList<int>& clustersToGroup){
                 newQuality += iterator.value().getQuality();
                 newNotes += iterator.value().getNotes();
 
-                first = FALSE;
+                first = false;
             }
             else{
                 newStructure += "--" + iterator.value().getStructure();
