@@ -52,9 +52,9 @@ qt4_wrap_ui(klusters_SRCS ${klusters_UI})
 add_executable(klusters ${klusters_SRCS} )
 
 if(Qt5Core_FOUND)
-  target_link_libraries( klustersshared ${LIBKLUSTERSSHARED_LIBRARY} Qt5::Widgets ${Qt5WebKitWidgets_LIBRARIES})
+  target_link_libraries( klusters ${LIBKLUSTERSSHARED_LIBRARY} Qt5::Widgets ${Qt5WebKitWidgets_LIBRARIES})
 else(Qt5Core_FOUND)
-  target_link_libraries( klustersshared ${LIBKLUSTERSSHARED_LIBRARY} ${QT_LIBRARIES} ${QT_QTXML_LIBRARY})
+  target_link_libraries( klusters ${LIBKLUSTERSSHARED_LIBRARY} ${QT_LIBRARIES} ${QT_QTXML_LIBRARY})
 endif()
 
 
