@@ -28,7 +28,12 @@
 #include <qfile.h>
 
 TracesProvider::TracesProvider(const QString& fileUrl,int nbChannels,int resolution,double samplingRate,int offset):
-    DataProvider(fileUrl),nbChannels(nbChannels),resolution(resolution),samplingRate(samplingRate),offset(offset){
+    DataProvider(fileUrl),
+    nbChannels(nbChannels),
+    resolution(resolution),
+    samplingRate(samplingRate),
+    offset(offset)
+{
     computeRecordingLength();
 }
 

@@ -85,7 +85,7 @@ public:
     void removeView(KlustersView* view);
     
     /** Returns the first view instance. */
-    KlustersView* firstView(){return viewList->isEmpty() ? 0 : viewList->at(0);}
+    KlustersView* firstView(){return viewList->isEmpty() ? 0 : viewList->first();}
     
     /**Returns true, if the requested view is the last view of the document. */
     bool isLastView();
@@ -127,7 +127,7 @@ public:
     /**Sets the URL of the document. */
     void setURL(const QString& url){docUrl=url;}
     /**Sends back the full name of the document with the electrode group Id append.*/
-    QString documentName();
+    QString documentName() const;
 
     /**Returns the base name of the document (common name for all the files). */
     QString documentBaseName() const;

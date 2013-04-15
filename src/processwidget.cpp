@@ -186,7 +186,8 @@ void ProcessWidget::maybeScrollToBottom()
 }
 
 void ProcessWidget::hideWidget(){
-    if(childproc->state() == QProcess::Running) childproc->terminate();
+    if(childproc->state() == QProcess::Running)
+        childproc->terminate();
     emit hidden();
 }
 
@@ -216,7 +217,7 @@ void ProcessWidget::print(QPrinter *printer, const QString &filePath){
         if(Margin + yPos > height - Margin) {
             printPainter.setPen(Qt::black);
             printPainter.drawText(Margin,Margin + yPos + fontMetrics.lineSpacing(),width,fontMetrics.lineSpacing(),
-                                  Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
+                                  Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1").arg(filePath));
 
             printer->newPage();
             yPos = 0;  // back to top of page
@@ -235,7 +236,7 @@ void ProcessWidget::print(QPrinter *printer, const QString &filePath){
     //Print the name of the file
     printPainter.resetMatrix();
     printPainter.setPen(Qt::black);
-    printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,QString("File: %1").arg(filePath));
+    printPainter.drawText(textRec,Qt::AlignLeft | Qt::AlignVCenter,tr("File: %1").arg(filePath));
 
     printPainter.end();
 }

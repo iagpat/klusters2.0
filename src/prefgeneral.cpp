@@ -23,7 +23,9 @@
 
 
 
-PrefGeneral::PrefGeneral(QWidget *parent ) : PrefGeneralLayout(parent) {
+PrefGeneral::PrefGeneral(QWidget *parent )
+    : PrefGeneralLayout(parent)
+{
     connect(crashRecoveryCheckBox,SIGNAL(stateChanged(int)),this,SLOT(updateCrashRecoveryTimeInterval(int)));
     connect(reclusteringExecutableButton,SIGNAL(clicked()),this,SLOT(updateReclusteringExecutable()));
 

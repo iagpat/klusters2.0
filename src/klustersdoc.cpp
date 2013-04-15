@@ -651,7 +651,7 @@ bool KlustersDoc::canCloseView(){
     return returnValue;
 }
 
-QString KlustersDoc::documentName(){
+QString KlustersDoc::documentName() const{
     QFileInfo docUrlFileInfo(docUrl);
     return docUrlFileInfo.absolutePath() + QDir::separator() + baseName + "-" + electrodeGroupID;
 }

@@ -85,7 +85,7 @@ WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& bac
         }
     } else {
         for(int i = 0; i < nbchannels; ++i) {
-            channelPositions[i] = positions[i];
+            channelPositions[i] = positions.at(i);
         }
     }
 

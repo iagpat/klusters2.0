@@ -45,8 +45,8 @@ int main(int argc, char* argv[])
     KlustersApp* Klusters = new KlustersApp();
     Klusters->show();
     if(args.count()){
-        QString file = args.at(0);
-        if(file.left(1) != "/"){
+        const QString file = args.at(0);
+        if(file.left(1) != QLatin1String("/")){
             QString url;
             url = QDir::currentPath()+ QDir::separator() + file;
             Klusters->openDocumentFile(url);
