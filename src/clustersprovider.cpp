@@ -28,7 +28,9 @@
 
 ClustersProvider::ClustersProvider(const QString& fileUrl,double samplingRate,double currentSamplingRate,Data& clusteringData,dataType dataFileMaxTime)
     : DataProvider(fileUrl),
-      samplingRate(samplingRate),clusteringData(clusteringData),dataFileMaxTime(dataFileMaxTime)
+      samplingRate(samplingRate),
+      clusteringData(clusteringData),
+      dataFileMaxTime(dataFileMaxTime)
 {
 
     clusterPosition = 0.25;
@@ -66,8 +68,10 @@ void ClustersProvider::retrieveData(long startTime,long endTime,QObject* initiat
     dataType startInRecordingUnits;
     //startTimeInRecordingUnits has been computed in a previous call to a browsing function. It has to be used insted of computing
     //the value from startTime because of the rounding which has been applied to it.
-    if(startTimeInRecordingUnits != 0) startInRecordingUnits = startTimeInRecordingUnits;
-    else startInRecordingUnits = static_cast<dataType>(startTime * samplingRate / 1000.0);
+    if(startTimeInRecordingUnits != 0)
+        startInRecordingUnits = startTimeInRecordingUnits;
+    else
+        startInRecordingUnits = static_cast<dataType>(startTime * samplingRate / 1000.0);
     dataType endInRecordingUnits =  static_cast<dataType>(endTime * samplingRate / 1000.0);
 
     if(startInRecordingUnits > fileMaxTime){
@@ -75,7 +79,8 @@ void ClustersProvider::retrieveData(long startTime,long endTime,QObject* initiat
         emit dataReady(data,initiator,name);
         return;
     }
-    if(endInRecordingUnits > fileMaxTime) endInRecordingUnits = fileMaxTime;
+    if(endInRecordingUnits > fileMaxTime)
+        endInRecordingUnits = fileMaxTime;
 
     //Store the information for the next request
     previousStartTime = startInRecordingUnits;
@@ -142,8 +147,8 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QLis
     if(startTimeInRecordingUnits != 0){
         //the found spike will be placed at clusterPosition*100 % of the timeFrame
         startInRecordingUnits = startTimeInRecordingUnits + static_cast<long>(position);
-    }
-    else startInRecordingUnits = static_cast<dataType>(startTime * samplingRate / 1000.0);
+    } else
+        startInRecordingUnits = static_cast<dataType>(startTime * samplingRate / 1000.0);
 
     if(startInRecordingUnits > fileMaxTime){
         //Send the information to the receiver.
@@ -194,7 +199,7 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QLis
     }
 
     qSort(firstSpikes);
-    time = firstSpikes[0];
+    time = firstSpikes.first();
 
     //the found spike will be placed at clusterPosition*100 % of the timeFrame
     //compute the final starting time
@@ -255,8 +260,10 @@ void ClustersProvider::requestNextClusterData(long startTime,long timeFrame,QLis
         for(dataType i = firstSpikePosition; i < lastPosition;++i){
             dataType featuresRowIndex = static_cast<dataType>((*spikesByCluster)(1,i));
             time = static_cast<dataType>(clusteringData.features(featuresRowIndex,nbOfDimensions));
-            if(time < startingInRecordingUnits) continue;
-            if(time > endInRecordingUnits) break;
+            if(time < startingInRecordingUnits)
+                continue;
+            if(time > endInRecordingUnits)
+                break;
             data(1,count + 1) = time - startingInRecordingUnits;
             data(2,count + 1) = *iterator;
             count++;
@@ -300,7 +307,8 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
         //the found spike will be placed at clusterPosition*100 % of the timeFrame
         startInRecordingUnits = startTimeInRecordingUnits + static_cast<long>(position);
     }
-    else startInRecordingUnits = static_cast<dataType>(startTime * samplingRate / 1000.0);
+    else
+        startInRecordingUnits = static_cast<dataType>(startTime * samplingRate / 1000.0);
 
     SortableTable* spikesByCluster;
     Data::ClusterInfoMap* clusterInfoMap;
@@ -330,8 +338,9 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
         for(dataType i = firstPosition; i > lastPosition;--i){
             dataType featuresRowIndex = static_cast<dataType>((*spikesByCluster)(1,i));
             time = static_cast<dataType>(clusteringData.features(featuresRowIndex,nbOfDimensions));
-            if(time > startInRecordingUnits) continue;
-            if(time < startInRecordingUnits){
+            if(time > startInRecordingUnits)
+                continue;
+            if(time < startInRecordingUnits) {
                 firstSpikes.append(time);
                 break;
             }
@@ -348,7 +357,7 @@ void ClustersProvider::requestPreviousClusterData(long startTime,long timeFrame,
     }
 
     qSort(firstSpikes);
-    time = firstSpikes[firstSpikes.size() - 1];
+    time = firstSpikes.at(firstSpikes.size() - 1);
 
     //the found spike will be placed at clusterPosition*100 % of the timeFrame
     //compute the final starting time

@@ -37,8 +37,18 @@
 ErrorMatrixView::ErrorMatrixView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,QStatusBar* statusBar,QWidget *parent,const char* name,int minSize, int
                                  maxSize, int windowTopLeft ,int windowBottomRight,int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border),
-    dataReady(false),nbColors(100),cutoffProbability(0.1),init(true),hasBeenRenumbered(false),
-    nbActions(0),nbRedo(0),isNotUpToDate(false),nbPreviousUndo(0),nbPreviousRedo(0),goingToDie(false) {
+    dataReady(false),
+    nbColors(100),
+    cutoffProbability(0.1),
+    init(true),
+    hasBeenRenumbered(false),
+    nbActions(0),
+    nbRedo(0),
+    isNotUpToDate(false),
+    nbPreviousUndo(0),
+    nbPreviousRedo(0),
+    goingToDie(false)
+{
 
 
     //Set the drawing variables
@@ -276,8 +286,7 @@ void ErrorMatrixView::drawMatrix(QPainter& painter){
             if((clusterIndex == clusterIndex2) || ignoreClusterIndex.contains(clusterIndex) || ignoreClusterIndex.contains(clusterIndex2)){
                 painter.setBrush(Qt::black);
                 painter.drawRect(x,y,cellWidth + 1,cellWidth + 1);
-            }
-            else{
+            } else {
                 double probability = (*probabilities)(clusterIndex,clusterIndex2);
                 int probColorIndex = static_cast<int>(probability * nbColors / cutoffProbability);
                 if(probColorIndex >= nbColors) probColorIndex = nbColors - 1;
@@ -518,24 +527,25 @@ void ErrorMatrixView::renumber(QMap<int,int>& clusterIdsOldNew){
 void ErrorMatrixView::undoRenumbering(QMap<int,int>& clusterIdsNewOld){
     if(nbActions > 0){
         renumbering.remove(nbActions);
-        if(renumbering.isEmpty()) hasBeenRenumbered = false;
+        if(renumbering.isEmpty())
+            hasBeenRenumbered = false;
 
         nbActions--;
         nbRedo++;
-        if(nbActions == 0) isNotUpToDate = false;
-        else isNotUpToDate = true;
+        if(nbActions == 0)
+            isNotUpToDate = false;
+        else
+            isNotUpToDate = true;
         drawContentsMode = REDRAW;
     }
     else{
-        if(nbPreviousUndo == 0){
+        if(nbPreviousUndo == 0) {
             nbPreviousRedo++;
             isNotUpToDate = true;
-        }
-        else if(nbPreviousUndo == 1){//There was a redo before
+        } else if(nbPreviousUndo == 1) {//There was a redo before
             nbPreviousUndo--;
             isNotUpToDate = false;
-        }
-        else{//nbPreviousUndo >1
+        } else {//nbPreviousUndo >1
             nbPreviousUndo--;
             nbPreviousRedo++;
             isNotUpToDate = true;

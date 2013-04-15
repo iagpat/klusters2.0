@@ -38,7 +38,8 @@ GroupingAssistant::~GroupingAssistant()
 Array<double>* GroupingAssistant::computeMeanProbabilities(Data& clusteringData,QList<int>& clusterList,QList<int>& computedClusterList,QList<int>& ignoreClusterIndex){
     Array<double>* probabilities;
 
-    if(haveToStopComputing) return new Array<double>(0,0); //We do not care about what is return as it will not be used.
+    if(haveToStopComputing)
+        return new Array<double>(0,0); //We do not care about what is return as it will not be used.
 
     //Compute the probabilities
     probabilities = computeProbabilities(clusteringData,clusterList,computedClusterList,ignoreClusterIndex);
@@ -53,7 +54,8 @@ Array<double>* GroupingAssistant::computeMeanProbabilities(Data& clusteringData,
     int clusterIndex = initIndex;
     for(iterator = clusterInfoMap->begin(); iterator != clusterInfoMap->end(); ++iterator){
 
-        if(haveToStopComputing) break; //We do not care about what is return as it will not be used.
+        if(haveToStopComputing)
+            break; //We do not care about what is return as it will not be used.
 
         dataType firstSpikePosition = iterator.value().firstSpikePosition();
         dataType nbSpikesOfCluster = iterator.value().nbSpikes();

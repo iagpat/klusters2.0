@@ -898,7 +898,8 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& cluste
 
             //For the new cluster, only the row index has been inserted in spikesByClusterTemp,
             //now the cluster number is updated at once for all the spikes of the new cluster
-            for(dataType i = 0; i<nbSpikesOfCluster;++i) (*spikesByClusterTemp)(2,firstSpikePosition + i) = newClusterId;
+            for(dataType i = 0; i<nbSpikesOfCluster;++i)
+                (*spikesByClusterTemp)(2,firstSpikePosition + i) = newClusterId;
         }
 
 

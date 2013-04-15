@@ -44,8 +44,15 @@ const int CorrelationView::YMARGIN = 0;
 CorrelationView::CorrelationView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,QStatusBar * statusBar,QWidget* parent,Data::ScaleMode scale,int binSize, int correlationTimeFrame,bool shoulderLine, const char* name,
                                  int minSize, int maxSize, int windowTopLeft ,int windowBottomRight, int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border,XMARGIN,YMARGIN),
-    scaleMode(scale),dataReady(true),binSize(binSize),timeWindow(correlationTimeFrame),shoulderLine(shoulderLine),
-    isZoomed(false),goingToDie(false),printState(false){
+    scaleMode(scale),
+    dataReady(true),
+    binSize(binSize),
+    timeWindow(correlationTimeFrame),
+    shoulderLine(shoulderLine),
+    isZoomed(false),
+    goingToDie(false),
+    printState(false)
+{
 
 
     //Set the only mode available.
@@ -119,7 +126,7 @@ CorrelationView::~CorrelationView(){
 }
 
 bool CorrelationView::isThreadsRunning() const{  
-    if(threadsToBeKill.count() == 0)
+    if(threadsToBeKill.isEmpty())
         return false;
     else
         return true;
@@ -381,7 +388,8 @@ void CorrelationView::updateWindow(){
     window = ZoomWindow(QRect(QPoint(abscissaMin,ordinateMin),QPoint(abscissaMax,ordinateMax)));
 
     //update the drawing mode if needed (if UPDATE, no change is need it).
-    if(drawContentsMode == REFRESH)drawContentsMode = REDRAW;
+    if(drawContentsMode == REFRESH)
+        drawContentsMode = REDRAW;
 }
 
 void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
@@ -470,8 +478,9 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
             QStringList parts = firingRateString.split(".", QString::SkipEmptyParts);
             if(parts.count() == 1) firingRateString += ".00";
             else{
-                QString precision = parts[1];
-                if(precision.length() == 1) firingRateString += "0";
+                const QString precision = parts[1];
+                if(precision.length() == 1)
+                    firingRateString += "0";
             }
             firingRates.insert(cluster1,firingRateString);
 
@@ -547,9 +556,12 @@ void CorrelationView::setBinSizeAndTimeWindow(int size,int width){
 
     //Compute variable to draw tick marks
     int n = 0;
-    if((timeWindow - 1)/2 <= 30) n = 5;
-    if((timeWindow - 1)/2 > 30 && (timeWindow - 1)/2 <= 100) n = 10;
-    if((timeWindow - 1)/2 >= 100) n = 20;
+    if((timeWindow - 1)/2 <= 30)
+        n = 5;
+    else if((timeWindow - 1)/2 > 30 && (timeWindow - 1)/2 <= 100)
+        n = 10;
+    else if((timeWindow - 1)/2 >= 100)
+        n = 20;
     int pixelPerTimeWindow = (timeWindow * binWidth) / binSize;
     tickMarkStep = static_cast<float>(pixelPerTimeWindow * n) / static_cast<float>(timeWindow);
     nbTickMarks = static_cast<int>(floor(0.5 + static_cast<float>((timeWindow/2) / static_cast<float>(n))));
@@ -594,7 +606,8 @@ void CorrelationView::drawClusterIds(QPainter& painter){
     ItemColors& clusterColors = doc.clusterColors();
     QRect r((QRect)window);
     bool isMargin = true;
-    if(r.left() != 0) isMargin = false;
+    if(r.left() != 0)
+        isMargin = false;
 
     for(iterator = shownClusters.begin(); iterator != shownClusters.end(); ++iterator){
         //the abscissa is increase by the font size to adjust for conversion from world coordinates to viewport coordinates.

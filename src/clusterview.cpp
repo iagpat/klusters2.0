@@ -50,7 +50,9 @@ const QColor ClusterView::DELETE_ARTEFACT_COLOR(Qt::red);
 ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int timeInterval,QStatusBar * statusBar,QWidget* parent, const char* name,
                          int minSize, int maxSize, int windowTopLeft ,int windowBottomRight, int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border),
-    selectionPolygon(0), nbSelectionPoints(0),polygonClosed(false)
+    selectionPolygon(0),
+    nbSelectionPoints(0),
+    polygonClosed(false)
 {
     //Set the default mode
     mode = ZOOM;
@@ -197,7 +199,8 @@ void ClusterView::paintEvent ( QPaintEvent*){
 
 
 
-void ClusterView::eraseTheLastDrawnLine(){
+void ClusterView::eraseTheLastDrawnLine()
+{
     //The user did not move since the last left click (no mouseMoveEvent)
     if(nbSelectionPoints == selectionPolygon.size()){
         //Treat the case when we reach the first point of the selection
@@ -222,7 +225,8 @@ void ClusterView::eraseTheLastDrawnLine(){
     }
 }
 
-void ClusterView::eraseTheLastMovingLine(){
+void ClusterView::eraseTheLastMovingLine()
+{
     //The user moved since the last left click, a line has been drawn in the mouseMoveEvent
     if(nbSelectionPoints != selectionPolygon.size()){
         selectionPolygon.resize(selectionPolygon.size()-1);

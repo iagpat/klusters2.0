@@ -47,11 +47,11 @@ EventsProvider::EventsProvider(const QString& fileUrl,double currentSamplingRate
     QString fileName = fileUrl;
     int startingIndex = fileName.lastIndexOf("evt");
     if(startingIndex == static_cast<int>(fileName.length()) - 3){//X.id.evt
-        int nBStartingIndex = fileName.lastIndexOf(".",startingIndex - 2);
+        const int nBStartingIndex = fileName.lastIndexOf(".",startingIndex - 2);
         name = fileName.mid(nBStartingIndex + 1,(startingIndex - 1) - (nBStartingIndex + 1));
     }
     else{//X.evt.id
-        int nBStartingIndex = fileName.lastIndexOf(".");
+        const int nBStartingIndex = fileName.lastIndexOf(".");
         name = fileName.right(static_cast<int>(fileName.length()) - (nBStartingIndex + 1));
     }
 }
@@ -650,7 +650,8 @@ void EventsProvider::requestPreviousEventData(long startTime,long timeFrame,QLis
         else if(startTime == previousEndTime){
             if(static_cast<long>(floor(0.5 + timeStamps(1,previousEndIndex))) < startTime){
                 startIndex = previousEndIndex + 1;
-                if(startIndex > nbEvents) startIndex = nbEvents;
+                if(startIndex > nbEvents)
+                    startIndex = nbEvents;
             }
             else startIndex = previousEndIndex;
         }
@@ -1060,7 +1061,8 @@ int EventsProvider::save(QFile* eventFile){
     QTextStream fileStream(eventFile);
     fileStream.setRealNumberPrecision(12);
 
-    for(int i = 1;i<=nbEvents;++i) fileStream<<timeStamps(1,i)<<"\t"<<events(1,i)<< "\n";
+    for(int i = 1;i<=nbEvents;++i)
+        fileStream<<timeStamps(1,i)<<"\t"<<events(1,i)<< "\n";
 
     if(eventFile->error() == QFile::NoError) {
         modified = false;
@@ -1075,7 +1077,8 @@ int EventsProvider::save(QFile* eventFile){
 void EventsProvider::removeEvent(int selectedEventId,double time){
     modified = true;
     long timeIndex;
-    if(nbEvents != 1) timeIndex = findIndex(time,selectedEventId);
+    if(nbEvents != 1)
+        timeIndex = findIndex(time,selectedEventId);
 
     //Clear the redo variables
     eventsRedo.setSize(0,0);
@@ -1341,7 +1344,9 @@ void EventsProvider::renameEvent(int selectedEventId,QString newEventDescription
 
 //Operator < on EventDescription to sort them in an case-insensitive maner.
 bool operator<(const EventDescription& s1,const EventDescription& s2){
-    if(s1.toLower() == s2.toLower()) return (static_cast<QString>(s1) < static_cast<QString>(s2));
-    else return (static_cast<QString>(s1.toLower()) < static_cast<QString>(s2.toLower()));
+    if(s1.toLower() == s2.toLower())
+        return (static_cast<QString>(s1) < static_cast<QString>(s2));
+    else
+        return (static_cast<QString>(s1.toLower()) < static_cast<QString>(s2.toLower()));
 }
 

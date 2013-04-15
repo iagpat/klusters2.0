@@ -26,8 +26,8 @@
 
 
 
-ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString& caption) :
-    QDialog(parent)
+ClusterInformationDialog::ClusterInformationDialog(QWidget *parent,const QString& caption)
+    : QDialog(parent)
 {
     setWindowTitle(caption);
     setModal(true);

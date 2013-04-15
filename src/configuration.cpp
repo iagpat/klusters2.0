@@ -30,7 +30,7 @@ const int  Configuration::gainDefault = 200;
 const int  Configuration::timeIntervalDefault = 60;
 const int  Configuration::nbUndoDefault = 2;
 const QColor Configuration::backgroundColorDefault = QColor(Qt::black);
-const QString Configuration::reclusteringExecutableDefault = "KlustaKwik";
+const QString Configuration::reclusteringExecutableDefault = QLatin1String("KlustaKwik");
 const QString Configuration::reclusteringArgsDefault =
         "%fileBaseName %electrodeGroupID -MinClusters 2 -MaxClusters 12 -UseFeatures %features";
 
