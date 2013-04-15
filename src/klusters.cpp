@@ -143,7 +143,6 @@ qDebug()<<"KlustersApp::KlustersApp()  "<<this;
 
 KlustersApp::~KlustersApp()
 {
-qDebug()<<" KlustersApp::~KlustersApp(******************************************"<<this;
     //Clear the memory by deleting all the pointers
     delete printer;
     delete doc;
@@ -484,10 +483,6 @@ void KlustersApp::createMenus()
     connect(mCloseActiveDisplay,SIGNAL(triggered()), this,SLOT(slotDisplayClose()));
 
 
-
-
-
-
     //Settings menu
     QMenu *settingsMenu = menuBar()->addMenu(tr("Settings"));
 
@@ -569,8 +564,6 @@ void KlustersApp::createMenus()
     connect(doc, SIGNAL(updateUndoNb(int)), this, SLOT(slotUpdateUndoNb(int)));
     connect(doc, SIGNAL(updateRedoNb(int)), this, SLOT(slotUpdateRedoNb(int)));
     connect(doc, SIGNAL(spikesDeleted()), this, SLOT(slotSpikesDeleted()));
-
-
 }
 
 
