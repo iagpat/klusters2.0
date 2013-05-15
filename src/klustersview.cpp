@@ -1111,12 +1111,10 @@ void KlustersView::addRemovedClusters(bool active){
     //If removedClustersUndoList is not empty, make the current removedClusters become the first element
     //of the removedClustersRedoList and the first element of the removedClustersUndoList become the current removedClusters.
     if(!removedClustersUndoList.isEmpty()){
-        qDebug() << "in addRemovedClusters removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
         if(!removedClusters->isEmpty()){
             QList<int>::iterator newClusterIterator;
             for(newClusterIterator = removedClusters->begin(); newClusterIterator != removedClusters->end(); ++newClusterIterator){
                 shownClusters->append(*newClusterIterator);
-                qDebug() << "in addRemovedClusters *newClusterIterator: "<<*newClusterIterator<< endl;
                 emit newClusterAddedToView(*newClusterIterator,active);
             }
         }
@@ -1130,7 +1128,6 @@ void KlustersView::undo(bool active){
     //add back the removed clusters
     addRemovedClusters(active);
     --numberUndo;
-    qDebug() << "numberUndo in KlustersView::undo added: "<<numberUndo<< endl;
 }
 
 void KlustersView::undoAddedClusters(QList<int>& addedClusters,bool active){
@@ -1148,7 +1145,6 @@ void KlustersView::undoAddedClusters(QList<int>& addedClusters,bool active){
         }
     }
     --numberUndo;
-    qDebug() << "numberUndo in KlustersView::undo modified: "<<numberUndo<<" removedClustersUndoList.count(): "<<removedClustersUndoList.count()<< endl;
 }
 
 void KlustersView::undoModifiedClusters(QList<int>& updatedClusters,bool active){
@@ -1163,7 +1159,6 @@ void KlustersView::undoModifiedClusters(QList<int>& updatedClusters,bool active)
         emit modifiedClustersUndo(inView,active);
     }
     --numberUndo;
-    qDebug() << "numberUndo in KlustersView::undo updated: "<<numberUndo<< endl;
 }
 
 void KlustersView::undo(QList<int>& addedClusters,QList<int>& updatedClusters,bool active){  
@@ -1187,7 +1182,6 @@ void KlustersView::undo(QList<int>& addedClusters,QList<int>& updatedClusters,bo
     if(!inView.isEmpty()) emit modifiedClustersUndo(inView,active);
 
     --numberUndo;
-    qDebug() << "numberUndo in KlustersView::undo added-updated: "<<numberUndo<< endl;
 }
 
 
@@ -1349,7 +1343,6 @@ void KlustersView::undoRenumbering(QMap<int,int>& clusterIdsNewOld,bool active){
 
 
     numberUndo--;
-    qDebug() << "numberUndo in KlustersView::undoRenumbering: "<<numberUndo<< endl;
 
     emit clustersRenumbered(active);
 }
@@ -1361,7 +1354,6 @@ void KlustersView::redoRenumbering(QMap<int,int>& clusterIdsOldNew,bool active){
     removeUndoAddedClusters(active);
 
     ++numberUndo;
-    qDebug() << "numberUndo in KlustersView::redoRenumbering: "<<numberUndo<< endl;
 
     emit clustersRenumbered(active);
 }
