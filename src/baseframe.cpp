@@ -28,7 +28,7 @@
 //include files for c/c++ libraries
 #include <math.h>
 
-BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,const QColor& backgroundColor,
+BaseFrame::BaseFrame(int Xborder,int Yborder,QWidget* parent,const QString &name,const QColor& backgroundColor,
                       int minSize,int maxSize ,int windowTopLeft ,int windowBottomRight,int border):
     QFrame(parent),
     MIN_SIZE(minSize),
@@ -48,7 +48,7 @@ BaseFrame:: BaseFrame(int Xborder,int Yborder,QWidget* parent,const char* name,c
     wholeHeightRectangle(false),
     mRubberBand(0)
 {
-
+    setObjectName(name);
     setAutoFillBackground(true);
     //Setting of the frame
     setLineWidth (BORDER);
