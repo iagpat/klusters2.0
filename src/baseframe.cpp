@@ -40,7 +40,6 @@ BaseFrame::BaseFrame(int Xborder,int Yborder,QWidget* parent,const QString &name
     window (QRect(QPoint(0,-WINDOW_TOP_LEFT),QPoint(WINDOW_BOTTOM_RIGHT,0))),
     firstClick(0,0),
     isDoubleClick(false),
-    rubber(0),
     drawContentsMode(REDRAW),
     Xborder(Xborder),
     Yborder(Yborder),
@@ -108,10 +107,9 @@ void BaseFrame::mousePressEvent(QMouseEvent* e){
             //or using only the abscissa and the ordinate if the top of the window if the rubber band has to
             //drawn on whole the height of the window.
             if(isRubberBandToBeDrawn && wholeHeightRectangle)
-                rubber = new QRect(firstClick.x(),r.top(),1,1);
+                mRubberBand->setGeometry(QRect(firstClick.x(),r.top(),1,1));
             else
-                rubber = new QRect(firstClick.x(),firstClick.y(),1,1);
-            mRubberBand->setGeometry(*rubber);
+                mRubberBand->setGeometry(QRect(firstClick.x(),firstClick.y(),1,1));
             mRubberBand->show();
         }
     }
@@ -123,14 +121,6 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
     if(e->button() & Qt::LeftButton){
         bool isZoomed = false;
 
-        if(isRubberBandToBeDrawn){
-            //Test if a selected rectangle exist, if so draw it and delete it.
-            if(rubber){
-                delete rubber;
-                rubber = 0;
-            }
-        }
-
         if(mode == ZOOM){
             //if double click, only update isDoubleClick, action has been taken in mouseDoubleClickEvent
             if(isDoubleClick){
@@ -139,8 +129,6 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
             }
 
             //Test if a selected rectangle exist, if so draw it and delete it.
-            delete rubber;
-            rubber = 0;
             if(mRubberBand) {
                 mRubberBand->hide();
             }
