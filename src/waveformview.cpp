@@ -727,6 +727,7 @@ void WaveformView::mouseDoubleClickEvent (QMouseEvent *e){
             else waveformIterator = clusteringData.timeFrameWaveformIterator(static_cast<dataType>(*clusterIterator),startTime,endTime);
             if(meanPresentation && (!waveformIterator->isMeanAvailable())) waveformsNotAvailable = true;
             else if(!waveformIterator->areSpikesAvailable()) waveformsNotAvailable = true;
+            delete waveformIterator;
         }
         if(waveformsNotAvailable){
             setCursor(Qt::WaitCursor);
@@ -756,6 +757,7 @@ void WaveformView::mouseReleaseEvent(QMouseEvent* e){
                 waveformsNotAvailable = true;
             else if(!waveformIterator->areSpikesAvailable())
                 waveformsNotAvailable = true;
+            delete waveformIterator;
         }
         if(waveformsNotAvailable){
             setCursor(Qt::WaitCursor);
@@ -781,6 +783,7 @@ void WaveformView::resizeEvent(QResizeEvent* e){
             else waveformIterator = clusteringData.timeFrameWaveformIterator(static_cast<dataType>(*clusterIterator),startTime,endTime);
             if(meanPresentation && (!waveformIterator->isMeanAvailable())) waveformsNotAvailable = true;
             else if(!waveformIterator->areSpikesAvailable()) waveformsNotAvailable = true;
+            delete waveformIterator;
         }
         if(waveformsNotAvailable){
             setCursor(Qt::WaitCursor);
