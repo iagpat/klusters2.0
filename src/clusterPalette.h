@@ -74,12 +74,12 @@ public:
     
     enum DataStored { INDEX = Qt::UserRole+1 };
 
-    virtual void createClusterList(KlustersDoc* doc);
-    virtual void updateClusterList();
+    void createClusterList(KlustersDoc* doc);
+    void updateClusterList();
     void selectItems(const QList<int> &selectedClusters);
-    virtual inline void setImmediateMode(){mode = IMMEDIATE;}
-    virtual inline void setDelayMode(){mode = DELAY;}
-    virtual void reset();
+    void setImmediateMode(){mode = IMMEDIATE;}
+    void setDelayMode(){mode = DELAY;}
+    void reset();
     /**Returns the list of selected clusters*/
     QList<int> selectedClusters();
 
@@ -95,11 +95,11 @@ public:
     void changeBackgroundColor(const QColor& color);
 
 public Q_SLOTS:
-    virtual void changeColor(QListWidgetItem *item);
-    virtual void moveClustersToNoise();
-    virtual void moveClustersToArtefact();
-    virtual void groupClusters();
-    virtual void updateClusters();
+    void changeColor(QListWidgetItem *item);
+    void moveClustersToNoise();
+    void moveClustersToArtefact();
+    void groupClusters();
+    void updateClusters();
 
 protected Q_SLOTS:
     /** The right click on a cluster icon bring a dialog allowing the user to enter information on the cluster
@@ -118,9 +118,9 @@ protected Q_SLOTS:
 Q_SIGNALS:
     void singleChangeColor(int selectedCluster);
     void updateShownClusters(const QList<int>& selectedClusters);
-    void groupClusters(QList<int> selectedClusters);
-    void moveClustersToNoise(QList<int> selectedClusters);
-    void moveClustersToArtefact(QList<int> selectedClusters);
+    void groupClusters(const QList<int> &selectedClusters);
+    void moveClustersToNoise(const QList<int> &selectedClusters);
+    void moveClustersToArtefact(const QList<int> &selectedClusters);
     void clusterInformationModified();
 
 private:

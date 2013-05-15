@@ -368,7 +368,7 @@ void ClusterPalette::slotOnItem(QListWidgetItem* item){
     }
 }
 
-QList<int> ClusterPalette::selectedClusters(){
+QList<int> ClusterPalette::selectedClusters() {
     //Get the list of clusters with their color
     if(!doc) {
         return QList<int>();
