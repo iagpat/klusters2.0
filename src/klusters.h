@@ -18,6 +18,8 @@
 #ifndef KLUSTERS_H
 #define KLUSTERS_H
 
+//include files application specific
+#include "klustersview.h"
 
 
 // include files for Qt
@@ -39,8 +41,6 @@
 #include <QTableWidget>
 #include <QProcess>
 
-//include files application specific
-#include "klustersview.h"
 
 
 // forward declaration of the Klusters classes

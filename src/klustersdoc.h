@@ -18,6 +18,15 @@
 #ifndef KLUSTERSDOC_H
 #define KLUSTERSDOC_H
 
+#include "itemcolors.h"
+
+//include files for the application
+#include "data.h"
+#include "tracesprovider.h"
+#include "channelcolors.h"
+#include "clustersprovider.h"
+
+
 // include files for QT
 #include <qobject.h>
 #include <qstring.h>
@@ -31,14 +40,6 @@
 #include <QDebug>
 
 
-#include "itemcolors.h"
-
-//include files for the application
-#include "data.h"
-//#include "clusterPalette.h"
-#include "tracesprovider.h"
-#include "channelcolors.h"
-#include "clustersprovider.h"
 
 
 // forward declaration

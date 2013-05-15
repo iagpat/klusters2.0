@@ -15,6 +15,17 @@
  *                                                                         *
  ***************************************************************************/
 #include "config-klusters.h"
+// application specific includes
+#include "klusters.h"
+#include "klustersdoc.h"
+#include "clusterPalette.h"
+#include "savethread.h"
+#include "prefdialog.h"
+#include "configuration.h"  // class Configuration
+#include "processwidget.h"
+#include "qhelpviewer.h"
+
+
 
 // include files for QT
 #include <qdir.h>
@@ -49,15 +60,6 @@
 #include <QKeySequence>
 #include <QFileDialog>
 #include <QTime>
-// application specific includes
-#include "klusters.h"
-#include "klustersdoc.h"
-#include "clusterPalette.h"
-#include "savethread.h"
-#include "prefdialog.h"
-#include "configuration.h"  // class Configuration
-#include "processwidget.h"
-#include "qhelpviewer.h"
 #include <QSettings>
 
 extern int nbUndo;
