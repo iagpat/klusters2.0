@@ -1192,7 +1192,7 @@ void EventsProvider::addEvent(QString eventDescriptionToAdd,double time){
 
 }
 
-void EventsProvider::addEventDescription(QString eventDescriptionToAdd){
+void EventsProvider::addEventDescription(const QString &eventDescriptionToAdd){
 
     QMap<int,int> oldNewEventIds;
     QMap<int,int> newOldEventIds;
@@ -1246,7 +1246,7 @@ void EventsProvider::addEventDescription(QString eventDescriptionToAdd){
     emit newEventDescriptionCreated(name,oldNewEventIds,newOldEventIds,eventDescriptionToAdd);
 }
 
-void EventsProvider::removeEventDescription(QString eventDescriptionToRemove){
+void EventsProvider::removeEventDescription(const QString &eventDescriptionToRemove){
     QMap<int,int> oldNewEventIds;
     QMap<int,int> newOldEventIds;
     QMap<EventDescription,int> eventIdsTmp;
@@ -1254,7 +1254,7 @@ void EventsProvider::removeEventDescription(QString eventDescriptionToRemove){
 
     //Remove the description of the list of existing ones and compute the new descriptionLength
     idsDescriptions.clear();
-    QList<EventDescription> descriptions = eventIds.keys();
+    //QList<EventDescription> descriptions = eventIds.keys();
 
     QList<EventDescription> newDescriptions = eventIds.keys();
     newDescriptions.removeAll(EventDescription(eventDescriptionToRemove));

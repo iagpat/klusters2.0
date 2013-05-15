@@ -318,12 +318,12 @@ private:
     /** Creates a new description event.
   *  @param eventDescriptionToAdd event description to add.
   */
-    void addEventDescription(QString eventDescriptionToAdd);
+    void addEventDescription(const QString &eventDescriptionToAdd);
 
     /** removes a description event.
   *  @param eventDescriptionToRemove event description to remove.
   */
-    void removeEventDescription(QString eventDescriptionToRemove);
+    void removeEventDescription(const QString &eventDescriptionToRemove);
 };
 
 
