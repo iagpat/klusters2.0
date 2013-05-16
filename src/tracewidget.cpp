@@ -361,7 +361,9 @@ void TraceWidget::slotStartSecondTimeUpdated(int start){
             startMinute->setMaximum(minutePart);
             startSecond->setMaximum(recordingLength/1000);
             startMilisecond->setMaximum(recordingLength);
+            scrollBar->blockSignals(true);
             scrollBar->setValue(startTime);
+            scrollBar->blockSignals(false);
         }
 
         updateView = true;
@@ -400,14 +402,18 @@ void TraceWidget::slotStartMilisecondTimeUpdated(int start){
                     startMinute->setValue(nbMinutes);
                     startTime = startMinute->value()* 60000 + startSecond->value() * 1000 + startMilisecond->value();
                     scrollBar->setMaximum(recordingLength - timeWindow);
+                    scrollBar->blockSignals(true);
                     scrollBar->setValue(startTime);
+                    scrollBar->blockSignals(false); 
                 }
             }
             else{
                 startSecond->setValue(nbSeconds);
                 startTime = startMinute->value()* 60000 + startSecond->value() * 1000 + startMilisecond->value();
                 scrollBar->setMaximum(recordingLength - timeWindow);
+                scrollBar->blockSignals(true);
                 scrollBar->setValue(startTime);
+                scrollBar->blockSignals(false);
             }
         }
         else{
@@ -415,7 +421,9 @@ void TraceWidget::slotStartMilisecondTimeUpdated(int start){
             startMinute->setMaximum(minutePart);
             startSecond->setMaximum(recordingLength/1000);
             startMilisecond->setMaximum(recordingLength);
+            scrollBar->blockSignals(true);
             scrollBar->setValue(startTime);
+            scrollBar->blockSignals(false);
         }
         updateView = true;
 
@@ -447,6 +455,9 @@ void TraceWidget::slotScrollBarUpdated(){
             int nbSeconds = remainingSeconds / 1000;
             int remainingMiliseconds = static_cast<int>(fmod(static_cast<double>(remainingSeconds),1000));
 
+            startMinute->blockSignals(true);
+            startSecond->blockSignals(true);
+            startMilisecond->blockSignals(true);
             startMinute->setValue(nbMinutes);
             startSecond->setValue(nbSeconds);
             startMilisecond->setValue(remainingMiliseconds);
@@ -455,6 +466,10 @@ void TraceWidget::slotScrollBarUpdated(){
             startMinute->setMaximum(minutePart);
             startSecond->setMaximum(recordingLength/1000);
             startMilisecond->setMaximum(recordingLength);
+            startMinute->blockSignals(false);
+            startSecond->blockSignals(false);
+            startMilisecond->blockSignals(false);
+
 
         }
 
