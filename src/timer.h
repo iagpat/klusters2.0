@@ -19,6 +19,7 @@
 #include <time.h>
 #else
 #include <sys/time.h>
+#include <windows.h>
 #endif
 
 static struct timeval tv0;
