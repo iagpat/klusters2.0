@@ -20,6 +20,7 @@
 #else
 #include <sys/time.h>
 #include <windows.h>
+#include <winsock.h>
 #endif
 
 static struct timeval tv0;
