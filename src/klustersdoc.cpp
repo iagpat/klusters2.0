@@ -1908,8 +1908,7 @@ void KlustersDoc::renumberClusters(){
             view->renumberClusters(clusterIdsOldNew,false);
             //update the TraceView if any
             view->updateTraceView(electrodeGroupID,clusterColorList,false);
-        }
-        else{
+        } else {
             view->renumberClusters(clusterIdsOldNew,true);
             //update the TraceView if any
             view->updateTraceView(electrodeGroupID,clusterColorList,true);
