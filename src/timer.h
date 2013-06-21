@@ -17,10 +17,10 @@
 
 #if defined(Q_OS_WIN)
 #include <time.h>
-#else
-#include <sys/time.h>
 #include <windows.h>
 #include <winsock.h>
+#else
+#include <sys/time.h>
 #endif
 
 static struct timeval tv0;
