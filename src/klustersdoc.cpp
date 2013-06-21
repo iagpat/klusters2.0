@@ -1900,9 +1900,10 @@ void KlustersDoc::renumberClusters(){
     }
 
     //Notify all the views of the modification
-    for(int i =0; i<viewList->count();++i)
+    const int numberOfView(viewList->count());
+    for(int i =0; i<numberOfView;++i)
     {
-	KlustersView* view = viewList->at(i);
+        KlustersView* view = viewList->at(i);
         if(view != activeView){
             view->renumberClusters(clusterIdsOldNew,false);
             //update the TraceView if any
