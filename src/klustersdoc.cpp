@@ -1894,7 +1894,7 @@ void KlustersDoc::renumberClusters(){
     QList<dataType> clusterList = clusteringData->clusterIds();
     int nbClusters = clusterList.size();
 
-    for(int i = 0; i < nbClusters; ++i){
+    for (int i = 0; i < nbClusters; ++i){
         int clusterId = static_cast<int>(clusterList[i]);
         clusterColorList->changeItemId(i,clusterId);
     }
@@ -1904,7 +1904,7 @@ void KlustersDoc::renumberClusters(){
     for(int i =0; i<numberOfView;++i)
     {
         KlustersView* view = viewList->at(i);
-        if(view != activeView){
+        if (view != activeView){
             view->renumberClusters(clusterIdsOldNew,false);
             //update the TraceView if any
             view->updateTraceView(electrodeGroupID,clusterColorList,false);
