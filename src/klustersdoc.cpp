@@ -1924,8 +1924,10 @@ void KlustersDoc::renumberClusters(){
     activeView->showAllWidgets();
 
     //Update the palette of cluster
+    QList<int> activeClusters = activeView->clusters();
     clusterPalette.updateClusterList();
-    clusterPalette.selectItems(activeView->clusters());
+    clusterPalette.selectItems(activeClusters);
+    shownClustersUpdate(activeClusters,*activeView);
 }
 
 int KlustersDoc::createFeatureFile(QList<int>& clustersToRecluster,const QString& reclusteringFetFileName){
