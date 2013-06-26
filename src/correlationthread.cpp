@@ -25,10 +25,6 @@
 #include <math.h>
 #include <stdlib.h>
 
-//Unix include file
-#include <unistd.h>
-#include <iomanip> // Required for formated I/O.
-
 void CorrelationThread::run(){
     if(!haveToStopProcessing){
         //Convert the miliseconds in recording units.
