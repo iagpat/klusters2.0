@@ -25,6 +25,20 @@
 
 static struct timeval tv0;
 
+
+#if defined(Q_OS_WIN)
+    #include <time.h>
+    #include <sys/timeb.h>
+    int gettimeofday (struct timeval *tp, void *tz)
+    {
+    struct _timeb timebuffer;
+    _ftime (&timebuffer);
+    tp->tv_sec = timebuffer.time;
+    tp->tv_usec = timebuffer.millitm * 1000;
+    return 0;
+    }
+#endif
+
 inline void RestartTimer()
 {
   struct timezone tz;
