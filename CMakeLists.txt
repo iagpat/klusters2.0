@@ -270,7 +270,7 @@ if (MSVC)
    set (KDE4_ENABLE_EXCEPTIONS -EHsc)
    # Qt disables the native wchar_t type, do it too to avoid linking issues
    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Zc:wchar_t-" )
-
+   add_definitions( -DUSE_MSVC_COMPILER )
 endif()   
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 

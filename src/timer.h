@@ -26,7 +26,7 @@
 static struct timeval tv0;
 
 
-#if defined(Q_OS_WIN)
+#if defined(Q_OS_WIN) && USE_MSVC_COMPILER
     #include <time.h>
     #include <sys/timeb.h>
     int gettimeofday (struct timeval *tp, void *tz)
@@ -37,7 +37,24 @@ static struct timeval tv0;
     tp->tv_usec = timebuffer.millitm * 1000;
     return 0;
     }
-#endif
+
+inline void RestartTimer()
+{
+  struct timeval tz;
+  gettimeofday(&tv0,&tz);
+}
+
+inline float Timer()
+{
+  struct timeval tv;
+  struct timeval tz;
+  gettimeofday(&tv,&tz);
+  float msec = static_cast<int>(tv.tv_usec/1000)/1000.0;
+  float msec0 = static_cast<int>(tv0.tv_usec/1000)/1000.0;
+  float time = (tv.tv_sec+msec)-(tv0.tv_sec+msec0);
+  return time;
+}
+#else
 
 inline void RestartTimer()
 {
@@ -55,3 +72,6 @@ inline float Timer()
   float time = (tv.tv_sec+msec)-(tv0.tv_sec+msec0);
   return time;
 }
+
+#endif
+
