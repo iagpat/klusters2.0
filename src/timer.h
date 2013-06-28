@@ -23,6 +23,8 @@
 #include <sys/time.h>
 #endif
 
+#include <sys/time.h>
+
 static struct timeval tv0;
 inline void RestartTimer()
 {
