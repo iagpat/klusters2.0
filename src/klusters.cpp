@@ -217,7 +217,6 @@ void KlustersApp::createMenus()
 
     mCloseAction = fileMenu->addAction(tr("Close"));
     mCloseAction->setIcon(QPixmap(":/shared-icons/document-close"));
-    mCloseAction->setShortcut(QKeySequence::Close);
     connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
 
     fileMenu->addSeparator();
@@ -956,7 +955,6 @@ void KlustersApp::initDisplay(){
 void KlustersApp::createDisplay(KlustersView::DisplayType type)
 {
     if(mainDock){
-        qDebug()<<" void KlustersApp::createDisplay(KlustersView::DisplayType type)";
         QString displayName = (doc->documentName()).append(type);
         QString displayType = KlustersView::DisplayTypeNames[type];
 
@@ -1348,9 +1346,9 @@ void KlustersApp::customEvent (QEvent* event){
                 mFileOpenRecent->addRecentFile(doc->url());
                 setWindowTitle(doc->documentName());
             }
-        }
-        else
+        } else {
             QMessageBox::critical (this,tr("I/O Error !"), tr("Could not save the current document !"));
+        }
 
         slotStatusMsg(tr("Ready."));
         slotStateChanged("SavingDoneState");
