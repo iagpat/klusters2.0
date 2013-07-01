@@ -532,12 +532,11 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
     if(docUrl != saveUrl){
         tmpCluFile =  saveUrl;
     }
-
     //Open the temp file in write mode
     FILE* cluFile = fopen(tmpCluFile.toLatin1(),"w");
     if(cluFile == NULL){
-        return OPEN_ERROR;
         tmpCluFile = tmpCluFileSave;
+        return OPEN_ERROR;
     }
 
     if(!clusteringData->saveClusters(cluFile)){
@@ -547,23 +546,22 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
 
     //close the file
     fclose(cluFile);
-
     //if it was a saveAs, the url has changed, update it
     if(docUrl != saveUrl){
         docUrl = saveUrl;
         QFileInfo docUrlFileInfo(docUrl);
         QString fileName = docUrlFileInfo.fileName();
         const QStringList fileParts = fileName.split(".", QString::SkipEmptyParts);
-        baseName = fileParts[0];
+        baseName = fileParts.first();
         if(fileParts.count() > 2)  {
             for(uint i = 1;i < fileParts.count()-2; ++i){
-                baseName += "." + fileParts[i];
+                baseName += "." + fileParts.at(i);
             }
         }
         if(fileParts.count() < 3)
             electrodeGroupID.clear();
         else
-            electrodeGroupID = fileParts[fileParts.count()-1];
+            electrodeGroupID = fileParts.at(fileParts.count()-1);
 
         QString xmlParFileUrl = docUrlFileInfo.absoluteFilePath() + QDir::separator()+ baseName +".xml";
         xmlParameterFile = xmlParFileUrl;
@@ -573,11 +571,13 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
     //NB : for the moment, the specific errors are not return to the user, only a generic message (document could not be saved).
     if(clusteringData->isTraceViewVariablesAvailable()){
         //Save the document information
+        qDebug()<<" xmlParameterFile"<<xmlParameterFile;
         QFileInfo parFileInfo = QFileInfo(xmlParameterFile);
 
         //Check that the file is writable
-        if(!parFileInfo.isWritable())
+        if(!parFileInfo.isWritable()) {
             return NOT_WRITABLE;
+        }
 
         QMap<int,ClusterUserInformation> clusterUserInformationMap = QMap<int,ClusterUserInformation>();
         clusteringData->getClusterUserInformation(electrodeGroupID.toInt(),clusterUserInformationMap);
@@ -597,7 +597,6 @@ int KlustersDoc::saveDocument(const QString& saveUrl, const char *format /*=0*/)
     }
 
     modified=false;
-
     return OK;
 }
 
