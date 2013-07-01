@@ -1656,9 +1656,11 @@ void KlustersApp::slotFileQuit()
     }
   }*/
 
+    if (!queryClose()) {
+        slotStatusMsg(tr("Ready."));
+        return;
+    }
     close();
-
-    slotStatusMsg(tr("Ready."));
 }
 
 void KlustersApp::slotUndo()
