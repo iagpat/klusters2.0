@@ -368,8 +368,10 @@ void CorrelationView::customEvent(QEvent *event){
 
         if(!goingToDie){
             //Each time a cluster is added to the view or modified, the size of the window is recalculated.
-            if(!isZoomed) updateWindow();
-            else drawContentsMode = REDRAW;
+            if(!isZoomed)
+                updateWindow();
+            else
+                drawContentsMode = REDRAW;
 
             dataReady = true;
 
@@ -381,7 +383,8 @@ void CorrelationView::customEvent(QEvent *event){
     }
 }
 
-void CorrelationView::updateWindow(){
+void CorrelationView::updateWindow()
+{
     int nbOfClusters = view.clusters().size();
 
     abscissaMax = 2 * widthBorder + (nbBins * binWidth * nbOfClusters) + (nbOfClusters - 1) * Xspace;
@@ -731,7 +734,8 @@ void CorrelationView::mouseReleaseEvent(QMouseEvent* e){
         bool correlogramsNotAvailable = false;
         for(pairIterator = pairs.begin(); pairIterator != pairs.end(); ++pairIterator){
             Data::CorrelogramIterator iterator = clusteringData.correlogramIterator(*pairIterator,scaleMode,binSize,timeWindow);
-            if(!iterator.isDataAvailable()) correlogramsNotAvailable = true;
+            if(!iterator.isDataAvailable())
+                correlogramsNotAvailable = true;
         }
         if(correlogramsNotAvailable){
             setCursor(Qt::WaitCursor);
@@ -777,8 +781,10 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
     //Write the current coordinates in the statusbar.
     QRect r((QRect)window);
     QPoint current;
-    if(r.left() != 0) current = viewportToWorld(event->x(),event->y());
-    else current = viewportToWorld(event->x() - XMARGIN,event->y());
+    if(r.left() != 0)
+        current = viewportToWorld(event->x(),event->y());
+    else
+        current = viewportToWorld(event->x() - XMARGIN,event->y());
 
     //Compute the time
     int x = (current.x() - static_cast<int>(widthBorder));
