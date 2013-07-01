@@ -225,7 +225,7 @@ void KlustersApp::createMenus()
     mQuitAction = fileMenu->addAction(tr("Quit"));
     mQuitAction->setShortcut(QKeySequence::Quit);
     mQuitAction->setIcon(QPixmap(":/shared-icons/window-close"));
-    connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(mQuitAction, SIGNAL(triggered()), this, SLOT(slotFileQuit()));
 
     //Edit Menu
     QMenu *editMenu = menuBar()->addMenu(tr("&Edit"));
