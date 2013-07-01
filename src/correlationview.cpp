@@ -119,7 +119,10 @@ CorrelationView::~CorrelationView(){
     // it may endup in a crash of the application.
     for(int i = 0; i<threadsToBeKill.count();++i ) {
         CorrelationThread* correlationThread = threadsToBeKill.at(i);
-        while(!correlationThread->wait()){};
+        while(!correlationThread->wait())
+        {
+            ;
+        }
     }
     qDeleteAll(threadsToBeKill);
     threadsToBeKill.clear();
