@@ -21,7 +21,7 @@
 </affiliation>
 </author>
 <author>
-<firstname>MichaÃ«l</firstname>
+<firstname>Michaël</firstname>
 <surname>Zugaro</surname>
 <affiliation>
 <address><email>michael.zugaro@college-de-france.fr</email></address>
@@ -32,7 +32,7 @@
 <copyright>
 <year>2004-2007</year>
 <holder>Lynn Hazan</holder>
-<holder>MichaÃ«l B. Zugaro</holder>
+<holder>Michaël B. Zugaro</holder>
 </copyright>
 <legalnotice>&FDLNotice;</legalnotice>
 
@@ -53,7 +53,7 @@ sort action potentials recorded from multiple neurons on groups of electrodes (e
 tetrodes or multisite silicon probes).
 </para>
 <para>
-Klusters was developped by Lynn Hazan in <ulink url="http://osiris.rutgers.edu">G. BuzsÃ¡ki's lab</ulink> (CMBN, Rutgers Newark, USA). If you use Klusters for your analyses, please be kind enough to cite the following article in your publications:
+Klusters was developped by Lynn Hazan in <ulink url="http://osiris.rutgers.edu">G. Buzsáki's lab</ulink> (CMBN, Rutgers Newark, USA). If you use Klusters for your analyses, please be kind enough to cite the following article in your publications:
 </para>
 <para>
 <citetitle>
@@ -1272,7 +1272,7 @@ Most tags are self-explanatory, but some tags may need clarification:
 <itemizedlist>
 <listitem>
 <para>
-voltageRange: the total voltage range, e.g. if the system is set to Â±5V, the range is 10V.
+voltageRange: the total voltage range, e.g. if the system is set to ±5V, the range is 10V.
 </para>
 </listitem>
 <listitem>
@@ -2074,7 +2074,7 @@ Program copyright 2003-2007 Lynn Hazan <email>lynn.hazan@myrealbox.com</email>
 <para>
 Contributors:
 <itemizedlist>
-<listitem><para>MichaÃ«l B. Zugaro <email>michael.zugaro@college-de-france.fr</email></para>
+<listitem><para>Michaël B. Zugaro <email>michael.zugaro@college-de-france.fr</email></para>
 </listitem>
 <listitem><para>Kenneth D. Harris <email>kdharris@andromeda.rutgers.edu</email></para>
 </listitem>
@@ -2082,7 +2082,7 @@ Contributors:
 </para>
 
 <para>
-Documentation copyright 2004 - 2007 MichaÃ«l B. Zugaro <email>michael.zugaro@college-de-france.fr</email>
+Documentation copyright 2004 - 2007 Michaël B. Zugaro <email>michael.zugaro@college-de-france.fr</email>
 </para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
