@@ -101,7 +101,7 @@ void BaseFrame::mousePressEvent(QMouseEvent* e){
             //Assign firstClick
             firstClick = e->pos();
             if (!mRubberBand)
-                mRubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+                mRubberBand = new KlusterRubberBand(QRubberBand::Rectangle, this);
             QRect r((QRect)window);
             //Construct the rubber starting on the selected point (width = 1 and not 0 because bottomRight = left+width-1, same trick for height ;0))
             //or using only the abscissa and the ordinate if the top of the window if the rubber band has to

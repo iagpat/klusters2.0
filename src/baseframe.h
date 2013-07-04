@@ -18,6 +18,7 @@
 #ifndef BASEFRAME_H
 #define BASEFRAME_H
 
+#include "klusterrubberband.h"
 // include files for QT
 #include <qwidget.h>
 #include <qframe.h>
@@ -25,7 +26,6 @@
 
 #include <QResizeEvent>
 #include <QMouseEvent>
-#include <QRubberBand>
 
 //include files for the application
 #include "zoomwindow.h"
@@ -296,7 +296,7 @@ protected:
 
     /**Color use to display the legends.*/
     QColor colorLegend;
-    QRubberBand *mRubberBand;
+    KlusterRubberBand *mRubberBand;
 };
 
 #endif

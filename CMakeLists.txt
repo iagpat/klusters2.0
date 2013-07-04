@@ -49,7 +49,7 @@ endif()
 add_definitions(${QT_DEFINITIONS} )
 
 include(MacroEnsureVersion)
-find_package(LibKlustersShared 1.0.7 REQUIRED)
+find_package(LibKlustersShared 1.0.8 REQUIRED)
 include(CheckCXXCompilerFlag)
 
 
