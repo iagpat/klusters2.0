@@ -208,8 +208,7 @@ void ClusterView::eraseTheLastDrawnLine()
             //Resize selectionPolygon to remove the point from selectionPolygon
             selectionPolygon.resize(0);
             nbSelectionPoints = 0;
-        }
-        else{
+        } else {
             //Resize selectionPolygon to remove the last point from selectionPolygon
             selectionPolygon.resize(selectionPolygon.size()-1);
             nbSelectionPoints = selectionPolygon.size();
@@ -332,12 +331,11 @@ void ClusterView::mousePressEvent(QMouseEvent* e){
     if(mode == DELETE_NOISE || mode == DELETE_ARTEFACT || mode == NEW_CLUSTER || mode == NEW_CLUSTERS){
         //Erase the last line drawn
         if(e->button() == Qt::RightButton){
-            if(!selectionPolygon.isEmpty())
+            if(selectionPolygon.isEmpty())
                 return;
 
             //Erase the last drawn line by drawing into the buffer
             eraseTheLastDrawnLine();
-
             drawContentsMode = REFRESH;
             update();
         }
