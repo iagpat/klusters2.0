@@ -101,12 +101,16 @@ KlustersApp::KlustersApp()
     initView();
 
     mMainToolBar = new QToolBar(tr("Main Actions"));
+    mMainToolBar->setObjectName("Main Actions");
 
     mActionBar = new QToolBar(tr("Actions"));
+    mActionBar->setObjectName("Actions");
 
     mToolBar = new QToolBar(tr("Tools"));
+    mToolBar->setObjectName("Tools");
 
     mClusterBar = new QToolBar(tr("Clusters Actions"));
+    mClusterBar->setObjectName("Clusters Actions");
 
     //Create a KlustersDoc which will hold the document manipulated by the application.
     doc = new KlustersDoc(this,*clusterPalette,configuration().isCrashRecovery(),configuration().crashRecoveryInterval());
@@ -140,7 +144,7 @@ KlustersApp::KlustersApp()
 
     //Disable some actions at startup (see the klustersui.rc file)
     slotStateChanged("initState");
-qDebug()<<"KlustersApp::KlustersApp()  "<<this;
+    readSettings();
 }
 
 KlustersApp::~KlustersApp()
@@ -611,6 +615,7 @@ void KlustersApp::initSelectionBoxes(){
 
 
     paramBar = addToolBar(tr("Parameters"));
+    paramBar->setObjectName("Parameters");
 
     //Create and initialize the spin boxes for the dimensions
     dimensionX = new QSpinBox(paramBar);
@@ -1663,6 +1668,28 @@ void KlustersApp::slotFileQuit()
         return;
     }
     close();
+}
+
+void KlustersApp::readSettings()
+{
+    QSettings settings;
+    settings.beginGroup("geometry");
+    restoreGeometry(settings.value("geometry").toByteArray());
+    restoreState(settings.value("windowState").toByteArray());
+    settings.endGroup();
+}
+
+void KlustersApp::closeEvent(QCloseEvent *event)
+{
+    qDebug()<<" void KlustersApp::closeEvent(QCloseEvent *event)";
+    QSettings settings;
+    settings.beginGroup("geometry");
+    qDebug()<<" settings"<<" settings"<<settings.fileName();
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
+    settings.endGroup();
+    settings.sync();
+    QMainWindow::closeEvent(event);
 }
 
 void KlustersApp::slotUndo()

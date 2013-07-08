@@ -140,6 +140,7 @@ protected:
     */
     bool eventFilter(QObject* object,QEvent* event);
 
+    void closeEvent(QCloseEvent *event);
 
 public Q_SLOTS:
     /** queryClose is called by KDocMainWindow call just before being closed.
@@ -433,6 +434,7 @@ private Q_SLOTS:
     void slotSaveRecentFiles();
 
 private:
+    void readSettings();
     void initView();
     void createMenus();
 
