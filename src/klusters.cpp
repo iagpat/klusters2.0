@@ -1681,10 +1681,8 @@ void KlustersApp::readSettings()
 
 void KlustersApp::closeEvent(QCloseEvent *event)
 {
-    qDebug()<<" void KlustersApp::closeEvent(QCloseEvent *event)";
     QSettings settings;
     settings.beginGroup("geometry");
-    qDebug()<<" settings"<<" settings"<<settings.fileName();
     settings.setValue("geometry", saveGeometry());
     settings.setValue("windowState", saveState());
     settings.endGroup();
