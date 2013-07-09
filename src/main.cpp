@@ -21,7 +21,7 @@
 #include <qstring.h>
 #include <QApplication>
 #include <QAction>
-
+#include <QDebug>
 //Application include files
 #include "klusters.h"
 
@@ -35,17 +35,29 @@ int main(int argc, char* argv[])
     QApplication::setOrganizationName("sourceforge");
     QApplication::setOrganizationDomain("sourceforge.net");
     QApplication::setApplicationName("klusters");
-
-    QStringList args;
-    for (int i = 1; i < argc; ++i) {
-        args.push_back(QString::fromLocal8Bit(argv[i]));
+   
+    QApplication app(argc, argv); 
+    QStringList args = QApplication::arguments();
+    QStringList argsList;
+    for (int i = 1, n = args.size(); i < n; ++i) {
+        const QString arg = args.at(i);
+        if (arg == "-h" || arg == "--help" || arg == "-help") {
+            qWarning() << "Usage: " << qPrintable(args.at(0))
+                       << " [file]"
+                       << "\n\n"
+                       << "Arguments:\n"
+                       << "  -h, --help              print this help\n";
+            return 1;
+        }
+        qDebug()<<" QString::fromLocal8Bit(argv[i]) :"<<QString::fromLocal8Bit(argv[i]);
+        argsList.push_back(QString::fromLocal8Bit(argv[i]));
     }
-    QApplication app(argc, argv);
+
 
     KlustersApp* Klusters = new KlustersApp();
     Klusters->show();
-    if(args.count()){
-        const QString file = args.at(0);
+    if(argsList.count()){
+        const QString file = argsList.at(0);
         if(file.left(1) != QLatin1String("/")){
             QString url;
             url = QDir::currentPath()+ QDir::separator() + file;
