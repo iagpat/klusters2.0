@@ -146,8 +146,10 @@ void CorrelationView::singleColorUpdate(int clusterId,bool active){
         for(iterator = shownClusters.begin(); iterator != shownClusters.end(); ++iterator){
             //Create pairs as (*iterator,clusterId) where *iterator <= clusterId
             //and (clusterId,*iterator) where *iterator > clusterId
-            if(*iterator <= clusterId) pairUpdateList.append(Pair(*iterator,clusterId));
-            else pairUpdateList.append(Pair(clusterId,*iterator));
+            if(*iterator <= clusterId)
+                pairUpdateList.append(Pair(*iterator,clusterId));
+            else
+                pairUpdateList.append(Pair(clusterId,*iterator));
         }
 
         if(drawContentsMode == REFRESH)
@@ -400,7 +402,6 @@ void CorrelationView::updateWindow()
 
 void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
 
-    //qDebug()<<" void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){ "<<pairList.count();
     if(pairList.isEmpty())
         return;
 
@@ -483,10 +484,10 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
             QString firingRateString = QString::fromLatin1("%1").arg(firingRate);
             QStringList parts = firingRateString.split(".", QString::SkipEmptyParts);
 
-            if(parts.count() == 1)
+            if(parts.count() == 1) {
                 firingRateString += ".00";
-            else{
-                const QString precision = parts[1];
+            } else {
+                const QString precision = parts.at(1);
                 if(precision.length() == 1)
                     firingRateString += "0";
             }
@@ -524,9 +525,11 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
             //Need to look at it
             //The point is drawn in the QT coordinate system where the Y axis in oriented downwards
             //The value receive from the iterator is already inverted.
-            float value = iterator.next();
-            int y = -Y + static_cast<int>(value * Yfactor);
-            painter.drawRect(x + X,y,binWidth + 1,- static_cast<int>(value * Yfactor)  + 1);
+            const float value = iterator.next();
+            const int y = -Y + static_cast<int>(value * Yfactor);
+            const QRect rectToDraw(x + X,y,binWidth + 1,- static_cast<int>(value * Yfactor)  + 1);
+            if(rectToDraw.isValid())
+                painter.drawRect(rectToDraw);
             x += binWidth;
         }
         //Draw a bottom line.
