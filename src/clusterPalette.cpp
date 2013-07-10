@@ -520,7 +520,8 @@ void ClusterPalette::selectItems(const QList<int>& selectedClusters){
     //Loop on the clusters to be selected
     QListWidgetItem *item = 0;
     QList<int>::const_iterator clusterIterator;
-    for(clusterIterator = selectedClusters.constBegin(); clusterIterator != selectedClusters.constEnd(); ++clusterIterator){
+    QList<int>::const_iterator clusterIteratorEnd(selectedClusters.constEnd());
+    for(clusterIterator = selectedClusters.constBegin(); clusterIterator != clusterIteratorEnd; ++clusterIterator){
         QList<QListWidgetItem *> lst = iconView->findItems(QString::number(*clusterIterator),Qt::MatchStartsWith);
         if(!lst.isEmpty()) {
             item = lst.at(0);
@@ -535,6 +536,7 @@ void ClusterPalette::selectItems(const QList<int>& selectedClusters){
     isInSelectItems = false;
 
     isUpToDate = true;
+    slotClickRedraw();
 }
 
 void ClusterPalette::reset(){

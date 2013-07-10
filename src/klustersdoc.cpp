@@ -858,7 +858,8 @@ void KlustersDoc::groupClusters(QList<int> clustersToGroup,KlustersView& activeV
 
     //Remove the clusters which were grouped
     QList<int>::iterator clustersToRemove;
-    for (clustersToRemove = clustersToGroup.begin(); clustersToRemove != clustersToGroup.end(); ++clustersToRemove ){
+    QList<int>::iterator clustersToRemoveEnd(clustersToGroup.end());
+    for (clustersToRemove = clustersToGroup.begin(); clustersToRemove != clustersToRemoveEnd; ++clustersToRemove ){
         clusterColorList->remove(*clustersToRemove);
     }
 
@@ -882,7 +883,8 @@ void KlustersDoc::groupClusters(QList<int> clustersToGroup,KlustersView& activeV
     emit clustersGrouped(clustersToGroup,newClusterIdint);
 
     //Reset the color status in clusterColors if need it
-    if(clusterColorList->isColorChanged()) clusterColorList->resetAllColorStatus();
+    if(clusterColorList->isColorChanged())
+        clusterColorList->resetAllColorStatus();
 
     //Ask the active view to take the modification into account immediately
     activeView.showAllWidgets();
