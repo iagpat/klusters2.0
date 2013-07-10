@@ -58,7 +58,9 @@ int main(int argc, char* argv[])
     Klusters->show();
     if(argsList.count()){
         const QString file = argsList.at(0);
-        if(file.left(1) != QLatin1String("/")){
+        if (file.startsWith(QLatin1String("-")) ) {
+            qWarning() << "it's not a filename :"<<file;
+        } else if(file.left(1) != QLatin1String("/")) {
             QString url;
             url = QDir::currentPath()+ QDir::separator() + file;
             Klusters->openDocumentFile(url);
