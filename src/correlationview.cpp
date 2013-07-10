@@ -425,8 +425,8 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
     int verticalNb = 0;
     //Clusters corresponding to the previous pair, they are initialized with the first pair.
 
-    int previousCluster1 = pairList[0].getX();
-    int previousCluster2 = pairList[0].getY();
+    int previousCluster1 = pairList.at(0).getX();
+    int previousCluster2 = pairList.at(0).getY();
     QColor clusterColor;
 
     //If it is an update that means that there some correlograms to redraw.
@@ -459,8 +459,7 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
             int index2 = shownClusters.indexOf(cluster2);
             X = widthBorder + index1 * shift;
             Y = heightBorder + index2 * (YsizeForMaxAmp + Yspace);
-        }
-        else{
+        } else {
             //The correlogram will be place on the current vertical.
             if(cluster1 == previousCluster1 && cluster2 != previousCluster2){
                 Y += (YsizeForMaxAmp + Yspace);
@@ -480,9 +479,12 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
             //Get the firing rate and ensure that there always 2 digits after the dot.
             float firingRate = iterator.getFiringRate();
             firingRate = floor((firingRate * 100) + 0.5) / 100;
+
             QString firingRateString = QString::fromLatin1("%1").arg(firingRate);
             QStringList parts = firingRateString.split(".", QString::SkipEmptyParts);
-            if(parts.count() == 1) firingRateString += ".00";
+
+            if(parts.count() == 1)
+                firingRateString += ".00";
             else{
                 const QString precision = parts[1];
                 if(precision.length() == 1)
@@ -495,11 +497,12 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
             painter.setBrush(QBrush(clusterColor));
             //Do not draw the outlines of the rectangles if there is more than one pair.
             painter.setPen(Qt::NoPen);
-        }
-        else{
+        } else {
             //Use white to draw if the background is dark (the legend is then white) and grey if it is white.
-            if(colorLegend == Qt::white) clusterColor = Qt::white;
-            else clusterColor = Qt::gray;
+            if(colorLegend == Qt::white)
+                clusterColor = Qt::white;
+            else
+                clusterColor = Qt::gray;
             painter.setBrush(QBrush(clusterColor));
             //Do not draw the outlines of the rectangles if there is more than one pair.
             painter.setPen(Qt::NoPen);
@@ -509,16 +512,16 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
 
         //Set the clip region to the rectangle defined by a correlogram unit.
         //If the view is been printed, a clip region has been created, take it into account
-        if(printState){
+        if (printState) {
             QRegion region = QRegion (X,-(Y+YsizeForMaxAmp),binWidth * nbBins + 1,YsizeForMaxAmp + 1);
             QRegion intersection = printRegion.intersected(region);
             painter.setClipRegion(intersection);
-        }
-        else  {
+        } else  {
             painter.setClipRect(X,-(Y+YsizeForMaxAmp),binWidth * nbBins + 1,YsizeForMaxAmp + 1);
         }
         //Iterate over the values of the current correlogram and draw them.
         for(;iterator.hasNext();){
+            //Need to look at it
             //The point is drawn in the QT coordinate system where the Y axis in oriented downwards
             //The value receive from the iterator is already inverted.
             float value = iterator.next();
@@ -530,7 +533,9 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
         if(printState)  {
             painter.setClipRegion(printRegion);
         }
-        else painter.setClipping(false);
+        else
+            painter.setClipping(false);
+
         painter.setPen(clusterColor);
         painter.drawLine(X - (Xspace/5),-Y,X + (binWidth * nbBins) + (Xspace/5),-Y);
         //Draw time marks
