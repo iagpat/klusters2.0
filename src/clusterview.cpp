@@ -196,9 +196,6 @@ void ClusterView::paintEvent ( QPaintEvent*){
     }
 }
 
-
-
-
 void ClusterView::eraseTheLastDrawnLine()
 {
     //The user did not move since the last left click (no mouseMoveEvent)
