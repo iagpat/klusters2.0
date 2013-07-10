@@ -439,7 +439,8 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
         specificPosition = true;
         QList<int>::const_iterator iterator;
         QList<int> const clusters = view.clusters();
-        for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
+        QList<int>::const_iterator end(clusters.end());
+        for(iterator = clusters.begin(); iterator != end; ++iterator)
             shownClusters.append(*iterator);
         qSort(shownClusters);
     }

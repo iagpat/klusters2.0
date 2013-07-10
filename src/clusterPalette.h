@@ -43,9 +43,12 @@ class ClusterPaletteWidget : public QListWidget
     Q_OBJECT
 public:
     explicit ClusterPaletteWidget(QWidget *parent);
+
 protected:
+    void keyPressEvent(QKeyEvent *event);
     void mousePressEvent ( QMouseEvent * event );
     void mouseMoveEvent ( QMouseEvent * event );
+
 Q_SIGNALS:
     void changeColor(QListWidgetItem* item);
     void onItem(QListWidgetItem* item);

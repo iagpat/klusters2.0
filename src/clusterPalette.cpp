@@ -38,6 +38,7 @@
 #include <QFrame>
 #include <QList>
 #include <QStatusBar>
+#include <QDebug>
 
 
 ClusterPaletteWidget::ClusterPaletteWidget(QWidget *parent)
@@ -64,6 +65,30 @@ void ClusterPaletteWidget::mouseMoveEvent ( QMouseEvent * event )
         Q_EMIT onItem(item);
     QListWidget::mouseMoveEvent(event);
 }
+
+void ClusterPaletteWidget::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Right) {
+        QListWidgetItem *c = currentItem();
+        if (c) {
+            const int i = row(c);
+            if (i < count()-1) {
+                setCurrentRow(i+1);
+            }
+        }
+    } else if (event->key() == Qt::Key_Left) {
+        QListWidgetItem *c = currentItem();
+        if (c) {
+            const int i = row(c);
+            if (i > 0) {
+                setCurrentRow(i-1);
+            }
+        }
+    } else {
+        QListWidget::keyPressEvent(event);
+    }
+}
+
 
 
 ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QStatusBar * statusBar, const char* name )
