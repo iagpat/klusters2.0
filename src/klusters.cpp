@@ -619,14 +619,12 @@ void KlustersApp::initSelectionBoxes(){
 
     //Create and initialize the spin boxes for the dimensions
     dimensionX = new QSpinBox(paramBar);
-    dimensionX->setFocusPolicy(Qt::ClickFocus);
     dimensionX->setObjectName("dimensionX");
     dimensionX->setMinimum(1);
     dimensionX->setMaximum(1);
     dimensionX->setSingleStep(1);
 
     dimensionY = new QSpinBox(paramBar);
-    dimensionY->setFocusPolicy(Qt::ClickFocus);
     dimensionY->setObjectName("dimensionY");
     dimensionY->setMinimum(1);
     dimensionY->setMaximum(1);
@@ -647,7 +645,6 @@ void KlustersApp::initSelectionBoxes(){
 
     //Create and initialize the spin boxe and lineEdit for the waveforms time frame mode.
     start = new QSpinBox(paramBar);
-    start->setFocusPolicy(Qt::ClickFocus);
     start->setObjectName("start");
     start->setMinimum(1);
     start->setMaximum(1);
@@ -680,7 +677,6 @@ void KlustersApp::initSelectionBoxes(){
 
     //Create and initialize the spin boxe for the waveforms sample mode.
     spikesTodisplay = new QSpinBox(paramBar);
-    spikesTodisplay->setFocusPolicy(Qt::ClickFocus);
     spikesTodisplay->setMinimum(1);
     spikesTodisplay->setMaximum(1);
     spikesTodisplay->setSingleStep(spikesTodisplayStep);
