@@ -1677,6 +1677,11 @@ void KlustersApp::readSettings()
 
 void KlustersApp::closeEvent(QCloseEvent *event)
 {
+    if (!queryClose()) {
+        event->ignore();
+        slotStatusMsg(tr("Ready."));
+        return;
+    }
     QSettings settings;
     settings.beginGroup("geometry");
     settings.setValue("geometry", saveGeometry());
