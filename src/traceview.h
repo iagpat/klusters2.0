@@ -314,14 +314,14 @@ public:
   * @param name name use to identified the cluster provider containing the clusters to show.
   * @param clustersToShow new list of clusters to be shown.
   */
-    void showClusters(QString name,QList<int>& clustersToShow);
+    void showClusters(const QString &name, QList<int>& clustersToShow);
 
     /**Changes the color of a cluster.
   * @param name name use to identified the cluster provider containing the updated cluster.
   * @param clusterId id of the cluster to redraw.
   * @param active true if the view is the active one, false otherwise.
   */
-    void clusterColorUpdate(QString name,int clusterId,bool active);
+    void clusterColorUpdate(const QString &name, int clusterId, bool active);
 
 
     /**Adds a new provider of event data.
@@ -406,7 +406,7 @@ public:
   * @param providerName name use to identified the event provider containing the modified event.
   * @param clustersToNotBrowse new list of clusters to not use while browsing.
   */
-    void updateNoneBrowsingClusterList(QString providerName,const QList<int>& clustersToNotBrowse);
+    void updateNoneBrowsingClusterList(const QString &providerName, const QList<int>& clustersToNotBrowse);
 
     /** Updates the description of a spike waveform.
   * @param nbSamplesBefore number of samples contained in the waveform of a spike before the sample of the peak.
@@ -1064,7 +1064,7 @@ private:
  * @param channels list of channels to draw.
  * @param highlight true if the channels have to be highlighted, false otherwise.
  */
-    void drawTraces(QList<int> channels,bool highlight);
+    void drawTraces(const QList<int> &channels, bool highlight);
 
     /**
  * Draws the trace for the channel @p channelId.
