@@ -1,0 +1,496 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>The Klusters Handbook</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="NEXT"
+TITLE="Introduction"
+HREF="c41.html"><META
+NAME="KEYWORD"
+CONTENT="KDE"><META
+NAME="KEYWORD"
+CONTENT="cluster cutting"><META
+NAME="KEYWORD"
+CONTENT="spike sorting"><META
+NAME="KEYWORD"
+CONTENT="electrophysiology"><META
+NAME="KEYWORD"
+CONTENT="tetrode"><META
+NAME="KEYWORD"
+CONTENT="silicon probe"><META
+NAME="KEYWORD"
+CONTENT="hippocampus"></HEAD
+><BODY
+CLASS="book"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="title"
+><A
+NAME="AEN2"
+>The Klusters Handbook</A
+></H1
+><H3
+CLASS="author"
+><A
+NAME="AEN5"
+></A
+>Lynn Hazan</H3
+><DIV
+CLASS="affiliation"
+><DIV
+CLASS="address"
+><P
+CLASS="address"
+><CODE
+CLASS="email"
+>&#60;<A
+HREF="mailto:lynn.hazan@myrealbox.com"
+>lynn.hazan@myrealbox.com</A
+>&#62;</CODE
+></P
+></DIV
+></DIV
+><H3
+CLASS="author"
+><A
+NAME="AEN11"
+></A
+>Michaël Zugaro</H3
+><DIV
+CLASS="affiliation"
+><DIV
+CLASS="address"
+><P
+CLASS="address"
+><CODE
+CLASS="email"
+>&#60;<A
+HREF="mailto:michael.zugaro@college-de-france.fr"
+>michael.zugaro@college-de-france.fr</A
+>&#62;</CODE
+></P
+></DIV
+></DIV
+><P
+CLASS="copyright"
+>Copyright &copy; 2004-2007 Lynn Hazan, Michaël B. Zugaro</P
+><DIV
+><DIV
+CLASS="abstract"
+><P
+></P
+><A
+NAME="AEN26"
+></A
+><P
+>&#13;<SPAN
+CLASS="application"
+>Klusters</SPAN
+> is a powerful and easy-to-use application designed to help neurophysiologists
+sort action potentials recorded from multiple neurons on groups of electrodes (e.g.,
+tetrodes or multisite silicon probes).
+</P
+><P
+>&#13;Klusters was developped by Lynn Hazan in <A
+HREF="http://osiris.rutgers.edu"
+TARGET="_top"
+>G. Buzsáki's lab</A
+> (CMBN, Rutgers Newark, USA). If you use Klusters for your analyses, please be kind enough to cite the following article in your publications:
+</P
+><P
+>&#13;<I
+CLASS="citetitle"
+>&#13;L. Hazan, M. Zugaro, G. Buzsáki (2006).
+Klusters, NeuroScope, NDManager: a Free Software Suite for Neurophysiological Data Processing and Visualization,
+J. Neurosci. Methods 155:207-216.
+</I
+> 
+</P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="legalnotice"
+><P
+></P
+><A
+NAME="AEN21"
+></A
+><P
+>Permission is granted to copy, distribute and/or modify this
+document under the terms of the GNU Free Documentation License,
+Version 1.1 or any later version published by the Free Software
+Foundation; with no Invariant Sections, with no Front-Cover Texts, and
+with no Back-Cover Texts.  A copy of the license is included in <A
+HREF="c1697.html#gnu-fdl"
+>the section entitled "GNU Free Documentation License"</A
+>.</P
+><P
+></P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="c41.html"
+>Introduction</A
+></DT
+><DT
+>2. <A
+HREF="c50.html"
+>Using Klusters</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="c50.html#starting"
+>Starting a New Session</A
+></DT
+><DT
+>2.2. <A
+HREF="x108.html"
+>Views and Displays</A
+></DT
+><DT
+>2.3. <A
+HREF="x178.html"
+>Cluster View, Waveform View, Correlation View</A
+></DT
+><DD
+><DL
+><DT
+>2.3.1. <A
+HREF="x178.html#AEN195"
+>The Cluster View</A
+></DT
+><DT
+>2.3.2. <A
+HREF="x178.html#AEN219"
+>The Waveform View</A
+></DT
+><DT
+>2.3.3. <A
+HREF="x178.html#AEN298"
+>The Correlation View</A
+></DT
+></DL
+></DD
+><DT
+>2.4. <A
+HREF="x368.html"
+>Trace View</A
+></DT
+><DD
+><DL
+><DT
+>2.4.1. <A
+HREF="x368.html#AEN388"
+>Browsing Wide-Band Data</A
+></DT
+><DT
+>2.4.2. <A
+HREF="x368.html#AEN424"
+>Browsing Unit Activity</A
+></DT
+><DT
+>2.4.3. <A
+HREF="x368.html#AEN450"
+>Adjusting Channel Amplitudes</A
+></DT
+><DT
+>2.4.4. <A
+HREF="x368.html#AEN459"
+>Labels</A
+></DT
+><DT
+>2.4.5. <A
+HREF="x368.html#AEN466"
+>Setting the Start Time from a Cluster View</A
+></DT
+></DL
+></DD
+><DT
+>2.5. <A
+HREF="x482.html"
+>Discarding Noise and Artefacts</A
+></DT
+><DT
+>2.6. <A
+HREF="x539.html"
+>Grouping and Reshaping Clusters</A
+></DT
+><DT
+>2.7. <A
+HREF="x638.html"
+>Grouping Assistant</A
+></DT
+><DT
+>2.8. <A
+HREF="x705.html"
+>Automatic Reclustering</A
+></DT
+><DT
+>2.9. <A
+HREF="x730.html"
+>Cluster Information</A
+></DT
+><DT
+>2.10. <A
+HREF="x769.html"
+>Saving the Cluster File</A
+></DT
+><DT
+>2.11. <A
+HREF="x782.html"
+>Using <SPAN
+CLASS="application"
+>Klusters</SPAN
+> over a Slow Network Connection</A
+></DT
+><DT
+>2.12. <A
+HREF="x808.html"
+>Printing and Exporting</A
+></DT
+><DD
+><DL
+><DT
+>2.12.1. <A
+HREF="x808.html#AEN810"
+>Printing</A
+></DT
+><DT
+>2.12.2. <A
+HREF="x808.html#AEN826"
+>Exporting</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>3. <A
+HREF="c835.html"
+>Settings</A
+></DT
+><DT
+>4. <A
+HREF="c916.html"
+>File Formats</A
+></DT
+><DD
+><DL
+><DT
+>4.1. <A
+HREF="c916.html#data_files"
+>Data Files</A
+></DT
+><DD
+><DL
+><DT
+>4.1.1. <A
+HREF="c916.html#cluster-file"
+>The Cluster File</A
+></DT
+><DT
+>4.1.2. <A
+HREF="c916.html#feature-file"
+>The Feature File</A
+></DT
+><DT
+>4.1.3. <A
+HREF="c916.html#spike-file"
+>The Spike File</A
+></DT
+></DL
+></DD
+><DT
+>4.2. <A
+HREF="x972.html"
+>Parameter Files</A
+></DT
+><DD
+><DL
+><DT
+>4.2.1. <A
+HREF="x972.html#parameter-file"
+>The Parameter File</A
+></DT
+><DT
+>4.2.2. <A
+HREF="x972.html#obsolete-parameter-files"
+>Obsolete Parameter Files</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>5. <A
+HREF="c1059.html"
+>Menu Entries</A
+></DT
+><DD
+><DL
+><DT
+>5.1. <A
+HREF="c1059.html#menu-file"
+>The File Menu</A
+></DT
+><DT
+>5.2. <A
+HREF="x1154.html"
+>The Edit Menu</A
+></DT
+><DT
+>5.3. <A
+HREF="x1204.html"
+>The Actions Menu</A
+></DT
+><DT
+>5.4. <A
+HREF="x1280.html"
+>The Tools Menu</A
+></DT
+><DT
+>5.5. <A
+HREF="x1342.html"
+>The Waveforms Menu</A
+></DT
+><DT
+>5.6. <A
+HREF="x1391.html"
+>The Correlations Menu</A
+></DT
+><DT
+>5.7. <A
+HREF="x1459.html"
+>The Traces Menu</A
+></DT
+><DT
+>5.8. <A
+HREF="x1498.html"
+>The Displays Menu</A
+></DT
+><DT
+>5.9. <A
+HREF="x1572.html"
+>The Settings Menu</A
+></DT
+><DT
+>5.10. <A
+HREF="x1654.html"
+>The Help Menu</A
+></DT
+></DL
+></DD
+><DT
+>6. <A
+HREF="c1697.html"
+>Credits and License</A
+></DT
+><DT
+>A. <A
+HREF="a1717.html"
+>Installation</A
+></DT
+><DD
+><DL
+><DT
+>A.1. <A
+HREF="a1717.html#getting-klusters"
+>How to obtain <SPAN
+CLASS="application"
+>Klusters</SPAN
+></A
+></DT
+><DT
+>A.2. <A
+HREF="x1725.html"
+>Requirements</A
+></DT
+><DT
+>A.3. <A
+HREF="x1739.html"
+>Compilation and Installation</A
+></DT
+></DL
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c41.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Introduction</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
