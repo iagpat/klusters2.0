@@ -1498,7 +1498,6 @@ void KlustersApp::slotFileSaveAs()
 
 void KlustersApp::slotDisplayClose()
 {
-
     DockArea* current = static_cast<DockArea*>(tabsParent->currentWidget());
 
     slotStatusMsg(tr("Closing display..."));
@@ -1511,8 +1510,8 @@ void KlustersApp::slotDisplayClose()
         displayCount --;
 
         //Remove the view from the document list if need it
-        if(qobject_cast<KlustersView*>(current->widget())){
-            KlustersView* view = dynamic_cast<KlustersView*>(current->widget());
+        if(qobject_cast<KlustersView*>(current)){
+            KlustersView* view = dynamic_cast<KlustersView*>(current);
             doc->removeView(view);
 
             //Update the Displays menu if the current display is a grouping assistant.
