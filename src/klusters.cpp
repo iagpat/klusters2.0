@@ -3094,9 +3094,9 @@ void KlustersApp::slotStateChanged(const QString& state)
         mGroupeClusters->setEnabled(true);
 
     } else if(state == QLatin1String("groupingAssistantDisplayExists")) {
-        mNewTraceDisplay->setEnabled(false);
+        newGroupingAssistantDisplay->setEnabled(false);
     } else if(state == QLatin1String("groupingAssistantDisplayNotExists")) {
-        mNewTraceDisplay->setEnabled(true);
+        newGroupingAssistantDisplay->setEnabled(true);
     } else if(state == QLatin1String("reclusterViewState")) {
         mZoomAction->setEnabled(false);
         mUpdateErrorMatrix->setEnabled(false);
