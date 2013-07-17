@@ -262,25 +262,26 @@ void ErrorMatrixView::drawClusterIds(QPainter& painter){
 }
 
 void ErrorMatrixView::drawMatrix(QPainter& painter){
+    int x = abscissaMin + widthBorder;
+    int y = ordinateMin + heightBorder;
+    int nbClusters = clusterList.size();
     if(!modifiedClusterList.isEmpty() || hasBeenRenumbered || isNotUpToDate){
         //Draw a red rectangle around the matrix to warn the user that
         //the matrix is not up to date anymore.
         QPen pen(Qt::red);
-        pen.setWidth(1);
+        pen.setWidth(2);
+        pen.setStyle(Qt::SolidLine);
         painter.setPen(pen);
-        const QRect rect(abscissaMin + widthBorder - 1,
-                         ordinateMin + heightBorder - 2,
-                         (clusterList.size() * cellWidth) + 4,
-                         (clusterList.size() * cellWidth)  + 5);
+        const QRect rect(x - 1,
+                         y - 3,
+                         (nbClusters * cellWidth) + 4,
+                         (nbClusters * cellWidth)  + 5);
         painter.drawRect(rect.normalized());
 
         painter.setPen(Qt::black);
     }
 
-    int x = abscissaMin + widthBorder;
-    int y = ordinateMin + heightBorder;
 
-    int nbClusters = clusterList.size();
     for(int clusterIndex = 1; clusterIndex <= nbClusters; ++clusterIndex){
         for(int clusterIndex2 = 1; clusterIndex2 <= nbClusters; ++clusterIndex2){
             if((clusterIndex == clusterIndex2) || ignoreClusterIndex.contains(clusterIndex) || ignoreClusterIndex.contains(clusterIndex2)){
