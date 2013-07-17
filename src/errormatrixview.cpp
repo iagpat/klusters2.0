@@ -272,6 +272,7 @@ void ErrorMatrixView::drawMatrix(QPainter& painter){
         pen.setWidth(2);
         pen.setStyle(Qt::SolidLine);
         painter.setPen(pen);
+        painter.setRenderHints(QPainter::Antialiasing);
         const QRect rect(x - 1,
                          y - 3,
                          (nbClusters * cellWidth) + 4,
@@ -281,19 +282,18 @@ void ErrorMatrixView::drawMatrix(QPainter& painter){
         painter.setPen(Qt::black);
     }
 
-
     for(int clusterIndex = 1; clusterIndex <= nbClusters; ++clusterIndex){
         for(int clusterIndex2 = 1; clusterIndex2 <= nbClusters; ++clusterIndex2){
             if((clusterIndex == clusterIndex2) || ignoreClusterIndex.contains(clusterIndex) || ignoreClusterIndex.contains(clusterIndex2)){
                 painter.setBrush(Qt::black);
-                painter.drawRect(x,y,cellWidth + 1,cellWidth + 1);
             } else {
                 double probability = (*probabilities)(clusterIndex,clusterIndex2);
                 int probColorIndex = static_cast<int>(probability * nbColors / cutoffProbability);
-                if(probColorIndex >= nbColors) probColorIndex = nbColors - 1;
+                if(probColorIndex >= nbColors)
+                    probColorIndex = nbColors - 1;
                 painter.setBrush(colorMap[probColorIndex]);
-                painter.drawRect(x,y,cellWidth + 1,cellWidth + 1);
             }
+            painter.drawRect(x,y,cellWidth + 1,cellWidth + 1);
             x += cellWidth;
         }
         x = abscissaMin + widthBorder;
