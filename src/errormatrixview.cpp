@@ -63,6 +63,7 @@ ErrorMatrixView::ErrorMatrixView(KlustersDoc& doc,KlustersView& view,const QColo
 }
 
 ErrorMatrixView::~ErrorMatrixView(){
+    qDebug()<<" ErrorMatrixView::~ErrorMatrixView(){******************************";
     //Ask the threads to stop as soon as possible.
     willBeKilled();
 
@@ -273,11 +274,11 @@ void ErrorMatrixView::drawMatrix(QPainter& painter){
         pen.setStyle(Qt::SolidLine);
         painter.setPen(pen);
         painter.setRenderHints(QPainter::Antialiasing);
-        const QRect rect(x - 1,
+        const QRect rect = QRect(x - 1,
                          y - 3,
                          (nbClusters * cellWidth) + 4,
-                         (nbClusters * cellWidth)  + 5);
-        painter.drawRect(rect.normalized());
+                         (nbClusters * cellWidth)  + 5).normalized();
+        painter.drawRect(rect);
 
         painter.setPen(Qt::black);
     }

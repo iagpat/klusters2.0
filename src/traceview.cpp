@@ -454,7 +454,7 @@ void TraceView::paintEvent ( QPaintEvent*){
 
         if(multiColumns){
             QRect contentsRec = contentsRect();
-            viewport = QRect(contentsRec.left() + xMargin,contentsRec.top(),contentsRec.width() - xMargin,contentsRec.height());
+            viewport = QRect(contentsRec.left() + xMargin,contentsRec.top(),contentsRec.width() /*- xMargin*/,contentsRec.height());
             if(viewport.width() == 0) update();
             else{
                 isInit = false;
@@ -465,7 +465,7 @@ void TraceView::paintEvent ( QPaintEvent*){
         }
         else{
             QRect contentsRec = contentsRect();
-            viewport = QRect(contentsRec.left() + xMargin,contentsRec.top(),contentsRec.width() - xMargin,contentsRec.height());
+            viewport = QRect(contentsRec.left() + xMargin,contentsRec.top(),contentsRec.width() /*- xMargin*/,contentsRec.height());
             if(viewport.width() == 0) update();
             else computeChannelDisplayGain();
         }
@@ -504,7 +504,7 @@ void TraceView::paintEvent ( QPaintEvent*){
         if(r.left() != 0)
             viewport = QRect(contentsRec.left(),contentsRec.top(),contentsRec.width(),contentsRec.height());
         else
-            viewport = QRect(contentsRec.left() + xMargin,contentsRec.top(),contentsRec.width() - xMargin,contentsRec.height());
+            viewport = QRect(contentsRec.left() + xMargin,contentsRec.top(),contentsRec.width() /*- xMargin*/,contentsRec.height());
 
         if(resized) updateWindow();
 
@@ -1612,7 +1612,7 @@ void TraceView::drawTraces(QPainter& painter){
                 QList<int> eventList = iterator.value();
                 QString providerName = iterator.key();
 
-                if(eventList.size() == 0 || eventsData[providerName] == 0) continue;
+                if(!eventList.isEmpty() || eventsData[providerName] == 0) continue;
                 ItemColors* colors = providerItemColors[providerName];
                 Array<dataType>& currentData = static_cast<EventData*>(eventsData[providerName])->getTimes();
                 Array<int>& currentIds = static_cast<EventData*>(eventsData[providerName])->getIds();
@@ -2191,7 +2191,7 @@ void TraceView::mouseMoveEvent(QMouseEvent* event){
     }
 
     //Paint the event selected while dragging
-    if((mode == SELECT_EVENT && selectedEvent.first != "") && (event->buttons() == Qt::LeftButton)){
+    if((mode == SELECT_EVENT && !selectedEvent.first.isEmpty()) && (event->buttons() == Qt::LeftButton)){
         QPainter painter;
         painter.begin(this);
         //set the window (part of the world I want to show)
