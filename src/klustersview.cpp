@@ -281,6 +281,7 @@ void KlustersView::createGroupingAssistantView(const QColor& backgroundColor,QSt
     setConnections(ERROR_MATRIX,errorMatrixView,errorMatrix);
 }
 
+
 void KlustersView::update(KlustersView* pSender){
     if(pSender != this)
         repaint();

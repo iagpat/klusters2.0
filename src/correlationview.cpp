@@ -825,7 +825,8 @@ void CorrelationView::mouseMoveEvent(QMouseEvent* event){
                 xCluster = qMin(qMax(0,xCluster),shownClusters.count()-1);
                 yCluster = qMin(qMax(0,yCluster),shownClusters.count()-1);
 
-                statusBar->showMessage(tr("Time (ms): %1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]));
+                if (xCluster<shownClusters.count() && yCluster <shownClusters.count() )
+                   statusBar->showMessage(tr("Time (ms): %1, Clusters (%2,%3)").arg(time).arg(shownClusters[xCluster]).arg(shownClusters[yCluster]));
             } else {
                 statusBar->showMessage(tr("Time (ms): %1").arg(time));
             }
