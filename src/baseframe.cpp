@@ -99,10 +99,11 @@ void BaseFrame::mousePressEvent(QMouseEvent* e){
         //Test if a selected rectangle exist, if so draw it and delete it.
         if(e->button() == Qt::LeftButton){
             //Assign firstClick
+
+            QRect r((QRect)window);
             firstClick = e->pos();
             if (!mRubberBand)
                 mRubberBand = new KlusterRubberBand(QRubberBand::Rectangle, this);
-            QRect r((QRect)window);
             //Construct the rubber starting on the selected point (width = 1 and not 0 because bottomRight = left+width-1, same trick for height ;0))
             //or using only the abscissa and the ordinate if the top of the window if the rubber band has to
             //drawn on whole the height of the window.
@@ -137,13 +138,19 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
             QPoint secondClick;
             QRect r((QRect)window);
             if(r.left() != 0)
-                secondClick = /*viewportToWorld*/QPoint(e->x(),e->y() - Yborder);
+                secondClick = QPoint(e->x(),e->y() - Yborder);
             else
-                secondClick = /*viewportToWorld*/QPoint(e->x() - Xborder,e->y() - Yborder);
+                secondClick = QPoint(e->x() - Xborder,e->y() - Yborder);
 
             //If the distance between the first and second selected points are > 5:
             //the user wanted to draw a rectangle otherwise he intended to select a single point
             if((abs(secondClick.x() - firstClick.x()) > 5) || (abs(secondClick.y() - firstClick.y()) > 5)){
+
+                if(r.left() != 0)
+                    secondClick = viewportToWorld(e->x(),e->y() - Yborder);
+                else
+                    secondClick = viewportToWorld(e->x() - Xborder,e->y() - Yborder);
+
                 //CAUTION this correction is intended to compensate for a selection in the left margin which is not part of the widget'window.
                 //If the widget contains a left margin and draws in the negative abscisses this correction will not work.
                 if(firstClick.x() < 0 && Xborder > 0)
