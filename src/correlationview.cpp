@@ -507,7 +507,10 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
                 clusterColor = Qt::gray;
             painter.setBrush(QBrush(clusterColor));
             //Do not draw the outlines of the rectangles if there is more than one pair.
-            painter.setPen(Qt::NoPen);
+
+            QPen pen(Qt::NoPen);
+            pen.setCosmetic(true);
+            painter.setPen(pen);
         }
 
         uint x = 0;
@@ -553,7 +556,9 @@ void CorrelationView::drawCorrelograms(QPainter& painter,QList<Pair>& pairList){
 
         //Draw the shoulder dash line if asked for.
         if(shoulderLine){
-            painter.setPen(QPen(QColor(60,60,60),0,Qt::DotLine));
+            QPen pen(QPen(QColor(60,60,60),0,Qt::DotLine));
+            pen.setCosmetic(true);
+            painter.setPen(pen);
             int y = -Y + static_cast<int>(iterator.getScaledShoulder() * Yfactor);
             painter.drawLine(X - (Xspace/10),y,X + (binWidth * nbBins) + (Xspace/10),y);
         }
