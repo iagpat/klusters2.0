@@ -168,6 +168,11 @@ void BaseFrame::mouseReleaseEvent(QMouseEvent* e){
                 else
                     factor = static_cast<float>(2);
 
+                if(r.left() != 0)
+                    secondClick = viewportToWorld(e->x(),e->y() - Yborder);
+                else
+                    secondClick = viewportToWorld(e->x() - Xborder,e->y() - Yborder);
+
                 //modify the window rectangle
                 isZoomed = window.zoom(factor, secondClick);
             }
