@@ -1209,7 +1209,7 @@ void KlustersApp::openDocumentFile(const QString& url)
         if(fileParts.count() < 3)
             electrodNb.clear();
         else
-            electrodNb = fileParts[fileParts.count()-1];;
+            electrodNb = fileParts[fileParts.count()-1];
 
         QString baseName = fileParts[0];
         for(uint i = 1;i < fileParts.count()-2; ++i)
@@ -1226,6 +1226,8 @@ void KlustersApp::openDocumentFile(const QString& url)
         else{
             mFileOpenRecent->removeRecentFile(url);
             filePath = doc->url();
+            qDebug()<<" filePath "<<filePath;
+            QMessageBox::information(this, QLatin1String("path :"), filePath);
 
 
             QStringList command;
