@@ -1226,9 +1226,6 @@ void KlustersApp::openDocumentFile(const QString& url)
         else{
             mFileOpenRecent->removeRecentFile(url);
             filePath = doc->url();
-            qDebug()<<" filePath "<<filePath;
-            QMessageBox::information(this, QLatin1String("path :"), filePath);
-
 
             QStringList command;
             command <<filePath;
