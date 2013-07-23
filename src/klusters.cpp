@@ -1225,7 +1225,8 @@ void KlustersApp::openDocumentFile(const QString& url)
         //If the document asked is not the already open. Open a new instance of the application with it.
         else{
             mFileOpenRecent->removeRecentFile(url);
-            filePath = doc->url();
+            filePath = url;
+
 
             QStringList command;
             command <<filePath;
