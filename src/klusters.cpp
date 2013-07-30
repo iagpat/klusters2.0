@@ -202,7 +202,6 @@ void KlustersApp::createMenus()
 
     mSaveAsAction = fileMenu->addAction(tr("&Save As..."));
     mSaveAsAction->setIcon(QPixmap(":/shared-icons/document-save-as"));
-    mSaveAsAction->setShortcut(QKeySequence::SaveAs);
     connect(mSaveAsAction, SIGNAL(triggered()), this, SLOT(slotFileSaveAs()));
 
     mRenumberAndSave = fileMenu->addAction(tr("Re&number and Save"));
