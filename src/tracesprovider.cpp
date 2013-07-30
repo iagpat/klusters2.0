@@ -127,23 +127,31 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
     //Depending on the acquisition system resolution, the data are store as short or long
     if((resolution == 12) | (resolution == 14) | (resolution == 16)){
         Array<short> retrieveData(nbSamples,nbChannels);
-        //go to the startInRecordingUnits position
-        off_t position = static_cast<off_t>(static_cast<off_t>(startInRecordingUnits)* static_cast<off_t>(nbChannels));
-        //C++ code:  dataFile.seekg(static_cast<off_t>(position * sizeof(short)),ios::beg);
-        fseeko64(dataFile,static_cast<off_t>(position * sizeof(short)),SEEK_SET);
-        // copy the data into retrieveData.
-        off_t nbValues = nbSamples * nbChannels;
-        //C++ code: dataFile.read((char*)(&(retrieveData[0])),sizeof(short) * nbValues);
-        off_t nbRead = fread((char*)(&(retrieveData[0])),sizeof(short),nbValues,dataFile);
 
-        if(nbRead != nbValues){
-            //emit the signal with an empty array, the reciever will take care of it, given a message to the user.
+        QFile dataFile(fileName);
+        if (!dataFile.open(QIODevice::ReadOnly)) {
             data.setSize(0,0);
-            fclose(dataFile);
             emit dataReady(data,initiator);
             return;
         }
+        off_t nbValues = nbSamples * nbChannels;
+        off_t position = static_cast<off_t>(static_cast<off_t>(startInRecordingUnits)* static_cast<off_t>(nbChannels));
 
+        dataFile.seek(position * sizeof(short));
+        off_t nbRead = 0;
+        for (int i = 0; i < nbValues; ++i) {
+            nbRead += dataFile.read(reinterpret_cast<char*>(&retrieveData[i]), sizeof(short));
+        }
+
+        // copy the data into retrieveData.
+        if(nbRead != nbValues*sizeof(short)){
+            //emit the signal with an empty array, the reciever will take care of it, given a message to the user.
+            data.setSize(0,0);
+            dataFile.close();
+            emit dataReady(data,initiator);
+            return;
+        }
+        dataFile.close();
         //Apply the offset if need it,convert to dataType and store the values in data.
         if(offset != 0){
             for(off_t i = 0; i < nbValues; ++i){
@@ -157,20 +165,27 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
         }
     }
     else if(resolution == 32){
+        QFile dataFile(fileName);
+        if (!dataFile.open(QIODevice::ReadOnly)) {
+            data.setSize(0,0);
+            emit dataReady(data,initiator);
+            return;
+        }
         Array<dataType> retrieveData(nbSamples,nbChannels);
-        //go to the startInRecordingUnits position
-        off_t position = static_cast<off_t>(static_cast<off_t>(startInRecordingUnits)* static_cast<off_t>(nbChannels));
-        //C++ code: dataFile.seekg(static_cast<off_t>(position * sizeof(dataType)),ios::beg);
-        fseeko64(dataFile,static_cast<off_t>(position * sizeof(dataType)),SEEK_SET);
-        // copy the data into retrieveData.
         off_t nbValues = nbSamples * nbChannels;
-        //C++ code: dataFile.read((char*)&(retrieveData[0]),sizeof(dataType) * nbValues);
-        off_t nbRead = fread((char*)(&(retrieveData[0])),sizeof(dataType),nbValues,dataFile);
+        off_t position = static_cast<off_t>(static_cast<off_t>(startInRecordingUnits)* static_cast<off_t>(nbChannels));
 
-        if(nbRead != nbValues){
+        dataFile.seek(position * sizeof(short));
+        off_t nbRead = 0;
+        for (int i = 0; i < nbValues; ++i) {
+            nbRead += dataFile.read(reinterpret_cast<char*>(&retrieveData[i]), sizeof(short));
+        }
+
+        // copy the data into retrieveData.
+        if(nbRead != nbValues*sizeof(short)){
             //emit the signal with an empty array, the reciever will take care of it, given a message to the user.
             data.setSize(0,0);
-            fclose(dataFile);
+            dataFile.close();
             emit dataReady(data,initiator);
             return;
         }
