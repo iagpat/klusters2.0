@@ -35,8 +35,10 @@ int main(int argc, char* argv[])
     QApplication::setOrganizationName("sourceforge");
     QApplication::setOrganizationDomain("sourceforge.net");
     QApplication::setApplicationName("klusters");
-   
+
     QApplication app(argc, argv); 
+    QApplication::setGraphicsSystem("raster");
+
     QStringList args = QApplication::arguments();
     QStringList argsList;
     for (int i = 1, n = args.size(); i < n; ++i) {
