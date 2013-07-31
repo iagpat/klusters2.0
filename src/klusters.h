@@ -19,6 +19,7 @@
 #define KLUSTERS_H
 
 //include files application specific
+#include "spinbox.h"
 #include "klustersview.h"
 
 
@@ -572,10 +573,10 @@ private:
 
     QAction *mViewStatusBar;
     /**Spine box enabling to choose the absciss dimension*/
-    QSpinBox* dimensionX;
+    SpinBox* dimensionX;
 
     /**Spine box enabling to choose the ordinate dimension*/
-    QSpinBox* dimensionY;
+    SpinBox* dimensionY;
 
     /**Boolean used to prevent the trigger of the spin box update during initialization.*/
     bool isInit;
@@ -604,7 +605,7 @@ private:
     /**Spine box enabling to choose the start time used to display the waveforms while
     * in time frame mode.
     */
-    QSpinBox* start;
+    SpinBox* start;
 
     /**Small box where the user can enter the width of the time frame to use
     * to display the waveforms while in time frame mode.*/
@@ -647,7 +648,7 @@ private:
     /**Spine box enabling to choose the number of spikes to display in
     * the waveform view, if any, while that view is in sample mode.
     */
-    QSpinBox* spikesTodisplay;
+    SpinBox* spikesTodisplay;
 
     /**The step used to increase or decrease the number of spikes to display
     * in the waveform view, if any, while that view is in sample mode. The default

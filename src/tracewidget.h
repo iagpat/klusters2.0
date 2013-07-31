@@ -18,9 +18,10 @@
 #ifndef TRACEWIDGET_H
 #define TRACEWIDGET_H
 
+#include "spinbox.h"
+
 // include files for QT
 #include <qwidget.h>
-#include <qspinbox.h>
 #include <qvalidator.h>
 #include <qlineedit.h>
 #include <qlabel.h>
@@ -573,15 +574,15 @@ private:
 
     /**Spine box enabling to choose the start time in minutes used to display the traces.
   */
-    QSpinBox* startMinute;
+    SpinBox* startMinute;
 
     /**Spine box enabling to choose the start time in seconds used to display the traces.
   */
-    QSpinBox* startSecond;
+    SpinBox* startSecond;
 
     /**Spine box enabling to choose the start time in miliseconds used to display the traces.
   */
-    QSpinBox* startMilisecond;
+    SpinBox* startMilisecond;
 
     /**Small box where the user can enter the width of the time frame to use
   * to display the traces.*/

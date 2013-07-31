@@ -104,7 +104,7 @@ void TraceWidget::initSelectionWidgets(){
     int nbSeconds = remainingSeconds / 1000;
     int remainingMiliseconds = static_cast<int>(fmod(static_cast<double>(remainingSeconds),1000));
 
-    startMinute = new QSpinBox(selectionWidgets);
+    startMinute = new SpinBox(selectionWidgets);
     startMinute->setMinimum(0);
     startMinute->setMaximum(minutePart);
     startMinute->setSingleStep(1);
@@ -112,20 +112,26 @@ void TraceWidget::initSelectionWidgets(){
     startMinute->setSuffix( tr(" min") );
     startMinute->setWrapping(true);
     startMinute->setValue(nbMinutes);
-    startSecond = new QSpinBox(selectionWidgets);
+    startMinute->setFocusPolicy(Qt::StrongFocus);
+	 connect(startMinute,SIGNAL(valueChanged(int)),startMinute,SLOT(deselect()),Qt::QueuedConnection);
+    startSecond = new SpinBox(selectionWidgets);
     startSecond->setMinimum(0);
     startSecond->setMaximum(recordingLength/1000);
     startSecond->setSingleStep(1);
     lay->addWidget(startSecond);
     startSecond->setSuffix( tr(" s") );
     startSecond->setValue(nbSeconds);
-    startMilisecond = new QSpinBox(selectionWidgets);
+    startSecond->setFocusPolicy(Qt::StrongFocus);
+	 connect(startSecond,SIGNAL(valueChanged(int)),startSecond,SLOT(deselect()),Qt::QueuedConnection);
+    startMilisecond = new SpinBox(selectionWidgets);
     startMilisecond->setMinimum(0);
     startMilisecond->setMaximum(recordingLength);
     startMilisecond->setSingleStep(1);
     lay->addWidget(startMilisecond);
     startMilisecond->setSuffix( tr(" ms") );
     startMilisecond->setValue(remainingMiliseconds);
+    startMilisecond->setFocusPolicy(Qt::StrongFocus);
+	 connect(startMilisecond,SIGNAL(valueChanged(int)),startMilisecond,SLOT(deselect()),Qt::QueuedConnection);
 
 
     durationLabel = new QLabel(tr("  Duration (ms)"),selectionWidgets);

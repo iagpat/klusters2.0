@@ -617,17 +617,21 @@ void KlustersApp::initSelectionBoxes(){
     paramBar->setObjectName("Parameters");
 
     //Create and initialize the spin boxes for the dimensions
-    dimensionX = new QSpinBox(paramBar);
+    dimensionX = new SpinBox(paramBar);
     dimensionX->setObjectName("dimensionX");
     dimensionX->setMinimum(1);
     dimensionX->setMaximum(1);
     dimensionX->setSingleStep(1);
-
-    dimensionY = new QSpinBox(paramBar);
+    dimensionX->setFocusPolicy(Qt::StrongFocus);
+	 connect(dimensionX,SIGNAL(valueChanged(int)),dimensionX,SLOT(deselect()),Qt::QueuedConnection);
+	 
+    dimensionY = new SpinBox(paramBar);
     dimensionY->setObjectName("dimensionY");
     dimensionY->setMinimum(1);
     dimensionY->setMaximum(1);
     dimensionY->setSingleStep(1);
+    dimensionY->setFocusPolicy(Qt::StrongFocus);
+	 connect(dimensionY,SIGNAL(valueChanged(int)),dimensionY,SLOT(deselect()),Qt::QueuedConnection);
 
     //Enable to step the value from the highest value to the lowest value and vice versa
     dimensionX->setWrapping(true);
@@ -643,11 +647,13 @@ void KlustersApp::initSelectionBoxes(){
     connect(dimensionY, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateDimensionY(int)));
 
     //Create and initialize the spin boxe and lineEdit for the waveforms time frame mode.
-    start = new QSpinBox(paramBar);
+    start = new SpinBox(paramBar);
     start->setObjectName("start");
     start->setMinimum(1);
     start->setMaximum(1);
     start->setSingleStep(timeWindow);
+    start->setFocusPolicy(Qt::StrongFocus);
+	 connect(start,SIGNAL(valueChanged(int)),start,SLOT(deselect()),Qt::QueuedConnection);
 
     //Enable to step the value from the highest value to the lowest value and vice versa
     start->setWrapping(true);
@@ -675,10 +681,12 @@ void KlustersApp::initSelectionBoxes(){
     connect(duration, SIGNAL(returnPressed()),this, SLOT(slotUpdateDuration()));
 
     //Create and initialize the spin boxe for the waveforms sample mode.
-    spikesTodisplay = new QSpinBox(paramBar);
+    spikesTodisplay = new SpinBox(paramBar);
     spikesTodisplay->setMinimum(1);
     spikesTodisplay->setMaximum(1);
     spikesTodisplay->setSingleStep(spikesTodisplayStep);
+    spikesTodisplay->setFocusPolicy(Qt::StrongFocus);
+	 connect(spikesTodisplay,SIGNAL(valueChanged(int)),spikesTodisplay,SLOT(deselect()),Qt::QueuedConnection);
 
     spikesTodisplay->setObjectName("spikesTodisplay");
     //Enable to step the value from the highest value to the lowest value and vice versa
