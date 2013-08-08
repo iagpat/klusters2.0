@@ -1,12 +1,10 @@
-# KDE Config File
 [Desktop Entry]
 Encoding=UTF-8
 Name=Klusters
 GenericName=Cluster cutting application
 Type=Application
-Exec=klusters -caption "%c" %i %m
+Exec=klusters %u 
 Icon=klusters.png
 DocPath=klusters/index.html
 Comment=
-Terminal=0
 Categories=KDE;Education;Science;
