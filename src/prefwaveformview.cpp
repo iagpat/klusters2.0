@@ -23,6 +23,7 @@
 #include <QTextStream>
 #include <qmessagebox.h>
 #include <QFileDialog>
+#include <QSettings>
 
 
 PrefWaveformView::PrefWaveformView(QWidget *parent,int nbChannels,const char *name):
@@ -96,50 +97,54 @@ void PrefWaveformView::saveChannelOrder(){
 }
 
 void PrefWaveformView::loadChannelOrder(){
-    const QString url = QFileDialog::getOpenFileName(this, tr("Load File..."),QString(),
+    QSettings settings;
+    const QString url = QFileDialog::getOpenFileName(this, tr("Load File..."), settings.value("CurrentDirectory").toString(),
                                                tr("*|All files") );
 
     if(url.isEmpty())
       return;
     QMap<int,int> positions;
 
-        QString tmpChannelFile = url;
-        if(!QFile(tmpChannelFile).exists()){
+    QDir CurrentDir;
+    settings.setValue("CurrentDirectory", CurrentDir.absoluteFilePath(url));
+
+    QString tmpChannelFile = url;
+    if(!QFile(tmpChannelFile).exists()){
+        QMessageBox::critical (this,tr("Error !"),
+                               tr("The selected file could not be downloaded !")
+                               );
+        return;
+    }
+
+    QFile channelFile(tmpChannelFile);
+    if(!channelFile.open(QIODevice::ReadOnly)){
+        QMessageBox::critical (this,tr("Error !"),
+                               tr("The selected file could not be opened !")
+                               );
+        return;
+    }
+
+    QTextStream positionStream(&channelFile);
+    QString line;
+    int channel = 0;
+    for(line = positionStream.readLine(); !line.isNull();line = positionStream.readLine()){
+        bool ok;
+        int position = line.toInt(&ok,10);
+        if(!ok){
             QMessageBox::critical (this,tr("Error !"),
-                                   tr("The selected file could not be downloaded !")
-                                   );
+                                   tr("The selected file does not have the correct format (list of channels number),\n"
+                                      "it can not be used."));
+
+            channelFile.close();
+
             return;
         }
+        //The channels are counted from 0 to nbChannels - 1.
+        positions.insert(channel,position);
+        channel++;
+    }
 
-        QFile channelFile(tmpChannelFile);
-        if(!channelFile.open(QIODevice::ReadOnly)){
-            QMessageBox::critical (this,tr("Error !"),
-                                   tr("The selected file could not be opened !")
-                                   );
-            return;
-        }
-
-        QTextStream positionStream(&channelFile);
-        QString line;
-        int channel = 0;
-        for(line = positionStream.readLine(); !line.isNull();line = positionStream.readLine()){
-            bool ok;
-            int position = line.toInt(&ok,10);
-            if(!ok){
-                QMessageBox::critical (this,tr("Error !"),
-                                       tr("The selected file does not have the correct format (list of channels number),\n"
-                                          "it can not be used."));
-
-                channelFile.close();
-
-                return;
-            }
-            //The channels are counted from 0 to nbChannels - 1.
-            positions.insert(channel,position);
-            channel++;
-        }
-
-        channelFile.close();
+    channelFile.close();
 
     if(nbChannels != static_cast<int>(positions.count())){
         QMessageBox::critical (this,tr("Error !"),

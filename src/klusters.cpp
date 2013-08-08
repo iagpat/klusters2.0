@@ -1399,10 +1399,13 @@ void KlustersApp::slotFileOpen()
 {
     slotStatusMsg(tr("Opening file..."));
 
-    const QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
+    QSettings settings;
+    const QString url=QFileDialog::getOpenFileName(this, tr("Open File..."), settings.value("CurrentDirectory").toString(),
                                              tr("Feature File (*.fet.*);;Cluster File (*.clu.*);;Spike File (*.spk.*);;Specific Parameter File (*.par.*);;All files (*.*)"));
     if(!url.isEmpty())
     {
+        QDir CurrentDir;
+        settings.setValue("CurrentDirectory", CurrentDir.absoluteFilePath(url));
         openDocumentFile(url);
     }
 
@@ -1455,10 +1458,13 @@ void KlustersApp::slotFileClose(){
 void KlustersApp::slotFileImport(){
     slotStatusMsg(tr("Importing file..."));
 
-    const QString url=QFileDialog::getOpenFileName(this, tr("Import File..."),QString(),
+    QSettings settings;
+    const QString url=QFileDialog::getOpenFileName(this, tr("Import File..."), settings.value("CurrentDirectory").toString(),
                                              tr("All files (*.*)"));
     if(!url.isEmpty())
     {
+        QDir CurrentDir;
+        settings.setValue("CurrentDirectory", CurrentDir.absoluteFilePath(url));
         importDocumentFile(url);
     }
 
