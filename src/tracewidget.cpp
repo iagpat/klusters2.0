@@ -56,7 +56,7 @@ TraceWidget::TraceWidget(long startTime,long duration,bool greyScale,TracesProvi
     layout->setStretchFactor(selectionWidgets,0);
     layout->setStretchFactor(&view,200);
 
-    setFocusPolicy(Qt::StrongFocus);
+    setFocusPolicy(Qt::NoFocus);
 
     initSelectionWidgets();
     adjustSize();
