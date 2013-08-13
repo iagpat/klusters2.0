@@ -30,7 +30,7 @@ class SpinBox : public QSpinBox
     Q_OBJECT
     
 public:
-	SpinBox(QWidget * parent = 0) : QSpinBox(parent) {};
+    SpinBox(QWidget * parent = 0) : QSpinBox(parent) {}
 
 public Q_SLOTS:
 	void deselect();
