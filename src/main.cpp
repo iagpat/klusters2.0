@@ -32,12 +32,12 @@ int nbUndo;
 
 int main(int argc, char* argv[])
 { 
+    QApplication::setGraphicsSystem("raster");
     QApplication::setOrganizationName("sourceforge");
     QApplication::setOrganizationDomain("sourceforge.net");
     QApplication::setApplicationName("klusters");
 
     QApplication app(argc, argv); 
-    QApplication::setGraphicsSystem("raster");
 
     QStringList args = QApplication::arguments();
     QStringList argsList;
