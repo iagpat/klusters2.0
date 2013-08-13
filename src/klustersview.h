@@ -352,11 +352,7 @@ public:
    * @param start the start time of the time frame.
    * @param timeFrameWidth the time amount, in second, to use to show the waveforms.
    */
-    void updateTimeFrame(long start,long timeFrameWidth){
-        startTime = start;
-        timeWindow = timeFrameWidth;
-        emit updatedTimeFrame(start,timeFrameWidth);
-    }
+    void updateTimeFrame(long start,long timeFrameWidth);
 
     /**Sets the presentation mode of the waveform view to sample mode, meaning that, for each shown cluster,
   * only one out of the number of spikes to be displayed will be shown.

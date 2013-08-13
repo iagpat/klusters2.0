@@ -653,7 +653,7 @@ void KlustersApp::initSelectionBoxes(){
     start->setMaximum(1);
     start->setSingleStep(timeWindow);
     start->setFocusPolicy(Qt::StrongFocus);
-	 connect(start,SIGNAL(valueChanged(int)),start,SLOT(deselect()),Qt::QueuedConnection);
+    connect(start,SIGNAL(valueChanged(int)),start,SLOT(deselect()),Qt::QueuedConnection);
 
     //Enable to step the value from the highest value to the lowest value and vice versa
     start->setWrapping(true);
@@ -3194,4 +3194,14 @@ void KlustersApp::slotSaveRecentFiles()
 {
     QSettings settings;
     settings.setValue(QLatin1String("Recent Files"),mFileOpenRecent->recentFiles());
+}
+
+/**Informs the active display to present the waveforms for an updated time frame.*/
+void KlustersApp::slotUpdateStartTime(int start)
+{
+    qDebug()<<" void KlustersApp::slotUpdateStartTime(int start)"<<start;
+    if(!isInit){
+        startTime = start;
+        activeView()->updateTimeFrame(static_cast<long>(start),timeWindow);
+    }
 }

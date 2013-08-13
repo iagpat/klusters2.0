@@ -80,7 +80,8 @@ void WaveformThread::run(){
             else{
                 if(!haveToStopProcessing){
                     QList<int>::iterator iterator;
-                    for(iterator = clusterIds.begin(); iterator != clusterIds.end(); ++iterator){
+                    QList<int>::iterator end(clusterIds.end());
+                    for(iterator = clusterIds.begin(); iterator != end; ++iterator){
                         if(!haveToStopProcessing){
                             Data::Status status = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay);
                             //If the data for one cluster is not available, skip it (do not send an event to the waveformView)
@@ -91,8 +92,9 @@ void WaveformThread::run(){
                                 {
                                     sleep(sleepingAmount);
                                 }
+                        } else {
+                            break;
                         }
-                        else break;
                     }
                 }
             }
@@ -127,7 +129,8 @@ void WaveformThread::run(){
             else{
                 if(!haveToStopProcessing){
                     QList<int>::iterator iterator;
-                    for(iterator = clusterIds.begin(); iterator != clusterIds.end(); ++iterator){
+                    QList<int>::iterator end(clusterIds.end());
+                    for(iterator = clusterIds.begin(); iterator != end; ++iterator){
                         if(!haveToStopProcessing){
                             Data::Status status = data.getTimeFrameWaveformPoints(*iterator,waveformView.startTime,waveformView.endTime);
                             //If the data for one cluster is not available, skip it (do not send an event to the waveformView)
@@ -137,8 +140,9 @@ void WaveformThread::run(){
                                 {
                                     sleep(sleepingAmount);
                                 }
+                        } else {
+                            break;
                         }
-                        else break;
                     }
                 }
             }
@@ -210,7 +214,8 @@ void WaveformThread::run(){
             else{
                 if(!haveToStopProcessing){
                     QList<int>::iterator iterator;
-                    for(iterator = clusterIds.begin(); iterator != clusterIds.end(); ++iterator){
+                    QList<int>::iterator end(clusterIds.end());
+                    for(iterator = clusterIds.begin(); iterator != end; ++iterator){
                         if(!haveToStopProcessing){
                             Data::Status status = data.calculateSampleMean(*iterator,waveformView.nbSpkToDisplay);
                             if(status == Data::NOT_AVAILABLE && !haveToStopProcessing){
@@ -314,7 +319,8 @@ void WaveformThread::run(){
             else{
                 if(!haveToStopProcessing){
                     QList<int>::iterator iterator;
-                    for(iterator = clusterIds.begin(); iterator != clusterIds.end(); ++iterator){
+                    QList<int>::iterator end(clusterIds.end());
+                    for(iterator = clusterIds.begin(); iterator != end; ++iterator){
                         if(!haveToStopProcessing){
                             Data::Status status = data.calculateTimeFrameMean(*iterator,waveformView.startTime,waveformView.endTime);
                             if(status == Data::NOT_AVAILABLE && !haveToStopProcessing){

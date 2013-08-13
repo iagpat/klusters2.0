@@ -292,12 +292,7 @@ private Q_SLOTS:
     void slotUpdateRedoNb(int redoNb);
 
     /**Informs the active display to present the waveforms for an updated time frame.*/
-    void slotUpdateStartTime(int start){
-        if(!isInit){
-            startTime = start;
-            activeView()->updateTimeFrame(static_cast<long>(start),timeWindow);
-        }
-    }
+    void slotUpdateStartTime(int start);
 
     /**Informs the active display to present the waveforms for an updated time frame.*/
     void slotUpdateDuration();

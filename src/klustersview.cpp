@@ -1540,3 +1540,11 @@ void KlustersView::updateCorrelogramConnections(ViewWidget* viewWidget){
     connect(this,SIGNAL(decreaseAmplitudeofCorrelograms()),viewWidget, SLOT(decreaseAmplitude()));
     connect(this,SIGNAL(setShoulderLine(bool)),viewWidget, SLOT(setShoulderLine(bool)));
 }
+
+void KlustersView::updateTimeFrame(long start,long timeFrameWidth)
+{
+    startTime = start;
+    timeWindow = timeFrameWidth;
+    qDebug()<<" void KlustersView::updateTimeFrame(long start,long timeFrameWidth)";
+    emit updatedTimeFrame(start,timeFrameWidth);
+}
