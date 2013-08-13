@@ -53,10 +53,10 @@ public:
   */
     void getMean(WaveformView::PresentationMode mode);
 
-    bool isSingleTriggeringCluster(){return treatSingleCluster;}
-    int triggeringCluster(){return clusterId;}
-    QList<int> triggeringClusters(){return clusterIds;}
-    bool isMeanRequested(){return  meanRequested;}
+    bool isSingleTriggeringCluster() const {return treatSingleCluster;}
+    int triggeringCluster() const {return clusterId;}
+    QList<int> triggeringClusters() const {return clusterIds;}
+    bool isMeanRequested() const {return  meanRequested;}
 
     /**Asks the thread to stop his work as soon as possible.*/
     void stopProcessing(){haveToStopProcessing = true;}
