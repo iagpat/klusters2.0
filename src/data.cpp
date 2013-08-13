@@ -3343,7 +3343,8 @@ void Data::cleanCorrelation(dataType clusterId,QList<dataType> currentClusterLis
 
     //Remove all the correlations link to clusterId
     QList<dataType>::iterator iterator;
-    for(iterator = currentClusterList.begin(); iterator != currentClusterList.end(); ++iterator){
+    QList<dataType>::iterator end(currentClusterList.end());
+    for(iterator = currentClusterList.begin(); iterator != end; ++iterator){
         //Search pairs as (clusterId,*iterator) where clusterId > *iterator
         //and (*iterator,clusterId) where *iterator > clusterId
         if(*iterator <= clusterId) delete correlationDict.take(Pair(static_cast<int>(*iterator),static_cast<int>(clusterId)).toString());
