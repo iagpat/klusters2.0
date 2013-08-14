@@ -161,10 +161,14 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     int s;
     int v;
     backgroundColor.getHsv(&h,&s,&v);
+    QColor legendColor;
     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
-        palette.setColor(QPalette::Text, Qt::black);
+        legendColor =  Qt::black;
     else
-        palette.setColor(QPalette::Text, Qt::white);
+        legendColor =  Qt::white;
+
+    palette.setColor(QPalette::Text, legendColor);
+    palette.setColor(QPalette::HighlightedText, legendColor);
 
     iconView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     iconView->setSpacing(4);
@@ -677,10 +681,14 @@ void ClusterPalette::changeBackgroundColor(const QColor& color){
     int v;
     color.getHsv(&h,&s,&v);
     QPalette palette;
+    QColor legendColor;
     if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
-        palette.setColor(QPalette::Text, Qt::black);
+        legendColor = Qt::black;
     else
-        palette.setColor(QPalette::Text, Qt::white);
+        legendColor = Qt::white;
+    palette.setColor(QPalette::Text, legendColor);
+    palette.setColor(QPalette::HighlightedText, legendColor);
+
     palette.setColor(iconView->backgroundRole(), color);
 
     iconView->setPalette(palette);
