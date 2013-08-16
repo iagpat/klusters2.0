@@ -90,7 +90,7 @@ WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& bac
     }
 
     ordinateMin = -(2 * heightBorder + nbchannels * YsizeForMaxAmp + (nbchannels - 1) * Yspace);
-    ordinateMax = 0;
+    ordinateMax = 2 * Yspace;
     abscissaMin = 0;
 
     X0 = widthBorder;
