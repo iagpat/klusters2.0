@@ -1556,17 +1556,17 @@ void KlustersApp::slotDisplayClose()
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
                 //Delete the view
-                if(qobject_cast<KlustersView*>(mainDock->widget())){
+                if(qobject_cast<KlustersView*>(tabsParent->currentWidget())){
                     delete processWidget;
                     processWidget = 0L;
-                    delete mainDock;
+                    delete tabsParent->currentWidget();
                 } else {
                     if(processWidget->isRunning()){
                         processWidget->killJob();
                         processKilled = true;
                     }
                     if(processFinished && processOutputsFinished){
-                        delete mainDock;
+                        delete tabsParent->currentWidget();
                         processWidget = 0L;
                     } else {
                         mainDock->hide();
@@ -1590,10 +1590,10 @@ void KlustersApp::slotDisplayClose()
             if(doc->canCloseDocument(this,"displayClose")){
                 doc->closeDocument();
                 //Delete the view
-                if(qobject_cast<KlustersView*>(mainDock->widget())){
+                if(qobject_cast<KlustersView*>(tabsParent->currentWidget())){
                     delete processWidget;
                     processWidget = 0L;
-                    delete mainDock;
+                    delete tabsParent->currentWidget();
                 }
                 else{
                     if(processWidget) {
@@ -1602,7 +1602,7 @@ void KlustersApp::slotDisplayClose()
                             processKilled = true;
                         }
                         if(processFinished && processOutputsFinished){
-                            delete mainDock;
+                            delete tabsParent->currentWidget();
                             processWidget = 0L;
                         } else {
                             mainDock->hide();
@@ -2273,6 +2273,7 @@ void KlustersApp::slotTimeFrameMode(){
         if(timeFrameMode->isChecked()){
             timeWindow = activeView()->timeFrameWidth();
             startTime =  activeView()->timeFrameStart();
+            qDebug()<<" ssssssssssssssssssssssssssssssssssssssssssssssssssss";
             start->setValue(startTime);
             start->setSingleStep(timeWindow);
             duration->setText(QString::fromLatin1("%1").arg(timeWindow));
