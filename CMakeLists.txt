@@ -297,6 +297,7 @@ add_subdirectory(doc)
 
 INCLUDE(InstallRequiredSystemLibraries)
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "klusters")
+set(CPACK_PACKAGE_DESCRIPTION "Klusters is a powerful and easy-to-use cluster cutting application designed to help neurophysiologists sort action potentials recorded from multiple neurons on groups of electrodes (e.g., tetrodes or multisite silicon probes).")
 set(CPACK_PACKAGE_NAME "klusters" )
 set(CPACK_PACKAGE_VERSION_MAJOR "1")
 set(CPACK_PACKAGE_VERSION_MINOR "99")
