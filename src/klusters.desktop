@@ -1,10 +1,9 @@
 [Desktop Entry]
-Encoding=UTF-8
+Type=Application
 Name=Klusters
 GenericName=Cluster cutting application
-Type=Application
-Exec=klusters %u 
-Icon=klusters.png
-DocPath=klusters/index.html
 Comment=
-Categories=KDE;Education;Science;
+Icon=klusters
+Exec=klusters %u
+MimeType=application/nphys-clu;application/nphys-fet;
+Categories=Qt;Education;Science;
