@@ -50,7 +50,7 @@ qt4_add_resources(klusters_SRCS klusters-cursors.qrc klusters-icons.qrc)
 set(klusters_UI prefwaveformviewlayout.ui prefgenerallayout.ui prefclusterviewlayout.ui ) 
 qt4_wrap_ui(klusters_SRCS ${klusters_UI})
 
-add_executable(klusters ${klusters_SRCS} )
+add_executable(klusters WIN32 ${klusters_SRCS} )
 
 if(Qt5Core_FOUND)
   target_link_libraries( klusters ${LIBKLUSTERSSHARED_LIBRARY} Qt5::Widgets Qt5::Xml ${Qt5WebKitWidgets_LIBRARIES})
