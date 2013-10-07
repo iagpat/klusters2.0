@@ -2837,7 +2837,8 @@ Data::Status Data::calculateTimeFrameMean(int clusterId,dataType start,dataType 
 }
 
 
-void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp, dataType clusterId,QList<dataType> positions,QList<dataType> nbOfspikes,int step,bool fromTop){
+void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesByClusterTemp, dataType clusterId,QList<dataType> positions,
+                       QList<dataType> nbOfspikes,int step,bool fromTop){
     uint nbClusters = static_cast<uint>(positions.size());
     uint indice = 0;
 
@@ -2881,8 +2882,8 @@ void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesB
         nbOfspikes[indice] --;
         if(nbOfspikes[indice] == 0){
             nbClusters --;
-            positions.removeAll(positions.at(indice));
-            nbOfspikes.removeAll(nbOfspikes.at(indice));
+            positions.removeOne(positions.at(indice));
+            nbOfspikes.removeOne(nbOfspikes.at(indice));
         }
         if(nbClusters == 0) break;
         indice = 0;
