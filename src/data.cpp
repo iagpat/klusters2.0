@@ -2943,8 +2943,8 @@ void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesB
                 nbOfspikes[indice] --;
                 if(nbOfspikes[indice] == 0){
                     nbClusters --;
-                    lastPositions.removeAll(lastPositions.at(indice));
-                    nbOfspikes.removeAll(nbOfspikes.at(indice));
+                    lastPositions.removeOne(lastPositions.at(indice));
+                    nbOfspikes.removeOne(nbOfspikes.at(indice));
                 }
                 //Copy all the reminding original spikes of the new cluster.
                 if(nbClusters == 0){
@@ -2977,8 +2977,8 @@ void Data::sortCluster(ClusterInfoMap* clusterInfoMapTemp,SortableTable* spikesB
             nbOfspikes[indice] --;
             if(nbOfspikes[indice] == 0){
                 nbClusters --;
-                lastPositions.removeAll(lastPositions.at(indice));
-                nbOfspikes.removeAll(nbOfspikes.at(indice));
+                lastPositions.removeOne(lastPositions.at(indice));
+                nbOfspikes.removeOne(nbOfspikes.at(indice));
             }
             if(nbClusters == 0) break;
             indice = 0;
