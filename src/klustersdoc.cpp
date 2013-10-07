@@ -1053,7 +1053,7 @@ void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,cons
             prepareUndo(updatedClusters,emptyClusters,true);
 
         //Remove all the empty clusters from clusterColors and clustersToShow
-        if(emptyClusters.size()>0){
+        if(!emptyClusters.isEmpty()){
             QList<int>::iterator clustersToRemove;
             for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
                 clusterColorList->remove(*clustersToRemove);
@@ -1123,7 +1123,7 @@ void KlustersDoc::createNewCluster(QRegion& region, const QList <int>& clustersO
         clusterColorList->append(newClusterIdint,color);
         clustersToShow.append(newClusterIdint);
         //Remove all the empty clusters from clusterColors and clustersToShow
-        if(emptyClusters.size()>0){
+        if(!emptyClusters.isEmpty()){
             QList<int>::iterator clustersToRemove;
             for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
                 clusterColorList->remove(*clustersToRemove);
@@ -1194,7 +1194,7 @@ void KlustersDoc::createNewClusters(QRegion& region, const QList <int>& clusters
             clustersToShow.append(*clustersToCreate);
         }
         //Remove all the empty clusters
-        if(emptyClusters.size()>0){
+        if(!emptyClusters.isEmpty()){
             QList<int>::iterator clustersToRemove;
             for (clustersToRemove = emptyClusters.begin(); clustersToRemove != emptyClusters.end(); ++clustersToRemove ){
                 clusterColorList->remove(*clustersToRemove);
