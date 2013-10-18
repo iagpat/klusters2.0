@@ -3486,7 +3486,7 @@ void Data::createFeatureFile(QList<int>& clustersToRecluster,QFile& fetFile){
         dataType featuresRowIndex = reclusteringSpikesByCluster(1,i);
         //loop on the features of the current spike
         for(int j = 1; j < nbDimensions;++j) fetStream << features(featuresRowIndex,j)<<" ";
-        fetStream << features(featuresRowIndex,nbDimensions);
+        fetStream << features(featuresRowIndex,nbDimensions)<<endl;
     }
 }
 
