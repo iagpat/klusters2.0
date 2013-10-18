@@ -1948,15 +1948,17 @@ int KlustersDoc::createFeatureFile(QList<int>& clustersToRecluster,const QString
 int KlustersDoc::integrateReclusteredClusters(QList<int>& clustersToRecluster,QList<int>& reclusteredClusterList,QString reclusteringFetFileName){
 
     QString cluFileName(reclusteringFetFileName);
+    qDebug()<<"reclusteringFetFileName "<<reclusteringFetFileName;
     cluFileName.replace(".fet.",".clu.");
 
     QString cluFileUrl(cluFileName);
-    QString tmpCluFile;
+    QString tmpCluFile = cluFileUrl;
     if(!QFile::exists(cluFileUrl)) {
         QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary cluster file used by the reclustering program.") );
         return DOWNLOAD_ERROR;
     }
 
+    qDebug()<<" tmpCluFile"<<tmpCluFile;
     QFile cluFile(tmpCluFile);
 
     if(!cluFile.open(QIODevice::ReadOnly)){
@@ -1976,7 +1978,6 @@ int KlustersDoc::integrateReclusteredClusters(QList<int>& clustersToRecluster,QL
             QMessageBox::critical(0,tr("Warning !"),tr("Could not delete the temporary cluster file used by the reclustering program.") );
         return INCORRECT_CONTENT;
     }
-
     cluFile.close();
 
     //Suppress the fet and clu files.
