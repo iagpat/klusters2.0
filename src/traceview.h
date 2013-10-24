@@ -873,16 +873,16 @@ private:
         ClusterData(Array<dataType> d,bool status){
             data = d;
             ready = status;
-        };
+        }
         ClusterData(){
             ready = false;
-        };
-        void setStatus(bool status){ready = status;};
-        void setData(Array<dataType>& d){data = d;};
-        bool status(){return ready;};
-        Array<dataType>& getData(){return data;};
+        }
+        void setStatus(bool status){ready = status;}
+        void setData(Array<dataType>& d){data = d;}
+        bool status(){return ready;}
+        Array<dataType>& getData(){return data;}
 
-        ~ClusterData(){};
+        ~ClusterData(){}
     };
 
     /**Dictionary between the cluster provider names and the cluster data and status.*/
@@ -937,20 +937,20 @@ private:
             times = t;
             ids = d;
             ready = status;
-        };
+        }
         EventData(){
             ready = false;
-        };
-        void setStatus(bool status){ready = status;};
+        }
+        void setStatus(bool status){ready = status;}
         void setData(Array<dataType>& t,Array<int>& d){
             times = t;
             ids = d;
-        };
-        bool status(){return ready;};
-        Array<int>& getIds(){return ids;};
-        Array<dataType>& getTimes(){return times;};
+        }
+        bool status(){return ready;}
+        Array<int>& getIds(){return ids;}
+        Array<dataType>& getTimes(){return times;}
 
-        ~EventData(){};
+        ~EventData(){}
     };
 
     /**Pair storing the cluster provider having a selected cluster the closer in time to the current endTime,

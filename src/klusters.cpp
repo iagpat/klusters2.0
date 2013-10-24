@@ -119,9 +119,6 @@ KlustersApp::KlustersApp()
     createMenus();
     createToolBar();
 
-    //Gets the configuration object of the application throught the static reference to the application kapp
-    printer = new QPrinter;
-
     //Apply the user settings.
     initializePreferences();
 
@@ -150,7 +147,6 @@ KlustersApp::KlustersApp()
 KlustersApp::~KlustersApp()
 {
     //Clear the memory by deleting all the pointers
-    delete printer;
     delete doc;
     delete saveThread;
     delete processWidget;
@@ -1626,24 +1622,24 @@ void KlustersApp::slotDisplayClose()
 void KlustersApp::slotFilePrint()
 {
     slotStatusMsg(tr("Printing..."));
+    QPrinter printer;
+    printer.setOrientation(QPrinter::Landscape);
+    printer.setColorMode(QPrinter::Color);
 
-    printer->setOrientation(QPrinter::Landscape);
-    printer->setColorMode(QPrinter::Color);
-
-    QPrintDialog dialog(printer, this);
+    QPrintDialog dialog(&printer, this);
     if (dialog.exec())
     {
         if(!doesActiveDisplayContainProcessWidget()){
             KlustersView* view = activeView();
             if(useWhiteColorDuringPrinting)
-                view->print(printer,filePath,true);
+                view->print(&printer,filePath,true);
             else
-                view->print(printer,filePath,false);
+                view->print(&printer,filePath,false);
         }
         else{
             QDockWidget* dock = static_cast<QDockWidget*>(tabsParent->currentWidget());
             ProcessWidget* view = static_cast<ProcessWidget*>(dock->widget());
-            view->print(printer,filePath);
+            view->print(&printer,filePath);
         }
     }
 
