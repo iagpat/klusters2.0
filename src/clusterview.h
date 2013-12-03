@@ -19,9 +19,9 @@
 #define CLUSTERVIEW_H
 
 // include files for QT
-#include <qpainter.h>
+#include <QPainter>
 #include <qstyle.h>
-#include <qpixmap.h>
+#include <QPixmap>
 #include <QPolygon>
 #include <qtimer.h>
 #include <qregion.h>

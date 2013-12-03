@@ -18,7 +18,7 @@
 #include "prefwaveformview.h"
 
 // include files for QT
-#include <qpainter.h>
+#include <QPainter>
 #include <qfile.h>
 #include <QTextStream>
 #include <qmessagebox.h>

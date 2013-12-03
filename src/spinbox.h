@@ -19,7 +19,7 @@
 #define SPINBOX_H
 
 // include files for Qt
-#include <qspinbox.h> 
+#include <QSpinBox> 
 
 /**
   * Utility class, used to make sure mouse wheel events do not select the qlineedit inside the spinbox

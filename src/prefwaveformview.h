@@ -21,7 +21,7 @@
 // include files for QT
 #include <QWidget>
 #include <qabstractbutton.h>
-#include <qspinbox.h>
+#include <QSpinBox>
 #include <qmap.h>
 
 #include <QList>

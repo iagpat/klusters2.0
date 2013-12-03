@@ -20,7 +20,7 @@
 
 // include files for QT
 #include <QWidget>
-#include <qpixmap.h>
+#include <QPixmap>
 #include <QHash>
 #include <qpair.h>
 

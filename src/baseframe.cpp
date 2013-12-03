@@ -19,7 +19,7 @@
 
 // include files for Qt
 #include <qpaintdevice.h>
-#include <qpainter.h>
+#include <QPainter>
 #include <qstyle.h>
 
 #include <QResizeEvent>

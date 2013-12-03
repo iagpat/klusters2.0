@@ -26,7 +26,7 @@
 #include <QWidgetAction>
 
 // include files for Qt
-#include <qpainter.h>
+#include <QPainter>
 #include <QDir>
 #include <qlabel.h>
 #include <QDebug>

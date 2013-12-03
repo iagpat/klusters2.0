@@ -22,7 +22,7 @@
 #include <QWidget>
 #include <qcombobox.h>
 #include <qcheckbox.h> 
-#include <qspinbox.h>
+#include <QSpinBox>
 #include <qpushbutton.h>
 #include <qlineedit.h>
 

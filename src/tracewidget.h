@@ -26,7 +26,7 @@
 #include <qlineedit.h>
 #include <qlabel.h>
 #include <qscrollbar.h>
-#include <qpainter.h>
+#include <QPainter>
 #include <qstyle.h> 
 
 #include <QList>

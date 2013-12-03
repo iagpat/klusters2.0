@@ -25,13 +25,13 @@
 
 // include files for Qt
 #include <qvariant.h>
-#include <qpainter.h>
+#include <QPainter>
 #include <qlayout.h>
 #include <qtooltip.h>
 #include <QMouseEvent>
 #include <QDebug>
 
-#include <qpixmap.h>
+#include <QPixmap>
 #include <qbitmap.h>
 #include <qcolordialog.h>
 #include <QColor>

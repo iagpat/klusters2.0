@@ -25,7 +25,7 @@
 
 // include files for Qt
 #include <QList>
-#include <qspinbox.h> 
+#include <QSpinBox> 
 #include <qvalidator.h>
 #include <qlineedit.h>
 #include <qlabel.h>

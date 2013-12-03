@@ -21,7 +21,7 @@
 // include files for Qt
 #include <QWidget>
 
-#include <qpixmap.h>
+#include <QPixmap>
 
 #include <QList>
 

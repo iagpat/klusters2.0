@@ -18,7 +18,7 @@
 
 // include files for QT
 #include <QDir>
-#include <qpainter.h>
+#include <QPainter>
 #include <qapplication.h>
 #include <qcursor.h>
 #include <QPrinter>

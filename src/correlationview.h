@@ -25,9 +25,9 @@
 #include "data.h"
 
 // include files for QT
-#include <qpainter.h>
+#include <QPainter>
 #include <qstyle.h>
-#include <qpixmap.h>
+#include <QPixmap>
 #include <qtimer.h>
 #include <QList>
 

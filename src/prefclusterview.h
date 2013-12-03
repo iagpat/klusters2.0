@@ -20,7 +20,7 @@
 
 // include files for QT
 #include <QWidget>
-#include <qspinbox.h>
+#include <QSpinBox>
 
 //include files for the application
 #include <prefclusterviewlayout.h>
