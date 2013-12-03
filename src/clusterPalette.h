@@ -19,7 +19,7 @@
 
 //QT include files
 #include <qvariant.h>
-#include <qwidget.h>
+#include <QWidget>
 #include <QListWidget>
 #include <qtooltip.h>
 

@@ -24,7 +24,7 @@
 #include <QListWidgetItem>
 
 //include files for Qt
-#include <qcolor.h>
+#include <QColor>
 #include <QProcess>
 
 //forward declaration 

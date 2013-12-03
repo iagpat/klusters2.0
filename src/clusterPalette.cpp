@@ -34,7 +34,7 @@
 #include <qpixmap.h>
 #include <qbitmap.h>
 #include <qcolordialog.h>
-#include <qcolor.h>
+#include <QColor>
 #include <QFrame>
 #include <QList>
 #include <QStatusBar>

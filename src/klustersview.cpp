@@ -27,7 +27,7 @@
 
 // include files for Qt
 #include <qpainter.h>
-#include <qdir.h>
+#include <QDir>
 #include <qlabel.h>
 #include <QDebug>
 #include <QHBoxLayout>

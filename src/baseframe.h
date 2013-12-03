@@ -20,7 +20,7 @@
 
 #include "klusterrubberband.h"
 // include files for QT
-#include <qwidget.h>
+#include <QWidget>
 #include <qframe.h>
 #include <qcursor.h>
 

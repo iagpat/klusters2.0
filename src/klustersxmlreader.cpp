@@ -25,7 +25,7 @@
 
 //include files for QT
 #include <qfileinfo.h>
-#include <qstring.h>
+#include <QString>
 #include <QDebug>
 
 using namespace klusters;

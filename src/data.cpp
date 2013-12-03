@@ -29,7 +29,7 @@
 //Qt include files
 #include <qtextstream.h>
 #include <qstringlist.h>
-#include <qstring.h>
+#include <QString>
 #include <qregexp.h>
 
 #include <QList>

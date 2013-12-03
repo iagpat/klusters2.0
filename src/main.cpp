@@ -17,8 +17,8 @@
 
 
 // include files for QT
-#include <qdir.h>
-#include <qstring.h>
+#include <QDir>
+#include <QString>
 #include <QApplication>
 #include <QAction>
 #include <QDebug>

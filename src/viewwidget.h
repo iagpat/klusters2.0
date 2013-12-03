@@ -19,7 +19,7 @@
 #define VIEWWIDGET_H
 
 // include files for Qt
-#include <qwidget.h>
+#include <QWidget>
 
 #include <qpixmap.h>
 

@@ -28,11 +28,11 @@
 
 
 // include files for QT
-#include <qdir.h>
+#include <QDir>
 
 #include <qtooltip.h>
 #include <qtoolbutton.h>
-#include <qstring.h>
+#include <QString>
 #include <qimage.h>
 #include <qicon.h>  
 #include <qcursor.h>

@@ -19,9 +19,9 @@
 #define ERRORMATRIXVIEW_H
 
 // include files for Qt
-#include <qwidget.h>
+#include <QWidget>
 #include <qmap.h>
-#include <qcolor.h>
+#include <QColor>
 #include <QList>
 
 #include <QResizeEvent>

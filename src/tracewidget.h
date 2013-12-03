@@ -21,7 +21,7 @@
 #include "spinbox.h"
 
 // include files for QT
-#include <qwidget.h>
+#include <QWidget>
 #include <qvalidator.h>
 #include <qlineedit.h>
 #include <qlabel.h>

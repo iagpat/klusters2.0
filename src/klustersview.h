@@ -23,7 +23,7 @@
 #include <QStatusBar>
 
 // include files for Qt
-#include <qwidget.h>
+#include <QWidget>
 #include <qvector.h>
 #include <qprinter.h>
 

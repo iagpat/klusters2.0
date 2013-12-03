@@ -17,7 +17,7 @@
 #include "processlinemaker.h"
 
 // include files for QT
-#include <qdir.h>
+#include <QDir>
 #include <qpainter.h>
 #include <qapplication.h>
 #include <qcursor.h>

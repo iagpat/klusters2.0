@@ -21,7 +21,7 @@
 #define _PROCESSLINEMAKER_H_
 
 // include files for Qt
-#include <qstring.h>
+#include <QString>
 #include <qobject.h>
 
 

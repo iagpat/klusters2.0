@@ -19,7 +19,7 @@
 #define PREFWAVEFORMVIEW_H
 
 // include files for QT
-#include <qwidget.h>
+#include <QWidget>
 #include <qabstractbutton.h>
 #include <qspinbox.h>
 #include <qmap.h>

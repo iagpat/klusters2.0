@@ -18,7 +18,7 @@
 #include "tracewidget.h"
 
 // include files for QT
-#include <qstring.h>
+#include <QString>
 
 #include <QList>
 #include <QLabel>

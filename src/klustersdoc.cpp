@@ -16,10 +16,10 @@
  ***************************************************************************/
 
 // include files for Qt
-#include <qdir.h>
-#include <qwidget.h>
+#include <QDir>
+#include <QWidget>
 #include <qstringlist.h>
-#include <qstring.h>
+#include <QString>
 #include <qtimer.h>
 #include <qdatetime.h>
 #include <qapplication.h>

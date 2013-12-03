@@ -29,8 +29,8 @@
 
 // include files for QT
 #include <qobject.h>
-#include <qstring.h>
-#include <qpoint.h>
+#include <QString>
+#include <QPoint>
 #include <qfileinfo.h>
 
 
