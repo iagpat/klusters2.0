@@ -408,7 +408,24 @@ if(UNIX)
       set(CPACK_RPM_PACKAGE_URL "http://klusters.sourceforge.net")
       set(CPACK_GENERATOR "RPM")
       set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}.fc${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
-        
+
+      # Set Scientific-Linux-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
+      if(ARCHITECTURE MATCHES ".*x86_64.*")
+        set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
+      else()
+        set(CPACK_RPM_PACKAGE_ARCHITECTURE "i586")
+      endif()
+      set(CPACK_PACKAGE_CONTACT "Rajat Mani Thomas")
+      set(CPACK_RPM_PACKAGE_GROUP "Science")
+      set(CPACK_RPM_PACKAGE_LICENSE "GPL")
+      set(CPACK_RPM_PACKAGE_SUGGESTS "nphys-data, neuroscope, ndmanager")
+      set(CPACK_RPM_PACKAGE_REQUIRES "libklustersshared, libQtCore, libQtGui, libQtWebKit, libQtNetwork, libQtXml")
+      set(CPACK_RPM_PACKAGE_URL "http://klusters.sourceforge.net")
+      set(CPACK_GENERATOR "RPM")
+      set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postinst")
+      set(CPACK_RPM_POST_UNINSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postrm")
+      set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
+
     # >>> TEMPLATE CODE FOR ADDITIONAL REDHAT-LIKE DISTRIBUTIONS <<<
     
     #elseif(DISTRIBUTION MATCHES "openSUSE.*")
