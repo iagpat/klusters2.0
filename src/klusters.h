@@ -672,7 +672,7 @@ private:
 
     /*Small box where the user can enter the minimum allowable spike time difference between spikes
     * for plotting in the bin waveform display*/
-    QLineEdit* minSpikeDiffBox;
+    //QLineEdit* minSpikeDiffBox;
 
     /**Time frame to use to compute the correlograms.*/
     int correlogramTimeFrame;
@@ -681,12 +681,12 @@ private:
     int binSize;
 
     /*Minimum allowable spike time difference between spikes for plotting in the bin waveform display*/
-    int minSpikeDiff;
+    //int minSpikeDiff;
 
     QLabel* correlogramsHalfDurationLabel;
     QLabel* binSizeLabel;
 
-    QLabel* minSpikeDiffLabel;
+    //QLabel* minSpikeDiffLabel;
 
     class BinSizeValidator;
     friend class BinSizeValidator;
@@ -840,8 +840,8 @@ private:
     QAction *spikesTodisplayAction;
     QAction *binSizeLabelAction;
     QAction *binSizeBoxAction;
-    QAction *minSpikeDiffLabelAction;
-    QAction *minSpikeDiffBoxAction;
+    //QAction *minSpikeDiffLabelAction;
+    //QAction *minSpikeDiffBoxAction;
     QAction *correlogramsHalfDurationLabelAction;
     QAction *correlogramsHalfDurationAction;
 
