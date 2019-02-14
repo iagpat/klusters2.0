@@ -657,6 +657,7 @@ private:
     */
     static const QString INITIAL_CORRELOGRAMS_HALF_TIME_FRAME;
     static const QString DEFAULT_BIN_SIZE;
+    static const QString DEFAULT_MIN_SPIKE_DIFF;
 
     /**Length of the recording in miliseconds.*/
     long maximumTime;
@@ -669,14 +670,23 @@ private:
     * to compute the correlograms.*/
     QLineEdit* binSizeBox;
 
+    /*Small box where the user can enter the minimum allowable spike time difference between spikes
+    * for plotting in the bin waveform display*/
+    QLineEdit* minSpikeDiffBox;
+
     /**Time frame to use to compute the correlograms.*/
     int correlogramTimeFrame;
     
     /**Size of the bins to use to compute the correlograms.*/
     int binSize;
 
+    /*Minimum allowable spike time difference between spikes for plotting in the bin waveform display*/
+    int minSpikeDiff;
+
     QLabel* correlogramsHalfDurationLabel;
     QLabel* binSizeLabel;
+
+    QLabel* minSpikeDiffLabel;
 
     class BinSizeValidator;
     friend class BinSizeValidator;
@@ -830,6 +840,8 @@ private:
     QAction *spikesTodisplayAction;
     QAction *binSizeLabelAction;
     QAction *binSizeBoxAction;
+    QAction *minSpikeDiffLabelAction;
+    QAction *minSpikeDiffBoxAction;
     QAction *correlogramsHalfDurationLabelAction;
     QAction *correlogramsHalfDurationAction;
 

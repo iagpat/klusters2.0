@@ -52,7 +52,7 @@ endif()
 add_definitions(${QT_DEFINITIONS} )
 
 include(MacroEnsureVersion)
-find_package(LibKlustersShared 1.0.12 REQUIRED)
+find_package(LibKlustersShared 2.0.0 REQUIRED)
 include(CheckCXXCompilerFlag)
 
 
@@ -270,20 +270,20 @@ if (CMAKE_C_COMPILER MATCHES "icc")
 endif (CMAKE_C_COMPILER MATCHES "icc")
 
 # Adjust code on OS X since file operation are always 64bit there.
-if(APPLE) 
+if(APPLE)
   set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -Dfseeko64=fseeko")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Dfseeko64=fseeko")
 
   set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS}   -Dftello64=ftello")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Dftello64=ftello")
 endif()
- 
+
 if (MSVC)
    set (KDE4_ENABLE_EXCEPTIONS -EHsc)
    # Qt disables the native wchar_t type, do it too to avoid linking issues
    set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Zc:wchar_t-" )
    add_definitions( -DUSE_MSVC_COMPILER )
-endif()   
+endif()
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 add_definitions(${KDE4_ENABLE_EXCEPTIONS})
@@ -299,9 +299,9 @@ INCLUDE(InstallRequiredSystemLibraries)
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Cluster cutting application")
 set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_SOURCE_DIR}/description)
 set(CPACK_PACKAGE_NAME "klusters" )
-set(CPACK_PACKAGE_VERSION_MAJOR "1")
-set(CPACK_PACKAGE_VERSION_MINOR "99")
-set(CPACK_PACKAGE_VERSION_PATCH "2")
+set(CPACK_PACKAGE_VERSION_MAJOR "2")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "klusters")
 set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
 if(WIN32)
@@ -329,12 +329,12 @@ if(UNIX)
  else()
     set(CPACK_GENERATOR "TBZ2") # for testing mostly, we probably want STGZ or RPM/DEB
     set(CPACK_SYSTEM_NAME "${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
-    
+
     # Determine distribution and release
     execute_process(COMMAND lsb_release -si OUTPUT_VARIABLE DISTRIBUTION OUTPUT_STRIP_TRAILING_WHITESPACE)
     execute_process(COMMAND lsb_release -sc OUTPUT_VARIABLE RELEASE OUTPUT_STRIP_TRAILING_WHITESPACE)
     execute_process(COMMAND uname -i OUTPUT_VARIABLE ARCHITECTURE)
-    
+
     # Set package type (deb vs rpm) and info
     if(DISTRIBUTION STREQUAL "Ubuntu")
 
@@ -354,7 +354,7 @@ if(UNIX)
       set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/postinst;${CMAKE_CURRENT_SOURCE_DIR}/postrm;" )
 
     # >>> TEMPLATE CODE FOR ADDITIONAL DEBIAN-LIKE DISTRIBUTIONS <<<
-    
+
     #elseif(DISTRIBUTION STREQUAL "Ubuntu")
     #
     #  # Set Debian-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
@@ -371,7 +371,7 @@ if(UNIX)
     #  set(CPACK_GENERATOR "DEB")
     #  set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/postinst;${CMAKE_CURRENT_SOURCE_DIR}/postrm;" )
     #  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}-${RELEASE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE})
-    
+
     elseif(DISTRIBUTION MATCHES "openSUSE.*")
 
       # Set openSUSE-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
@@ -382,7 +382,7 @@ if(UNIX)
       endif()
       set(CPACK_PACKAGE_CONTACT "Michaël Zugaro")
       set(CPACK_RPM_PACKAGE_GROUP "Science")
-      set(CPACK_RPM_PACKAGE_LICENSE "GPL")		
+      set(CPACK_RPM_PACKAGE_LICENSE "GPL")
       set(CPACK_RPM_PACKAGE_SUGGESTS "nphys-data, neuroscope, ndmanager")
       set(CPACK_RPM_PACKAGE_REQUIRES "libklustersshared, libqt4, libqt4-x11, libQtWebKit4")
       set(CPACK_RPM_PACKAGE_URL "http://klusters.sourceforge.net")
@@ -402,9 +402,9 @@ if(UNIX)
       endif()
       set(CPACK_PACKAGE_CONTACT "Michaël Zugaro")
       set(CPACK_RPM_PACKAGE_GROUP "Science")
-      set(CPACK_RPM_PACKAGE_LICENSE "GPL")		
+      set(CPACK_RPM_PACKAGE_LICENSE "GPL")
       set(CPACK_RPM_PACKAGE_SUGGESTS "nphys-data, neuroscope, ndmanager")
-      set(CPACK_RPM_PACKAGE_REQUIRES "libklustersshared, qt, qt-mobility, qtwebkit, qt-x11")          
+      set(CPACK_RPM_PACKAGE_REQUIRES "libklustersshared, qt, qt-mobility, qtwebkit, qt-x11")
       set(CPACK_RPM_PACKAGE_URL "http://klusters.sourceforge.net")
       set(CPACK_GENERATOR "RPM")
       set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}.fc${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
@@ -427,7 +427,7 @@ if(UNIX)
       set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
 
     # >>> TEMPLATE CODE FOR ADDITIONAL REDHAT-LIKE DISTRIBUTIONS <<<
-    
+
     #elseif(DISTRIBUTION MATCHES "openSUSE.*")
     #
     #  # Set openSUSE-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
@@ -438,7 +438,7 @@ if(UNIX)
     #  endif()
     #  set(CPACK_PACKAGE_CONTACT "Michaël Zugaro")
     #  set(CPACK_RPM_PACKAGE_GROUP "Science")
-    #  set(CPACK_RPM_PACKAGE_LICENSE "GPL")		
+    #  set(CPACK_RPM_PACKAGE_LICENSE "GPL")
     #  set(CPACK_RPM_PACKAGE_SUGGESTS "nphys-data, neuroscope, ndmanager")
     #  set(CPACK_RPM_PACKAGE_REQUIRES "libklustersshared, libqt4, libqt4-x11, libQtWebKit4")
     #  set(CPACK_RPM_PACKAGE_URL "http://klusters.sourceforge.net")

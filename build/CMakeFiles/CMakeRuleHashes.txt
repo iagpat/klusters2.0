@@ -1,0 +1,7 @@
+# Hashes of file build rules.
+1293b3a08107241680f9b67bd5688847 src/CMakeFiles/klusters_automoc
+403179188df9fb32149379b3defc8355 src/qrc_klusters-cursors.cxx
+1facb1ba4c5c8446c1ebce9e802239ea src/qrc_klusters-icons.cxx
+d42d8834bff6d3956af2c07674ce96a4 src/ui_prefclusterviewlayout.h
+2f27348ee8f7051849016c7baab4e1f5 src/ui_prefgenerallayout.h
+e50610348610b002eb21aa873129e81c src/ui_prefwaveformviewlayout.h

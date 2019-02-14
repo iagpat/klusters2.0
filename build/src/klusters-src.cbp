@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+   <FileVersion major="1" minor="6" />
+   <Project>
+      <Option title="klusters-src" />
+      <Option makefile_is_custom="1" />
+      <Option compiler="gcc" />
+      <Option virtualFolders="CMake Files\;CMake Files\cmake\;CMake Files\cmake\modules\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\usr\lib\cmake\;CMake Files\..\..\..\..\..\usr\lib\cmake\LibKlustersShared\;CMake Files\src\;CMake Files\po\;CMake Files\doc\;" />
+      <Build>
+      <Target title="all">
+         <Option working_dir="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 all" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="klusters">
+         <Option output="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/klusters" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src" />
+         <Option object_output="./" />
+         <Option type="0" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DQT_NO_DEBUG" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add option="-D_BSD_SOURCE" />
+            <Add option="-DQT_USE_FAST_CONCATENATION" />
+            <Add option="-DQT_USE_FAST_OPERATOR_PLUS" />
+            <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build" />
+            <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src" />
+            <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src" />
+            <Add directory="/usr/include/klustersshared" />
+            <Add directory="/usr/include/qt4" />
+            <Add directory="/usr/include/qt4/Qt3Support" />
+            <Add directory="/usr/include/qt4/QtCore" />
+            <Add directory="/usr/include/qt4/QtDBus" />
+            <Add directory="/usr/include/qt4/QtDeclarative" />
+            <Add directory="/usr/include/qt4/QtDesigner" />
+            <Add directory="/usr/include/qt4/QtGui" />
+            <Add directory="/usr/include/qt4/QtHelp" />
+            <Add directory="/usr/include/qt4/QtNetwork" />
+            <Add directory="/usr/include/qt4/QtOpenGL" />
+            <Add directory="/usr/include/qt4/QtScript" />
+            <Add directory="/usr/include/qt4/QtScriptTools" />
+            <Add directory="/usr/include/qt4/QtSql" />
+            <Add directory="/usr/include/qt4/QtSvg" />
+            <Add directory="/usr/include/qt4/QtTest" />
+            <Add directory="/usr/include/qt4/QtUiTools" />
+            <Add directory="/usr/include/qt4/QtWebKit" />
+            <Add directory="/usr/include/qt4/QtXml" />
+            <Add directory="/usr/include/qt4/QtXmlPatterns" />
+            <Add directory="/usr/share/qt4/mkspecs/default" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 klusters" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="klusters/fast">
+         <Option output="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/klusters" prefix_auto="0" extension_auto="0" />
+         <Option working_dir="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src" />
+         <Option object_output="./" />
+         <Option type="0" />
+         <Option compiler="gcc" />
+         <Compiler>
+            <Add option="-DQT_NO_DEBUG" />
+            <Add option="-DQT_GUI_LIB" />
+            <Add option="-DQT_CORE_LIB" />
+            <Add option="-D_BSD_SOURCE" />
+            <Add option="-DQT_USE_FAST_CONCATENATION" />
+            <Add option="-DQT_USE_FAST_OPERATOR_PLUS" />
+            <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build" />
+            <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src" />
+            <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src" />
+            <Add directory="/usr/include/klustersshared" />
+            <Add directory="/usr/include/qt4" />
+            <Add directory="/usr/include/qt4/Qt3Support" />
+            <Add directory="/usr/include/qt4/QtCore" />
+            <Add directory="/usr/include/qt4/QtDBus" />
+            <Add directory="/usr/include/qt4/QtDeclarative" />
+            <Add directory="/usr/include/qt4/QtDesigner" />
+            <Add directory="/usr/include/qt4/QtGui" />
+            <Add directory="/usr/include/qt4/QtHelp" />
+            <Add directory="/usr/include/qt4/QtNetwork" />
+            <Add directory="/usr/include/qt4/QtOpenGL" />
+            <Add directory="/usr/include/qt4/QtScript" />
+            <Add directory="/usr/include/qt4/QtScriptTools" />
+            <Add directory="/usr/include/qt4/QtSql" />
+            <Add directory="/usr/include/qt4/QtSvg" />
+            <Add directory="/usr/include/qt4/QtTest" />
+            <Add directory="/usr/include/qt4/QtUiTools" />
+            <Add directory="/usr/include/qt4/QtWebKit" />
+            <Add directory="/usr/include/qt4/QtXml" />
+            <Add directory="/usr/include/qt4/QtXmlPatterns" />
+            <Add directory="/usr/share/qt4/mkspecs/default" />
+         </Compiler>
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 klusters/fast" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      <Target title="klusters_automoc">
+         <Option working_dir="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src" />
+         <Option type="4" />
+         <MakeCommands>
+            <Build command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 klusters_automoc" />
+            <CompileFile command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 &quot;$file&quot;" />
+            <Clean command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 clean" />
+            <DistClean command="/usr/bin/make -f &quot;/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/Makefile&quot;  VERBOSE=1 clean" />
+         </MakeCommands>
+      </Target>
+      </Build>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/autosavethread.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/autosavethread.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/baseframe.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/baseframe.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/channellist.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/channellist.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clusterPalette.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clusterPalette.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clusterinformationdialog.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clusterinformationdialog.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clustersprovider.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clustersprovider.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clusterview.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clusterview.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/configuration.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/configuration.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/correlationthread.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/correlationthread.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/correlationview.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/correlationview.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/data.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/data.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/dataprovider.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/dataprovider.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/errormatrixthread.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/errormatrixthread.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/errormatrixview.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/errormatrixview.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/eventsprovider.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/eventsprovider.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/groupingassistant.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/groupingassistant.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-cursors.qrc">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-icons.qrc">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klustersdoc.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klustersdoc.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klustersview.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klustersview.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klustersxmlreader.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klustersxmlreader.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/main.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/minmaxthread.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/minmaxthread.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/pair.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/pair.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/parameterxmlmodifier.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/parameterxmlmodifier.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefclusterview.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefclusterview.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefclusterviewlayout.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefclusterviewlayout.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefclusterviewlayout.ui">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefdialog.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefdialog.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgeneral.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgeneral.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgenerallayout.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgenerallayout.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgenerallayout.ui">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformview.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformview.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformviewlayout.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformviewlayout.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformviewlayout.ui">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/processlinemaker.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/processlinemaker.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/processwidget.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/processwidget.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/savethread.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/savethread.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/sortabletable.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/sortabletable.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/spinbox.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/spinbox.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tags.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tags.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tracesprovider.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tracesprovider.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/traceview.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/traceview.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tracewidget.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tracewidget.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/viewwidget.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/viewwidget.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformthread.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformthread.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformview.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformview.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/config-klusters.h.cmake">
+          <Option virtualFolder="CMake Files\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/cmake/modules/MacroEnsureVersion.cmake">
+          <Option virtualFolder="CMake Files\cmake\modules\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/../../../../../usr/lib/cmake/LibKlustersShared/LibKlustersSharedConfigVersion.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\cmake\LibKlustersShared\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/../../../../../usr/lib/cmake/LibKlustersShared/LibKlustersSharedConfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\cmake\LibKlustersShared\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/../../../../../usr/lib/cmake/LibKlustersShared/LibKlustersSharedTargetsWithPrefix.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\cmake\LibKlustersShared\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/../../../../../usr/lib/cmake/LibKlustersShared/LibKlustersSharedTargetsWithPrefix-noconfig.cmake">
+          <Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\cmake\LibKlustersShared\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-cursors.qrc">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-icons.qrc">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-cursors.qrc">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-icons.qrc">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/po/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\po\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/po/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\po\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/doc/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\doc\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/doc/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\doc\" />
+      </Unit>
+   </Project>
+</CodeBlocks_project_file>

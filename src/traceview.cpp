@@ -168,6 +168,9 @@ TraceView::TraceView(TracesProvider& tracesProvider,bool greyScale,bool multiCol
     setMouseTracking(true);
 
     //Get the data.
+    qDebug()<<"traceview.cpp line 171 tracesProvider.requestData";
+    qDebug()<<"startTime = " << startTime;
+    qDebug()<<"endTime = " << endTime;
     tracesProvider.requestData(startTime,endTime,this,startTimeInRecordingUnits);
 }
 
@@ -347,6 +350,9 @@ void TraceView::updateClusterData(bool active){
             iterator.next();
             if(iterator.key() != clusterProviderToSkip){
                 iterator.value()->setStatus(false);
+                qDebug()<<"traceview.cpp line 398 requestData";
+                qDebug()<<"startTime = " << startTime;
+                qDebug()<<"endTime = " << endTime;
                 static_cast<ClustersProvider*>(clusterProviders[iterator.key()])->requestData(startTime,endTime,this,startTimeInRecordingUnits);
             }
             else clusterProviderToSkip.clear();
@@ -391,6 +397,9 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
 
             if(iterator.key() != clusterProviderToSkip){
                 iterator.value()->setStatus(false);
+                qDebug()<<"traceview.cpp line 401 requestData";
+                qDebug()<<"startTime = " << startTime;
+                qDebug()<<"endTime = " << endTime;
                 static_cast<ClustersProvider*>(clusterProviders[iterator.key()])->requestData(startTime,endTime,this,startTimeInRecordingUnits);
             }
             else clusterProviderToSkip.clear();
@@ -418,12 +427,17 @@ void TraceView::displayTimeFrame(long start,long timeFrameWidth){
             iterator.next();
             if(iterator.key() != eventProviderToSkip){
                 iterator.value()->setStatus(false);
+                qDebug()<<"traceview.cpp line 431 requestData";
+                qDebug()<<"startTime = " << startTime;
+                qDebug()<<"endTime = " << endTime;
                 static_cast<EventsProvider*>(eventProviders[iterator.key()])->requestData(startTime,endTime,this);
             }
             else eventProviderToSkip.clear();
         }
     }
-
+    qDebug()<<"traceview.cpp line 439 requestData";
+    qDebug()<<"startTime = " << startTime;
+    qDebug()<<"endTime = " << endTime;
     tracesProvider.requestData(startTime,endTime,this,startTimeInRecordingUnits);
 }
 
@@ -488,6 +502,9 @@ void TraceView::paintEvent ( QPaintEvent*){
         while (iterator.hasNext()) {
             iterator.next();
             if(eventProvidersToUpdate.contains(iterator.key())){
+                qDebug()<<"traceview.cpp line 432 requestData";
+                qDebug()<<"startTime = " << startTime;
+                qDebug()<<"endTime = " << endTime;
                 static_cast<EventsProvider*>(eventProviders[iterator.key()])->requestData(startTime,endTime,this);
                 eventProvidersToUpdate.removeAll(iterator.key());
             }
@@ -662,6 +679,9 @@ void TraceView::showChannels(const QList<int>& channelsToShow){
 
     //Request the data
     dataReady = false;
+    qDebug()<<"traceview.cpp line 683 requestData";
+    qDebug()<<"startTime = " << startTime;
+    qDebug()<<"endTime = " << endTime;
     tracesProvider.requestData(startTime,endTime,this,startTimeInRecordingUnits);
 }
 
@@ -3459,6 +3479,9 @@ void TraceView::addClusterProvider(ClustersProvider* clustersProvider,QString na
         //if the view is the active one, load the cluster data for the current start time and time window
         if(active){
             setCursor(Qt::WaitCursor);
+            qDebug()<<"traceview.cpp line 3483 requestData";
+            qDebug()<<"startTime = " << startTime;
+            qDebug()<<"endTime = " << endTime;
             clustersProvider->requestData(startTime,endTime,this,startTimeInRecordingUnits);
         }
     }
@@ -3504,6 +3527,9 @@ void TraceView::showClusters(const QString &name,QList<int>& clustersToShow){
             ClustersProvider* provider = clusterProviders[name];
             setCursor(Qt::WaitCursor);
             updateWindow();
+            qDebug()<<"traceview.cpp line 3531 requestData";
+            qDebug()<<"startTime = " << startTime;
+            qDebug()<<"endTime = " << endTime;
             provider->requestData(startTime,endTime,this,startTimeInRecordingUnits);
         }
         //Redraw
@@ -3650,6 +3676,9 @@ void TraceView::addEventProvider(EventsProvider* eventsProvider,QString name,Ite
         //if the view is the active one, load the event data for the current start time and time window
         if(active){
             setCursor(Qt::WaitCursor);
+            qDebug()<<"traceview.cpp line 3680 requestData";
+            qDebug()<<"startTime = " << startTime;
+            qDebug()<<"endTime = " << endTime;
             eventsProvider->requestData(startTime,endTime,this);
         }
     }
@@ -3685,6 +3714,9 @@ void TraceView::showEvents(QString name,QList<int>& eventsToShow){
             eventsData.insert(name,eventData);
             EventsProvider* provider = eventProviders[name];
             setCursor(Qt::WaitCursor);
+            qDebug()<<"traceview.cpp line 3718 requestData";
+            qDebug()<<"startTime = " << startTime;
+            qDebug()<<"endTime = " << endTime;
             provider->requestData(startTime,endTime,this);
         }
         //Redraw

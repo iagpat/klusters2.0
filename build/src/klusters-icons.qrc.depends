@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/backCluster.png</file>
+        <file>icons/clusterview.png</file>
+        <file>icons/delete_artefact.png</file>
+        <file>icons/delete_artefact_tool.png</file>
+        <file>icons/delete_noise.png</file>
+        <file>icons/delete_noise_tool.png</file>
+        <file>icons/forwardCluster.png</file>
+        <file>icons/group.png</file>
+        <file>icons/grouping_assistant_update.png</file>
+        <file>icons/new_cluster.png</file>
+        <file>icons/new_clusters.png</file>
+        <file>icons/time_tool.png</file>
+        <file>icons/update.png</file>
+        <file>icons/waveformview.png</file>
+        <file>icons/zoom_tool.png</file>
+    </qresource>
+</RCC>

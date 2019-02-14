@@ -80,6 +80,7 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
         //emit the signal with an empty array, the reciever will take care of it, given a message to the user.
         data.setSize(0,0);
         emit dataReady(data,initiator);
+        qDebug()<<"tracesprovide.cpp line 83"; //Debugging
         return;
     }
 
@@ -131,6 +132,7 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
         QFile dataFile(fileName);
         if (!dataFile.open(QIODevice::ReadOnly)) {
             data.setSize(0,0);
+            qDebug()<<"tracesprovide.cpp line 135"; //Debugging
             emit dataReady(data,initiator);
             return;
         }
@@ -145,6 +147,9 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
             //emit the signal with an empty array, the reciever will take care of it, given a message to the user.
             data.setSize(0,0);
             dataFile.close();
+            qDebug()<<"tracesprovide.cpp line 150"; //Debugging
+            qDebug()<<"nbRead = " << nbRead;
+            qDebug()<<"qint64(nbValues*sizeof(short)) = " << qint64(nbValues*sizeof(short));
             emit dataReady(data,initiator);
             return;
         }
@@ -165,6 +170,7 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
         QFile dataFile(fileName);
         if (!dataFile.open(QIODevice::ReadOnly)) {
             data.setSize(0,0);
+            qDebug()<<"tracesprovide.cpp line 171"; //Debugging
             emit dataReady(data,initiator);
             return;
         }
@@ -180,6 +186,7 @@ void TracesProvider::retrieveData(long startTime,long endTime,QObject* initiator
             //emit the signal with an empty array, the reciever will take care of it, given a message to the user.
             data.setSize(0,0);
             dataFile.close();
+            qDebug()<<"tracesprovide.cpp line 187"; //Debugging
             emit dataReady(data,initiator);
             return;
         }
@@ -239,9 +246,10 @@ void TracesProvider::computeRecordingLength(){
 
     length = static_cast<long long>(
                 static_cast<double>(
-                    fileLength / static_cast<double>(nbChannels) * samplingRate * static_cast<double>(dataSize)
+                    fileLength / (static_cast<double>(nbChannels) * samplingRate * static_cast<double>(dataSize))
                     ) * 1000
                 );
+    qDebug()<< "tracesprovider.cpp line 252 the length of the recording is calculated as " << length;
 }
 
 long TracesProvider::getTotalNbSamples(){

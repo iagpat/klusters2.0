@@ -1,0 +1,10 @@
+#!/bin/sh
+# startup file for MacOS bundle
+
+bundle="`echo "$0" | sed -e 's_/Contents/MacOS/Klusters__'`"
+resources="$bundle/Contents/Resources"
+
+export "DYLD_LIBRARY_PATH=$resources/lib"
+export "PATH=$resources/bin:$PATH"
+
+exec "$resources/bin/klusters"

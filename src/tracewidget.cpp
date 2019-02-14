@@ -24,6 +24,7 @@
 #include <QLabel>
 #include <QKeyEvent>
 #include <QVBoxLayout>
+#include <QDebug>
 
 //includes files for KDE
 
@@ -95,6 +96,9 @@ void TraceWidget::initSelectionWidgets(){
     lay->addWidget(startLabel);
 
     minutePart = recordingLength / 60000;
+    qDebug()<<"tracewidget.cpp line 99 minutePart is: " << minutePart;
+    qDebug()<<"tracewidget.cpp line 100 recording length is: " << recordingLength;
+
     int remainingSeconds = static_cast<int>(fmod(static_cast<double>(recordingLength),60000));
     secondPart = remainingSeconds / 1000;
     milisecondPart = static_cast<int>(fmod(static_cast<double>(remainingSeconds),1000));
