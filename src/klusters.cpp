@@ -88,8 +88,8 @@ KlustersApp::KlustersApp()
       correlogramTimeFrame(INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1),
       binSize(DEFAULT_BIN_SIZE.toInt()),
       binSizeValidator(this),
-      //minSpikeDiff(DEFAULT_MIN_SPIKE_DIFF.toInt()),
-      //minSpikeDiffValidator(this),
+      minSpikeDiff(DEFAULT_MIN_SPIKE_DIFF.toInt()),
+      minSpikeDiffValidator(this),
       correlogramsHalfTimeFrameValidator(this),
       prefDialog(0L),
       processWidget(0L),
@@ -713,7 +713,7 @@ void KlustersApp::initSelectionBoxes(){
     binSizeBoxAction = paramBar->addWidget(binSizeBox);
     connect(binSizeBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateBinSize()));
 
-    /*minSpikeDiffBox = new QLineEdit(paramBar);
+    minSpikeDiffBox = new QLineEdit(paramBar);
     minSpikeDiffBox->setObjectName("DEFAULT_MIN_SPIKE_DIFF");
     minSpikeDiffBox->setMaxLength(100);
     minSpikeDiffLabel = new QLabel("  Min. Spike Diff. (ms)", paramBar);
@@ -723,7 +723,7 @@ void KlustersApp::initSelectionBoxes(){
     minSpikeDiffBox->setMinimumSize(30,minSpikeDiffBox->minimumHeight());
     minSpikeDiffBox->setMaximumSize(30,minSpikeDiffBox->maximumHeight());
     minSpikeDiffBoxAction = paramBar->addWidget(minSpikeDiffBox);
-    connect(minSpikeDiffBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateMinSpikeSize()));*/
+    connect(minSpikeDiffBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateMinSpikeSize()));
 
     correlogramsHalfDuration = new QLineEdit(paramBar);
     correlogramsHalfDuration->setObjectName("INITIAL_CORRELOGRAMS_HALF_TIME_FRAME");
@@ -885,9 +885,9 @@ void KlustersApp::initDisplay(){
     binSizeBox->setText(DEFAULT_BIN_SIZE);
     binSizeBoxAction->setVisible(true);
     binSizeLabelAction->setVisible(true);
-    /*minSpikeDiffBox->setText(DEFAULT_MIN_SPIKE_DIFF);
+    minSpikeDiffBox->setText(DEFAULT_MIN_SPIKE_DIFF);
     minSpikeDiffBoxAction->setVisible(true);
-    minSpikeDiffLabelAction->setVisible(true);*/
+    minSpikeDiffLabelAction->setVisible(true);
     shoulderLine->setChecked(true);
 
     //Set the range value of the spine boxes
@@ -2176,16 +2176,16 @@ void KlustersApp::slotTabChange(int index){
                 //Update the lineEdit
                 correlogramTimeFrame = activeView->correlationTimeFrameWidth();
                 binSize = activeView->sizeOfBin();
-                //minSpikeDiff = activeView->minDiffOfSpike();
+                minSpikeDiff = activeView->minDiffOfSpike();
                 correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
                 binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
-                //minSpikeDiffBox->setText(QString::fromLatin1("%1").arg(minSpikeDiff));
+                minSpikeDiffBox->setText(QString::fromLatin1("%1").arg(minSpikeDiff));
                 correlogramsHalfDurationAction->setVisible(true);
                 correlogramsHalfDurationLabelAction->setVisible(true);
                 binSizeBoxAction->setVisible(true);
                 binSizeLabelAction->setVisible(true);
-                //minSpikeDiffBoxAction->setVisible(true);
-                //minSpikeDiffLabelAction->setVisible(true);
+                minSpikeDiffBoxAction->setVisible(true);
+                minSpikeDiffLabelAction->setVisible(true);
 
                 //Update the shoulder line menu entry
                 shoulderLine->setChecked(activeView->isShoulderLine());
@@ -2196,8 +2196,8 @@ void KlustersApp::slotTabChange(int index){
                 correlogramsHalfDurationLabelAction->setVisible(false);
                 binSizeBoxAction->setVisible(false);
                 binSizeLabelAction->setVisible(false);
-                //minSpikeDiffBoxAction->setVisible(false);
-                //minSpikeDiffLabelAction->setVisible(false);
+                minSpikeDiffBoxAction->setVisible(false);
+                minSpikeDiffLabelAction->setVisible(false);
             }
 
             if(activeView->containsErrorMatrixView()) {
@@ -2255,8 +2255,8 @@ void KlustersApp::slotTabChange(int index){
         correlogramsHalfDurationLabelAction->setVisible(false);
         binSizeBoxAction->setVisible(false);
         binSizeLabelAction->setVisible(false);
-        //minSpikeDiffBoxAction->setVisible(false);
-        //minSpikeDiffLabelAction->setVisible(false);
+        minSpikeDiffBoxAction->setVisible(false);
+        minSpikeDiffLabelAction->setVisible(false);
 
         //Update the palette of clusters
         if(!processFinished) {
@@ -2340,11 +2340,11 @@ void KlustersApp::resetState(){
     correlogramsHalfDurationLabelAction->setVisible(false);
     binSizeBoxAction->setVisible(false);
     binSizeLabelAction->setVisible(false);
-    //minSpikeDiffBoxAction->setVisible(false);
-    //minSpikeDiffLabelAction->setVisible(false);
+    minSpikeDiffBoxAction->setVisible(false);
+    minSpikeDiffLabelAction->setVisible(false);
     shoulderLine->setChecked(true);
     binSize = DEFAULT_BIN_SIZE.toInt();
-    //minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
+    minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
     correlogramTimeFrame = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
     startTime = 0;
     timeWindow = INITIAL_WAVEFORM_TIME_WINDOW.toLong();
@@ -2397,12 +2397,12 @@ void KlustersApp::slotUpdateBinSize(){
     }
 }
 
-/*void KlustersApp::slotUpdateMinSpikeDiff(){
+void KlustersApp::slotUpdateMinSpikeDiff(){
     if(!isInit){
         minSpikeDiff = (minSpikeDiffBox->displayText()).toInt();
         //activeView()->updateBinSizeAndTimeFrame(binSize,correlogramTimeFrame);
     }
-}*/
+}
 
 void KlustersApp::slotUpdateParameterBar(){  
     durationAction->setVisible(false);
@@ -2418,8 +2418,8 @@ void KlustersApp::slotUpdateParameterBar(){
     correlogramsHalfDurationLabelAction->setVisible(false);
     binSizeBoxAction->setVisible(false);
     binSizeLabelAction->setVisible(false);
-    //minSpikeDiffBoxAction->setVisible(false);
-    //minSpikeDiffLabelAction->setVisible(false);
+    minSpikeDiffBoxAction->setVisible(false);
+    minSpikeDiffLabelAction->setVisible(false);
 
     if(mainDock != 0L){
         KlustersView* currentView = activeView();
@@ -2448,8 +2448,8 @@ void KlustersApp::slotUpdateParameterBar(){
             correlogramsHalfDurationLabelAction->setVisible(true);
             binSizeBoxAction->setVisible(true);
             binSizeLabelAction->setVisible(true);
-            //minSpikeDiffBoxAction->setVisible(true);
-            //minSpikeDiffLabelAction->setVisible(true);
+            minSpikeDiffBoxAction->setVisible(true);
+            minSpikeDiffLabelAction->setVisible(true);
         }
     }
 }
@@ -2772,16 +2772,16 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType){
             scaleByMax->setChecked(true);
             correlogramTimeFrame = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
             binSize = DEFAULT_BIN_SIZE.toInt();
-            //minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
+            minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
             correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
             binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
-            //minSpikeDiffBox->setText(QString::fromLatin1("%1").arg(minSpikeDiff));
+            minSpikeDiffBox->setText(QString::fromLatin1("%1").arg(minSpikeDiff));
             correlogramsHalfDurationAction->setVisible(true);
             correlogramsHalfDurationLabelAction->setVisible(true);
             binSizeBoxAction->setVisible(true);
             binSizeLabelAction->setVisible(true);
-            //minSpikeDiffBoxAction->setVisible(true);
-           //minSpikeDiffLabelAction->setVisible(true);
+            minSpikeDiffBoxAction->setVisible(true);
+            minSpikeDiffLabelAction->setVisible(true);
             //Update the shoulder line menu entry
             shoulderLine->setChecked(true);
             break;
@@ -2839,8 +2839,8 @@ void KlustersApp::widgetRemovedFromDisplay(KlustersView::DisplayType displayType
         correlogramsHalfDurationLabelAction->setVisible(false);
         binSizeBoxAction->setVisible(false);
         binSizeLabelAction->setVisible(false);
-        //minSpikeDiffBoxAction->setVisible(false);
-        //minSpikeDiffLabelAction->setVisible(false);
+        minSpikeDiffBoxAction->setVisible(false);
+        minSpikeDiffLabelAction->setVisible(false);
         break;
     case KlustersView::ERROR_MATRIX :
         slotStateChanged("noErrorMatrixViewState");
