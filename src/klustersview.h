@@ -472,6 +472,11 @@ public:
         return binSize;
     }
 
+    /**Returns the min spike diff used in the view*/
+    long minDiffOfSpikes() const {
+        return minSpikeDiff;
+    }
+
     /**Returns a boolean indicating if the view contains a CorrelationView.
   * @return true if the view contains a CorrelationView, false otherwise.*/
     bool containsCorrelationView() const {return isThereCorrelationView;}
@@ -814,6 +819,9 @@ private:
 
     /**Size of the bins to use to compute the correlograms.*/
     int binSize;
+
+    /*Minimus distance between spikes*/
+    int minSpikeDiff;
 
     /**Width of the time frame to use to compute the correlograms.*/
     int correlogramTimeFrame;

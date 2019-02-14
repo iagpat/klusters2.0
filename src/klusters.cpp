@@ -68,6 +68,7 @@ const QString KlustersApp::INITIAL_WAVEFORM_TIME_WINDOW = "30";
 const long KlustersApp::DEFAULT_NB_SPIKES_DISPLAYED = 100;
 const QString KlustersApp::INITIAL_CORRELOGRAMS_HALF_TIME_FRAME = "30";
 const QString KlustersApp::DEFAULT_BIN_SIZE = "1";
+const QString KlustersApp::DEFAULT_MIN_SPIKE_DIFF = "1";
 
 
 KlustersApp::KlustersApp()
@@ -716,6 +717,7 @@ void KlustersApp::initSelectionBoxes(){
     minSpikeDiffBox = new QLineEdit(paramBar);
     minSpikeDiffBox->setObjectName("DEFAULT_MIN_SPIKE_DIFF");
     minSpikeDiffBox->setMaxLength(100);
+    minSpikeDiffBox->setValidator(&minSpikeDiffValidator);
     minSpikeDiffLabel = new QLabel("  Min. Spike Diff. (ms)", paramBar);
     minSpikeDiffLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
     minSpikeDiffLabel->setFont(font);
@@ -901,6 +903,7 @@ void KlustersApp::initDisplay(){
     maximumTime *= 1000;
     correlogramsHalfTimeFrameValidator.setRange(0,static_cast<int>((maximumTime - 1) / 2));
     binSizeValidator.setRange(0,maximumTime);
+    minSpikeDiffValidator.setRange(0,100);
 
 
     //If the setting dialog exists (has already be open once), enable the settings for the channels.
@@ -2176,7 +2179,7 @@ void KlustersApp::slotTabChange(int index){
                 //Update the lineEdit
                 correlogramTimeFrame = activeView->correlationTimeFrameWidth();
                 binSize = activeView->sizeOfBin();
-                minSpikeDiff = activeView->minDiffOfSpike();
+                minSpikeDiff = activeView->minDiffOfSpikes();
                 correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
                 binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
                 minSpikeDiffBox->setText(QString::fromLatin1("%1").arg(minSpikeDiff));

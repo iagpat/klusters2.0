@@ -345,6 +345,9 @@ private Q_SLOTS:
     /**Informs the active display to present the correlations with a new size for the bins.*/
     void slotUpdateBinSize();
 
+    /**Informs the active display of the new MinSpikeDiff*/
+    void slotUpdateMinSpikeDiff();
+
     /**Triggers the increase of the amplitude of the correlograms in the correlation view.
    */
     void slotIncreaseCorrelogramsAmplitude(){activeView()->increaseCorrelogramsAmplitude();}
@@ -689,7 +692,41 @@ private:
     QLabel* minSpikeDiffLabel;
 
     class BinSizeValidator;
+    class MinSpikeDiffValidator;
+
     friend class BinSizeValidator;
+    friend class MinSpikeDiffValidator;
+
+    /**Validator for the minSpikeDiff lineEdit*/
+
+    class MinSpikeDiffValidator: public QIntValidator{
+
+    public:
+        MinSpikeDiffValidator(QObject* parent):QIntValidator(parent){
+            klusters = dynamic_cast<KlustersApp*>(parent);
+        }
+        MinSpikeDiffValidator(int minimum,int maximum,QObject* parent):
+            QIntValidator(minimum,maximum,parent){
+            klusters = dynamic_cast<KlustersApp*>(parent);
+        }
+        ~MinSpikeDiffValidator(){}
+        void fixup (QString& input) const{
+            input = QString::fromLatin1("%1").arg(klusters->minSpikeDiff);
+        }
+        QValidator::State validate(QString &input,int& pos) const{
+            QValidator::State state = QIntValidator::validate(input,pos);
+            //Let the QIntValidator validates the value as to know if it is a correct integer (within the range).
+            if(state != QValidator::Acceptable) return state;
+            //If the value is a correct integer, update the correlogramsHalfDuration if need it.
+            // correlogramTimeFrame (2 * correlogramsHalfDuration) has to be (2k + 1) * binSize.
+            else{
+                return state;
+            }
+        }
+    private:
+        KlustersApp* klusters;
+    };
+    MinSpikeDiffValidator minSpikeDiffValidator;
 
     /**
     * Represents a validator for the binSize lineEdit which fix any bad entry
@@ -740,6 +777,7 @@ private:
     * The range is between 0-1 and the maximun of time for the current document in miliseconds.
     */
     BinSizeValidator binSizeValidator;
+
 
     class CorrelogramsHalfTimeFrameValidator;
     friend class CorrelogramsHalfTimeFrameValidator;
