@@ -45,6 +45,7 @@ extern int nbUndo;
 
 const QString KlustersView::DisplayTypeNames[]={QObject::tr("Cluster Display"),
                                                 QObject::tr("Waveform Display"),
+                                                QObject::tr("Waveform2 Display"),
                                                 QObject::tr("Correlation Display"),
                                                 QObject::tr("Overview Display"),
                                                 QObject::tr("Grouping Assistant Display"),
@@ -98,6 +99,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
     case CLUSTERS:
     {
         isThereWaveformView = false;
+        isThereWaveform2View = false;
         isThereClusterView = true;
         isThereCorrelationView = false;
         isThereErrorMatrixView = false;
@@ -114,6 +116,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
     case WAVEFORMS:
     {
         isThereWaveformView = true;
+        isThereWaveform2View = false;
         isThereClusterView = false;
         isThereCorrelationView = false;
         isThereErrorMatrixView = false;
@@ -132,6 +135,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
     case CORRELATIONS:
     {
         isThereWaveformView = false;
+        isThereWaveform2View = false;
         isThereClusterView = false;
         isThereCorrelationView = true;
         isThereErrorMatrixView = false;
@@ -149,6 +153,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
         break;
     case OVERVIEW:
         isThereWaveformView = true;
+        isThereWaveform2View = true;
         isThereClusterView = true;
         isThereCorrelationView = true;
         isThereErrorMatrixView = false;
@@ -157,6 +162,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
         break;
     case GROUPING_ASSISTANT_VIEW:
         isThereWaveformView = true;
+        isThereWaveform2View = false;
         isThereClusterView = true;
         isThereCorrelationView = true;
         isThereErrorMatrixView = true;
@@ -168,6 +174,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
     case TRACES:
     {
         isThereWaveformView = false;
+        isThereWaveform2View = false;
         isThereClusterView = false;
         isThereCorrelationView = false;
         isThereErrorMatrixView = false;
@@ -246,6 +253,22 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
     viewCounter.insert("WaveformView",1);
 
     setConnections(WAVEFORMS,waveformView,waveforms);
+
+
+    //Create and add the second waveforms view --DEBUGGING
+    QDockWidget* waveforms2 = new QDockWidget(tr(doc.documentName().toLatin1()));
+    waveforms2->setAttribute(Qt::WA_DeleteOnClose, true);
+    waveforms2->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
+    waveforms2->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms2,
+                                          inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
+    ViewWidget* waveformView2 = dynamic_cast<ViewWidget*>(waveforms2->widget());
+    viewList.append(waveformView2);
+    waveformView2->installEventFilter(this);//To enable right click popup menu
+    waveforms2->installEventFilter(this);
+    addDockWidget(Qt::BottomDockWidgetArea,waveforms2);
+    viewCounter.insert("WaveformView2",1);
+
+    setConnections(WAVEFORMS2,waveformView2,waveforms2);
 
     //Create and add the correlations view
     QDockWidget* correlations = new QDockWidget(tr(doc.documentName().toLatin1()));
@@ -394,6 +417,18 @@ void KlustersView::waveformDockClosed(QObject* waveformView){
     }
     else
         viewCounter["WaveformView"]--;
+}
+
+void KlustersView::waveform2DockClosed(QObject* waveform2View){
+    QApplication::restoreOverrideCursor();//Clear any previous overrided coming from this function.
+    viewList.removeAll(static_cast<ViewWidget*>(waveform2View));
+    if(viewCounter["Waveform2View"] == 1){
+        viewCounter.remove("Waveform2View");
+        mainWindow.widgetRemovedFromDisplay(WAVEFORMS2);
+        isThereWaveform2View = false;
+    }
+    else
+        viewCounter["Waveform2View"]--;
 }
 
 void KlustersView::correlogramDockClosed(QObject* correlogramView){
@@ -623,10 +658,12 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
     //Enable docking abilities
     QDockWidget* clusters;
     QDockWidget* waveforms;
+    QDockWidget* waveforms2;
     QDockWidget* correlations;
     QDockWidget* errorMatrix;
     ViewWidget* clusterView;
     ViewWidget* waveformView;
+    ViewWidget* waveform2View;
     ViewWidget* correlationView;
     ViewWidget* errorMatrixView;
     QDockWidget* traces;
@@ -700,6 +737,29 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         waveforms->installEventFilter(this);
         addDockWidget(Qt::BottomDockWidgetArea,waveforms);
         setConnections(WAVEFORMS,waveformView,waveforms);
+        break;
+    case WAVEFORMS2:
+        if(!isThereWaveform2View){
+            newViewType = true;
+            viewCounter.insert("Waveform2View",1);
+        } else {
+            viewCounter["Waveform2View"]++;
+        }
+
+        isThereWaveform2View = true;
+        count = QString::number(viewCounter["WaveformView"]);
+
+        waveforms2 = new QDockWidget(tr(doc.documentName().toLatin1()));
+        waveforms2->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
+        waveforms2->setAttribute(Qt::WA_DeleteOnClose, true);
+        waveforms2->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms2,
+                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
+        waveform2View = dynamic_cast<ViewWidget*>(waveforms2->widget());
+        viewList.append(waveform2View);
+        waveform2View->installEventFilter(this);//To enable right click popup menu
+        waveforms2->installEventFilter(this);
+        addDockWidget(Qt::BottomDockWidgetArea,waveforms2);
+        setConnections(WAVEFORMS2,waveform2View,waveforms2);
         break;
     case CORRELATIONS:
         if(!isThereCorrelationView){
@@ -1407,7 +1467,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
     connect(this,SIGNAL(updateContents()),view, SLOT(update()));
     
     //Connections common to ClusterView, WaveformView and CorrelationView
-    if((displayType == CLUSTERS) || (displayType == WAVEFORMS) || (displayType == CORRELATIONS)){
+    if((displayType == CLUSTERS) || (displayType == WAVEFORMS) || (displayType == WAVEFORMS2) || (displayType == CORRELATIONS)){
         connect(this,SIGNAL(singleColorUpdated(int,bool)),view, SLOT(singleColorUpdate(int,bool)));
         connect(this,SIGNAL(clusterRemovedFromView(int,bool)),view, SLOT(removeClusterFromView(int,bool)));
         connect(this,SIGNAL(clusterAddedToView(int,bool)),view, SLOT(addClusterToView(int,bool)));
@@ -1433,6 +1493,21 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
             connect(view,SIGNAL(moveToTime(long)),traceWidget, SLOT(moveToTime(long)));
         }
     } else if(displayType == WAVEFORMS) { //Connections for WaveformViews
+        connect(this,SIGNAL(updatedTimeFrame(long,long)),view, SLOT(setTimeFrame(long,long)));
+        connect(this,SIGNAL(sampleMode()),view, SLOT(setSampleMode()));
+        connect(this,SIGNAL(timeFrameMode()),view, SLOT(setTimeFrameMode()));
+        connect(this,SIGNAL(meanPresentation()),view, SLOT(setMeanPresentation()));
+        connect(this,SIGNAL(allWaveformsPresentation()),view, SLOT(setAllWaveformsPresentation()));
+        connect(this,SIGNAL(overLayPresentation()),view, SLOT(setOverLayPresentation()));
+        connect(this,SIGNAL(sideBySidePresentation()),view, SLOT(setSideBySidePresentation()));
+        connect(this,SIGNAL(increaseAmplitude()),view, SLOT(increaseAmplitude()));
+        connect(this,SIGNAL(decreaseAmplitude()),view, SLOT(decreaseAmplitude()));
+        connect(this,SIGNAL(updateDisplayNbSpikes(long)),view, SLOT(setDisplayNbSpikes(long)));
+        connect(this,SIGNAL(changeGain(int)),view, SLOT(setGain(int)));
+        connect(this,SIGNAL(changeChannelPositions(QList<int>&)),view, SLOT(setChannelPositions(QList<int>&)));
+        connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));
+        connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(waveformDockClosed(QObject*)));
+    } else if(displayType == WAVEFORMS2) { //Connections for WaveformViews
         connect(this,SIGNAL(updatedTimeFrame(long,long)),view, SLOT(setTimeFrame(long,long)));
         connect(this,SIGNAL(sampleMode()),view, SLOT(setSampleMode()));
         connect(this,SIGNAL(timeFrameMode()),view, SLOT(setTimeFrameMode()));

@@ -22,7 +22,7 @@ static const uint qt_meta_data_KlustersView[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      50,   14, // methods
+      51,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -78,10 +78,11 @@ static const uint qt_meta_data_KlustersView[] = {
  // slots: signature, parameters, type, tag, flags
     1527, 1523,   13,   13, 0x0a,
     1568, 1555,   13,   13, 0x0a,
-    1613, 1597,   13,   13, 0x0a,
-    1661, 1645,   13,   13, 0x0a,
-    1705, 1693,   13,   13, 0x0a,
-    1746, 1731,   13,   13, 0x0a,
+    1611, 1597,   13,   13, 0x0a,
+    1657, 1641,   13,   13, 0x0a,
+    1705, 1689,   13,   13, 0x0a,
+    1749, 1737,   13,   13, 0x0a,
+    1790, 1775,   13,   13, 0x0a,
 
        0        // eod
 };
@@ -129,6 +130,7 @@ static const char qt_meta_stringdata_KlustersView[] = {
     "show\0showLabels(bool)\0nextCluster()\0"
     "previousCluster()\0obj\0clusterDockClosed(QObject*)\0"
     "waveformView\0waveformDockClosed(QObject*)\0"
+    "waveform2View\0waveform2DockClosed(QObject*)\0"
     "correlogramView\0correlogramDockClosed(QObject*)\0"
     "errorMatrixView\0errorMatrixDockClosed(QObject*)\0"
     "traceWidget\0traceDockClosed(QObject*)\0"
@@ -187,10 +189,11 @@ void KlustersView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 43: _t->previousCluster(); break;
         case 44: _t->clusterDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
         case 45: _t->waveformDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 46: _t->correlogramDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 47: _t->errorMatrixDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 48: _t->traceDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 49: _t->setStartAndDuration((*reinterpret_cast< long(*)>(_a[1])),(*reinterpret_cast< long(*)>(_a[2]))); break;
+        case 46: _t->waveform2DockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 47: _t->correlogramDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 48: _t->errorMatrixDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 49: _t->traceDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 50: _t->setStartAndDuration((*reinterpret_cast< long(*)>(_a[1])),(*reinterpret_cast< long(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -228,9 +231,9 @@ int KlustersView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 50)
+        if (_id < 51)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 50;
+        _id -= 51;
     }
     return _id;
 }

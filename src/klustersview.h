@@ -63,7 +63,7 @@ public:
     /**
     * Enum indicating wich type of view the user wants.
     */
-    enum DisplayType {CLUSTERS=0,WAVEFORMS=1,CORRELATIONS=2,OVERVIEW=3,GROUPING_ASSISTANT_VIEW=4,ERROR_MATRIX=5,TRACES=6};
+    enum DisplayType {CLUSTERS=0,WAVEFORMS=1,WAVEFORMS2=7,CORRELATIONS=2,OVERVIEW=3,GROUPING_ASSISTANT_VIEW=4,ERROR_MATRIX=5,TRACES=6};
 
     /** Constructs a view.
       * @param mainWindow a reference on the main window of the application.
@@ -386,6 +386,7 @@ public:
         emit allWaveformsPresentation();
     }
 
+
     /**Sets the waveforms of each cluster to overlap.
   */
     void setOverLayPresentation(){
@@ -411,6 +412,8 @@ public:
     /**Returns a boolean indicating if the view contains a WaveformView.
   * @return true if the view contains a WaveformView, false otherwise.*/
     bool containsWaveformView() const {return isThereWaveformView;}
+
+    bool containsWaveform2View() const {return isThereWaveform2View;}
 
     /**Returns true if the view contains a WavefromView in time frame mode,
   * false otherwise.*/
@@ -657,6 +660,7 @@ public Q_SLOTS:
   * @param waveformView the WaveformView to be closed.
   */
     void waveformDockClosed(QObject *waveformView);
+    void waveform2DockClosed(QObject *waveform2View);
 
     /**Takes care of the closing of a CorrelogramView.
   * @param correlogramView the CorrelogramView to be closed.
@@ -777,6 +781,8 @@ private:
 
     /**True if the view contains a Waveform view, false otherwise.*/
     bool isThereWaveformView;
+
+    bool isThereWaveform2View;
 
     /**True if the view contains a Waveform view and this one is in
     * time frame mode, false otherwise. The default is false.*/
