@@ -28,7 +28,8 @@ set(klusters_SRCS
 	prefclusterview.cpp
 	prefdialog.cpp 
 	prefgeneral.cpp
-	prefwaveformview.cpp 
+	prefwaveformview.cpp
+	prefwaveform2view.cpp 
 	processlinemaker.cpp 
 	processwidget.cpp
 	spinbox.cpp 
@@ -39,10 +40,13 @@ set(klusters_SRCS
 	traceview.cpp
         tracewidget.cpp 
 	viewwidget.cpp 
-	waveformthread.cpp 
+	waveformthread.cpp
+	waveform2thread.cpp  
 	waveformview.cpp
+	waveform2view.cpp
 	prefgenerallayout.cpp 
-	prefwaveformviewlayout.cpp 
+	prefwaveformviewlayout.cpp
+	prefwaveform2viewlayout.cpp  
 	prefclusterviewlayout.cpp)
 
 qt4_add_resources(klusters_SRCS klusters-cursors.qrc klusters-icons.qrc) 

@@ -1,4 +1,4 @@
-The system is: Linux - 4.15.0-43-generic - x86_64
+The system is: Linux - 4.15.0-45-generic - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /usr/bin/cc 
 Build flags: 
@@ -28,28 +28,28 @@ The CXX compiler identification is GNU, found in "/home/drew/Desktop/klusters_mo
 Determining if the C compiler works passed with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_5a684/fast"
-/usr/bin/make -f CMakeFiles/cmTC_5a684.dir/build.make CMakeFiles/cmTC_5a684.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_4afa6/fast"
+/usr/bin/make -f CMakeFiles/cmTC_4afa6.dir/build.make CMakeFiles/cmTC_4afa6.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_5a684.dir/testCCompiler.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_5a684.dir/testCCompiler.c.o   -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_5a684
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5a684.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_5a684.dir/testCCompiler.c.o  -o cmTC_5a684 -rdynamic 
+Building C object CMakeFiles/cmTC_4afa6.dir/testCCompiler.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_4afa6.dir/testCCompiler.c.o   -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_4afa6
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4afa6.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_4afa6.dir/testCCompiler.c.o  -o cmTC_4afa6 -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_715d6/fast"
-/usr/bin/make -f CMakeFiles/cmTC_715d6.dir/build.make CMakeFiles/cmTC_715d6.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_8d0f3/fast"
+/usr/bin/make -f CMakeFiles/cmTC_8d0f3.dir/build.make CMakeFiles/cmTC_8d0f3.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc     -o CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.5/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_715d6
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_715d6.dir/link.txt --verbose=1
-/usr/bin/cc      -v CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o  -o cmTC_715d6 -rdynamic  
+Building C object CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc     -o CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.5/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_8d0f3
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8d0f3.dir/link.txt --verbose=1
+/usr/bin/cc      -v CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o  -o cmTC_8d0f3 -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper
@@ -59,8 +59,8 @@ Thread model: posix
 gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_715d6' '-rdynamic' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEWg9ir.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_715d6 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8d0f3' '-rdynamic' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccxebjKe.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_8d0f3 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
@@ -68,14 +68,14 @@ Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_715d6/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_715d6.dir/build.make CMakeFiles/cmTC_715d6.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_8d0f3/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_8d0f3.dir/build.make CMakeFiles/cmTC_8d0f3.dir/build]
   ignore line: [make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building C object CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.5/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_715d6]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_715d6.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc      -v CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o  -o cmTC_715d6 -rdynamic  ]
+  ignore line: [Building C object CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc     -o CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-3.5/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_8d0f3]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8d0f3.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc      -v CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o  -o cmTC_8d0f3 -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper]
@@ -85,13 +85,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.11) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_715d6' '-rdynamic' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccEWg9ir.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_715d6 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8d0f3' '-rdynamic' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccxebjKe.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_8d0f3 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccEWg9ir.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccxebjKe.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -109,7 +109,7 @@ Parsed C implicit link information from above output:
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_715d6] ==> ignore
+    arg [cmTC_8d0f3] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o] ==> ignore
@@ -121,7 +121,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/5/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/5/../../..]
-    arg [CMakeFiles/cmTC_715d6.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_8d0f3.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -155,14 +155,14 @@ Parsed C implicit link information from above output:
 Detecting C [-std=c11] compiler features compiled with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_76889/fast"
-/usr/bin/make -f CMakeFiles/cmTC_76889.dir/build.make CMakeFiles/cmTC_76889.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_9b45c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9b45c.dir/build.make CMakeFiles/cmTC_9b45c.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_76889.dir/feature_tests.c.o
-/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_76889.dir/feature_tests.c.o   -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_76889
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_76889.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_76889.dir/feature_tests.c.o  -o cmTC_76889 -rdynamic 
+Building C object CMakeFiles/cmTC_9b45c.dir/feature_tests.c.o
+/usr/bin/cc    -std=c11 -o CMakeFiles/cmTC_9b45c.dir/feature_tests.c.o   -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_9b45c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9b45c.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_9b45c.dir/feature_tests.c.o  -o cmTC_9b45c -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
@@ -175,14 +175,14 @@ make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build
 Detecting C [-std=c99] compiler features compiled with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_0eee1/fast"
-/usr/bin/make -f CMakeFiles/cmTC_0eee1.dir/build.make CMakeFiles/cmTC_0eee1.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_ec1ea/fast"
+/usr/bin/make -f CMakeFiles/cmTC_ec1ea.dir/build.make CMakeFiles/cmTC_ec1ea.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_0eee1.dir/feature_tests.c.o
-/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_0eee1.dir/feature_tests.c.o   -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_0eee1
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0eee1.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_0eee1.dir/feature_tests.c.o  -o cmTC_0eee1 -rdynamic 
+Building C object CMakeFiles/cmTC_ec1ea.dir/feature_tests.c.o
+/usr/bin/cc    -std=c99 -o CMakeFiles/cmTC_ec1ea.dir/feature_tests.c.o   -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_ec1ea
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ec1ea.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_ec1ea.dir/feature_tests.c.o  -o cmTC_ec1ea -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
@@ -195,14 +195,14 @@ make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build
 Detecting C [-std=c90] compiler features compiled with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_90bba/fast"
-/usr/bin/make -f CMakeFiles/cmTC_90bba.dir/build.make CMakeFiles/cmTC_90bba.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_548e9/fast"
+/usr/bin/make -f CMakeFiles/cmTC_548e9.dir/build.make CMakeFiles/cmTC_548e9.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_90bba.dir/feature_tests.c.o
-/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_90bba.dir/feature_tests.c.o   -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.c
-Linking C executable cmTC_90bba
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_90bba.dir/link.txt --verbose=1
-/usr/bin/cc       CMakeFiles/cmTC_90bba.dir/feature_tests.c.o  -o cmTC_90bba -rdynamic 
+Building C object CMakeFiles/cmTC_548e9.dir/feature_tests.c.o
+/usr/bin/cc    -std=c90 -o CMakeFiles/cmTC_548e9.dir/feature_tests.c.o   -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.c
+Linking C executable cmTC_548e9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_548e9.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTC_548e9.dir/feature_tests.c.o  -o cmTC_548e9 -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
@@ -213,28 +213,28 @@ make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build
 Determining if the CXX compiler works passed with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_33b77/fast"
-/usr/bin/make -f CMakeFiles/cmTC_33b77.dir/build.make CMakeFiles/cmTC_33b77.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_2de50/fast"
+/usr/bin/make -f CMakeFiles/cmTC_2de50.dir/build.make CMakeFiles/cmTC_2de50.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_33b77.dir/testCXXCompiler.cxx.o
-/usr/bin/c++      -o CMakeFiles/cmTC_33b77.dir/testCXXCompiler.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_33b77
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_33b77.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_33b77.dir/testCXXCompiler.cxx.o  -o cmTC_33b77 -rdynamic 
+Building CXX object CMakeFiles/cmTC_2de50.dir/testCXXCompiler.cxx.o
+/usr/bin/c++      -o CMakeFiles/cmTC_2de50.dir/testCXXCompiler.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_2de50
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2de50.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_2de50.dir/testCXXCompiler.cxx.o  -o cmTC_2de50 -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_8ffb6/fast"
-/usr/bin/make -f CMakeFiles/cmTC_8ffb6.dir/build.make CMakeFiles/cmTC_8ffb6.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_a244c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_a244c.dir/build.make CMakeFiles/cmTC_a244c.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++      -o CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.5/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_8ffb6
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8ffb6.dir/link.txt --verbose=1
-/usr/bin/c++       -v CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_8ffb6 -rdynamic  
+Building CXX object CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++      -o CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.5/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_a244c
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a244c.dir/link.txt --verbose=1
+/usr/bin/c++       -v CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_a244c -rdynamic  
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper
@@ -244,8 +244,8 @@ Thread model: posix
 gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.11) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8ffb6' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPs2HMY.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_8ffb6 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a244c' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccQhhVkF.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_a244c /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
@@ -253,14 +253,14 @@ Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|([^/\]+-)?ld|collect2)[^/\]*( |$)]
   ignore line: [Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_8ffb6/fast"]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_8ffb6.dir/build.make CMakeFiles/cmTC_8ffb6.dir/build]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_a244c/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_a244c.dir/build.make CMakeFiles/cmTC_a244c.dir/build]
   ignore line: [make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp']
-  ignore line: [Building CXX object CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++      -o CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.5/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_8ffb6]
-  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8ffb6.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++       -v CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_8ffb6 -rdynamic  ]
+  ignore line: [Building CXX object CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++      -o CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o -c /usr/share/cmake-3.5/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_a244c]
+  ignore line: [/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a244c.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++       -v CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_a244c -rdynamic  ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper]
@@ -270,13 +270,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.11) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_8ffb6' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccPs2HMY.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_8ffb6 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_a244c' '-rdynamic' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccQhhVkF.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -export-dynamic -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_a244c /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccPs2HMY.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/ccQhhVkF.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -294,7 +294,7 @@ Parsed CXX implicit link information from above output:
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_8ffb6] ==> ignore
+    arg [cmTC_a244c] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o] ==> ignore
@@ -306,7 +306,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/5/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/5/../../..]
-    arg [CMakeFiles/cmTC_8ffb6.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_a244c.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -338,14 +338,14 @@ Parsed CXX implicit link information from above output:
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_53bbb/fast"
-/usr/bin/make -f CMakeFiles/cmTC_53bbb.dir/build.make CMakeFiles/cmTC_53bbb.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_1305b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1305b.dir/build.make CMakeFiles/cmTC_1305b.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_53bbb.dir/feature_tests.cxx.o
-/usr/bin/c++     -std=c++14 -o CMakeFiles/cmTC_53bbb.dir/feature_tests.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_53bbb
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_53bbb.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_53bbb.dir/feature_tests.cxx.o  -o cmTC_53bbb -rdynamic 
+Building CXX object CMakeFiles/cmTC_1305b.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++14 -o CMakeFiles/cmTC_1305b.dir/feature_tests.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_1305b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1305b.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_1305b.dir/feature_tests.cxx.o  -o cmTC_1305b -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
@@ -411,14 +411,14 @@ make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_dffea/fast"
-/usr/bin/make -f CMakeFiles/cmTC_dffea.dir/build.make CMakeFiles/cmTC_dffea.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_7acf5/fast"
+/usr/bin/make -f CMakeFiles/cmTC_7acf5.dir/build.make CMakeFiles/cmTC_7acf5.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_dffea.dir/feature_tests.cxx.o
-/usr/bin/c++     -std=c++11 -o CMakeFiles/cmTC_dffea.dir/feature_tests.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_dffea
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dffea.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_dffea.dir/feature_tests.cxx.o  -o cmTC_dffea -rdynamic 
+Building CXX object CMakeFiles/cmTC_7acf5.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++11 -o CMakeFiles/cmTC_7acf5.dir/feature_tests.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_7acf5
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7acf5.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_7acf5.dir/feature_tests.cxx.o  -o cmTC_7acf5 -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
@@ -484,14 +484,14 @@ make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_c57f3/fast"
-/usr/bin/make -f CMakeFiles/cmTC_c57f3.dir/build.make CMakeFiles/cmTC_c57f3.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_40b7d/fast"
+/usr/bin/make -f CMakeFiles/cmTC_40b7d.dir/build.make CMakeFiles/cmTC_40b7d.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_c57f3.dir/feature_tests.cxx.o
-/usr/bin/c++     -std=c++98 -o CMakeFiles/cmTC_c57f3.dir/feature_tests.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_c57f3
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c57f3.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_c57f3.dir/feature_tests.cxx.o  -o cmTC_c57f3 -rdynamic 
+Building CXX object CMakeFiles/cmTC_40b7d.dir/feature_tests.cxx.o
+/usr/bin/c++     -std=c++98 -o CMakeFiles/cmTC_40b7d.dir/feature_tests.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_40b7d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_40b7d.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_40b7d.dir/feature_tests.cxx.o  -o cmTC_40b7d -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 
@@ -555,14 +555,14 @@ make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build
 Determining if the Q_WS_X11 exist passed with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_b0f6c/fast"
-/usr/bin/make -f CMakeFiles/cmTC_b0f6c.dir/build.make CMakeFiles/cmTC_b0f6c.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_62ef0/fast"
+/usr/bin/make -f CMakeFiles/cmTC_62ef0.dir/build.make CMakeFiles/cmTC_62ef0.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_b0f6c.dir/CheckSymbolExists.cxx.o
-/usr/bin/c++    -I/usr/include/qt4   -o CMakeFiles/cmTC_b0f6c.dir/CheckSymbolExists.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
-Linking CXX executable cmTC_b0f6c
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b0f6c.dir/link.txt --verbose=1
-/usr/bin/c++        CMakeFiles/cmTC_b0f6c.dir/CheckSymbolExists.cxx.o  -o cmTC_b0f6c -rdynamic 
+Building CXX object CMakeFiles/cmTC_62ef0.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -I/usr/include/qt4   -o CMakeFiles/cmTC_62ef0.dir/CheckSymbolExists.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Linking CXX executable cmTC_62ef0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_62ef0.dir/link.txt --verbose=1
+/usr/bin/c++        CMakeFiles/cmTC_62ef0.dir/CheckSymbolExists.cxx.o  -o cmTC_62ef0 -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 File /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
@@ -583,14 +583,14 @@ int main(int argc, char** argv)
 Performing C++ SOURCE FILE Test HAVE_FPIE_SUPPORT succeeded with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_ea2c6/fast"
-/usr/bin/make -f CMakeFiles/cmTC_ea2c6.dir/build.make CMakeFiles/cmTC_ea2c6.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_44ef1/fast"
+/usr/bin/make -f CMakeFiles/cmTC_44ef1.dir/build.make CMakeFiles/cmTC_44ef1.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_ea2c6.dir/src.cxx.o
-/usr/bin/c++     -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -DHAVE_FPIE_SUPPORT   -fPIE -o CMakeFiles/cmTC_ea2c6.dir/src.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_ea2c6
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ea2c6.dir/link.txt --verbose=1
-/usr/bin/c++    -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -DHAVE_FPIE_SUPPORT    CMakeFiles/cmTC_ea2c6.dir/src.cxx.o  -o cmTC_ea2c6 -rdynamic 
+Building CXX object CMakeFiles/cmTC_44ef1.dir/src.cxx.o
+/usr/bin/c++     -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -DHAVE_FPIE_SUPPORT   -fPIE -o CMakeFiles/cmTC_44ef1.dir/src.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_44ef1
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_44ef1.dir/link.txt --verbose=1
+/usr/bin/c++    -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -DHAVE_FPIE_SUPPORT    CMakeFiles/cmTC_44ef1.dir/src.cxx.o  -o cmTC_44ef1 -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 Source file was:
@@ -598,14 +598,14 @@ int main() { return 0; }
 Performing C++ SOURCE FILE Test __KDE_HAVE_W_OVERLOADED_VIRTUAL succeeded with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_afc51/fast"
-/usr/bin/make -f CMakeFiles/cmTC_afc51.dir/build.make CMakeFiles/cmTC_afc51.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_54c49/fast"
+/usr/bin/make -f CMakeFiles/cmTC_54c49.dir/build.make CMakeFiles/cmTC_54c49.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_afc51.dir/src.cxx.o
-/usr/bin/c++     -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -D__KDE_HAVE_W_OVERLOADED_VIRTUAL   -Woverloaded-virtual -o CMakeFiles/cmTC_afc51.dir/src.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_afc51
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_afc51.dir/link.txt --verbose=1
-/usr/bin/c++    -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -D__KDE_HAVE_W_OVERLOADED_VIRTUAL    CMakeFiles/cmTC_afc51.dir/src.cxx.o  -o cmTC_afc51 -rdynamic 
+Building CXX object CMakeFiles/cmTC_54c49.dir/src.cxx.o
+/usr/bin/c++     -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -D__KDE_HAVE_W_OVERLOADED_VIRTUAL   -Woverloaded-virtual -o CMakeFiles/cmTC_54c49.dir/src.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_54c49
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_54c49.dir/link.txt --verbose=1
+/usr/bin/c++    -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -D__KDE_HAVE_W_OVERLOADED_VIRTUAL    CMakeFiles/cmTC_54c49.dir/src.cxx.o  -o cmTC_54c49 -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 Source file was:
@@ -613,14 +613,14 @@ int main() { return 0; }
 Performing C++ SOURCE FILE Test __KDE_HAVE_GCC_VISIBILITY succeeded with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_c1e68/fast"
-/usr/bin/make -f CMakeFiles/cmTC_c1e68.dir/build.make CMakeFiles/cmTC_c1e68.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_1f346/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1f346.dir/build.make CMakeFiles/cmTC_1f346.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_c1e68.dir/src.cxx.o
-/usr/bin/c++     -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -Woverloaded-virtual -D__KDE_HAVE_GCC_VISIBILITY   -fvisibility=hidden -o CMakeFiles/cmTC_c1e68.dir/src.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/src.cxx
-Linking CXX executable cmTC_c1e68
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_c1e68.dir/link.txt --verbose=1
-/usr/bin/c++    -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -Woverloaded-virtual -D__KDE_HAVE_GCC_VISIBILITY    CMakeFiles/cmTC_c1e68.dir/src.cxx.o  -o cmTC_c1e68 -rdynamic 
+Building CXX object CMakeFiles/cmTC_1f346.dir/src.cxx.o
+/usr/bin/c++     -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -Woverloaded-virtual -D__KDE_HAVE_GCC_VISIBILITY   -fvisibility=hidden -o CMakeFiles/cmTC_1f346.dir/src.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_1f346
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1f346.dir/link.txt --verbose=1
+/usr/bin/c++    -Wnon-virtual-dtor -Wno-long-long -Wundef -Wcast-align -Wchar-subscripts -Wall -W -Wpointer-arith -Wformat-security -fno-exceptions -DQT_NO_EXCEPTIONS -fno-check-new -fno-common -Woverloaded-virtual -D__KDE_HAVE_GCC_VISIBILITY    CMakeFiles/cmTC_1f346.dir/src.cxx.o  -o cmTC_1f346 -rdynamic 
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
 
 Source file was:

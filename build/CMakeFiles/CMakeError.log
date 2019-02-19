@@ -1,20 +1,20 @@
 Determining if the Q_WS_WIN exist failed with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_46337/fast"
-/usr/bin/make -f CMakeFiles/cmTC_46337.dir/build.make CMakeFiles/cmTC_46337.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_e91e1/fast"
+/usr/bin/make -f CMakeFiles/cmTC_e91e1.dir/build.make CMakeFiles/cmTC_e91e1.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_46337.dir/CheckSymbolExists.cxx.o
-/usr/bin/c++    -I/usr/include/qt4   -o CMakeFiles/cmTC_46337.dir/CheckSymbolExists.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Building CXX object CMakeFiles/cmTC_e91e1.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -I/usr/include/qt4   -o CMakeFiles/cmTC_e91e1.dir/CheckSymbolExists.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main(int, char**)’:
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: ‘Q_WS_WIN’ was not declared in this scope
    return ((int*)(&Q_WS_WIN))[argc];
                    ^
-CMakeFiles/cmTC_46337.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_46337.dir/CheckSymbolExists.cxx.o' failed
-make[1]: *** [CMakeFiles/cmTC_46337.dir/CheckSymbolExists.cxx.o] Error 1
+CMakeFiles/cmTC_e91e1.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_e91e1.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_e91e1.dir/CheckSymbolExists.cxx.o] Error 1
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_46337/fast' failed
-make: *** [cmTC_46337/fast] Error 2
+Makefile:126: recipe for target 'cmTC_e91e1/fast' failed
+make: *** [cmTC_e91e1/fast] Error 2
 
 File /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
 /* */
@@ -34,20 +34,20 @@ int main(int argc, char** argv)
 Determining if the Q_WS_QWS exist failed with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_8c2bf/fast"
-/usr/bin/make -f CMakeFiles/cmTC_8c2bf.dir/build.make CMakeFiles/cmTC_8c2bf.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_64cf1/fast"
+/usr/bin/make -f CMakeFiles/cmTC_64cf1.dir/build.make CMakeFiles/cmTC_64cf1.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_8c2bf.dir/CheckSymbolExists.cxx.o
-/usr/bin/c++    -I/usr/include/qt4   -o CMakeFiles/cmTC_8c2bf.dir/CheckSymbolExists.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Building CXX object CMakeFiles/cmTC_64cf1.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -I/usr/include/qt4   -o CMakeFiles/cmTC_64cf1.dir/CheckSymbolExists.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main(int, char**)’:
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: ‘Q_WS_QWS’ was not declared in this scope
    return ((int*)(&Q_WS_QWS))[argc];
                    ^
-CMakeFiles/cmTC_8c2bf.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_8c2bf.dir/CheckSymbolExists.cxx.o' failed
-make[1]: *** [CMakeFiles/cmTC_8c2bf.dir/CheckSymbolExists.cxx.o] Error 1
+CMakeFiles/cmTC_64cf1.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_64cf1.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_64cf1.dir/CheckSymbolExists.cxx.o] Error 1
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_8c2bf/fast' failed
-make: *** [cmTC_8c2bf/fast] Error 2
+Makefile:126: recipe for target 'cmTC_64cf1/fast' failed
+make: *** [cmTC_64cf1/fast] Error 2
 
 File /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
 /* */
@@ -67,20 +67,20 @@ int main(int argc, char** argv)
 Determining if the Q_WS_MAC exist failed with the following output:
 Change Dir: /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_850c7/fast"
-/usr/bin/make -f CMakeFiles/cmTC_850c7.dir/build.make CMakeFiles/cmTC_850c7.dir/build
+Run Build Command:"/usr/bin/make" "cmTC_44a93/fast"
+/usr/bin/make -f CMakeFiles/cmTC_44a93.dir/build.make CMakeFiles/cmTC_44a93.dir/build
 make[1]: Entering directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Building CXX object CMakeFiles/cmTC_850c7.dir/CheckSymbolExists.cxx.o
-/usr/bin/c++    -I/usr/include/qt4   -o CMakeFiles/cmTC_850c7.dir/CheckSymbolExists.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Building CXX object CMakeFiles/cmTC_44a93.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -I/usr/include/qt4   -o CMakeFiles/cmTC_44a93.dir/CheckSymbolExists.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx: In function ‘int main(int, char**)’:
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: ‘Q_WS_MAC’ was not declared in this scope
    return ((int*)(&Q_WS_MAC))[argc];
                    ^
-CMakeFiles/cmTC_850c7.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_850c7.dir/CheckSymbolExists.cxx.o' failed
-make[1]: *** [CMakeFiles/cmTC_850c7.dir/CheckSymbolExists.cxx.o] Error 1
+CMakeFiles/cmTC_44a93.dir/build.make:65: recipe for target 'CMakeFiles/cmTC_44a93.dir/CheckSymbolExists.cxx.o' failed
+make[1]: *** [CMakeFiles/cmTC_44a93.dir/CheckSymbolExists.cxx.o] Error 1
 make[1]: Leaving directory '/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp'
-Makefile:126: recipe for target 'cmTC_850c7/fast' failed
-make: *** [cmTC_850c7/fast] Error 2
+Makefile:126: recipe for target 'cmTC_44a93/fast' failed
+make: *** [cmTC_44a93/fast] Error 2
 
 File /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
 /* */

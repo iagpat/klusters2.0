@@ -34,6 +34,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefdialog.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/prefdialog.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgeneral.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/prefgeneral.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgenerallayout.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.o"
+  "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2view.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o"
+  "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2viewlayout.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformview.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/prefwaveformview.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformviewlayout.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/processlinemaker.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/processlinemaker.cpp.o"
@@ -48,6 +50,8 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/traceview.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/traceview.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tracewidget.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/tracewidget.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/viewwidget.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/viewwidget.cpp.o"
+  "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2thread.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/waveform2thread.cpp.o"
+  "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/waveform2view.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformthread.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/waveformthread.cpp.o"
   "/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformview.cpp" "/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters.dir/waveformview.cpp.o"
   )

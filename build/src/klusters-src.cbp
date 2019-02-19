@@ -33,6 +33,9 @@
             <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build" />
             <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src" />
             <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
             <Add directory="/usr/include/klustersshared" />
             <Add directory="/usr/include/qt4" />
             <Add directory="/usr/include/qt4/Qt3Support" />
@@ -53,6 +56,11 @@
             <Add directory="/usr/include/qt4/QtWebKit" />
             <Add directory="/usr/include/qt4/QtXml" />
             <Add directory="/usr/include/qt4/QtXmlPatterns" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
             <Add directory="/usr/share/qt4/mkspecs/default" />
          </Compiler>
          <MakeCommands>
@@ -78,6 +86,9 @@
             <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build" />
             <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src" />
             <Add directory="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src" />
+            <Add directory="/usr/include" />
+            <Add directory="/usr/include/c++/5" />
+            <Add directory="/usr/include/c++/5/backward" />
             <Add directory="/usr/include/klustersshared" />
             <Add directory="/usr/include/qt4" />
             <Add directory="/usr/include/qt4/Qt3Support" />
@@ -98,6 +109,11 @@
             <Add directory="/usr/include/qt4/QtWebKit" />
             <Add directory="/usr/include/qt4/QtXml" />
             <Add directory="/usr/include/qt4/QtXmlPatterns" />
+            <Add directory="/usr/include/x86_64-linux-gnu" />
+            <Add directory="/usr/include/x86_64-linux-gnu/c++/5" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include" />
+            <Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed" />
+            <Add directory="/usr/local/include" />
             <Add directory="/usr/share/qt4/mkspecs/default" />
          </Compiler>
          <MakeCommands>
@@ -301,6 +317,18 @@
       <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgenerallayout.ui">
          <Option target="klusters"/>
       </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2view.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2view.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2viewlayout.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2viewlayout.h">
+         <Option target="klusters"/>
+      </Unit>
       <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformview.cpp">
          <Option target="klusters"/>
       </Unit>
@@ -374,6 +402,18 @@
          <Option target="klusters"/>
       </Unit>
       <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/viewwidget.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2thread.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2thread.h">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.cpp">
+         <Option target="klusters"/>
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.h">
          <Option target="klusters"/>
       </Unit>
       <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformthread.cpp">

@@ -770,9 +770,33 @@ src/CMakeFiles/klusters.dir/prefwaveformview.cpp.o.provides: src/CMakeFiles/klus
 src/CMakeFiles/klusters.dir/prefwaveformview.cpp.o.provides.build: src/CMakeFiles/klusters.dir/prefwaveformview.cpp.o
 
 
+src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o: src/CMakeFiles/klusters.dir/flags.make
+src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o: ../src/prefwaveform2view.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/prefwaveform2view.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2view.cpp
+
+src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/klusters.dir/prefwaveform2view.cpp.i"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2view.cpp > CMakeFiles/klusters.dir/prefwaveform2view.cpp.i
+
+src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/klusters.dir/prefwaveform2view.cpp.s"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2view.cpp -o CMakeFiles/klusters.dir/prefwaveform2view.cpp.s
+
+src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o.requires:
+
+.PHONY : src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o.requires
+
+src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o.provides: src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o.requires
+	$(MAKE) -f src/CMakeFiles/klusters.dir/build.make src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o.provides.build
+.PHONY : src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o.provides
+
+src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o.provides.build: src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o
+
+
 src/CMakeFiles/klusters.dir/processlinemaker.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/processlinemaker.cpp.o: ../src/processlinemaker.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building CXX object src/CMakeFiles/klusters.dir/processlinemaker.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object src/CMakeFiles/klusters.dir/processlinemaker.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/processlinemaker.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/processlinemaker.cpp
 
 src/CMakeFiles/klusters.dir/processlinemaker.cpp.i: cmake_force
@@ -796,7 +820,7 @@ src/CMakeFiles/klusters.dir/processlinemaker.cpp.o.provides.build: src/CMakeFile
 
 src/CMakeFiles/klusters.dir/processwidget.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/processwidget.cpp.o: ../src/processwidget.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Building CXX object src/CMakeFiles/klusters.dir/processwidget.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object src/CMakeFiles/klusters.dir/processwidget.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/processwidget.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/processwidget.cpp
 
 src/CMakeFiles/klusters.dir/processwidget.cpp.i: cmake_force
@@ -820,7 +844,7 @@ src/CMakeFiles/klusters.dir/processwidget.cpp.o.provides.build: src/CMakeFiles/k
 
 src/CMakeFiles/klusters.dir/spinbox.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/spinbox.cpp.o: ../src/spinbox.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_36) "Building CXX object src/CMakeFiles/klusters.dir/spinbox.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object src/CMakeFiles/klusters.dir/spinbox.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/spinbox.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/spinbox.cpp
 
 src/CMakeFiles/klusters.dir/spinbox.cpp.i: cmake_force
@@ -844,7 +868,7 @@ src/CMakeFiles/klusters.dir/spinbox.cpp.o.provides.build: src/CMakeFiles/kluster
 
 src/CMakeFiles/klusters.dir/savethread.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/savethread.cpp.o: ../src/savethread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_37) "Building CXX object src/CMakeFiles/klusters.dir/savethread.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object src/CMakeFiles/klusters.dir/savethread.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/savethread.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/savethread.cpp
 
 src/CMakeFiles/klusters.dir/savethread.cpp.i: cmake_force
@@ -868,7 +892,7 @@ src/CMakeFiles/klusters.dir/savethread.cpp.o.provides.build: src/CMakeFiles/klus
 
 src/CMakeFiles/klusters.dir/sortabletable.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/sortabletable.cpp.o: ../src/sortabletable.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_38) "Building CXX object src/CMakeFiles/klusters.dir/sortabletable.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object src/CMakeFiles/klusters.dir/sortabletable.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/sortabletable.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/sortabletable.cpp
 
 src/CMakeFiles/klusters.dir/sortabletable.cpp.i: cmake_force
@@ -892,7 +916,7 @@ src/CMakeFiles/klusters.dir/sortabletable.cpp.o.provides.build: src/CMakeFiles/k
 
 src/CMakeFiles/klusters.dir/tags.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/tags.cpp.o: ../src/tags.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_39) "Building CXX object src/CMakeFiles/klusters.dir/tags.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object src/CMakeFiles/klusters.dir/tags.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/tags.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tags.cpp
 
 src/CMakeFiles/klusters.dir/tags.cpp.i: cmake_force
@@ -916,7 +940,7 @@ src/CMakeFiles/klusters.dir/tags.cpp.o.provides.build: src/CMakeFiles/klusters.d
 
 src/CMakeFiles/klusters.dir/tracesprovider.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/tracesprovider.cpp.o: ../src/tracesprovider.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_40) "Building CXX object src/CMakeFiles/klusters.dir/tracesprovider.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object src/CMakeFiles/klusters.dir/tracesprovider.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/tracesprovider.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tracesprovider.cpp
 
 src/CMakeFiles/klusters.dir/tracesprovider.cpp.i: cmake_force
@@ -940,7 +964,7 @@ src/CMakeFiles/klusters.dir/tracesprovider.cpp.o.provides.build: src/CMakeFiles/
 
 src/CMakeFiles/klusters.dir/traceview.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/traceview.cpp.o: ../src/traceview.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_41) "Building CXX object src/CMakeFiles/klusters.dir/traceview.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object src/CMakeFiles/klusters.dir/traceview.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/traceview.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/traceview.cpp
 
 src/CMakeFiles/klusters.dir/traceview.cpp.i: cmake_force
@@ -964,7 +988,7 @@ src/CMakeFiles/klusters.dir/traceview.cpp.o.provides.build: src/CMakeFiles/klust
 
 src/CMakeFiles/klusters.dir/tracewidget.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/tracewidget.cpp.o: ../src/tracewidget.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_42) "Building CXX object src/CMakeFiles/klusters.dir/tracewidget.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object src/CMakeFiles/klusters.dir/tracewidget.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/tracewidget.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tracewidget.cpp
 
 src/CMakeFiles/klusters.dir/tracewidget.cpp.i: cmake_force
@@ -988,7 +1012,7 @@ src/CMakeFiles/klusters.dir/tracewidget.cpp.o.provides.build: src/CMakeFiles/klu
 
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/viewwidget.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_43) "Building CXX object src/CMakeFiles/klusters.dir/viewwidget.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object src/CMakeFiles/klusters.dir/viewwidget.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/viewwidget.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/viewwidget.cpp
 
 src/CMakeFiles/klusters.dir/viewwidget.cpp.i: cmake_force
@@ -1012,7 +1036,7 @@ src/CMakeFiles/klusters.dir/viewwidget.cpp.o.provides.build: src/CMakeFiles/klus
 
 src/CMakeFiles/klusters.dir/waveformthread.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/waveformthread.cpp.o: ../src/waveformthread.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_44) "Building CXX object src/CMakeFiles/klusters.dir/waveformthread.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object src/CMakeFiles/klusters.dir/waveformthread.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/waveformthread.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformthread.cpp
 
 src/CMakeFiles/klusters.dir/waveformthread.cpp.i: cmake_force
@@ -1034,9 +1058,33 @@ src/CMakeFiles/klusters.dir/waveformthread.cpp.o.provides: src/CMakeFiles/kluste
 src/CMakeFiles/klusters.dir/waveformthread.cpp.o.provides.build: src/CMakeFiles/klusters.dir/waveformthread.cpp.o
 
 
+src/CMakeFiles/klusters.dir/waveform2thread.cpp.o: src/CMakeFiles/klusters.dir/flags.make
+src/CMakeFiles/klusters.dir/waveform2thread.cpp.o: ../src/waveform2thread.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object src/CMakeFiles/klusters.dir/waveform2thread.cpp.o"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/waveform2thread.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2thread.cpp
+
+src/CMakeFiles/klusters.dir/waveform2thread.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/klusters.dir/waveform2thread.cpp.i"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2thread.cpp > CMakeFiles/klusters.dir/waveform2thread.cpp.i
+
+src/CMakeFiles/klusters.dir/waveform2thread.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/klusters.dir/waveform2thread.cpp.s"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2thread.cpp -o CMakeFiles/klusters.dir/waveform2thread.cpp.s
+
+src/CMakeFiles/klusters.dir/waveform2thread.cpp.o.requires:
+
+.PHONY : src/CMakeFiles/klusters.dir/waveform2thread.cpp.o.requires
+
+src/CMakeFiles/klusters.dir/waveform2thread.cpp.o.provides: src/CMakeFiles/klusters.dir/waveform2thread.cpp.o.requires
+	$(MAKE) -f src/CMakeFiles/klusters.dir/build.make src/CMakeFiles/klusters.dir/waveform2thread.cpp.o.provides.build
+.PHONY : src/CMakeFiles/klusters.dir/waveform2thread.cpp.o.provides
+
+src/CMakeFiles/klusters.dir/waveform2thread.cpp.o.provides.build: src/CMakeFiles/klusters.dir/waveform2thread.cpp.o
+
+
 src/CMakeFiles/klusters.dir/waveformview.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/waveformview.cpp.o: ../src/waveformview.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_45) "Building CXX object src/CMakeFiles/klusters.dir/waveformview.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object src/CMakeFiles/klusters.dir/waveformview.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/waveformview.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformview.cpp
 
 src/CMakeFiles/klusters.dir/waveformview.cpp.i: cmake_force
@@ -1058,9 +1106,33 @@ src/CMakeFiles/klusters.dir/waveformview.cpp.o.provides: src/CMakeFiles/klusters
 src/CMakeFiles/klusters.dir/waveformview.cpp.o.provides.build: src/CMakeFiles/klusters.dir/waveformview.cpp.o
 
 
+src/CMakeFiles/klusters.dir/waveform2view.cpp.o: src/CMakeFiles/klusters.dir/flags.make
+src/CMakeFiles/klusters.dir/waveform2view.cpp.o: ../src/waveform2view.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object src/CMakeFiles/klusters.dir/waveform2view.cpp.o"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/waveform2view.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.cpp
+
+src/CMakeFiles/klusters.dir/waveform2view.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/klusters.dir/waveform2view.cpp.i"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.cpp > CMakeFiles/klusters.dir/waveform2view.cpp.i
+
+src/CMakeFiles/klusters.dir/waveform2view.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/klusters.dir/waveform2view.cpp.s"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.cpp -o CMakeFiles/klusters.dir/waveform2view.cpp.s
+
+src/CMakeFiles/klusters.dir/waveform2view.cpp.o.requires:
+
+.PHONY : src/CMakeFiles/klusters.dir/waveform2view.cpp.o.requires
+
+src/CMakeFiles/klusters.dir/waveform2view.cpp.o.provides: src/CMakeFiles/klusters.dir/waveform2view.cpp.o.requires
+	$(MAKE) -f src/CMakeFiles/klusters.dir/build.make src/CMakeFiles/klusters.dir/waveform2view.cpp.o.provides.build
+.PHONY : src/CMakeFiles/klusters.dir/waveform2view.cpp.o.provides
+
+src/CMakeFiles/klusters.dir/waveform2view.cpp.o.provides.build: src/CMakeFiles/klusters.dir/waveform2view.cpp.o
+
+
 src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.o: ../src/prefgenerallayout.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_46) "Building CXX object src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/prefgenerallayout.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefgenerallayout.cpp
 
 src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.i: cmake_force
@@ -1084,7 +1156,7 @@ src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.o.provides.build: src/CMakeFil
 
 src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o: ../src/prefwaveformviewlayout.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_47) "Building CXX object src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveformviewlayout.cpp
 
 src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.i: cmake_force
@@ -1106,9 +1178,33 @@ src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o.provides: src/CMakeFile
 src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o.provides.build: src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o
 
 
+src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o: src/CMakeFiles/klusters.dir/flags.make
+src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o: ../src/prefwaveform2viewlayout.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2viewlayout.cpp
+
+src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.i"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2viewlayout.cpp > CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.i
+
+src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.s"
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefwaveform2viewlayout.cpp -o CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.s
+
+src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o.requires:
+
+.PHONY : src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o.requires
+
+src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o.provides: src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o.requires
+	$(MAKE) -f src/CMakeFiles/klusters.dir/build.make src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o.provides.build
+.PHONY : src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o.provides
+
+src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o.provides.build: src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o
+
+
 src/CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o: ../src/prefclusterviewlayout.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_48) "Building CXX object src/CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Building CXX object src/CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/prefclusterviewlayout.cpp
 
 src/CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.i: cmake_force
@@ -1132,7 +1228,7 @@ src/CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o.provides.build: src/CMak
 
 src/CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o: src/qrc_klusters-cursors.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_49) "Building CXX object src/CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_53) "Building CXX object src/CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/qrc_klusters-cursors.cxx
 
 src/CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.i: cmake_force
@@ -1156,7 +1252,7 @@ src/CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o.provides.build: src/CMake
 
 src/CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o: src/qrc_klusters-icons.cxx
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_50) "Building CXX object src/CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_54) "Building CXX object src/CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/qrc_klusters-icons.cxx
 
 src/CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.i: cmake_force
@@ -1180,7 +1276,7 @@ src/CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o.provides.build: src/CMakeFi
 
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: src/CMakeFiles/klusters.dir/flags.make
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: src/klusters_automoc.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_51) "Building CXX object src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_55) "Building CXX object src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/klusters.dir/klusters_automoc.cpp.o -c /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/klusters_automoc.cpp
 
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.i: cmake_force
@@ -1232,6 +1328,7 @@ klusters_OBJECTS = \
 "CMakeFiles/klusters.dir/prefdialog.cpp.o" \
 "CMakeFiles/klusters.dir/prefgeneral.cpp.o" \
 "CMakeFiles/klusters.dir/prefwaveformview.cpp.o" \
+"CMakeFiles/klusters.dir/prefwaveform2view.cpp.o" \
 "CMakeFiles/klusters.dir/processlinemaker.cpp.o" \
 "CMakeFiles/klusters.dir/processwidget.cpp.o" \
 "CMakeFiles/klusters.dir/spinbox.cpp.o" \
@@ -1243,9 +1340,12 @@ klusters_OBJECTS = \
 "CMakeFiles/klusters.dir/tracewidget.cpp.o" \
 "CMakeFiles/klusters.dir/viewwidget.cpp.o" \
 "CMakeFiles/klusters.dir/waveformthread.cpp.o" \
+"CMakeFiles/klusters.dir/waveform2thread.cpp.o" \
 "CMakeFiles/klusters.dir/waveformview.cpp.o" \
+"CMakeFiles/klusters.dir/waveform2view.cpp.o" \
 "CMakeFiles/klusters.dir/prefgenerallayout.cpp.o" \
 "CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o" \
+"CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o" \
 "CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o" \
 "CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o" \
 "CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o" \
@@ -1282,6 +1382,7 @@ src/klusters: src/CMakeFiles/klusters.dir/prefclusterview.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/prefdialog.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/prefgeneral.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/prefwaveformview.cpp.o
+src/klusters: src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/processlinemaker.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/processwidget.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/spinbox.cpp.o
@@ -1293,9 +1394,12 @@ src/klusters: src/CMakeFiles/klusters.dir/traceview.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/tracewidget.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/viewwidget.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/waveformthread.cpp.o
+src/klusters: src/CMakeFiles/klusters.dir/waveform2thread.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/waveformview.cpp.o
+src/klusters: src/CMakeFiles/klusters.dir/waveform2view.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o
+src/klusters: src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o
 src/klusters: src/CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o
 src/klusters: src/CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o
@@ -1309,7 +1413,7 @@ src/klusters: /usr/lib/x86_64-linux-gnu/libQtWebKit.so
 src/klusters: /usr/lib/x86_64-linux-gnu/libQtGui.so
 src/klusters: /usr/lib/x86_64-linux-gnu/libQtCore.so
 src/klusters: src/CMakeFiles/klusters.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_52) "Linking CXX executable klusters"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_56) "Linking CXX executable klusters"
 	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/klusters.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -1345,6 +1449,7 @@ src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefclustervie
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefdialog.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefgeneral.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefwaveformview.cpp.o.requires
+src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefwaveform2view.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/processlinemaker.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/processwidget.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/spinbox.cpp.o.requires
@@ -1356,9 +1461,12 @@ src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/traceview.cpp.
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/tracewidget.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/viewwidget.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/waveformthread.cpp.o.requires
+src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/waveform2thread.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/waveformview.cpp.o.requires
+src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/waveform2view.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefgenerallayout.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefwaveformviewlayout.cpp.o.requires
+src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefwaveform2viewlayout.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/prefclusterviewlayout.cpp.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/qrc_klusters-cursors.cxx.o.requires
 src/CMakeFiles/klusters.dir/requires: src/CMakeFiles/klusters.dir/qrc_klusters-icons.cxx.o.requires

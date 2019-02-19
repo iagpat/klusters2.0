@@ -43,6 +43,7 @@ using namespace std;
 // forward declaration
 class MinMaxThread;
 class WaveformThread;
+class Waveform2Thread;
 class CorrelationThread;
 
 
@@ -59,6 +60,7 @@ class Data {
 public:
     friend class MinMaxThread;
     friend class WaveformThread;
+    friend class Waveform2Thread;
     friend class CorrelationThread;
     friend class AutoSaveThread;
     friend class GroupingAssistant;
