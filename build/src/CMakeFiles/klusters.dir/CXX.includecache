@@ -873,6 +873,8 @@ qcheckbox.h
 -
 qapplication.h
 -
+QDebug
+-
 QEvent
 -
 QShowEvent
@@ -1005,6 +1007,8 @@ clusterview.h
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/clusterview.h
 waveformview.h
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformview.h
+waveform2view.h
+/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.h
 errormatrixview.h
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/errormatrixview.h
 tracewidget.h
@@ -1020,6 +1024,8 @@ QWidget
 qvector.h
 -
 qprinter.h
+-
+QDebug
 -
 QList
 -
@@ -1617,6 +1623,8 @@ QMouseEvent
 -
 QEvent
 -
+QDebug
+-
 
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.h
 QPainter
@@ -1696,6 +1704,8 @@ QResizeEvent
 QMouseEvent
 -
 QEvent
+-
+QDebug
 -
 
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformview.h

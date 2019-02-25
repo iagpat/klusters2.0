@@ -57,7 +57,7 @@ public:
     friend class Waveform2Thread;
 
     Waveform2View(KlustersDoc& doc, KlustersView& view, const QColor &backgroundColor, int acquisitionGain, const QList<int> &positions, QStatusBar * statusBar, QWidget* parent=0,
-                 bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay =0, bool overLay = false, bool mean = false,
+                 bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay =0, bool overLay = false, bool mean = false, int minSpikeDiff =1,
                  const char* name=0, int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
                  int windowBottomRight = 1001, int border = 0);
     ~Waveform2View();
@@ -164,7 +164,7 @@ public Q_SLOTS:
     /** Sets the way of presenting the information concerning the waveforms2 selected to
   * show all the waveforms2 corresponding to the mode of presentation.
   */
-    void setAllWaveforms2Presentation();
+    void setAllWaveformsPresentation();
 
     /** The waveforms2 of each cluster are overlaying.
   */
@@ -213,6 +213,8 @@ public Q_SLOTS:
     /**Increase of the number of samples display in the sample mode.
   */
     void setDisplayNbSpikes(long nbSpikes);
+
+    void setMinSpikeDiff(long MinSpkDiff);
 
     /**Enables the caller to know if there is any thread running launch by the view.*/
     bool isThreadsRunning() const;
@@ -388,6 +390,8 @@ private:
 
     /**The number of spikes to display in sample mode.*/
     long nbSpkToDisplay;
+
+    int minSpikeDiff;
 
     /**True if the view has been zoomed, false ohterwise.*/
     bool isZoomed;

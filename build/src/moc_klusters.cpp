@@ -90,31 +90,31 @@ static const uint qt_meta_data_KlustersApp[] = {
     1414, 1405,   12,   12, 0x08,
     1439,   12,   12,   12, 0x08,
     1476,   12,   12,   12, 0x08,
-    1496,   12,   12,   12, 0x08,
-    1521,   12,   12,   12, 0x08,
-    1557,   12,   12,   12, 0x08,
-    1593,   12,   12,   12, 0x08,
-    1607,   12,   12,   12, 0x08,
-    1624,   12,   12,   12, 0x08,
-    1645,   12,   12,   12, 0x08,
-    1664,   12,   12,   12, 0x08,
-    1688,   12,   12,   12, 0x08,
+    1509, 1496,   12,   12, 0x08,
+    1537,   12,   12,   12, 0x08,
+    1573,   12,   12,   12, 0x08,
+    1609,   12,   12,   12, 0x08,
+    1623,   12,   12,   12, 0x08,
+    1640,   12,   12,   12, 0x08,
+    1661,   12,   12,   12, 0x08,
+    1680,   12,   12,   12, 0x08,
     1704,   12,   12,   12, 0x08,
-    1724,   12,   12,   12, 0x08,
+    1720,   12,   12,   12, 0x08,
     1740,   12,   12,   12, 0x08,
-    1762, 1760,   12,   12, 0x08,
-    1806,   12,   12,   12, 0x08,
-    1832,   12,   12,   12, 0x08,
-    1854,   12,   12,   12, 0x08,
-    1889,   12,   12,   12, 0x08,
-    1924,   12,   12,   12, 0x08,
-    1941,   12,   12,   12, 0x08,
-    1963,   12,   12,   12, 0x08,
-    1989,   12,   12,   12, 0x08,
-    2009,   12,   12,   12, 0x08,
-    2042,   12,   12,   12, 0x08,
-    2054,   12,   12,   12, 0x08,
-    2068,   12,   12,   12, 0x08,
+    1756,   12,   12,   12, 0x08,
+    1778, 1776,   12,   12, 0x08,
+    1822,   12,   12,   12, 0x08,
+    1848,   12,   12,   12, 0x08,
+    1870,   12,   12,   12, 0x08,
+    1905,   12,   12,   12, 0x08,
+    1940,   12,   12,   12, 0x08,
+    1957,   12,   12,   12, 0x08,
+    1979,   12,   12,   12, 0x08,
+    2005,   12,   12,   12, 0x08,
+    2025,   12,   12,   12, 0x08,
+    2058,   12,   12,   12, 0x08,
+    2070,   12,   12,   12, 0x08,
+    2084,   12,   12,   12, 0x08,
 
        0        // eod
 };
@@ -161,7 +161,8 @@ static const char qt_meta_stringdata_KlustersApp[] = {
     "slotDecreaseAmplitude()\0nbSpikes\0"
     "slotSpikesTodisplay(int)\0"
     "slotUpdateCorrelogramsHalfDuration()\0"
-    "slotUpdateBinSize()\0slotUpdateMinSpikeDiff()\0"
+    "slotUpdateBinSize()\0minSpikeDiff\0"
+    "slotUpdateMinSpikeDiff(int)\0"
     "slotIncreaseCorrelogramsAmplitude()\0"
     "slotDecreaseCorrelogramsAmplitude()\0"
     "slotNoScale()\0slotScaleByMax()\0"
@@ -248,7 +249,7 @@ void KlustersApp::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 57: _t->slotSpikesTodisplay((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 58: _t->slotUpdateCorrelogramsHalfDuration(); break;
         case 59: _t->slotUpdateBinSize(); break;
-        case 60: _t->slotUpdateMinSpikeDiff(); break;
+        case 60: _t->slotUpdateMinSpikeDiff((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 61: _t->slotIncreaseCorrelogramsAmplitude(); break;
         case 62: _t->slotDecreaseCorrelogramsAmplitude(); break;
         case 63: _t->slotNoScale(); break;

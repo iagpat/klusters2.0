@@ -759,6 +759,7 @@ private:
         virtual dataType getSampleStDeviation(dataType index) const  = 0;
         virtual dataType getTimeFrameStDeviation(dataType index) const  = 0;
         virtual void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay) = 0;
+        virtual void read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff) = 0;
         virtual void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end) = 0;
         virtual void calculateMean(WaveformMode waveformMode) = 0;
 
@@ -777,6 +778,7 @@ private:
         dataType timeStart;
         dataType timeEnd;
         dataType nbSampleSpikes;
+        dataType MinSpkDiff;
         dataType nbTimeFrameSpikes;
         WaveformMode mode;
         int nbPtsBySpike;
@@ -835,6 +837,7 @@ private:
             return static_cast<dataType>(timeFrameStDeviationTable[index]);
         }
         void read(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* spikeFile,dataType nbSpkToDisplay);
+        void read2(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff);
         void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end);
         void calculateMean(WaveformMode waveformMode = SAMPLE);
     private:
@@ -1021,6 +1024,8 @@ private:
   * and IN_PROCESS if an other thread is already treating @p clusterId.
   */
     Status getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay);
+    Status getSampleWaveform2Points(int clusterId,dataType nbSpkToDisplay, dataType MinSpkDiff);
+
 
     /**
   * Gets the waveform points for cluster @p clusterId in time frame mode.

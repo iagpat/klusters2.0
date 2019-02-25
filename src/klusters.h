@@ -31,7 +31,7 @@
 #include <qlabel.h>
 #include <qcheckbox.h>
 #include <qapplication.h>
-
+#include <QDebug>
 
 #include <QEvent>
 #include <QShowEvent>
@@ -334,6 +334,7 @@ private Q_SLOTS:
    * waveformView is in sample mode.
    */
     void slotSpikesTodisplay(int nbSpikes){
+        qDebug()<<"slotSpikesToDisplay";
         if(!isInit){
             activeView()->setDisplayNbSpikes(static_cast<long>(nbSpikes));
         }
@@ -346,7 +347,12 @@ private Q_SLOTS:
     void slotUpdateBinSize();
 
     /**Informs the active display of the new MinSpikeDiff*/
-    void slotUpdateMinSpikeDiff();
+    void slotUpdateMinSpikeDiff(int minSpikeDiff){
+        qDebug()<<"slotUpdateMinSpikeDiff";
+        if(!isInit){
+            activeView()->setMinSpikeDiff(static_cast<long>(minSpikeDiff));
+        }
+    }
 
     /**Triggers the increase of the amplitude of the correlograms in the correlation view.
    */
@@ -675,7 +681,7 @@ private:
 
     /*Small box where the user can enter the minimum allowable spike time difference between spikes
     * for plotting in the bin waveform display*/
-    QLineEdit* minSpikeDiffBox;
+    SpinBox* minSpikeDiffBox;
 
     /**Time frame to use to compute the correlograms.*/
     int correlogramTimeFrame;

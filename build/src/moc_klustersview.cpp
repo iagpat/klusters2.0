@@ -22,12 +22,12 @@ static const uint qt_meta_data_KlustersView[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      51,   14, // methods
+      52,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      44,       // signalCount
+      45,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       36,   14,   13,   13, 0x05,
@@ -54,35 +54,36 @@ static const uint qt_meta_data_KlustersView[] = {
      845,   13,   13,   13, 0x05,
      865,   13,   13,   13, 0x05,
      894,  885,   13,   13, 0x05,
-     922,   13,   13,   13, 0x05,
-     956,   13,   13,   13, 0x05,
-     990,   13,   13,   13, 0x05,
-    1000,   13,   13,   13, 0x05,
-    1011,   13,   13,   13, 0x05,
-    1042, 1027,   13,   13, 0x05,
-    1080, 1078,   13,   13, 0x05,
-    1102,   13,   13,   13, 0x05,
-    1134, 1118,   13,   13, 0x05,
-    1162, 1150,   13,   13, 0x05,
-    1201, 1191,   13,   13, 0x05,
-    1237,   13,   13,   13, 0x05,
-    1266, 1260,   13,   13, 0x05,
-    1303, 1296,   13,   13, 0x05,
-    1370, 1328,   13,   13, 0x05,
-    1423,   13,   13,   13, 0x05,
-    1446,   13,   13,   13, 0x05,
-    1474, 1469,   13,   13, 0x05,
-    1491,   13,   13,   13, 0x05,
-    1505,   13,   13,   13, 0x05,
+     933,  922,   13,   13, 0x05,
+     958,   13,   13,   13, 0x05,
+     992,   13,   13,   13, 0x05,
+    1026,   13,   13,   13, 0x05,
+    1036,   13,   13,   13, 0x05,
+    1047,   13,   13,   13, 0x05,
+    1078, 1063,   13,   13, 0x05,
+    1116, 1114,   13,   13, 0x05,
+    1138,   13,   13,   13, 0x05,
+    1170, 1154,   13,   13, 0x05,
+    1198, 1186,   13,   13, 0x05,
+    1237, 1227,   13,   13, 0x05,
+    1273,   13,   13,   13, 0x05,
+    1302, 1296,   13,   13, 0x05,
+    1339, 1332,   13,   13, 0x05,
+    1406, 1364,   13,   13, 0x05,
+    1459,   13,   13,   13, 0x05,
+    1482,   13,   13,   13, 0x05,
+    1510, 1505,   13,   13, 0x05,
+    1527,   13,   13,   13, 0x05,
+    1541,   13,   13,   13, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-    1527, 1523,   13,   13, 0x0a,
-    1568, 1555,   13,   13, 0x0a,
-    1611, 1597,   13,   13, 0x0a,
-    1657, 1641,   13,   13, 0x0a,
-    1705, 1689,   13,   13, 0x0a,
-    1749, 1737,   13,   13, 0x0a,
-    1790, 1775,   13,   13, 0x0a,
+    1563, 1559,   13,   13, 0x0a,
+    1604, 1591,   13,   13, 0x0a,
+    1647, 1633,   13,   13, 0x0a,
+    1693, 1677,   13,   13, 0x0a,
+    1741, 1725,   13,   13, 0x0a,
+    1785, 1773,   13,   13, 0x0a,
+    1826, 1811,   13,   13, 0x0a,
 
        0        // eod
 };
@@ -113,6 +114,7 @@ static const char qt_meta_stringdata_KlustersView[] = {
     "overLayPresentation()\0sideBySidePresentation()\0"
     "increaseAmplitude()\0decreaseAmplitude()\0"
     "nbSpikes\0updateDisplayNbSpikes(long)\0"
+    "MinSpkDiff\0updateMinSpikeDiff(long)\0"
     "increaseAmplitudeofCorrelograms()\0"
     "decreaseAmplitudeofCorrelograms()\0"
     "noScale()\0maxScale()\0shoulderScale()\0"
@@ -167,33 +169,34 @@ void KlustersView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 21: _t->increaseAmplitude(); break;
         case 22: _t->decreaseAmplitude(); break;
         case 23: _t->updateDisplayNbSpikes((*reinterpret_cast< long(*)>(_a[1]))); break;
-        case 24: _t->increaseAmplitudeofCorrelograms(); break;
-        case 25: _t->decreaseAmplitudeofCorrelograms(); break;
-        case 26: _t->noScale(); break;
-        case 27: _t->maxScale(); break;
-        case 28: _t->shoulderScale(); break;
-        case 29: _t->updatedBinSizeAndTimeFrame((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 30: _t->setShoulderLine((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 31: _t->updateDrawing(); break;
-        case 32: _t->changeGain((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 33: _t->changeTimeInterval((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 34: _t->changeChannelPositions((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
-        case 35: _t->computeProbabilities(); break;
-        case 36: _t->changeBackgroundColor((*reinterpret_cast< QColor(*)>(_a[1]))); break;
-        case 37: _t->clustersRenumbered((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 38: _t->updateClusters((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QList<int>(*)>(_a[2])),(*reinterpret_cast< ItemColors*(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
-        case 39: _t->increaseAllAmplitude(); break;
-        case 40: _t->decreaseAllAmplitude(); break;
-        case 41: _t->showLabels((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 42: _t->nextCluster(); break;
-        case 43: _t->previousCluster(); break;
-        case 44: _t->clusterDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 45: _t->waveformDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 46: _t->waveform2DockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 47: _t->correlogramDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 48: _t->errorMatrixDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 49: _t->traceDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
-        case 50: _t->setStartAndDuration((*reinterpret_cast< long(*)>(_a[1])),(*reinterpret_cast< long(*)>(_a[2]))); break;
+        case 24: _t->updateMinSpikeDiff((*reinterpret_cast< long(*)>(_a[1]))); break;
+        case 25: _t->increaseAmplitudeofCorrelograms(); break;
+        case 26: _t->decreaseAmplitudeofCorrelograms(); break;
+        case 27: _t->noScale(); break;
+        case 28: _t->maxScale(); break;
+        case 29: _t->shoulderScale(); break;
+        case 30: _t->updatedBinSizeAndTimeFrame((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 31: _t->setShoulderLine((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 32: _t->updateDrawing(); break;
+        case 33: _t->changeGain((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 34: _t->changeTimeInterval((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 35: _t->changeChannelPositions((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
+        case 36: _t->computeProbabilities(); break;
+        case 37: _t->changeBackgroundColor((*reinterpret_cast< QColor(*)>(_a[1]))); break;
+        case 38: _t->clustersRenumbered((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 39: _t->updateClusters((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QList<int>(*)>(_a[2])),(*reinterpret_cast< ItemColors*(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
+        case 40: _t->increaseAllAmplitude(); break;
+        case 41: _t->decreaseAllAmplitude(); break;
+        case 42: _t->showLabels((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 43: _t->nextCluster(); break;
+        case 44: _t->previousCluster(); break;
+        case 45: _t->clusterDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 46: _t->waveformDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 47: _t->waveform2DockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 48: _t->correlogramDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 49: _t->errorMatrixDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 50: _t->traceDockClosed((*reinterpret_cast< QObject*(*)>(_a[1]))); break;
+        case 51: _t->setStartAndDuration((*reinterpret_cast< long(*)>(_a[1])),(*reinterpret_cast< long(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -231,9 +234,9 @@ int KlustersView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 51)
+        if (_id < 52)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 51;
+        _id -= 52;
     }
     return _id;
 }
@@ -390,131 +393,138 @@ void KlustersView::updateDisplayNbSpikes(long _t1)
 }
 
 // SIGNAL 24
-void KlustersView::increaseAmplitudeofCorrelograms()
+void KlustersView::updateMinSpikeDiff(long _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 24, 0);
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 24, _a);
 }
 
 // SIGNAL 25
-void KlustersView::decreaseAmplitudeofCorrelograms()
+void KlustersView::increaseAmplitudeofCorrelograms()
 {
     QMetaObject::activate(this, &staticMetaObject, 25, 0);
 }
 
 // SIGNAL 26
-void KlustersView::noScale()
+void KlustersView::decreaseAmplitudeofCorrelograms()
 {
     QMetaObject::activate(this, &staticMetaObject, 26, 0);
 }
 
 // SIGNAL 27
-void KlustersView::maxScale()
+void KlustersView::noScale()
 {
     QMetaObject::activate(this, &staticMetaObject, 27, 0);
 }
 
 // SIGNAL 28
-void KlustersView::shoulderScale()
+void KlustersView::maxScale()
 {
     QMetaObject::activate(this, &staticMetaObject, 28, 0);
 }
 
 // SIGNAL 29
-void KlustersView::updatedBinSizeAndTimeFrame(int _t1, int _t2)
+void KlustersView::shoulderScale()
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
-    QMetaObject::activate(this, &staticMetaObject, 29, _a);
+    QMetaObject::activate(this, &staticMetaObject, 29, 0);
 }
 
 // SIGNAL 30
-void KlustersView::setShoulderLine(bool _t1)
+void KlustersView::updatedBinSizeAndTimeFrame(int _t1, int _t2)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 30, _a);
 }
 
 // SIGNAL 31
-void KlustersView::updateDrawing()
+void KlustersView::setShoulderLine(bool _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 31, 0);
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 31, _a);
 }
 
 // SIGNAL 32
-void KlustersView::changeGain(int _t1)
+void KlustersView::updateDrawing()
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 32, _a);
+    QMetaObject::activate(this, &staticMetaObject, 32, 0);
 }
 
 // SIGNAL 33
-void KlustersView::changeTimeInterval(int _t1, bool _t2)
+void KlustersView::changeGain(int _t1)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 33, _a);
 }
 
 // SIGNAL 34
-void KlustersView::changeChannelPositions(QList<int> & _t1)
+void KlustersView::changeTimeInterval(int _t1, bool _t2)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 34, _a);
 }
 
 // SIGNAL 35
-void KlustersView::computeProbabilities()
+void KlustersView::changeChannelPositions(QList<int> & _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 35, 0);
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 35, _a);
 }
 
 // SIGNAL 36
-void KlustersView::changeBackgroundColor(QColor _t1)
+void KlustersView::computeProbabilities()
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 36, _a);
+    QMetaObject::activate(this, &staticMetaObject, 36, 0);
 }
 
 // SIGNAL 37
-void KlustersView::clustersRenumbered(bool _t1)
+void KlustersView::changeBackgroundColor(QColor _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 37, _a);
 }
 
 // SIGNAL 38
-void KlustersView::updateClusters(QString _t1, QList<int> & _t2, ItemColors * _t3, bool _t4)
+void KlustersView::clustersRenumbered(bool _t1)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 38, _a);
 }
 
 // SIGNAL 39
-void KlustersView::increaseAllAmplitude()
+void KlustersView::updateClusters(QString _t1, QList<int> & _t2, ItemColors * _t3, bool _t4)
 {
-    QMetaObject::activate(this, &staticMetaObject, 39, 0);
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
+    QMetaObject::activate(this, &staticMetaObject, 39, _a);
 }
 
 // SIGNAL 40
-void KlustersView::decreaseAllAmplitude()
+void KlustersView::increaseAllAmplitude()
 {
     QMetaObject::activate(this, &staticMetaObject, 40, 0);
 }
 
 // SIGNAL 41
-void KlustersView::showLabels(bool _t1)
+void KlustersView::decreaseAllAmplitude()
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
-    QMetaObject::activate(this, &staticMetaObject, 41, _a);
+    QMetaObject::activate(this, &staticMetaObject, 41, 0);
 }
 
 // SIGNAL 42
-void KlustersView::nextCluster()
+void KlustersView::showLabels(bool _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 42, 0);
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 42, _a);
 }
 
 // SIGNAL 43
-void KlustersView::previousCluster()
+void KlustersView::nextCluster()
 {
     QMetaObject::activate(this, &staticMetaObject, 43, 0);
+}
+
+// SIGNAL 44
+void KlustersView::previousCluster()
+{
+    QMetaObject::activate(this, &staticMetaObject, 44, 0);
 }
 QT_END_MOC_NAMESPACE

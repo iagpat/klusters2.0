@@ -39,7 +39,7 @@
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QEvent>
-
+#include <QDebug>
 
 const int WaveformView::XMARGIN = 0;
 const int WaveformView::YMARGIN = 0;

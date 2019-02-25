@@ -38,6 +38,7 @@
 #include "klustersdoc.h"
 #include "clusterview.h"
 #include "waveformview.h"
+#include "waveform2view.h"
 #include "errormatrixview.h"
 #include "tracewidget.h"
 
@@ -55,8 +56,8 @@ const QString KlustersView::DisplayTypeNames[]={QObject::tr("Cluster Display"),
 
 KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColor& backgroundColor,int initialDimensionX,int initialDimensionY,
                            QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
-                           QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean,
-                           int binSize, int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay,
+                           QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean, int minSpkDiff,
+                           int binSize,int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay,
                            QList< QList<int>* > undoList, QList< QList<int>* > redoList)
     : DockArea(parent),
       doc(pDoc),
@@ -70,6 +71,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
       timeWindow(timeFrameWidth),
       startTime(start),
       nbSpkToDisplay(nbSpkToDisplay),
+      minSpikeDiff(minSpkDiff),
       overLayDisplay(overLay),
       meanDisplay(mean),
       binSize(binSize),
@@ -130,6 +132,25 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
         mainDock->installEventFilter(this);
         viewCounter.insert("WaveformView",1);
         setConnections(WAVEFORMS,currentViewWidget,mainDock);
+    }
+        break;
+    case WAVEFORMS2:
+    {
+        isThereWaveformView = false;
+        isThereWaveform2View = true;
+        isThereClusterView = false;
+        isThereCorrelationView = false;
+        isThereErrorMatrixView = false;
+        isThereTraceView = false;
+        mainDock->setWidget(new Waveform2View(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,mainDock,
+                                             inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay, minSpikeDiff));
+
+        currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
+        viewList.append(currentViewWidget);
+        currentViewWidget->installEventFilter(this);//To enable right click popup menu
+        mainDock->installEventFilter(this);
+        viewCounter.insert("Waveform2View",1);
+        setConnections(WAVEFORMS2,currentViewWidget,mainDock);
     }
         break;
     case CORRELATIONS:
@@ -259,8 +280,8 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
     QDockWidget* waveforms2 = new QDockWidget(tr(doc.documentName().toLatin1()));
     waveforms2->setAttribute(Qt::WA_DeleteOnClose, true);
     waveforms2->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
-    waveforms2->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms2,
-                                          inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
+    waveforms2->setWidget(new Waveform2View(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms2,
+                                          inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay, minSpikeDiff));//assign the widget
     ViewWidget* waveformView2 = dynamic_cast<ViewWidget*>(waveforms2->widget());
     viewList.append(waveformView2);
     waveformView2->installEventFilter(this);//To enable right click popup menu
@@ -752,8 +773,8 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         waveforms2 = new QDockWidget(tr(doc.documentName().toLatin1()));
         waveforms2->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
         waveforms2->setAttribute(Qt::WA_DeleteOnClose, true);
-        waveforms2->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms2,
-                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
+        waveforms2->setWidget(new Waveform2View(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms2,
+                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay, minSpikeDiff));//assign the widget
         waveform2View = dynamic_cast<ViewWidget*>(waveforms2->widget());
         viewList.append(waveform2View);
         waveform2View->installEventFilter(this);//To enable right click popup menu
@@ -1518,6 +1539,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(increaseAmplitude()),view, SLOT(increaseAmplitude()));
         connect(this,SIGNAL(decreaseAmplitude()),view, SLOT(decreaseAmplitude()));
         connect(this,SIGNAL(updateDisplayNbSpikes(long)),view, SLOT(setDisplayNbSpikes(long)));
+        connect(this,SIGNAL(updateMinSpikeDiff(long)), view, SLOT(setMinSpikeDiff(long)));
         connect(this,SIGNAL(changeGain(int)),view, SLOT(setGain(int)));
         connect(this,SIGNAL(changeChannelPositions(QList<int>&)),view, SLOT(setChannelPositions(QList<int>&)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));

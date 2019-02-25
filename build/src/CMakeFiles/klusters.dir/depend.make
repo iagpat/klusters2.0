@@ -2838,6 +2838,7 @@ src/CMakeFiles/klusters.dir/klustersview.cpp.o: ../src/tracesprovider.h
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: ../src/traceview.h
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: ../src/tracewidget.h
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: ../src/viewwidget.h
+src/CMakeFiles/klusters.dir/klustersview.cpp.o: ../src/waveform2view.h
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: ../src/waveformview.h
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/klustersshared/array.h
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/klustersshared/channelcolors.h

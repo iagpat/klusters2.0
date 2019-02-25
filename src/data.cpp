@@ -2356,9 +2356,108 @@ bool Data::spikePositions(int clusterId,SortableTable& subsetTable){
     return true;
 }
 
+Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDisplay, dataType MinSpkDiff){
+    qDebug() << "Data::Status Data::getSampleWaveform2Points";
+    //If the cluster has been suppress after the thread calling this function has been launched
+    //return this information that the data are not available.
+    if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)))return NOT_AVAILABLE;
 
+    //Take a sample of the spikes (displayNbSpikes) evenly distributed on all the recording.
+
+    QString clusterIdString = QString::fromLatin1("%1").arg(clusterId);
+    SortableTable positionOfSpikes = SortableTable();
+    Waveforms* waveforms2;
+    dataType nbSpikesOfCluster = 0;
+
+    //Does this cluster has already been processed?
+    /*if(waveformStatusMap.contains(clusterId)){
+        Status status = waveformStatusMap[clusterId].sampleStatus();
+        if(status == IN_PROCESS)return IN_PROCESS;
+        waveforms2 = waveformDict[clusterIdString];
+        //status == READY with the same number of spikes to present
+        if((waveforms2->nbOfSpikesAsked() == nbSpkToDisplay) && (status == READY))return READY;
+        //status == READY with a different number of spikes to present, recollect the data
+        mutex.lock();
+        waveformStatusMap[clusterId].setSampleStatus(IN_PROCESS);
+        mutex.unlock();
+        //Check if there not a mean calculation in process, is so wait until it finishes before doing anything
+        while(waveformStatusMap[clusterId].sampleMeanStatus() == IN_PROCESS);
+        //check if the cluster has not been removed while the mean function was running
+        //if so the entry in waveformStatusMap for that cluster will have been removed  in the mean function
+        if(!waveformStatusMap.contains(clusterId)) return NOT_AVAILABLE;
+        mutex.lock();
+        waveformStatusMap[clusterId].setSampleMeanStatus(NOT_AVAILABLE);
+        mutex.unlock();
+
+        //Check again that the cluster has not been removed or modified and get the spikes positions in a one row SortableTable.
+        if(!spikePositions(clusterId,positionOfSpikes) || waveformStatusMap[clusterId].isClusterModified()){
+            mutex.lock();
+            waveformStatusMap[clusterId].setClusterModified(false);
+            delete waveformDict.take(clusterIdString); //not already done by the function which modified the data as the thread is running.
+            waveformStatusMap.remove(clusterId);
+            mutex.unlock();
+            return NOT_AVAILABLE;
+        }
+        waveforms2->setNbOfSpikesAsked(nbSpkToDisplay);
+        //Get the spikes information
+        nbSpikesOfCluster = positionOfSpikes.nbOfColumns();
+        waveforms2->setSize(nbSpikesOfCluster,SAMPLE);
+    }
+    else{*/
+        mutex.lock();
+        waveformStatusMap.insert(clusterId,WaveformStatus(IN_PROCESS));
+        mutex.unlock();
+        if(isTwoBytesRecording) waveforms2 = new WaveformData<short>(*this);
+        else waveforms2 = new WaveformData<long>(*this);
+
+        //Check that the cluster has not been removed or modified and get the spikes positions in a one row SortableTable.
+        if(!spikePositions(clusterId,positionOfSpikes) || waveformStatusMap[clusterId].isClusterModified()){
+            mutex.lock();
+            waveformStatusMap[clusterId].setClusterModified(false);
+            delete waveformDict.take(clusterIdString); //not already done by the function which modified the data as the thread is running.
+            waveformStatusMap.remove(clusterId);
+            mutex.unlock();
+            return NOT_AVAILABLE;
+        }
+
+        waveforms2->setNbOfSpikesAsked(nbSpkToDisplay);
+        //Get the spikes information
+        nbSpikesOfCluster = positionOfSpikes.nbOfColumns();
+
+        waveforms2->setSize(nbSpikesOfCluster,SAMPLE);
+        waveformDict.insert(clusterIdString,waveforms2);
+    //}
+
+    FILE* spikeFile = fopen(spkFileName.toLatin1(),"r");
+    if(spikeFile == NULL){
+        // OPEN_ERROR;  ///The openning pb has to be taken into account
+    }
+
+    //read and store the data
+    waveforms2->read2(positionOfSpikes,nbSpikesOfCluster,spikeFile,nbSpkToDisplay, MinSpkDiff);
+    fclose(spikeFile);
+
+    //If the cluster has been suppress or modified after the thread calling this function has been launched
+    //return this information that the data are not available and remove the collected data.
+    if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)) || waveformStatusMap[clusterId].isClusterModified()){
+        mutex.lock();
+        waveformStatusMap[clusterId].setClusterModified(false);
+        delete waveformDict.take(clusterIdString);  //not already done by the function which modified the data as the thread is running.
+        waveformStatusMap.remove(clusterId);
+        mutex.unlock();
+        return NOT_AVAILABLE;
+    }
+    else{
+        //Store the information in waveformStatusMap
+        mutex.lock();
+        waveformStatusMap[clusterId].setSampleStatus(READY);
+        mutex.unlock();
+        return READY;
+    }
+}
 
 Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay){
+    qDebug() << "Data::Status Data::getSampleWaveformPoints";
     //If the cluster has been suppress after the thread calling this function has been launched
     //return this information that the data are not available.
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)))return NOT_AVAILABLE;
@@ -2611,6 +2710,7 @@ void Data::WaveformData<T>::setSize(dataType size,WaveformMode waveformMode){
 
 template <class T>
 void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay){
+    qDebug()<< "Data::WaveformData<T>::read1";
     //Show nbSpkToDisplay spikes or all the spikes if nbSpikesOfCluster < nbSpkToDisplay
     if(nbSpikesOfCluster < nbSpkToDisplay){
         dataType max = nbSpikesOfCluster +1;
@@ -2656,6 +2756,7 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
 
 template <class T>
 void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end){
+    qDebug()<< "Data::WaveformData<T>::read3";
     dataType max = nbSpikesOfCluster +1;
     dataType position = 0;
     dataType startPositionInSpk;
@@ -2676,6 +2777,55 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
         ++nbTimeFrameSpikes;
     }
 }
+
+template <class T>
+void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay, dataType MinSpkDiff){
+    qDebug()<< "*****************************read2";
+    //This function needs to be modified so that it only reads the spikes in within the min spike diff
+
+    //Show nbSpkToDisplay spikes or all the spikes if nbSpikesOfCluster < nbSpkToDisplay
+    if(nbSpikesOfCluster < nbSpkToDisplay){
+        dataType max = nbSpikesOfCluster +1;
+        dataType position = 0;
+        for(dataType i = 1; i < max; ++i){
+            //go to the spike position
+            dataType currentSpikePosition = (positionOfSpikes(1,i) - 1) * nbPtsBySpike ;
+            fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
+            // copy the spikes into spikePoints.
+            fread(&(sampleSpikesTable[position]),sizeof(T),nbPtsBySpike,spikeFile);
+            position += nbPtsBySpike;
+            ++nbSampleSpikes;
+        }
+    }
+    //If there is only one spike to show, take the first one
+    else if(nbSpkToDisplay == 1){
+        //go to the spike position
+        dataType currentSpikePosition = (positionOfSpikes(1,1) - 1) * nbPtsBySpike ;
+        fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
+        // copy the spikes into spikePoints.
+        fread(&(sampleSpikesTable[0]),sizeof(T),nbPtsBySpike,spikeFile);
+        nbSampleSpikes = 1;
+    }
+    else{
+        float factor = static_cast<float>(static_cast<float>(nbSpikesOfCluster - 1) / static_cast<float>(nbSpkToDisplay - 1));
+        dataType position = 0;
+        dataType max = nbSpkToDisplay +1;
+        float floatSpkIndice = 1;
+        dataType spkIndice;
+        for(float i = 1; i < max; ++i){
+            spkIndice = static_cast<dataType>(floatSpkIndice + 0.5);
+            //go to the spike position
+            dataType currentSpikePosition = (positionOfSpikes(1,spkIndice) - 1) * nbPtsBySpike ;
+            fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
+            // copy the spikes into spikePoints.
+            fread(&(sampleSpikesTable[position]),sizeof(T),nbPtsBySpike,spikeFile);
+            position += nbPtsBySpike;
+            ++nbSampleSpikes;
+            floatSpkIndice += factor;
+        }
+    }
+}
+
 
 template <class T>
 void Data::WaveformData<T>::calculateMean(WaveformMode waveformMode){

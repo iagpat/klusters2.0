@@ -39,6 +39,7 @@
 #include <QResizeEvent>
 #include <QMouseEvent>
 #include <QEvent>
+#include <QDebug>
 
 
 const int Waveform2View::XMARGIN = 0;
@@ -46,7 +47,7 @@ const int Waveform2View::YMARGIN = 0;
 
 Waveform2View::Waveform2View(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int acquisitionGain,const QList<int>& positions,QStatusBar * statusBar,QWidget* parent,
                            bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
-                           bool overLay,bool mean, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
+                           bool overLay,bool mean, int minSpkDiff, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
                            int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border,XMARGIN,YMARGIN)
   ,meanPresentation(mean),overLayPresentation(overLay),acquisitionGain(acquisitionGain),dataReady(true),
@@ -59,6 +60,7 @@ Waveform2View::Waveform2View(KlustersDoc& doc,KlustersView& view,const QColor& b
     else
         presentationMode = SAMPLE;
 
+    minSpikeDiff = minSpkDiff;
     //Set the drawing variables
     Data& clusteringData = doc.data();
     nbSamplesInWaveform2 = clusteringData.nbOfSampleInWaveform();
@@ -155,6 +157,7 @@ void Waveform2View::singleColorUpdate(int clusterId,bool active){
 
 void Waveform2View::askForWaveform2Information(int clusterId){
     //If the widget is not about to be deleted, request the data.
+    qDebug() << "Waveform2View::askForWaveform2Information";
     if(!goingToDie){
         dataReady = false;
         //Create a thread to get the waveform2 data for that cluster.
@@ -165,6 +168,7 @@ void Waveform2View::askForWaveform2Information(int clusterId){
 }
 
 void Waveform2View::askForWaveform2Information(const QList<int> &clusterIds){
+    qDebug() << "Waveform2View::askForWaveform2Information";
     //If the widget is not about to be deleted, request the data.
     if(!goingToDie){
         dataReady = false;
@@ -602,7 +606,7 @@ void Waveform2View::setMeanPresentation(){
     }
 }
 
-void Waveform2View::setAllWaveforms2Presentation(){
+void Waveform2View::setAllWaveformsPresentation(){
     meanPresentation = false;
     isZoomed = false;//Hack because all the tabs share the same data.
     drawContentsMode = REDRAW;
@@ -656,6 +660,7 @@ void Waveform2View::setTimeFrame(long start, long width){
 }
 
 void Waveform2View::setDisplayNbSpikes(long nbSpikes){
+    qDebug()<<"Waveform2View::setDisplayNbSpikes";
     nbSpkToDisplay =  nbSpikes;
     isZoomed = false;//Hack because all the tabs share the same data.
     drawContentsMode = REDRAW;
@@ -664,6 +669,19 @@ void Waveform2View::setDisplayNbSpikes(long nbSpikes){
     if(!view.clusters().isEmpty()){
         setCursor(Qt::WaitCursor);
         askForWaveform2Information(view.clusters());
+    }
+}
+
+void Waveform2View::setMinSpikeDiff(long minSpkDiff){
+    qDebug()<<"Waveform2View::setMinSpikeDiff";
+    minSpikeDiff =  minSpkDiff;
+    isZoomed = false;//Hack because all the tabs share the same data.
+    drawContentsMode = REDRAW;
+
+    //The data have to be collected if need it and everything has to be redraw
+    if(!view.clusters().isEmpty()){
+        setCursor(Qt::WaitCursor);
+        askForWaveform2Information(view.clusters());//This line needs to be changed
     }
 }
 

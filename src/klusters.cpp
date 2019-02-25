@@ -698,6 +698,38 @@ void KlustersApp::initSelectionBoxes(){
     spikesTodisplayAction = paramBar->addWidget(spikesTodisplay);
     connect(spikesTodisplay, SIGNAL(valueChanged(int)),this, SLOT(slotSpikesTodisplay(int)));
 
+    //Create and initialize the spin box for the min spike diff
+    minSpikeDiffBox = new SpinBox(paramBar);
+    minSpikeDiffBox->setMinimum(0);
+    minSpikeDiffBox->setMaximum(100);
+    minSpikeDiffBox->setSingleStep(1);
+    minSpikeDiffBox->setFocusPolicy(Qt::StrongFocus);
+    connect(minSpikeDiffBox,SIGNAL(valueChanged(int)),minSpikeDiffBox,SLOT(deselect()),Qt::QueuedConnection);
+
+    minSpikeDiffBox->setObjectName("minSpikeDiff");
+    minSpikeDiffBox->setWrapping(false);
+    minSpikeDiffLabel = new QLabel("  Min. Spike Diff. (ms)",paramBar);
+    minSpikeDiffLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
+    minSpikeDiffLabel->setFont(font);
+    minSpikeDiffLabelAction = paramBar->addWidget(minSpikeDiffLabel);
+    minSpikeDiffBox->setMinimumSize(70,minSpikeDiffBox->minimumHeight());
+    minSpikeDiffBox->setMaximumSize(70,minSpikeDiffBox->maximumHeight());
+    minSpikeDiffBoxAction = paramBar->addWidget(minSpikeDiffBox);
+    connect(minSpikeDiffBox, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateMinSpikeDiff(int)));
+
+ /*   minSpikeDiffBox = new QLineEdit(paramBar);
+    minSpikeDiffBox->setObjectName("DEFAULT_MIN_SPIKE_DIFF");
+    minSpikeDiffBox->setMaxLength(100);
+    minSpikeDiffBox->setValidator(&minSpikeDiffValidator);
+    minSpikeDiffLabel = new QLabel("", paramBar);
+    minSpikeDiffLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
+    minSpikeDiffLabel->setFont(font);
+    minSpikeDiffLabelAction = paramBar->addWidget(minSpikeDiffLabel);
+    minSpikeDiffBox->setMinimumSize(30,minSpikeDiffBox->minimumHeight());
+    minSpikeDiffBox->setMaximumSize(30,minSpikeDiffBox->maximumHeight());
+    minSpikeDiffBoxAction = paramBar->addWidget(minSpikeDiffBox);
+    connect(minSpikeDiffBox, SIGNAL(returnPressed(int)),this, SLOT(slotUpdateMinSpikeDiff(int)));*/
+
     //Create and initialize the lineEdit for the correlations.
     binSizeBox = new QLineEdit(paramBar);
     binSizeBox->setObjectName("DEFAULT_BIN_SIZE");
@@ -713,19 +745,6 @@ void KlustersApp::initSelectionBoxes(){
     binSizeBox->setMaximumSize(30,binSizeBox->maximumHeight());
     binSizeBoxAction = paramBar->addWidget(binSizeBox);
     connect(binSizeBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateBinSize()));
-
-    minSpikeDiffBox = new QLineEdit(paramBar);
-    minSpikeDiffBox->setObjectName("DEFAULT_MIN_SPIKE_DIFF");
-    minSpikeDiffBox->setMaxLength(100);
-    minSpikeDiffBox->setValidator(&minSpikeDiffValidator);
-    minSpikeDiffLabel = new QLabel("  Min. Spike Diff. (ms)", paramBar);
-    minSpikeDiffLabel->setFrameStyle(QFrame::StyledPanel|QFrame::Plain);
-    minSpikeDiffLabel->setFont(font);
-    minSpikeDiffLabelAction = paramBar->addWidget(minSpikeDiffLabel);
-    minSpikeDiffBox->setMinimumSize(30,minSpikeDiffBox->minimumHeight());
-    minSpikeDiffBox->setMaximumSize(30,minSpikeDiffBox->maximumHeight());
-    minSpikeDiffBoxAction = paramBar->addWidget(minSpikeDiffBox);
-    connect(minSpikeDiffBox, SIGNAL(returnPressed()),this, SLOT(slotUpdateMinSpikeSize()));
 
     correlogramsHalfDuration = new QLineEdit(paramBar);
     correlogramsHalfDuration->setObjectName("INITIAL_CORRELOGRAMS_HALF_TIME_FRAME");
@@ -887,7 +906,6 @@ void KlustersApp::initDisplay(){
     binSizeBox->setText(DEFAULT_BIN_SIZE);
     binSizeBoxAction->setVisible(true);
     binSizeLabelAction->setVisible(true);
-    minSpikeDiffBox->setText(DEFAULT_MIN_SPIKE_DIFF);
     minSpikeDiffBoxAction->setVisible(true);
     minSpikeDiffLabelAction->setVisible(true);
     shoulderLine->setChecked(true);
@@ -926,7 +944,7 @@ void KlustersApp::initDisplay(){
 
     KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
-                                          false,false,DEFAULT_BIN_SIZE.toInt(),INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
+                                          false,false, DEFAULT_MIN_SPIKE_DIFF.toInt(),DEFAULT_BIN_SIZE.toInt(), INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
     mainDock = view;
     tabsParent->addDockArea(view,tr("Overview Display"));
@@ -1006,6 +1024,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //as the existing one if it exists.
         Data::ScaleMode scaleMode = Data::MAX;
         int sizeOfBin = DEFAULT_BIN_SIZE.toInt();
+        int minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
         int correlogramTimeWindow = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
         bool line = true;
         if(!isProcessWidget && activeView()->containsCorrelationView()){
@@ -1042,12 +1061,12 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         if(!isProcessWidget)
             view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,statusBar(),
                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
-                                    nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
+                                    nbSpkToDisplay, overLay,mean,minSpikeDiff,sizeOfBin, correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
         else
             view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,statusBar(),
                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
-                                    nbSpkToDisplay,overLay,mean,sizeOfBin,correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
+                                    nbSpkToDisplay, overLay,mean,minSpikeDiff,sizeOfBin, correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
 
         view->setWindowTitle(displayName);
         tabsParent->addDockArea(view,displayType);
@@ -2182,7 +2201,6 @@ void KlustersApp::slotTabChange(int index){
                 minSpikeDiff = activeView->minDiffOfSpikes();
                 correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
                 binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
-                minSpikeDiffBox->setText(QString::fromLatin1("%1").arg(minSpikeDiff));
                 correlogramsHalfDurationAction->setVisible(true);
                 correlogramsHalfDurationLabelAction->setVisible(true);
                 binSizeBoxAction->setVisible(true);
@@ -2400,12 +2418,6 @@ void KlustersApp::slotUpdateBinSize(){
     }
 }
 
-void KlustersApp::slotUpdateMinSpikeDiff(){
-    if(!isInit){
-        minSpikeDiff = (minSpikeDiffBox->displayText()).toInt();
-        //activeView()->updateBinSizeAndTimeFrame(binSize,correlogramTimeFrame);
-    }
-}
 
 void KlustersApp::slotUpdateParameterBar(){  
     durationAction->setVisible(false);
@@ -2778,7 +2790,6 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType){
             minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
             correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
             binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
-            minSpikeDiffBox->setText(QString::fromLatin1("%1").arg(minSpikeDiff));
             correlogramsHalfDurationAction->setVisible(true);
             correlogramsHalfDurationLabelAction->setVisible(true);
             binSizeBoxAction->setVisible(true);

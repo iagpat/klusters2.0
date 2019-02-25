@@ -2839,6 +2839,7 @@ src/CMakeFiles/klusters.dir/klustersview.cpp.o
  /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/traceview.h
  /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/tracewidget.h
  /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/viewwidget.h
+ /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveform2view.h
  /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/waveformview.h
  /usr/include/klustersshared/array.h
  /usr/include/klustersshared/channelcolors.h

@@ -26,6 +26,7 @@
 #include <QWidget>
 #include <qvector.h>
 #include <qprinter.h>
+#include <QDebug>
 
 #include <QList>
 #include <QEvent>
@@ -101,7 +102,7 @@ public:
     KlustersView(KlustersApp& mainWindow, KlustersDoc& doc, const QColor& backgroundColor, int initialDimensionX, int initialDdimensionY,
                  QList<int>* initialClusterList, DisplayType type, QWidget* parent, const char *name, QStatusBar * statusBar, int timeInterval, int maxAmplitude,
                  QList<int> positions, bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay = 0, bool overLay = false,
-                 bool mean = false, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
+                 bool mean = false, int minSpikeDiff = 1, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
                  long startingTime = 0, long duration = 100, bool labelsDisplay = false, QList< QList<int>* > undoList = QList< QList<int>* >(), QList< QList<int>* > redoList = QList< QList<int>* >());
 
     /** Destructor for the main view */
@@ -440,8 +441,15 @@ public:
   * @param nbSpikes number of spikes to display.
   */
     void setDisplayNbSpikes(int nbSpikes){
+        qDebug()<<"setDisplayNbSpikes";
         nbSpkToDisplay = nbSpikes;
         emit updateDisplayNbSpikes(nbSpikes);
+    }
+
+    void setMinSpikeDiff(int MinSpkDiff){
+        qDebug()<<"setMinSpikeDiff";
+        minSpikeDiff = MinSpkDiff;
+        emit updateMinSpikeDiff(MinSpkDiff);
     }
 
     /**Returns the number of spikes displayed in the Waveform View, if any, when the presentation mode is sample.
@@ -709,6 +717,7 @@ Q_SIGNALS:
     void increaseAmplitude();
     void decreaseAmplitude();
     void updateDisplayNbSpikes(long nbSpikes);
+    void updateMinSpikeDiff(long MinSpkDiff);
     void increaseAmplitudeofCorrelograms();
     void decreaseAmplitudeofCorrelograms();
     void noScale();
