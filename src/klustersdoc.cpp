@@ -179,6 +179,7 @@ void KlustersDoc::closeDocument(){
     //Remove the temp files if any
     tmpCluFile.clear();
     tmpSpikeFile.clear();
+    tmpResFile.clear();
 
     //Variables link to TraceView
     if(channelColorList != 0L){
@@ -241,6 +242,8 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
 
     QString spkFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".spk."+ electrodeGroupID;
 
+    QString resFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".res."+ electrodeGroupID;
+
     QString cluFileUrl = urlFileInfo.absolutePath() + QDir::separator() + baseName +".clu."+ electrodeGroupID;
     docUrl = cluFileUrl;
 
@@ -264,6 +267,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
     if(!QFile(spkFileUrl).exists())
         return SPK_DOWNLOAD_ERROR;
     QString tmpSpikeFile = spkFileUrl;
+    QString tmpResFile = resFileUrl;
 
 
     QFile fetFile(fetFileUrl);
@@ -278,6 +282,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
 
     //The length of the spike file is used to determine the number of spikes.
     QFile spikeFile(tmpSpikeFile);
+    QFile resFile(tmpResFile);
 
     if(!spikeFile.open(QIODevice::ReadOnly)){
         fetFile.close();
@@ -384,7 +389,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
 
         //Initialize the data
         if(isXmlParExist){
-            if(!clusteringData->initialize(fetFile,cluFile,spkFileLength,tmpSpikeFile,xmlParFile,electrodeGroupID.toInt(),errorInformation)){
+            if(!clusteringData->initialize(fetFile,cluFile,spkFileLength,tmpResFile,tmpSpikeFile,xmlParFile,electrodeGroupID.toInt(),errorInformation)){
                 //close the files
                 xmlParFile.close();
                 fetFile.close();
@@ -396,7 +401,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
             cluFile.close();
         }
         else{
-            if(!clusteringData->initialize(fetFile,cluFile,spkFileLength,tmpSpikeFile,parXFile,parFile,errorInformation)){
+            if(!clusteringData->initialize(fetFile,cluFile,spkFileLength,tmpResFile,tmpSpikeFile,parXFile,parFile,errorInformation)){
                 //close the files
                 parXFile.close();
                 parFile.close();
@@ -416,7 +421,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
 
         //Initialize the data
         if(isXmlParExist){
-            if(!clusteringData->initialize(fetFile,spkFileLength,tmpSpikeFile,xmlParFile,electrodeGroupID.toInt(),errorInformation)){
+            if(!clusteringData->initialize(fetFile,spkFileLength,tmpResFile,tmpSpikeFile,xmlParFile,electrodeGroupID.toInt(),errorInformation)){
                 //close the files
                 xmlParFile.close();
                 fetFile.close();
@@ -426,7 +431,7 @@ int KlustersDoc::openDocument(const QString &url,QString& errorInformation, cons
             fetFile.close();
         }
         else{
-            if(!clusteringData->initialize(fetFile,spkFileLength,tmpSpikeFile,parXFile,parFile,errorInformation)){
+            if(!clusteringData->initialize(fetFile,spkFileLength,tmpResFile,tmpSpikeFile,parXFile,parFile,errorInformation)){
                 //close the files
                 parXFile.close();
                 parFile.close();

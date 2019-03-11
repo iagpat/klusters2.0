@@ -110,12 +110,13 @@ public:
   * @param featureFile the .fet file
   * @param spkFileLength the length of the .spk.i file
   * @param spkFileName the name of the .spk.i file
+  * @param resFile the name of the .res.i file
   * @param parXFile the .par.i file
   * @param parFile the .par file
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(QFile& featureFile, long spkFileLength, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
+    bool initialize(QFile& featureFile, long spkFileLength, const QString &resFileName, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data.
@@ -124,12 +125,13 @@ public:
   * @param clusterFile the .clu.i file
   * @param spkFileLength the length of the .spk.i file
   * @param spkFileName the name of the .spk.i file
+  * @param resFile the name of the .res.i file
   * @param parXFile the .par.i file
   * @param parFile the .par file
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(QFile& featureFile, QFile& clusterFile, long spkFileLength, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
+    bool initialize(QFile& featureFile, QFile& clusterFile, long spkFileLength, const QString &resFileName, const QString &spkFileName, QFile& parXFile, QFile& parFile, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data when the cluster file does not exist.
@@ -137,12 +139,13 @@ public:
   * @param featureFile the .fet file
   * @param spkFileLength the length of the .spk.i file
   * @param spkFileName the name of the .spk.i file
+  * @param resFile the name of the .res.i file
   * @param parFile the .xml parameter file
   * @param electrodeGroupID the id of the electrode group currently opened.
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(QFile& featureFile, long spkFileLength, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
+    bool initialize(QFile& featureFile, long spkFileLength, const QString &resFileName, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
 
     /**
   * Load the features data, cluster data and configuration data.
@@ -151,12 +154,13 @@ public:
   * @param clusterFile the .clu.i file
   * @param spkFileLength the length of the .spk.i file
   * @param spkFileName the name of the .spk.i file
+  * @param resFile the name of the .res.i file
   * @param parFile the .xml parameter file
   * @param electrodeGroupID the id of the electrode group currently opened.
   * @param errorInformation string which, in case of an error, will contain detail about it.
   * @return true if the initialization succeded false otherwise
   */
-    bool initialize(QFile& featureFile,QFile& clusterFile, long spkFileLength, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
+    bool initialize(QFile& featureFile,QFile& clusterFile, long spkFileLength, const QString &resFileName, const QString &spkFileName, QFile& parFile, int electrodeGroupID, QString& errorInformation);
 
     /**Calculate the minimum and maximum for each dimension and store them in
   *dimensionMinima and dimensionMaxima respectively.
@@ -551,6 +555,7 @@ private:
     int nbTotalElectrodes;
     int nbBits;
     QString spkFileName;
+    QString resFileName;
     int voltageRange;
     int amplification;
     int initialOffset;
@@ -759,7 +764,7 @@ private:
         virtual dataType getSampleStDeviation(dataType index) const  = 0;
         virtual dataType getTimeFrameStDeviation(dataType index) const  = 0;
         virtual void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay) = 0;
-        virtual void read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff) = 0;
+        virtual void read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* resFile ,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff) = 0;
         virtual void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end) = 0;
         virtual void calculateMean(WaveformMode waveformMode) = 0;
 
@@ -837,7 +842,7 @@ private:
             return static_cast<dataType>(timeFrameStDeviationTable[index]);
         }
         void read(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* spikeFile,dataType nbSpkToDisplay);
-        void read2(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff);
+        void read2(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* resFile,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff);
         void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end);
         void calculateMean(WaveformMode waveformMode = SAMPLE);
     private:

@@ -68,7 +68,7 @@ const QString KlustersApp::INITIAL_WAVEFORM_TIME_WINDOW = "30";
 const long KlustersApp::DEFAULT_NB_SPIKES_DISPLAYED = 100;
 const QString KlustersApp::INITIAL_CORRELOGRAMS_HALF_TIME_FRAME = "30";
 const QString KlustersApp::DEFAULT_BIN_SIZE = "1";
-const QString KlustersApp::DEFAULT_MIN_SPIKE_DIFF = "1";
+const QString KlustersApp::DEFAULT_MIN_SPIKE_DIFF = "0";
 
 
 KlustersApp::KlustersApp()

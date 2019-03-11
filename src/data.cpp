@@ -385,8 +385,9 @@ bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength,Q
 
 
 
-bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength,const QString& spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength, const QString& resFileName,const QString& spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
     this->spkFileName = spkFileName;
+    this->resFileName = resFileName;
     if(!configure(parXFile, parFile,errorInformation))
         return false;
 
@@ -396,9 +397,9 @@ bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength,c
     return true;
 }
 
-bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,QFile& clusterFile,long spkFileLength, const QString& resFileName,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
     this->spkFileName = spkFileName;
-
+    this->resFileName = resFileName;
     if(!configure(parFile,electrodeGroupID,errorInformation))
         return false;
     if(!initialize(featureFile,clusterFile,spkFileLength,errorInformation))
@@ -456,8 +457,9 @@ bool Data::initialize(QFile& featureFile,long spkFileLength,QString& errorInform
     return true;
 }
 
-bool Data::initialize(QFile& featureFile,long spkFileLength,const QString &spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,long spkFileLength,const QString& resFileName,const QString &spkFileName,QFile& parXFile,QFile& parFile,QString& errorInformation){
     this->spkFileName = spkFileName;
+    this->resFileName = resFileName;
     if(!configure(parXFile, parFile,errorInformation))
         return false;
     if(!initialize(featureFile,spkFileLength,errorInformation)){
@@ -467,9 +469,9 @@ bool Data::initialize(QFile& featureFile,long spkFileLength,const QString &spkFi
     return true;
 }
 
-bool Data::initialize(QFile& featureFile,long spkFileLength,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
+bool Data::initialize(QFile& featureFile,long spkFileLength,const QString& resFileName,const QString& spkFileName,QFile& parFile,int electrodeGroupID,QString& errorInformation){
     this->spkFileName = spkFileName;
-
+    this->resFileName = resFileName;
     if(!configure(parFile,electrodeGroupID,errorInformation))
         return false;
     if(!initialize(featureFile,spkFileLength,errorInformation))
@@ -2433,9 +2435,14 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
         // OPEN_ERROR;  ///The openning pb has to be taken into account
     }
 
+    FILE* resFile = fopen(resFileName.toLatin1(),"r");
+    if(resFile == NULL){
+        // OPEN_ERROR;  ///The openning pb has to be taken into account
+    }
     //read and store the data
-    waveforms2->read2(positionOfSpikes,nbSpikesOfCluster,spikeFile,nbSpkToDisplay, MinSpkDiff);
+    waveforms2->read2(positionOfSpikes,nbSpikesOfCluster,resFile, spikeFile,nbSpkToDisplay, MinSpkDiff*samplingRate/1000);
     fclose(spikeFile);
+    fclose(resFile);
 
     //If the cluster has been suppress or modified after the thread calling this function has been launched
     //return this information that the data are not available and remove the collected data.
@@ -2779,17 +2786,61 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
 }
 
 template <class T>
-void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay, dataType MinSpkDiff){
+void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* resFile ,FILE* spikeFile,dataType nbSpkToDisplay, dataType MinSpkDiff){
     qDebug()<< "*****************************read2";
-    //This function needs to be modified so that it only reads the spikes in within the min spike diff
+    //positionOfSpikes has all the positions for spikes in the desired cluster
+    //first we are going to load the res file, ideally in the future we will put this somewhere else more efficient
+    //BUG ALERT: the following 15 lines of code make the first waveformview not update
+
+    qDebug()<< "minspikediff = " << MinSpkDiff; //Debugging
+    qDebug()<< "number of spikes in cluster = " << nbSpikesOfCluster; //Debugging
+    qDebug()<< "number of points by spike = " << nbPtsBySpike;//Debugging
+    QTextStream times_file(resFile); //Set up file stream
+    int64_t *times = new int64_t[nbSpikesOfCluster+1]; //Array to store spike times in timepoint units
+    bool ok;
+    int64_t file_pos = 1;
+    int64_t spike_pos = 1;
+    while(!times_file.atEnd()){
+        if (file_pos++ == (positionOfSpikes(1,spike_pos))){
+            times[spike_pos] = times_file.readLine().toLong(&ok,10);
+            qDebug()<< "time: " << times[spike_pos];
+            spike_pos++;
+            if (nbSpikesOfCluster < spike_pos) break;
+        }
+    }
+
+    QSet<dataType> PositionOfSpikesSet;
+    for(dataType i = 1; i < nbSpikesOfCluster+1; i++){ //For every spike in the cluster
+        //First we check the times of the spikes before the current one
+        qDebug()<< "time: " << times[i];//Debugging
+        int64_t before = 1;
+        while(true){
+            if (i-before < 1) break;
+            if((times[i] - times[i-before]) > MinSpkDiff) break;
+            qDebug()<< times[i] << " - " << times[i-before] << " < " << MinSpkDiff;//Debugging
+            PositionOfSpikesSet.insert(positionOfSpikes(1,i-before));
+            before++;
+        }
+        //Then we check the times of the spikes after one
+        int64_t after =1;
+        while(true){
+            if (i+after > nbSpikesOfCluster) break;
+            if((times[i+after] - times[i])  > MinSpkDiff) break;
+            qDebug()<< times[i+after] << " - " << times[i] << " < " << MinSpkDiff;//Debugging
+            PositionOfSpikesSet.insert(positionOfSpikes(1,i+after));
+            after++;
+        }
+    }
+    QList<dataType> PositionOfSpikesList = PositionOfSpikesSet.toList();
+
+    qDebug()<< "number of spikes in range = " << PositionOfSpikesList.size(); //Debugging
 
     //Show nbSpkToDisplay spikes or all the spikes if nbSpikesOfCluster < nbSpkToDisplay
     if(nbSpikesOfCluster < nbSpkToDisplay){
-        dataType max = nbSpikesOfCluster +1;
         dataType position = 0;
-        for(dataType i = 1; i < max; ++i){
+        for(dataType i = 1; i < nbSpikesOfCluster+1; ++i){
             //go to the spike position
-            dataType currentSpikePosition = (positionOfSpikes(1,i) - 1) * nbPtsBySpike ;
+            dataType currentSpikePosition = (PositionOfSpikesList.at(i) - 1) * nbPtsBySpike ;
             fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
             // copy the spikes into spikePoints.
             fread(&(sampleSpikesTable[position]),sizeof(T),nbPtsBySpike,spikeFile);
@@ -2800,7 +2851,7 @@ void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpi
     //If there is only one spike to show, take the first one
     else if(nbSpkToDisplay == 1){
         //go to the spike position
-        dataType currentSpikePosition = (positionOfSpikes(1,1) - 1) * nbPtsBySpike ;
+        dataType currentSpikePosition = (PositionOfSpikesList.at(1) - 1) * nbPtsBySpike ;
         fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
         // copy the spikes into spikePoints.
         fread(&(sampleSpikesTable[0]),sizeof(T),nbPtsBySpike,spikeFile);
@@ -2815,7 +2866,7 @@ void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpi
         for(float i = 1; i < max; ++i){
             spkIndice = static_cast<dataType>(floatSpkIndice + 0.5);
             //go to the spike position
-            dataType currentSpikePosition = (positionOfSpikes(1,spkIndice) - 1) * nbPtsBySpike ;
+            dataType currentSpikePosition = (PositionOfSpikesList.at(spkIndice) - 1) * nbPtsBySpike ;
             fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
             // copy the spikes into spikePoints.
             fread(&(sampleSpikesTable[position]),sizeof(T),nbPtsBySpike,spikeFile);

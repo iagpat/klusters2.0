@@ -256,6 +256,9 @@ public:
     /**Returns the temporary file corresponding to the spike file.*/
     QString getSpikeFileName() const {return tmpSpikeFile;}
 
+    /**Returns the temporary file corresponding to the res file.*/
+    QString getResFileName() const {return tmpResFile;}
+
     /**Returns the maximum value for the time dimension in second.*/
     long maxTime() const{return clusteringData->maxTime();}
 
@@ -636,6 +639,9 @@ private:
 
     /**Temporary file corresponding to the spike file.*/
     QString tmpSpikeFile;
+
+    /**Temporary file corresponding to the res file.*/
+    QString tmpResFile;
     
     /**The list of the views currently connected to the document. */
     QList<KlustersView*>* viewList;
