@@ -55,7 +55,7 @@ include src/CMakeFiles/klusters_automoc.dir/progress.make
 
 src/CMakeFiles/klusters_automoc:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic moc for target klusters"
-	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/cmake -E cmake_autogen /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters_automoc.dir/ ""
+	cd /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src && /usr/bin/cmake -E cmake_autogen /home/drew/Desktop/klusters_mod/klusters-2.0.0/build/src/CMakeFiles/klusters_automoc.dir/ Debug
 
 klusters_automoc: src/CMakeFiles/klusters_automoc
 klusters_automoc: src/CMakeFiles/klusters_automoc.dir/build.make

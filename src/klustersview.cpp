@@ -56,7 +56,7 @@ const QString KlustersView::DisplayTypeNames[]={QObject::tr("Cluster Display"),
 
 KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColor& backgroundColor,int initialDimensionX,int initialDimensionY,
                            QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
-                           QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean, int minSpkDiff,
+                           QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean, double minSpkDiff,
                            int binSize,int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay,
                            QList< QList<int>* > undoList, QList< QList<int>* > redoList)
     : DockArea(parent),
@@ -106,7 +106,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
         isThereCorrelationView = false;
         isThereErrorMatrixView = false;
         isThereTraceView = false;
-        mainDock->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,mainDock));
+        mainDock->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,minSpikeDiff,statusBar,mainDock));
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
         currentViewWidget->installEventFilter(this);//To enable right click popup menu
@@ -247,7 +247,7 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
   CLUSTERS on the left side, WAVEFORMS at the right top and CORRELATIONS in the bottom right
  */
     //The main dock will be the cluster view
-    ClusterView* view = new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,mainDock);
+    ClusterView* view = new ClusterView(doc,*this,backgroundColor,timeInterval,minSpikeDiff,statusBar,mainDock);
     mainDock->setWidget(view);
 
     currentViewWidget = view;
@@ -709,7 +709,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         clusters->setAttribute(Qt::WA_DeleteOnClose, true);
         clusters->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
                 //createDockWidget(count.prepend("ClusterView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
-        clusters->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval,statusBar,clusters));
+        clusters->setWidget(new ClusterView(doc,*this,backgroundColor,timeInterval, minSpikeDiff,statusBar,clusters));
         clusterView = static_cast<ViewWidget*>(clusters->widget());
         viewList.append(clusterView);
         clusterView->installEventFilter(this);//To enable right click popup menu
@@ -1508,7 +1508,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(updatedDimensions(int,int)),view, SLOT(updatedDimensions(int,int)));
         connect(this,SIGNAL(emptySelection()),view, SLOT(emptySelection()));
         connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(clusterDockClosed(QObject*)));
-
+        connect(this,SIGNAL(updateMinSpikeDiff(double)), view, SLOT(setMinSpikeDiff(double)));
         //Connect the clusterView to a possible TraceView
         if(isThereTraceView){
             connect(view,SIGNAL(moveToTime(long)),traceWidget, SLOT(moveToTime(long)));
@@ -1539,7 +1539,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(increaseAmplitude()),view, SLOT(increaseAmplitude()));
         connect(this,SIGNAL(decreaseAmplitude()),view, SLOT(decreaseAmplitude()));
         connect(this,SIGNAL(updateDisplayNbSpikes(long)),view, SLOT(setDisplayNbSpikes(long)));
-        connect(this,SIGNAL(updateMinSpikeDiff(long)), view, SLOT(setMinSpikeDiff(long)));
+        connect(this,SIGNAL(updateMinSpikeDiff(double)), view, SLOT(setMinSpikeDiff(double)));
         connect(this,SIGNAL(changeGain(int)),view, SLOT(setGain(int)));
         connect(this,SIGNAL(changeChannelPositions(QList<int>&)),view, SLOT(setChannelPositions(QList<int>&)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));

@@ -24,7 +24,6 @@
          <Option type="0" />
          <Option compiler="gcc" />
          <Compiler>
-            <Add option="-DQT_NO_DEBUG" />
             <Add option="-DQT_GUI_LIB" />
             <Add option="-DQT_CORE_LIB" />
             <Add option="-D_BSD_SOURCE" />
@@ -77,7 +76,6 @@
          <Option type="0" />
          <Option compiler="gcc" />
          <Compiler>
-            <Add option="-DQT_NO_DEBUG" />
             <Add option="-DQT_GUI_LIB" />
             <Add option="-DQT_CORE_LIB" />
             <Add option="-D_BSD_SOURCE" />

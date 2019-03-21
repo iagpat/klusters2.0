@@ -22,7 +22,7 @@ static const uint qt_meta_data_ClusterView[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      16,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,9 +45,10 @@ static const uint qt_meta_data_ClusterView[] = {
      420,  407,   12,   12, 0x0a,
      490,  445,   12,   12, 0x0a,
      552,  528,   12,   12, 0x0a,
-     594,  589,   12,   12, 0x0a,
-     631,  619,   12,   12, 0x0a,
-     703,  661,   12,   12, 0x0a,
+     600,  589,   12,   12, 0x0a,
+     629,  624,   12,   12, 0x0a,
+     666,  654,   12,   12, 0x0a,
+     738,  696,   12,   12, 0x0a,
 
        0        // eod
 };
@@ -70,6 +71,7 @@ static const char qt_meta_stringdata_ClusterView[] = {
     "updateClusters(QList<int>&,bool,bool)\0"
     "modifiedClusters,active\0"
     "undoUpdateClusters(QList<int>&,bool)\0"
+    "MinSpkDiff\0setMinSpikeDiff(double)\0"
     "step\0setTimeStepInSecond(int)\0step,active\0"
     "setTimeStepInSecond(int,bool)\0"
     "printPainter,width,height,whiteBackground\0"
@@ -95,9 +97,10 @@ void ClusterView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 10: _t->setMode((*reinterpret_cast< BaseFrame::Mode(*)>(_a[1]))); break;
         case 11: _t->updateClusters((*reinterpret_cast< QList<int>(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
         case 12: _t->undoUpdateClusters((*reinterpret_cast< QList<int>(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 13: _t->setTimeStepInSecond((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 14: _t->setTimeStepInSecond((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 15: _t->print((*reinterpret_cast< QPainter(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
+        case 13: _t->setMinSpikeDiff((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 14: _t->setTimeStepInSecond((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: _t->setTimeStepInSecond((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 16: _t->print((*reinterpret_cast< QPainter(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
         default: ;
         }
     }
@@ -135,9 +138,9 @@ int ClusterView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 16)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 16;
+        _id -= 17;
     }
     return _id;
 }

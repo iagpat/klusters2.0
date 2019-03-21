@@ -54,7 +54,7 @@ class ClusterView : public ViewWidget  {
     Q_OBJECT
 
 public:
-    ClusterView(KlustersDoc& doc, KlustersView& view, const QColor &backgroundColor, int timeInterval, QStatusBar* statusBar, QWidget* parent=0, const char* name=0,
+    ClusterView(KlustersDoc& doc, KlustersView& view, const QColor &backgroundColor, int timeInterval, double minSpikeDiff, QStatusBar* statusBar, QWidget* parent=0, const char* name=0,
                 int minSize = 50, int maxSize = 4000,
                 int windowTopLeft = -500, int windowBottomRight = 1001, int border = 0);
     ~ClusterView();
@@ -188,6 +188,8 @@ public Q_SLOTS:
     /**Updates the time interval in second and in recording unit using @p step given in second.
   * @param step the interval to use in second.
   */
+    void setMinSpikeDiff(double MinSpkDiff);
+
     void setTimeStepInSecond(int step){
         timeStepInSecond = step;
         timeStepInRecordingUnit =  static_cast<long>((static_cast<double>(timeStepInSecond) * 1000000.0) / samplingInterval);
@@ -355,6 +357,7 @@ private:
     /**Sampling rate (time between two samples) in micro second.*/
     double samplingInterval;
 
+    double minSpikeDiff;
     /**The step, in second, used to draw information mark on the time axis.
   * The default is 60 second.
   */

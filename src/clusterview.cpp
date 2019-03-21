@@ -47,7 +47,7 @@ const QColor ClusterView::NEW_CLUSTER_COLOR(Qt::green);
 const QColor ClusterView::DELETE_NOISE_COLOR(220,220,220);
 const QColor ClusterView::DELETE_ARTEFACT_COLOR(Qt::red);
 
-ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int timeInterval,QStatusBar * statusBar,QWidget* parent, const char* name,
+ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int timeInterval, double minSpkDiff,QStatusBar * statusBar,QWidget* parent, const char* name,
                          int minSize, int maxSize, int windowTopLeft ,int windowBottomRight, int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border),
     selectionPolygon(0),
@@ -62,6 +62,7 @@ ClusterView::ClusterView(KlustersDoc& doc,KlustersView& view,const QColor& backg
     samplingInterval = doc.data().intervalOfSampling();
     setTimeStepInSecond(timeInterval);
 
+    minSpikeDiff = minSpkDiff;
     //Update the dimension of the window and the values of dimensionX and dimensionY
     updatedDimensions(view.abscissaDimension(),view.ordinateDimension());
 
@@ -104,7 +105,41 @@ void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,
             }
         }
         else  {
+            int spike_index = 0;
+            int current_time;
+            QColor color = clusterColors.color(*clusterIterator);
+            QColor newColor = QColor();
+            newColor.setHsv((358/2+color.hue())%358,color.saturation(),color.value(),color.alpha());
+            dataType cluster_id = static_cast<dataType>(*clusterIterator);
+            SortableTable spikesOfCluster = SortableTable();
+            clusteringData.spikePositions(cluster_id,spikesOfCluster);
+            double MaxNumberOfSpikes = clusteringData.nbOfSpikes(cluster_id);
+            double previous_time;
+            double after_time;
+
             for(;spikeIterator.hasNext();spikeIterator.next()){
+                spike_index++;
+                if(MaxNumberOfSpikes>spike_index){
+                    current_time = clusteringData.spikeTime(spikesOfCluster, spike_index);
+                    if (spike_index-1>0){
+                        previous_time = clusteringData.spikeTime(spikesOfCluster, spike_index-1);
+                        if((current_time-previous_time) < (minSpikeDiff*clusteringData.getSamplingRate()/1000)){
+                            painter.setPen(newColor);
+                            painter.drawText(spikeIterator(dimensionX,dimensionY), tr("^"));
+                            painter.setPen(color);
+                            continue;
+                        }
+                    }
+                    if (spike_index+1<MaxNumberOfSpikes){
+                        after_time = clusteringData.spikeTime(spikesOfCluster, spike_index+1);
+                        if((after_time - current_time) < (minSpikeDiff*clusteringData.getSamplingRate()/1000)){
+                            painter.setPen(newColor);
+                            painter.drawText(spikeIterator(dimensionX,dimensionY), tr("^"));
+                            painter.setPen(color);
+                            continue;
+                        }
+                    }
+                }
                 painter.drawPoint(spikeIterator(dimensionX,dimensionY));
             }
         }
@@ -302,6 +337,12 @@ void ClusterView::setMode(BaseFrame::Mode selectedMode){
         break;
     }
     drawContentsMode = REFRESH;
+    update();
+}
+
+void ClusterView::setMinSpikeDiff(double MinSpkDiff){
+    minSpikeDiff = MinSpkDiff;
+    drawContentsMode = REDRAW;
     update();
 }
 

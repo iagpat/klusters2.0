@@ -625,6 +625,8 @@ qmutex.h
 -
 qthread.h
 -
+QDebug
+-
 stdexcept
 -
 math.h
@@ -862,6 +864,8 @@ klustersview.h
 QList
 -
 QSpinBox
+-
+QDoubleSpinBox
 -
 qvalidator.h
 -
@@ -2657,6 +2661,10 @@ qdialogbuttonbox.h
 /usr/include/qt4/QtGui/QDockWidget
 qdockwidget.h
 /usr/include/qt4/QtGui/qdockwidget.h
+
+/usr/include/qt4/QtGui/QDoubleSpinBox
+qspinbox.h
+/usr/include/qt4/QtGui/qspinbox.h
 
 /usr/include/qt4/QtGui/QFileDialog
 qfiledialog.h

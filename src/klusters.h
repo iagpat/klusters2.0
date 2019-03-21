@@ -26,6 +26,7 @@
 // include files for Qt
 #include <QList>
 #include <QSpinBox> 
+#include <QDoubleSpinBox>
 #include <qvalidator.h>
 #include <qlineedit.h>
 #include <qlabel.h>
@@ -347,10 +348,10 @@ private Q_SLOTS:
     void slotUpdateBinSize();
 
     /**Informs the active display of the new MinSpikeDiff*/
-    void slotUpdateMinSpikeDiff(int minSpikeDiff){
+    void slotUpdateMinSpikeDiff(double minSpikeDiff){
         qDebug()<<"slotUpdateMinSpikeDiff";
         if(!isInit){
-            activeView()->setMinSpikeDiff(static_cast<long>(minSpikeDiff));
+            activeView()->setMinSpikeDiff(static_cast<double>(minSpikeDiff));
         }
     }
 
@@ -666,7 +667,7 @@ private:
     */
     static const QString INITIAL_CORRELOGRAMS_HALF_TIME_FRAME;
     static const QString DEFAULT_BIN_SIZE;
-    static const QString DEFAULT_MIN_SPIKE_DIFF;
+    static const double DEFAULT_MIN_SPIKE_DIFF;
 
     /**Length of the recording in miliseconds.*/
     long maximumTime;
@@ -681,7 +682,7 @@ private:
 
     /*Small box where the user can enter the minimum allowable spike time difference between spikes
     * for plotting in the bin waveform display*/
-    SpinBox* minSpikeDiffBox;
+    QDoubleSpinBox* minSpikeDiffBox;
 
     /**Time frame to use to compute the correlograms.*/
     int correlogramTimeFrame;
@@ -690,7 +691,7 @@ private:
     int binSize;
 
     /*Minimum allowable spike time difference between spikes for plotting in the bin waveform display*/
-    int minSpikeDiff;
+    double minSpikeDiff;
 
     QLabel* correlogramsHalfDurationLabel;
     QLabel* binSizeLabel;
@@ -705,14 +706,14 @@ private:
 
     /**Validator for the minSpikeDiff lineEdit*/
 
-    class MinSpikeDiffValidator: public QIntValidator{
+    class MinSpikeDiffValidator: public QDoubleValidator{
 
     public:
-        MinSpikeDiffValidator(QObject* parent):QIntValidator(parent){
+        MinSpikeDiffValidator(QObject* parent):QDoubleValidator(parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
-        MinSpikeDiffValidator(int minimum,int maximum,QObject* parent):
-            QIntValidator(minimum,maximum,parent){
+        MinSpikeDiffValidator(double minimum,double maximum, int decimals, QObject* parent):
+            QDoubleValidator(minimum,maximum,decimals, parent){
             klusters = dynamic_cast<KlustersApp*>(parent);
         }
         ~MinSpikeDiffValidator(){}
@@ -720,7 +721,7 @@ private:
             input = QString::fromLatin1("%1").arg(klusters->minSpikeDiff);
         }
         QValidator::State validate(QString &input,int& pos) const{
-            QValidator::State state = QIntValidator::validate(input,pos);
+            QValidator::State state = QDoubleValidator::validate(input,pos);
             //Let the QIntValidator validates the value as to know if it is a correct integer (within the range).
             if(state != QValidator::Acceptable) return state;
             //If the value is a correct integer, update the correlogramsHalfDuration if need it.

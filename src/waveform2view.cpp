@@ -47,7 +47,7 @@ const int Waveform2View::YMARGIN = 0;
 
 Waveform2View::Waveform2View(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int acquisitionGain,const QList<int>& positions,QStatusBar * statusBar,QWidget* parent,
                            bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
-                           bool overLay,bool mean, int minSpkDiff, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
+                           bool overLay,bool mean, double minSpkDiff, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
                            int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border,XMARGIN,YMARGIN)
   ,meanPresentation(mean),overLayPresentation(overLay),acquisitionGain(acquisitionGain),dataReady(true),
@@ -157,7 +157,7 @@ void Waveform2View::singleColorUpdate(int clusterId,bool active){
 
 void Waveform2View::askForWaveform2Information(int clusterId){
     //If the widget is not about to be deleted, request the data.
-    qDebug() << "Waveform2View::askForWaveform2Information";
+
     if(!goingToDie){
         dataReady = false;
         //Create a thread to get the waveform2 data for that cluster.
@@ -168,7 +168,7 @@ void Waveform2View::askForWaveform2Information(int clusterId){
 }
 
 void Waveform2View::askForWaveform2Information(const QList<int> &clusterIds){
-    qDebug() << "Waveform2View::askForWaveform2Information";
+
     //If the widget is not about to be deleted, request the data.
     if(!goingToDie){
         dataReady = false;
@@ -540,18 +540,24 @@ void Waveform2View::drawWaveforms2(QPainter& painter,const QList<int>& clusterLi
             long nbOfSpikes = waveform2Iterator->nbOfSpikes();
             for(long i = 0; i < nbOfSpikes; ++i){
                 int x = 0;
+                bool discard = true;
                 QPolygon spike(nbchannels * nbSamplesInWaveform2);
                 for(int i = 0; i < nbSamplesInWaveform2; ++i){
                     for(int j = 0; j < nbchannels; ++j){
                         Y = Y0 - channelPositions[j] * (YsizeForMaxAmp + Yspace);
                         //The point is drawn in the QT coordinate system where the Y axis in oriented downwards
                         //The value receive from the iterator is already inverted.
-                        spike.setPoint((j*nbSamplesInWaveform2) + i, X + x,-Y + static_cast<long>(waveform2Iterator->nextSpike() * Yfactor));
+                        long temp = static_cast<long>(waveform2Iterator->nextViableSpike(static_cast<dataType>(*clusterIterator),clusteringData, minSpikeDiff*clusteringData.getSamplingRate()/1000, discard) * Yfactor);
+                        if (discard == false){
+                            spike.setPoint((j*nbSamplesInWaveform2) + i, X + x,-Y + temp);
+                        } else if(discard == true){
+                            break;
+                        }
                     }
                     x += Xstep;
+                    if(discard == true) break;
                 }
                 for(int k = 0;k < nbchannels;++k){
-
                     int pointCount = (nbSamplesInWaveform2 == -1) ?  spike.size() - k * nbSamplesInWaveform2 : nbSamplesInWaveform2;
                     painter.drawPolyline(spike.constData() + k * nbSamplesInWaveform2, pointCount);
                 }
@@ -672,7 +678,7 @@ void Waveform2View::setDisplayNbSpikes(long nbSpikes){
     }
 }
 
-void Waveform2View::setMinSpikeDiff(long minSpkDiff){
+void Waveform2View::setMinSpikeDiff(double minSpkDiff){
     qDebug()<<"Waveform2View::setMinSpikeDiff";
     minSpikeDiff =  minSpkDiff;
     isZoomed = false;//Hack because all the tabs share the same data.

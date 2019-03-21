@@ -68,7 +68,7 @@ const QString KlustersApp::INITIAL_WAVEFORM_TIME_WINDOW = "30";
 const long KlustersApp::DEFAULT_NB_SPIKES_DISPLAYED = 100;
 const QString KlustersApp::INITIAL_CORRELOGRAMS_HALF_TIME_FRAME = "30";
 const QString KlustersApp::DEFAULT_BIN_SIZE = "1";
-const QString KlustersApp::DEFAULT_MIN_SPIKE_DIFF = "0";
+const double KlustersApp::DEFAULT_MIN_SPIKE_DIFF = 1.0;
 
 
 KlustersApp::KlustersApp()
@@ -89,7 +89,7 @@ KlustersApp::KlustersApp()
       correlogramTimeFrame(INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1),
       binSize(DEFAULT_BIN_SIZE.toInt()),
       binSizeValidator(this),
-      minSpikeDiff(DEFAULT_MIN_SPIKE_DIFF.toInt()),
+      minSpikeDiff(DEFAULT_MIN_SPIKE_DIFF),
       minSpikeDiffValidator(this),
       correlogramsHalfTimeFrameValidator(this),
       prefDialog(0L),
@@ -699,12 +699,12 @@ void KlustersApp::initSelectionBoxes(){
     connect(spikesTodisplay, SIGNAL(valueChanged(int)),this, SLOT(slotSpikesTodisplay(int)));
 
     //Create and initialize the spin box for the min spike diff
-    minSpikeDiffBox = new SpinBox(paramBar);
+    minSpikeDiffBox = new QDoubleSpinBox(paramBar);
     minSpikeDiffBox->setMinimum(0);
-    minSpikeDiffBox->setMaximum(100);
+    minSpikeDiffBox->setMaximum(1000);
     minSpikeDiffBox->setSingleStep(1);
     minSpikeDiffBox->setFocusPolicy(Qt::StrongFocus);
-    connect(minSpikeDiffBox,SIGNAL(valueChanged(int)),minSpikeDiffBox,SLOT(deselect()),Qt::QueuedConnection);
+    connect(minSpikeDiffBox,SIGNAL(valueChanged(double)),minSpikeDiffBox,SLOT(deselect()),Qt::QueuedConnection);
 
     minSpikeDiffBox->setObjectName("minSpikeDiff");
     minSpikeDiffBox->setWrapping(false);
@@ -715,7 +715,7 @@ void KlustersApp::initSelectionBoxes(){
     minSpikeDiffBox->setMinimumSize(70,minSpikeDiffBox->minimumHeight());
     minSpikeDiffBox->setMaximumSize(70,minSpikeDiffBox->maximumHeight());
     minSpikeDiffBoxAction = paramBar->addWidget(minSpikeDiffBox);
-    connect(minSpikeDiffBox, SIGNAL(valueChanged(int)),this, SLOT(slotUpdateMinSpikeDiff(int)));
+    connect(minSpikeDiffBox, SIGNAL(valueChanged(double)),this, SLOT(slotUpdateMinSpikeDiff(double)));
 
  /*   minSpikeDiffBox = new QLineEdit(paramBar);
     minSpikeDiffBox->setObjectName("DEFAULT_MIN_SPIKE_DIFF");
@@ -921,7 +921,7 @@ void KlustersApp::initDisplay(){
     maximumTime *= 1000;
     correlogramsHalfTimeFrameValidator.setRange(0,static_cast<int>((maximumTime - 1) / 2));
     binSizeValidator.setRange(0,maximumTime);
-    minSpikeDiffValidator.setRange(0,100);
+    minSpikeDiffValidator.setRange(0,1000);
 
 
     //If the setting dialog exists (has already be open once), enable the settings for the channels.
@@ -944,7 +944,7 @@ void KlustersApp::initDisplay(){
 
     KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,statusBar(),
                                           displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
-                                          false,false, DEFAULT_MIN_SPIKE_DIFF.toInt(),DEFAULT_BIN_SIZE.toInt(), INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
+                                          false,false, DEFAULT_MIN_SPIKE_DIFF,DEFAULT_BIN_SIZE.toInt(), INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
     mainDock = view;
     tabsParent->addDockArea(view,tr("Overview Display"));
@@ -973,6 +973,7 @@ void KlustersApp::initDisplay(){
     clusterPanel->show();
     //Update the Time frame and sample related widgets
     spikesTodisplay->setValue(DEFAULT_NB_SPIKES_DISPLAYED);
+    minSpikeDiffBox->setValue(DEFAULT_MIN_SPIKE_DIFF);
     start->setValue(0);
     start->setSingleStep(timeWindow);
     duration->setText(INITIAL_WAVEFORM_TIME_WINDOW);
@@ -1024,7 +1025,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         //as the existing one if it exists.
         Data::ScaleMode scaleMode = Data::MAX;
         int sizeOfBin = DEFAULT_BIN_SIZE.toInt();
-        int minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
+        double minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF;
         int correlogramTimeWindow = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
         bool line = true;
         if(!isProcessWidget && activeView()->containsCorrelationView()){
@@ -2365,7 +2366,7 @@ void KlustersApp::resetState(){
     minSpikeDiffLabelAction->setVisible(false);
     shoulderLine->setChecked(true);
     binSize = DEFAULT_BIN_SIZE.toInt();
-    minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
+    minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF;
     correlogramTimeFrame = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
     startTime = 0;
     timeWindow = INITIAL_WAVEFORM_TIME_WINDOW.toLong();
@@ -2787,7 +2788,7 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType){
             scaleByMax->setChecked(true);
             correlogramTimeFrame = INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1;
             binSize = DEFAULT_BIN_SIZE.toInt();
-            minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF.toInt();
+            minSpikeDiff = DEFAULT_MIN_SPIKE_DIFF;
             correlogramsHalfDuration->setText(QString::fromLatin1("%1").arg(correlogramTimeFrame / 2));
             binSizeBox->setText(QString::fromLatin1("%1").arg(binSize));
             correlogramsHalfDurationAction->setVisible(true);

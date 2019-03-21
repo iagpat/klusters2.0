@@ -55,35 +55,35 @@ static const uint qt_meta_data_KlustersView[] = {
      865,   13,   13,   13, 0x05,
      894,  885,   13,   13, 0x05,
      933,  922,   13,   13, 0x05,
-     958,   13,   13,   13, 0x05,
-     992,   13,   13,   13, 0x05,
-    1026,   13,   13,   13, 0x05,
-    1036,   13,   13,   13, 0x05,
-    1047,   13,   13,   13, 0x05,
-    1078, 1063,   13,   13, 0x05,
-    1116, 1114,   13,   13, 0x05,
-    1138,   13,   13,   13, 0x05,
-    1170, 1154,   13,   13, 0x05,
-    1198, 1186,   13,   13, 0x05,
-    1237, 1227,   13,   13, 0x05,
-    1273,   13,   13,   13, 0x05,
-    1302, 1296,   13,   13, 0x05,
-    1339, 1332,   13,   13, 0x05,
-    1406, 1364,   13,   13, 0x05,
-    1459,   13,   13,   13, 0x05,
-    1482,   13,   13,   13, 0x05,
-    1510, 1505,   13,   13, 0x05,
-    1527,   13,   13,   13, 0x05,
-    1541,   13,   13,   13, 0x05,
+     960,   13,   13,   13, 0x05,
+     994,   13,   13,   13, 0x05,
+    1028,   13,   13,   13, 0x05,
+    1038,   13,   13,   13, 0x05,
+    1049,   13,   13,   13, 0x05,
+    1080, 1065,   13,   13, 0x05,
+    1118, 1116,   13,   13, 0x05,
+    1140,   13,   13,   13, 0x05,
+    1172, 1156,   13,   13, 0x05,
+    1200, 1188,   13,   13, 0x05,
+    1239, 1229,   13,   13, 0x05,
+    1275,   13,   13,   13, 0x05,
+    1304, 1298,   13,   13, 0x05,
+    1341, 1334,   13,   13, 0x05,
+    1408, 1366,   13,   13, 0x05,
+    1461,   13,   13,   13, 0x05,
+    1484,   13,   13,   13, 0x05,
+    1512, 1507,   13,   13, 0x05,
+    1529,   13,   13,   13, 0x05,
+    1543,   13,   13,   13, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-    1563, 1559,   13,   13, 0x0a,
-    1604, 1591,   13,   13, 0x0a,
-    1647, 1633,   13,   13, 0x0a,
-    1693, 1677,   13,   13, 0x0a,
-    1741, 1725,   13,   13, 0x0a,
-    1785, 1773,   13,   13, 0x0a,
-    1826, 1811,   13,   13, 0x0a,
+    1565, 1561,   13,   13, 0x0a,
+    1606, 1593,   13,   13, 0x0a,
+    1649, 1635,   13,   13, 0x0a,
+    1695, 1679,   13,   13, 0x0a,
+    1743, 1727,   13,   13, 0x0a,
+    1787, 1775,   13,   13, 0x0a,
+    1828, 1813,   13,   13, 0x0a,
 
        0        // eod
 };
@@ -114,7 +114,7 @@ static const char qt_meta_stringdata_KlustersView[] = {
     "overLayPresentation()\0sideBySidePresentation()\0"
     "increaseAmplitude()\0decreaseAmplitude()\0"
     "nbSpikes\0updateDisplayNbSpikes(long)\0"
-    "MinSpkDiff\0updateMinSpikeDiff(long)\0"
+    "MinSpkDiff\0updateMinSpikeDiff(double)\0"
     "increaseAmplitudeofCorrelograms()\0"
     "decreaseAmplitudeofCorrelograms()\0"
     "noScale()\0maxScale()\0shoulderScale()\0"
@@ -169,7 +169,7 @@ void KlustersView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 21: _t->increaseAmplitude(); break;
         case 22: _t->decreaseAmplitude(); break;
         case 23: _t->updateDisplayNbSpikes((*reinterpret_cast< long(*)>(_a[1]))); break;
-        case 24: _t->updateMinSpikeDiff((*reinterpret_cast< long(*)>(_a[1]))); break;
+        case 24: _t->updateMinSpikeDiff((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 25: _t->increaseAmplitudeofCorrelograms(); break;
         case 26: _t->decreaseAmplitudeofCorrelograms(); break;
         case 27: _t->noScale(); break;
@@ -393,7 +393,7 @@ void KlustersView::updateDisplayNbSpikes(long _t1)
 }
 
 // SIGNAL 24
-void KlustersView::updateMinSpikeDiff(long _t1)
+void KlustersView::updateMinSpikeDiff(double _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 24, _a);

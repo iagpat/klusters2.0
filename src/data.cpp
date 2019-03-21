@@ -2372,7 +2372,8 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
     dataType nbSpikesOfCluster = 0;
 
     //Does this cluster has already been processed?
-    /*if(waveformStatusMap.contains(clusterId)){
+    if(waveformStatusMap.contains(clusterId)){
+        qDebug() << "getSampleWaveform2Points:: waveformStatusMap contains cluster " << clusterId;
         Status status = waveformStatusMap[clusterId].sampleStatus();
         if(status == IN_PROCESS)return IN_PROCESS;
         waveforms2 = waveformDict[clusterIdString];
@@ -2405,7 +2406,8 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
         nbSpikesOfCluster = positionOfSpikes.nbOfColumns();
         waveforms2->setSize(nbSpikesOfCluster,SAMPLE);
     }
-    else{*/
+    else{
+        qDebug() << "getSampleWaveform2Points:: waveformStatusMap doesnt contain cluster " << clusterId;
         mutex.lock();
         waveformStatusMap.insert(clusterId,WaveformStatus(IN_PROCESS));
         mutex.unlock();
@@ -2428,7 +2430,7 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
 
         waveforms2->setSize(nbSpikesOfCluster,SAMPLE);
         waveformDict.insert(clusterIdString,waveforms2);
-    //}
+    }
 
     FILE* spikeFile = fopen(spkFileName.toLatin1(),"r");
     if(spikeFile == NULL){
@@ -2440,7 +2442,7 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
         // OPEN_ERROR;  ///The openning pb has to be taken into account
     }
     //read and store the data
-    waveforms2->read2(positionOfSpikes,nbSpikesOfCluster,resFile, spikeFile,nbSpkToDisplay, MinSpkDiff*samplingRate/1000);
+    waveforms2->read2(positionOfSpikes,nbSpikesOfCluster,resFile, spikeFile,nbSpkToDisplay, MinSpkDiff);
     fclose(spikeFile);
     fclose(resFile);
 
@@ -2478,6 +2480,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
 
     //Does this cluster has already been processed?
     if(waveformStatusMap.contains(clusterId)){
+        qDebug() << "getSampleWaveformPoints:: waveformStatusMap contains cluster " << clusterId;
         Status status = waveformStatusMap[clusterId].sampleStatus();
         if(status == IN_PROCESS)return IN_PROCESS;
         waveforms = waveformDict[clusterIdString];
@@ -2511,6 +2514,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
         waveforms->setSize(nbSpikesOfCluster,SAMPLE);
     }
     else{
+        qDebug() << "getSampleWaveformPoints:: waveformStatusMap doesnt contain cluster " << clusterId;
         mutex.lock();
         waveformStatusMap.insert(clusterId,WaveformStatus(IN_PROCESS));
         mutex.unlock();

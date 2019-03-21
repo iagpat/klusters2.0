@@ -52,11 +52,11 @@ static const uint qt_meta_data_Waveform2View[] = {
      712,   14,   14,   14, 0x0a,
      741,  732,   14,   14, 0x0a,
      777,  766,   14,   14, 0x0a,
-     804,   14,  799,   14, 0x0a,
-     823,   14,   14,   14, 0x0a,
-     849,  839,   14,   14, 0x0a,
-     889,  882,   14,   14, 0x0a,
-     956,  914,   14,   14, 0x0a,
+     806,   14,  801,   14, 0x0a,
+     825,   14,   14,   14, 0x0a,
+     851,  841,   14,   14, 0x0a,
+     891,  884,   14,   14, 0x0a,
+     958,  916,   14,   14, 0x0a,
 
        0        // eod
 };
@@ -85,8 +85,8 @@ static const char qt_meta_stringdata_Waveform2View[] = {
     "setTimeFrame(long,long)\0gain\0setGain(int)\0"
     "increaseAmplitude()\0decreaseAmplitude()\0"
     "nbSpikes\0setDisplayNbSpikes(long)\0"
-    "MinSpkDiff\0setMinSpikeDiff(long)\0bool\0"
-    "isThreadsRunning()\0updateDrawing()\0"
+    "MinSpkDiff\0setMinSpikeDiff(double)\0"
+    "bool\0isThreadsRunning()\0updateDrawing()\0"
     "positions\0setChannelPositions(QList<int>&)\0"
     "active\0clustersRenumbered(bool)\0"
     "printPainter,width,height,whiteBackground\0"
@@ -120,7 +120,7 @@ void Waveform2View::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         case 18: _t->increaseAmplitude(); break;
         case 19: _t->decreaseAmplitude(); break;
         case 20: _t->setDisplayNbSpikes((*reinterpret_cast< long(*)>(_a[1]))); break;
-        case 21: _t->setMinSpikeDiff((*reinterpret_cast< long(*)>(_a[1]))); break;
+        case 21: _t->setMinSpikeDiff((*reinterpret_cast< double(*)>(_a[1]))); break;
         case 22: { bool _r = _t->isThreadsRunning();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
         case 23: _t->updateDrawing(); break;

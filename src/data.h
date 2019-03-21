@@ -33,7 +33,7 @@
 #include <qfile.h>
 #include <qmutex.h>
 #include <qthread.h>
-
+#include <QDebug>
 
 #include <stdexcept>
 #include <math.h>
@@ -1087,7 +1087,7 @@ private:
   * features sorted by position.
   * @param spike position.
   */
-    double spikeTime(SortableTable& spikesOfCluster,dataType spike){
+public:double spikeTime(SortableTable& spikesOfCluster,dataType spike){
         dataType currentPositionInFeatures = spikesOfCluster(1,spike);
         return static_cast<double>(features(currentPositionInFeatures,nbDimensions));
     }
@@ -1154,10 +1154,12 @@ public:
         void setMeanAvailable(bool available){meanAvailable = available;}
         bool isMeanAvailable(){return meanAvailable;}
         virtual dataType nextSpike(){return 0;}
+        virtual dataType nextViableSpike(int, Data&, dataType, bool&){return 0;}
         virtual dataType nextMeanValue(){return 0;}
+        virtual dataType nextViableMeanValue(int, Data&, dataType){return 0;}
         virtual dataType nextStDeviationValue(){return 0;}
+        virtual dataType nextViableStDeviationValue(int, Data&, dataType){return 0;}
         virtual dataType nbOfSpikes() const{return 0;}
-
         WaveformIterator(){init();}
 
     protected:
@@ -1180,6 +1182,8 @@ public:
         dataType stDeviationIndex;
         bool spikesAvailable;
         bool meanAvailable;
+
+
     };
 
 
@@ -1198,6 +1202,7 @@ public:
     SampleWaveformIterator* sampleWaveformIterator(dataType clusterId,dataType nbSampleSpikes){
         QString clusterIdString = QString::fromLatin1("%1").arg(clusterId);
         int clusterIdInt = static_cast<int>(clusterId);
+
         SampleWaveformIterator* waveformIterator;
 
         if(waveformStatusMap.contains(clusterIdInt)){
@@ -1238,11 +1243,48 @@ public:
             ++spikesIndex;
             return - static_cast<dataType>(waveforms->getSample(spikesIndex));
         }
+        dataType nextViableSpike(int cluster_number, Data& data, dataType MinSpkDiff, bool &discard){
+            SortableTable spikesOfCluster = SortableTable();
+            double MaxNumberOfSpikes = data.nbOfSpikes(cluster_number);
+            data.spikePositions(cluster_number,spikesOfCluster);
+            int spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
+            double current_time;
+            if(MaxNumberOfSpikes>spikeNumber){
+                current_time = data.spikeTime(spikesOfCluster,spikeNumber);
+                if (spikeNumber-1>0){
+                    double previous_time =data.spikeTime(spikesOfCluster,spikeNumber-1);
+                    if(current_time - previous_time < MinSpkDiff){
+                        ++spikesIndex;
+                        discard = false;
+                        return - static_cast<dataType>(waveforms->getSample(spikesIndex));
+                    }
+                }
+                if (spikeNumber+1<MaxNumberOfSpikes){
+                    double after_time = data.spikeTime(spikesOfCluster,spikeNumber+1);
+                    if(after_time - current_time < MinSpkDiff){
+                        ++spikesIndex;
+                        discard = false;
+                        return - static_cast<dataType>(waveforms->getSample(spikesIndex));
+                    }
+                }
+            }
+            spikesIndex = spikesIndex + (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
+            discard = true;
+            return NULL;
+        }
         dataType nextMeanValue(){
             ++meanIndex;
             return - static_cast<dataType>(waveforms->getSampleMean(meanIndex));
         }
+        dataType nextViableMeanValue(int cluster_number, Data& data, dataType MinSpkDiff){
+            ++meanIndex;
+            return - static_cast<dataType>(waveforms->getSampleMean(meanIndex));
+        }
         dataType nextStDeviationValue(){
+            ++stDeviationIndex;
+            return - static_cast<dataType>(waveforms->getSampleStDeviation(stDeviationIndex));
+        }
+        dataType nextViableStDeviationValue(int cluster_number, Data& data, dataType MinSpkDiff){
             ++stDeviationIndex;
             return - static_cast<dataType>(waveforms->getSampleStDeviation(stDeviationIndex));
         }
@@ -1315,11 +1357,48 @@ public:
             ++spikesIndex;
             return - static_cast<dataType>(waveforms->getTimeFrame(spikesIndex));
         }
+        dataType nextViableSpike(int cluster_number, Data& data, dataType MinSpkDiff, bool &discard){
+            SortableTable spikesOfCluster = SortableTable();
+            double MaxNumberOfSpikes = data.nbOfSpikes(cluster_number);
+            data.spikePositions(cluster_number,spikesOfCluster);
+            int spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
+
+            if(MaxNumberOfSpikes>spikeNumber){
+                double current_time = data.spikeTime(spikesOfCluster,spikeNumber);
+                if (spikeNumber-1>0){
+                    double previous_time =data.spikeTime(spikesOfCluster,spikeNumber-1);
+                    if(current_time - previous_time < MinSpkDiff){
+                        ++spikesIndex;
+                        discard = false;
+                        return - static_cast<dataType>(waveforms->getTimeFrame(spikesIndex));
+                    }
+                }
+                if (spikeNumber+1<MaxNumberOfSpikes){
+                    double after_time = data.spikeTime(spikesOfCluster,spikeNumber+1);
+                    if(after_time - current_time < MinSpkDiff){
+                        ++spikesIndex;
+                        discard = false;
+                        return - static_cast<dataType>(waveforms->getTimeFrame(spikesIndex));
+                    }
+                }
+            }
+            ++spikesIndex;
+            discard = true;
+            return NULL;
+        }
         dataType nextMeanValue(){
             ++meanIndex;
             return - static_cast<dataType>(waveforms->getTimeFrameMean(meanIndex));
         }
+        dataType nextViableMeanValue(int cluster_number, Data& data, dataType MinSpkDiff){
+            ++meanIndex;
+            return - static_cast<dataType>(waveforms->getTimeFrameMean(meanIndex));
+        }
         dataType nextStDeviationValue(){
+            ++stDeviationIndex;
+            return - static_cast<dataType>(waveforms->getTimeFrameStDeviation(stDeviationIndex));
+        }
+        dataType nextViableStDeviationValue(int cluster_number, Data& data, dataType MinSpkDiff){
             ++stDeviationIndex;
             return - static_cast<dataType>(waveforms->getTimeFrameStDeviation(stDeviationIndex));
         }

@@ -102,7 +102,19 @@ public:
     KlustersView(KlustersApp& mainWindow, KlustersDoc& doc, const QColor& backgroundColor, int initialDimensionX, int initialDdimensionY,
                  QList<int>* initialClusterList, DisplayType type, QWidget* parent, const char *name, QStatusBar * statusBar, int timeInterval, int maxAmplitude,
                  QList<int> positions, bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay = 0, bool overLay = false,
-                 bool mean = false, int minSpikeDiff = 1, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
+                 bool mean = false, double minSpike
+
+
+
+
+
+
+
+
+
+
+
+                 = 1, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
                  long startingTime = 0, long duration = 100, bool labelsDisplay = false, QList< QList<int>* > undoList = QList< QList<int>* >(), QList< QList<int>* > redoList = QList< QList<int>* >());
 
     /** Destructor for the main view */
@@ -358,7 +370,7 @@ public:
     /**Sets the presentation mode of the waveform view to sample mode, meaning that, for each shown cluster,
   * only one out of the number of spikes to be displayed will be shown.
   */
-    void setSampleMode(){
+    void setSampleMode(){ //modify - iago
         inTimeFrameMode = false;
         emit sampleMode();
     }
@@ -366,7 +378,7 @@ public:
     /**Set the presentation mode of the waveform view to time frame mode, meaning that, for each shown cluster,
   * only the spikes within the current time frame will be shown.
   */
-    void setTimeFrameMode(){
+    void setTimeFrameMode(){ //modify - iago
         inTimeFrameMode = true;
         emit timeFrameMode();
     }
@@ -374,7 +386,7 @@ public:
     /**Sets the way of presenting the information concerning the waveforms selected to
   * only show the waveforms of the mean and the standard deviation.
   */
-    void setMeanPresentation(){
+    void setMeanPresentation(){ //modify - iago
         meanDisplay = true;
         emit meanPresentation();
     }
@@ -382,7 +394,7 @@ public:
     /**Sets the way of presenting the information concerning the waveforms selected to
   * show all the waveforms corresponding to the mode of presentation.
   */
-    void setAllWaveformsPresentation(){
+    void setAllWaveformsPresentation(){ //modify - iago
         meanDisplay = false;
         emit allWaveformsPresentation();
     }
@@ -390,25 +402,25 @@ public:
 
     /**Sets the waveforms of each cluster to overlap.
   */
-    void setOverLayPresentation(){
+    void setOverLayPresentation(){//modify - iago
         overLayDisplay = true;
         emit overLayPresentation();
     }
 
     /** Sets the waveforms of each cluster to be presented side by side.
   */
-    void setSideBySidePresentation(){
+    void setSideBySidePresentation(){//modify - iago
         overLayDisplay = false;
         emit sideBySidePresentation();
     }
 
     /**Triggers the increase of the amplitude of the waveforms in the Waveform view.
   */
-    void increaseWaveformsAmplitude(){emit increaseAmplitude();}
+    void increaseWaveformsAmplitude(){emit increaseAmplitude();}//modify - iago
 
     /**Triggers the decrease of the amplitude of the waveforms in the Waveform view.
   */
-    void decreaseWaveformsAmplitude(){emit decreaseAmplitude();}
+    void decreaseWaveformsAmplitude(){emit decreaseAmplitude();}//modify - iago
 
     /**Returns a boolean indicating if the view contains a WaveformView.
   * @return true if the view contains a WaveformView, false otherwise.*/
@@ -440,13 +452,13 @@ public:
   * mode is sample.
   * @param nbSpikes number of spikes to display.
   */
-    void setDisplayNbSpikes(int nbSpikes){
+    void setDisplayNbSpikes(int nbSpikes){ //modify - iago
         qDebug()<<"setDisplayNbSpikes";
         nbSpkToDisplay = nbSpikes;
         emit updateDisplayNbSpikes(nbSpikes);
     }
 
-    void setMinSpikeDiff(int MinSpkDiff){
+    void setMinSpikeDiff(double MinSpkDiff){
         qDebug()<<"setMinSpikeDiff";
         minSpikeDiff = MinSpkDiff;
         emit updateMinSpikeDiff(MinSpkDiff);
@@ -484,7 +496,7 @@ public:
     }
 
     /**Returns the min spike diff used in the view*/
-    long minDiffOfSpikes() const {
+    double minDiffOfSpikes() const {
         return minSpikeDiff;
     }
 
@@ -717,7 +729,7 @@ Q_SIGNALS:
     void increaseAmplitude();
     void decreaseAmplitude();
     void updateDisplayNbSpikes(long nbSpikes);
-    void updateMinSpikeDiff(long MinSpkDiff);
+    void updateMinSpikeDiff(double MinSpkDiff);
     void increaseAmplitudeofCorrelograms();
     void decreaseAmplitudeofCorrelograms();
     void noScale();
@@ -836,7 +848,7 @@ private:
     int binSize;
 
     /*Minimus distance between spikes*/
-    int minSpikeDiff;
+    double minSpikeDiff;
 
     /**Width of the time frame to use to compute the correlograms.*/
     int correlogramTimeFrame;

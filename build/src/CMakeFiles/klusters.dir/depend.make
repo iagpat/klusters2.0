@@ -701,8 +701,11 @@ src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/klustersshared/
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/klustersshared/types.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/Qt3Support/q3cstring.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/Qt3Support/q3valuelist.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/QDebug
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/QHash
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/QList
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/QPoint
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/QPointF
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/QString
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qalgorithms.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qatomic.h
@@ -738,8 +741,10 @@ src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qbas
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qbytearray.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qchar.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qconfig.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qcontiguouscache.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qcoreevent.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qdatastream.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qdebug.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qfeatures.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qfile.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qfileinfo.h
@@ -749,7 +754,9 @@ src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qiod
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qiterator.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qlinkedlist.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qlist.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qlocale.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qmap.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qmetatype.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qmutex.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qnamespace.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qobject.h
@@ -759,13 +766,18 @@ src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qpoi
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qrect.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qregexp.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qscopedpointer.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qset.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qshareddata.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qsize.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qstring.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qstringbuilder.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qstringlist.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qstringmatcher.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qtextcodec.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qtextstream.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qthread.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qvariant.h
+src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtCore/qvector.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtGui/qmacdefines_mac.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtGui/qregion.h
 src/CMakeFiles/klusters.dir/clustersprovider.cpp.o: /usr/include/qt4/QtGui/qwindowdefs.h
@@ -1043,6 +1055,7 @@ src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/klustersshared
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/klustersshared/zoomwindow.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/Qt3Support/q3cstring.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/Qt3Support/q3valuelist.h
+src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/QDebug
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/QEvent
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/QHash
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/QList
@@ -1086,9 +1099,11 @@ src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qbu
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qbytearray.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qchar.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qconfig.h
+src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qcontiguouscache.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qcoreapplication.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qcoreevent.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qdatastream.h
+src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qdebug.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qeventloop.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qfeatures.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qfile.h
@@ -1099,6 +1114,7 @@ src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qit
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qline.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qlinkedlist.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qlist.h
+src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qlocale.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qmap.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qmargins.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qmetatype.h
@@ -1122,6 +1138,8 @@ src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qst
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qstringbuilder.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qstringlist.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qstringmatcher.h
+src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qtextcodec.h
+src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qtextstream.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qthread.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qtimer.h
 src/CMakeFiles/klusters.dir/correlationthread.cpp.o: /usr/include/qt4/QtCore/qvariant.h
@@ -1573,6 +1591,7 @@ src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/klustersshared
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/klustersshared/zoomwindow.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/Qt3Support/q3cstring.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/Qt3Support/q3valuelist.h
+src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/QDebug
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/QEvent
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/QHash
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/QList
@@ -1615,9 +1634,11 @@ src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qbu
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qbytearray.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qchar.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qconfig.h
+src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qcontiguouscache.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qcoreapplication.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qcoreevent.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qdatastream.h
+src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qdebug.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qeventloop.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qfeatures.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qfile.h
@@ -1628,6 +1649,7 @@ src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qit
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qline.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qlinkedlist.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qlist.h
+src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qlocale.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qmap.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qmargins.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qmetatype.h
@@ -1651,6 +1673,8 @@ src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qst
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qstringbuilder.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qstringlist.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qstringmatcher.h
+src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qtextcodec.h
+src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qtextstream.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qthread.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qvariant.h
 src/CMakeFiles/klusters.dir/errormatrixthread.cpp.o: /usr/include/qt4/QtCore/qvector.h
@@ -1965,8 +1989,11 @@ src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: ../src/sortabletable.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/klustersshared/array.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/klustersshared/types.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/Qt3Support/q3cstring.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/QDebug
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/QHash
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/QList
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/QPoint
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/QPointF
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/QString
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qalgorithms.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qatomic.h
@@ -2002,8 +2029,10 @@ src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qba
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qbytearray.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qchar.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qconfig.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qcontiguouscache.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qcoreevent.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qdatastream.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qdebug.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qfeatures.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qfile.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qglobal.h
@@ -2011,7 +2040,9 @@ src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qha
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qiodevice.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qiterator.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qlist.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qlocale.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qmap.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qmetatype.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qmutex.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qnamespace.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qobject.h
@@ -2020,10 +2051,15 @@ src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qpa
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qpoint.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qrect.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qscopedpointer.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qset.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qsize.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qstring.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qstringbuilder.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qtextcodec.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qtextstream.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qthread.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qvariant.h
+src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtCore/qvector.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtGui/qmacdefines_mac.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtGui/qregion.h
 src/CMakeFiles/klusters.dir/groupingassistant.cpp.o: /usr/include/qt4/QtGui/qwindowdefs.h
@@ -2178,6 +2214,7 @@ src/CMakeFiles/klusters.dir/klusters.cpp.o: /usr/include/qt4/QtGui/QCloseEvent
 src/CMakeFiles/klusters.dir/klusters.cpp.o: /usr/include/qt4/QtGui/QColor
 src/CMakeFiles/klusters.dir/klusters.cpp.o: /usr/include/qt4/QtGui/QDialog
 src/CMakeFiles/klusters.dir/klusters.cpp.o: /usr/include/qt4/QtGui/QDockWidget
+src/CMakeFiles/klusters.dir/klusters.cpp.o: /usr/include/qt4/QtGui/QDoubleSpinBox
 src/CMakeFiles/klusters.dir/klusters.cpp.o: /usr/include/qt4/QtGui/QFileDialog
 src/CMakeFiles/klusters.dir/klusters.cpp.o: /usr/include/qt4/QtGui/QFont
 src/CMakeFiles/klusters.dir/klusters.cpp.o: /usr/include/qt4/QtGui/QKeySequence
@@ -2482,6 +2519,7 @@ src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: /usr/include/qt4/QtGui/QColo
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: /usr/include/qt4/QtGui/QComboBox
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: /usr/include/qt4/QtGui/QDialog
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: /usr/include/qt4/QtGui/QDockWidget
+src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: /usr/include/qt4/QtGui/QDoubleSpinBox
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: /usr/include/qt4/QtGui/QGridLayout
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: /usr/include/qt4/QtGui/QGroupBox
 src/CMakeFiles/klusters.dir/klusters_automoc.cpp.o: /usr/include/qt4/QtGui/QHBoxLayout
@@ -2728,6 +2766,7 @@ src/CMakeFiles/klusters.dir/klustersdoc.cpp.o: /usr/include/qt4/QtGui/QAction
 src/CMakeFiles/klusters.dir/klustersdoc.cpp.o: /usr/include/qt4/QtGui/QCloseEvent
 src/CMakeFiles/klusters.dir/klustersdoc.cpp.o: /usr/include/qt4/QtGui/QColor
 src/CMakeFiles/klusters.dir/klustersdoc.cpp.o: /usr/include/qt4/QtGui/QDockWidget
+src/CMakeFiles/klusters.dir/klustersdoc.cpp.o: /usr/include/qt4/QtGui/QDoubleSpinBox
 src/CMakeFiles/klusters.dir/klustersdoc.cpp.o: /usr/include/qt4/QtGui/QListWidget
 src/CMakeFiles/klusters.dir/klustersdoc.cpp.o: /usr/include/qt4/QtGui/QListWidgetItem
 src/CMakeFiles/klusters.dir/klustersdoc.cpp.o: /usr/include/qt4/QtGui/QMainWindow
@@ -2952,6 +2991,7 @@ src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/qt4/QtGui/QAction
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/qt4/QtGui/QCloseEvent
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/qt4/QtGui/QColor
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/qt4/QtGui/QDockWidget
+src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/qt4/QtGui/QDoubleSpinBox
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/qt4/QtGui/QHBoxLayout
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/qt4/QtGui/QKeyEvent
 src/CMakeFiles/klusters.dir/klustersview.cpp.o: /usr/include/qt4/QtGui/QMainWindow
@@ -3246,6 +3286,7 @@ src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtGui/QApplication
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtGui/QCloseEvent
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtGui/QColor
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtGui/QDockWidget
+src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtGui/QDoubleSpinBox
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtGui/QMainWindow
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtGui/QMouseEvent
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtGui/QPainter
@@ -5398,6 +5439,7 @@ src/CMakeFiles/klusters.dir/savethread.cpp.o: /usr/include/qt4/QtGui/QAction
 src/CMakeFiles/klusters.dir/savethread.cpp.o: /usr/include/qt4/QtGui/QCloseEvent
 src/CMakeFiles/klusters.dir/savethread.cpp.o: /usr/include/qt4/QtGui/QColor
 src/CMakeFiles/klusters.dir/savethread.cpp.o: /usr/include/qt4/QtGui/QDockWidget
+src/CMakeFiles/klusters.dir/savethread.cpp.o: /usr/include/qt4/QtGui/QDoubleSpinBox
 src/CMakeFiles/klusters.dir/savethread.cpp.o: /usr/include/qt4/QtGui/QMainWindow
 src/CMakeFiles/klusters.dir/savethread.cpp.o: /usr/include/qt4/QtGui/QMouseEvent
 src/CMakeFiles/klusters.dir/savethread.cpp.o: /usr/include/qt4/QtGui/QPainter

@@ -29,7 +29,6 @@
 #include <unistd.h>
 
 void Waveform2Thread::getWaveform2Information(int clusterId,Waveform2View::PresentationMode mode){
-    qDebug() << "Waveform2Thread::getWaveform2Information";
     this->clusterId = clusterId;
     treatSingleCluster = true;
     this->mode = mode;
@@ -37,7 +36,6 @@ void Waveform2Thread::getWaveform2Information(int clusterId,Waveform2View::Prese
 }
 
 void Waveform2Thread::getWaveform2Information(const QList<int>& clusterIds,Waveform2View::PresentationMode mode){
-    qDebug() << "Waveform2Thread::getWaveform2Information";
     this->clusterIds = clusterIds;
     treatSingleCluster = false;
     this->mode = mode;
