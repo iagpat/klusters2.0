@@ -15,5 +15,6 @@
         <file>icons/update.png</file>
         <file>icons/waveformview.png</file>
         <file>icons/zoom_tool.png</file>
+        <file>icons/cursor_icon.png</file>
     </qresource>
 </RCC>

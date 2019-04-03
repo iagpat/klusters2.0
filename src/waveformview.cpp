@@ -640,7 +640,6 @@ void WaveformView::setTimeFrameMode(){
 }
 
 void WaveformView::setTimeFrame(long start, long width){
-    qDebug()<<" void WaveformView::setTimeFrame(long start, long width){";
     startTime = start;
     endTime = start + width;
     if(endTime > maximumTime) endTime = maximumTime;

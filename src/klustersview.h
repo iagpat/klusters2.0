@@ -102,19 +102,7 @@ public:
     KlustersView(KlustersApp& mainWindow, KlustersDoc& doc, const QColor& backgroundColor, int initialDimensionX, int initialDdimensionY,
                  QList<int>* initialClusterList, DisplayType type, QWidget* parent, const char *name, QStatusBar * statusBar, int timeInterval, int maxAmplitude,
                  QList<int> positions, bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay = 0, bool overLay = false,
-                 bool mean = false, double minSpike
-
-
-
-
-
-
-
-
-
-
-
-                 = 1, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
+                 bool mean = false, double minSpike = 1, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
                  long startingTime = 0, long duration = 100, bool labelsDisplay = false, QList< QList<int>* > undoList = QList< QList<int>* >(), QList< QList<int>* > redoList = QList< QList<int>* >());
 
     /** Destructor for the main view */
@@ -452,14 +440,12 @@ public:
   * mode is sample.
   * @param nbSpikes number of spikes to display.
   */
-    void setDisplayNbSpikes(int nbSpikes){ //modify - iago
-        qDebug()<<"setDisplayNbSpikes";
+    void setDisplayNbSpikes(int nbSpikes){
         nbSpkToDisplay = nbSpikes;
         emit updateDisplayNbSpikes(nbSpikes);
     }
 
     void setMinSpikeDiff(double MinSpkDiff){
-        qDebug()<<"setMinSpikeDiff";
         minSpikeDiff = MinSpkDiff;
         emit updateMinSpikeDiff(MinSpkDiff);
     }

@@ -305,6 +305,11 @@ void KlustersApp::createMenus()
     mZoomAction->setShortcut(Qt::Key_Z);
     connect(mZoomAction,SIGNAL(triggered()), this,SLOT(slotZoom()));
 
+    mVoltageSelection = toolsMenu->addAction(tr("Voltage Selection"));
+    mVoltageSelection->setIcon(QIcon(":/icons/cursor_icon.png"));
+    mVoltageSelection->setShortcut(Qt::Key_V);
+    connect(mVoltageSelection,SIGNAL(triggered()), this,SLOT(slotVoltageSelection()));
+
     toolsMenu->addSeparator();
 
     mNewCluster = toolsMenu->addAction(tr("New Cluster"));
@@ -591,6 +596,7 @@ void KlustersApp::createToolBar()
     addToolBar(mActionBar);
 
     mToolBar->addAction(mZoomAction);
+    mToolBar->addAction(mVoltageSelection);
     mToolBar->addSeparator();
     mToolBar->addAction(mNewCluster);
     mToolBar->addAction(mSplitClusters);
@@ -1053,8 +1059,9 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
                 inTimeFrameMode = true;
                 startingTime = startTime;
                 timeFrameWidth = timeWindow;
-            } else
+            } else {
                 nbSpkToDisplay = spikesTodisplay->value();
+            }
         }
 
         KlustersView* view;
@@ -1062,7 +1069,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         if(!isProcessWidget)
             view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,statusBar(),
                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
-                                    nbSpkToDisplay, overLay,mean,minSpikeDiff,sizeOfBin, correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
+                                    nbSpkToDisplay,overLay,mean,minSpikeDiff,sizeOfBin, correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
         else
             view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,statusBar(),
@@ -1947,6 +1954,20 @@ void KlustersApp::slotSingleNew(){
     view->setMode(ViewWidget::NEW_CLUSTER);
     slotStatusMsg(tr("Ready."));
 }
+
+void KlustersApp::slotVoltageSelection(){
+    qDebug()<< "Voltage selection pressed";
+    slotStatusMsg(tr("Select voltage range..."));
+
+    if(mDelaySelection->isChecked()){
+        clusterPalette->updateClusters();
+    }
+
+    KlustersView* view = activeView();
+    view->setMode(ViewWidget::REMOVE_SPIKES);
+    slotStatusMsg(tr("Ready."));
+}
+
 /**Creates a multiple clusters by selecting an area*/
 void KlustersApp::slotMultipleNew(){
     slotStatusMsg(tr("Split clusters..."));
@@ -1999,6 +2020,9 @@ void KlustersApp::slotZoom(){
     view->setMode(BaseFrame::ZOOM);
     slotStatusMsg(tr("Ready."));
 }
+
+
+
 
 void KlustersApp::slotSelectTime(){
     slotStatusMsg(tr("Selecting time..."));
@@ -2992,6 +3016,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mGroupeClusters->setEnabled(false);
         mUpdateDisplay->setEnabled(false);
         mZoomAction->setEnabled(false);
+        mVoltageSelection->setEnabled(false);
         mUpdateErrorMatrix->setEnabled(false);
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
@@ -3041,6 +3066,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mSelectAllAction->setEnabled(true);
         mSelectAllExceptAction->setEnabled(true);
         mZoomAction->setEnabled(true);
+        mVoltageSelection->setEnabled(true);
         newClusterDisplay->setEnabled(true);
         mCloseActiveDisplay->setEnabled(true);
         mNewCluster->setEnabled(true);
@@ -3114,6 +3140,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         mGroupeClusters->setEnabled(true);
     } else if(state == QLatin1String("noClusterViewState")) {
         mZoomAction->setEnabled(false);
+        mVoltageSelection->setEnabled(false);
         mDeleteNoisy->setEnabled(false);
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);
@@ -3123,6 +3150,7 @@ void KlustersApp::slotStateChanged(const QString& state)
 
     } else if(state == QLatin1String("clusterViewState")) {
         mZoomAction->setEnabled(true);
+        mVoltageSelection->setEnabled(true);
         mDeleteNoisy->setEnabled(true);
         mNewCluster->setEnabled(true);
         mSplitClusters->setEnabled(true);
@@ -3166,6 +3194,7 @@ void KlustersApp::slotStateChanged(const QString& state)
         newGroupingAssistantDisplay->setEnabled(true);
     } else if(state == QLatin1String("reclusterViewState")) {
         mZoomAction->setEnabled(false);
+        mVoltageSelection->setEnabled(false);
         mUpdateErrorMatrix->setEnabled(false);
         mNewCluster->setEnabled(false);
         mSplitClusters->setEnabled(false);

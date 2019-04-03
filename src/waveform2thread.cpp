@@ -44,7 +44,6 @@ void Waveform2Thread::getWaveform2Information(const QList<int>& clusterIds,Wavef
 
 
 void Waveform2Thread::run(){
-    qDebug() << "Waveform2Thread::run()";
     //Need to modify this function so that it only provides the spikes that match our min spike diff criteria.
 
     int sleepingAmount = 1;
@@ -390,7 +389,6 @@ void Waveform2Thread::getMean(Waveform2View::PresentationMode mode){
 
 void Waveform2Thread::getMean(const QList<int>& clusterIds,Waveform2View::PresentationMode mode){
 
-    qDebug()<<"in  Waveform2Thread::getMean";
 
     meanRequested = true;
     this->clusterIds = clusterIds;

@@ -42,7 +42,6 @@
 #include <QEvent>
 
 
-
 const QColor ClusterView::NEW_CLUSTER_COLOR(Qt::green);
 const QColor ClusterView::DELETE_NOISE_COLOR(220,220,220);
 const QColor ClusterView::DELETE_ARTEFACT_COLOR(Qt::red);
@@ -117,6 +116,14 @@ void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,
             double previous_time;
             double after_time;
 
+            long width = abscissaMax-abscissaMin;
+            long height = ordinateMax-ordinateMin;
+            long width1 = this->dimensionX;
+            long height1 = this->dimensionY;
+            viewport = contentsRect();
+            long width2 = viewport.width();
+            long height2 = viewport.height();
+
             for(;spikeIterator.hasNext();spikeIterator.next()){
                 spike_index++;
                 if(MaxNumberOfSpikes>spike_index){
@@ -124,22 +131,25 @@ void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,
                     if (spike_index-1>0){
                         previous_time = clusteringData.spikeTime(spikesOfCluster, spike_index-1);
                         if((current_time-previous_time) < (minSpikeDiff*clusteringData.getSamplingRate()/1000)){
-                            painter.setPen(newColor);
-                            painter.drawText(spikeIterator(dimensionX,dimensionY), tr("^"));
-                            painter.setPen(color);
+                            painter.setPen(QPen(newColor,0));
+                            painter.drawEllipse(spikeIterator(dimensionX,dimensionY), (width2*width)/500000,(height2*height)/100000);
+                            painter.drawPoint(spikeIterator(dimensionX,dimensionY));
+                            painter.setPen(QPen(color,0));
                             continue;
                         }
                     }
                     if (spike_index+1<MaxNumberOfSpikes){
                         after_time = clusteringData.spikeTime(spikesOfCluster, spike_index+1);
                         if((after_time - current_time) < (minSpikeDiff*clusteringData.getSamplingRate()/1000)){
-                            painter.setPen(newColor);
-                            painter.drawText(spikeIterator(dimensionX,dimensionY), tr("^"));
-                            painter.setPen(color);
+                            painter.setPen(QPen(newColor,0));
+                            painter.drawEllipse(spikeIterator(dimensionX,dimensionY), (width2*width)/500000,(height2*height)/100000);
+                            painter.drawPoint(spikeIterator(dimensionX,dimensionY));
+                            painter.setPen(QPen(color,0));
                             continue;
                         }
                     }
                 }
+
                 painter.drawPoint(spikeIterator(dimensionX,dimensionY));
             }
         }
@@ -149,6 +159,7 @@ void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,
 }
 
 void ClusterView::paintEvent ( QPaintEvent*){
+
     QPainter p(this);
     //set the window (part of the word I want to show)
     QRect r((QRect)window);
@@ -175,6 +186,7 @@ void ClusterView::paintEvent ( QPaintEvent*){
         painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
 
         if(drawContentsMode == REDRAW){
+
             //Reset the variables associates with the polygon
 
             //Resize selectionPolygon to remove all the last selected area, reinitialize nbSelectionPoints accordingly
@@ -191,7 +203,6 @@ void ClusterView::paintEvent ( QPaintEvent*){
             //Paint all the clusters in the shownClusters list (in the double buffer)
             drawClusters(painter,view.clusters());
         } else if(drawContentsMode == UPDATE){
-
             //Erase any polygon of selection and reset the associated variables
             //resetSelectionPolygon();
 
@@ -348,6 +359,7 @@ void ClusterView::setMinSpikeDiff(double MinSpkDiff){
 
 
 void ClusterView::mousePressEvent(QMouseEvent* e){
+
     //Defining a time window t oupdate the Traceview
     if(mode == SELECT_TIME){
         QPoint current = viewportToWorld(e->x(),e->y());
@@ -418,6 +430,7 @@ void ClusterView::mouseReleaseEvent(QMouseEvent* event){
 }
 
 void ClusterView::mouseMoveEvent(QMouseEvent* e){
+    qDebug()<<"mouse move event in cluster view";
     //Write the current coordinates in the statusbar.
     QPoint current = viewportToWorld(e->x(),e->y());
 

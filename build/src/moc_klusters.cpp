@@ -22,7 +22,7 @@ static const uint qt_meta_data_KlustersApp[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      85,   14, // methods
+      86,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -67,54 +67,55 @@ static const uint qt_meta_data_KlustersApp[] = {
      770,   12,   12,   12, 0x08,
      791,   12,   12,   12, 0x08,
      802,   12,   12,   12, 0x08,
-     829,  819,   12,   12, 0x08,
-     873,  856,   12,   12, 0x08,
-     909,  856,   12,   12, 0x08,
-     939,  856,   12,   12, 0x08,
-     975,  856,   12,   12, 0x08,
-    1014,   12,   12,   12, 0x08,
-    1039,   12,   12,   12, 0x08,
-    1066, 1060,   12,   12, 0x08,
-    1096, 1085,   12,   12, 0x08,
-    1134, 1122,   12,   12, 0x08,
-    1160,   12,   12,   12, 0x08,
-    1186, 1179,   12,   12, 0x08,
-    1215, 1208,   12,   12, 0x08,
-    1243, 1237,   12,   12, 0x08,
-    1268,   12,   12,   12, 0x08,
-    1289,   12,   12,   12, 0x08,
-    1309,   12,   12,   12, 0x08,
-    1334,   12,   12,   12, 0x08,
+     825,   12,   12,   12, 0x08,
+     852,  842,   12,   12, 0x08,
+     896,  879,   12,   12, 0x08,
+     932,  879,   12,   12, 0x08,
+     962,  879,   12,   12, 0x08,
+     998,  879,   12,   12, 0x08,
+    1037,   12,   12,   12, 0x08,
+    1062,   12,   12,   12, 0x08,
+    1089, 1083,   12,   12, 0x08,
+    1119, 1108,   12,   12, 0x08,
+    1157, 1145,   12,   12, 0x08,
+    1183,   12,   12,   12, 0x08,
+    1209, 1202,   12,   12, 0x08,
+    1238, 1231,   12,   12, 0x08,
+    1266, 1260,   12,   12, 0x08,
+    1291,   12,   12,   12, 0x08,
+    1312,   12,   12,   12, 0x08,
+    1332,   12,   12,   12, 0x08,
     1357,   12,   12,   12, 0x08,
-    1381,   12,   12,   12, 0x08,
-    1414, 1405,   12,   12, 0x08,
-    1439,   12,   12,   12, 0x08,
-    1476,   12,   12,   12, 0x08,
-    1509, 1496,   12,   12, 0x08,
-    1540,   12,   12,   12, 0x08,
-    1576,   12,   12,   12, 0x08,
-    1612,   12,   12,   12, 0x08,
-    1626,   12,   12,   12, 0x08,
-    1643,   12,   12,   12, 0x08,
-    1664,   12,   12,   12, 0x08,
-    1683,   12,   12,   12, 0x08,
-    1707,   12,   12,   12, 0x08,
-    1723,   12,   12,   12, 0x08,
-    1743,   12,   12,   12, 0x08,
-    1759,   12,   12,   12, 0x08,
-    1781, 1779,   12,   12, 0x08,
-    1825,   12,   12,   12, 0x08,
-    1851,   12,   12,   12, 0x08,
-    1873,   12,   12,   12, 0x08,
-    1908,   12,   12,   12, 0x08,
-    1943,   12,   12,   12, 0x08,
-    1960,   12,   12,   12, 0x08,
-    1982,   12,   12,   12, 0x08,
-    2008,   12,   12,   12, 0x08,
-    2028,   12,   12,   12, 0x08,
-    2061,   12,   12,   12, 0x08,
-    2073,   12,   12,   12, 0x08,
-    2087,   12,   12,   12, 0x08,
+    1380,   12,   12,   12, 0x08,
+    1404,   12,   12,   12, 0x08,
+    1437, 1428,   12,   12, 0x08,
+    1462,   12,   12,   12, 0x08,
+    1499,   12,   12,   12, 0x08,
+    1532, 1519,   12,   12, 0x08,
+    1563,   12,   12,   12, 0x08,
+    1599,   12,   12,   12, 0x08,
+    1635,   12,   12,   12, 0x08,
+    1649,   12,   12,   12, 0x08,
+    1666,   12,   12,   12, 0x08,
+    1687,   12,   12,   12, 0x08,
+    1706,   12,   12,   12, 0x08,
+    1730,   12,   12,   12, 0x08,
+    1746,   12,   12,   12, 0x08,
+    1766,   12,   12,   12, 0x08,
+    1782,   12,   12,   12, 0x08,
+    1804, 1802,   12,   12, 0x08,
+    1848,   12,   12,   12, 0x08,
+    1874,   12,   12,   12, 0x08,
+    1896,   12,   12,   12, 0x08,
+    1931,   12,   12,   12, 0x08,
+    1966,   12,   12,   12, 0x08,
+    1983,   12,   12,   12, 0x08,
+    2005,   12,   12,   12, 0x08,
+    2031,   12,   12,   12, 0x08,
+    2051,   12,   12,   12, 0x08,
+    2084,   12,   12,   12, 0x08,
+    2096,   12,   12,   12, 0x08,
+    2110,   12,   12,   12, 0x08,
 
        0        // eod
 };
@@ -143,9 +144,9 @@ static const char qt_meta_stringdata_KlustersApp[] = {
     "viewMenuActivated(int)\0slotSingleNew()\0"
     "slotMultipleNew()\0slotDeleteNoise()\0"
     "slotDeleteArtefact()\0slotZoom()\0"
-    "slotSelectTime()\0clusterId\0"
-    "slotSingleColorUpdate(int)\0selectedClusters\0"
-    "slotUpdateShownClusters(QList<int>)\0"
+    "slotVoltageSelection()\0slotSelectTime()\0"
+    "clusterId\0slotSingleColorUpdate(int)\0"
+    "selectedClusters\0slotUpdateShownClusters(QList<int>)\0"
     "slotGroupClusters(QList<int>)\0"
     "slotMoveClustersToNoise(QList<int>)\0"
     "slotMoveClustersToArtefact(QList<int>)\0"
@@ -225,55 +226,56 @@ void KlustersApp::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 33: _t->slotDeleteNoise(); break;
         case 34: _t->slotDeleteArtefact(); break;
         case 35: _t->slotZoom(); break;
-        case 36: _t->slotSelectTime(); break;
-        case 37: _t->slotSingleColorUpdate((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 38: _t->slotUpdateShownClusters((*reinterpret_cast< const QList<int>(*)>(_a[1]))); break;
-        case 39: _t->slotGroupClusters((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
-        case 40: _t->slotMoveClustersToNoise((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
-        case 41: _t->slotMoveClustersToArtefact((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
-        case 42: _t->slotImmediateSelection(); break;
-        case 43: _t->slotDelaySelection(); break;
-        case 44: _t->slotTabChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 45: _t->slotUpdateDimensionX((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 46: _t->slotUpdateDimensionY((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 47: _t->slotDisplayClose(); break;
-        case 48: _t->slotUpdateUndoNb((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 49: _t->slotUpdateRedoNb((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 50: _t->slotUpdateStartTime((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 51: _t->slotUpdateDuration(); break;
-        case 52: _t->slotTimeFrameMode(); break;
-        case 53: _t->setOverLayPresentation(); break;
-        case 54: _t->slotMeanPresentation(); break;
-        case 55: _t->slotIncreaseAmplitude(); break;
-        case 56: _t->slotDecreaseAmplitude(); break;
-        case 57: _t->slotSpikesTodisplay((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 58: _t->slotUpdateCorrelogramsHalfDuration(); break;
-        case 59: _t->slotUpdateBinSize(); break;
-        case 60: _t->slotUpdateMinSpikeDiff((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 61: _t->slotIncreaseCorrelogramsAmplitude(); break;
-        case 62: _t->slotDecreaseCorrelogramsAmplitude(); break;
-        case 63: _t->slotNoScale(); break;
-        case 64: _t->slotScaleByMax(); break;
-        case 65: _t->slotScaleByShouler(); break;
-        case 66: _t->slotShoulderLine(); break;
-        case 67: _t->slotUpdateErrorMatrix(); break;
-        case 68: _t->slotSelectAll(); break;
-        case 69: _t->slotSelectAllWO01(); break;
-        case 70: _t->slotRecluster(); break;
-        case 71: _t->slotStopRecluster(); break;
-        case 72: _t->slotProcessExited((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QProcess::ExitStatus(*)>(_a[2]))); break;
-        case 73: _t->slotOutputTreatmentOver(); break;
-        case 74: _t->renameActiveDisplay(); break;
-        case 75: _t->slotIncreaseAllChannelsAmplitude(); break;
-        case 76: _t->slotDecreaseAllChannelsAmplitude(); break;
-        case 77: _t->slotShowLabels(); break;
-        case 78: _t->slotShowNextCluster(); break;
-        case 79: _t->slotShowPreviousCluster(); break;
-        case 80: _t->slotSpikesDeleted(); break;
-        case 81: _t->slotClusterInformationModified(); break;
-        case 82: _t->slotAbout(); break;
-        case 83: _t->slotHanbook(); break;
-        case 84: _t->slotSaveRecentFiles(); break;
+        case 36: _t->slotVoltageSelection(); break;
+        case 37: _t->slotSelectTime(); break;
+        case 38: _t->slotSingleColorUpdate((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 39: _t->slotUpdateShownClusters((*reinterpret_cast< const QList<int>(*)>(_a[1]))); break;
+        case 40: _t->slotGroupClusters((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
+        case 41: _t->slotMoveClustersToNoise((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
+        case 42: _t->slotMoveClustersToArtefact((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
+        case 43: _t->slotImmediateSelection(); break;
+        case 44: _t->slotDelaySelection(); break;
+        case 45: _t->slotTabChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 46: _t->slotUpdateDimensionX((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 47: _t->slotUpdateDimensionY((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 48: _t->slotDisplayClose(); break;
+        case 49: _t->slotUpdateUndoNb((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 50: _t->slotUpdateRedoNb((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 51: _t->slotUpdateStartTime((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 52: _t->slotUpdateDuration(); break;
+        case 53: _t->slotTimeFrameMode(); break;
+        case 54: _t->setOverLayPresentation(); break;
+        case 55: _t->slotMeanPresentation(); break;
+        case 56: _t->slotIncreaseAmplitude(); break;
+        case 57: _t->slotDecreaseAmplitude(); break;
+        case 58: _t->slotSpikesTodisplay((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 59: _t->slotUpdateCorrelogramsHalfDuration(); break;
+        case 60: _t->slotUpdateBinSize(); break;
+        case 61: _t->slotUpdateMinSpikeDiff((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 62: _t->slotIncreaseCorrelogramsAmplitude(); break;
+        case 63: _t->slotDecreaseCorrelogramsAmplitude(); break;
+        case 64: _t->slotNoScale(); break;
+        case 65: _t->slotScaleByMax(); break;
+        case 66: _t->slotScaleByShouler(); break;
+        case 67: _t->slotShoulderLine(); break;
+        case 68: _t->slotUpdateErrorMatrix(); break;
+        case 69: _t->slotSelectAll(); break;
+        case 70: _t->slotSelectAllWO01(); break;
+        case 71: _t->slotRecluster(); break;
+        case 72: _t->slotStopRecluster(); break;
+        case 73: _t->slotProcessExited((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QProcess::ExitStatus(*)>(_a[2]))); break;
+        case 74: _t->slotOutputTreatmentOver(); break;
+        case 75: _t->renameActiveDisplay(); break;
+        case 76: _t->slotIncreaseAllChannelsAmplitude(); break;
+        case 77: _t->slotDecreaseAllChannelsAmplitude(); break;
+        case 78: _t->slotShowLabels(); break;
+        case 79: _t->slotShowNextCluster(); break;
+        case 80: _t->slotShowPreviousCluster(); break;
+        case 81: _t->slotSpikesDeleted(); break;
+        case 82: _t->slotClusterInformationModified(); break;
+        case 83: _t->slotAbout(); break;
+        case 84: _t->slotHanbook(); break;
+        case 85: _t->slotSaveRecentFiles(); break;
         default: ;
         }
     }
@@ -311,9 +313,9 @@ int KlustersApp::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 85)
+        if (_id < 86)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 85;
+        _id -= 86;
     }
     return _id;
 }

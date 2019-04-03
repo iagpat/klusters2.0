@@ -81,6 +81,7 @@ src/qrc_klusters-icons.cxx: ../src/icons/time_tool.png
 src/qrc_klusters-icons.cxx: ../src/icons/update.png
 src/qrc_klusters-icons.cxx: ../src/icons/waveformview.png
 src/qrc_klusters-icons.cxx: ../src/icons/zoom_tool.png
+src/qrc_klusters-icons.cxx: ../src/icons/cursor_icon.png
 src/qrc_klusters-icons.cxx: src/klusters-icons.qrc.depends
 src/qrc_klusters-icons.cxx: ../src/klusters-icons.qrc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating qrc_klusters-icons.cxx"

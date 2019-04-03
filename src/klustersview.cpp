@@ -1538,6 +1538,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(sideBySidePresentation()),view, SLOT(setSideBySidePresentation()));
         connect(this,SIGNAL(increaseAmplitude()),view, SLOT(increaseAmplitude()));
         connect(this,SIGNAL(decreaseAmplitude()),view, SLOT(decreaseAmplitude()));
+        connect(this,SIGNAL(modeToSet(BaseFrame::Mode)),view, SLOT(setMode(BaseFrame::Mode)));
         connect(this,SIGNAL(updateDisplayNbSpikes(long)),view, SLOT(setDisplayNbSpikes(long)));
         connect(this,SIGNAL(updateMinSpikeDiff(double)), view, SLOT(setMinSpikeDiff(double)));
         connect(this,SIGNAL(changeGain(int)),view, SLOT(setGain(int)));

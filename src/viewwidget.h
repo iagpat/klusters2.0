@@ -80,9 +80,10 @@ public:
   * <li>NEW_CLUSTER Enumeration indicating that the user is in a mode enabling him to create a new cluster.</li>
   * <li>NEW_CLUSTERS Enumeration indicating that the user is in a mode enabling him to create new clusters.</li>
   * <li>SELECT_TIME Enumeration indicating that the user is in a mode enabling him to select a time window which will be display in a TraceView.</li>
+  * <li>REMOVE_SPIKES Enumeration indicating that the user is in a mode enabling him to remove noise spikes</li>
   * </ul>
   */
-    enum {DELETE_NOISE = ZOOM+1,DELETE_ARTEFACT = ZOOM+2,NEW_CLUSTER = ZOOM+3,NEW_CLUSTERS = ZOOM+4,SELECT_TIME = ZOOM+5};
+    enum {DELETE_NOISE = ZOOM+1,DELETE_ARTEFACT = ZOOM+2,NEW_CLUSTER = ZOOM+3,NEW_CLUSTERS = ZOOM+4,SELECT_TIME = ZOOM+5, REMOVE_SPIKES = ZOOM+6};
 
 public Q_SLOTS:
 

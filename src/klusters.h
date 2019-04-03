@@ -244,6 +244,8 @@ private Q_SLOTS:
     void slotDeleteArtefact();
     /**Changes to a mode enabling the user to zoom.*/
     void slotZoom();
+
+    void slotVoltageSelection();
     
     /**Chooses the selection time tool, enabling the user to select a time frame
     * for which the traces are going to be displayed in the TraceView. This slot is accessible only if a TraceView and a ClusterView are present
@@ -335,11 +337,15 @@ private Q_SLOTS:
    * waveformView is in sample mode.
    */
     void slotSpikesTodisplay(int nbSpikes){
-        qDebug()<<"slotSpikesToDisplay";
         if(!isInit){
             activeView()->setDisplayNbSpikes(static_cast<long>(nbSpikes));
         }
     }
+
+    /**Informs the active display to present an updated number of waveforms when the
+   * waveform2View is in sample mode. MSD stands for Minimum Spike Difference
+   */
+
 
     /**Informs the active display to present the correlations with a new time frame.*/
     void slotUpdateCorrelogramsHalfDuration();
@@ -349,7 +355,6 @@ private Q_SLOTS:
 
     /**Informs the active display of the new MinSpikeDiff*/
     void slotUpdateMinSpikeDiff(double minSpikeDiff){
-        qDebug()<<"slotUpdateMinSpikeDiff";
         if(!isInit){
             activeView()->setMinSpikeDiff(static_cast<double>(minSpikeDiff));
         }
@@ -543,6 +548,7 @@ private:
     QAction *mReCluster;
     QAction *mAbortReclustering;
     QAction *mZoomAction;
+    QAction *mVoltageSelection;
     QAction *mNewCluster;
     QAction *mSplitClusters;
     QAction *mDeleteArtifactSpikes;
@@ -652,6 +658,11 @@ private:
     */
     SpinBox* spikesTodisplay;
 
+    /**Spine box enabling to choose the number of spikes to display in
+    * the waveform2view, if any, while that view is in sample mode.
+    */
+
+
     /**The step used to increase or decrease the number of spikes to display
     * in the waveform view, if any, while that view is in sample mode. The default
     * is 20;
@@ -659,9 +670,19 @@ private:
     long spikesTodisplayStep;
     
     QLabel* spikesTodisplayLabel;
-    
+
+    /**The step used to increase or decrease the number of spikes to display
+    * in the waveform2view, if any, while that view is in sample mode. The default
+    * is 20;
+    */
+
+
+
     static const QString INITIAL_WAVEFORM_TIME_WINDOW;
     static const long DEFAULT_NB_SPIKES_DISPLAYED;
+
+
+
     /**The size of half the time frame for the correlations has to be k*bineSize,
     * as the total number of bins = 2*halfbins + 1 (halfBins.5 for each half time frame).
     */

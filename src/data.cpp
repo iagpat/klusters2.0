@@ -265,9 +265,6 @@ bool Data::loadClusters(QFile &clusterFile, long spkFileLength, QString& errorIn
         }
     }
 
-    qDebug()<<" nbSpikes:"<< nbSpikes<< "k:"<<k<<" spkFileLength:"<<spkFileLength<< "nbChannels : "<< nbChannels<<" nbSamplesInWaveform "<<nbSamplesInWaveform<< " sampleSize:"<<sampleSize;
-
-    qDebug()<<" upperLimit"<<upperLimit<< " k "<<k;
     //if the number of clusters read did not correspond to nbSpikes, there is a problem.
     if(k != upperLimit){
         errorInformation = QObject::tr("The number of spikes read in the cluster file does not correspond to number of spikes computed.(computed : %1, upperlimit %2)").arg(k).arg(upperLimit);
@@ -575,7 +572,7 @@ void Data::minMaxDimensionCalculation(QList<int> modifiedClusters){
     }
     mutex.unlock();
 
-    qDebug() << "in minMaxDimensionCalculation end" << endl;
+
 
 }
 
@@ -2359,7 +2356,7 @@ bool Data::spikePositions(int clusterId,SortableTable& subsetTable){
 }
 
 Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDisplay, dataType MinSpkDiff){
-    qDebug() << "Data::Status Data::getSampleWaveform2Points";
+
     //If the cluster has been suppress after the thread calling this function has been launched
     //return this information that the data are not available.
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)))return NOT_AVAILABLE;
@@ -2373,7 +2370,6 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
 
     //Does this cluster has already been processed?
     if(waveformStatusMap.contains(clusterId)){
-        qDebug() << "getSampleWaveform2Points:: waveformStatusMap contains cluster " << clusterId;
         Status status = waveformStatusMap[clusterId].sampleStatus();
         if(status == IN_PROCESS)return IN_PROCESS;
         waveforms2 = waveformDict[clusterIdString];
@@ -2407,7 +2403,6 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
         waveforms2->setSize(nbSpikesOfCluster,SAMPLE);
     }
     else{
-        qDebug() << "getSampleWaveform2Points:: waveformStatusMap doesnt contain cluster " << clusterId;
         mutex.lock();
         waveformStatusMap.insert(clusterId,WaveformStatus(IN_PROCESS));
         mutex.unlock();
@@ -2442,7 +2437,7 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
         // OPEN_ERROR;  ///The openning pb has to be taken into account
     }
     //read and store the data
-    waveforms2->read2(positionOfSpikes,nbSpikesOfCluster,resFile, spikeFile,nbSpkToDisplay, MinSpkDiff);
+    waveforms2->read(positionOfSpikes,nbSpikesOfCluster,spikeFile,nbSpkToDisplay);
     fclose(spikeFile);
     fclose(resFile);
 
@@ -2466,7 +2461,7 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
 }
 
 Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay){
-    qDebug() << "Data::Status Data::getSampleWaveformPoints";
+
     //If the cluster has been suppress after the thread calling this function has been launched
     //return this information that the data are not available.
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)))return NOT_AVAILABLE;
@@ -2480,7 +2475,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
 
     //Does this cluster has already been processed?
     if(waveformStatusMap.contains(clusterId)){
-        qDebug() << "getSampleWaveformPoints:: waveformStatusMap contains cluster " << clusterId;
+
         Status status = waveformStatusMap[clusterId].sampleStatus();
         if(status == IN_PROCESS)return IN_PROCESS;
         waveforms = waveformDict[clusterIdString];
@@ -2514,7 +2509,6 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
         waveforms->setSize(nbSpikesOfCluster,SAMPLE);
     }
     else{
-        qDebug() << "getSampleWaveformPoints:: waveformStatusMap doesnt contain cluster " << clusterId;
         mutex.lock();
         waveformStatusMap.insert(clusterId,WaveformStatus(IN_PROCESS));
         mutex.unlock();
@@ -2721,7 +2715,7 @@ void Data::WaveformData<T>::setSize(dataType size,WaveformMode waveformMode){
 
 template <class T>
 void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay){
-    qDebug()<< "Data::WaveformData<T>::read1";
+    qDebug()<< "sampleSpikesTable1 = " << &sampleSpikesTable ;
     //Show nbSpkToDisplay spikes or all the spikes if nbSpikesOfCluster < nbSpkToDisplay
     if(nbSpikesOfCluster < nbSpkToDisplay){
         dataType max = nbSpikesOfCluster +1;
@@ -2767,7 +2761,7 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
 
 template <class T>
 void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end){
-    qDebug()<< "Data::WaveformData<T>::read3";
+
     dataType max = nbSpikesOfCluster +1;
     dataType position = 0;
     dataType startPositionInSpk;
@@ -2789,16 +2783,13 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
     }
 }
 
-template <class T>
+/*template <class T>
 void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* resFile ,FILE* spikeFile,dataType nbSpkToDisplay, dataType MinSpkDiff){
-    qDebug()<< "*****************************read2";
+    qDebug()<< "sampleSpikesTable2 = " << &sampleSpikesTable ;
     //positionOfSpikes has all the positions for spikes in the desired cluster
     //first we are going to load the res file, ideally in the future we will put this somewhere else more efficient
     //BUG ALERT: the following 15 lines of code make the first waveformview not update
 
-    qDebug()<< "minspikediff = " << MinSpkDiff; //Debugging
-    qDebug()<< "number of spikes in cluster = " << nbSpikesOfCluster; //Debugging
-    qDebug()<< "number of points by spike = " << nbPtsBySpike;//Debugging
     QTextStream times_file(resFile); //Set up file stream
     int64_t *times = new int64_t[nbSpikesOfCluster+1]; //Array to store spike times in timepoint units
     bool ok;
@@ -2807,7 +2798,7 @@ void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpi
     while(!times_file.atEnd()){
         if (file_pos++ == (positionOfSpikes(1,spike_pos))){
             times[spike_pos] = times_file.readLine().toLong(&ok,10);
-            qDebug()<< "time: " << times[spike_pos];
+
             spike_pos++;
             if (nbSpikesOfCluster < spike_pos) break;
         }
@@ -2816,12 +2807,12 @@ void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpi
     QSet<dataType> PositionOfSpikesSet;
     for(dataType i = 1; i < nbSpikesOfCluster+1; i++){ //For every spike in the cluster
         //First we check the times of the spikes before the current one
-        qDebug()<< "time: " << times[i];//Debugging
+
         int64_t before = 1;
         while(true){
             if (i-before < 1) break;
             if((times[i] - times[i-before]) > MinSpkDiff) break;
-            qDebug()<< times[i] << " - " << times[i-before] << " < " << MinSpkDiff;//Debugging
+
             PositionOfSpikesSet.insert(positionOfSpikes(1,i-before));
             before++;
         }
@@ -2830,14 +2821,14 @@ void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpi
         while(true){
             if (i+after > nbSpikesOfCluster) break;
             if((times[i+after] - times[i])  > MinSpkDiff) break;
-            qDebug()<< times[i+after] << " - " << times[i] << " < " << MinSpkDiff;//Debugging
+            //qDebug()<< times[i+after] << " - " << times[i] << " < " << MinSpkDiff;//Debugging
             PositionOfSpikesSet.insert(positionOfSpikes(1,i+after));
             after++;
         }
     }
     QList<dataType> PositionOfSpikesList = PositionOfSpikesSet.toList();
 
-    qDebug()<< "number of spikes in range = " << PositionOfSpikesList.size(); //Debugging
+    //qDebug()<< "number of spikes in range = " << PositionOfSpikesList.size(); //Debugging
 
     //Show nbSpkToDisplay spikes or all the spikes if nbSpikesOfCluster < nbSpkToDisplay
     if(nbSpikesOfCluster < nbSpkToDisplay){
@@ -2880,7 +2871,7 @@ void Data::WaveformData<T>::read2(SortableTable& positionOfSpikes,dataType nbSpi
         }
     }
 }
-
+*/
 
 template <class T>
 void Data::WaveformData<T>::calculateMean(WaveformMode waveformMode){

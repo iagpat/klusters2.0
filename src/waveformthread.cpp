@@ -387,8 +387,6 @@ void WaveformThread::getMean(WaveformView::PresentationMode mode){
 
 void WaveformThread::getMean(const QList<int>& clusterIds,WaveformView::PresentationMode mode){
 
-    qDebug()<<"in  WaveformThread::getMean";
-
     meanRequested = true;
     this->clusterIds = clusterIds;
     treatSingleCluster = false;

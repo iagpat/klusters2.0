@@ -764,7 +764,7 @@ private:
         virtual dataType getSampleStDeviation(dataType index) const  = 0;
         virtual dataType getTimeFrameStDeviation(dataType index) const  = 0;
         virtual void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay) = 0;
-        virtual void read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* resFile ,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff) = 0;
+        //virtual void read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* resFile ,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff) = 0;
         virtual void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end) = 0;
         virtual void calculateMean(WaveformMode waveformMode) = 0;
 
@@ -842,7 +842,7 @@ private:
             return static_cast<dataType>(timeFrameStDeviationTable[index]);
         }
         void read(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* spikeFile,dataType nbSpkToDisplay);
-        void read2(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* resFile,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff);
+        //void read2(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* resFile,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff);
         void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end);
         void calculateMean(WaveformMode waveformMode = SAMPLE);
     private:
@@ -1154,7 +1154,7 @@ public:
         void setMeanAvailable(bool available){meanAvailable = available;}
         bool isMeanAvailable(){return meanAvailable;}
         virtual dataType nextSpike(){return 0;}
-        virtual dataType nextViableSpike(int, Data&, dataType, bool&){return 0;}
+        virtual dataType nextViableSpike(int, Data&, dataType, bool&, long&){return 0;}
         virtual dataType nextMeanValue(){return 0;}
         virtual dataType nextViableMeanValue(int, Data&, dataType){return 0;}
         virtual dataType nextStDeviationValue(){return 0;}
@@ -1243,11 +1243,11 @@ public:
             ++spikesIndex;
             return - static_cast<dataType>(waveforms->getSample(spikesIndex));
         }
-        dataType nextViableSpike(int cluster_number, Data& data, dataType MinSpkDiff, bool &discard){
+        dataType nextViableSpike(int cluster_number, Data& data, dataType MinSpkDiff, bool &discard, long &spikeNumber){
             SortableTable spikesOfCluster = SortableTable();
             double MaxNumberOfSpikes = data.nbOfSpikes(cluster_number);
             data.spikePositions(cluster_number,spikesOfCluster);
-            int spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
+            spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
             double current_time;
             if(MaxNumberOfSpikes>spikeNumber){
                 current_time = data.spikeTime(spikesOfCluster,spikeNumber);
@@ -1357,11 +1357,11 @@ public:
             ++spikesIndex;
             return - static_cast<dataType>(waveforms->getTimeFrame(spikesIndex));
         }
-        dataType nextViableSpike(int cluster_number, Data& data, dataType MinSpkDiff, bool &discard){
+        dataType nextViableSpike(int cluster_number, Data& data, dataType MinSpkDiff, bool &discard, long &spikeNumber){
             SortableTable spikesOfCluster = SortableTable();
             double MaxNumberOfSpikes = data.nbOfSpikes(cluster_number);
             data.spikePositions(cluster_number,spikesOfCluster);
-            int spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
+            spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
 
             if(MaxNumberOfSpikes>spikeNumber){
                 double current_time = data.spikeTime(spikesOfCluster,spikeNumber);
