@@ -465,6 +465,7 @@ void ClusterPalette::groupClusters(){
 }
 
 void ClusterPalette::moveClustersToNoise(){
+    qDebug()<<"clusterpalette.cpp line 468: moveClustersToNoise";
     QList<int> selected = selectedClusters();
 
     if(!selected.isEmpty()){

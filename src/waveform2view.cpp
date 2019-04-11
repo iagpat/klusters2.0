@@ -46,9 +46,9 @@ const int Waveform2View::XMARGIN = 0;
 const int Waveform2View::YMARGIN = 0;
 
 Waveform2View::Waveform2View(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int acquisitionGain,const QList<int>& positions,QStatusBar * statusBar,QWidget* parent,
-                           bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
-                           bool overLay,bool mean, double minSpkDiff, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
-                           int border) :
+                             bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
+                             bool overLay,bool mean, double minSpkDiff, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
+                             int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border,XMARGIN,YMARGIN)
   ,meanPresentation(mean),overLayPresentation(overLay),acquisitionGain(acquisitionGain),dataReady(true),
     nbSpkToDisplay(nbSpkToDisplay),selectionPolygon(0), isZoomed(false),goingToDie(false){
@@ -461,9 +461,14 @@ void Waveform2View::paintEvent ( QPaintEvent *){
 
 void Waveform2View::drawWaveforms2(QPainter& painter,const QList<int>& clusterList){
     //the clusters will be presented by increasing ids, to do so the lists have to be sorted.
+    qDebug()<< "drawwaveforms";
     QList<int> shownClusters;
     QList<int>::const_iterator iterator;
     QList<int> const clusters = view.clusters();
+    listCorresponingSpikes.clear(); //Spike number of each polygon in listCOmparePolygons
+    listCorresponingClusters.clear();
+    listComparePolygons.clear(); //Each spike displayed in the view
+
     for(iterator = clusters.begin(); iterator != clusters.end(); ++iterator)
         shownClusters.append(*iterator);
 
@@ -515,7 +520,7 @@ void Waveform2View::drawWaveforms2(QPainter& painter,const QList<int>& clusterLi
 
         //Iterate over the waveforms2 of the cluster and draw them
         if(meanPresentation){
-            qDebug()<<"meanPresentation";
+            //qDebug()<<"meanPresentation";
             if(!waveform2Iterator->isMeanAvailable()) continue;
             int x = 0;
             QPolygon mean;
@@ -559,11 +564,10 @@ void Waveform2View::drawWaveforms2(QPainter& painter,const QList<int>& clusterLi
         else{
             if(!waveform2Iterator->areSpikesAvailable())continue;
             long nbOfSpikes = waveform2Iterator->nbOfSpikes();
-
+            bool discard = true;
+            long spikesIndex = 0;
             for(long i = 0; i < nbOfSpikes; ++i){
                 int x = 0;
-                bool discard = true;
-                long spikesIndex = 0;
                 QPolygon spike(nbchannels * nbSamplesInWaveform2);
                 for(int i = 0; i < nbSamplesInWaveform2; ++i){
                     for(int j = 0; j < nbchannels; ++j){
@@ -572,21 +576,34 @@ void Waveform2View::drawWaveforms2(QPainter& painter,const QList<int>& clusterLi
                         //The value receive from the iterator is already inverted.
                         long temp = static_cast<long>(waveform2Iterator->nextViableSpike(static_cast<dataType>(*clusterIterator),clusteringData, minSpikeDiff*clusteringData.getSamplingRate()/1000, discard, spikesIndex) * Yfactor);
                         if (discard == false){
-                            qDebug()<<"spike: " << spikesIndex;
+                            if (i==0 && j ==0){//On the first timepoint and channels of a viable spike
+                                listComparePolygons.append(QVector<QPolygon>());//Add a list of polygons for this spike
+                                listCorresponingSpikes.append(spikesIndex);//Save the spike index for the spike
+                                listCorresponingClusters.append(static_cast<dataType>(*clusterIterator));
+
+                            }
+                            if (i==0){//On the first timepoint of each channel in each viable spike, add a new polygon
+                                listComparePolygons[listComparePolygons.size()-1].append(QPolygon(nbSamplesInWaveform2));
+                            }
+                            listComparePolygons[listComparePolygons.size()-1][j].setPoint(i, X + x,-Y + temp);//Store the point for this spike and channel
                             spike.setPoint((j*nbSamplesInWaveform2) + i, X + x,-Y + temp);
                         } else if(discard == true){
                             break;
                         }
                     }
                     x += Xstep;
-                    if(discard == true){
-                        break;
-                    }
+                    if(discard == true) break;
                 }
-                for(int k = 0;k < nbchannels;++k){
-                    int pointCount = (nbSamplesInWaveform2 == -1) ?  spike.size() - k * nbSamplesInWaveform2 : nbSamplesInWaveform2;
-                    //store the qpolygon spikes for later comparison
-                    painter.drawPolyline(spike.constData() + k * nbSamplesInWaveform2, pointCount);
+                if (discard == false){
+                    if (listSelectedMSDSpikes.contains(listCorresponingSpikes.at(listCorresponingSpikes.size()-1))){
+                        painter.setPen(Qt::red);
+                    } else {
+                        painter.setPen(alternative_color);
+                    }
+                    for(int k = 0;k < nbchannels;++k){
+                        int pointCount = (nbSamplesInWaveform2 == -1) ?  spike.size() - k * nbSamplesInWaveform2 : nbSamplesInWaveform2;
+                        painter.drawPolyline(spike.constData() + k * nbSamplesInWaveform2, pointCount);
+                    }
                 }
             }
         }
@@ -706,13 +723,11 @@ void Waveform2View::setDisplayNbSpikes(long nbSpikes){
 
 
 void Waveform2View::mousePressEvent(QMouseEvent* e){
-    qDebug()<<"Mouse pressed" << viewportToWorld(e->x(),e->y());;
-    //Defining a time window t oupdate the Traceview
+    //There are two things that can possibly happen when one presses the mouse, either zoom in or select spikes to remove
     if(mode == ZOOM || isRubberBandToBeDrawn){
         //Test if a selected rectangle exist, if so draw it and delete it.
         if(e->button() == Qt::LeftButton){
             //Assign firstClick
-
             QRect r((QRect)window);
             firstClick = e->pos();
             if (!mRubberBand)
@@ -727,18 +742,75 @@ void Waveform2View::mousePressEvent(QMouseEvent* e){
             mRubberBand->show();
         }
     }
-    if(mode == REMOVE_SPIKES && e->button() == Qt::LeftButton){
-        QPoint selectedPoint = viewportToWorld(e->x(),e->y());
-        if (selectionPolygon.empty()){ //If this is the first point of the line
-            selectionPolygon.putPoints(0, 1, selectedPoint.x(),selectedPoint.y());
-        } else { //If this is the last point of the line
+    if(mode == REMOVE_SPIKES){
+        if (e->button() == Qt::LeftButton){ //Left button pressed
+            QPoint selectedPoint = viewportToWorld(e->x(),e->y());
+            if (selectionPolygon.empty()){ //If this is the first point of the line for voltage selection
+                selectionPolygon.putPoints(0, 1, selectedPoint.x(),selectedPoint.y());
+                listSelectedMSDClusters.clear();
+                listSelectedMSDSpikes.clear();
+                drawContentsMode = REDRAW;
+                update();
+            }else { //If this is the second point of the line
+                selectionPolygon.putPoints(1, 1, selectedPoint.x(),selectedPoint.y());
+                QLineF VoltageSelectorLine = QLineF(selectionPolygon.at(0),selectionPolygon.at(1));
+                QPointF A;
+                QPointF B;
+                QPointF intersectionPoint;
+                for(int i = 0; i<listComparePolygons.size();i++){ //For every displayed spike
+                    for(int j = 0; j<nbchannels;j++){ //For every channel
+                        for( int k = 0; k<nbSamplesInWaveform2-1;k++){ //For every line forming the spike
+                            A = listComparePolygons[i][j].at(k); //First point
+                            B = listComparePolygons[i][j].at(k+1); //Second point
+                            int compare = VoltageSelectorLine.intersect(QLineF(A,B), &intersectionPoint);
+                            if(1==compare && !listSelectedMSDSpikes.contains(listCorresponingSpikes[i])){ //If it intersects and we dont already have that spike
+                                listSelectedMSDSpikes.append(listCorresponingSpikes[i]); //Add the spike to the list of selected spikes
+                                listSelectedMSDClusters.append(listCorresponingClusters[i]);
+                                QPainter painter;
+                                painter.begin(&doublebuffer);
+                                QRect r((QRect)window);
+                                painter.setWindow(r.left(),r.top(),r.width()-1,r.height()-1);//hack because Qt QRect is used differently in this function
+                                painter.setViewport(viewport);
+                                painter.setPen(Qt::red);
+                                for(int j2 = 0; j2<nbchannels;j2++) painter.drawPolyline(listComparePolygons[i][j2]); //Paint every channel
+                                painter.end();
+                            }
+                        }
 
-            //HERE IS WHERE I NEED TO WRITE CODE TO COMPARE THE SPIKES AND PERHAPS REMOVE THEM
-
-            selectionPolygon.clear();
+                    }
+                }
+                selectionPolygon.clear();
+            }
+            drawContentsMode = REDRAW;
+            update();
         }
-        drawContentsMode = REFRESH;
-        update();
+        if(e->button() == Qt::RightButton){ //Right button pressed
+            listSelectedMSDSpikes.clear();
+            listSelectedMSDClusters.clear();
+            selectionPolygon.clear();
+            drawContentsMode = REDRAW;
+            update();
+        }
+        if(e->button() == Qt::MiddleButton){ //MIddle button pressed
+            //By pressing the middle button one comfirms moving the spikes to the noise cluster
+            Data& clusteringData = doc.data();
+            int xdimensionValue; //For the current spike, value of the x dimensional feature
+            int ydimensionValue; //For the current spike, value of the y dimensional feature
+            QRegion region;
+            for(int i = 0; i<listSelectedMSDSpikes.size();i++){
+                xdimensionValue = clusteringData.spikeFeature(listSelectedMSDSpikes[i],view.abscissaDimension());
+                ydimensionValue = clusteringData.spikeFeature(listSelectedMSDSpikes[i],view.ordinateDimension());
+                region = QRegion(xdimensionValue,ydimensionValue,1,1,QRegion::Rectangle); //This region is too big
+                QList<int> clustersOfOrigin;
+                clustersOfOrigin.append(listSelectedMSDClusters[i]);
+                doc.deleteNoise(region,clustersOfOrigin,view.abscissaDimension(),view.ordinateDimension());
+            }
+            selectionPolygon.clear();
+            listSelectedMSDSpikes.clear();
+            listSelectedMSDClusters.clear();
+            drawContentsMode = REDRAW;
+            update();
+        }
     }
 }
 
@@ -748,11 +820,7 @@ void Waveform2View::mouseMoveEvent(QMouseEvent* e){
     int x = coordinates.x();
     int y = coordinates.y()/Yfactor;
     int channelNumber = (-coordinates.y()-Y0)/-(YsizeForMaxAmp+Yspace);
-    int voltage = -(-(YsizeForMaxAmp+Yspace)* channelNumber + coordinates.y() + Y0)/Yfactor;
-    qDebug()<<"CHANNEL NUMBER = " << channelNumber;
-    qDebug()<<"voltage = " << voltage;
-
-
+    //int voltage = -(-(YsizeForMaxAmp+Yspace)* channelNumber + coordinates.y() + Y0)/Yfactor;
     if (mode == REMOVE_SPIKES){
         if(selectionPolygon.isEmpty())
             return;
@@ -806,7 +874,7 @@ void Waveform2View::mouseMoveEvent(QMouseEvent* e){
 }
 
 void Waveform2View::mouseDoubleClickEvent (QMouseEvent *e){
-    qDebug()<<"mouse double click event" << viewportToWorld(e->x(),e->y());
+    //qDebug()<<"mouse double click event" << viewportToWorld(e->x(),e->y());
     //Trigger parent event
     ViewWidget::mouseDoubleClickEvent(e);
     if((!view.clusters().isEmpty())){
@@ -831,7 +899,7 @@ void Waveform2View::mouseDoubleClickEvent (QMouseEvent *e){
 }
 
 void Waveform2View::mouseReleaseEvent(QMouseEvent* e){
-    qDebug()<<"mouse release event"<< viewportToWorld(e->x(),e->y());
+    //qDebug()<<"mouse release event"<< viewportToWorld(e->x(),e->y());
     //Trigger parent event
     ViewWidget::mouseReleaseEvent(e);
 
@@ -1043,7 +1111,7 @@ void Waveform2View::setMode(BaseFrame::Mode selectedMode){
     selectionPolygon.clear();
     mode = selectedMode;
     if (mode == REMOVE_SPIKES){
-        qDebug()<<"setCursor(voltageSelectionCursor);";
+        //qDebug()<<"setCursor(voltageSelectionCursor);";
         setCursor(voltageSelectionCursor);
     } else {
         setCursor(zoomCursor);

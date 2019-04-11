@@ -1089,7 +1089,17 @@ private:
   */
 public:double spikeTime(SortableTable& spikesOfCluster,dataType spike){
         dataType currentPositionInFeatures = spikesOfCluster(1,spike);
+        //qDebug()<<"spike = " << spike;
+        //qDebug()<<"currentPOsitionInFeatures = " << currentPositionInFeatures;
         return static_cast<double>(features(currentPositionInFeatures,nbDimensions));
+    }
+    /**Returns the feature value corresponding to a spike and specified dimension.
+     * @param spikeIndex is the index of the spike
+     * @param feature is the dimension in the feature space
+     */
+
+public:double spikeFeature(dataType spikeIndex, int feature){
+        return static_cast<double>(features(spikeIndex, feature));
     }
 
     /**Sorts by time the spikes of a newly created cluster created from other clusters, knowing
@@ -1243,11 +1253,12 @@ public:
             ++spikesIndex;
             return - static_cast<dataType>(waveforms->getSample(spikesIndex));
         }
-        dataType nextViableSpike(int cluster_number, Data& data, dataType MinSpkDiff, bool &discard, long &spikeNumber){
+        dataType nextViableSpike(int cluster_number, Data& data, dataType MinSpkDiff, bool &discard, long &spikeNB){
             SortableTable spikesOfCluster = SortableTable();
             double MaxNumberOfSpikes = data.nbOfSpikes(cluster_number);
             data.spikePositions(cluster_number,spikesOfCluster);
-            spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
+            long spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
+            spikeNB = spikesOfCluster(1,spikeNumber);//THIS IS THE OVERALL SPIKE NUMBER
             double current_time;
             if(MaxNumberOfSpikes>spikeNumber){
                 current_time = data.spikeTime(spikesOfCluster,spikeNumber);

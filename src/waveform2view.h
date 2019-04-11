@@ -398,6 +398,18 @@ private:
     /**Voltage selection polygon */
     QPolygon selectionPolygon;
 
+    /**In this 2 dimensional list I am storing to polygons drawn for later comparison.
+       The first dimension correponds to the viable spike index and the second corresponds to the channels number*/
+    QVector<QVector<QPolygon> > listComparePolygons;
+
+    /**In this list I am storing the corresponding spike indices of listComparePolygons*/
+    QList<long> listCorresponingSpikes;
+    QList<long> listCorresponingClusters;
+
+    //THe following two lists contain the spikes that were selected through the voltage selection method and their clusters
+    QList<long> listSelectedMSDSpikes;
+    QList<long> listSelectedMSDClusters;
+
     /**True if the widget is about to be deleted, false otherwise.*/
     bool goingToDie;
 

@@ -903,6 +903,7 @@ void KlustersDoc::groupClusters(QList<int> clustersToGroup,KlustersView& activeV
 
 
 void KlustersDoc::deleteClusters(QList<int> clustersToDelete,KlustersView& activeView,int clusterId){
+    qDebug()<<"klustersdoc.cpp line 906: deleteClusters";
     QList<int> modifiedcluster;
     modifiedcluster.append(clusterId);
 
@@ -1013,10 +1014,12 @@ void KlustersDoc::deleteArtifact(QRegion& region,const QList <int>& clustersOfOr
 
 
 void KlustersDoc::deleteNoise(QRegion& region,const QList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
+    qDebug()<<"klustersdoc.cpp line 1017: deleteNoise";
     deleteSpikesFromClusters(1,region,clustersOfOrigin,dimensionX,dimensionY);
 }
 
 void KlustersDoc::deleteSpikesFromClusters(int destination, QRegion& region,const QList <int>& clustersOfOrigin, int dimensionX, int dimensionY){
+    qDebug()<<"klustersdoc.cpp line 1022: deleteSpikesFromClusters";
     //list which will contain the clusters really having spikes in the region of selection.
     QList <int> fromClusters;
     //list which will contain the clusters which became empty because all their spikes were in the region of selection.

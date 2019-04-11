@@ -1983,6 +1983,7 @@ void KlustersApp::slotMultipleNew(){
 }
 /**Deletes spikes from a cluster and move them to the cluster (number 1) containing the poorly isolated cells*/
 void KlustersApp::slotDeleteNoise(){
+    qDebug()<<"kluster.cpp line 1986: slotDeleteNoise";
     slotStatusMsg(tr("Delete noise..."));
 
     //If we are in delay mode, update the display, if need it, before triggering the tool change
@@ -2076,6 +2077,7 @@ void KlustersApp::slotGroupClusters(QList<int> selectedClusters){
 }
 
 void KlustersApp::slotMoveClustersToNoise(QList<int> selectedClusters){
+    qDebug()<<"klusters.cpp line 2079: slotMoveClustersToNoise";
     slotStatusMsg(tr("Delete &noisy cluster(s)..."));
     KlustersView* view = activeView();
     QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));

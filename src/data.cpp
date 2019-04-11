@@ -981,6 +981,7 @@ QMap<int,int> Data::createNewClusters(QRegion& region, const QList <int>& cluste
   Cluster one is the destination and cluster 0 can contain spikes to be deleted.
  */
 void Data::deleteSpikesFromClusters(QRegion& region, const QList <int>& clustersOfOrigin, int destinationCluster, int dimensionX, int dimensionY, QList <int>& fromClusters,QList <int>& emptyClusters){
+    qDebug()<<"data.cpp line 984: deleteSpikesFromClusters";
     //The new information about the cluster will be inserted in the table pointed by spikesByClusterTemp
     SortableTable* spikesByClusterTemp = new SortableTable();
     spikesByClusterTemp->setSize(nbSpikes);
@@ -1424,6 +1425,8 @@ void Data::moveClustersToArtefact(QList <int>& clustersToDelete){
 
 
 void Data::moveClustersToNoise(QList<int>& clustersToDelete){
+    qDebug()<<"data.cpp line 1427: moveClustersToNoise";
+
     //If clustersToDelete contains the cluster 0, the max and min dimensions
     //have to be recalculated. If minMaxThread is running, clusterZeroJustModified will
     //inform it that it has to stop (the computation will be done again on the new data).
