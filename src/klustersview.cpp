@@ -56,7 +56,7 @@ const QString KlustersView::DisplayTypeNames[]={QObject::tr("Cluster Display"),
 
 KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColor& backgroundColor,int initialDimensionX,int initialDimensionY,
                            QList<int>* initialClusterList, DisplayType type, QWidget *parent, const char* name,QStatusBar * statusBar,int timeInterval,int maxAmplitude,
-                           QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,bool overLay,bool mean, double minSpkDiff,
+                           QList<int> positions,bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,long bchIteration,bool overLay,bool mean, double minSpkDiff,
                            int binSize,int correlationTimeFrame,Data::ScaleMode scale,bool shoulderLine,long startingTime,long duration,bool labelsDisplay,
                            QList< QList<int>* > undoList, QList< QList<int>* > redoList)
     : DockArea(parent),
@@ -72,6 +72,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
       startTime(start),
       nbSpkToDisplay(nbSpkToDisplay),
       minSpikeDiff(minSpkDiff),
+      batchIteration(bchIteration),
       overLayDisplay(overLay),
       meanDisplay(mean),
       binSize(binSize),
@@ -124,7 +125,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
         isThereErrorMatrixView = false;
         isThereTraceView = false;
         mainDock->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,mainDock,
-                                             inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));
+                                             inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,batchIteration, overLayDisplay,meanDisplay));
 
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
@@ -143,7 +144,7 @@ KlustersView::KlustersView(KlustersApp& mainWindow,KlustersDoc& pDoc,const QColo
         isThereErrorMatrixView = false;
         isThereTraceView = false;
         mainDock->setWidget(new Waveform2View(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,mainDock,
-                                             inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay, minSpikeDiff));
+                                             inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,batchIteration,overLayDisplay,meanDisplay, minSpikeDiff));
 
         currentViewWidget = dynamic_cast<ViewWidget*>(mainDock->widget());
         viewList.append(currentViewWidget);
@@ -265,7 +266,7 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
     waveforms->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
     //createDockWidget( "WaveForm", QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
     waveforms->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms,
-                                          inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
+                                          inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,batchIteration,overLayDisplay,meanDisplay));//assign the widget
     ViewWidget* waveformView = dynamic_cast<ViewWidget*>(waveforms->widget());
     viewList.append(waveformView);
     waveformView->installEventFilter(this);//To enable right click popup menu
@@ -281,7 +282,7 @@ void KlustersView::createOverview(const QColor& backgroundColor,QStatusBar* stat
     waveforms2->setAttribute(Qt::WA_DeleteOnClose, true);
     waveforms2->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
     waveforms2->setWidget(new Waveform2View(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms2,
-                                          inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay, minSpikeDiff));//assign the widget
+                                          inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,batchIteration,overLayDisplay,meanDisplay, minSpikeDiff));//assign the widget
     ViewWidget* waveformView2 = dynamic_cast<ViewWidget*>(waveforms2->widget());
     viewList.append(waveformView2);
     waveformView2->installEventFilter(this);//To enable right click popup menu
@@ -327,6 +328,7 @@ void KlustersView::createGroupingAssistantView(const QColor& backgroundColor,QSt
 
 
 void KlustersView::update(KlustersView* pSender){
+    qDebug()<<"KlustersView::update(KlustersView* pSender)";
     if(pSender != this)
         repaint();
 }
@@ -751,7 +753,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         waveforms->setAttribute(Qt::WA_DeleteOnClose, true);
                 //createDockWidget(count.prepend("WaveformView"), QPixmap(), 0L, tr(doc.documentName().toLatin1()), tr(doc.documentName().toLatin1()));
         waveforms->setWidget(new WaveformView(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms,
-                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay));//assign the widget
+                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,batchIteration,overLayDisplay,meanDisplay));//assign the widget
         waveformView = dynamic_cast<ViewWidget*>(waveforms->widget());
         viewList.append(waveformView);
         waveformView->installEventFilter(this);//To enable right click popup menu
@@ -774,7 +776,7 @@ bool KlustersView::addView(DisplayType displayType, const QColor &backgroundColo
         waveforms2->setFeatures(QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable);
         waveforms2->setAttribute(Qt::WA_DeleteOnClose, true);
         waveforms2->setWidget(new Waveform2View(doc,*this,backgroundColor,maxAmplitude,positions,statusBar,waveforms2,
-                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,overLayDisplay,meanDisplay, minSpikeDiff));//assign the widget
+                                              inTimeFrameMode,startTime,timeWindow,nbSpkToDisplay,batchIteration,overLayDisplay,meanDisplay, minSpikeDiff));//assign the widget
         waveform2View = dynamic_cast<ViewWidget*>(waveforms2->widget());
         viewList.append(waveform2View);
         waveform2View->installEventFilter(this);//To enable right click popup menu
@@ -885,6 +887,23 @@ void KlustersView::updateDimensions(int dimensionX,int dimensionY){
 
 
 void KlustersView::shownClustersUpdate(QList<int>& clustersToShow){
+    qDebug()<<"void KlustersView::shownClustersUpdate(QList<int>& clustersToShow)";
+    long maxBatchIteration = 0;
+    for(int i = 0; i < clustersToShow.size(); i++) {
+        SortableTable positionOfSpikes = SortableTable();
+        getDocument().data().spikePositions(clustersToShow.at(i),positionOfSpikes);
+        int temp = (positionOfSpikes.nbOfColumns()-1)/nbSpkToDisplay;
+        if (temp>maxBatchIteration) maxBatchIteration = temp;
+    }
+
+    if (batchIteration >= maxBatchIteration){
+        batchIteration = maxBatchIteration;
+        mainWindow.nextBatchSwitch(true);
+    } else mainWindow.nextBatchSwitch(false);
+    if (batchIteration == 0 ){
+        mainWindow.previousBatchSwitch(true);
+    } else  mainWindow.previousBatchSwitch(false);
+
     //Try to minimize the number of clusters to draw
     QVector<int> clustersToRemove;
     
@@ -1527,6 +1546,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(changeGain(int)),view, SLOT(setGain(int)));
         connect(this,SIGNAL(changeChannelPositions(QList<int>&)),view, SLOT(setChannelPositions(QList<int>&)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));
+        connect(this,SIGNAL(updateBatchIteration(long)), view, SLOT(setWaveformBatch(long)));
         connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(waveformDockClosed(QObject*)));
     } else if(displayType == WAVEFORMS2) { //Connections for WaveformViews
         connect(this,SIGNAL(updatedTimeFrame(long,long)),view, SLOT(setTimeFrame(long,long)));
@@ -1544,6 +1564,7 @@ void KlustersView::setConnections(DisplayType displayType, QWidget* view,QDockWi
         connect(this,SIGNAL(changeGain(int)),view, SLOT(setGain(int)));
         connect(this,SIGNAL(changeChannelPositions(QList<int>&)),view, SLOT(setChannelPositions(QList<int>&)));
         connect(this,SIGNAL(clustersRenumbered(bool)),view, SLOT(clustersRenumbered(bool)));
+        connect(this,SIGNAL(updateBatchIteration(long)), view, SLOT(setWaveformBatch(long)));
         connect(view, SIGNAL(destroyed(QObject*)), this, SLOT(waveformDockClosed(QObject*)));
     } else if(displayType == CORRELATIONS){ //Connections for CorrelationViews
         connect(this,SIGNAL(updatedBinSizeAndTimeFrame(int,int)),view, SLOT(setBinSizeAndTimeWindow(int,int)));
@@ -1645,4 +1666,51 @@ void KlustersView::updateTimeFrame(long start,long timeFrameWidth)
     timeWindow = timeFrameWidth;
     qDebug()<<" void KlustersView::updateTimeFrame(long start,long timeFrameWidth)";
     emit updatedTimeFrame(start,timeFrameWidth);
+}
+
+void KlustersView::setDisplayNbSpikes(int nbSpikes){
+    if (nbSpkToDisplay != nbSpikes){
+        batchIteration = 0;
+        mainWindow.previousBatchSwitch(true);
+        long maxBatchIteration = 0;
+        for(int i = 0; i < shownClusters->count(); i++) {
+            SortableTable positionOfSpikes = SortableTable();
+            getDocument().data().spikePositions(shownClusters->at(i),positionOfSpikes);
+            int temp = (positionOfSpikes.nbOfColumns()-1)/nbSpikes;
+            if (temp>maxBatchIteration) maxBatchIteration = temp;
+        }
+        if (batchIteration >= maxBatchIteration){
+            mainWindow.nextBatchSwitch(true);
+        } else {
+            mainWindow.nextBatchSwitch(false);
+        }
+    }
+    nbSpkToDisplay = nbSpikes;
+    emit updateDisplayNbSpikes(nbSpikes);
+}
+
+void KlustersView::setWaveformBatch(long factor){
+    qDebug() << "setWaveformBatch";
+    int previousBatchIteration = batchIteration;
+    long maxBatchIteration = 0;
+    for(int i = 0; i < shownClusters->count(); i++) {
+        SortableTable positionOfSpikes = SortableTable();
+        getDocument().data().spikePositions(shownClusters->at(i),positionOfSpikes);
+        int temp = (positionOfSpikes.nbOfColumns()-1)/nbSpkToDisplay;
+        if (temp>maxBatchIteration) maxBatchIteration = temp;
+    }
+    batchIteration = batchIteration + factor;
+    if (batchIteration>maxBatchIteration) batchIteration = maxBatchIteration;
+    if (batchIteration<0) batchIteration = 0;
+    if (batchIteration == previousBatchIteration) return;
+
+    if (batchIteration == 0 ){
+        mainWindow.previousBatchSwitch(true);
+    } else  mainWindow.previousBatchSwitch(false);
+
+    if (batchIteration >= maxBatchIteration){
+        mainWindow.nextBatchSwitch(true);
+    } else mainWindow.nextBatchSwitch(false);
+
+    emit updateBatchIteration(batchIteration);
 }

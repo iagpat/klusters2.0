@@ -1045,6 +1045,8 @@ viewwidget.h
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/viewwidget.h
 correlationview.h
 /home/drew/Desktop/klusters_mod/klusters-2.0.0/src/correlationview.h
+klustersdoc.h
+/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klustersdoc.h
 dockarea.h
 -
 

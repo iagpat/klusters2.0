@@ -124,6 +124,13 @@ public:
     */
     void updateCorrelogramViewVariables(int binSize,int timeWindow,bool isShoulderLine, Data::ScaleMode correlationScale);
     
+    void nextBatchSwitch(bool on_off){
+        mNextWaveformBatch->setDisabled(on_off);
+    }
+
+    void previousBatchSwitch(bool on_off){
+        mPreviousWaveformBatch->setDisabled(on_off);
+    }
 
 protected:
     /** queryExit is called by KDocMainWindow when the last window of the application is going to be closed during the closeEvent().
@@ -337,6 +344,7 @@ private Q_SLOTS:
    * waveformView is in sample mode.
    */
     void slotSpikesTodisplay(int nbSpikes){
+        qDebug()<< "klusters.h: slotSpikesTodisplay";
         if(!isInit){
             activeView()->setDisplayNbSpikes(static_cast<long>(nbSpikes));
         }
@@ -357,6 +365,22 @@ private Q_SLOTS:
     void slotUpdateMinSpikeDiff(double minSpikeDiff){
         if(!isInit){
             activeView()->setMinSpikeDiff(static_cast<double>(minSpikeDiff));
+        }
+    }
+
+    /**Go to the next batch of waveforms*/
+    void slotNextWaveformBatch(){
+        qDebug()<<"slotNextWaveformBatch";
+        if(!isInit){
+            activeView()->setWaveformBatch(1);
+        }
+    }
+
+    /**Go to the next batch of waveforms*/
+    void slotPreviousWaveformBatch(){
+        qDebug()<<"slotPreviousWaveformBatch";
+        if(!isInit){
+            activeView()->setWaveformBatch(-1);
         }
     }
 
@@ -567,6 +591,8 @@ private:
     QAction *mDecreaseChannelAmplitudes;
     QAction *mNextSpike;
     QAction *mPreviousSpike;
+    QAction *mNextWaveformBatch;
+    QAction *mPreviousWaveformBatch;
     QAction *mPrintAction;
     QAction *mImmediateSelection;
     QAction *mDelaySelection;
@@ -680,6 +706,7 @@ private:
 
     static const QString INITIAL_WAVEFORM_TIME_WINDOW;
     static const long DEFAULT_NB_SPIKES_DISPLAYED;
+    static const long DEFAULT_BATCH_ITERATION;
 
 
 

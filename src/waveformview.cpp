@@ -45,12 +45,12 @@ const int WaveformView::XMARGIN = 0;
 const int WaveformView::YMARGIN = 0;
 
 WaveformView::WaveformView(KlustersDoc& doc,KlustersView& view,const QColor& backgroundColor,int acquisitionGain,const QList<int>& positions,QStatusBar * statusBar,QWidget* parent,
-                           bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay,
+                           bool isTimeFrameMode,long start,long timeFrameWidth,long nbSpkToDisplay, long batchIteration,
                            bool overLay,bool mean, const char* name,int minSize, int maxSize, int windowTopLeft ,int windowBottomRight,
                            int border) :
     ViewWidget(doc,view,backgroundColor,statusBar,parent,name,minSize,maxSize,windowTopLeft,windowBottomRight,border,XMARGIN,YMARGIN)
   ,meanPresentation(mean),overLayPresentation(overLay),acquisitionGain(acquisitionGain),dataReady(true),
-    nbSpkToDisplay(nbSpkToDisplay),isZoomed(false),goingToDie(false){
+    nbSpkToDisplay(nbSpkToDisplay), batchIteration(batchIteration),isZoomed(false),goingToDie(false){
 
     //Set the default modes
     mode = ZOOM;
@@ -155,6 +155,8 @@ void WaveformView::singleColorUpdate(int clusterId,bool active){
 
 void WaveformView::askForWaveformInformation(int clusterId){
     //If the widget is not about to be deleted, request the data.
+    //if (batchIteration == 0) view.mainWindow.previousBatchSwitch(true);
+    qDebug()<<"askForWaveformInformation - clusterID = " << clusterId;
     if(!goingToDie){
         dataReady = false;
         //Create a thread to get the waveform data for that cluster.
@@ -165,6 +167,7 @@ void WaveformView::askForWaveformInformation(int clusterId){
 }
 
 void WaveformView::askForWaveformInformation(const QList<int> &clusterIds){
+    qDebug()<<"askForWaveformInformation - clusterIDs size = " << clusterIds.size();
     //If the widget is not about to be deleted, request the data.
     if(!goingToDie){
         dataReady = false;
@@ -655,6 +658,9 @@ void WaveformView::setTimeFrame(long start, long width){
 }
 
 void WaveformView::setDisplayNbSpikes(long nbSpikes){
+    if (nbSpkToDisplay != nbSpikes) batchIteration = 0;
+    //add stuff about fading
+
     nbSpkToDisplay =  nbSpikes;
     isZoomed = false;//Hack because all the tabs share the same data.
     drawContentsMode = REDRAW;
@@ -666,6 +672,17 @@ void WaveformView::setDisplayNbSpikes(long nbSpikes){
     }
 }
 
+void WaveformView::setWaveformBatch(long bchIteration){
+    batchIteration=  bchIteration;
+    isZoomed = false;//Hack because all the tabs share the same data.
+    drawContentsMode = REDRAW;
+
+    //The data have to be collected if need it and everything has to be redraw
+    if(!view.clusters().isEmpty()){
+        setCursor(Qt::WaitCursor);
+        askForWaveformInformation(view.clusters());
+    }
+}
 
 void WaveformView::drawClusterIds(QPainter& painter){
     QList<int> shownClusters;

@@ -22,7 +22,7 @@ static const uint qt_meta_data_WaveformView[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      26,   14, // methods
+      27,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -51,11 +51,12 @@ static const uint qt_meta_data_WaveformView[] = {
      691,   13,   13,   13, 0x0a,
      711,   13,   13,   13, 0x0a,
      740,  731,   13,   13, 0x0a,
-     770,   13,  765,   13, 0x0a,
-     789,   13,   13,   13, 0x0a,
-     815,  805,   13,   13, 0x0a,
-     855,  848,   13,   13, 0x0a,
-     922,  880,   13,   13, 0x0a,
+     778,  765,   13,   13, 0x0a,
+     806,   13,  801,   13, 0x0a,
+     825,   13,   13,   13, 0x0a,
+     851,  841,   13,   13, 0x0a,
+     891,  884,   13,   13, 0x0a,
+     958,  916,   13,   13, 0x0a,
 
        0        // eod
 };
@@ -84,6 +85,7 @@ static const char qt_meta_stringdata_WaveformView[] = {
     "setTimeFrame(long,long)\0gain\0setGain(int)\0"
     "increaseAmplitude()\0decreaseAmplitude()\0"
     "nbSpikes\0setDisplayNbSpikes(long)\0"
+    "bchIteration\0setWaveformBatch(long)\0"
     "bool\0isThreadsRunning()\0updateDrawing()\0"
     "positions\0setChannelPositions(QList<int>&)\0"
     "active\0clustersRenumbered(bool)\0"
@@ -118,12 +120,13 @@ void WaveformView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 18: _t->increaseAmplitude(); break;
         case 19: _t->decreaseAmplitude(); break;
         case 20: _t->setDisplayNbSpikes((*reinterpret_cast< long(*)>(_a[1]))); break;
-        case 21: { bool _r = _t->isThreadsRunning();
+        case 21: _t->setWaveformBatch((*reinterpret_cast< long(*)>(_a[1]))); break;
+        case 22: { bool _r = _t->isThreadsRunning();
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = _r; }  break;
-        case 22: _t->updateDrawing(); break;
-        case 23: _t->setChannelPositions((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
-        case 24: _t->clustersRenumbered((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 25: _t->print((*reinterpret_cast< QPainter(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
+        case 23: _t->updateDrawing(); break;
+        case 24: _t->setChannelPositions((*reinterpret_cast< QList<int>(*)>(_a[1]))); break;
+        case 25: _t->clustersRenumbered((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 26: _t->print((*reinterpret_cast< QPainter(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
         default: ;
         }
     }
@@ -161,9 +164,9 @@ int WaveformView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 26)
+        if (_id < 27)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 26;
+        _id -= 27;
     }
     return _id;
 }

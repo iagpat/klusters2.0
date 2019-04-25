@@ -134,7 +134,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
 
     QPalette palette;
     palette.setColor(backgroundRole(), backgroundColor);
-    palette.setColor(foregroundRole(), Qt::white);
+    palette.setColor(foregroundRole(), Qt::black);
     setPalette(palette);
 
     iconView = new ClusterPaletteWidget(this);
@@ -161,12 +161,7 @@ ClusterPalette::ClusterPalette(const QColor& backgroundColor,QWidget* parent,QSt
     int s;
     int v;
     backgroundColor.getHsv(&h,&s,&v);
-    QColor legendColor;
-    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
-        legendColor =  Qt::black;
-    else
-        legendColor =  Qt::white;
-
+    QColor legendColor =  Qt::black;
     palette.setColor(QPalette::Text, legendColor);
     palette.setColor(QPalette::HighlightedText, legendColor);
 
@@ -222,8 +217,10 @@ void ClusterPalette::updateClusterList(){
         painter.fillRect(0,0,12,12,clusterColors.color(i,ItemColors::BY_INDEX));
         painter.end();
         QString clusterText = QString::fromLatin1("%1").arg(clusterColors.itemId(i));
+        QString NBspikes = QString::number(doc->data().nbOfSpikes(clusterColors.itemId(i)));
 
         if(isInUserClusterInfoMode){
+            clusterText.append(" - ").append(NBspikes).append(" spikes");//NUmber of spikes in cluster
             if(clusterColors.itemId(i) == 0){
                 clusterText.append(" - ").append("artefact");
             } else if(clusterColors.itemId(i) == 1){
@@ -595,6 +592,8 @@ void ClusterPalette::showUserClusterInformation(int electrodeGroupId){
         clusterId = clusterColors.itemId(i);
 
         QString clusterText = iconView->item(i)->text();
+        QString NBspikes = QString::number(doc->data().nbOfSpikes(clusterId));
+        clusterText.append(" - ").append(NBspikes).append(" spikes");//NUmber of spikes in cluster
 
         if(clusterId == 0){
             clusterText.append(" - ").append("artefact");
@@ -683,10 +682,8 @@ void ClusterPalette::changeBackgroundColor(const QColor& color){
     color.getHsv(&h,&s,&v);
     QPalette palette;
     QColor legendColor;
-    if(s <= 80 && v >= 240 || (s <= 40 && v >= 220))
         legendColor = Qt::black;
-    else
-        legendColor = Qt::white;
+
     palette.setColor(QPalette::Text, legendColor);
     palette.setColor(QPalette::HighlightedText, legendColor);
 

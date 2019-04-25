@@ -3163,19 +3163,24 @@ src/CMakeFiles/klusters.dir/klustersxmlreader.cpp.o: /usr/include/qt4/QtXml/QDom
 src/CMakeFiles/klusters.dir/klustersxmlreader.cpp.o: /usr/include/qt4/QtXml/qdom.h
 src/CMakeFiles/klusters.dir/klustersxmlreader.cpp.o: config-klusters.h
 
+src/CMakeFiles/klusters.dir/main.cpp.o: ../src/dataprovider.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/baseframe.h
+src/CMakeFiles/klusters.dir/main.cpp.o: ../src/clustersprovider.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/clusteruserinformation.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/correlationview.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/data.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/klusters.h
+src/CMakeFiles/klusters.dir/main.cpp.o: ../src/klustersdoc.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/klustersview.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/main.cpp
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/pair.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/sortabletable.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/spinbox.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/timer.h
+src/CMakeFiles/klusters.dir/main.cpp.o: ../src/tracesprovider.h
 src/CMakeFiles/klusters.dir/main.cpp.o: ../src/viewwidget.h
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/klustersshared/array.h
+src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/klustersshared/channelcolors.h
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/klustersshared/dockarea.h
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/klustersshared/itemcolors.h
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/klustersshared/klusterrubberband.h
@@ -3187,6 +3192,7 @@ src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/Qt3Support/q3valuelist.
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtCore/QDebug
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtCore/QDir
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtCore/QEvent
+src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtCore/QFile
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtCore/QHash
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtCore/QList
 src/CMakeFiles/klusters.dir/main.cpp.o: /usr/include/qt4/QtCore/QMap
@@ -6079,16 +6085,21 @@ src/CMakeFiles/klusters.dir/tracewidget.cpp.o: /usr/include/qt4/QtGui/qwindowdef
 src/CMakeFiles/klusters.dir/tracewidget.cpp.o: /usr/include/qt4/QtGui/qwindowdefs_win.h
 src/CMakeFiles/klusters.dir/tracewidget.cpp.o: /usr/include/qt4/QtGui/qwmatrix.h
 
+src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/dataprovider.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/baseframe.h
+src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/clustersprovider.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/clusteruserinformation.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/correlationview.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/data.h
+src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/klustersdoc.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/klustersview.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/pair.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/sortabletable.h
+src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/tracesprovider.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/viewwidget.cpp
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: ../src/viewwidget.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/klustersshared/array.h
+src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/klustersshared/channelcolors.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/klustersshared/dockarea.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/klustersshared/itemcolors.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/klustersshared/klusterrubberband.h
@@ -6099,6 +6110,7 @@ src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/Qt3Support/q3cstr
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/Qt3Support/q3valuelist.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/QDebug
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/QEvent
+src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/QFile
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/QHash
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/QList
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/QMap
@@ -6148,6 +6160,7 @@ src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/qdatastrea
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/qdebug.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/qfeatures.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/qfile.h
+src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/qfileinfo.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/qglobal.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/qhash.h
 src/CMakeFiles/klusters.dir/viewwidget.cpp.o: /usr/include/qt4/QtCore/qiodevice.h

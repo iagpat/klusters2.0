@@ -430,7 +430,7 @@ void ClusterView::mouseReleaseEvent(QMouseEvent* event){
 }
 
 void ClusterView::mouseMoveEvent(QMouseEvent* e){
-    qDebug()<<"mouse move event in cluster view";
+    //qDebug()<<"mouse move event in cluster view";
     //Write the current coordinates in the statusbar.
     QPoint current = viewportToWorld(e->x(),e->y());
 

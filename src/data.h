@@ -753,7 +753,9 @@ private:
             else return nbTimeFrameSpikes;
         }
         dataType nbOfSpikesAsked() const {return nbSpikesAsked;}
+        long getBatchIterationAsked() const {return batchIterationAsked;}
         void setNbOfSpikesAsked(dataType nb) {nbSpikesAsked = nb;}
+        void setBatchIterationAsked(long batchIter) {batchIterationAsked = batchIter;}
         void setMode(WaveformMode waveformMode){mode = waveformMode;}
 
         virtual void setSize(dataType size,WaveformMode waveformMode) = 0;
@@ -763,7 +765,7 @@ private:
         virtual dataType getTimeFrameMean(dataType index) const  = 0;
         virtual dataType getSampleStDeviation(dataType index) const  = 0;
         virtual dataType getTimeFrameStDeviation(dataType index) const  = 0;
-        virtual void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay) = 0;
+        virtual void read(long batchIteration, SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay) = 0;
         //virtual void read2(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* resFile ,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff) = 0;
         virtual void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end) = 0;
         virtual void calculateMean(WaveformMode waveformMode) = 0;
@@ -775,6 +777,7 @@ private:
             timeEnd = endTime;
             nbPtsBySpike = data.nbChannels * data.nbSamplesInWaveform;
             nbSpikesAsked = 0;
+            batchIterationAsked = 0;
         }
 
     protected:
@@ -788,6 +791,7 @@ private:
         WaveformMode mode;
         int nbPtsBySpike;
         dataType nbSpikesAsked;
+        long batchIterationAsked;
     } ;
 
     template <class T>
@@ -841,7 +845,7 @@ private:
         dataType getTimeFrameStDeviation(dataType index) const {
             return static_cast<dataType>(timeFrameStDeviationTable[index]);
         }
-        void read(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* spikeFile,dataType nbSpkToDisplay);
+        void read(long batchIteration, SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* spikeFile,dataType nbSpkToDisplay);
         //void read2(SortableTable& positionOfSpikes,dataType currentSpikeIndex,FILE* resFile,FILE* spikeFile,dataType nbSpkToDisplay,dataType MinSpkDiff);
         void read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType& currentSpikeIndex,dataType end);
         void calculateMean(WaveformMode waveformMode = SAMPLE);
@@ -1028,8 +1032,8 @@ private:
   * @return the status, READY if the data have already been collected or the current collection is finish,
   * and IN_PROCESS if an other thread is already treating @p clusterId.
   */
-    Status getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay);
-    Status getSampleWaveform2Points(int clusterId,dataType nbSpkToDisplay, dataType MinSpkDiff);
+    Status getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay, long batchIteration);
+    Status getSampleWaveform2Points(int clusterId,dataType nbSpkToDisplay, dataType MinSpkDiff, long batchIteration);
 
 
     /**

@@ -66,6 +66,7 @@ extern int nbUndo;
 
 const QString KlustersApp::INITIAL_WAVEFORM_TIME_WINDOW = "30";
 const long KlustersApp::DEFAULT_NB_SPIKES_DISPLAYED = 100;
+const long KlustersApp::DEFAULT_BATCH_ITERATION = 0;
 const QString KlustersApp::INITIAL_CORRELOGRAMS_HALF_TIME_FRAME = "30";
 const QString KlustersApp::DEFAULT_BIN_SIZE = "1";
 const double KlustersApp::DEFAULT_MIN_SPIKE_DIFF = 1.0;
@@ -690,7 +691,7 @@ void KlustersApp::initSelectionBoxes(){
     spikesTodisplay->setMaximum(1);
     spikesTodisplay->setSingleStep(spikesTodisplayStep);
     spikesTodisplay->setFocusPolicy(Qt::StrongFocus);
-	 connect(spikesTodisplay,SIGNAL(valueChanged(int)),spikesTodisplay,SLOT(deselect()),Qt::QueuedConnection);
+    connect(spikesTodisplay,SIGNAL(valueChanged(int)),spikesTodisplay,SLOT(deselect()),Qt::QueuedConnection);
 
     spikesTodisplay->setObjectName("spikesTodisplay");
     //Enable to step the value from the highest value to the lowest value and vice versa
@@ -703,6 +704,16 @@ void KlustersApp::initSelectionBoxes(){
     spikesTodisplay->setMaximumSize(70,spikesTodisplay->maximumHeight());
     spikesTodisplayAction = paramBar->addWidget(spikesTodisplay);
     connect(spikesTodisplay, SIGNAL(valueChanged(int)),this, SLOT(slotSpikesTodisplay(int)));
+
+    //Create the ability to iterate through waveforms
+
+    mPreviousWaveformBatch = paramBar->addAction(tr("&Previous Waveform Batch"));
+    mPreviousWaveformBatch->setIcon(QIcon(":/icons/backCluster"));
+    connect(mPreviousWaveformBatch,SIGNAL(triggered()), this,SLOT(slotPreviousWaveformBatch()));
+
+    mNextWaveformBatch = paramBar->addAction(tr("&Next Waveform Batch"));
+    mNextWaveformBatch->setIcon(QIcon(":/icons/forwardCluster"));
+    connect(mNextWaveformBatch,SIGNAL(triggered()), this,SLOT(slotNextWaveformBatch()));
 
     //Create and initialize the spin box for the min spike diff
     minSpikeDiffBox = new QDoubleSpinBox(paramBar);
@@ -906,6 +917,9 @@ void KlustersApp::initDisplay(){
     featureXLabelAction->setVisible(true);
     spikesTodisplayAction->setVisible(true);
     spikesTodisplayLabelAction->setVisible(true);
+    mPreviousWaveformBatch->setVisible(true);
+    mNextWaveformBatch->setVisible(true);
+    mPreviousWaveformBatch->setDisabled(true);
     correlogramsHalfDuration->setText(INITIAL_CORRELOGRAMS_HALF_TIME_FRAME);
     correlogramsHalfDurationAction->setVisible(true);
     correlogramsHalfDurationLabelAction->setVisible(true);
@@ -949,7 +963,7 @@ void KlustersApp::initDisplay(){
         channelPositions.clear();
 
     KlustersView* view = new KlustersView(*this,*doc,backgroundColor,1,2,clusterList,KlustersView::OVERVIEW,mainDock,0,statusBar(),
-                                          displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,
+                                          displayTimeInterval,waveformsGain,channelPositions,false,0,timeWindow,DEFAULT_NB_SPIKES_DISPLAYED,DEFAULT_BATCH_ITERATION,
                                           false,false, DEFAULT_MIN_SPIKE_DIFF,DEFAULT_BIN_SIZE.toInt(), INITIAL_CORRELOGRAMS_HALF_TIME_FRAME.toInt() * 2 + 1,Data::MAX);
 
     mainDock = view;
@@ -990,6 +1004,8 @@ void KlustersApp::initDisplay(){
         startLabelAction->setVisible(true);
         spikesTodisplayAction->setVisible(false);
         spikesTodisplayLabelAction->setVisible(false);
+        mPreviousWaveformBatch->setVisible(false);
+        mNextWaveformBatch->setVisible(false);
     }
     else{
         durationAction->setVisible(false);
@@ -998,6 +1014,8 @@ void KlustersApp::initDisplay(){
         startLabelAction->setVisible(false);
         spikesTodisplayAction->setVisible(true);
         spikesTodisplayLabelAction->setVisible(true);
+        mPreviousWaveformBatch->setVisible(true);
+        mNextWaveformBatch->setVisible(true);
     }
 
     //Enable some actions now that a document is open (see the klustersui.rc file)
@@ -1051,6 +1069,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         long startingTime = 0;
         long timeFrameWidth = INITIAL_WAVEFORM_TIME_WINDOW.toLong();
         long nbSpkToDisplay = DEFAULT_NB_SPIKES_DISPLAYED;
+        long batchIteration = DEFAULT_BATCH_ITERATION;
         if(!isProcessWidget && activeView()->containsWaveformView()){
             overLay = activeView()->isOverLayPresentation();
             mean = activeView()->isMeanPresentation();
@@ -1061,6 +1080,7 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
                 timeFrameWidth = timeWindow;
             } else {
                 nbSpkToDisplay = spikesTodisplay->value();
+
             }
         }
 
@@ -1069,12 +1089,12 @@ void KlustersApp::createDisplay(KlustersView::DisplayType type)
         if(!isProcessWidget)
             view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,statusBar(),
                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
-                                    nbSpkToDisplay,overLay,mean,minSpikeDiff,sizeOfBin, correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
+                                    nbSpkToDisplay, batchIteration, overLay,mean,minSpikeDiff,sizeOfBin, correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked(),activeView()->getUndoList(),activeView()->getRedoList());
 
         else
             view = new KlustersView(*this,*doc,backgroundColor,XDimension,YDimension,clusterList,type,this,0,statusBar(),
                                     displayTimeInterval,waveformsGain,channelPositions,inTimeFrameMode,startingTime,timeFrameWidth,
-                                    nbSpkToDisplay, overLay,mean,minSpikeDiff,sizeOfBin, correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
+                                    nbSpkToDisplay, batchIteration, overLay,mean,minSpikeDiff,sizeOfBin, correlogramTimeWindow,scaleMode,line,activeView()->getStartingTime(),activeView()->getDuration(),showHideLabels->isChecked());
 
         view->setWindowTitle(displayName);
         tabsParent->addDockArea(view,displayType);
@@ -2182,6 +2202,8 @@ void KlustersApp::slotTabChange(int index){
                     startLabelAction->setVisible(true);
                     spikesTodisplayAction->setVisible(false);
                     spikesTodisplayLabelAction->setVisible(false);
+                    mPreviousWaveformBatch->setVisible(false);
+                    mNextWaveformBatch->setVisible(false);
                 }
                 else{
                     timeFrameMode->setChecked(false);
@@ -2192,6 +2214,8 @@ void KlustersApp::slotTabChange(int index){
                     spikesTodisplay->setValue(activeView->displayedNbSpikes());
                     spikesTodisplayAction->setVisible(true);
                     spikesTodisplayLabelAction->setVisible(true);
+                    mPreviousWaveformBatch->setVisible(true);
+                    mNextWaveformBatch->setVisible(true);
                 }
             }
             else{
@@ -2205,6 +2229,8 @@ void KlustersApp::slotTabChange(int index){
                 startLabelAction->setVisible(false);
                 spikesTodisplayAction->setVisible(false);
                 spikesTodisplayLabelAction->setVisible(false);
+                mPreviousWaveformBatch->setVisible(false);
+                mNextWaveformBatch->setVisible(false);
             }
 
             if(activeView->containsCorrelationView()){
@@ -2299,6 +2325,8 @@ void KlustersApp::slotTabChange(int index){
         startLabelAction->setVisible(false);
         spikesTodisplayAction->setVisible(false);
         spikesTodisplayLabelAction->setVisible(false);
+        mPreviousWaveformBatch->setVisible(false);
+        mNextWaveformBatch->setVisible(false);
         correlogramsHalfDurationAction->setVisible(false);
         correlogramsHalfDurationLabelAction->setVisible(false);
         binSizeBoxAction->setVisible(false);
@@ -2353,12 +2381,16 @@ void KlustersApp::slotTimeFrameMode(){
             startLabelAction->setVisible(true);
             spikesTodisplayAction->setVisible(false);
             spikesTodisplayLabelAction->setVisible(false);
+            mPreviousWaveformBatch->setVisible(false);
+            mNextWaveformBatch->setVisible(false);
             activeView()->setTimeFrameMode();
         }
         else{
             spikesTodisplay->setValue(activeView()->displayedNbSpikes());
             spikesTodisplayAction->setVisible(true);
             spikesTodisplayLabelAction->setVisible(true);
+            mPreviousWaveformBatch->setVisible(true);
+            mNextWaveformBatch->setVisible(true);
             durationAction->setVisible(false);
             durationLabelAction->setVisible(false);
             startAction->setVisible(false);
@@ -2384,6 +2416,8 @@ void KlustersApp::resetState(){
     featureXLabelAction->setVisible(false);
     spikesTodisplayAction->setVisible(false);
     spikesTodisplayLabelAction->setVisible(false);
+    mPreviousWaveformBatch->setVisible(false);
+    mNextWaveformBatch->setVisible(false);
     correlogramsHalfDurationAction->setVisible(false);
     correlogramsHalfDurationLabelAction->setVisible(false);
     binSizeBoxAction->setVisible(false);
@@ -2456,6 +2490,8 @@ void KlustersApp::slotUpdateParameterBar(){
     featureXLabelAction->setVisible(false);
     spikesTodisplayAction->setVisible(false);
     spikesTodisplayLabelAction->setVisible(false);
+    mPreviousWaveformBatch->setVisible(false);
+    mNextWaveformBatch->setVisible(false);
     correlogramsHalfDurationAction->setVisible(false);
     correlogramsHalfDurationLabelAction->setVisible(false);
     binSizeBoxAction->setVisible(false);
@@ -2482,6 +2518,8 @@ void KlustersApp::slotUpdateParameterBar(){
             else{
                 spikesTodisplayAction->setVisible(true);
                 spikesTodisplayLabelAction->setVisible(true);
+                mPreviousWaveformBatch->setVisible(true);
+                mNextWaveformBatch->setVisible(true);
             }
         }
 
@@ -2807,6 +2845,8 @@ void KlustersApp::widgetAddToDisplay(KlustersView::DisplayType displayType){
             spikesTodisplay->setValue(DEFAULT_NB_SPIKES_DISPLAYED);
             spikesTodisplayAction->setVisible(true);
             spikesTodisplayLabelAction->setVisible(true);
+            mPreviousWaveformBatch->setVisible(true);
+            mNextWaveformBatch->setVisible(true);
             break;
         case KlustersView::CORRELATIONS:
             slotStateChanged("correlationViewState");
@@ -2873,6 +2913,8 @@ void KlustersApp::widgetRemovedFromDisplay(KlustersView::DisplayType displayType
         startLabelAction->setVisible(false);
         spikesTodisplayAction->setVisible(false);
         spikesTodisplayLabelAction->setVisible(false);
+        mPreviousWaveformBatch->setVisible(false);
+        mNextWaveformBatch->setVisible(false);
         break;
     case KlustersView::CORRELATIONS:
         slotStateChanged("noCorrelationViewState");
@@ -2970,6 +3012,7 @@ void KlustersApp::slotShowPreviousCluster(){
         view->showPreviousCluster();
     }
 }
+
 
 void KlustersApp::slotSpikesDeleted(){
     //Update the browsing possibility of the traceView

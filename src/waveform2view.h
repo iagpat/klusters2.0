@@ -57,7 +57,7 @@ public:
     friend class Waveform2Thread;
 
     Waveform2View(KlustersDoc& doc, KlustersView& view, const QColor &backgroundColor, int acquisitionGain, const QList<int> &positions, QStatusBar * statusBar, QWidget* parent=0,
-                 bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay =0, bool overLay = false, bool mean = false, double minSpikeDiff =1,
+                 bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay =0, long batchIteration = 0, bool overLay = false, bool mean = false, double minSpikeDiff =1,
                  const char* name=0, int minSize = 50, int maxSize = 4000, int windowTopLeft = -500,
                  int windowBottomRight = 1001, int border = 0);
     ~Waveform2View();
@@ -213,6 +213,8 @@ public Q_SLOTS:
     /**Increase of the number of samples display in the sample mode.
   */
     void setDisplayNbSpikes(long nbSpikes);
+
+    void setWaveformBatch(long bchIteration);
 
     void setMinSpikeDiff(double MinSpkDiff);
 
@@ -389,6 +391,8 @@ private:
 
     /**The number of spikes to display in sample mode.*/
     long nbSpkToDisplay;
+
+    long batchIteration;
 
     double minSpikeDiff;
 

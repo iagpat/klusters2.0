@@ -53,7 +53,7 @@ void WaveformThread::run(){
         if(waveformView.presentationMode == WaveformView::SAMPLE){
             if(treatSingleCluster){
                 if(!haveToStopProcessing){
-                    Data::Status status = data.getSampleWaveformPoints(clusterId,waveformView.nbSpkToDisplay);
+                    Data::Status status = data.getSampleWaveformPoints(clusterId,waveformView.nbSpkToDisplay, waveformView.batchIteration);
                     if(status == Data::NOT_AVAILABLE){
                         //Send an event to the waveformView to let it know that the data requested are not available.
                         NoWaveformDataEvent* event = noWaveformDataEvent();
@@ -64,7 +64,7 @@ void WaveformThread::run(){
                         while(true){
                             if(haveToStopProcessing) break;
                             sleep(sleepingAmount);
-                            status = data.getSampleWaveformPoints(clusterId,waveformView.nbSpkToDisplay);
+                            status = data.getSampleWaveformPoints(clusterId,waveformView.nbSpkToDisplay, waveformView.batchIteration);
                             if(status == Data::READY) break;
                             else if(status == Data::NOT_AVAILABLE){
                                 //Send an event to the waveformView to let it know that the data requested are not available.
@@ -83,12 +83,12 @@ void WaveformThread::run(){
                     QList<int>::iterator end(clusterIds.end());
                     for(iterator = clusterIds.begin(); iterator != end; ++iterator){
                         if(!haveToStopProcessing){
-                            Data::Status status = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay);
+                            Data::Status status = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay,waveformView.batchIteration);
                             //If the data for one cluster is not available, skip it (do not send an event to the waveformView)
                             if(status == Data::NOT_AVAILABLE)
                                 continue;
                             else if(status == Data::IN_PROCESS)
-                                while(!haveToStopProcessing && (data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay) == Data::IN_PROCESS))
+                                while(!haveToStopProcessing && (data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay, waveformView.batchIteration) == Data::IN_PROCESS))
                                 {
                                     sleep(sleepingAmount);
                                 }
@@ -159,7 +159,7 @@ void WaveformThread::run(){
                 if(!haveToStopProcessing){
                     Data::Status status = data.calculateSampleMean(clusterId,waveformView.nbSpkToDisplay);
                     if(status == Data::NOT_AVAILABLE && !haveToStopProcessing){
-                        Data::Status dataStatus = data.getSampleWaveformPoints(clusterId,waveformView.nbSpkToDisplay);
+                        Data::Status dataStatus = data.getSampleWaveformPoints(clusterId,waveformView.nbSpkToDisplay, waveformView.batchIteration);
                         if(dataStatus == Data::NOT_AVAILABLE){
                             //Send an event to the waveformView to let it know that the data requested are not available.
                             NoWaveformDataEvent* event = noWaveformDataEvent();
@@ -170,7 +170,7 @@ void WaveformThread::run(){
                             while(true){
                                 if(haveToStopProcessing) break;
                                 sleep(sleepingAmount);
-                                dataStatus = data.getSampleWaveformPoints(clusterId,waveformView.nbSpkToDisplay);
+                                dataStatus = data.getSampleWaveformPoints(clusterId,waveformView.nbSpkToDisplay, waveformView.batchIteration);
                                 if(dataStatus == Data::READY) break;
                                 else if(dataStatus == Data::NOT_AVAILABLE){
                                     //Send an event to the waveformView to let it know that the data requested are not available.
@@ -219,7 +219,7 @@ void WaveformThread::run(){
                         if(!haveToStopProcessing){
                             Data::Status status = data.calculateSampleMean(*iterator,waveformView.nbSpkToDisplay);
                             if(status == Data::NOT_AVAILABLE && !haveToStopProcessing){
-                                Data::Status dataStatus = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay);
+                                Data::Status dataStatus = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay, waveformView.batchIteration);
 
                                 //If the data for one cluster is not available, skip it (do not send an event to the waveformView)
                                 if(dataStatus == Data::NOT_AVAILABLE) continue;
@@ -240,7 +240,7 @@ void WaveformThread::run(){
                                         }
                                         else{
                                             sleep(sleepingAmount);
-                                            dataStatus = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay);
+                                            dataStatus = data.getSampleWaveformPoints(*iterator,waveformView.nbSpkToDisplay, waveformView.batchIteration);
                                             if(dataStatus == Data::NOT_AVAILABLE)
                                                 break;
                                         }

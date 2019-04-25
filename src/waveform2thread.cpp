@@ -55,7 +55,7 @@ void Waveform2Thread::run(){
         if(waveform2View.presentationMode == Waveform2View::SAMPLE){
             if(treatSingleCluster){
                 if(!haveToStopProcessing){
-                    Data::Status status = data.getSampleWaveform2Points(clusterId,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff);
+                    Data::Status status = data.getSampleWaveform2Points(clusterId,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff, waveform2View.batchIteration);
                     if(status == Data::NOT_AVAILABLE){
                         //Send an event to the waveform2View to let it know that the data requested are not available.
                         NoWaveform2DataEvent* event = noWaveform2DataEvent();
@@ -66,7 +66,7 @@ void Waveform2Thread::run(){
                         while(true){
                             if(haveToStopProcessing) break;
                             sleep(sleepingAmount);
-                            status = data.getSampleWaveform2Points(clusterId,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff);
+                            status = data.getSampleWaveform2Points(clusterId,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff, waveform2View.batchIteration);
                             if(status == Data::READY) break;
                             else if(status == Data::NOT_AVAILABLE){
                                 //Send an event to the waveform2View to let it know that the data requested are not available.
@@ -85,12 +85,12 @@ void Waveform2Thread::run(){
                     QList<int>::iterator end(clusterIds.end());
                     for(iterator = clusterIds.begin(); iterator != end; ++iterator){
                         if(!haveToStopProcessing){
-                            Data::Status status = data.getSampleWaveform2Points(*iterator,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff);
+                            Data::Status status = data.getSampleWaveform2Points(*iterator,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff, waveform2View.batchIteration);
                             //If the data for one cluster is not available, skip it (do not send an event to the waveform2View)
                             if(status == Data::NOT_AVAILABLE)
                                 continue;
                             else if(status == Data::IN_PROCESS)
-                                while(!haveToStopProcessing && (data.getSampleWaveform2Points(*iterator,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff) == Data::IN_PROCESS))
+                                while(!haveToStopProcessing && (data.getSampleWaveform2Points(*iterator,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff, waveform2View.batchIteration) == Data::IN_PROCESS))
                                 {
                                     sleep(sleepingAmount);
                                 }
@@ -161,7 +161,7 @@ void Waveform2Thread::run(){
                 if(!haveToStopProcessing){
                     Data::Status status = data.calculateSampleMean(clusterId,waveform2View.nbSpkToDisplay);
                     if(status == Data::NOT_AVAILABLE && !haveToStopProcessing){
-                        Data::Status dataStatus = data.getSampleWaveform2Points(clusterId,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff);
+                        Data::Status dataStatus = data.getSampleWaveform2Points(clusterId,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff, waveform2View.batchIteration);
                         if(dataStatus == Data::NOT_AVAILABLE){
                             //Send an event to the waveform2View to let it know that the data requested are not available.
                             NoWaveform2DataEvent* event = noWaveform2DataEvent();
@@ -172,7 +172,7 @@ void Waveform2Thread::run(){
                             while(true){
                                 if(haveToStopProcessing) break;
                                 sleep(sleepingAmount);
-                                dataStatus = data.getSampleWaveform2Points(clusterId,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff);
+                                dataStatus = data.getSampleWaveform2Points(clusterId,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff, waveform2View.batchIteration);
                                 if(dataStatus == Data::READY) break;
                                 else if(dataStatus == Data::NOT_AVAILABLE){
                                     //Send an event to the waveform2View to let it know that the data requested are not available.
@@ -221,7 +221,7 @@ void Waveform2Thread::run(){
                         if(!haveToStopProcessing){
                             Data::Status status = data.calculateSampleMean(*iterator,waveform2View.nbSpkToDisplay);
                             if(status == Data::NOT_AVAILABLE && !haveToStopProcessing){
-                                Data::Status dataStatus = data.getSampleWaveform2Points(*iterator,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff);
+                                Data::Status dataStatus = data.getSampleWaveform2Points(*iterator,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff, waveform2View.batchIteration);
 
                                 //If the data for one cluster is not available, skip it (do not send an event to the waveform2View)
                                 if(dataStatus == Data::NOT_AVAILABLE) continue;
@@ -242,7 +242,7 @@ void Waveform2Thread::run(){
                                         }
                                         else{
                                             sleep(sleepingAmount);
-                                            dataStatus = data.getSampleWaveform2Points(*iterator,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff);
+                                            dataStatus = data.getSampleWaveform2Points(*iterator,waveform2View.nbSpkToDisplay, waveform2View.minSpikeDiff, waveform2View.batchIteration);
                                             if(dataStatus == Data::NOT_AVAILABLE)
                                                 break;
                                         }
@@ -388,8 +388,6 @@ void Waveform2Thread::getMean(Waveform2View::PresentationMode mode){
 }
 
 void Waveform2Thread::getMean(const QList<int>& clusterIds,Waveform2View::PresentationMode mode){
-
-
     meanRequested = true;
     this->clusterIds = clusterIds;
     treatSingleCluster = false;

@@ -22,7 +22,7 @@ static const uint qt_meta_data_KlustersApp[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      86,   14, // methods
+      88,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -93,29 +93,31 @@ static const uint qt_meta_data_KlustersApp[] = {
     1499,   12,   12,   12, 0x08,
     1532, 1519,   12,   12, 0x08,
     1563,   12,   12,   12, 0x08,
-    1599,   12,   12,   12, 0x08,
-    1635,   12,   12,   12, 0x08,
-    1649,   12,   12,   12, 0x08,
-    1666,   12,   12,   12, 0x08,
+    1587,   12,   12,   12, 0x08,
+    1615,   12,   12,   12, 0x08,
+    1651,   12,   12,   12, 0x08,
     1687,   12,   12,   12, 0x08,
-    1706,   12,   12,   12, 0x08,
-    1730,   12,   12,   12, 0x08,
-    1746,   12,   12,   12, 0x08,
-    1766,   12,   12,   12, 0x08,
+    1701,   12,   12,   12, 0x08,
+    1718,   12,   12,   12, 0x08,
+    1739,   12,   12,   12, 0x08,
+    1758,   12,   12,   12, 0x08,
     1782,   12,   12,   12, 0x08,
-    1804, 1802,   12,   12, 0x08,
-    1848,   12,   12,   12, 0x08,
-    1874,   12,   12,   12, 0x08,
-    1896,   12,   12,   12, 0x08,
-    1931,   12,   12,   12, 0x08,
-    1966,   12,   12,   12, 0x08,
+    1798,   12,   12,   12, 0x08,
+    1818,   12,   12,   12, 0x08,
+    1834,   12,   12,   12, 0x08,
+    1856, 1854,   12,   12, 0x08,
+    1900,   12,   12,   12, 0x08,
+    1926,   12,   12,   12, 0x08,
+    1948,   12,   12,   12, 0x08,
     1983,   12,   12,   12, 0x08,
-    2005,   12,   12,   12, 0x08,
-    2031,   12,   12,   12, 0x08,
-    2051,   12,   12,   12, 0x08,
-    2084,   12,   12,   12, 0x08,
-    2096,   12,   12,   12, 0x08,
-    2110,   12,   12,   12, 0x08,
+    2018,   12,   12,   12, 0x08,
+    2035,   12,   12,   12, 0x08,
+    2057,   12,   12,   12, 0x08,
+    2083,   12,   12,   12, 0x08,
+    2103,   12,   12,   12, 0x08,
+    2136,   12,   12,   12, 0x08,
+    2148,   12,   12,   12, 0x08,
+    2162,   12,   12,   12, 0x08,
 
        0        // eod
 };
@@ -164,6 +166,8 @@ static const char qt_meta_stringdata_KlustersApp[] = {
     "slotUpdateCorrelogramsHalfDuration()\0"
     "slotUpdateBinSize()\0minSpikeDiff\0"
     "slotUpdateMinSpikeDiff(double)\0"
+    "slotNextWaveformBatch()\0"
+    "slotPreviousWaveformBatch()\0"
     "slotIncreaseCorrelogramsAmplitude()\0"
     "slotDecreaseCorrelogramsAmplitude()\0"
     "slotNoScale()\0slotScaleByMax()\0"
@@ -252,30 +256,32 @@ void KlustersApp::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         case 59: _t->slotUpdateCorrelogramsHalfDuration(); break;
         case 60: _t->slotUpdateBinSize(); break;
         case 61: _t->slotUpdateMinSpikeDiff((*reinterpret_cast< double(*)>(_a[1]))); break;
-        case 62: _t->slotIncreaseCorrelogramsAmplitude(); break;
-        case 63: _t->slotDecreaseCorrelogramsAmplitude(); break;
-        case 64: _t->slotNoScale(); break;
-        case 65: _t->slotScaleByMax(); break;
-        case 66: _t->slotScaleByShouler(); break;
-        case 67: _t->slotShoulderLine(); break;
-        case 68: _t->slotUpdateErrorMatrix(); break;
-        case 69: _t->slotSelectAll(); break;
-        case 70: _t->slotSelectAllWO01(); break;
-        case 71: _t->slotRecluster(); break;
-        case 72: _t->slotStopRecluster(); break;
-        case 73: _t->slotProcessExited((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QProcess::ExitStatus(*)>(_a[2]))); break;
-        case 74: _t->slotOutputTreatmentOver(); break;
-        case 75: _t->renameActiveDisplay(); break;
-        case 76: _t->slotIncreaseAllChannelsAmplitude(); break;
-        case 77: _t->slotDecreaseAllChannelsAmplitude(); break;
-        case 78: _t->slotShowLabels(); break;
-        case 79: _t->slotShowNextCluster(); break;
-        case 80: _t->slotShowPreviousCluster(); break;
-        case 81: _t->slotSpikesDeleted(); break;
-        case 82: _t->slotClusterInformationModified(); break;
-        case 83: _t->slotAbout(); break;
-        case 84: _t->slotHanbook(); break;
-        case 85: _t->slotSaveRecentFiles(); break;
+        case 62: _t->slotNextWaveformBatch(); break;
+        case 63: _t->slotPreviousWaveformBatch(); break;
+        case 64: _t->slotIncreaseCorrelogramsAmplitude(); break;
+        case 65: _t->slotDecreaseCorrelogramsAmplitude(); break;
+        case 66: _t->slotNoScale(); break;
+        case 67: _t->slotScaleByMax(); break;
+        case 68: _t->slotScaleByShouler(); break;
+        case 69: _t->slotShoulderLine(); break;
+        case 70: _t->slotUpdateErrorMatrix(); break;
+        case 71: _t->slotSelectAll(); break;
+        case 72: _t->slotSelectAllWO01(); break;
+        case 73: _t->slotRecluster(); break;
+        case 74: _t->slotStopRecluster(); break;
+        case 75: _t->slotProcessExited((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QProcess::ExitStatus(*)>(_a[2]))); break;
+        case 76: _t->slotOutputTreatmentOver(); break;
+        case 77: _t->renameActiveDisplay(); break;
+        case 78: _t->slotIncreaseAllChannelsAmplitude(); break;
+        case 79: _t->slotDecreaseAllChannelsAmplitude(); break;
+        case 80: _t->slotShowLabels(); break;
+        case 81: _t->slotShowNextCluster(); break;
+        case 82: _t->slotShowPreviousCluster(); break;
+        case 83: _t->slotSpikesDeleted(); break;
+        case 84: _t->slotClusterInformationModified(); break;
+        case 85: _t->slotAbout(); break;
+        case 86: _t->slotHanbook(); break;
+        case 87: _t->slotSaveRecentFiles(); break;
         default: ;
         }
     }
@@ -313,9 +319,9 @@ int KlustersApp::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 86)
+        if (_id < 88)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 86;
+        _id -= 88;
     }
     return _id;
 }

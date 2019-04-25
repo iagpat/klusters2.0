@@ -2358,7 +2358,8 @@ bool Data::spikePositions(int clusterId,SortableTable& subsetTable){
     return true;
 }
 
-Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDisplay, dataType MinSpkDiff){
+Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDisplay, dataType MinSpkDiff, long batchIteration){
+    qDebug()<<"Data::Status Data::getSampleWaveform2Points: batch iteration = " << batchIteration;
 
     //If the cluster has been suppress after the thread calling this function has been launched
     //return this information that the data are not available.
@@ -2377,7 +2378,8 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
         if(status == IN_PROCESS)return IN_PROCESS;
         waveforms2 = waveformDict[clusterIdString];
         //status == READY with the same number of spikes to present
-        if((waveforms2->nbOfSpikesAsked() == nbSpkToDisplay) && (status == READY))return READY;
+        qDebug()<<"previous batch iteration = " << waveforms2->getBatchIterationAsked();
+        if((waveforms2->nbOfSpikesAsked() == nbSpkToDisplay) && (status == READY) && (waveforms2->getBatchIterationAsked() == batchIteration))return READY;
         //status == READY with a different number of spikes to present, recollect the data
         mutex.lock();
         waveformStatusMap[clusterId].setSampleStatus(IN_PROCESS);
@@ -2401,6 +2403,7 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
             return NOT_AVAILABLE;
         }
         waveforms2->setNbOfSpikesAsked(nbSpkToDisplay);
+        waveforms2->setBatchIterationAsked(batchIteration);
         //Get the spikes information
         nbSpikesOfCluster = positionOfSpikes.nbOfColumns();
         waveforms2->setSize(nbSpikesOfCluster,SAMPLE);
@@ -2423,6 +2426,7 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
         }
 
         waveforms2->setNbOfSpikesAsked(nbSpkToDisplay);
+        waveforms2->setBatchIterationAsked(batchIteration);
         //Get the spikes information
         nbSpikesOfCluster = positionOfSpikes.nbOfColumns();
 
@@ -2440,7 +2444,7 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
         // OPEN_ERROR;  ///The openning pb has to be taken into account
     }
     //read and store the data
-    waveforms2->read(positionOfSpikes,nbSpikesOfCluster,spikeFile,nbSpkToDisplay);
+    waveforms2->read(batchIteration, positionOfSpikes,nbSpikesOfCluster,spikeFile,nbSpkToDisplay);
     fclose(spikeFile);
     fclose(resFile);
 
@@ -2463,8 +2467,8 @@ Data::Status Data::getSampleWaveform2Points(int clusterId,dataType nbSpkToDispla
     }
 }
 
-Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay){
-
+Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay, long batchIteration){
+    qDebug()<<"Data::Status Data::getSampleWaveformPoints: batch iteration = " << batchIteration;
     //If the cluster has been suppress after the thread calling this function has been launched
     //return this information that the data are not available.
     if(!clusterInfoMap->contains(static_cast<dataType>(clusterId)))return NOT_AVAILABLE;
@@ -2483,7 +2487,8 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
         if(status == IN_PROCESS)return IN_PROCESS;
         waveforms = waveformDict[clusterIdString];
         //status == READY with the same number of spikes to present
-        if((waveforms->nbOfSpikesAsked() == nbSpkToDisplay) && (status == READY))return READY;
+        qDebug()<<"previous batch iteration = " << waveforms->getBatchIterationAsked();
+        if((waveforms->nbOfSpikesAsked() == nbSpkToDisplay) && (status == READY) && (waveforms->getBatchIterationAsked() == batchIteration))return READY;
         //status == READY with a different number of spikes to present, recollect the data
         mutex.lock();
         waveformStatusMap[clusterId].setSampleStatus(IN_PROCESS);
@@ -2507,6 +2512,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
             return NOT_AVAILABLE;
         }
         waveforms->setNbOfSpikesAsked(nbSpkToDisplay);
+        waveforms->setBatchIterationAsked(batchIteration);
         //Get the spikes information
         nbSpikesOfCluster = positionOfSpikes.nbOfColumns();
         waveforms->setSize(nbSpikesOfCluster,SAMPLE);
@@ -2529,6 +2535,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
         }
 
         waveforms->setNbOfSpikesAsked(nbSpkToDisplay);
+        waveforms->setBatchIterationAsked(batchIteration);
         //Get the spikes information
         nbSpikesOfCluster = positionOfSpikes.nbOfColumns();
 
@@ -2542,7 +2549,7 @@ Data::Status Data::getSampleWaveformPoints(int clusterId,dataType nbSpkToDisplay
     }
 
     //read and store the data
-    waveforms->read(positionOfSpikes,nbSpikesOfCluster,spikeFile,nbSpkToDisplay);
+    waveforms->read(batchIteration, positionOfSpikes,nbSpikesOfCluster,spikeFile,nbSpkToDisplay);
     fclose(spikeFile);
 
     //If the cluster has been suppress or modified after the thread calling this function has been launched
@@ -2717,8 +2724,8 @@ void Data::WaveformData<T>::setSize(dataType size,WaveformMode waveformMode){
 
 
 template <class T>
-void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay){
-    qDebug()<< "sampleSpikesTable1 = " << &sampleSpikesTable ;
+void Data::WaveformData<T>::read(long batchIteration, SortableTable& positionOfSpikes,dataType nbSpikesOfCluster,FILE* spikeFile,dataType nbSpkToDisplay){
+    qDebug()<<"Data::WaveformData<T>::read batchIteration = " << batchIteration;
     //Show nbSpkToDisplay spikes or all the spikes if nbSpikesOfCluster < nbSpkToDisplay
     if(nbSpikesOfCluster < nbSpkToDisplay){
         dataType max = nbSpikesOfCluster +1;
@@ -2736,27 +2743,39 @@ void Data::WaveformData<T>::read(SortableTable& positionOfSpikes,dataType nbSpik
     //If there is only one spike to show, take the first one
     else if(nbSpkToDisplay == 1){
         //go to the spike position
-        dataType currentSpikePosition = (positionOfSpikes(1,1) - 1) * nbPtsBySpike ;
+        dataType currentSpikePosition = (positionOfSpikes(1,1+batchIteration) - 1) * nbPtsBySpike ;
         fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
         // copy the spikes into spikePoints.
         fread(&(sampleSpikesTable[0]),sizeof(T),nbPtsBySpike,spikeFile);
         nbSampleSpikes = 1;
     }
     else{
+        //factor = number of spikes in a cluster / number of spikes to display
+        //example: if the cluster has 188 spikes and you ask to display 100, then the factor is 1.88
+        //include a new variable to iterate through spikes
         float factor = static_cast<float>(static_cast<float>(nbSpikesOfCluster - 1) / static_cast<float>(nbSpkToDisplay - 1));
         dataType position = 0;
-        dataType max = nbSpkToDisplay +1;
-        float floatSpkIndice = 1;
-        dataType spkIndice;
-        for(float i = 1; i < max; ++i){
-            spkIndice = static_cast<dataType>(floatSpkIndice + 0.5);
+        if (batchIteration > (nbSpikesOfCluster/nbSpkToDisplay)) batchIteration = (nbSpikesOfCluster/nbSpkToDisplay);
+        float floatSpkIndice = 1+batchIteration;//this might cause a segfault
+        qDebug()<< "batchIteration = " << batchIteration;
+        for(float i = 1; i < nbSpkToDisplay +1; ++i){
             //go to the spike position
-            dataType currentSpikePosition = (positionOfSpikes(1,spkIndice) - 1) * nbPtsBySpike ;
+            if ((long)(floatSpkIndice+0.5)>nbSpikesOfCluster) floatSpkIndice = 2+batchIteration; //If we run out of spikes, go back to the beginning.
+            dataType currentSpikePosition = (positionOfSpikes(1,static_cast<dataType>(floatSpkIndice + 0.5)) - 1) * nbPtsBySpike ;
+            //qDebug()<< "cureentSpikePosition = " << (long)(floatSpkIndice+0.5);
+            //navigate to the currentSpikePosition relative to the begining of the file
             fseeko64(spikeFile,currentSpikePosition * sizeof(T),SEEK_SET);
-            // copy the spikes into spikePoints.
+            //sampleSpikesTable is a buffer where the spikes are stored. fread will reak the spike file at whatever point it is
+            //and it will store an entire spike into the samplesSpikeTable
             fread(&(sampleSpikesTable[position]),sizeof(T),nbPtsBySpike,spikeFile);
+            //qDebug() << "position = " << position ;
+            //This position variable just keeps track of where in the sampleSpikesTable we shall write. Making sure we dont overwrite the data.
             position += nbPtsBySpike;
+            //this nbSampleSpikes global variable keeps track of how many spikes we have stored
             ++nbSampleSpikes;
+            //qDebug() << "nbSampleSpikes = " << nbSampleSpikes;
+            //qDebug() << "floatSpkIndice = " << static_cast<dataType>(floatSpkIndice + 0.5);
+            //factor is 1.88 in our example. So increase the floatSpkIndice by 1.88
             floatSpkIndice += factor;
         }
     }

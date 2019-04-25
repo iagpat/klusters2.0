@@ -37,6 +37,7 @@
 #include "data.h"
 #include "viewwidget.h"
 #include "correlationview.h"
+#include "klustersdoc.h"
 #include <dockarea.h>
 
 
@@ -101,7 +102,7 @@ public:
      */
     KlustersView(KlustersApp& mainWindow, KlustersDoc& doc, const QColor& backgroundColor, int initialDimensionX, int initialDdimensionY,
                  QList<int>* initialClusterList, DisplayType type, QWidget* parent, const char *name, QStatusBar * statusBar, int timeInterval, int maxAmplitude,
-                 QList<int> positions, bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay = 0, bool overLay = false,
+                 QList<int> positions, bool isTimeFrameMode = false, long start = 0, long timeFrameWidth = 0, long nbSpkToDisplay = 0, long batchIteration = 0, bool overLay = false,
                  bool mean = false, double minSpike = 1, int binSize = 0, int correlationTimeFrame = 0, Data::ScaleMode scale = Data::MAX, bool shoulderLine = true,
                  long startingTime = 0, long duration = 100, bool labelsDisplay = false, QList< QList<int>* > undoList = QList< QList<int>* >(), QList< QList<int>* > redoList = QList< QList<int>* >());
 
@@ -440,15 +441,14 @@ public:
   * mode is sample.
   * @param nbSpikes number of spikes to display.
   */
-    void setDisplayNbSpikes(int nbSpikes){
-        nbSpkToDisplay = nbSpikes;
-        emit updateDisplayNbSpikes(nbSpikes);
-    }
+    void setDisplayNbSpikes(int nbSpikes);
 
     void setMinSpikeDiff(double MinSpkDiff){
         minSpikeDiff = MinSpkDiff;
         emit updateMinSpikeDiff(MinSpkDiff);
     }
+
+    void setWaveformBatch(long factor);
 
     /**Returns the number of spikes displayed in the Waveform View, if any, when the presentation mode is sample.
   * @return number of spikes displayed.
@@ -716,6 +716,7 @@ Q_SIGNALS:
     void decreaseAmplitude();
     void updateDisplayNbSpikes(long nbSpikes);
     void updateMinSpikeDiff(double MinSpkDiff);
+    void updateBatchIteration(long batchIteration);
     void increaseAmplitudeofCorrelograms();
     void decreaseAmplitudeofCorrelograms();
     void noScale();
@@ -835,6 +836,9 @@ private:
 
     /*Minimus distance between spikes*/
     double minSpikeDiff;
+
+    /*Variable used to iterate through spikes*/
+    long batchIteration;
 
     /**Width of the time frame to use to compute the correlograms.*/
     int correlogramTimeFrame;
