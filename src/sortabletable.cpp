@@ -19,7 +19,7 @@
 
 //C include files
 #include <cstring>
-
+//the sortable table sometimes give us issues
 
 const dataType SortableTable::kSMALL_ENOUGH = 15;
 

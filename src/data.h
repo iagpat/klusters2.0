@@ -1168,6 +1168,7 @@ public:
         void setMeanAvailable(bool available){meanAvailable = available;}
         bool isMeanAvailable(){return meanAvailable;}
         virtual dataType nextSpike(){return 0;}
+        virtual dataType nextSpike(int,Data&,long&){return 0;}
         virtual dataType nextViableSpike(int, Data&, dataType, bool&, long&){return 0;}
         virtual dataType nextMeanValue(){return 0;}
         virtual dataType nextViableMeanValue(int, Data&, dataType){return 0;}
@@ -1254,6 +1255,14 @@ public:
     public:
         ~SampleWaveformIterator(){}
         dataType nextSpike(){
+            ++spikesIndex;
+            return - static_cast<dataType>(waveforms->getSample(spikesIndex));
+        }
+        dataType nextSpike(int cluster_number,Data& data, long &spikeNB){
+            SortableTable spikesOfCluster = SortableTable();
+            data.spikePositions(cluster_number,spikesOfCluster);
+            long spikeNumber = 1 + (1 + spikesIndex) / (data.getCurrentChannels().count()*data.getNbSamplesInWaveform());
+            spikeNB = spikesOfCluster(1,spikeNumber);//THIS IS THE OVERALL SPIKE NUMBER
             ++spikesIndex;
             return - static_cast<dataType>(waveforms->getSample(spikesIndex));
         }

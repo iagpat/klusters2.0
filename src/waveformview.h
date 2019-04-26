@@ -129,7 +129,7 @@ public Q_SLOTS:
     /**Changes the current mode, call by a selection of a tool
   * @param selectedMode new mode of drawing (selection or zoom)
   */
-    inline void setMode(BaseFrame::Mode selectedMode){}
+    void setMode(BaseFrame::Mode selectedMode);
 
     /**
   * Updates the clusters which have been modified by the suppression of spikes
@@ -272,6 +272,8 @@ protected:
   * @param event mouse release event.
   */
     void mouseReleaseEvent(QMouseEvent* event);
+    void mousePressEvent(QMouseEvent* event);
+    void mouseMoveEvent(QMouseEvent* event);
 
     /**The view responds to a resize event.
   * The waveforms are retrieve in case the data have changed (an other view has changed its parameters)
@@ -323,6 +325,9 @@ private:
 
     /**The width border*/
     int widthBorder;
+
+    /**The voltage selection cursor*/
+    QCursor voltageSelectionCursor;
 
     /**The height border*/
     int heightBorder;
@@ -395,6 +400,21 @@ private:
 
     /**True if the view has been zoomed, false ohterwise.*/
     bool isZoomed;
+
+    /**Voltage selection polygon */
+    QPolygon selectionPolygon;
+
+    /**In this 2 dimensional list I am storing to polygons drawn for later comparison.
+       The first dimension correponds to the viable spike index and the second corresponds to the channels number*/
+    QVector<QVector<QPolygon> > listComparePolygons;
+
+    /**In this list I am storing the corresponding spike indices of listComparePolygons*/
+    QList<long> listCorresponingSpikes;
+    QList<long> listCorresponingClusters;
+
+    //THe following two lists contain the spikes that were selected through the voltage selection method and their clusters
+    QList<long> listSelectedMSDSpikes;
+    QList<long> listSelectedMSDClusters;
 
     /**True if the widget is about to be deleted, false otherwise.*/
     bool goingToDie;

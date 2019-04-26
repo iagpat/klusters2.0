@@ -564,6 +564,7 @@ void Waveform2View::drawWaveforms2(QPainter& painter,const QList<int>& clusterLi
         else{
             if(!waveform2Iterator->areSpikesAvailable())continue;
             long nbOfSpikes = waveform2Iterator->nbOfSpikes();
+            QList <QPolygon> redSpikes;
             bool discard = true;
             long spikesIndex = 0;
             for(long i = 0; i < nbOfSpikes; ++i){
@@ -596,14 +597,20 @@ void Waveform2View::drawWaveforms2(QPainter& painter,const QList<int>& clusterLi
                 }
                 if (discard == false){
                     if (listSelectedMSDSpikes.contains(listCorresponingSpikes.at(listCorresponingSpikes.size()-1))){
-                        painter.setPen(Qt::red);
-                    } else {
-                        painter.setPen(alternative_color);
+                        redSpikes.append(spike);
+                        continue;
                     }
                     for(int k = 0;k < nbchannels;++k){
                         int pointCount = (nbSamplesInWaveform2 == -1) ?  spike.size() - k * nbSamplesInWaveform2 : nbSamplesInWaveform2;
                         painter.drawPolyline(spike.constData() + k * nbSamplesInWaveform2, pointCount);
                     }
+                }
+            }
+            painter.setPen(Qt::red);
+            for(int k1 = 0; k1 < redSpikes.size(); k1++){
+                for(int k = 0;k < nbchannels;++k){
+                    int pointCount = (nbSamplesInWaveform2 == -1) ?  redSpikes.at(k1).size() - k * nbSamplesInWaveform2 : nbSamplesInWaveform2;
+                    painter.drawPolyline(redSpikes.at(k1).constData() + k * nbSamplesInWaveform2, pointCount);
                 }
             }
         }
@@ -756,7 +763,7 @@ void Waveform2View::mousePressEvent(QMouseEvent* e){
         }
     }
     if(mode == REMOVE_SPIKES){
-        if (e->button() == Qt::LeftButton){ //Left button pressed
+        if(e->button() == Qt::LeftButton){ //Left button pressed
             QPoint selectedPoint = viewportToWorld(e->x(),e->y());
             if (selectionPolygon.empty()){ //If this is the first point of the line for voltage selection
                 selectionPolygon.putPoints(0, 1, selectedPoint.x(),selectedPoint.y());
