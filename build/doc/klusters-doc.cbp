@@ -5,7 +5,7 @@
       <Option title="klusters-doc" />
       <Option makefile_is_custom="1" />
       <Option compiler="gcc" />
-      <Option virtualFolders="CMake Files\;CMake Files\cmake\;CMake Files\cmake\modules\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\usr\lib\cmake\;CMake Files\..\..\..\..\..\usr\lib\cmake\LibKlustersShared\;CMake Files\src\;CMake Files\po\;CMake Files\doc\;" />
+      <Option virtualFolders="CMake Files\;CMake Files\doc\;CMake Files\po\;CMake Files\src\;CMake Files\cmake\;CMake Files\cmake\modules\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\usr\;CMake Files\..\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\..\usr\lib\cmake\;CMake Files\..\..\..\..\..\usr\lib\cmake\LibKlustersShared\;" />
       <Build>
       <Target title="all">
          <Option working_dir="/home/drew/Desktop/klusters_mod/klusters-2.0.0/build/doc" />
@@ -24,6 +24,36 @@
       <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/config-klusters.h.cmake">
           <Option virtualFolder="CMake Files\" />
       </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/doc/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\doc\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/doc/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\doc\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/po/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\po\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/po/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\po\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-cursors.qrc">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-icons.qrc">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/CMakeLists.txt">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-cursors.qrc">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
+      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-icons.qrc">
+          <Option virtualFolder="CMake Files\src\" />
+      </Unit>
       <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/cmake/modules/MacroEnsureVersion.cmake">
           <Option virtualFolder="CMake Files\cmake\modules\" />
       </Unit>
@@ -38,36 +68,6 @@
       </Unit>
       <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/../../../../../usr/lib/cmake/LibKlustersShared/LibKlustersSharedTargetsWithPrefix-noconfig.cmake">
           <Option virtualFolder="CMake Files\..\..\..\..\..\usr\lib\cmake\LibKlustersShared\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/CMakeLists.txt">
-          <Option virtualFolder="CMake Files\src\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-cursors.qrc">
-          <Option virtualFolder="CMake Files\src\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-icons.qrc">
-          <Option virtualFolder="CMake Files\src\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/CMakeLists.txt">
-          <Option virtualFolder="CMake Files\src\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-cursors.qrc">
-          <Option virtualFolder="CMake Files\src\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/src/klusters-icons.qrc">
-          <Option virtualFolder="CMake Files\src\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/po/CMakeLists.txt">
-          <Option virtualFolder="CMake Files\po\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/po/CMakeLists.txt">
-          <Option virtualFolder="CMake Files\po\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/doc/CMakeLists.txt">
-          <Option virtualFolder="CMake Files\doc\" />
-      </Unit>
-      <Unit filename="/home/drew/Desktop/klusters_mod/klusters-2.0.0/doc/CMakeLists.txt">
-          <Option virtualFolder="CMake Files\doc\" />
       </Unit>
    </Project>
 </CodeBlocks_project_file>

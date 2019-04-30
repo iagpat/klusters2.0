@@ -606,6 +606,7 @@ void Waveform2View::drawWaveforms2(QPainter& painter,const QList<int>& clusterLi
                     }
                 }
             }
+            painter.setCompositionMode(QPainter::CompositionMode_Source);
             painter.setPen(Qt::red);
             for(int k1 = 0; k1 < redSpikes.size(); k1++){
                 for(int k = 0;k < nbchannels;++k){

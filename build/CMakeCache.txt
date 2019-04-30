@@ -117,7 +117,7 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=klusters
+CMAKE_PROJECT_NAME:STATIC=klusters2
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -821,6 +821,12 @@ klusters-src_BINARY_DIR:STATIC=/home/drew/Desktop/klusters_mod/klusters-2.0.0/bu
 
 //Value Computed by CMake
 klusters-src_SOURCE_DIR:STATIC=/home/drew/Desktop/klusters_mod/klusters-2.0.0/src
+
+//Value Computed by CMake
+klusters2_BINARY_DIR:STATIC=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build
+
+//Value Computed by CMake
+klusters2_SOURCE_DIR:STATIC=/home/drew/Desktop/klusters_mod/klusters-2.0.0
 
 //Value Computed by CMake
 klusters_BINARY_DIR:STATIC=/home/drew/Desktop/klusters_mod/klusters-2.0.0/build

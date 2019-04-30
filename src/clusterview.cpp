@@ -127,6 +127,13 @@ void ClusterView::drawClusters(QPainter& painter,const QList<int>& clustersList,
             for(;spikeIterator.hasNext();spikeIterator.next()){
                 spike_index++;
                 if(MaxNumberOfSpikes>spike_index){
+                    /*if (listSelectedSpikes.contains(spike_index)){
+                        painter.setPen(QPen(Qt::red,0));
+                        painter.drawEllipse(spikeIterator(dimensionX,dimensionY), (width2*width)/500000,(height2*height)/100000);
+                        painter.drawPoint(spikeIterator(dimensionX,dimensionY));
+                        painter.setPen(QPen(color,0));
+                        continue;
+                    }*/
                     current_time = clusteringData.spikeTime(spikesOfCluster, spike_index);
                     if (spike_index-1>0){
                         previous_time = clusteringData.spikeTime(spikesOfCluster, spike_index-1);

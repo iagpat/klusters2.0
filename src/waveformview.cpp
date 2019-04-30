@@ -581,7 +581,7 @@ void WaveformView::drawWaveforms(QPainter& painter,const QList<int>& clusterList
 
                 }
 
-                if (listSelectedMSDSpikes.contains(listCorresponingSpikes.at(listCorresponingSpikes.size()-1))){
+                if (listSelectedSpikes.contains(listCorresponingSpikes.at(listCorresponingSpikes.size()-1))){
                     redSpikes.append(spike);
                     continue; //do not draw if it is a red spike
                 }
@@ -605,8 +605,6 @@ void WaveformView::drawWaveforms(QPainter& painter,const QList<int>& clusterList
             }
 
         }
-        painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
-        painter.setBackground(Qt::black);
         //Delete the waveform iterator received for the current cluster
         delete waveformIterator;
         //Reinitialize the Y,the starting ordinate
@@ -761,8 +759,8 @@ void WaveformView::mousePressEvent(QMouseEvent* e){
             QPoint selectedPoint = viewportToWorld(e->x(),e->y());
             if (selectionPolygon.empty()){ //If this is the first point of the line for voltage selection
                 selectionPolygon.putPoints(0, 1, selectedPoint.x(),selectedPoint.y());
-                listSelectedMSDClusters.clear();
-                listSelectedMSDSpikes.clear();
+                listSelectedClusters.clear();
+                listSelectedSpikes.clear();
                 drawContentsMode = REDRAW;
                 update();
             }else { //If this is the second point of the line
@@ -777,9 +775,9 @@ void WaveformView::mousePressEvent(QMouseEvent* e){
                             A = listComparePolygons[i][j].at(k); //First point
                             B = listComparePolygons[i][j].at(k+1); //Second point
                             int compare = VoltageSelectorLine.intersect(QLineF(A,B), &intersectionPoint);
-                            if(1==compare && !listSelectedMSDSpikes.contains(listCorresponingSpikes[i])){ //If it intersects and we dont already have that spike
-                                listSelectedMSDSpikes.append(listCorresponingSpikes[i]); //Add the spike to the list of selected spikes
-                                listSelectedMSDClusters.append(listCorresponingClusters[i]);
+                            if(1==compare && !listSelectedSpikes.contains(listCorresponingSpikes[i])){ //If it intersects and we dont already have that spike
+                                listSelectedSpikes.append(listCorresponingSpikes[i]); //Add the spike to the list of selected spikes
+                                listSelectedClusters.append(listCorresponingClusters[i]);
                                 QPainter painter;
                                 painter.begin(&doublebuffer);
                                 QRect r((QRect)window);
@@ -799,8 +797,8 @@ void WaveformView::mousePressEvent(QMouseEvent* e){
             update();
         }
         if(e->button() == Qt::RightButton){ //Right button pressed
-            listSelectedMSDSpikes.clear();
-            listSelectedMSDClusters.clear();
+            listSelectedSpikes.clear();
+            listSelectedClusters.clear();
             selectionPolygon.clear();
             drawContentsMode = REDRAW;
             update();
@@ -811,17 +809,17 @@ void WaveformView::mousePressEvent(QMouseEvent* e){
             int xdimensionValue; //For the current spike, value of the x dimensional feature
             int ydimensionValue; //For the current spike, value of the y dimensional feature
             QRegion region;
-            for(int i = 0; i<listSelectedMSDSpikes.size();i++){
-                xdimensionValue = clusteringData.spikeFeature(listSelectedMSDSpikes[i],view.abscissaDimension());
-                ydimensionValue = clusteringData.spikeFeature(listSelectedMSDSpikes[i],view.ordinateDimension());
+            for(int i = 0; i<listSelectedSpikes.size();i++){
+                xdimensionValue = clusteringData.spikeFeature(listSelectedSpikes[i],view.abscissaDimension());
+                ydimensionValue = clusteringData.spikeFeature(listSelectedSpikes[i],view.ordinateDimension());
                 region = QRegion(xdimensionValue,ydimensionValue,1,1,QRegion::Rectangle); //This region is too big
                 QList<int> clustersOfOrigin;
-                clustersOfOrigin.append(listSelectedMSDClusters[i]);
+                clustersOfOrigin.append(listSelectedClusters[i]);
                 doc.deleteNoise(region,clustersOfOrigin,view.abscissaDimension(),view.ordinateDimension());
             }
             selectionPolygon.clear();
-            listSelectedMSDSpikes.clear();
-            listSelectedMSDClusters.clear();
+            listSelectedSpikes.clear();
+            listSelectedClusters.clear();
             drawContentsMode = REDRAW;
             update();
         }
@@ -872,8 +870,8 @@ void WaveformView::mouseDoubleClickEvent (QMouseEvent *e){
         isZoomed = true;
     }else if (mode == REMOVE_SPIKES){
         selectionPolygon.clear();
-        listSelectedMSDSpikes.clear();
-        listSelectedMSDClusters.clear();
+        listSelectedSpikes.clear();
+        listSelectedClusters.clear();
         drawContentsMode = REDRAW;
         update();
     }

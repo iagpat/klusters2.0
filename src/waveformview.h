@@ -412,9 +412,7 @@ private:
     QList<long> listCorresponingSpikes;
     QList<long> listCorresponingClusters;
 
-    //THe following two lists contain the spikes that were selected through the voltage selection method and their clusters
-    QList<long> listSelectedMSDSpikes;
-    QList<long> listSelectedMSDClusters;
+
 
     /**True if the widget is about to be deleted, false otherwise.*/
     bool goingToDie;

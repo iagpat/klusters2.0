@@ -867,7 +867,8 @@ void KlustersApp::applyPreferences() {
 }
 
 void KlustersApp::initializePreferences(){
-    nbUndo = configuration().getNbUndo();
+    nbUndo = 1000;
+    //nbUndo = configuration().getNbUndo();
     waveformsGain = configuration().getGain();
     displayTimeInterval = configuration().getTimeInterval();
     backgroundColor =  configuration().getBackgroundColor();

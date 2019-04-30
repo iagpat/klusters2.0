@@ -270,6 +270,10 @@ protected:
     /**Mode giving the way of drawing the contents of the view*/
     DrawContentsMode drawContentsMode;
 
+    //THe following two lists contain the spikes that were selected through the voltage selection method and their clusters
+    QList<long> listSelectedSpikes;
+    QList<long> listSelectedClusters;
+
     /**
    * Draw mode (selected by the user via a menu, a button or a shortcut).
    */

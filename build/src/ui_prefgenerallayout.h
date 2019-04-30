@@ -109,8 +109,8 @@ public:
         gridLayout_3->setObjectName(QString::fromUtf8("gridLayout_3"));
         hboxLayout1 = new QHBoxLayout();
         hboxLayout1->setSpacing(6);
-        hboxLayout1->setContentsMargins(0, 0, 0, 0);
         hboxLayout1->setObjectName(QString::fromUtf8("hboxLayout1"));
+        hboxLayout1->setContentsMargins(0, 0, 0, 0);
         textLabel4 = new QLabel(groupBox2);
         textLabel4->setObjectName(QString::fromUtf8("textLabel4"));
         textLabel4->setWordWrap(false);
@@ -120,8 +120,8 @@ public:
         undoSpinBox = new QSpinBox(groupBox2);
         undoSpinBox->setObjectName(QString::fromUtf8("undoSpinBox"));
         undoSpinBox->setWrapping(true);
-        undoSpinBox->setMaximum(30);
-        undoSpinBox->setValue(2);
+        undoSpinBox->setMaximum(2000);
+        undoSpinBox->setValue(1000);
 
         hboxLayout1->addWidget(undoSpinBox);
 
@@ -167,8 +167,8 @@ public:
         gridLayout_4->setObjectName(QString::fromUtf8("gridLayout_4"));
         hboxLayout4 = new QHBoxLayout();
         hboxLayout4->setSpacing(6);
-        hboxLayout4->setContentsMargins(0, 0, 0, 0);
         hboxLayout4->setObjectName(QString::fromUtf8("hboxLayout4"));
+        hboxLayout4->setContentsMargins(0, 0, 0, 0);
         crashRecoveryCheckBox = new QCheckBox(groupBox1);
         crashRecoveryCheckBox->setObjectName(QString::fromUtf8("crashRecoveryCheckBox"));
 
@@ -183,8 +183,8 @@ public:
 
         hboxLayout5 = new QHBoxLayout();
         hboxLayout5->setSpacing(6);
-        hboxLayout5->setContentsMargins(0, 0, 0, 0);
         hboxLayout5->setObjectName(QString::fromUtf8("hboxLayout5"));
+        hboxLayout5->setContentsMargins(0, 0, 0, 0);
         textLabel3 = new QLabel(groupBox1);
         textLabel3->setObjectName(QString::fromUtf8("textLabel3"));
         textLabel3->setWordWrap(false);
@@ -296,8 +296,8 @@ public:
         gridLayout1->setObjectName(QString::fromUtf8("gridLayout1"));
         hboxLayout9 = new QHBoxLayout();
         hboxLayout9->setSpacing(6);
-        hboxLayout9->setContentsMargins(0, 0, 0, 0);
         hboxLayout9->setObjectName(QString::fromUtf8("hboxLayout9"));
+        hboxLayout9->setContentsMargins(0, 0, 0, 0);
         textLabel1 = new QLabel(groupBox3);
         textLabel1->setObjectName(QString::fromUtf8("textLabel1"));
         textLabel1->setWordWrap(false);

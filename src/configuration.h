@@ -169,7 +169,7 @@ private:
     /**Time interval between 2 lines drawn in the cluster views when the time dimension in selected.*/
     int  timeInterval;
     /**Number of step in the undo/redo mechanism.*/
-    int  nbUndo;
+    int  nbUndo = 1000; //Default is 1000
     /**Positions of the channels in the waveform view.*/
     QList<int> channelPositions;
     /**Number of channels.*/

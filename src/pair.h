@@ -48,16 +48,16 @@ public:
         return (x == p.x && y == p.y);
     }
     bool operator <(const Pair& p){
-        return ((x < p.x) || (x == p.x) && (y < p.y));
+        return ((x < p.x) || ((x == p.x) && (y < p.y)));
     }
     bool operator <=(const Pair& p){
-        return ((x < p.x) || (x == p.x) && (y <= p.y));
+        return ((x < p.x) || ((x == p.x) && (y <= p.y)));
     }
     bool operator >(const Pair& p){
-        return ((x > p.x) || (x == p.x) && (y > p.y));
+        return ((x > p.x) || ((x == p.x) && (y > p.y)));
     }
     bool operator >=(const Pair& p){
-        return ((x > p.x) || (x == p.x) && (y >= p.y));
+        return ((x > p.x) || ((x == p.x) && (y >= p.y)));
     }
 
     ~Pair(){}
